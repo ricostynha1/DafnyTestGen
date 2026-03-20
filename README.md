@@ -17,6 +17,7 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts postconditions 
 - **All-combinations** (`-a`): generates tests for all 2^n-1 non-empty truth combinations of DNF clauses
 - **Boundary** (`-b`): boundary value analysis on inputs (integer bounds, sequence sizes)
 - **Simple** (`-s`): one test per DNF clause
+- **Quantifier boundary decomposition**: single-variable `exists k :: lo <= k < hi && P(k)` is automatically decomposed into 3 DNF clauses — P(lo), exists in middle range, P(hi-1) — producing up to 7 combinations. Negated `forall` is handled similarly.
 
 ## Prerequisites
 
@@ -147,6 +148,7 @@ test/
 
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
+- Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - `fresh()` postconditions are specification-only and skipped
 - Not all Dafny expressions are translatable to SMT2
 
