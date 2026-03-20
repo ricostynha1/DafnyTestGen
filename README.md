@@ -6,8 +6,8 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditi
 
 ## How It Works
 
-1. **Parse** Dafny source files and discover methods with `ensures` clauses
-2. **Analyze** postconditions in DNF to identify distinct test scenarios
+1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses)
+2. **Analyze** preconditions and postconditions in DNF to identify distinct test scenarios
 3. **Solve** SMT queries via Z3 to find satisfying concrete inputs for each scenario
 4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method
 
