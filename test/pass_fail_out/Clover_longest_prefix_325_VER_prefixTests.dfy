@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\pass_fail_in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-03-20 14:31:42
+// Generated: 2026-03-20 14:51:15
 
 // Clover_longest_prefix.dfy
 
@@ -26,7 +26,7 @@ method LongestCommonPrefix(str1: seq<char>, str2: seq<char>) returns (prefix: se
 
 method Passing()
 {
-  // Test case for combination {1}/Bstr1=0,str2=1#1:
+  // Test case for combination {1}/Bstr1=0,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -39,7 +39,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1}/Bstr1=0,str2=2#1:
+  // Test case for combination {1}/Bstr1=0,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -52,7 +52,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1}/Bstr1=0,str2=3#1:
+  // Test case for combination {1}/Bstr1=0,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -65,7 +65,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1}/Bstr1=1,str2=2#1:
+  // Test case for combination {1}/Bstr1=1,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -78,7 +78,7 @@ method Passing()
     expect prefix == ['x'];
   }
 
-  // Test case for combination {1}/Bstr1=1,str2=3#1:
+  // Test case for combination {1}/Bstr1=1,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -91,7 +91,7 @@ method Passing()
     expect prefix == ['x'];
   }
 
-  // Test case for combination {1}/Bstr1=2,str2=3#1:
+  // Test case for combination {1}/Bstr1=2,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -104,7 +104,7 @@ method Passing()
     expect prefix == ['w', 't'];
   }
 
-  // Test case for combination {2}/Bstr1=1,str2=0#1:
+  // Test case for combination {2}/Bstr1=1,str2=0:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -117,7 +117,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {2}/Bstr1=2,str2=0#1:
+  // Test case for combination {2}/Bstr1=2,str2=0:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -130,7 +130,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {2}/Bstr1=3,str2=0#1:
+  // Test case for combination {2}/Bstr1=3,str2=0:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -143,7 +143,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1,2}/Bstr1=0,str2=0#1:
+  // Test case for combination {1,2}/Bstr1=0,str2=0:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -157,7 +157,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1,2}/Bstr1=1,str2=1#1:
+  // Test case for combination {1,2}/Bstr1=1,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -171,7 +171,7 @@ method Passing()
     expect prefix == ['a'];
   }
 
-  // Test case for combination {1,2}/Bstr1=2,str2=2#1:
+  // Test case for combination {1,2}/Bstr1=2,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -185,7 +185,7 @@ method Passing()
     expect prefix == ['a', 'x'];
   }
 
-  // Test case for combination {1,2}/Bstr1=3,str2=3#1:
+  // Test case for combination {1,2}/Bstr1=3,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -199,7 +199,7 @@ method Passing()
     expect prefix == ['a', 'w', 't'];
   }
 
-  // Test case for combination {3}/Bstr1=1,str2=1#1:
+  // Test case for combination {3}/Bstr1=1,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -212,7 +212,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {3}/Bstr1=1,str2=2#1:
+  // Test case for combination {3}/Bstr1=1,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -225,7 +225,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {3}/Bstr1=1,str2=3#1:
+  // Test case for combination {3}/Bstr1=1,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -238,7 +238,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {3}/Bstr1=2,str2=1#1:
+  // Test case for combination {3}/Bstr1=2,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -251,7 +251,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {3}/Bstr1=2,str2=2#1:
+  // Test case for combination {3}/Bstr1=2,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -264,7 +264,7 @@ method Passing()
     expect prefix == ['t'];
   }
 
-  // Test case for combination {3}/Bstr1=2,str2=3#1:
+  // Test case for combination {3}/Bstr1=2,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -277,7 +277,7 @@ method Passing()
     expect prefix == ['t'];
   }
 
-  // Test case for combination {3}/Bstr1=3,str2=1#1:
+  // Test case for combination {3}/Bstr1=3,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -290,7 +290,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {3}/Bstr1=3,str2=2#1:
+  // Test case for combination {3}/Bstr1=3,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -303,7 +303,7 @@ method Passing()
     expect prefix == ['t'];
   }
 
-  // Test case for combination {3}/Bstr1=3,str2=3#1:
+  // Test case for combination {3}/Bstr1=3,str2=3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -320,7 +320,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {2}/Bstr1=2,str2=1#1:
+  // Test case for combination {2}/Bstr1=2,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -333,7 +333,7 @@ method Failing()
     // expect prefix == ['x'];
   }
 
-  // Test case for combination {2}/Bstr1=3,str2=1#1:
+  // Test case for combination {2}/Bstr1=3,str2=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -346,7 +346,7 @@ method Failing()
     // expect prefix == ['x'];
   }
 
-  // Test case for combination {2}/Bstr1=3,str2=2#1:
+  // Test case for combination {2}/Bstr1=3,str2=2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
