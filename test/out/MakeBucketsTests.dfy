@@ -1,0 +1,99 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\DafnyTestGen\test\in\MakeBuckets.dfy
+// Method: MakeBuckets
+// Generated: 2026-03-20 12:27:56
+
+// Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
+// (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
+// for 0 <= k <= m, where 'm' denotes the maximum value in 'a'.
+method MakeBuckets(a: array<nat>) returns(b: array<nat>)
+  requires a.Length > 0
+  ensures fresh(b) 
+  ensures b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  ensures forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+{
+   var max := a[0];
+   for i := 1 to a.Length
+     invariant max == MaxSeq(a[..i])
+   {
+      if a[i] > max {
+         max := a[i];
+      }
+   } 
+
+   b := new nat[1 + max];
+   forall k | 0 <= k <= max {
+     b[k] := 0;
+   }
+   assert a[..] == old(a[..]); // proof helper
+   for i := 0 to a.Length
+    invariant forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..i])
+   {
+      b[a[i]] := b[a[i]] + 1; 
+   } 
+   assert a[..] == a[..a.Length]; // proof helper
+}
+
+// Gets the maximum value in a non-empty sequence 's' of natural numbers.
+function MaxSeq(s: seq<nat>) : (result: nat) 
+  requires |s| > 0
+  ensures result in s && forall k :: 0 <= k < |s| ==> result >= s[k]
+{
+   if |s| == 1 then s[0] else if s[0] > MaxSeq(s[1..]) then s[0] else MaxSeq(s[1..])
+}
+
+// Counts the number of occurrences of 'x' in a sequence 's' of natural numbers.
+function count(x: nat, s: seq<nat>) : nat {
+   multiset(s)[x]
+}
+
+
+
+method GeneratedTests_MakeBuckets()
+{
+  // Test case for combination 1/Ba=1:
+  //   PRE:  a.Length > 0
+  //   POST: b.Length > 0
+  //   POST: b.Length == MaxSeq(a[..]) + 1
+  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  {
+    var a := new nat[1] [2];
+    var b := MakeBuckets(a);
+    expect b.Length > 0;
+    expect b.Length == MaxSeq(a[..]) + 1;
+    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+  }
+
+  // Test case for combination 1/Ba=2:
+  //   PRE:  a.Length > 0
+  //   POST: b.Length > 0
+  //   POST: b.Length == MaxSeq(a[..]) + 1
+  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  {
+    var a := new nat[2] [4, 3];
+    var b := MakeBuckets(a);
+    expect b.Length > 0;
+    expect b.Length == MaxSeq(a[..]) + 1;
+    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+  }
+
+  // Test case for combination 1/Ba=3:
+  //   PRE:  a.Length > 0
+  //   POST: b.Length > 0
+  //   POST: b.Length == MaxSeq(a[..]) + 1
+  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  {
+    var a := new nat[3] [4, 6, 5];
+    var b := MakeBuckets(a);
+    expect b.Length > 0;
+    expect b.Length == MaxSeq(a[..]) + 1;
+    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+  }
+
+}
+
+method Main()
+{
+  GeneratedTests_MakeBuckets();
+  print "GeneratedTests_MakeBuckets: all tests passed!\n";
+}
