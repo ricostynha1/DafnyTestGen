@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\pass_fail_in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-03-20 13:10:11
+// Generated: 2026-03-20 14:31:29
 
 // res.dfy
 
@@ -20,29 +20,28 @@ method abs(x: int) returns (y: int)
 
 method Passing()
 {
-  // (no passing tests)
+  // Test case for combination {2,4}/Bx=0#1:
+  //   POST: !(x > 0)
+  //   POST: y == -x
+  //   POST: y == x
+  {
+    var x := 0;
+    var y := abs(x);
+    expect y == 0;
+  }
+
 }
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   POST: !(x > 0)
-  //   POST: y == -x
-  {
-    var x := 0;
-    var y := abs(x);
-    // expect y == 1;
-
-  }
-
-  // Test case for combination {3}:
+  // Test case for combination {3,4}/Bx=1#1:
   //   POST: y == x
   //   POST: !(x <= 0)
+  //   POST: y == -x
   {
-    var x := 1;
-    var y := abs(x);
-    // expect y == 1;
-
+    var x := 1;
+    var y := abs(x);
+    // expect y == 1;
   }
 
 }

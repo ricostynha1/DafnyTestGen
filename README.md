@@ -68,6 +68,7 @@ dotnet run -- test/pass_fail_in/abs__121-127_COI.dfy -o test/pass_fail_out/ -c
 | `--simple` | `-s` | One test per DNF clause (overrides auto) |
 | `--tiers <n>` | `-t` | Sequence/array size tiers for boundary analysis (default: 4) |
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
+| `--repeat <n>` | `-r` | Generate N distinct test cases per condition (default: 1) |
 
 ## Example
 
