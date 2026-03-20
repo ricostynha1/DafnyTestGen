@@ -15,8 +15,9 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts postconditions 
 
 - **Auto** (default): boundary mode if no disjunctive clauses, all-combinations otherwise
 - **All-combinations** (`-a`): generates tests for all 2^n-1 non-empty truth combinations of DNF clauses
-- **Boundary** (`-b`): boundary value analysis on inputs (integer bounds, sequence sizes)
+- **Boundary** (`-b`): boundary value analysis on inputs (integer bounds, sequence sizes). Extracts numeric ranges from preconditions (e.g., `-100 <= x <= 100` → tests at x=-100, -99, 0, 1, 99, 100)
 - **Simple** (`-s`): one test per DNF clause
+- **Disjunctive preconditions**: preconditions with disjunctions (e.g., `requires x > 0 || y > 0`) are decomposed into DNF branches, each tested independently with its own boundary values
 - **Quantifier boundary decomposition**: single-variable `exists k :: lo <= k < hi && P(k)` is automatically decomposed into 3 DNF clauses — P(lo), exists in middle range, P(hi-1) — producing up to 7 combinations. Negated `forall` is handled similarly.
 
 ## Prerequisites
