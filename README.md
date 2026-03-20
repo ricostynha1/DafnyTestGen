@@ -2,7 +2,7 @@
 
 Automatic test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions).
 
-DafnyTestGen analyzes `requires` and `ensures` clauses, converts postconditions to Disjunctive Normal Form (DNF), and uses the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths.
+DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditions and postconditions to Disjunctive Normal Form (DNF), and uses the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths.
 
 ## How It Works
 
