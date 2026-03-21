@@ -150,6 +150,7 @@ test/
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
+- Tuple types (e.g., `(real, real)`) are not supported — test generation produces incorrect syntax for tuple values and tuple arrays
 - `fresh()` postconditions are specification-only and skipped
 - Not all Dafny expressions are translatable to SMT2
 
