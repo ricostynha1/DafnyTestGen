@@ -43,19 +43,19 @@ dotnet publish -c Release -o ../publish
 
 ```bash
 # Generate tests for a single file
-dotnet run -- test/in/Factorial.dfy -o test/out/FactorialTests.dfy
+dotnet run -- test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 
 # Generate tests for all files in a folder
-dotnet run -- test/in/ -o test/out/
+dotnet run -- test/correct_progs/in/ -o test/correct_progs/out/
 
 # Generate tests with verbose output (shows contracts, DNF, SMT queries)
-dotnet run -- test/in/BinarySearch.dfy -o test/out/ -v
+dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ -v
 
 # Force boundary value analysis with 5 tiers
-dotnet run -- test/in/Factorial.dfy -b -t 5
+dotnet run -- test/correct_progs/in/Factorial.dfy -b -t 5
 
 # Validate tests and split into Passing/Failing methods
-dotnet run -- test/pass_fail_in/abs__121-127_COI.dfy -o test/pass_fail_out/ -c
+dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
 ```
 
 ### Command-Line Options
@@ -124,14 +124,16 @@ This is useful for evaluating buggy implementations against their contracts.
 ```
 DafnyTestGen/
   DafnyTestGen.csproj    # C# project file (.NET 8.0)
-  Program.cs             # Main source (~1900 lines)
+  Program.cs             # Main source (~2100 lines)
 DafnyTestGen.sln         # Solution file
 test/
-  in/                    # Sample Dafny input programs (26 files)
-  out/                   # Generated test files
-  pass_fail_in/          # Buggy programs for --check mode
-  pass_fail_out/         # Check mode output (Passing/Failing split)
-  failed/                # Programs where test generation times out
+  correct_progs/         # Correct Dafny programs
+    in/                  #   Source files (28 files)
+    out/                 #   Generated test files
+  buggy_progs/           # Buggy programs for --check mode
+    in/                  #   Source files with known bugs
+    out/                 #   Check mode output (Passing/Failing split)
+  unsupported_progs/     # Programs not currently supported (e.g., tuple types)
 ```
 
 ## Supported Dafny Features
@@ -141,7 +143,7 @@ test/
 - Quantifiers (`forall`, `exists`)
 - Implications, logical operators, chain comparisons
 - `IsSorted` predicate (built-in translation)
-- `old()` expressions in postconditions (captured before method call)
+- `old()` expressions in postconditions (array params captured as sequences before method call, supporting quantifier-bound indices)
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
