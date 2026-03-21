@@ -13,12 +13,91 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditi
 
 ### Test Strategies
 
-- **Auto** (default): boundary mode if no disjunctive clauses, all-combinations otherwise
-- **All-combinations** (`-a`): generates tests for all 2^n-1 non-empty truth combinations of DNF clauses
-- **Boundary** (`-b`): boundary value analysis on inputs (integer bounds, sequence sizes). Extracts numeric ranges from contracts (e.g., `-100 <= x <= 100` → tests at x=-100, -99, 0, 1, 99, 100)
-- **Simple** (`-s`): one test per DNF clause
-- **Disjunctive preconditions**: preconditions with disjunctions (e.g., `requires x > 0 || y > 0`) are decomposed into DNF and combined with postcondition clauses using all-combinations with exclusions. For example, `x > 0 || y > 0` produces 3 precondition combinations — P{1}: x>0 only, P{2}: y>0 only, P{1,2}: both — each crossed with postcondition scenarios
-- **Quantifier boundary decomposition**: single-variable `exists k :: lo <= k < hi && P(k)` is automatically decomposed into 3 DNF clauses — P(lo), exists in middle range, P(hi-1) — producing up to 7 combinations. Negated `forall` is handled similarly.
+DafnyTestGen uses method contracts to derive test scenarios, combining equivalence class partitioning (via DNF analysis) with boundary value analysis. Strategies can be selected explicitly or chosen automatically.
+
+#### Equivalence Class Partitioning via DNF
+
+The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
+
+**How DNF decomposition works.** Each `ensures` clause with an implication `A ==> B` is rewritten as `!A || B`, producing two literals. When multiple `ensures` clauses exist, their cross-product forms the full DNF. Disjunctive preconditions (`requires A || B`) are decomposed similarly.
+
+**Example — disjunctive postconditions** (`Classify`):
+
+```dafny
+method Classify(x: int) returns (r: int)
+  requires -100 <= x <= 100
+  ensures x < 0 ==> r == -1
+  ensures x == 0 ==> r == 0
+  ensures x > 0 ==> r == 1
+```
+
+Each implication produces 2 literals, and the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**. For example:
+- Clause 2: `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
+- Clause 3: `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
+- Clause 5: `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
+
+Many clauses are contradictory (e.g., clause 1: `!(x<0)` ∧ `!(x==0)` ∧ `!(x>0)` — impossible) and are detected as UNSAT by Z3.
+
+**Example — disjunctive preconditions** (`Process`):
+
+```dafny
+method Process(x: int, y: int) returns (r: int)
+  requires x > 0 || y > 0
+  ensures r == x + y
+```
+
+The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With all-combinations, this produces 3 precondition scenarios, each with exclusions to force the intended branch:
+- P{1}: `x > 0` ∧ `!(y > 0)` — only x is positive
+- P{2}: `!(x > 0)` ∧ `y > 0` — only y is positive
+- P{1,2}: `x > 0` ∧ `y > 0` — both positive
+
+Each precondition scenario is crossed with postcondition scenarios.
+
+**Simple mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
+
+**All-combinations mode** (`-a`): generates tests for all **2^n − 1** non-empty subsets of DNF clauses, testing which combinations can hold simultaneously. For each combination {i, j, ...}, the selected clauses are asserted and all non-selected clauses are **negated** (exclusions). For Classify with 8 clauses, this tries 255 combinations — but since the clauses are mutually exclusive, only the same 3 singleton combinations are SAT.
+
+With more complex contracts, all-combinations discovers scenarios where multiple clauses hold simultaneously. For example, FindMax with `ensures exists k :: ...` and `ensures forall k :: ...` produces combinations like {1,3} (max at both first and last position — a single-element array).
+
+#### Quantifier Boundary Decomposition
+
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into **3 DNF clauses** representing boundary cases:
+
+1. **Left boundary**: `P(lo)` — property holds at first position
+2. **Middle**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
+3. **Right boundary**: `P(hi-1)` — property holds at last position
+
+These clauses feed into the same DNF analysis, so they combine with other postcondition clauses via simple or all-combinations mode. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly.
+
+**Example** (`FindMax`):
+
+```dafny
+ensures exists k :: 0 <= k < a.Length && max == a[k]
+ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
+```
+
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). With all-combinations, this yields 7 combinations — {1}: max at left only, {2}: max in middle only, {3}: max at right only, {1,3}: max at both ends (single-element array), etc. Contradictory combinations (e.g., {1,2,3} with exclusions preventing all three) are UNSAT.
+
+#### Boundary Value Analysis (`-b`)
+
+BVA complements equivalence class partitioning by testing at the **edges** of each equivalence class. DafnyTestGen extracts numeric bounds from contracts and generates boundary tiers:
+
+- **Integer ranges**: for `requires -100 <= x <= 100`, generates tests at x = -100, -99, 0, 1, 99, 100
+- **Array/sequence sizes**: generates tests with different sizes (length 0, 1, 2, 3, ...), with distinct elements within each tier
+
+The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers. For example, `-t 5` generates arrays of length 0 through 4.
+
+BVA is **combined with DNF**: each equivalence class (DNF scenario) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
+
+#### Repetition (`-r`)
+
+The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
+
+#### Auto Strategy (default)
+
+When no strategy flag is specified, DafnyTestGen chooses automatically:
+- If the contracts produce **disjunctive DNF clauses** (more than one clause) → all-combinations mode
+- Otherwise (single clause, no disjunctions) → boundary mode
 
 ## Prerequisites
 
@@ -54,6 +133,9 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 # Force boundary value analysis with 5 tiers
 dotnet run -- test/correct_progs/in/Factorial.dfy -b -t 5
 
+# Thorough: all combinations + boundary + 3 tests per scenario
+dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ -a -b -r 3
+
 # Validate tests and split into Passing/Failing methods
 dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
 ```
@@ -72,28 +154,17 @@ dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ 
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 
-## Example
+## Generated Output
 
-Given a Dafny method:
+Given a Dafny method with a single non-disjunctive postcondition (no equivalence classes to partition), DafnyTestGen defaults to boundary value analysis and emits `expect` assertions using the postcondition expression:
 
 ```dafny
 method CalcFact(n: nat) returns (f: nat)
   ensures f == Fact(n)
-{
-  f := 1;
-  for i := 1 to n + 1
-    invariant f == Fact(i-1)
-  { f := f * i; }
-}
 ```
 
-DafnyTestGen produces:
-
 ```dafny
-method GeneratedTests_CalcFact()
-{
   // Test case for combination 1/Bn=0:
-  //   POST: f == Fact(n)
   {
     var n := 0;
     var f := CalcFact(n);
@@ -101,13 +172,22 @@ method GeneratedTests_CalcFact()
   }
 
   // Test case for combination 1/Bn=1:
-  //   POST: f == Fact(n)
   {
     var n := 1;
     var f := CalcFact(n);
     expect f == Fact(n);
   }
-}
+```
+
+When postconditions involve quantifiers or predicates that cannot be directly used as `expect` assertions, Z3-computed **concrete expected values** are emitted instead:
+
+```dafny
+  // Test case for combination {1}: max at left boundary
+  {
+    var a := new real[2] [0.5, 0.0];
+    var max := FindMax(a);
+    expect max == 0.5;
+  }
 ```
 
 ## Check Mode (`-c`)
@@ -153,7 +233,6 @@ test/
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - Tuple types (e.g., `(real, real)`) are not supported — test generation produces incorrect syntax for tuple values and tuple arrays
-- `fresh()` postconditions are specification-only and skipped
 - Not all Dafny expressions are translatable to SMT2
 
 ## License
