@@ -204,7 +204,15 @@ This is useful for evaluating buggy implementations against their contracts.
 ```
 DafnyTestGen/
   DafnyTestGen.csproj    # C# project file (.NET 8.0)
-  Program.cs             # Main source (~2100 lines)
+  Program.cs             # CLI, orchestration, test generation loop (~800 lines)
+  DafnyParser.cs         # Dafny AST parsing, method discovery
+  DnfEngine.cs           # DNF decomposition, quantifier boundary decomposition
+  SmtTranslator.cs       # Dafny-to-SMT2 translation, query building
+  BoundaryAnalysis.cs    # Boundary value tiers, numeric/relational bounds extraction
+  TestEmitter.cs         # Dafny test code generation, old() capture handling
+  TestValidator.cs       # --check mode: run tests, split into Passing/Failing
+  TypeUtils.cs           # Type checks, Z3 model parsing, value normalization
+  Z3Runner.cs            # Z3 process execution
 DafnyTestGen.sln         # Solution file
 test/
   correct_progs/         # Correct Dafny programs
@@ -215,6 +223,8 @@ test/
     out/                 #   Check mode output (Passing/Failing split)
   unsupported_progs/     # Programs not currently supported (e.g., tuple types)
 ```
+
+The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis** + **SmtTranslator** → **Z3Runner** → **TypeUtils** (model parsing) → **TestEmitter** → **TestValidator** (optional).
 
 ## Supported Dafny Features
 

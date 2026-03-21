@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\DafnyTestGen\test\in\RawSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-20 12:27:57
+// Generated: 2026-03-21 12:21:59
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -62,7 +62,7 @@ lemma MappingProp<T1, T2>(a: set<T1>, b: set<T2>, k: T2, m: map<T1, T2>)
 
 method GeneratedTests_RawSort()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}/Ba=0:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -70,10 +70,10 @@ method GeneratedTests_RawSort()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -81,10 +81,10 @@ method GeneratedTests_RawSort()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -92,18 +92,18 @@ method GeneratedTests_RawSort()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [4, 6, 5];
+    var a := new T[3] [5, 4, 6];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
 }

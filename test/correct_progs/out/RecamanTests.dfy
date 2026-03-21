@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\DafnyTestGen\test\in\Recaman.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-20 12:27:57
+// Generated: 2026-03-21 12:22:01
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -58,7 +58,7 @@ method Recaman(n: nat) returns (res: nat)
 
 method GeneratedTests_Contains()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,a=0,len=0:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
@@ -67,13 +67,218 @@ method GeneratedTests_Contains()
     var a := new nat[0] [];
     var len := 0;
     var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=1,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[1] [2];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=1,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[1] [2];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=2,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[2] [4, 3];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=2,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[2] [4, 3];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=2,len==a:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[2] [4, 3];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=3,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[3] [5, 4, 6];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=3,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[3] [5, 4, 6];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=0,a=3,len==a:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[3] [5, 4, 6];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=0,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[0] [];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=1,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[1] [2];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=1,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[1] [2];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=2,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[2] [4, 3];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=2,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[2] [4, 3];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=2,len==a:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[2] [4, 3];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=3,len=0:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[3] [5, 4, 6];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=3,len=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[3] [5, 4, 6];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Bx=1,a=3,len==a:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  {
+    var x := 1;
+    var a := new nat[3] [5, 4, 6];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == true;
   }
 
 }
 
 method GeneratedTests_Recaman()
 {
-  // Test case for combination 1/Bn=0:
+  // Test case for combination {1}/Bn=0:
   //   POST: res == R(n)
   {
     var n := 0;
@@ -81,10 +286,18 @@ method GeneratedTests_Recaman()
     expect res == R(n);
   }
 
-  // Test case for combination 1/Bn=1:
+  // Test case for combination {1}/Bn=1:
   //   POST: res == R(n)
   {
     var n := 1;
+    var res := Recaman(n);
+    expect res == R(n);
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST: res == R(n)
+  {
+    var n := 2;
     var res := Recaman(n);
     expect res == R(n);
   }

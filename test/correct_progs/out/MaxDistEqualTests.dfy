@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\failed_in\MaxDistEqual.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-03-21 10:45:02
+// Generated: 2026-03-21 12:21:57
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -32,7 +32,7 @@ method MaxDistEqual(a: array<int>) returns (maxDist: nat)
 
 
 
-method Passing()
+method GeneratedTests_MaxDistEqual()
 {
   // Test case for combination {1,3}/Ba=1:
   //   PRE:  a.Length > 0
@@ -187,13 +187,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MaxDistEqual();
+  print "GeneratedTests_MaxDistEqual: all tests passed!\n";
 }

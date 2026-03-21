@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\in\InsertionSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-03-21 10:57:13
+// Generated: 2026-03-21 12:21:43
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -44,7 +44,7 @@ method InsertionSort(a: array<T>)
 
 method GeneratedTests_InsertionSort()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}/Ba=0:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -55,7 +55,7 @@ method GeneratedTests_InsertionSort()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -66,7 +66,7 @@ method GeneratedTests_InsertionSort()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -77,7 +77,7 @@ method GeneratedTests_InsertionSort()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {

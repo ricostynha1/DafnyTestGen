@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\DafnyTestGen\test\in\SelectionSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-20 12:27:57
+// Generated: 2026-03-21 12:22:02
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -47,7 +47,7 @@ predicate IsSorted(a: array<int>)
 
 method GeneratedTests_SelectionSort()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}/Ba=0:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -55,10 +55,10 @@ method GeneratedTests_SelectionSort()
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -66,10 +66,10 @@ method GeneratedTests_SelectionSort()
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -77,18 +77,18 @@ method GeneratedTests_SelectionSort()
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [4, 6, 5];
+    var a := new int[3] [5, 4, 6];
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect multiset(a[..]) == multiset(old_a[..]);
   }
 
 }
