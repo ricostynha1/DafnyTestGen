@@ -23,7 +23,7 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditi
 ## Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Dafny](https://github.com/dafny-lang/dafny) (for the `--check` mode and for running generated tests)
+- [Dafny](https://github.com/dafny-lang/dafny) (for `--check` mode and for running generated tests; parsing uses the `Microsoft.Dafny` NuGet package, which is bundled with the build)
 - Z3 SMT solver (bundled with the Dafny VS Code extension)
 
 ## Build
