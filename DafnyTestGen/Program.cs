@@ -477,7 +477,8 @@ class Program
     static async Task<string> GenerateTests(string filePath, string methodName, string source, Uri uri, bool verbose, Method method, bool allCombinations, bool boundary, int tierCount = 4, int repeat = 1,
         List<(string name, List<string> paramNames, string body)>? inlinablePredicates = null)
     {
-        var z3Path = @"C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\z3\bin\z3-4.12.1.exe";
+        
+        var z3Path = "z3";
 
         // Get DNF clauses
         var ensuresClauses = method.Ens.Select(e => e.E).ToList();

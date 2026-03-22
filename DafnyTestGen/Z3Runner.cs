@@ -48,16 +48,13 @@ static class Z3Runner
         return outputTask.Result + errTask.Result;
     }
 
-    /// <summary>
     /// Finds the Dafny executable path (derived from the Z3 path).
     /// </summary>
     internal static string FindDafnyPath()
     {
-        // Z3 is at: .../dafny/z3/bin/z3-4.12.1.exe
-        // Dafny is at: .../dafny/dafny.exe or dafny (on PATH)
-        var z3Dir = Path.GetDirectoryName(
-            @"C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\z3\bin\z3-4.12.1.exe");
-        var dafnyDir = Path.GetFullPath(Path.Combine(z3Dir!, "..", ".."));
+        var basePath = FindRepoRoot(".repo_verifixer_fault_localization_marker");
+        var dafnyDir = Path.Combine(basePath, "dafny");
+
         foreach (var name in new[] { "dafny.exe", "Dafny.exe", "dafny", "Dafny", "dafny.bat" })
         {
             var path = Path.Combine(dafnyDir, name);
@@ -65,4 +62,22 @@ static class Z3Runner
         }
         return "dafny"; // fallback: assume on PATH
     }
+
+      public static string FindRepoRoot(string marker = ".git")
+        {
+            var current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            while (current != null)
+            {
+                if (File.Exists(Path.Combine(current.FullName, marker)) ||
+                    Directory.Exists(Path.Combine(current.FullName, marker)))
+                {
+                    return current.FullName;
+                }
+                current = current.Parent;
+            }
+
+            throw new DirectoryNotFoundException("Could not find repository root. Marker missing: " + marker);
+        }
+   
 }

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DafnyDir>C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny</DafnyDir>
+    <DafnyDir>/app/dafny/Binaries</DafnyDir>
   </PropertyGroup>
 
   <ItemGroup>
