@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-03-21 12:21:43
+// Generated: 2026-03-22 20:21:53
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -42,7 +42,7 @@ method InsertionSort(a: array<T>)
 
 
 
-method GeneratedTests_InsertionSort()
+method Passing()
 {
   // Test case for combination {1}/Ba=0:
   //   POST: IsSorted(a[..])
@@ -70,7 +70,7 @@ method GeneratedTests_InsertionSort()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [1236, 1237];
+    var a := new T[2] [4, 3];
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
@@ -81,7 +81,7 @@ method GeneratedTests_InsertionSort()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [1796, 1797, 1798];
+    var a := new T[3] [5, 4, 6];
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
@@ -90,8 +90,13 @@ method GeneratedTests_InsertionSort()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_InsertionSort();
-  print "GeneratedTests_InsertionSort: all tests passed!\n";
+  Passing();
+  Failing();
 }

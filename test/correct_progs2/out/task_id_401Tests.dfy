@@ -1,0 +1,101 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_401.dfy
+// Method: ElementWiseAddition
+// Generated: 2026-03-21 23:04:31
+
+method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
+  requires |a| == |b| 
+  requires forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
+  ensures |result| == |a|
+  ensures forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
+{
+  result := [];
+  for i := 0 to |a|
+    invariant |result| == i
+    invariant forall k :: 0 <= k < i ==> IsElementWiseAddition(a[k], b[k], result[k])
+  {
+    var subResult := ElementWiseAddition(a[i], b[i]);
+    result := result + [subResult];
+  }
+}
+
+// Auxiliary predicate to check if the third sequence (c) if the pairwise 
+// addition of the first two sequences of equal size (a and b).
+predicate IsElementWiseAddition(a: seq<int>, b: seq<int>, c: seq<int>)
+  requires |a| == |b|
+{
+  |c| == |a| == |b| && forall i :: 0 <= i < |a| ==> c[i] == a[i] + b[i]
+}
+
+// Auxiliary method to compute the element wise addition of two sequences of equal size.
+method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
+  requires |a| == |b| 
+  ensures IsElementWiseAddition(a, b, result)
+{
+  result := [];
+  for i := 0 to |a|
+    invariant |result| == i
+    invariant forall k :: 0 <= k < i ==> result[k] == a[k] + b[k]
+  {
+      result := result + [a[i] + b[i]];
+  }
+}
+
+// Test cases checked statically
+method IndexWiseAdditionTest(){
+  var s1:seq<seq<int>> :=[[4], [1, 3], [2, 9, 1], []];
+  var s2:seq<seq<int>> :=[[2], [6, 7], [1, 1, 8], []];
+  var res1 := DeepElementWiseAddition(s1,s2);
+  // proof helpers
+  assert res1[0] == [6]; // helper
+  assert res1[1] == [7, 10]; // helper
+  assert res1[2] == [3, 10, 9]; // helper
+  assert res1[3] == []; // helper
+  // now the full assertion
+  assert res1 == [[6], [7, 10], [3, 10, 9], []];
+}
+
+method Passing()
+{
+  // Test case for combination {1}/Ba=1,b=1:
+  //   PRE:  |a| == |b|
+  //   POST: IsElementWiseAddition(a, b, result)
+  {
+    var a: seq<int> := [7719];
+    var b: seq<int> := [1236];
+    var result := ElementWiseAddition(a, b);
+    expect result == [8955];
+  }
+
+  // Test case for combination {1}/Ba=2,b=2:
+  //   PRE:  |a| == |b|
+  //   POST: IsElementWiseAddition(a, b, result)
+  {
+    var a: seq<int> := [641, 9497];
+    var b: seq<int> := [1796, 1797];
+    var result := ElementWiseAddition(a, b);
+    expect result == [2437, 11294];
+  }
+
+  // Test case for combination {1}/Ba=3,b=3:
+  //   PRE:  |a| == |b|
+  //   POST: IsElementWiseAddition(a, b, result)
+  {
+    var a: seq<int> := [489, 490, 2287];
+    var b: seq<int> := [8364, 8365, 10648];
+    var result := ElementWiseAddition(a, b);
+    expect result == [8853, 8855, 12935];
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\ProcessDisjPre.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\ProcessDisjPre.dfy
 // Method: Process
-// Generated: 2026-03-21 12:21:59
+// Generated: 2026-03-22 20:24:32
 
 // Method with disjunctive precondition.
 method Process(x: int, y: int) returns (r: int)
@@ -12,7 +12,7 @@ method Process(x: int, y: int) returns (r: int)
 }
 
 
-method GeneratedTests_Process()
+method Passing()
 {
   // Test case for combination P{1}/{1}/Bx=1,y=0:
   //   PRE:  x > 0 || y > 0
@@ -116,8 +116,13 @@ method GeneratedTests_Process()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Process();
-  print "GeneratedTests_Process: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,0 +1,338 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_284.dfy
+// Method: AllElementsEqualTo
+// Generated: 2026-03-21 23:02:32
+
+// Checks if all elements in an array are equal to a given number.
+method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
+  ensures result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
+{
+  for i := 0 to a.Length
+    invariant forall k :: 0 <= k < i ==> a[k] == x
+  {
+    if a[i] != x {
+      return false;
+    }
+  }
+  return true;
+}
+
+method AllElementsEqualTest(){
+  var a1:= new int[] [1, 3, 5, 7, 9, 2, 4, 6, 8];
+  var res1:=AllElementsEqualTo(a1, 3);
+  assert a1[0] != 3; // proof helper (counter-example)
+  assert !res1;
+
+  var a2:= new int[] [1,1,1,1,1,1,1];
+  var res2:=AllElementsEqualTo(a2, 1);
+  assert res2;
+
+  var a3 := new int[] [5,6,7,4,8];
+  var res3 := AllElementsEqualTo(a3, 6);
+  assert a3[2] != 6;
+  assert !res3;
+}
+
+
+method Passing()
+{
+  // Test case for combination {1}/Ba=1,x=0:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[1] [0];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/Ba=1,x=1:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[1] [1];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/Ba=2,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  {
+    var a := new int[2] [5, 0];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/Ba=2,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  {
+    var a := new int[2] [5, 1];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3}/Ba=3,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[3] [8, 7, 0];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3}/Ba=3,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[3] [7, 8, 1];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {4}/Ba=2,x=0:
+  //   POST: !(result)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[2] [0, 5];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {4}/Ba=2,x=1:
+  //   POST: !(result)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[2] [1, 5];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=1,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[1] [4];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=1,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[1] [4];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=2,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[2] [5, 6];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=2,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[2] [5, 6];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=3,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [6, 0, 7];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,4}/Ba=3,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [6, 1, 7];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3,4}/Ba=3,x=0:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [0, 8, 7];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3,4}/Ba=3,x=1:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [1, 8, 7];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3,4}/Ba=3,x=0:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [7, 9, 8];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3,4}/Ba=3,x=1:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[3] [7, 9, 8];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[1] [3];
+    var x := 3;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  {
+    var a := new int[2] [5, 3];
+    var x := 3;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/R1:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[4] [6, 31, 8, 6];
+    var x := 6;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/R2:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[3] [7, 9, 7];
+    var x := 7;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/R3:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[4] [10, 8, 12, 10];
+    var x := 10;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3}/R3:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[4] [12, 8, 21, 5];
+    var x := 5;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {4}/R3:
+  //   POST: !(result)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[2] [3, 5];
+    var x := 3;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3,4}/R3:
+  //   POST: !(result)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[4] [8, 6, 10, 12];
+    var x := 8;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2,3,4}/R3:
+  //   POST: !(result)
+  //   POST: !(a[0] == x)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   POST: !(a[(a.Length - 1)] == x)
+  {
+    var a := new int[4] [10, 33, 7, 13];
+    var x := 5;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

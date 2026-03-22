@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-03-21 12:21:58
+// Generated: 2026-03-22 20:24:14
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -35,7 +35,7 @@ predicate IsEven(n: nat) {
 
 
 
-method GeneratedTests_PartitionOddEven()
+method Passing()
 {
   // Test case for combination {1}/Ba=0:
   //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
@@ -63,7 +63,7 @@ method GeneratedTests_PartitionOddEven()
   //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [4, 3];
+    var a := new nat[2] [15439, 3];
     var old_a := a[..];
     PartitionOddEven(a);
     expect !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]));
@@ -83,8 +83,13 @@ method GeneratedTests_PartitionOddEven()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_PartitionOddEven();
-  print "GeneratedTests_PartitionOddEven: all tests passed!\n";
+  Passing();
+  Failing();
 }

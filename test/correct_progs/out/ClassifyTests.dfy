@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-03-21 12:20:50
+// Generated: 2026-03-22 21:06:25
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -20,42 +20,20 @@ method Classify(x: int) returns (r: int)
 }
 
 
-method GeneratedTests_Classify()
+method Passing()
 {
-  // Test case for combination {2}/Bx=1:
+  // Test case for combination {2}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
   //   POST: !(x == 0)
   //   POST: r == 1
   {
-    var x := 1;
+    var x := 97;
     var r := Classify(x);
     expect r == 1;
   }
 
-  // Test case for combination {2}/Bx=99:
-  //   PRE:  -100 <= x <= 100
-  //   POST: !(x < 0)
-  //   POST: !(x == 0)
-  //   POST: r == 1
-  {
-    var x := 99;
-    var r := Classify(x);
-    expect r == 1;
-  }
-
-  // Test case for combination {2}/Bx=100:
-  //   PRE:  -100 <= x <= 100
-  //   POST: !(x < 0)
-  //   POST: !(x == 0)
-  //   POST: r == 1
-  {
-    var x := 100;
-    var r := Classify(x);
-    expect r == 1;
-  }
-
-  // Test case for combination {3}/Bx=0:
+  // Test case for combination {3}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
   //   POST: r == 0
@@ -66,29 +44,7 @@ method GeneratedTests_Classify()
     expect r == 0;
   }
 
-  // Test case for combination {5}/Bx=-100:
-  //   PRE:  -100 <= x <= 100
-  //   POST: r == -1
-  //   POST: !(x == 0)
-  //   POST: !(x > 0)
-  {
-    var x := -100;
-    var r := Classify(x);
-    expect r == -1;
-  }
-
-  // Test case for combination {5}/Bx=-99:
-  //   PRE:  -100 <= x <= 100
-  //   POST: r == -1
-  //   POST: !(x == 0)
-  //   POST: !(x > 0)
-  {
-    var x := -99;
-    var r := Classify(x);
-    expect r == -1;
-  }
-
-  // Test case for combination {5}/R3:
+  // Test case for combination {5}:
   //   PRE:  -100 <= x <= 100
   //   POST: r == -1
   //   POST: !(x == 0)
@@ -101,8 +57,13 @@ method GeneratedTests_Classify()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Classify();
-  print "GeneratedTests_Classify: all tests passed!\n";
+  Passing();
+  Failing();
 }

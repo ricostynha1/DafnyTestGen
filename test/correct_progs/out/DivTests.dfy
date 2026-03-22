@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Div.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Div.dfy
 // Method: Div
-// Generated: 2026-03-21 12:21:40
+// Generated: 2026-03-22 21:06:46
 
 // Computes the quotient 'q' and remainder 'r' of  the integer division
 // of a (non-negative) dividend 'n' by a (positive) divisor 'd'.
@@ -21,9 +21,9 @@ method Div(n: nat, d: nat) returns (q: nat, r: nat)
 
 
 
-method GeneratedTests_Div()
+method Passing()
 {
-  // Test case for combination {1}/Bn=0,d=1:
+  // Test case for combination 1/Bn=0,d=1:
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
@@ -35,7 +35,7 @@ method GeneratedTests_Div()
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bn=0,d=2:
+  // Test case for combination 1/Bn=0,d=2:
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
@@ -47,7 +47,7 @@ method GeneratedTests_Div()
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bn=1,d=1:
+  // Test case for combination 1/Bn=1,d=1:
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
@@ -59,7 +59,7 @@ method GeneratedTests_Div()
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bn=1,d=2:
+  // Test case for combination 1/Bn=1,d=2:
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
@@ -73,8 +73,13 @@ method GeneratedTests_Div()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Div();
-  print "GeneratedTests_Div: all tests passed!\n";
+  Passing();
+  Failing();
 }

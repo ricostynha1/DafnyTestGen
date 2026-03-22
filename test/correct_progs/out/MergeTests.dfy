@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-03-21 12:21:58
+// Generated: 2026-03-22 21:02:17
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -46,7 +46,7 @@ method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
 
 
 
-method GeneratedTests_Merge()
+method Passing()
 {
   // Test case for combination {1}/Ba=0,b=0:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
@@ -233,8 +233,8 @@ method GeneratedTests_Merge()
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[3] [840, 841, 842];
-    var b := new int[3] [-1401, -1400, 843];
+    var a := new int[3] [1141, 8095, 8096];
+    var b := new int[3] [1144, 8098, 8099];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
@@ -242,8 +242,13 @@ method GeneratedTests_Merge()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Merge();
-  print "GeneratedTests_Merge: all tests passed!\n";
+  Passing();
+  Failing();
 }

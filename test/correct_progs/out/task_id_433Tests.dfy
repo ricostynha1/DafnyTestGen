@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-03-21 12:22:06
+// Generated: 2026-03-22 20:28:05
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -18,7 +18,7 @@ method IsGreater(n: int, a: array<int>) returns (result: bool)
 }
 
 
-method GeneratedTests_IsGreater()
+method Passing()
 {
   // Test case for combination {1}/Bn=0,a=0:
   //   POST: result
@@ -339,7 +339,7 @@ method GeneratedTests_IsGreater()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
   {
     var n := -1237;
-    var a := new int[4] [-1238, 37, 23, -1238];
+    var a := new int[4] [-1238, 37, 22, -1238];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -361,7 +361,7 @@ method GeneratedTests_IsGreater()
   //   POST: !(n > a[(a.Length - 1)])
   {
     var n := -1;
-    var a := new int[4] [-2, 7718, 22, 37];
+    var a := new int[4] [-2, 7718, 21, 37];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -380,8 +380,13 @@ method GeneratedTests_IsGreater()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_IsGreater();
-  print "GeneratedTests_IsGreater: all tests passed!\n";
+  Passing();
+  Failing();
 }

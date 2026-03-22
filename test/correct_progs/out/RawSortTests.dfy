@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-21 12:21:59
+// Generated: 2026-03-22 20:24:55
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -60,7 +60,7 @@ lemma MappingProp<T1, T2>(a: set<T1>, b: set<T2>, k: T2, m: map<T1, T2>)
 }
 
 
-method GeneratedTests_RawSort()
+method Passing()
 {
   // Test case for combination {1}/Ba=0:
   //   POST: Sorted(a)
@@ -88,7 +88,7 @@ method GeneratedTests_RawSort()
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [4, 3];
+    var a := new T[2] [1236, 1237];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
@@ -99,7 +99,7 @@ method GeneratedTests_RawSort()
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [5, 4, 6];
+    var a := new T[3] [1796, 1797, 1798];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
@@ -108,8 +108,13 @@ method GeneratedTests_RawSort()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RawSort();
-  print "GeneratedTests_RawSort: all tests passed!\n";
+  Passing();
+  Failing();
 }

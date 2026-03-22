@@ -1,0 +1,207 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_2.dfy
+// Method: SharedElements
+// Generated: 2026-03-21 23:00:24
+
+// Obtains the set of elements (without duplicates) shared between two arrays. 
+method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
+  ensures result == elems(a[..]) * elems(b[..])
+{
+  result := {};
+  for i := 0 to a.Length // loop through the first array
+    invariant result == elems(a[..i]) * elems(b[..])
+  {
+    if a[i] !in result && a[i] in b[..] {
+      result := result + {a[i]};
+    }
+  }
+}
+
+// Auxiliary function that returns the set of elements (without duplicates) in a sequence.
+function elems<T>(s: seq<T>) : set<T> {
+  set x | x in s
+}
+
+// Test cases checked statically.
+method SharedElementsTest(){
+  // arrays with shared elements and no duplicates
+  var a1:= new int[] [3, 4, 5, 6];
+  var a2:= new int[] [5, 7, 4, 10];
+  assert a1[1] == a2[2] == 4; // proof helper
+  assert a1[2] == a2[0] == 5; // proof helper
+  var res1 := SharedElements(a1, a2);
+  assert res1 == {4, 5};
+
+  // arrays with duplicates and shared elements 
+  var a3:= new int[] [1, 3, 3, 4];
+  var a4:= new int[] [4, 4, 3, 7];
+  assert a3[1] == a4[2] == 3; // proof helper
+  assert a3[3] == a4[0] == 4; // proof helper
+  var res2 := SharedElements(a3, a4);
+  assert res2 == {3, 4};
+
+  // arrays with no shared elements
+  var a5:= new int[] [11, 12, 13];
+  var a6:= new int[] [17, 15, 14];
+  var res3 := SharedElements(a5, a6);
+  assert res3 == {};
+}
+
+method Passing()
+{
+  // Test case for combination {1}/Ba=0,b=0:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[0] [];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=0,b=1:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[1] [2];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=0,b=2:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[2] [4, 3];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=0,b=3:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[3] [5, 4, 6];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=1,b=0:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[1] [2];
+    var b := new int[0] [];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=1,b=1:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[1] [2];
+    var b := new int[1] [3];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=1,b=2:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[1] [9];
+    var b := new int[2] [4, 3];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=1,b=3:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[1] [14];
+    var b := new int[3] [5, 4, 6];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=2,b=0:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[2] [4, 3];
+    var b := new int[0] [];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=2,b=1:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[2] [4, 3];
+    var b := new int[1] [9];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=2,b=2:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[2] [4, 3];
+    var b := new int[2] [6, 5];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=2,b=3:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[2] [5, 4];
+    var b := new int[3] [7, 6, 8];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=3,b=0:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[3] [5, 4, 6];
+    var b := new int[0] [];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=3,b=1:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[3] [5, 4, 6];
+    var b := new int[1] [14];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=3,b=2:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[3] [5, 4, 6];
+    var b := new int[2] [8, 7];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+  // Test case for combination {1}/Ba=3,b=3:
+  //   POST: result == elems(a[..]) * elems(b[..])
+  {
+    var a := new int[3] [5, 4, 6];
+    var b := new int[3] [8, 7, 9];
+    var result := SharedElements<int>(a, b);
+    expect result == elems(a[..]) * elems(b[..]);
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

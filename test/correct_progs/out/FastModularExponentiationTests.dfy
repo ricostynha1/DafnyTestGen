@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-21 12:21:40
+// Generated: 2026-03-22 20:20:11
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -128,7 +128,7 @@ lemma ProdLemma(a: int, b: nat)
 
 
 
-method GeneratedTests_FastExponentiation()
+method Passing()
 {
   // Test case for combination {1}/Bx=0,n=0:
   //   POST: p == Power(x, n)
@@ -166,10 +166,6 @@ method GeneratedTests_FastExponentiation()
     expect p == Power(x, n);
   }
 
-}
-
-method GeneratedTests_FastModularExponentiation()
-{
   // Test case for combination {1}/Bx=0,n=0,m=1:
   //   PRE:  m > 0
   //   POST: res == Power(x, n) % m
@@ -260,10 +256,13 @@ method GeneratedTests_FastModularExponentiation()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FastExponentiation();
-  print "GeneratedTests_FastExponentiation: all tests passed!\n";
-  GeneratedTests_FastModularExponentiation();
-  print "GeneratedTests_FastModularExponentiation: all tests passed!\n";
+  Passing();
+  Failing();
 }

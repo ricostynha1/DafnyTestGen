@@ -32,7 +32,7 @@ method Mode(a: array<int>) returns (m: int)
 }
 
 // Counts the number of occurrences of a value in a sequence
-ghost function {:fuel 5} Count<T>(s: seq<T>, x: T) : nat
+ghost function {:fuel 5} Count<T(==)>(s: seq<T>, x: T) : nat
   ensures x !in s ==> Count(s, x) == 0
 {
     if |s| == 0 then 0 else (if s[|s|-1] == x then 1 else 0) + Count(s[..|s|-1], x)
