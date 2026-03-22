@@ -243,6 +243,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - Tuple types (e.g., `(real, real)`) are not supported — test generation produces incorrect syntax for tuple values and tuple arrays
+- Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
 - Not all Dafny expressions are translatable to SMT2
 
 ## License
