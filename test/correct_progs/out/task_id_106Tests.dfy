@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\task_id_106.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-03-22 20:26:22
+// Generated: 2026-03-22 22:38:14
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)
@@ -34,7 +34,7 @@ method AppendArrayToSeqTest(){
 
 method Passing()
 {
-  // Test case for combination {1}/Bs=0,a=0:
+  // Test case for combination 1/Bs=0,a=0:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -43,7 +43,7 @@ method Passing()
     expect r == [];
   }
 
-  // Test case for combination {1}/Bs=0,a=1:
+  // Test case for combination 1/Bs=0,a=1:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -52,7 +52,7 @@ method Passing()
     expect r == [2];
   }
 
-  // Test case for combination {1}/Bs=0,a=2:
+  // Test case for combination 1/Bs=0,a=2:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -61,7 +61,7 @@ method Passing()
     expect r == [4, 3];
   }
 
-  // Test case for combination {1}/Bs=0,a=3:
+  // Test case for combination 1/Bs=0,a=3:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -70,7 +70,7 @@ method Passing()
     expect r == [5, 4, 6];
   }
 
-  // Test case for combination {1}/Bs=1,a=0:
+  // Test case for combination 1/Bs=1,a=0:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [2];
@@ -79,7 +79,7 @@ method Passing()
     expect r == [2];
   }
 
-  // Test case for combination {1}/Bs=1,a=1:
+  // Test case for combination 1/Bs=1,a=1:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [2];
@@ -88,7 +88,7 @@ method Passing()
     expect r == [2, 3];
   }
 
-  // Test case for combination {1}/Bs=1,a=2:
+  // Test case for combination 1/Bs=1,a=2:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [9];
@@ -97,7 +97,7 @@ method Passing()
     expect r == [9, 4, 3];
   }
 
-  // Test case for combination {1}/Bs=1,a=3:
+  // Test case for combination 1/Bs=1,a=3:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [14];
@@ -106,7 +106,7 @@ method Passing()
     expect r == [14, 5, 4, 6];
   }
 
-  // Test case for combination {1}/Bs=2,a=0:
+  // Test case for combination 1/Bs=2,a=0:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [4, 3];
@@ -115,7 +115,7 @@ method Passing()
     expect r == [4, 3];
   }
 
-  // Test case for combination {1}/Bs=2,a=1:
+  // Test case for combination 1/Bs=2,a=1:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [4, 3];
@@ -124,7 +124,7 @@ method Passing()
     expect r == [4, 3, 9];
   }
 
-  // Test case for combination {1}/Bs=2,a=2:
+  // Test case for combination 1/Bs=2,a=2:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [4, 3];
@@ -133,7 +133,7 @@ method Passing()
     expect r == [4, 3, 6, 5];
   }
 
-  // Test case for combination {1}/Bs=2,a=3:
+  // Test case for combination 1/Bs=2,a=3:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [5, 4];
@@ -142,7 +142,7 @@ method Passing()
     expect r == [5, 4, 7, 6, 8];
   }
 
-  // Test case for combination {1}/Bs=3,a=0:
+  // Test case for combination 1/Bs=3,a=0:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [5, 4, 6];
@@ -151,7 +151,7 @@ method Passing()
     expect r == [5, 4, 6];
   }
 
-  // Test case for combination {1}/Bs=3,a=1:
+  // Test case for combination 1/Bs=3,a=1:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [5, 4, 6];
@@ -160,7 +160,7 @@ method Passing()
     expect r == [5, 4, 6, 14];
   }
 
-  // Test case for combination {1}/Bs=3,a=2:
+  // Test case for combination 1/Bs=3,a=2:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [5, 4, 6];
@@ -169,7 +169,7 @@ method Passing()
     expect r == [5, 4, 6, 8, 7];
   }
 
-  // Test case for combination {1}/Bs=3,a=3:
+  // Test case for combination 1/Bs=3,a=3:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [5, 4, 6];

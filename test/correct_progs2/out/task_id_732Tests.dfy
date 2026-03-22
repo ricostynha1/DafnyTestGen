@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-03-21 23:18:41
+// Generated: 2026-03-22 21:18:12
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -22,7 +22,7 @@ function ReplaceCharWithColon(c: char) : char {
 
 // Checks is a target sequence 't' is the result of applying a function 'f'
 // to each element of a source sequence 's'.
-predicate  IsMapSeq<T, E>(s: seq<T>, t: seq<E>, f: T -> E) {
+predicate  IsMapSeq<T, E(==)>(s: seq<T>, t: seq<E>, f: T -> E) {
    |t| == |s| && (forall i :: 0 <= i < |s| ==> t[i] == f(s[i]))
 }
 
@@ -41,17 +41,20 @@ method ReplaceWithColonTest(){
 
 method Passing()
 {
-  // (no passing tests)
-}
+  // Test case for combination {1}/Bs=0:
+  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := [];
+    var v := ReplaceWithColon(s);
+    expect v == [];
+  }
 
-method Failing()
-{
   // Test case for combination {1}/Bs=1:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
   {
     var s: seq<char> := ['!'];
     var v := ReplaceWithColon(s);
-    // expect v == ['!'];
+    expect v == ['!'];
   }
 
   // Test case for combination {1}/Bs=2:
@@ -59,7 +62,7 @@ method Failing()
   {
     var s: seq<char> := [' ', ','];
     var v := ReplaceWithColon(s);
-    // expect v == [':', ':'];
+    expect v == [':', ':'];
   }
 
   // Test case for combination {1}/Bs=3:
@@ -67,9 +70,14 @@ method Failing()
   {
     var s: seq<char> := [' ', '+', ','];
     var v := ReplaceWithColon(s);
-    // expect v == [':', '+', ':'];
+    expect v == [':', '+', ':'];
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()

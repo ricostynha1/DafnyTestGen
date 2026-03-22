@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\RawSort.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-22 20:24:55
+// Generated: 2026-03-22 22:37:36
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -62,7 +62,7 @@ lemma MappingProp<T1, T2>(a: set<T1>, b: set<T2>, k: T2, m: map<T1, T2>)
 
 method Passing()
 {
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination 1/Ba=0:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -73,7 +73,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination 1/Ba=1:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -84,7 +84,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination 1/Ba=2:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -95,7 +95,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination 1/Ba=3:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {

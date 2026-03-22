@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\task_id_602.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-03-22 20:29:36
+// Generated: 2026-03-22 22:39:26
 
     // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -31,31 +31,11 @@ method FindFirstRepeatedChar(s: string) returns (found: bool, c: char)
 
 method Passing()
 {
-  // Test case for combination {3}/R1:
+  // Test case for combination {3}:
   //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   POST: found
   {
     var s: seq<char> := ['!', '!'];
-    var found, c := FindFirstRepeatedChar(s);
-    expect found == true;
-    expect c == '!';
-  }
-
-  // Test case for combination {3}/R2:
-  //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: found
-  {
-    var s: seq<char> := ['"', ' ', '!', '!'];
-    var found, c := FindFirstRepeatedChar(s);
-    expect found == true;
-    expect c == '!';
-  }
-
-  // Test case for combination {3}/R3:
-  //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: found
-  {
-    var s: seq<char> := ['!', '!', ' '];
     var found, c := FindFirstRepeatedChar(s);
     expect found == true;
     expect c == '!';

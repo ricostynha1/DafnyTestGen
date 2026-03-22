@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_624.dfy
 // Method: ToUppercase
-// Generated: 2026-03-21 23:17:28
+// Generated: 2026-03-22 21:16:06
 
 // Converts a string to uppercase (only 'a' to 'z' characters are converted).
 method ToUppercase(s: string) returns (v: string)
@@ -21,7 +21,7 @@ function CharToUpper(c : char) : char {
 
 // Checks if a sequence 't' is the result of applying a function 'f'
 // to every element of a sequence 's'.
-predicate IsMapSeq<T, E>(s: seq<T>, t: seq<E>, f: T -> E) {
+predicate IsMapSeq<T, E(==)>(s: seq<T>, t: seq<E>, f: T -> E) {
   |t| == |s| && forall i :: 0 <= i < |s| ==> t[i] == f(s[i])
 }
 
@@ -37,17 +37,20 @@ method ToUppercaseTest(){
 
 method Passing()
 {
-  // (no passing tests)
-}
+  // Test case for combination {1}/Bs=0:
+  //   POST: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := [];
+    var v := ToUppercase(s);
+    expect v == [];
+  }
 
-method Failing()
-{
   // Test case for combination {1}/Bs=1:
   //   POST: IsMapSeq(s, v, CharToUpper)
   {
     var s: seq<char> := ['{'];
     var v := ToUppercase(s);
-    // expect v == ['{'];
+    expect v == ['{'];
   }
 
   // Test case for combination {1}/Bs=2:
@@ -55,7 +58,7 @@ method Failing()
   {
     var s: seq<char> := ['{', '|'];
     var v := ToUppercase(s);
-    // expect v == ['{', '|'];
+    expect v == ['{', '|'];
   }
 
   // Test case for combination {1}/Bs=3:
@@ -63,9 +66,14 @@ method Failing()
   {
     var s: seq<char> := ['{', '|', '}'];
     var v := ToUppercase(s);
-    // expect v == ['{', '|', '}'];
+    expect v == ['{', '|', '}'];
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()

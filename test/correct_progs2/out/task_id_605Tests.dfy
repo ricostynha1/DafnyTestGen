@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-03-22 20:00:37
+// Generated: 2026-03-22 21:14:20
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)

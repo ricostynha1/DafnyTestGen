@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs2\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-03-21 23:19:39
+// Generated: 2026-03-22 21:19:44
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -49,6 +49,24 @@ method IsMinHeapTest(){
 
 method Passing()
 {
+  // Test case for combination {1}/Ba=0:
+  //   POST: result
+  //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[0] [];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/Ba=1:
+  //   POST: result
+  //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [2];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
   // Test case for combination {1}/Ba=2:
   //   POST: result
   //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
@@ -105,20 +123,11 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/R3:
-  //   POST: result
-  //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
-  {
-    var a := new int[4] [-12883, -6814, 118, -5497];
-    var result := IsMinHeap(a);
-    expect result == true;
-  }
-
   // Test case for combination {2}/R2:
   //   POST: !(result)
   //   POST: !(a[Parent(1)] <= a[1])
   {
-    var a := new int[4] [3010, 3009, 10371, 9485];
+    var a := new int[4] [3010, 3009, 7628, 9919];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -127,7 +136,7 @@ method Passing()
   //   POST: !(result)
   //   POST: !(a[Parent(1)] <= a[1])
   {
-    var a := new int[6] [4366, -1451, 4367, -316, 596, 4367];
+    var a := new int[5] [7554, 6631, 9237, 10350, 7555];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -136,7 +145,7 @@ method Passing()
   //   POST: !(result)
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[4] [4683, 12537, 1470, 19239];
+    var a := new int[4] [1107, 1108, 1106, 1108];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -145,7 +154,7 @@ method Passing()
   //   POST: !(result)
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[5] [-449, 4048, 68, -3531, 5150];
+    var a := new int[8] [-1395, 4330, 6203, -2245, 1557, 99, 5353, 454];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -154,7 +163,7 @@ method Passing()
   //   POST: !(result)
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[7] [-5741, -3629, -3628, 81, -7134, -3629, 5903];
+    var a := new int[7] [5598, 5599, -1062, 5598, 5598, 94, 5853];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -174,7 +183,7 @@ method Passing()
   //   POST: !(a[Parent(1)] <= a[1])
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[5] [-2621, -2622, -6853, -8501, 590];
+    var a := new int[8] [2805, 2804, 6401, 5781, 2803, 98, 6400, 5781];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -184,7 +193,16 @@ method Passing()
   //   POST: !(a[Parent(1)] <= a[1])
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[8] [-8337, -8338, -7005, -8774, -8339, 113, -7006, 384];
+    var a := new int[7] [10842, 10841, 737, 101, 2001, 736, 8098];
+    var result := IsMinHeap(a);
+    expect result == false;
+  }
+
+  // Test case for combination {4}/R2:
+  //   POST: !(result)
+  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
+  {
+    var a := new int[4] [7307, 7308, 7839, 7307];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -193,7 +211,7 @@ method Passing()
   //   POST: !(result)
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[4] [-8167, -8165, 1291, -8166];
+    var a := new int[5] [5840, 5844, 6263, 10860, 5843];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -213,7 +231,7 @@ method Passing()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[4] [7417, 11803, 7416, 11802];
+    var a := new int[4] [3343, 12746, 3342, 12745];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -223,7 +241,7 @@ method Passing()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[7] [5876, 5877, 5875, 113, 5872, 5873, 5874];
+    var a := new int[7] [-11635, -8831, -11636, 80, -10223, 96, -11637];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -233,7 +251,7 @@ method Passing()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[8] [-8191, -5419, -5420, -5420, 55, 56, -5421, -8986];
+    var a := new int[6] [-9231, -6956, -18957, 54, -6957, -18958];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -255,7 +273,7 @@ method Passing()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[5] [3961, 3960, -3413, 1343, 3959];
+    var a := new int[8] [3512, 3511, 2276, 937, 85, 88, 92, -6129];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -266,7 +284,7 @@ method Passing()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
   {
-    var a := new int[8] [8936, 8935, 6891, 7066, 108, 6890, 6890, 7065];
+    var a := new int[5] [4683, 4682, 4682, 57, 4681];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -275,15 +293,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {4}/Ba=1:
-  //   POST: !(result)
-  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
-  {
-    var a := new int[1] [7719];
-    var result := IsMinHeap(a);
-    // expect result == false;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

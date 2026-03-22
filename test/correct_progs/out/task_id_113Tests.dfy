@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\Correct_progs\in\task_id_113.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-03-22 20:27:05
+// Generated: 2026-03-22 22:38:45
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -44,7 +44,7 @@ method IsIntegerTest(){
 
 method Passing()
 {
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: |s| > 0
   //   POST: forall i :: 0 <= i < |s| ==> IsDigit(s[i])
@@ -54,27 +54,7 @@ method Passing()
     expect result == true;
   }
 
-  // Test case for combination {1}/Bs=2:
-  //   POST: result
-  //   POST: |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> IsDigit(s[i])
-  {
-    var s: seq<char> := ['0', '1'];
-    var result := IsInteger(s);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Bs=3:
-  //   POST: result
-  //   POST: |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> IsDigit(s[i])
-  {
-    var s: seq<char> := ['0', '1', '2'];
-    var result := IsInteger(s);
-    expect result == true;
-  }
-
-  // Test case for combination {2}/Bs=0:
+  // Test case for combination {2}:
   //   POST: !(result)
   //   POST: !(|s| > 0)
   {
@@ -83,7 +63,7 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {3}/Bs=2:
+  // Test case for combination {3}:
   //   POST: !(result)
   //   POST: !(IsDigit(s[0]))
   {
@@ -92,53 +72,35 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {3}/Bs=3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  {
-    var s: seq<char> := [' ', '0', '1'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4}/Bs=3:
+  // Test case for combination {4}:
   //   POST: !(result)
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   {
-    var s: seq<char> := ['0', ' ', '1'];
+    var s: seq<char> := ['0', ':', '}', '5'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {3,4}/Bs=3:
+  // Test case for combination {3,4}:
   //   POST: !(result)
   //   POST: !(IsDigit(s[0]))
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   {
-    var s: seq<char> := [':', ' ', '9'];
+    var s: seq<char> := ['.', '(', '/', '0'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {5}/Bs=2:
+  // Test case for combination {5}:
   //   POST: !(result)
   //   POST: !(IsDigit(s[(|s| - 1)]))
   {
-    var s: seq<char> := ['0', 'Q'];
+    var s: seq<char> := ['0', ':'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {5}/Bs=3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := ['1', '0', ';'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,5}/Bs=1:
+  // Test case for combination {3,5}:
   //   POST: !(result)
   //   POST: !(IsDigit(s[0]))
   //   POST: !(IsDigit(s[(|s| - 1)]))
@@ -148,141 +110,23 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {3,5}/Bs=2:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := ['P', 'Q'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,5}/Bs=3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := [' ', '0', ':'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4,5}/Bs=3:
+  // Test case for combination {4,5}:
   //   POST: !(result)
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   //   POST: !(IsDigit(s[(|s| - 1)]))
   {
-    var s: seq<char> := ['0', ' ', ':'];
+    var s: seq<char> := ['0', '"', ':', '`'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {3,4,5}/Bs=3:
+  // Test case for combination {3,4,5}:
   //   POST: !(result)
   //   POST: !(IsDigit(s[0]))
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   //   POST: !(IsDigit(s[(|s| - 1)]))
   {
-    var s: seq<char> := [' ', ':', ';'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3}/R3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  {
-    var s: seq<char> := [':', '5', '2', '0'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4}/R2:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  {
-    var s: seq<char> := ['0', '!', ' ', '7'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4}/R3:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  {
-    var s: seq<char> := ['0', ':', '#', '/', '.', '5'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4}/R2:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  {
-    var s: seq<char> := [';', ' ', ':', '0'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4}/R3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  {
-    var s: seq<char> := [':', '"', '7', '/', '&', '0'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {5}/R3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := ['0', '0', '3', ':'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4,5}/R2:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := ['0', 'x', ':', 's'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {4,5}/R3:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := ['0', '#', 'D', '/', '$', '&'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4,5}/R2:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := [' ', '/', ':', 'g'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4,5}/R3:
-  //   POST: !(result)
-  //   POST: !(IsDigit(s[0]))
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
-  //   POST: !(IsDigit(s[(|s| - 1)]))
-  {
-    var s: seq<char> := [':', '}', '1', 'x', '*', 'q'];
+    var s: seq<char> := [':', ';', '=', '/'];
     var result := IsInteger(s);
     expect result == false;
   }
