@@ -93,11 +93,15 @@ BVA is **combined with DNF**: each equivalence class (DNF scenario) is tested at
 
 The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
 
-#### Auto Strategy (default)
+#### Progressive Auto Strategy (default)
 
-When no strategy flag is specified, DafnyTestGen chooses automatically:
-- If the contracts produce **disjunctive DNF clauses** (more than one clause) → all-combinations mode
-- Otherwise (single clause, no disjunctions) → boundary mode
+When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
+
+1. **Phase 1 — All-combinations**: Run DNF all-combinations mode. If enough SAT results, stop.
+2. **Phase 2 — Boundary analysis**: Add boundary value tiers. Solve only the new entries, stopping early once the minimum is reached.
+3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition until the minimum is reached.
+
+This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (all-combinations without escalation).
 
 ## Prerequisites
 
@@ -153,10 +157,11 @@ dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ 
 | `--tiers <n>` | `-t` | Sequence/array size tiers for boundary analysis (default: 4) |
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
+| `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
 
 ## Generated Output
 
-Given a Dafny method with a single non-disjunctive postcondition (no equivalence classes to partition), DafnyTestGen defaults to boundary value analysis and emits `expect` assertions using the postcondition expression:
+Given a Dafny method with a single non-disjunctive postcondition, the progressive auto strategy escalates through boundary analysis and repeats to reach the minimum test count. Tests emit `expect` assertions using the postcondition expression:
 
 ```dafny
 method CalcFact(n: nat) returns (f: nat)

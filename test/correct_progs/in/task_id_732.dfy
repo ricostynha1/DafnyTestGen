@@ -17,7 +17,7 @@ function ReplaceCharWithColon(c: char) : char {
 
 // Checks is a target sequence 't' is the result of applying a function 'f'
 // to each element of a source sequence 's'.
-ghost predicate  IsMapSeq<T, E>(s: seq<T>, t: seq<E>, f: T -> E) {
+ghost predicate  IsMapSeq<T, E(==)>(s: seq<T>, t: seq<E>, f: T -> E) {
    |t| == |s| && (forall i :: 0 <= i < |s| ==> t[i] == f(s[i]))
 }
 
