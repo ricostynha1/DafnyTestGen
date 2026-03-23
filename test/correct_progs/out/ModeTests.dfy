@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-03-22 22:37:00
+// Generated: 2026-03-23 00:00:04
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -55,19 +55,19 @@ predicate IsSorted(a: array<int>)
 
 method Passing()
 {
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [8];
     var m := Mode(a);
     expect m in a[..];
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
@@ -79,7 +79,7 @@ method Passing()
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]

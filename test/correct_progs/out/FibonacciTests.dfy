@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-03-22 22:35:35
+// Generated: 2026-03-22 23:58:15
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -31,7 +31,7 @@ method CalcFib(n: nat) returns (res: nat)
 
 method Passing()
 {
-  // Test case for combination 1/Bn=0:
+  // Test case for combination {1}:
   //   POST: res == Fib(n)
   {
     var n := 0;
@@ -39,10 +39,18 @@ method Passing()
     expect res == Fib(n);
   }
 
-  // Test case for combination 1/Bn=1:
+  // Test case for combination {1}/Bn=1:
   //   POST: res == Fib(n)
   {
     var n := 1;
+    var res := CalcFib(n);
+    expect res == Fib(n);
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST: res == Fib(n)
+  {
+    var n := 2;
     var res := CalcFib(n);
     expect res == Fib(n);
   }

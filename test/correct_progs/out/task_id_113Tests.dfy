@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-03-22 22:38:45
+// Generated: 2026-03-23 00:02:07
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -76,7 +76,7 @@ method Passing()
   //   POST: !(result)
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   {
-    var s: seq<char> := ['0', ':', '}', '5'];
+    var s: seq<char> := ['8', ':', '0'];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -86,7 +86,7 @@ method Passing()
   //   POST: !(IsDigit(s[0]))
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   {
-    var s: seq<char> := ['.', '(', '/', '0'];
+    var s: seq<char> := [':', 'q', '0'];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -115,7 +115,7 @@ method Passing()
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   //   POST: !(IsDigit(s[(|s| - 1)]))
   {
-    var s: seq<char> := ['0', '"', ':', '`'];
+    var s: seq<char> := ['0', '`', ' ', ':'];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -126,7 +126,7 @@ method Passing()
   //   POST: exists i :: 1 <= i < (|s| - 1) && !(IsDigit(s[i]))
   //   POST: !(IsDigit(s[(|s| - 1)]))
   {
-    var s: seq<char> := [':', ';', '=', '/'];
+    var s: seq<char> := [' ', ':', 'P'];
     var result := IsInteger(s);
     expect result == false;
   }

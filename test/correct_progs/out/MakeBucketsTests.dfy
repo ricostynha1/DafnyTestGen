@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-03-22 22:36:05
+// Generated: 2026-03-22 23:59:24
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -51,7 +51,7 @@ function count(x: nat, s: seq<nat>) : nat {
 
 method Passing()
 {
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0
   //   POST: b.Length == MaxSeq(a[..]) + 1
@@ -64,7 +64,7 @@ method Passing()
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0
   //   POST: b.Length == MaxSeq(a[..]) + 1
@@ -77,7 +77,7 @@ method Passing()
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0
   //   POST: b.Length == MaxSeq(a[..]) + 1

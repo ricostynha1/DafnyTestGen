@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-03-22 22:39:18
+// Generated: 2026-03-23 00:08:47
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -40,7 +40,7 @@ method CubeElementsTest(){
 
 method Passing()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}:
   //   POST: IsMapSeq(a[..], cubed[..], cube)
   {
     var a := new int[0] [];
@@ -48,7 +48,7 @@ method Passing()
     expect IsMapSeq(a[..], cubed[..], cube);
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   POST: IsMapSeq(a[..], cubed[..], cube)
   {
     var a := new int[1] [2];
@@ -56,7 +56,7 @@ method Passing()
     expect IsMapSeq(a[..], cubed[..], cube);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   POST: IsMapSeq(a[..], cubed[..], cube)
   {
     var a := new int[2] [4, 3];
@@ -64,7 +64,7 @@ method Passing()
     expect IsMapSeq(a[..], cubed[..], cube);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   POST: IsMapSeq(a[..], cubed[..], cube)
   {
     var a := new int[3] [5, 4, 6];

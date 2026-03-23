@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-03-22 22:38:14
+// Generated: 2026-03-23 00:01:54
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)
@@ -34,7 +34,7 @@ method AppendArrayToSeqTest(){
 
 method Passing()
 {
-  // Test case for combination 1/Bs=0,a=0:
+  // Test case for combination {1}:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -43,7 +43,7 @@ method Passing()
     expect r == [];
   }
 
-  // Test case for combination 1/Bs=0,a=1:
+  // Test case for combination {1}/Bs=0,a=1:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -52,7 +52,7 @@ method Passing()
     expect r == [2];
   }
 
-  // Test case for combination 1/Bs=0,a=2:
+  // Test case for combination {1}/Bs=0,a=2:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
@@ -61,121 +61,13 @@ method Passing()
     expect r == [4, 3];
   }
 
-  // Test case for combination 1/Bs=0,a=3:
+  // Test case for combination {1}/Bs=0,a=3:
   //   POST: r == s + a[..]
   {
     var s: seq<int> := [];
     var a := new int[3] [5, 4, 6];
     var r := AppendArrayToSeq<int>(s, a);
     expect r == [5, 4, 6];
-  }
-
-  // Test case for combination 1/Bs=1,a=0:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [2];
-    var a := new int[0] [];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [2];
-  }
-
-  // Test case for combination 1/Bs=1,a=1:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [2];
-    var a := new int[1] [3];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [2, 3];
-  }
-
-  // Test case for combination 1/Bs=1,a=2:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [9];
-    var a := new int[2] [4, 3];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [9, 4, 3];
-  }
-
-  // Test case for combination 1/Bs=1,a=3:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [14];
-    var a := new int[3] [5, 4, 6];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [14, 5, 4, 6];
-  }
-
-  // Test case for combination 1/Bs=2,a=0:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [4, 3];
-    var a := new int[0] [];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [4, 3];
-  }
-
-  // Test case for combination 1/Bs=2,a=1:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [4, 3];
-    var a := new int[1] [9];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [4, 3, 9];
-  }
-
-  // Test case for combination 1/Bs=2,a=2:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [4, 3];
-    var a := new int[2] [6, 5];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [4, 3, 6, 5];
-  }
-
-  // Test case for combination 1/Bs=2,a=3:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [5, 4];
-    var a := new int[3] [7, 6, 8];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 7, 6, 8];
-  }
-
-  // Test case for combination 1/Bs=3,a=0:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [5, 4, 6];
-    var a := new int[0] [];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 6];
-  }
-
-  // Test case for combination 1/Bs=3,a=1:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [5, 4, 6];
-    var a := new int[1] [14];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 6, 14];
-  }
-
-  // Test case for combination 1/Bs=3,a=2:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [5, 4, 6];
-    var a := new int[2] [8, 7];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 6, 8, 7];
-  }
-
-  // Test case for combination 1/Bs=3,a=3:
-  //   POST: r == s + a[..]
-  {
-    var s: seq<int> := [5, 4, 6];
-    var a := new int[3] [8, 7, 9];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 6, 8, 7, 9];
   }
 
 }

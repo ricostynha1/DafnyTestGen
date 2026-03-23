@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-03-22 22:36:26
+// Generated: 2026-03-22 23:59:50
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -48,7 +48,7 @@ method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
 
 method Passing()
 {
-  // Test case for combination 1/Ba=0,b=0:
+  // Test case for combination {1}:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
@@ -60,7 +60,7 @@ method Passing()
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
   }
 
-  // Test case for combination 1/Ba=0,b=1:
+  // Test case for combination {1}/Ba=0,b=1:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
@@ -72,7 +72,7 @@ method Passing()
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
   }
 
-  // Test case for combination 1/Ba=0,b=2:
+  // Test case for combination {1}/Ba=0,b=2:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
@@ -84,157 +84,13 @@ method Passing()
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
   }
 
-  // Test case for combination 1/Ba=0,b=3:
+  // Test case for combination {1}/Ba=0,b=3:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[3] [1796, 1797, 1798];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=1,b=0:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[1] [2];
-    var b := new int[0] [];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=1,b=1:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[1] [2];
-    var b := new int[1] [3];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=1,b=2:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[1] [6];
-    var b := new int[2] [1236, 1237];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=1,b=3:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[1] [11];
-    var b := new int[3] [1142, 1143, 1144];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=2,b=0:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[2] [1236, 1237];
-    var b := new int[0] [];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=2,b=1:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[2] [1236, 1237];
-    var b := new int[1] [6];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=2,b=2:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[2] [2437, 2438];
-    var b := new int[2] [8854, 8855];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=2,b=3:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[2] [8365, 8366];
-    var b := new int[3] [448, 449, 450];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=3,b=0:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[3] [1796, 1797, 1798];
-    var b := new int[0] [];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=3,b=1:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[3] [1142, 1143, 1144];
-    var b := new int[1] [11];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=3,b=2:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[3] [449, 450, 451];
-    var b := new int[2] [2281, 2282];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-  }
-
-  // Test case for combination 1/Ba=3,b=3:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[3] [1141, 8095, 8096];
-    var b := new int[3] [1144, 8098, 8099];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);

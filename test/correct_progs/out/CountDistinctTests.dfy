@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-03-22 22:34:36
+// Generated: 2026-03-22 23:57:21
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -45,7 +45,7 @@ function AsSet(a: array<int>, n: nat := a.Length): set<int>
 
 method Passing()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
   {
@@ -54,7 +54,7 @@ method Passing()
     expect count == |AsSet(a)|;
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
   {
@@ -63,7 +63,7 @@ method Passing()
     expect count == |AsSet(a)|;
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
   {
@@ -72,7 +72,7 @@ method Passing()
     expect count == |AsSet(a)|;
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
   {

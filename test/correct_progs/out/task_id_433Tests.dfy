@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-03-22 22:39:02
+// Generated: 2026-03-23 00:07:54
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -17,6 +17,16 @@ method IsGreater(n: int, a: array<int>) returns (result: bool)
     return true;
 }
 
+// Test cases checked statically
+method IsGreaterTest(){
+    var a1 := new int[] [3, 2, 1, 5, 2];
+    var out1 := IsGreater(4, a1);
+    assert 4 <= a1[3]; // proof helper (counter-example)
+    assert ! out1;
+
+    var out2 := IsGreater(6, a1);
+    assert out2;
+}
 
 method Passing()
 {
@@ -24,8 +34,8 @@ method Passing()
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := 0;
-    var a := new int[0] [];
+    var n := 8365;
+    var a := new int[1] [8364];
     var result := IsGreater(n, a);
     expect result == true;
   }
@@ -34,8 +44,8 @@ method Passing()
   //   POST: !(result)
   //   POST: !(n > a[0])
   {
-    var n := 8855;
-    var a := new int[2] [8855, 8854];
+    var n := -1;
+    var a := new int[2] [-1, -2];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -44,8 +54,8 @@ method Passing()
   //   POST: !(result)
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
   {
-    var n := 955;
-    var a := new int[4] [953, 7719, 1490, 954];
+    var n := -38;
+    var a := new int[3] [-39, 0, -39];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -56,7 +66,7 @@ method Passing()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
   {
     var n := 0;
-    var a := new int[4] [38, 2437, 5853, -1];
+    var a := new int[3] [38, 7719, -1];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -65,8 +75,8 @@ method Passing()
   //   POST: !(result)
   //   POST: !(n > a[(a.Length - 1)])
   {
-    var n := 38;
-    var a := new int[2] [37, 38];
+    var n := 0;
+    var a := new int[2] [-1, 0];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -77,7 +87,7 @@ method Passing()
   //   POST: !(n > a[(a.Length - 1)])
   {
     var n := 0;
-    var a := new int[1] [8855];
+    var a := new int[1] [0];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -88,7 +98,7 @@ method Passing()
   //   POST: !(n > a[(a.Length - 1)])
   {
     var n := 0;
-    var a := new int[4] [-1, 2437, 5853, 1236];
+    var a := new int[3] [-1, 0, 7719];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -100,7 +110,7 @@ method Passing()
   //   POST: !(n > a[(a.Length - 1)])
   {
     var n := 0;
-    var a := new int[4] [38, 31, 8855, 1236];
+    var a := new int[3] [38, 7719, 2437];
     var result := IsGreater(n, a);
     expect result == false;
   }

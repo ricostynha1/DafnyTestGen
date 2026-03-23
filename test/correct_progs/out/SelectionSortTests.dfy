@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-22 22:38:00
+// Generated: 2026-03-23 00:01:33
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -47,7 +47,7 @@ predicate IsSorted(a: array<int>)
 
 method Passing()
 {
-  // Test case for combination 1/Ba=0:
+  // Test case for combination {1}:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -58,7 +58,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=1:
+  // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -69,7 +69,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=2:
+  // Test case for combination {1}/Ba=2:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -80,7 +80,7 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination 1/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {

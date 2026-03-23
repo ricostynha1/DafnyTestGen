@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
+// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-22 22:34:55
+// Generated: 2026-03-22 23:57:46
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -44,7 +44,7 @@ lemma PowerSquareLemma(x: real, n: nat)
 
 method Passing()
 {
-  // Test case for combination 1/Bx=0.0,n=0:
+  // Test case for combination {1}:
   //   POST: p == Power(x, n)
   {
     var x := 0.0;
@@ -53,7 +53,7 @@ method Passing()
     expect p == Power(x, n);
   }
 
-  // Test case for combination 1/Bx=0.0,n=1:
+  // Test case for combination {1}/Bx=0.0,n=1:
   //   POST: p == Power(x, n)
   {
     var x := 0.0;
@@ -62,7 +62,7 @@ method Passing()
     expect p == Power(x, n);
   }
 
-  // Test case for combination 1/Bx=1.0,n=0:
+  // Test case for combination {1}/Bx=1.0,n=0:
   //   POST: p == Power(x, n)
   {
     var x := 1.0;
@@ -71,46 +71,10 @@ method Passing()
     expect p == Power(x, n);
   }
 
-  // Test case for combination 1/Bx=1.0,n=1:
+  // Test case for combination {1}/Bx=1.0,n=1:
   //   POST: p == Power(x, n)
   {
     var x := 1.0;
-    var n := 1;
-    var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
-  }
-
-  // Test case for combination 1/Bx=-1.0,n=0:
-  //   POST: p == Power(x, n)
-  {
-    var x := -1.0;
-    var n := 0;
-    var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
-  }
-
-  // Test case for combination 1/Bx=-1.0,n=1:
-  //   POST: p == Power(x, n)
-  {
-    var x := -1.0;
-    var n := 1;
-    var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
-  }
-
-  // Test case for combination 1/Bx=0.5,n=0:
-  //   POST: p == Power(x, n)
-  {
-    var x := 0.5;
-    var n := 0;
-    var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
-  }
-
-  // Test case for combination 1/Bx=0.5,n=1:
-  //   POST: p == Power(x, n)
-  {
-    var x := 0.5;
     var n := 1;
     var p := FastExponentiation(x, n);
     expect p == Power(x, n);
