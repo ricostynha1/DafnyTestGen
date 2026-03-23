@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-03-22 23:56:41
+// Generated: 2026-03-23 10:56:57
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -56,7 +56,7 @@ method BubbleSort(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_BubbleSort()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
@@ -73,7 +73,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [2];
+    var a := new int[1] [3];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
@@ -84,7 +84,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [1236, 1237];
+    var a := new int[2] [4, 3];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
@@ -95,7 +95,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [1796, 1797, 1798];
+    var a := new int[3] [5, 4, 6];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
@@ -104,13 +104,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_BubbleSort();
+  print "GeneratedTests_BubbleSort: all tests passed!\n";
 }

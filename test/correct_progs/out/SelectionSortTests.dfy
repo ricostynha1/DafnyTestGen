@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-23 00:01:33
+// Generated: 2026-03-23 10:57:10
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -45,7 +45,7 @@ predicate IsSorted(a: array<int>)
 }
 
 
-method Passing()
+method GeneratedTests_SelectionSort()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a)
@@ -62,7 +62,7 @@ method Passing()
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [2];
+    var a := new int[1] [3];
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);
@@ -93,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SelectionSort();
+  print "GeneratedTests_SelectionSort: all tests passed!\n";
 }

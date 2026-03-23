@@ -251,6 +251,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Implications, logical operators, chain comparisons
 - `IsSorted` predicate (built-in translation)
 - `old()` expressions in postconditions (array params captured as sequences before method call, supporting quantifier-bound indices)
+- **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 

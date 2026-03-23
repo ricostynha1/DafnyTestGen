@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-03-22 23:58:41
+// Generated: 2026-03-23 10:58:59
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -59,7 +59,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[1] [2];
+    var a := new T[1] [3];
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
@@ -70,7 +70,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [1236, 1237];
+    var a := new T[2] [4, 3];
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
@@ -81,7 +81,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [1796, 1797, 1798];
+    var a := new T[3] [5, 4, 6];
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
