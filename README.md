@@ -107,7 +107,7 @@ This ensures methods with rich disjunctive postconditions get good coverage from
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Dafny](https://github.com/dafny-lang/dafny) (for `--check` mode and for running generated tests; parsing uses the `Microsoft.Dafny` NuGet package, which is bundled with the build)
-- Z3 SMT solver (bundled with the Dafny VS Code extension)
+- Z3 SMT solver (auto-discovered from the Dafny VS Code extension, or configurable via `--z3-path` / `Z3_PATH` env var)
 
 ## Build
 
@@ -158,6 +158,18 @@ dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ 
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
+| `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
+
+### Z3 Path Resolution
+
+DafnyTestGen needs the Z3 SMT solver. The path is resolved using this priority chain:
+
+1. **`--z3-path <path>`** CLI option (highest priority)
+2. **`Z3_PATH`** environment variable
+3. **Auto-discovery**: searches the Dafny VS Code extension directory (`~/.vscode/extensions/dafny-lang.ide-vscode-*/`), then `DAFNY_HOME`, then common system install locations
+4. **PATH fallback**: assumes `z3` is on the system PATH
+
+The resolved path is printed at startup (e.g., `[DafnyTestGen] Z3: /path/to/z3`).
 
 ## Generated Output
 
