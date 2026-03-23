@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-03-23 15:40:19
+// Generated: 2026-03-23 21:52:18
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -113,6 +113,14 @@ method getRandomDataEntry<T(==)>(m_workList: array<T>, avoidSet: seq<T>) returns
 
 method Passing()
 {
+  // Test case for combination {1}:
+  //   POST: !(a <= b)
+  {
+    var a := 0;
+    var b := -2;
+    var r := random(a, b);
+  }
+
   // Test case for combination {2}:
   //   POST: a <= r <= b
   {
@@ -128,7 +136,6 @@ method Passing()
     var a := 1;
     var b := 0;
     var r := random(a, b);
-    expect r == 1;
   }
 
   // Test case for combination {2}/Ba=0,b=1:
@@ -230,15 +237,6 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   POST: !(a <= b)
-  {
-    var a := 0;
-    var b := -2;
-    var r := random(a, b);
-    // expect r == -1;
-  }
-
   // Test case for combination {1}/Bm_dataEntries=1:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])
