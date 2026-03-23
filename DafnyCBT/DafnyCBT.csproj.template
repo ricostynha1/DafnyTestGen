@@ -16,7 +16,7 @@
       "<USER>/.vscode/extensions/dafny-lang.ide-vscode-3.5.2/out/resources/4.11.0/github/dafny".
       Copy this template to DafnyCBT.csproj and replace the value below.
     -->
-    <DafnyDir>PATH_TO_YOUR_LOCAL_DAFNY_INSTALL</DafnyDir>
+    <DafnyDir>/app/dafny/Binaries</DafnyDir>
   </PropertyGroup>
 
   <ItemGroup>
