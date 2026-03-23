@@ -212,7 +212,12 @@ static class Z3Runner
             }
         }
 
-        // 2. Derive from Z3 path: Z3 is at .../dafny/z3/bin/z3*, Dafny is at .../dafny/
+        var basePath = FindRepoRoot(".repo_verifixer_fault_localization_marker");
+        if(basePath != null)
+        {
+            return Path.Combine(basePath, "dafny");
+        } 
+
         var resolvedZ3 = z3Path ?? _resolvedZ3Path;
         if (!string.IsNullOrEmpty(resolvedZ3) && resolvedZ3 != "z3" && resolvedZ3 != "z3.exe")
         {
@@ -232,4 +237,21 @@ static class Z3Runner
         // 3. Fallback: assume on PATH
         return "dafny";
     }
+
+    public static string FindRepoRoot(string marker = ".git")
+        {
+            var current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            while (current != null)
+            {
+                if (File.Exists(Path.Combine(current.FullName, marker)) ||
+                    Directory.Exists(Path.Combine(current.FullName, marker)))
+                {
+                    return current.FullName;
+                }
+                current = current.Parent;
+            }
+
+            throw new DirectoryNotFoundException("Could not find repository root. Marker missing: " + marker);
+        }
 }
