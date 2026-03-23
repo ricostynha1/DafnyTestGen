@@ -213,9 +213,9 @@ static class Z3Runner
         }
 
         var basePath = FindRepoRoot(".repo_verifixer_fault_localization_marker");
-        if(basePath != null)
+        if(basePath != "")
         {
-            return Path.Combine(basePath, "dafny");
+            return Path.Combine(basePath, "dafny","Binaries", "Dafny");
         } 
 
         var resolvedZ3 = z3Path ?? _resolvedZ3Path;
@@ -252,6 +252,6 @@ static class Z3Runner
                 current = current.Parent;
             }
 
-            throw new DirectoryNotFoundException("Could not find repository root. Marker missing: " + marker);
+            return "";
         }
 }
