@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-03-23 15:09:54
+// Generated: 2026-03-23 15:39:07
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -515,15 +515,14 @@ method Failing()
     var limit := 1;
     var key := 1;
     var b := InsertIntoSorted(a, limit, key);
-    expect b.Length == a.Length;
-    expect sorted(b[..limit + 1]);
-    expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
-    expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
+    // expect b.Length == a.Length;
+    // expect sorted(b[..limit + 1]);
+    // expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    // expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
+    // expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
   }
 
 }
-
 
 method Main()
 {

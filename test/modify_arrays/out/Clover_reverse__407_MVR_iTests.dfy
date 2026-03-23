@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\Clover_reverse__407_MVR_i.dfy
 // Method: reverse
-// Generated: 2026-03-23 15:01:26
+// Generated: 2026-03-23 15:39:39
 
 // Clover_reverse.dfy
 
@@ -25,7 +25,7 @@ method reverse(a: array<int>)
 
 method Passing()
 {
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[0] [];

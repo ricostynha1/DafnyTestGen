@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
 // Method: BubbleSort
-// Generated: 2026-03-23 15:01:34
+// Generated: 2026-03-23 15:39:47
 
 // CS494-final-project_tmp_tmp7nof55uq_bubblesort.dfy
 
@@ -60,12 +60,12 @@ method BubbleSort(a: array<int>)
 
 method Passing()
 {
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   PRE:  a != null && a.Length > 0
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [3];
+    var a := new int[1] [6];
     var old_a := a[..];
     BubbleSort(a);
     expect sorted(a, 0, a.Length);

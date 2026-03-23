@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-03-23 15:19:16
+// Generated: 2026-03-23 15:40:19
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -273,6 +273,6 @@ method Failing()
 
 method Main()
 {
- // Passing();
+  Passing();
   Failing();
 }
