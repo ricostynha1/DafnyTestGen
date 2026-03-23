@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+  <PackageReference Include="Microsoft.Z3" Version="4.12.2" />
     <!-- Dafny core (for parsing .dfy files and walking the AST) -->
     <Reference Include="DafnyCore">
       <HintPath>$(DafnyDir)\DafnyCore.dll</HintPath>
