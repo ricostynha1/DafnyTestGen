@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-03-24 19:34:27
+// Generated: 2026-03-24 21:27:42
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...

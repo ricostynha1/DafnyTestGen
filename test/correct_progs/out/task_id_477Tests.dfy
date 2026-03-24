@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-03-24 19:33:13
+// Generated: 2026-03-24 21:27:19
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)

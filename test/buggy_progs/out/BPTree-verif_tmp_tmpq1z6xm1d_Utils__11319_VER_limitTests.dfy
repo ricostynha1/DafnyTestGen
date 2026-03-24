@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-03-24 11:46:56
+// Generated: 2026-03-24 21:10:29
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -470,6 +470,30 @@ method Passing()
     expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
   }
 
+  // Test case for combination {1}/Ba=2,limit=1,key=2:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST: b.Length == a.Length
+  //   POST: sorted(b[..limit + 1])
+  //   POST: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[2] [1, 0];
+    var limit := 1;
+    var key := 2;
+    var b := InsertIntoSorted(a, limit, key);
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
+  }
+
 }
 
 method Failing()
@@ -490,30 +514,6 @@ method Failing()
     var a := new int[2] [2, 0];
     var limit := 1;
     var key := 1;
-    var b := InsertIntoSorted(a, limit, key);
-    // expect b.Length == a.Length;
-    // expect sorted(b[..limit + 1]);
-    // expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
-    // expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
-  }
-
-  // Test case for combination {1}/Ba=2,limit=1,key=2:
-  //   PRE:  key > 0
-  //   PRE:  key !in a[..]
-  //   PRE:  0 <= limit < a.Length
-  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
-  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
-  //   PRE:  sorted(a[..limit])
-  //   POST: b.Length == a.Length
-  //   POST: sorted(b[..limit + 1])
-  //   POST: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
-  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
-  {
-    var a := new int[2] [1, 0];
-    var limit := 1;
-    var key := 2;
     var b := InsertIntoSorted(a, limit, key);
     // expect b.Length == a.Length;
     // expect sorted(b[..limit + 1]);

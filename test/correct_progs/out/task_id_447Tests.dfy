@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-03-24 19:32:28
+// Generated: 2026-03-24 21:27:04
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)

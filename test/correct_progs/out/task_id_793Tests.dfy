@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-03-24 19:38:35
+// Generated: 2026-03-24 21:29:07
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.

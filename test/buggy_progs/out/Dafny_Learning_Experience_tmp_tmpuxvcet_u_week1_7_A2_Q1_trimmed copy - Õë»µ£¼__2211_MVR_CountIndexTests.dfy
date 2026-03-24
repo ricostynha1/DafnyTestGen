@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - Õë»µ£¼__2211_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-03-24 11:56:49
+// Generated: 2026-03-24 21:15:56
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -257,14 +257,42 @@ method Passing()
 
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
-  //   POST: b.Length == 0
-  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
   {
     var a := new int[0] [];
     var b := new int[0] [];
     var p := PreCompute(a, b);
-    expect b.Length == 0;
-    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+  }
+
+  // Test case for combination {1}/Ba=1,b=1:
+  //   PRE:  a.Length == b.Length
+  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[1] [3];
+    var b := new int[1] [4];
+    var p := PreCompute(a, b);
+    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+  }
+
+  // Test case for combination {1}/Ba=2,b=2:
+  //   PRE:  a.Length == b.Length
+  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[2] [4, 3];
+    var b := new int[2] [6, 5];
+    var p := PreCompute(a, b);
+    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+  }
+
+  // Test case for combination {1}/Ba=3,b=3:
+  //   PRE:  a.Length == b.Length
+  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[3] [5, 4, 6];
+    var b := new int[3] [8, 7, 9];
+    var p := PreCompute(a, b);
+    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
   }
 
   // Test case for combination {1}:
@@ -311,48 +339,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   PRE:  a.Length == b.Length
-  //   POST: a.Length == b.Length
-  //   POST: 1 <= b.Length <= a.Length
-  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[1] [7];
-    var b := new int[1] [9];
-    var p := PreCompute(a, b);
-    // expect a.Length == b.Length;
-    // expect 1 <= b.Length <= a.Length;
-    // expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {2}/Ba=2,b=2:
-  //   PRE:  a.Length == b.Length
-  //   POST: a.Length == b.Length
-  //   POST: 1 <= b.Length <= a.Length
-  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[2] [4, 3];
-    var b := new int[2] [6, 5];
-    var p := PreCompute(a, b);
-    // expect a.Length == b.Length;
-    // expect 1 <= b.Length <= a.Length;
-    // expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {2}/Ba=3,b=3:
-  //   PRE:  a.Length == b.Length
-  //   POST: a.Length == b.Length
-  //   POST: 1 <= b.Length <= a.Length
-  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := PreCompute(a, b);
-    // expect a.Length == b.Length;
-    // expect 1 <= b.Length <= a.Length;
-    // expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
+  // (no failing tests)
 }
 
 method Main()

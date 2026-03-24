@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Factorial.dfy
 // Method: CalcFact
-// Generated: 2026-03-24 19:42:11
+// Generated: 2026-03-24 21:24:46
 
 // Recursive definition of the factorial of a number 'n'. 
 function Fact(n: nat) : nat 
