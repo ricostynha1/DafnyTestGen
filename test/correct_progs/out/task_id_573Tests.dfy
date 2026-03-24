@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-03-24 21:27:34
+// Generated: 2026-03-24 22:23:32
 
 // Difficult example because of the need for auxiliary lemmas.
 

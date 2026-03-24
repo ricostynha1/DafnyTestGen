@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-03-24 21:10:44
+// Generated: 2026-03-24 22:09:44
 
 // Clover_longest_prefix.dfy
 
@@ -26,7 +26,7 @@ method LongestCommonPrefix(str1: seq<char>, str2: seq<char>) returns (prefix: se
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/R1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -39,44 +39,43 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {2}:
-  //   POST: |prefix| <= |str1|
-  //   POST: prefix == str1[0 .. |prefix|]
-  //   POST: |prefix| <= |str2|
-  //   POST: prefix == str2[0 .. |prefix|]
-  //   POST: |prefix| == |str2|
-  {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := [];
-    var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == [];
-  }
-
-  // Test case for combination {1,2}:
+  // Test case for combination {1}/R2:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
   //   POST: prefix == str2[0 .. |prefix|]
   //   POST: |prefix| == |str1|
-  //   POST: |prefix| == |str2|
   {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := [' '];
+    var str1: seq<char> := ['%'];
+    var str2: seq<char> := ['%', ' '];
     var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == [' '];
+    expect prefix == ['%'];
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {1}/R3:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
   //   POST: prefix == str2[0 .. |prefix|]
-  //   POST: str1[|prefix|] != str2[|prefix|]
+  //   POST: |prefix| == |str1|
   {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := ['!'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '%'];
     var prefix := LongestCommonPrefix(str1, str2);
     expect prefix == [];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: |prefix| <= |str1|
+  //   POST: prefix == str1[0 .. |prefix|]
+  //   POST: |prefix| <= |str2|
+  //   POST: prefix == str2[0 .. |prefix|]
+  //   POST: |prefix| == |str1|
+  {
+    var str1: seq<char> := ['%', '6', '^'];
+    var str2: seq<char> := ['%', '6', '^', ' '];
+    var prefix := LongestCommonPrefix(str1, str2);
+    expect prefix == ['%', '6', '^'];
   }
 
 }
