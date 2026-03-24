@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-03-24 09:16:03
+// Generated: 2026-03-24 11:21:16
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -47,7 +47,7 @@ method SharedElementsTest(){
   assert res3 == {};
 }
 
-method Passing()
+method GeneratedTests_SharedElements()
 {
   // Test case for combination {1}:
   //   POST: result == elems(a[..]) * elems(b[..])
@@ -87,13 +87,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SharedElements();
+  print "GeneratedTests_SharedElements: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-03-24 09:28:39
+// Generated: 2026-03-24 11:21:51
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -38,7 +38,7 @@ method CubeElementsTest(){
   assert res2[..] == [8, 1, 0, -1, -8];
 }
 
-method Passing()
+method GeneratedTests_CubeElements()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(a[..], cubed[..], cube)
@@ -74,13 +74,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CubeElements();
+  print "GeneratedTests_CubeElements: all tests passed!\n";
 }

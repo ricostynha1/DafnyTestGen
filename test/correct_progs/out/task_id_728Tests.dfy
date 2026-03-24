@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-03-24 10:24:44
+// Generated: 2026-03-24 11:22:11
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -31,7 +31,7 @@ method AddListsTest(){
   assert res2 == [6, 8, 10];
 }
 
-method Passing()
+method GeneratedTests_ElementWiseAddition()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -49,10 +49,10 @@ method Passing()
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [3];
+    var b: seq<int> := [4];
     var result := ElementWiseAddition(a, b);
-    expect result == [0];
+    expect result == [2];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -60,10 +60,10 @@ method Passing()
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [0, 21239];
-    var b: seq<int> := [0, 7720];
+    var a: seq<int> := [4, 3];
+    var b: seq<int> := [6, 5];
     var result := ElementWiseAddition(a, b);
-    expect result == [0, 28959];
+    expect result == [15, 14];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
@@ -71,21 +71,16 @@ method Passing()
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [-10158, -2438, 0];
-    var b: seq<int> := [-21240, -21239, 0];
+    var a: seq<int> := [5, 4, 6];
+    var b: seq<int> := [8, 7, 9];
     var result := ElementWiseAddition(a, b);
-    expect result == [-31398, -23677, 0];
+    expect result == [24, 25, 23];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseAddition();
+  print "GeneratedTests_ElementWiseAddition: all tests passed!\n";
 }

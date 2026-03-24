@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Catalan.dfy
 // Method: CatalanNumber
-// Generated: 2026-03-24 09:03:24
+// Generated: 2026-03-24 11:20:34
 
 /* Catalan numbers are a sequence of natural numbers with significant importance in combinatorial mathematics. 
    They count the number of ways to correctly match parentheses, the number of rooted binary trees with n internal nodes,
@@ -31,7 +31,7 @@ method CatalanNumber(n: nat) returns (res: nat)
 
 
 
-method Passing()
+method GeneratedTests_CatalanNumber()
 {
   // Test case for combination {1}:
   //   POST: res == C(n)
@@ -59,13 +59,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CatalanNumber();
+  print "GeneratedTests_CatalanNumber: all tests passed!\n";
 }

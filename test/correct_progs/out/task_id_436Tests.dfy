@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-03-24 09:28:01
+// Generated: 2026-03-24 11:21:47
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.
@@ -42,7 +42,7 @@ method FindNegativeNumbersTest(){
   assert res3 == [];
 }
 
-method Passing()
+method GeneratedTests_FindNegativeNumbers()
 {
   // Test case for combination {1}:
   //   POST: res == Filter(a[..], x => x < 0)
@@ -78,13 +78,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindNegativeNumbers();
+  print "GeneratedTests_FindNegativeNumbers: all tests passed!\n";
 }

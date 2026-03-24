@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-03-24 09:14:21
+// Generated: 2026-03-24 11:21:13
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -40,7 +40,7 @@ method SumOfNegativesTest(){
   assert out2 == -14;
 }
 
-method Passing()
+method GeneratedTests_CalcSumOfNegatives()
 {
   // Test case for combination {1}:
   //   POST: result == SumOfNegatives(a)
@@ -76,13 +76,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcSumOfNegatives();
+  print "GeneratedTests_CalcSumOfNegatives: all tests passed!\n";
 }

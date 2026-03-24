@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-03-24 10:23:59
+// Generated: 2026-03-24 11:22:08
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -64,7 +64,7 @@ method MoveZeroesToEndTest(){
     assert nz2 == 2 && a2[..] == [1, 1, 0, 0];
 }
 
-method Passing()
+method GeneratedTests_MoveZeroesToEnd()
 {
   // Test case for combination {1}:
   //   POST: 0 <= nz <= a.Length
@@ -120,13 +120,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MoveZeroesToEnd();
+  print "GeneratedTests_MoveZeroesToEnd: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-24 09:12:09
+// Generated: 2026-03-24 11:21:10
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -45,7 +45,7 @@ predicate IsSorted(a: array<int>)
 }
 
 
-method Passing()
+method GeneratedTests_SelectionSort()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a)
@@ -93,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SelectionSort();
+  print "GeneratedTests_SelectionSort: all tests passed!\n";
 }

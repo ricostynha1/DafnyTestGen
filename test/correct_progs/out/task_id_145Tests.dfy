@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-03-24 09:14:36
+// Generated: 2026-03-24 11:21:14
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
@@ -46,7 +46,7 @@ method MaxDifferenceTest(){
   assert out3 == 2 == 3 - 1;
 }
 
-method Passing()
+method GeneratedTests_MaxDifference()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -80,13 +80,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MaxDifference();
+  print "GeneratedTests_MaxDifference: all tests passed!\n";
 }

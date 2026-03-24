@@ -158,6 +158,8 @@ dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ 
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
+| `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
+| `--timeout <n>` | | Timeout in seconds for test generation per method (0 = unlimited) |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 ### Z3 Path Resolution

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-03-24 09:48:19
+// Generated: 2026-03-24 11:21:56
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -79,7 +79,7 @@ method UniqueProductTest(){
   assert out2 == 0; // so the product can be calculated as 0 * ... = 0
 }
 
-method Passing()
+method GeneratedTests_UniqueProduct()
 {
   // Test case for combination {1}:
   //   POST: product == SetProduct(elems(a))
@@ -115,13 +115,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_UniqueProduct();
+  print "GeneratedTests_UniqueProduct: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-03-24 10:17:18
+// Generated: 2026-03-24 11:22:06
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -36,7 +36,7 @@ method ElementWiseModuloTest(){
 
 
 
-method Passing()
+method GeneratedTests_ElementWiseModulo()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
@@ -92,13 +92,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseModulo();
+  print "GeneratedTests_ElementWiseModulo: all tests passed!\n";
 }

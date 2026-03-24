@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-03-24 10:27:39
+// Generated: 2026-03-24 11:22:20
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -48,7 +48,7 @@ method ArraySumTest(){
   assert s3 == 0;
 }
 
-method Passing()
+method GeneratedTests_CalcArraySum()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= n <= a.Length
@@ -92,13 +92,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcArraySum();
+  print "GeneratedTests_CalcArraySum: all tests passed!\n";
 }

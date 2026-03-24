@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-03-24 09:07:18
+// Generated: 2026-03-24 11:21:04
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -49,7 +49,7 @@ function count(x: nat, s: seq<nat>) : nat {
 
 
 
-method Passing()
+method GeneratedTests_MakeBuckets()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -92,13 +92,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MakeBuckets();
+  print "GeneratedTests_MakeBuckets: all tests passed!\n";
 }

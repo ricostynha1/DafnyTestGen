@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-03-24 09:28:18
+// Generated: 2026-03-24 11:21:48
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -27,7 +27,7 @@ method MultiplyElementsTest(){
 
 
 
-method Passing()
+method GeneratedTests_ElementWiseMultiplication()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -75,13 +75,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseMultiplication();
+  print "GeneratedTests_ElementWiseMultiplication: all tests passed!\n";
 }

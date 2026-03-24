@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-03-24 10:17:49
+// Generated: 2026-03-24 11:22:07
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -44,7 +44,7 @@ method FindSmallestTest(){
   assert out3 == 1;
 }
 
-method Passing()
+method GeneratedTests_FindSmallest()
 {
   // Test case for combination {1}:
   //   PRE:  s.Length > 0
@@ -75,13 +75,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindSmallest();
+  print "GeneratedTests_FindSmallest: all tests passed!\n";
 }

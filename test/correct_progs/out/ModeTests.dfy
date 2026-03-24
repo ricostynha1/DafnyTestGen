@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-03-24 09:08:22
+// Generated: 2026-03-24 11:21:05
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -53,7 +53,7 @@ predicate IsSorted(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_Mode()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a)
@@ -93,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Mode();
+  print "GeneratedTests_Mode: all tests passed!\n";
 }

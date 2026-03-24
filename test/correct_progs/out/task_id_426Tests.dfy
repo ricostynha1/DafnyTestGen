@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-03-24 09:27:20
+// Generated: 2026-03-24 11:21:46
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -48,7 +48,7 @@ method FilterOddNumbersTest(){
 }
 
 
-method Passing()
+method GeneratedTests_FilterOddNumbers()
 {
   // Test case for combination {1}:
   //   POST: oddList == Filter(arr[..], IsOdd)
@@ -84,13 +84,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FilterOddNumbers();
+  print "GeneratedTests_FilterOddNumbers: all tests passed!\n";
 }

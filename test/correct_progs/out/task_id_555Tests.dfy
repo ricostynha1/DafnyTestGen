@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-03-24 09:46:40
+// Generated: 2026-03-24 11:21:54
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -58,7 +58,7 @@ method DifferenceSumCubesAndSumNumbersTest(){
   assert res1==30;
 }
 
-method Passing()
+method GeneratedTests_DifferenceSumCubesAndSumNumbers()
 {
   // Test case for combination {1}:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
@@ -84,6 +84,10 @@ method Passing()
     expect diff == 90;
   }
 
+}
+
+method GeneratedTests_SumCubes()
+{
   // Test case for combination {1}:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   {
@@ -108,6 +112,10 @@ method Passing()
     expect s == 9;
   }
 
+}
+
+method GeneratedTests_SumNumbers()
+{
   // Test case for combination {1}:
   //   POST: s == n * (n + 1) / 2
   {
@@ -134,13 +142,12 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_DifferenceSumCubesAndSumNumbers();
+  print "GeneratedTests_DifferenceSumCubesAndSumNumbers: all tests passed!\n";
+  GeneratedTests_SumCubes();
+  print "GeneratedTests_SumCubes: all tests passed!\n";
+  GeneratedTests_SumNumbers();
+  print "GeneratedTests_SumNumbers: all tests passed!\n";
 }

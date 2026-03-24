@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-03-24 09:12:40
+// Generated: 2026-03-24 11:21:10
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -36,7 +36,7 @@ method CountTrueTest(){
 }
 
 
-method Passing()
+method GeneratedTests_CalcCountTrue()
 {
   // Test case for combination {1}:
   //   POST: count == multiset(a[..])[true]
@@ -64,13 +64,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcCountTrue();
+  print "GeneratedTests_CalcCountTrue: all tests passed!\n";
 }

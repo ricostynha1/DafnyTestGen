@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-24 09:05:05
+// Generated: 2026-03-24 11:20:58
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -42,7 +42,7 @@ lemma PowerSquareLemma(x: real, n: nat)
 
 
 
-method Passing()
+method GeneratedTests_FastExponentiation()
 {
   // Test case for combination {1}:
   //   POST: p == Power(x, n)
@@ -82,13 +82,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FastExponentiation();
+  print "GeneratedTests_FastExponentiation: all tests passed!\n";
 }

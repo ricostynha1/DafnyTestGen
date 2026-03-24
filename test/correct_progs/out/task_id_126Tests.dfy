@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-03-24 09:13:58
+// Generated: 2026-03-24 11:21:13
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -69,7 +69,7 @@ method SumOfCommonDivisorsTest(){
 
 }
 
-method Passing()
+method GeneratedTests_SumOfCommonDivisors()
 {
   // Test case for combination {1}:
   //   PRE:  a > 0 && b > 0
@@ -113,13 +113,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SumOfCommonDivisors();
+  print "GeneratedTests_SumOfCommonDivisors: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-03-24 09:04:01
+// Generated: 2026-03-24 11:20:56
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -47,7 +47,7 @@ method CalcComb(n: nat, k: nat) returns (res: nat)
 }
 
 
-method Passing()
+method GeneratedTests_CalcComb()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= n
@@ -81,13 +81,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcComb();
+  print "GeneratedTests_CalcComb: all tests passed!\n";
 }
