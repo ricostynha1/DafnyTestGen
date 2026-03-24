@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
 // Method: InitArray
-// Generated: 2026-03-23 15:39:54
+// Generated: 2026-03-24 08:55:31
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -123,7 +123,7 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
-    var a := new int[1] [3];
+    var a := new int[1] [7718];
     var old_a := a[..];
     IncrementArray(a);
     expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
@@ -132,7 +132,7 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-21239, 2437];
     var old_a := a[..];
     IncrementArray(a);
     expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
@@ -141,7 +141,7 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [-8856, 11797, 11798];
     var old_a := a[..];
     IncrementArray(a);
     expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;

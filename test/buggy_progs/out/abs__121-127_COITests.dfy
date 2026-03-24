@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-03-23 14:56:42
+// Generated: 2026-03-24 08:53:48
 
 // res.dfy
 
@@ -20,7 +20,7 @@ method abs(x: int) returns (y: int)
 
 method Passing()
 {
-  // Test case for combination {2,4}/Bx=0:
+  // Test case for combination {2,4}:
   //   POST: !(x > 0)
   //   POST: y == -x
   //   POST: y == x
@@ -34,13 +34,31 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {3}/Bx=1:
+  // Test case for combination {2}:
+  //   POST: !(x > 0)
+  //   POST: y == -x
+  {
+    var x := -1;
+    var y := abs(x);
+    // expect y == 1;
+  }
+
+  // Test case for combination {3}:
   //   POST: y == x
   //   POST: !(x <= 0)
   {
     var x := 1;
     var y := abs(x);
     // expect y == 1;
+  }
+
+  // Test case for combination {2}/R2:
+  //   POST: !(x > 0)
+  //   POST: y == -x
+  {
+    var x := -2;
+    var y := abs(x);
+    // expect y == 2;
   }
 
 }
