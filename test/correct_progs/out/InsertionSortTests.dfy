@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-03-24 14:08:05
+// Generated: 2026-03-24 15:54:31
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -42,7 +42,7 @@ method InsertionSort(a: array<T>)
 
 
 
-method GeneratedTests_InsertionSort()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
@@ -90,8 +90,13 @@ method GeneratedTests_InsertionSort()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_InsertionSort();
-  print "GeneratedTests_InsertionSort: all tests passed!\n";
+  Passing();
+  Failing();
 }

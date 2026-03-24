@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-03-24 14:08:33
+// Generated: 2026-03-24 15:57:29
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -38,7 +38,7 @@ method ElementWiseDivisionTest(){
 }
 
 
-method GeneratedTests_ElementWiseDivision()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -90,8 +90,13 @@ method GeneratedTests_ElementWiseDivision()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ElementWiseDivision();
-  print "GeneratedTests_ElementWiseDivision: all tests passed!\n";
+  Passing();
+  Failing();
 }

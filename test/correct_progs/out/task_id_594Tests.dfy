@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_594.dfy
 // Method: FirstEvenOddDifference
-// Generated: 2026-03-24 14:09:15
+// Generated: 2026-03-24 16:01:11
 
 // Returns the difference between the first even and the first odd number in the array.
 method FirstEvenOddDifference(a: array<int>) returns (diff: int)
@@ -61,7 +61,7 @@ method FirstEvenOddDifferenceTest(){
     assert out3 == 9;
 }
 
-method GeneratedTests_FirstEvenOddDifference()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
@@ -95,8 +95,13 @@ method GeneratedTests_FirstEvenOddDifference()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FirstEvenOddDifference();
-  print "GeneratedTests_FirstEvenOddDifference: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_251.dfy
 // Method: InsertBeforeEach
-// Generated: 2026-03-24 14:08:32
+// Generated: 2026-03-24 15:57:21
 
 // Given a list s = [e1, e2, ...] and an element x, 
 // returns a new list [x, e1, x, e2, ...].
@@ -30,7 +30,7 @@ method InsertBeforeEachTest(){
 
 }
 
-method GeneratedTests_InsertBeforeEach()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: |v| == 2 * |s|
@@ -74,8 +74,13 @@ method GeneratedTests_InsertBeforeEach()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_InsertBeforeEach();
-  print "GeneratedTests_InsertBeforeEach: all tests passed!\n";
+  Passing();
+  Failing();
 }

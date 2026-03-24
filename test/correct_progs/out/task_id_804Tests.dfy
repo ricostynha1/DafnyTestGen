@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-03-24 14:09:39
+// Generated: 2026-03-24 16:09:54
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -40,7 +40,7 @@ method ContainsEvenNumberTest(){
 }
 
 
-method GeneratedTests_ContainsEvenNumber()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -80,8 +80,13 @@ method GeneratedTests_ContainsEvenNumber()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ContainsEvenNumber();
-  print "GeneratedTests_ContainsEvenNumber: all tests passed!\n";
+  Passing();
+  Failing();
 }

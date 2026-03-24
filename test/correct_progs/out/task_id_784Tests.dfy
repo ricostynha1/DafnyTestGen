@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-03-24 14:09:33
+// Generated: 2026-03-24 16:08:44
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -80,7 +80,7 @@ method ProductEvenOddTest(){
     assert out2 == 10;
 }
 
-method GeneratedTests_ProductFirstEvenOdd()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
@@ -112,10 +112,6 @@ method GeneratedTests_ProductFirstEvenOdd()
     expect product == 9358;
   }
 
-}
-
-method GeneratedTests_FirstEvenOddIndices()
-{
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
@@ -154,10 +150,13 @@ method GeneratedTests_FirstEvenOddIndices()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ProductFirstEvenOdd();
-  print "GeneratedTests_ProductFirstEvenOdd: all tests passed!\n";
-  GeneratedTests_FirstEvenOddIndices();
-  print "GeneratedTests_FirstEvenOddIndices: all tests passed!\n";
+  Passing();
+  Failing();
 }

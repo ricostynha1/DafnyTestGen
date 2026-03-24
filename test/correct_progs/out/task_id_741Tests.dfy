@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-03-24 14:09:29
+// Generated: 2026-03-24 16:07:26
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).
@@ -33,7 +33,7 @@ method AllCharactersSameTest(){
     var r4 := AllCharactersSame(""); assert r4;
 }
 
-method GeneratedTests_AllCharactersSame()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -73,8 +73,13 @@ method GeneratedTests_AllCharactersSame()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_AllCharactersSame();
-  print "GeneratedTests_AllCharactersSame: all tests passed!\n";
+  Passing();
+  Failing();
 }

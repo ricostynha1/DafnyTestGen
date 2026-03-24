@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_808.dfy
 // Method: Contains
-// Generated: 2026-03-24 14:09:40
+// Generated: 2026-03-24 16:10:15
 
 // Checks if a sequence 's' contains a value 'x'.
 method Contains<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -35,7 +35,7 @@ method ContainsTest(){
 
 
 
-method GeneratedTests_Contains()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -79,8 +79,13 @@ method GeneratedTests_Contains()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Contains();
-  print "GeneratedTests_Contains: all tests passed!\n";
+  Passing();
+  Failing();
 }

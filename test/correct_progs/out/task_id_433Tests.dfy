@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-03-24 14:08:49
+// Generated: 2026-03-24 15:58:55
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -28,7 +28,7 @@ method IsGreaterTest(){
     assert out2;
 }
 
-method GeneratedTests_IsGreater()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -72,8 +72,13 @@ method GeneratedTests_IsGreater()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_IsGreater();
-  print "GeneratedTests_IsGreater: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-24 14:08:09
+// Generated: 2026-03-24 15:55:26
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -60,7 +60,7 @@ lemma MappingProp<T1, T2>(a: set<T1>, b: set<T2>, k: T2, m: map<T1, T2>)
 }
 
 
-method GeneratedTests_RawSort()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: Sorted(a)
@@ -108,8 +108,13 @@ method GeneratedTests_RawSort()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RawSort();
-  print "GeneratedTests_RawSort: all tests passed!\n";
+  Passing();
+  Failing();
 }

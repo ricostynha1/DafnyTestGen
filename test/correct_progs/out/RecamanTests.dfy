@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-24 14:08:10
+// Generated: 2026-03-24 15:55:34
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -56,7 +56,7 @@ method Recaman(n: nat) returns (res: nat)
 
 
 
-method GeneratedTests_Contains()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  len <= a.Length
@@ -108,38 +108,13 @@ method GeneratedTests_Contains()
 
 }
 
-method GeneratedTests_Recaman()
+method Failing()
 {
-  // Test case for combination {1}:
-  //   POST: res == R(n)
-  {
-    var n := 0;
-    var res := Recaman(n);
-    expect res == R(n);
-  }
-
-  // Test case for combination {1}/Bn=1:
-  //   POST: res == R(n)
-  {
-    var n := 1;
-    var res := Recaman(n);
-    expect res == R(n);
-  }
-
-  // Test case for combination {1}/R3:
-  //   POST: res == R(n)
-  {
-    var n := 2;
-    var res := Recaman(n);
-    expect res == R(n);
-  }
-
+  // (no failing tests)
 }
 
 method Main()
 {
-  GeneratedTests_Contains();
-  print "GeneratedTests_Contains: all tests passed!\n";
-  GeneratedTests_Recaman();
-  print "GeneratedTests_Recaman: all tests passed!\n";
+  Passing();
+  Failing();
 }

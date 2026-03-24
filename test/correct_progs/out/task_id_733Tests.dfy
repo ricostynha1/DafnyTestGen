@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-03-24 14:09:28
+// Generated: 2026-03-24 16:07:16
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -39,7 +39,7 @@ method FindFirstOccurrenceTest(){
 }
 
 
-method GeneratedTests_FindFirstOccurrence()
+method Passing()
 {
   // Test case for combination {2}:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
@@ -93,8 +93,13 @@ method GeneratedTests_FindFirstOccurrence()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FindFirstOccurrence();
-  print "GeneratedTests_FindFirstOccurrence: all tests passed!\n";
+  Passing();
+  Failing();
 }

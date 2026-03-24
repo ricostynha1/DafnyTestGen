@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-03-24 14:08:46
+// Generated: 2026-03-24 15:58:31
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -55,7 +55,7 @@ method IndexWiseAdditionTest(){
   assert res1 == [[6], [7, 10], [3, 10, 9], []];
 }
 
-method GeneratedTests_ElementWiseAddition()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -99,8 +99,13 @@ method GeneratedTests_ElementWiseAddition()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ElementWiseAddition();
-  print "GeneratedTests_ElementWiseAddition: all tests passed!\n";
+  Passing();
+  Failing();
 }

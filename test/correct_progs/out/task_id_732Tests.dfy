@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-03-24 14:09:26
+// Generated: 2026-03-24 16:07:04
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -39,7 +39,7 @@ method ReplaceWithColonTest(){
 }
 
 
-method GeneratedTests_ReplaceWithColon()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
@@ -75,8 +75,13 @@ method GeneratedTests_ReplaceWithColon()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ReplaceWithColon();
-  print "GeneratedTests_ReplaceWithColon: all tests passed!\n";
+  Passing();
+  Failing();
 }

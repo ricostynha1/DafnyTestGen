@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-03-24 14:08:15
+// Generated: 2026-03-24 15:56:47
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -38,7 +38,7 @@ method ReplaceBlanksWithCharTest(){
   assert res3=="blank-space";
 }
 
-method GeneratedTests_ReplaceBlanksWithChar()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
@@ -78,8 +78,13 @@ method GeneratedTests_ReplaceBlanksWithChar()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ReplaceBlanksWithChar();
-  print "GeneratedTests_ReplaceBlanksWithChar: all tests passed!\n";
+  Passing();
+  Failing();
 }

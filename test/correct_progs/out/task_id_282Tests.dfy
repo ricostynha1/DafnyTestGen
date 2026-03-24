@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-24 14:08:36
+// Generated: 2026-03-24 15:57:51
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -34,7 +34,7 @@ method ElementWiseSubtractionTest(){
   assert res3[..] == [40, 50];
 }
 
-method GeneratedTests_ElementWiseSubtraction()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
@@ -78,8 +78,13 @@ method GeneratedTests_ElementWiseSubtraction()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ElementWiseSubtraction();
-  print "GeneratedTests_ElementWiseSubtraction: all tests passed!\n";
+  Passing();
+  Failing();
 }

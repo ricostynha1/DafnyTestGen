@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-03-24 14:09:31
+// Generated: 2026-03-24 16:08:06
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -54,7 +54,7 @@ method SecondSmallestTest(){
     assert s3 == -3 && out3 == -2;
 }
 
-method GeneratedTests_SecondSmallest()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
@@ -100,8 +100,13 @@ method GeneratedTests_SecondSmallest()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SecondSmallest();
-  print "GeneratedTests_SecondSmallest: all tests passed!\n";
+  Passing();
+  Failing();
 }

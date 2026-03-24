@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-03-24 14:08:10
+// Generated: 2026-03-24 15:55:42
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -22,7 +22,7 @@ method RotateLeft(a: array<int>)
 
 
 
-method GeneratedTests_RotateLeft()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -62,8 +62,13 @@ method GeneratedTests_RotateLeft()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RotateLeft();
-  print "GeneratedTests_RotateLeft: all tests passed!\n";
+  Passing();
+  Failing();
 }

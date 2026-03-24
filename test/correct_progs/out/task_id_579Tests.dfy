@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-03-24 14:09:13
+// Generated: 2026-03-24 16:00:47
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -65,7 +65,7 @@ method DissimilarElementsTest(){
     assert  res3 == {3, 4, 5, 6};
 }
 
-method GeneratedTests_DissimilarElements()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
@@ -103,10 +103,6 @@ method GeneratedTests_DissimilarElements()
     expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
   }
 
-}
-
-method GeneratedTests_contains()
-{
   // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
@@ -149,10 +145,13 @@ method GeneratedTests_contains()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_DissimilarElements();
-  print "GeneratedTests_DissimilarElements: all tests passed!\n";
-  GeneratedTests_contains();
-  print "GeneratedTests_contains: all tests passed!\n";
+  Passing();
+  Failing();
 }

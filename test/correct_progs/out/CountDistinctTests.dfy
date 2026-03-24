@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-03-24 14:08:02
+// Generated: 2026-03-24 15:54:10
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -43,7 +43,7 @@ function AsSet(a: array<int>, n: nat := a.Length): set<int>
 }
 
 
-method GeneratedTests_CountDistinct()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a)
@@ -83,8 +83,13 @@ method GeneratedTests_CountDistinct()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CountDistinct();
-  print "GeneratedTests_CountDistinct: all tests passed!\n";
+  Passing();
+  Failing();
 }
