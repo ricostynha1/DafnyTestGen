@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-03-24 11:20:59
+// Generated: 2026-03-24 14:08:04
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)

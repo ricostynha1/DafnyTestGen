@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-03-24 11:24:24
+// Generated: 2026-03-24 14:08:47
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -37,7 +37,7 @@ method AnyValueExistsTest(){
   assert !res3;
 }
 
-method Passing()
+method GeneratedTests_AnyValueExists()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -81,13 +81,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_AnyValueExists();
+  print "GeneratedTests_AnyValueExists: all tests passed!\n";
 }
