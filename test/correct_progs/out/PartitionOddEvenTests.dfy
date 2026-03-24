@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-03-23 00:00:13
+// Generated: 2026-03-24 09:08:46
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -38,46 +38,46 @@ predicate IsEven(n: nat) {
 method Passing()
 {
   // Test case for combination {1}:
-  //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
+  //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[0] [];
     var old_a := a[..];
     PartitionOddEven(a);
-    expect !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]));
+    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
   // Test case for combination {1}/Ba=1:
-  //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
+  //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[1] [2];
+    var a := new nat[1] [3];
     var old_a := a[..];
     PartitionOddEven(a);
-    expect !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]));
+    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
   // Test case for combination {1}/Ba=2:
-  //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
+  //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [15439, 3];
+    var a := new nat[2] [4, 3];
     var old_a := a[..];
     PartitionOddEven(a);
-    expect !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]));
+    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
   // Test case for combination {1}/Ba=3:
-  //   POST: !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]))
+  //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[3] [5, 4, 6];
     var old_a := a[..];
     PartitionOddEven(a);
-    expect !(exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]));
+    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 

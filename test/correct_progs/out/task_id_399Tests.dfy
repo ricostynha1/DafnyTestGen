@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-03-23 00:06:45
+// Generated: 2026-03-24 09:26:30
 
 // Performs the bitwise XOR operation on two sequences of bv32 values (with equal length).
 method BitwiseXOR(a: seq<bv32>, b: seq<bv32>) returns (result: seq<bv32>)

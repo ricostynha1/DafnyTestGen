@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-03-22 23:57:21
+// Generated: 2026-03-24 09:04:11
 
 
 // Returns the number of distinct elements in a sorted array of integers.

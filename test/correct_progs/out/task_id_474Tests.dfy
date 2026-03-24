@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
 // Method: ReplaceChars
-// Generated: 2026-03-23 00:09:52
+// Generated: 2026-03-24 09:44:39
 
 // Replace all occurrences of oldChar in string s by newChar 
 // and return the resulting string.

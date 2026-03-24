@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-23 00:01:03
+// Generated: 2026-03-24 09:10:49
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -72,7 +72,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   PRE:  len <= a.Length
-  //   POST: !(res)
+  //   POST: !res
   //   POST: !(x in a[..len])
   {
     var x := 8;

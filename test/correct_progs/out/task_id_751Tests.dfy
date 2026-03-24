@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-03-23 00:15:38
+// Generated: 2026-03-24 10:25:47
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -49,9 +49,11 @@ method IsMinHeapTest(){
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1,2}:
   //   POST: result
   //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  //   POST: !result
+  //   POST: !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
     var a := new int[1] [13];
     var result := IsMinHeap(a);
@@ -59,71 +61,21 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(result)
-  //   POST: !(a[Parent(1)] <= a[1])
+  //   POST: !result
+  //   POST: !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[4] [60217, 60216, 66070, 60217];
+    var a := new int[2] [38, 37];
     var result := IsMinHeap(a);
     expect result == false;
   }
 
-  // Test case for combination {3}:
-  //   POST: !(result)
-  //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
+  // Test case for combination {1}/Ba=0:
+  //   POST: result
+  //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[4] [-21238, 10802, -21239, 10802];
+    var a := new int[0] [];
     var result := IsMinHeap(a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,3}:
-  //   POST: !(result)
-  //   POST: !(a[Parent(1)] <= a[1])
-  //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
-  {
-    var a := new int[4] [21238, -2437, 21237, 8855];
-    var result := IsMinHeap(a);
-    expect result == false;
-  }
-
-  // Test case for combination {4}:
-  //   POST: !(result)
-  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
-  {
-    var a := new int[3] [0, 11797, -1];
-    var result := IsMinHeap(a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,4}:
-  //   POST: !(result)
-  //   POST: !(a[Parent(1)] <= a[1])
-  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
-  {
-    var a := new int[2] [0, -1];
-    var result := IsMinHeap(a);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4}:
-  //   POST: !(result)
-  //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
-  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
-  {
-    var a := new int[4] [-8855, 32285, -8856, 32284];
-    var result := IsMinHeap(a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,3,4}:
-  //   POST: !(result)
-  //   POST: !(a[Parent(1)] <= a[1])
-  //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
-  //   POST: !(a[Parent((a.Length - 1))] <= a[(a.Length - 1)])
-  {
-    var a := new int[4] [2437, 2436, 2436, 2435];
-    var result := IsMinHeap(a);
-    expect result == false;
+    expect result == true;
   }
 
 }

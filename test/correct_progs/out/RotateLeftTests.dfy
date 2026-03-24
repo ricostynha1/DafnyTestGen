@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-03-23 14:54:30
+// Generated: 2026-03-24 09:11:45
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -29,7 +29,7 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[1] [6];
+    var a := new int[1] [16];
     var old_a := a[..];
     RotateLeft(a);
     expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
@@ -53,7 +53,7 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [6, 4, 5];
     var old_a := a[..];
     RotateLeft(a);
     expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-03-23 00:09:17
+// Generated: 2026-03-24 09:43:50
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-23 00:00:49
+// Generated: 2026-03-24 09:10:17
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -77,7 +77,7 @@ method Passing()
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[1] [2];
+    var a := new T[1] [3];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
@@ -88,7 +88,7 @@ method Passing()
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [1236, 1237];
+    var a := new T[2] [4, 3];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
@@ -99,7 +99,7 @@ method Passing()
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [1796, 1797, 1798];
+    var a := new T[3] [5, 4, 6];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
