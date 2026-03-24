@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-03-23 00:11:36
+// Generated: 2026-03-24 09:49:04
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -114,7 +114,7 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(res)
+  //   POST: !res
   //   POST: !(x in a[..])
   {
     var a := new int[1] [9];

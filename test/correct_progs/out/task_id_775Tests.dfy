@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-03-23 00:16:23
+// Generated: 2026-03-24 10:26:40
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -35,41 +35,33 @@ method IsOddAtIndexOddTest(){
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1,2}:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
     var a := new int[0] [];
     var result := IsOddAtIndexOdd(a);
     expect result == true;
   }
 
-  // Test case for combination {3}:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && IsOdd(i) && !(IsOdd(a[i]))
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[3] [13, 0, 11];
+    var a := new int[2] [9, 0];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }
 
-  // Test case for combination {4}:
-  //   POST: !(result)
-  //   POST: IsOdd((a.Length - 1)) && !(IsOdd(a[(a.Length - 1)]))
+  // Test case for combination {1}/Ba=1:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[2] [19, 0];
+    var a := new int[1] [2];
     var result := IsOddAtIndexOdd(a);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4}:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && IsOdd(i) && !(IsOdd(a[i]))
-  //   POST: IsOdd((a.Length - 1)) && !(IsOdd(a[(a.Length - 1)]))
-  {
-    var a := new int[4] [24, 0, 32, 0];
-    var result := IsOddAtIndexOdd(a);
-    expect result == false;
+    expect result == true;
   }
 
 }

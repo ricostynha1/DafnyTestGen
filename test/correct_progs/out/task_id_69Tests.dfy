@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_69.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_69.dfy
 // Method: InSeq
-// Generated: 2026-03-23 00:14:49
+// Generated: 2026-03-24 10:24:33
 
 // Checks if a sequence 's' of elements of any type T contains a given value 'x' of type T.
 method InSeq<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -49,7 +49,7 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(result)
+  //   POST: !result
   //   POST: !(x in s)
   {
     var s: seq<int> := [9];

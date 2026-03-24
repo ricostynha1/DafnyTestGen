@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-03-23 00:18:47
+// Generated: 2026-03-24 10:27:26
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -45,68 +45,48 @@ method LastPositionTest(){
 
 method Passing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {3}:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
-  //   POST: !(elem !in arr[..])
-  //   POST: 0 <= pos < arr.Length
-  //   POST: arr[pos] == elem
-  //   POST: elem !in arr[pos + 1..]
+  //   POST: pos == -1
+  //   POST: !(elem in arr[..])
   {
-    var arr := new int[1] [38];
-    var elem := 38;
-    var pos := LastPosition(arr, elem);
-    expect !(elem !in arr[..]);
-    expect 0 <= pos < arr.Length;
-    expect arr[pos] == elem;
-    expect elem !in arr[pos + 1..];
-  }
-
-  // Test case for combination {2}/Barr=1,elem=0:
-  //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
-  //   POST: !(elem !in arr[..])
-  //   POST: 0 <= pos < arr.Length
-  //   POST: arr[pos] == elem
-  //   POST: elem !in arr[pos + 1..]
-  {
-    var arr := new int[1] [0];
+    var arr := new int[0] [];
     var elem := 0;
     var pos := LastPosition(arr, elem);
-    expect !(elem !in arr[..]);
-    expect 0 <= pos < arr.Length;
-    expect arr[pos] == elem;
-    expect elem !in arr[pos + 1..];
+    expect pos == -1;
   }
 
-  // Test case for combination {2}/Barr=1,elem=1:
+  // Test case for combination {3}/Barr=0,elem=1:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
-  //   POST: !(elem !in arr[..])
-  //   POST: 0 <= pos < arr.Length
-  //   POST: arr[pos] == elem
-  //   POST: elem !in arr[pos + 1..]
+  //   POST: pos == -1
+  //   POST: !(elem in arr[..])
   {
-    var arr := new int[1] [1];
+    var arr := new int[0] [];
     var elem := 1;
     var pos := LastPosition(arr, elem);
-    expect !(elem !in arr[..]);
-    expect 0 <= pos < arr.Length;
-    expect arr[pos] == elem;
-    expect elem !in arr[pos + 1..];
+    expect pos == -1;
   }
 
-  // Test case for combination {2}/Barr=2,elem=0:
+  // Test case for combination {3}/Barr=1,elem=0:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
-  //   POST: !(elem !in arr[..])
-  //   POST: 0 <= pos < arr.Length
-  //   POST: arr[pos] == elem
-  //   POST: elem !in arr[pos + 1..]
+  //   POST: pos == -1
+  //   POST: !(elem in arr[..])
   {
-    var arr := new int[2] [0, 4];
+    var arr := new int[1] [2];
     var elem := 0;
     var pos := LastPosition(arr, elem);
-    expect !(elem !in arr[..]);
-    expect 0 <= pos < arr.Length;
-    expect arr[pos] == elem;
-    expect elem !in arr[pos + 1..];
+    expect pos == -1;
+  }
+
+  // Test case for combination {3}/Barr=1,elem=1:
+  //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
+  //   POST: pos == -1
+  //   POST: !(elem in arr[..])
+  {
+    var arr := new int[1] [2];
+    var elem := 1;
+    var pos := LastPosition(arr, elem);
+    expect pos == -1;
   }
 
 }

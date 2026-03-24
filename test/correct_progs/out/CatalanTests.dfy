@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\Catalan.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Catalan.dfy
 // Method: CatalanNumber
-// Generated: 2026-03-22 23:56:50
+// Generated: 2026-03-24 09:03:24
 
 /* Catalan numbers are a sequence of natural numbers with significant importance in combinatorial mathematics. 
    They count the number of ways to correctly match parentheses, the number of rooted binary trees with n internal nodes,

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
 // Method: SquareElements
-// Generated: 2026-03-23 00:19:03
+// Generated: 2026-03-24 10:27:52
 
 // Returns an array of the same length as the input array, 
 // with each element of the input array squared.

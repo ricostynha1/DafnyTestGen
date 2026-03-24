@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-03-23 00:07:54
+// Generated: 2026-03-24 09:27:49
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -30,9 +30,11 @@ method IsGreaterTest(){
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1,2}:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length ==> n > a[i]
   {
     var n := 8365;
     var a := new int[1] [8364];
@@ -41,78 +43,23 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(result)
-  //   POST: !(n > a[0])
-  {
-    var n := -1;
-    var a := new int[2] [-1, -2];
-    var result := IsGreater(n, a);
-    expect result == false;
-  }
-
-  // Test case for combination {3}:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
-  {
-    var n := -38;
-    var a := new int[3] [-39, 0, -39];
-    var result := IsGreater(n, a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,3}:
-  //   POST: !(result)
-  //   POST: !(n > a[0])
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length ==> n > a[i]
   {
     var n := 0;
-    var a := new int[3] [38, 7719, -1];
+    var a := new int[1] [38];
     var result := IsGreater(n, a);
     expect result == false;
   }
 
-  // Test case for combination {4}:
-  //   POST: !(result)
-  //   POST: !(n > a[(a.Length - 1)])
+  // Test case for combination {1}/Bn=0,a=0:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
   {
     var n := 0;
-    var a := new int[2] [-1, 0];
+    var a := new int[0] [];
     var result := IsGreater(n, a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,4}:
-  //   POST: !(result)
-  //   POST: !(n > a[0])
-  //   POST: !(n > a[(a.Length - 1)])
-  {
-    var n := 0;
-    var a := new int[1] [0];
-    var result := IsGreater(n, a);
-    expect result == false;
-  }
-
-  // Test case for combination {3,4}:
-  //   POST: !(result)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
-  //   POST: !(n > a[(a.Length - 1)])
-  {
-    var n := 0;
-    var a := new int[3] [-1, 0, 7719];
-    var result := IsGreater(n, a);
-    expect result == false;
-  }
-
-  // Test case for combination {2,3,4}:
-  //   POST: !(result)
-  //   POST: !(n > a[0])
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
-  //   POST: !(n > a[(a.Length - 1)])
-  {
-    var n := 0;
-    var a := new int[3] [38, 7719, 2437];
-    var result := IsGreater(n, a);
-    expect result == false;
+    expect result == true;
   }
 
 }

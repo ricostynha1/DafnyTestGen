@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-03-23 21:52:18
+// Generated: 2026-03-24 08:56:00
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -173,7 +173,7 @@ method Passing()
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 4];
     var i := 0;
     var j := 0;
     var old_a := a[..];
@@ -211,7 +211,7 @@ method Passing()
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 4];
     var i := 1;
     var j := 0;
     var old_a := a[..];

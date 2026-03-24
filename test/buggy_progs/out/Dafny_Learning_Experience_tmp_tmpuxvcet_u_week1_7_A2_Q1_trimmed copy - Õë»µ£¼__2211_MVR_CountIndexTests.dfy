@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - Õë»µ£¼__2211_MVR_CountIndex.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - Õë»µ£¼__2211_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-03-23 15:45:00
+// Generated: 2026-03-24 09:01:20
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -267,36 +267,6 @@ method Passing()
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
   }
 
-  // Test case for combination {1}:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 0;
-    var y := 0;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=0,y=1:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 0;
-    var y := 1;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,y=0:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 1;
-    var y := 0;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
   // Test case for combination {1}/Bx=1,y=1:
   //   PRE:  x >= 0 && y >= 0
   //   POST: r == x * y
@@ -351,6 +321,36 @@ method Failing()
     // expect a.Length == b.Length;
     // expect 1 <= b.Length <= a.Length;
     // expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  {
+    var x := 0;
+    var y := 0;
+    var r := Mult(x, y);
+    // expect r == 0;
+  }
+
+  // Test case for combination {1}/Bx=0,y=1:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  {
+    var x := 0;
+    var y := 1;
+    var r := Mult(x, y);
+    // expect r == 0;
+  }
+
+  // Test case for combination {1}/Bx=1,y=0:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  {
+    var x := 1;
+    var y := 0;
+    var r := Mult(x, y);
+    // expect r == 0;
   }
 
 }

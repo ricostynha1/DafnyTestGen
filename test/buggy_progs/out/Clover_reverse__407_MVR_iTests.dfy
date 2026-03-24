@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\dafny\DafnyTestGen\test\modify_arrays\in\Clover_reverse__407_MVR_i.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_reverse__407_MVR_i.dfy
 // Method: reverse
-// Generated: 2026-03-23 15:39:39
+// Generated: 2026-03-24 08:55:15
 
 // Clover_reverse.dfy
 
@@ -37,7 +37,7 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[1] [3];
+    var a := new int[1] [2];
     var old_a := a[..];
     reverse(a);
     expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
@@ -59,7 +59,7 @@ method Failing()
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [6, 5, 4];
     var old_a := a[..];
     reverse(a);
     // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
