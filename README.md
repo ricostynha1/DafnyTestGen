@@ -262,7 +262,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- Tuple types (e.g., `(real, real)`) are not supported — test generation produces incorrect syntax for tuple values and tuple arrays
+- Tuple types (e.g., `(real, real)`) are not supported — methods with tuple parameters or return types are automatically skipped
 - Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
 - When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), Z3 picks one concrete value, but the implementation may return a different valid one — this can cause false negatives in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted).
 - Methods whose contracts (after predicate inlining) involve `multiset` or quantifiers on variable-indexed sequence slices (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) are automatically skipped — these produce unsolvable SMT constraints that cause every Z3 query to timeout
