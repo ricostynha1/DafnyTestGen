@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_566.dfy
 // Method: CalcSumOfDigits
-// Generated: 2026-03-24 14:09:04
+// Generated: 2026-03-24 19:33:47
 
 // Recursive definition of the sum of the decimal digits of a natural number n.
 function SumOfDigits(n: nat) : (sum: nat) { 
@@ -37,7 +37,7 @@ method SumOfDigitsTest() {
     assert s5 == 9;
 }
 
-method GeneratedTests_CalcSumOfDigits()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
@@ -68,8 +68,13 @@ method GeneratedTests_CalcSumOfDigits()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcSumOfDigits();
-  print "GeneratedTests_CalcSumOfDigits: all tests passed!\n";
+  Passing();
+  Failing();
 }

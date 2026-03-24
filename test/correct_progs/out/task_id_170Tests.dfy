@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-03-24 14:08:14
+// Generated: 2026-03-24 19:29:17
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -40,7 +40,7 @@ method SumInRangeTest(){
   assert s5 == 14;
 }
 
-method GeneratedTests_CalcSumRange()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= start <= end <= a.Length
@@ -88,8 +88,13 @@ method GeneratedTests_CalcSumRange()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcSumRange();
-  print "GeneratedTests_CalcSumRange: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-03-24 14:09:32
+// Generated: 2026-03-24 19:37:52
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -46,7 +46,7 @@ method DifferenceTest(){
 }
 
 
-method GeneratedTests_Difference()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: diff == filter(a, x => x !in b)
@@ -86,8 +86,13 @@ method GeneratedTests_Difference()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Difference();
-  print "GeneratedTests_Difference: all tests passed!\n";
+  Passing();
+  Failing();
 }

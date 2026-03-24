@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-03-24 14:08:09
+// Generated: 2026-03-24 19:27:33
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -280,7 +280,7 @@ function BezoutCoefficients(a: nat, b: nat): (r: (int, int))
 
 
 
-method GeneratedTests_PrimeFactors()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  n > 1
@@ -323,8 +323,13 @@ method GeneratedTests_PrimeFactors()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_PrimeFactors();
-  print "GeneratedTests_PrimeFactors: all tests passed!\n";
+  Passing();
+  Failing();
 }

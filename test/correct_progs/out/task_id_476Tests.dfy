@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-03-24 14:09:01
+// Generated: 2026-03-24 19:33:07
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -72,7 +72,7 @@ method SumMinMaxTest(){
 }
 
 
-method GeneratedTests_SumMinMax()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -103,8 +103,13 @@ method GeneratedTests_SumMinMax()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SumMinMax();
-  print "GeneratedTests_SumMinMax: all tests passed!\n";
+  Passing();
+  Failing();
 }

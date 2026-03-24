@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-03-24 14:08:12
+// Generated: 2026-03-24 19:28:46
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -69,19 +69,9 @@ method SumOfCommonDivisorsTest(){
 
 }
 
-method GeneratedTests_SumOfCommonDivisors()
+method Passing()
 {
   // Test case for combination {1}:
-  //   PRE:  a > 0 && b > 0
-  //   POST: sum == sumSeq(commonDivisors(a, b))
-  {
-    var a := 1;
-    var b := 39;
-    var sum := SumOfCommonDivisors(a, b);
-    expect sum == sumSeq(commonDivisors(a, b));
-  }
-
-  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  a > 0 && b > 0
   //   POST: sum == sumSeq(commonDivisors(a, b))
   {
@@ -111,10 +101,25 @@ method GeneratedTests_SumOfCommonDivisors()
     expect sum == sumSeq(commonDivisors(a, b));
   }
 
+  // Test case for combination {1}/Ba=2,b=2:
+  //   PRE:  a > 0 && b > 0
+  //   POST: sum == sumSeq(commonDivisors(a, b))
+  {
+    var a := 2;
+    var b := 2;
+    var sum := SumOfCommonDivisors(a, b);
+    expect sum == sumSeq(commonDivisors(a, b));
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()
 {
-  GeneratedTests_SumOfCommonDivisors();
-  print "GeneratedTests_SumOfCommonDivisors: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-03-24 14:08:04
+// Generated: 2026-03-24 19:26:12
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -29,7 +29,7 @@ method CalcFib(n: nat) returns (res: nat)
 
 
 
-method GeneratedTests_CalcFib()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == Fib(n)
@@ -57,8 +57,13 @@ method GeneratedTests_CalcFib()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcFib();
-  print "GeneratedTests_CalcFib: all tests passed!\n";
+  Passing();
+  Failing();
 }

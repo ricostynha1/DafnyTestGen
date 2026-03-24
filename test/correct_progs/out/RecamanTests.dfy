@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-24 15:55:34
+// Generated: 2026-03-24 19:27:56
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -104,6 +104,30 @@ method Passing()
     var len := 1;
     var res := Contains(x, a, len);
     expect res == true;
+  }
+
+  // Test case for combination {1}:
+  //   POST: res == R(n)
+  {
+    var n := 0;
+    var res := Recaman(n);
+    expect res == R(n);
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   POST: res == R(n)
+  {
+    var n := 1;
+    var res := Recaman(n);
+    expect res == R(n);
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST: res == R(n)
+  {
+    var n := 2;
+    var res := Recaman(n);
+    expect res == R(n);
   }
 
 }

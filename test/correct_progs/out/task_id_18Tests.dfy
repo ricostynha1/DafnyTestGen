@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-03-24 14:08:14
+// Generated: 2026-03-24 19:29:25
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -44,7 +44,7 @@ method RemoveCharsTest(){
 }
 
 
-method GeneratedTests_RemoveChars()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: v == Filter(s1, c => !(c in s2))
@@ -84,8 +84,13 @@ method GeneratedTests_RemoveChars()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RemoveChars();
-  print "GeneratedTests_RemoveChars: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-03-24 14:08:13
+// Generated: 2026-03-24 19:29:09
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates
@@ -82,7 +82,7 @@ method RemoveElementsDups(){
 }
 
 
-method GeneratedTests_RemoveElements()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == removeElems(a[..], b[..])
@@ -122,8 +122,13 @@ method GeneratedTests_RemoveElements()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RemoveElements();
-  print "GeneratedTests_RemoveElements: all tests passed!\n";
+  Passing();
+  Failing();
 }
