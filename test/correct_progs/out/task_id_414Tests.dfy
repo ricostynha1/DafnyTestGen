@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-03-24 22:22:42
+// Generated: 2026-03-25 13:52:17
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -59,24 +59,24 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bseq1=1,seq2=2:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: exists x :: x in seq1 && x in seq2
   {
-    var seq1: seq<int> := [7];
-    var seq2: seq<int> := [7, 8];
+    var seq1: seq<int> := [0, 0];
+    var seq2: seq<int> := [0, 0];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == true;
   }
 
-  // Test case for combination {1}/Bseq1=1,seq2=3:
-  //   POST: result
-  //   POST: exists x :: x in seq1 && x in seq2
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !exists x :: x in seq1 && x in seq2
   {
-    var seq1: seq<int> := [7];
-    var seq2: seq<int> := [7, 8, 9];
+    var seq1: seq<int> := [2];
+    var seq2: seq<int> := [24];
     var result := AnyValueExists<int>(seq1, seq2);
-    expect result == true;
+    expect result == false;
   }
 
 }

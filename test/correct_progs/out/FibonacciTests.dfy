@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-03-24 22:20:46
+// Generated: 2026-03-25 13:49:44
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -36,15 +36,15 @@ method Passing()
   {
     var n := 0;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 0; // == Fib(n)
   }
 
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {1}:
   //   POST: res == Fib(n)
   {
     var n := 1;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 1; // == Fib(n)
   }
 
   // Test case for combination {1}/R3:
@@ -52,7 +52,7 @@ method Passing()
   {
     var n := 2;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 1; // == Fib(n)
   }
 
 }

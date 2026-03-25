@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-03-24 22:23:16
+// Generated: 2026-03-25 13:52:53
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -57,7 +57,7 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['['];

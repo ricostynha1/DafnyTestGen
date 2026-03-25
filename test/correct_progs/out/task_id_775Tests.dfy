@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-03-24 22:24:55
+// Generated: 2026-03-25 13:54:36
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -53,22 +53,22 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[1] [2];
+    var a := new int[1] [4];
     var result := IsOddAtIndexOdd(a);
     expect result == true;
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: result
-  //   POST: forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[2] [6, 77];
+    var a := new int[3] [9, 0, 15];
     var result := IsOddAtIndexOdd(a);
-    expect result == true;
+    expect result == false;
   }
 
 }

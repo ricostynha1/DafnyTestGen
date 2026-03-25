@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-03-24 22:24:44
+// Generated: 2026-03-25 13:54:24
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -70,7 +70,7 @@ method Passing()
     expect secondSmallest == 10803;
   }
 
-  // Test case for combination {1}/Bs=3:
+  // Test case for combination {1}:
   //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
   //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
@@ -78,10 +78,10 @@ method Passing()
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[3] [1798, 1796, 1797];
+    var s := new int[3] [1059, 609, 6912];
     var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == 1796;
-    expect secondSmallest == 1797;
+    expect smallest == 609;
+    expect secondSmallest == 1059;
   }
 
   // Test case for combination {1}/R3:

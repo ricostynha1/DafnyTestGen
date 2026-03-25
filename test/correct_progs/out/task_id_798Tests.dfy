@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-03-24 22:25:10
+// Generated: 2026-03-25 13:54:48
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -57,7 +57,17 @@ method Passing()
     var a := new int[0] [];
     var n := 0;
     var sum := CalcArraySum(a, n);
-    expect sum == ArraySum(a, 0, n);
+    expect sum == 0; // == ArraySum(a, 0, n)
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[1] [4];
+    var n := 1;
+    var sum := CalcArraySum(a, n);
+    expect sum == 4; // == ArraySum(a, 0, n)
   }
 
   // Test case for combination {1}/Ba=1,n=0:
@@ -67,17 +77,7 @@ method Passing()
     var a := new int[1] [2];
     var n := 0;
     var sum := CalcArraySum(a, n);
-    expect sum == ArraySum(a, 0, n);
-  }
-
-  // Test case for combination {1}/Ba=1,n=1:
-  //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  {
-    var a := new int[1] [2];
-    var n := 1;
-    var sum := CalcArraySum(a, n);
-    expect sum == ArraySum(a, 0, n);
+    expect sum == 0; // == ArraySum(a, 0, n)
   }
 
   // Test case for combination {1}/Ba=2,n=0:
@@ -87,7 +87,7 @@ method Passing()
     var a := new int[2] [4, 3];
     var n := 0;
     var sum := CalcArraySum(a, n);
-    expect sum == ArraySum(a, 0, n);
+    expect sum == 0; // == ArraySum(a, 0, n)
   }
 
 }

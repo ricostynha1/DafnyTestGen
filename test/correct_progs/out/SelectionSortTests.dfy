@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-24 22:21:25
+// Generated: 2026-03-25 13:50:31
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -58,11 +58,11 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [3];
+    var a := new int[1] [6];
     var old_a := a[..];
     SelectionSort(a);
     expect IsSorted(a);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-03-24 22:20:55
+// Generated: 2026-03-25 13:49:56
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -45,26 +45,25 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {2}/Ba=0,x=0:
+  // Test case for combination {2}:
   //   POST: !(0 <= index < a.Length)
   //   POST: index == -1
   //   POST: x !in a[..]
   {
     var a := new int[0] [];
-    var x := 0;
+    var x := 9;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
 
-  // Test case for combination {2}/Ba=0,x=1:
-  //   POST: !(0 <= index < a.Length)
-  //   POST: index == -1
-  //   POST: x !in a[..]
+  // Test case for combination {3}:
+  //   POST: a[index] == x
+  //   POST: 0 <= index < a.Length
   {
-    var a := new int[0] [];
-    var x := 1;
+    var a := new int[1] [18];
+    var x := 18;
     var index := LinearSearch(a, x);
-    expect index == -1;
+    expect index == 0;
   }
 
 }

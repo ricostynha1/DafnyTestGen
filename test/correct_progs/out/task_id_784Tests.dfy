@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-03-24 22:24:58
+// Generated: 2026-03-25 13:54:39
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -92,6 +92,16 @@ method Passing()
     expect product == -2;
   }
 
+  // Test case for combination {1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [-2, 1, 16196, 1948];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == -2;
+  }
+
   // Test case for combination {1}/Blst=3:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
@@ -100,16 +110,6 @@ method Passing()
     var lst: seq<int> := [0, 564, -3];
     var product := ProductFirstEvenOdd(lst);
     expect product == 0;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [1, 9358, 11706, 563];
-    var product := ProductFirstEvenOdd(lst);
-    expect product == 9358;
   }
 
   // Test case for combination {1}:
@@ -124,6 +124,18 @@ method Passing()
     expect oddIndex == 1;
   }
 
+  // Test case for combination {1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [29363, 41955, 1, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 3;
+    expect oddIndex == 0;
+  }
+
   // Test case for combination {1}/Blst=3:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
@@ -134,18 +146,6 @@ method Passing()
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 2;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [1, -1, 1, 0];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 3;
-    expect oddIndex == 0;
   }
 
 }

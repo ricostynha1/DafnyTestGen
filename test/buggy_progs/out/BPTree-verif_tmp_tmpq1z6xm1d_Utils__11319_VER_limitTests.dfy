@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-03-24 22:09:34
+// Generated: 2026-03-25 13:27:40
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -342,27 +342,6 @@ method Passing()
     expect x < a[idx];
   }
 
-  // Test case for combination {1,2}:
-  //   PRE:  x !in a[..]
-  //   PRE:  0 <= limit <= a.Length
-  //   PRE:  SortedSeq(a[..limit])
-  //   POST: 0 <= idx <= limit
-  //   POST: SortedSeq(a[..limit])
-  //   POST: !(idx > 0)
-  //   POST: !(idx < limit)
-  //   POST: x < a[idx]
-  {
-    var a := new int[1] [7720];
-    var limit := 0;
-    var x := 7719;
-    var idx := GetInsertIndex(a, limit, x);
-    expect 0 <= idx <= limit;
-    expect SortedSeq(a[..limit]);
-    expect !(idx > 0);
-    expect !(idx < limit);
-    expect x < a[idx];
-  }
-
   // Test case for combination {3}:
   //   PRE:  x !in a[..]
   //   PRE:  0 <= limit <= a.Length
@@ -401,6 +380,445 @@ method Passing()
     expect x < a[idx];
   }
 
+  // Test case for combination {1}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [-38, 4, 5];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [-1, 4, 5];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=2,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [-1, 3];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=2,limit=0,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [-38, 3];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=1,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[1] [-38];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=0,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[0] [];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {1}/Ba=1,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  {
+    var a := new int[1] [-1];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {2}/Ba=2,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [39, 3];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [39, 4, 5];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=3,limit=1,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [40, 4, 5];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=2,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [2, 3];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=1,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[1] [2];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=1,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[1] [1];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {3}/Ba=1,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[1] [-38];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=2,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [-2, -1];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=2,limit=1,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [-39, -38];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=3,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [-2, -1, 6];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=3,limit=1,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [-39, -38, 6];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+  }
+
+  // Test case for combination {4}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [-38, 7721, 7];
+    var limit := 2;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect x < a[idx];
+  }
+
+  // Test case for combination {4}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [-1, 39, 7];
+    var limit := 2;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect x < a[idx];
+  }
+
+  // Test case for combination {4}/Ba=2,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [-7719, 2];
+    var limit := 2;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect x < a[idx];
+  }
+
+  // Test case for combination {4}/Ba=2,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [-1, 7720];
+    var limit := 2;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[1] [7720];
+    var limit := 0;
+    var x := 7719;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
   // Test case for combination {3,4}:
   //   PRE:  x !in a[..]
   //   PRE:  0 <= limit <= a.Length
@@ -414,6 +832,216 @@ method Passing()
     var a := new int[2] [7717, 7719];
     var limit := 1;
     var x := 7718;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [40, 4, 5];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [39, 4, 5];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=2,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [2, 3];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=2,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [39, 3];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=1,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[1] [2];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {1,2}/Ba=1,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[1] [1];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect !(idx > 0);
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {3,4}/Ba=2,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [-1, 39];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {3,4}/Ba=2,limit=1,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [-38, 2];
+    var limit := 1;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {3,4}/Ba=3,limit=1,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [-1, 39, 6];
+    var limit := 1;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect 0 <= idx <= limit;
+    expect SortedSeq(a[..limit]);
+    expect a[idx - 1] < x;
+    expect !(idx < limit);
+    expect x < a[idx];
+  }
+
+  // Test case for combination {3,4}/Ba=3,limit=1,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [-38, 7721, 6];
+    var limit := 1;
+    var x := 1;
     var idx := GetInsertIndex(a, limit, x);
     expect 0 <= idx <= limit;
     expect SortedSeq(a[..limit]);
@@ -446,30 +1074,6 @@ method Passing()
     expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
   }
 
-  // Test case for combination {1}/Ba=1,limit=0,key=2:
-  //   PRE:  key > 0
-  //   PRE:  key !in a[..]
-  //   PRE:  0 <= limit < a.Length
-  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
-  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
-  //   PRE:  sorted(a[..limit])
-  //   POST: b.Length == a.Length
-  //   POST: sorted(b[..limit + 1])
-  //   POST: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
-  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
-  {
-    var a := new int[1] [0];
-    var limit := 0;
-    var key := 2;
-    var b := InsertIntoSorted(a, limit, key);
-    expect b.Length == a.Length;
-    expect sorted(b[..limit + 1]);
-    expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
-    expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
-  }
-
   // Test case for combination {1}/Ba=2,limit=1,key=2:
   //   PRE:  key > 0
   //   PRE:  key !in a[..]
@@ -494,10 +1098,190 @@ method Passing()
     expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
   }
 
+  // Test case for combination {1}/Ba=1,limit=0,key=2:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST: b.Length == a.Length
+  //   POST: sorted(b[..limit + 1])
+  //   POST: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[1] [0];
+    var limit := 0;
+    var key := 2;
+    var b := InsertIntoSorted(a, limit, key);
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0;
+  }
+
 }
 
 method Failing()
 {
+  // Test case for combination {2}/Ba=2,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[2] [39, 3];
+    var limit := 2;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect !(idx > 0);
+    // expect x < a[idx];
+  }
+
+  // Test case for combination {2}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: !(idx > 0)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [40, 4, 5];
+    var limit := 2;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect !(idx > 0);
+    // expect x < a[idx];
+  }
+
+  // Test case for combination {3}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [7, 8, -38];
+    var limit := 3;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=2,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [6, -1];
+    var limit := 2;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=2,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[2] [6, -38];
+    var limit := 2;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+  }
+
+  // Test case for combination {3}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  {
+    var a := new int[3] [7, 8, -1];
+    var limit := 3;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+  }
+
+  // Test case for combination {3,4}/Ba=3,limit==a,x=0:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [7, -1, 39];
+    var limit := 2;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+    // expect x < a[idx];
+  }
+
+  // Test case for combination {3,4}/Ba=3,limit==a,x=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST: 0 <= idx <= limit
+  //   POST: SortedSeq(a[..limit])
+  //   POST: a[idx - 1] < x
+  //   POST: !(idx < limit)
+  //   POST: x < a[idx]
+  {
+    var a := new int[3] [7, -38, 7721];
+    var limit := 2;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    // expect 0 <= idx <= limit;
+    // expect SortedSeq(a[..limit]);
+    // expect a[idx - 1] < x;
+    // expect !(idx < limit);
+    // expect x < a[idx];
+  }
+
   // Test case for combination {1}/Ba=2,limit=1,key=1:
   //   PRE:  key > 0
   //   PRE:  key !in a[..]

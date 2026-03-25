@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-03-24 22:20:22
+// Generated: 2026-03-25 13:49:15
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -62,26 +62,27 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {2}/Ba=0,x=1:
+  // Test case for combination {2}:
   //   PRE:  IsSorted(a[..])
   //   POST: !(index != -1)
   //   POST: x !in a[..]
   {
-    var a := new T[0] [];
-    var x := 1;
+    var a := new T[1] [38];
+    var x := 8;
     var index := BinarySearch(a, x);
     expect index == -1;
   }
 
-  // Test case for combination {2}/Ba=1,x=0:
+  // Test case for combination {3}:
   //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
+  //   POST: 0 <= index < a.Length
+  //   POST: a[index] == x
+  //   POST: !(index == -1)
   {
-    var a := new T[1] [2];
-    var x := 0;
+    var a := new T[1] [-1];
+    var x := -1;
     var index := BinarySearch(a, x);
-    expect index == -1;
+    expect index == 0;
   }
 
 }

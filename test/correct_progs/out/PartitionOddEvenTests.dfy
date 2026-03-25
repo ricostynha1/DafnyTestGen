@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-03-24 22:21:10
+// Generated: 2026-03-25 13:50:13
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -48,11 +48,11 @@ method Passing()
     expect multiset(a[..]) == multiset(old_a[..]);
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[1] [3];
+    var a := new nat[1] [5];
     var old_a := a[..];
     PartitionOddEven(a);
     expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);

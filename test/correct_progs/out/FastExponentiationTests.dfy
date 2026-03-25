@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-24 22:20:41
+// Generated: 2026-03-25 13:49:39
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -50,7 +50,16 @@ method Passing()
     var x := 0.0;
     var n := 0;
     var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
+    expect p == 1.0; // == Power(x, n)
+  }
+
+  // Test case for combination {1}:
+  //   POST: p == Power(x, n)
+  {
+    var x := 1.0;
+    var n := 1;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0; // == Power(x, n)
   }
 
   // Test case for combination {1}/Bx=0.0,n=1:
@@ -59,7 +68,7 @@ method Passing()
     var x := 0.0;
     var n := 1;
     var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
+    expect p == 0.0; // == Power(x, n)
   }
 
   // Test case for combination {1}/Bx=1.0,n=0:
@@ -68,16 +77,7 @@ method Passing()
     var x := 1.0;
     var n := 0;
     var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
-  }
-
-  // Test case for combination {1}/Bx=1.0,n=1:
-  //   POST: p == Power(x, n)
-  {
-    var x := 1.0;
-    var n := 1;
-    var p := FastExponentiation(x, n);
-    expect p == Power(x, n);
+    expect p == 1.0; // == Power(x, n)
   }
 
 }

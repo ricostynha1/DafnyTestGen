@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-24 22:22:21
+// Generated: 2026-03-25 13:51:54
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -48,7 +48,7 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]

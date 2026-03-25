@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-03-24 22:25:26
+// Generated: 2026-03-25 13:55:06
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -63,26 +63,26 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [7719];
-    var b: seq<int> := [7720];
+    var a: seq<int> := [28957];
+    var b: seq<int> := [28958];
     var result := IsSmaller(a, b);
     expect result == true;
   }
 
-  // Test case for combination {1}/Ba=2,b=2:
+  // Test case for combination {2}:
   //   PRE:  |a| == |b|
-  //   POST: result
-  //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [11292, 11293];
-    var b: seq<int> := [11293, 11294];
+    var a: seq<int> := [7719, 21238];
+    var b: seq<int> := [-38, 22];
     var result := IsSmaller(a, b);
-    expect result == true;
+    expect result == false;
   }
 
 }

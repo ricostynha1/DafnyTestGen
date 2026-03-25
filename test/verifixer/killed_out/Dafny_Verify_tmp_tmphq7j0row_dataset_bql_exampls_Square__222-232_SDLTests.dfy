@@ -1,0 +1,69 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square__222-232_SDL.dfy
+// Method: square
+// Generated: 2026-03-25 22:48:24
+
+// Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
+
+method square(n: int) returns (r: int)
+  requires 0 <= n
+  ensures r == n * n
+  decreases n
+{
+  var x: int;
+  var i: int;
+  r := 0;
+  i := 0;
+  x := 1;
+  while i < n
+    invariant i <= n
+    invariant r == i * i
+    invariant x == 2 * i + 1
+    decreases n - i
+  {
+    x := x + 2;
+    i := i + 1;
+  }
+}
+
+
+method Passing()
+{
+  // Test case for combination {1}:
+  //   PRE:  0 <= n
+  //   POST: r == n * n
+  {
+    var n := 0;
+    var r := square(n);
+    expect r == 0;
+  }
+
+}
+
+method Failing()
+{
+  // Test case for combination {1}:
+  //   PRE:  0 <= n
+  //   POST: r == n * n
+  {
+    var n := 1;
+    var r := square(n);
+    // expect r == 1;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  0 <= n
+  //   POST: r == n * n
+  {
+    var n := 4;
+    var r := square(n);
+    // expect r == 16;
+  }
+
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

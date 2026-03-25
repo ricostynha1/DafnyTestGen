@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-03-24 22:20:53
+// Generated: 2026-03-25 13:49:53
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -67,15 +67,15 @@ method Passing()
     expect IsMin(right, r);
   }
 
-  // Test case for combination {1}/Bleft=2,right=2:
+  // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
   {
-    var left := new real[2] [2437.0, 2438.0];
-    var right := new real[2] [2438.0, 2439.0];
+    var left := new real[2] [0.0, 21237.5];
+    var right := new real[2] [0.5, 21238.0];
     var l, r := IntersectIntervals(left, right);
     expect IsMax(left, l);
     expect IsMin(right, r);
