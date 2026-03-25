@@ -268,13 +268,13 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 ## Limitations
 
 - Generic type parameters are mapped to `Int` in SMT
-- Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
+- Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- Methods inside classes are not supported — they require object construction, field state setup, `modifies this` handling, etc. Class methods are automatically detected and skipped
+- Methods inside classes or traits are not supported — they require object construction, field state setup, `modifies this` handling, etc. Such methods are automatically detected and skipped
 - Function-typed parameters (e.g., `P: T -> bool`, `f: int ~> int`) are not supported — methods with such parameters are automatically skipped
 - Tuple types (e.g., `(real, real)`) are not supported — methods with tuple parameters or return types are automatically skipped
 - Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
-- Recursive or ghost functions in postconditions (e.g., `ensures result == Fact(n)`, `ensures Max(a) < Min(b)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword)
+- Recursive or ghost functions in postconditions (e.g., `ensures result == Fact(n)`, `ensures Max(a) < Min(b)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). Predicates that transitively call other predicates (e.g., `isSubstringPred` → `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
 - When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), Z3 picks one concrete value, but the implementation may return a different valid one — this can cause false negatives in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted).
 - Methods whose contracts (after predicate inlining) involve `multiset` or quantifiers on variable-indexed sequence slices (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) are automatically skipped — these produce unsolvable SMT constraints that cause every Z3 query to timeout
 - Not all Dafny expressions are translatable to SMT2
