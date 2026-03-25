@@ -271,6 +271,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - Methods inside classes are not supported — they require object construction, field state setup, `modifies this` handling, etc. Class methods are automatically detected and skipped
+- Function-typed parameters (e.g., `P: T -> bool`, `f: int ~> int`) are not supported — methods with such parameters are automatically skipped
 - Tuple types (e.g., `(real, real)`) are not supported — methods with tuple parameters or return types are automatically skipped
 - Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
 - Recursive or ghost functions in postconditions (e.g., `ensures result == Fact(n)`, `ensures Max(a) < Min(b)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword)
