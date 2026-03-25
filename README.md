@@ -222,6 +222,8 @@ When `--check` is enabled, DafnyTestGen compiles all tests into a **single** Daf
 - **`Passing()`** &mdash; tests that pass at runtime (expects remain active)
 - **`Failing()`** &mdash; tests that fail at runtime (expects are commented out)
 
+When postconditions use recursive or ghost functions (e.g., `expect f == Fact(n);`), check mode captures the actual output values at runtime and injects them as concrete literals in the final test file (e.g., `expect f == 120; // == Fact(n)`). This makes test cases easier to inspect while preserving the original expression as a comment.
+
 This is useful for evaluating buggy implementations against their contracts.
 
 ## Project Structure
