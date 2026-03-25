@@ -217,7 +217,7 @@ When postconditions involve quantifiers or predicates that cannot be directly us
 
 ## Check Mode (`-c`)
 
-When `--check` is enabled, all generated tests are executed in a **single** `dafny run --no-verify` invocation (avoiding per-test compilation overhead). Each `expect` is replaced with a `CheckExpect` helper that prints failure markers instead of aborting, so all tests run to completion. Tests that don't complete (crash/abort) are also detected. The output is split into two methods:
+When `--check` is enabled, DafnyTestGen compiles all tests into a **single** Dafny file with `dafny build --no-verify` (one compilation), then runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `FAIL:N` / `DONE:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (e.g., infinite loop), the remaining incomplete tests are automatically **re-checked individually** using the same compiled binary with a test index argument — no recompilation needed. The output is split into two methods:
 
 - **`Passing()`** &mdash; tests that pass at runtime (expects remain active)
 - **`Failing()`** &mdash; tests that fail at runtime (expects are commented out)
