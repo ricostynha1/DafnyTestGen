@@ -300,7 +300,7 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - **Tuple types** (e.g., `(real, real)`)
 - **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
 - **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
-- **Map/imap/multiset parameters** (`map<K,V>`, `imap<K,V>`, `multiset<T>`)
+- **Set/map/imap/multiset parameters** (`set<T>`, `iset<T>`, `map<K,V>`, `imap<K,V>`, `multiset<T>`) as input parameters are not supported. Note: `set<T>` as a **return type** works fine — the postcondition is used as the `expect` assertion and Dafny evaluates set expressions at runtime
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
 
 ## Supported with Limitations
