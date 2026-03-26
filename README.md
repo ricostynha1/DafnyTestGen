@@ -272,6 +272,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 
 - Integer, natural, real, char, bool types
 - Arrays and sequences (including `array<T>`, `seq<T>`, `string`)
+- **Simple enum datatypes**: datatypes where all constructors are parameterless (e.g., `datatype Color = Red | White | Blue`) are supported. Constructors are mapped to bounded integers in SMT (Red→0, White→1, Blue→2) with range constraints, and mapped back to constructor names in generated test code. Boundary analysis generates one tier per constructor for exhaustive value coverage. This works for direct parameters (`c: Color`), arrays (`array<Color>`), and sequences (`seq<Color>`)
 - Quantifiers (`forall`, `exists`)
 - Implications, logical operators, chain comparisons
 - `IsSorted` predicate (built-in translation)
@@ -280,25 +281,31 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
+## Excluded (Auto-Skipped)
+
+The following constructs are detected and automatically skipped because they cannot be meaningfully tested or translated to SMT. These are not bugs or limitations of the tool — they are cases where test generation is not applicable. A message is printed when a method or file is skipped.
+
+- **Programs with bodyless methods**: if the source file contains any non-ghost method without a body, the entire file is skipped — such programs cannot be compiled by `dafny build`
+- **Bodyless methods**: abstract methods (without an implementation body) are skipped — there is no code to test
+- **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
+- **Methods inside classes or traits**: require object construction, field state setup, `modifies this` handling, etc. — automatically detected and skipped
+- **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
+- **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
+- **Complex datatype parameters**: methods with non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics — are skipped, as recursive/parameterized datatypes cannot be encoded as bounded integers
+- **Tuple types** (e.g., `(real, real)`)
+- **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
+- **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
+- **Map/imap/multiset parameters** (`map<K,V>`, `imap<K,V>`, `multiset<T>`)
+- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
+
 ## Limitations
 
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- Methods inside classes or traits are not supported — they require object construction, field state setup, `modifies this` handling, etc. Such methods are automatically detected and skipped
-- **Programs with bodyless methods**: if the Dafny source file contains any non-ghost method without a body, the entire file is skipped — such programs cannot be compiled by `dafny build`, so generated tests would produce build errors
-- **Bodyless methods** (abstract or declared without an implementation body) are also individually skipped — there is no code to test
-- **Bodyless functions/predicates in contracts**: if a method's `requires` or `ensures` clauses reference a function or predicate that has no body (abstract/opaque), the method is automatically skipped — the function's semantics are unknown and cannot be used for SMT solving or as `expect` assertions
-- **User-defined datatype parameters**: methods whose signature includes a parameter or return value of a user-defined `datatype` type — including when nested inside generic types (e.g., `array<Color>`, `seq<Tree>`) — are automatically skipped, as datatypes are not yet supported in the SMT translation
-- **Map/imap/multiset parameters**: methods whose signature includes a `map<K,V>`, `imap<K,V>`, or `multiset<T>` parameter are automatically skipped — these collection types are not yet supported in the SMT translation
-- **Twostate predicates/functions in contracts**: if a method's `requires` or `ensures` clauses reference a `twostate predicate` or `twostate function`, the method is automatically skipped — twostate predicates reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
-- Function-typed parameters (e.g., `P: T -> bool`, `f: int ~> int`) are not supported — methods with such parameters are automatically skipped
-- Tuple types (e.g., `(real, real)`) are not supported — methods with tuple parameters or return types are automatically skipped
-- Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
-- Recursive or ghost functions in postconditions (e.g., `ensures result == Fact(n)`, `ensures Max(a) < Min(b)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). Predicates that transitively call other predicates (e.g., `isSubstringPred` → `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
-- When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), Z3 picks one concrete value, but the implementation may return a different valid one — this can cause false negatives in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted).
-- Methods whose contracts (after predicate inlining) involve `multiset` or quantifiers on variable-indexed sequence slices (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) are automatically skipped — these produce unsolvable SMT constraints that cause every Z3 query to timeout
-- **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors like *"quantifiers in non-ghost contexts must be compilable, but Dafny's heuristics can't figure out how to produce or compile a bounded set of values"*. This is a fundamental Dafny limitation — the compiler cannot enumerate infinite domains at runtime. Methods whose postconditions reference such predicates may fail to compile in generated tests or in `--check` mode
+- Recursive or ghost functions in postconditions (e.g., `ensures result == Fact(n)`, `ensures Max(a) < Min(b)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). Predicates that transitively call other predicates (e.g., `isSubstringPred` -> `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
+- When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), Z3 picks one concrete value, but the implementation may return a different valid one — this can cause false negatives in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted)
+- **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
 - Not all Dafny expressions are translatable to SMT2
 
 ## License
