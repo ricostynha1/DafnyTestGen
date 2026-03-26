@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15__684_VER_n.dfy
 // Method: SelectionSort
-// Generated: 2026-03-25 22:55:23
+// Generated: 2026-03-26 15:04:28
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15.dfy
 
@@ -117,7 +117,7 @@ method Partition(a: array<int>, lo: int, hi: int)
 }
 
 
-method GeneratedTests_SelectionSort()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
@@ -130,43 +130,6 @@ method GeneratedTests_SelectionSort()
     expect multiset(a[..]) == old_multiset_a;
   }
 
-  // Test case for combination {1}:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[1] [5];
-    var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[2] [4, 3];
-    var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[3] [5, 4, 6];
-    var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
-  }
-
-}
-
-method GeneratedTests_QuickSort()
-{
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
@@ -213,182 +176,45 @@ method GeneratedTests_QuickSort()
 
 }
 
-method GeneratedTests_QuickSortAux()
+method Failing()
 {
   // Test case for combination {1}:
-  //   PRE:  0 <= lo <= hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j]
-  //   POST: SwapFrame(a, lo, hi)
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
+  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[0] [];
-    var lo := 0;
-    var hi := 0;
-    QuickSortAux(a, lo, hi);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j];
-    expect SwapFrame(a, lo, hi);
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
+    var a := new int[1] [5];
+    var old_multiset_a := multiset(a[..]);
+    SelectionSort(a);
+    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
   }
 
-  // Test case for combination {1}:
-  //   PRE:  0 <= lo <= hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j]
-  //   POST: SwapFrame(a, lo, hi)
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
-  {
-    var a := new int[1] [6];
-    var lo := 1;
-    var hi := 1;
-    QuickSortAux(a, lo, hi);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j];
-    expect SwapFrame(a, lo, hi);
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-  }
-
-  // Test case for combination {1}/Ba=2,lo=0,hi=1:
-  //   PRE:  0 <= lo <= hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j]
-  //   POST: SwapFrame(a, lo, hi)
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
+  // Test case for combination {1}/Ba=2:
+  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[2] [4, 3];
-    var lo := 0;
-    var hi := 1;
-    QuickSortAux(a, lo, hi);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j];
-    expect SwapFrame(a, lo, hi);
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
+    var old_multiset_a := multiset(a[..]);
+    SelectionSort(a);
+    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
   }
 
-  // Test case for combination {1}/Ba=2,lo=0,hi==a:
-  //   PRE:  0 <= lo <= hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j]
-  //   POST: SwapFrame(a, lo, hi)
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
+  // Test case for combination {1}/Ba=3:
+  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
-    var lo := 0;
-    var hi := 0;
-    QuickSortAux(a, lo, hi);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: lo <= i < j < hi ==> a[i] <= a[j];
-    expect SwapFrame(a, lo, hi);
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-  }
-
-}
-
-method GeneratedTests_Partition()
-{
-  // Test case for combination {1}:
-  //   PRE:  0 <= lo < hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: lo <= p < hi
-  //   POST: forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p]
-  //   POST: forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i]
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
-  //   POST: SwapFrame(a, lo, hi)
-  {
-    var a := new int[1] [41];
-    var lo := 0;
-    var hi := 1;
-    var p := Partition(a, lo, hi);
-    expect lo <= p < hi;
-    expect forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p];
-    expect forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i];
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-    expect SwapFrame(a, lo, hi);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= lo < hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: lo <= p < hi
-  //   POST: forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p]
-  //   POST: forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i]
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
-  //   POST: SwapFrame(a, lo, hi)
-  {
-    var a := new int[2] [30, 31];
-    var lo := 1;
-    var hi := 2;
-    var p := Partition(a, lo, hi);
-    expect lo <= p < hi;
-    expect forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p];
-    expect forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i];
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-    expect SwapFrame(a, lo, hi);
-  }
-
-  // Test case for combination {1}/Ba=3,lo=0,hi==a:
-  //   PRE:  0 <= lo < hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: lo <= p < hi
-  //   POST: forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p]
-  //   POST: forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i]
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
-  //   POST: SwapFrame(a, lo, hi)
-  {
-    var a := new int[3] [14, 13, 15];
-    var lo := 0;
-    var hi := 3;
-    var p := Partition(a, lo, hi);
-    expect lo <= p < hi;
-    expect forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p];
-    expect forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i];
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-    expect SwapFrame(a, lo, hi);
-  }
-
-  // Test case for combination {1}/Ba=3,lo=0,hi=1:
-  //   PRE:  0 <= lo < hi <= a.Length
-  //   PRE:  SplitPoint(a, lo) && SplitPoint(a, hi)
-  //   POST: lo <= p < hi
-  //   POST: forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p]
-  //   POST: forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i]
-  //   POST: SplitPoint(a, lo)
-  //   POST: SplitPoint(a, hi)
-  //   POST: SwapFrame(a, lo, hi)
-  {
-    var a := new int[3] [11, 10, 12];
-    var lo := 0;
-    var hi := 1;
-    var p := Partition(a, lo, hi);
-    expect lo <= p < hi;
-    expect forall i: int {:trigger a[i]} :: lo <= i < p ==> a[i] < a[p];
-    expect forall i: int {:trigger a[i]} :: p <= i < hi ==> a[p] <= a[i];
-    expect SplitPoint(a, lo);
-    expect SplitPoint(a, hi);
-    expect SwapFrame(a, lo, hi);
+    var a := new int[3] [5, 4, 6];
+    var old_multiset_a := multiset(a[..]);
+    SelectionSort(a);
+    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_SelectionSort();
-  print "GeneratedTests_SelectionSort: all tests passed!\n";
-  GeneratedTests_QuickSort();
-  print "GeneratedTests_QuickSort: all tests passed!\n";
-  GeneratedTests_QuickSortAux();
-  print "GeneratedTests_QuickSortAux: all tests passed!\n";
-  GeneratedTests_Partition();
-  print "GeneratedTests_Partition: all tests passed!\n";
+  Passing();
+  Failing();
 }

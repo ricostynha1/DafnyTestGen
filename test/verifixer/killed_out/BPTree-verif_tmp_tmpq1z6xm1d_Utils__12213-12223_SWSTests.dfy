@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\BPTree-verif_tmp_tmpq1z6xm1d_Utils__12213-12223_SWS.dfy
 // Method: GetInsertIndex
-// Generated: 2026-03-25 22:46:09
+// Generated: 2026-03-26 14:54:59
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 

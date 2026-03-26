@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_two_sum.dfy
 // Method: twoSum
-// Generated: 2026-03-25 22:36:40
+// Generated: 2026-03-26 14:55:23
 
 // Clover_two_sum.dfy
 

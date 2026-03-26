@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1__1436-1438_EVR_int.dfy
 // Method: query
-// Generated: 2026-03-25 22:58:52
+// Generated: 2026-03-26 15:07:50
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 
@@ -92,7 +92,7 @@ function mem<T(==)>(x: T, l: List<T>): bool
 datatype List<T> = Nil | Cons(head: T, tail: List<T>)
 
 
-method GeneratedTests_query()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= i <= j <= a.Length
@@ -138,49 +138,6 @@ method GeneratedTests_query()
     expect res == sum(a, i, j);
   }
 
-}
-
-method GeneratedTests_queryFast()
-{
-  // Test case for combination {1}:
-  //   PRE:  0 <= i <= j <= a.Length
-  //   PRE:  is_prefix_sum_for(a, c)
-  //   POST: r == sum(a, i, j)
-  {
-    var a := new int[0] [];
-    var c := new int[0] [];
-    var i := 0;
-    var j := 0;
-    var r := queryFast(a, c, i, j);
-    expect r == sum(a, i, j);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= i <= j <= a.Length
-  //   PRE:  is_prefix_sum_for(a, c)
-  //   POST: r == sum(a, i, j)
-  {
-    var a := new int[1] [4];
-    var c := new int[1] [7];
-    var i := 1;
-    var j := 1;
-    var r := queryFast(a, c, i, j);
-    expect r == sum(a, i, j);
-  }
-
-  // Test case for combination {1}/Ba=2,c=2,i=0,j=1:
-  //   PRE:  0 <= i <= j <= a.Length
-  //   PRE:  is_prefix_sum_for(a, c)
-  //   POST: r == sum(a, i, j)
-  {
-    var a := new int[2] [4, 3];
-    var c := new int[2] [6, 5];
-    var i := 0;
-    var j := 1;
-    var r := queryFast(a, c, i, j);
-    expect r == sum(a, i, j);
-  }
-
   // Test case for combination {1}/Ba=2,c=2,i=0,j==a:
   //   PRE:  0 <= i <= j <= a.Length
   //   PRE:  is_prefix_sum_for(a, c)
@@ -196,56 +153,51 @@ method GeneratedTests_queryFast()
 
 }
 
-method GeneratedTests_from_array()
+method Failing()
 {
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l)
-  //   POST: forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
   {
     var a := new int[0] [];
-    var l := from_array<int>(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l);
-    expect forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x;
+    var c := new int[0] [];
+    var i := 0;
+    var j := 0;
+    var r := queryFast(a, c, i, j);
+    // expect r == sum(a, i, j);
   }
 
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l)
-  //   POST: forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
   {
-    var a := new int[1] [2];
-    var l := from_array<int>(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l);
-    expect forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x;
+    var a := new int[1] [4];
+    var c := new int[1] [7];
+    var i := 1;
+    var j := 1;
+    var r := queryFast(a, c, i, j);
+    // expect r == sum(a, i, j);
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l)
-  //   POST: forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x
+  // Test case for combination {1}/Ba=2,c=2,i=0,j=1:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
   {
     var a := new int[2] [4, 3];
-    var l := from_array<int>(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l);
-    expect forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l)
-  //   POST: forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x
-  {
-    var a := new int[3] [5, 4, 6];
-    var l := from_array<int>(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> mem(a[i], l);
-    expect forall x: T {:trigger mem(x, l)} :: mem(x, l) ==> exists y: int {:trigger a[y]} :: 0 <= y < a.Length && a[y] == x;
+    var c := new int[2] [6, 5];
+    var i := 0;
+    var j := 1;
+    var r := queryFast(a, c, i, j);
+    // expect r == sum(a, i, j);
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_query();
-  print "GeneratedTests_query: all tests passed!\n";
-  GeneratedTests_queryFast();
-  print "GeneratedTests_queryFast: all tests passed!\n";
-  GeneratedTests_from_array();
-  print "GeneratedTests_from_array: all tests passed!\n";
+  Passing();
+  Failing();
 }

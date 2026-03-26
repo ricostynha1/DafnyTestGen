@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square__222-232_SDL.dfy
 // Method: square
-// Generated: 2026-03-25 22:48:24
+// Generated: 2026-03-26 14:57:15
 
 // Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
 

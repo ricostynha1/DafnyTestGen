@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\formal-verification_tmp_tmpoepcssay_strings3__1473-1844_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-03-25 22:44:16
+// Generated: 2026-03-26 16:19:50
 
 // formal-verification_tmp_tmpoepcssay_strings3.dfy
 

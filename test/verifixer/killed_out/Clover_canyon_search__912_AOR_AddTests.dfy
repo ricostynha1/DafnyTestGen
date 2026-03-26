@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_canyon_search__912_AOR_Add.dfy
 // Method: CanyonSearch
-// Generated: 2026-03-25 22:46:51
+// Generated: 2026-03-26 14:55:44
 
 // Clover_canyon_search.dfy
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search__689_ROR_Eq.dfy
 // Method: binSearch
-// Generated: 2026-03-25 22:47:08
+// Generated: 2026-03-26 14:56:01
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search.dfy
 

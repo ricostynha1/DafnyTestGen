@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_integer_square_root__140_AOR_Sub.dfy
 // Method: SquareRoot
-// Generated: 2026-03-25 22:46:54
+// Generated: 2026-03-26 14:55:47
 
 // Clover_integer_square_root.dfy
 

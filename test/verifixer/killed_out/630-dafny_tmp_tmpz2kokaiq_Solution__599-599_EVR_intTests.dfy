@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-03-25 22:45:42
+// Generated: 2026-03-26 14:54:32
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 

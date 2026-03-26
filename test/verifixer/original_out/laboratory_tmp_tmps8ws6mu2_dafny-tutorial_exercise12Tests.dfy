@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12.dfy
 // Method: FindMax
-// Generated: 2026-03-25 22:40:00
+// Generated: 2026-03-26 14:58:47
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12.dfy
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p6__942_ROR_Gt.dfy
 // Method: FilterVowelsArray
-// Generated: 2026-03-25 22:48:54
+// Generated: 2026-03-26 14:57:45
 
 // dafny-duck_tmp_tmplawbgxjo_p6.dfy
 

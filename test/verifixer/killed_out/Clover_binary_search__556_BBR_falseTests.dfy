@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_binary_search__556_BBR_false.dfy
 // Method: BinarySearch
-// Generated: 2026-03-25 22:46:19
+// Generated: 2026-03-26 14:55:10
 
 // Clover_binary_search.dfy
 

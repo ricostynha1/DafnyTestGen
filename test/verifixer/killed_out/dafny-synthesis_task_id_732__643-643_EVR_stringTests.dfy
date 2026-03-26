@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_732__643-643_EVR_string.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-03-25 22:52:32
+// Generated: 2026-03-26 15:01:38
 
 // dafny-synthesis_task_id_732.dfy
 

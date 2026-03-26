@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_binary_search.dfy
 // Method: BinarySearch
-// Generated: 2026-03-25 22:36:23
+// Generated: 2026-03-26 14:55:04
 
 // Clover_binary_search.dfy
 

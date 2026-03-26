@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 // Method: Fib
-// Generated: 2026-03-25 22:41:45
+// Generated: 2026-03-26 15:00:54
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 
@@ -137,7 +137,7 @@ method sumBackwards(n: nat) returns (r: nat)
 datatype List<T> = Nil | Cons(head: T, tail: List<T>)
 
 
-method GeneratedTests_Fib()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: r == fib(n)
@@ -163,38 +163,6 @@ method GeneratedTests_Fib()
     expect r == fib(n);
   }
 
-}
-
-method GeneratedTests_addImp()
-{
-  // Test case for combination {1}:
-  //   POST: r == add(l)
-  {
-    var l := 0;
-    var r := addImp(l);
-    expect r == add(l);
-  }
-
-  // Test case for combination {1}:
-  //   POST: r == add(l)
-  {
-    var l := 1;
-    var r := addImp(l);
-    expect r == add(l);
-  }
-
-  // Test case for combination {1}/B:
-  //   POST: r == add(l)
-  {
-    var l := -1;
-    var r := addImp(l);
-    expect r == add(l);
-  }
-
-}
-
-method GeneratedTests_maxArray()
-{
   // Test case for combination {1}:
   //   PRE:  arr.Length > 0
   //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
@@ -225,10 +193,6 @@ method GeneratedTests_maxArray()
     expect max == 7757;
   }
 
-}
-
-method GeneratedTests_maxArrayReverse()
-{
   // Test case for combination {1}:
   //   PRE:  arr.Length > 0
   //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
@@ -259,10 +223,6 @@ method GeneratedTests_maxArrayReverse()
     expect max == 7757;
   }
 
-}
-
-method GeneratedTests_sumBackwards()
-{
   // Test case for combination {1}:
   //   POST: r == sum(n)
   {
@@ -287,18 +247,15 @@ method GeneratedTests_sumBackwards()
     expect r == sum(n);
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()
 {
-  GeneratedTests_Fib();
-  print "GeneratedTests_Fib: all tests passed!\n";
-  GeneratedTests_addImp();
-  print "GeneratedTests_addImp: all tests passed!\n";
-  GeneratedTests_maxArray();
-  print "GeneratedTests_maxArray: all tests passed!\n";
-  GeneratedTests_maxArrayReverse();
-  print "GeneratedTests_maxArrayReverse: all tests passed!\n";
-  GeneratedTests_sumBackwards();
-  print "GeneratedTests_sumBackwards: all tests passed!\n";
+  Passing();
+  Failing();
 }

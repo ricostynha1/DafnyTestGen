@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 // Method: selectionSort
-// Generated: 2026-03-25 22:39:30
+// Generated: 2026-03-26 14:58:20
 
 // feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 

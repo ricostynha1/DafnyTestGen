@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2__4039_AOR_Mul.dfy
 // Method: HoareTripleReqEns
-// Generated: 2026-03-25 22:53:56
+// Generated: 2026-03-26 15:03:02
 
 // formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2.dfy
 

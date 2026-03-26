@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Programs_tmp_tmp99966ew4_binary_search__642-642_AOI.dfy
 // Method: BinarySearch
-// Generated: 2026-03-25 22:48:03
+// Generated: 2026-03-26 14:56:56
 
 // Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao.dfy
 // Method: buscar
-// Generated: 2026-03-25 22:40:07
+// Generated: 2026-03-26 14:58:55
 
 // Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao.dfy
 

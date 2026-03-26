@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote.dfy
 // Method: FindWinner
-// Generated: 2026-03-25 22:40:45
+// Generated: 2026-03-26 14:59:38
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote.dfy
 
@@ -346,50 +346,6 @@ method GeneratedTests_FindWinner()
 
 }
 
-method GeneratedTests_DetermineElection()
-{
-  // Test case for combination {1}:
-  //   POST: result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|
-  //   POST: result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|
-  {
-    var a: seq<int> := [];
-    var result := DetermineElection<int>(a);
-    expect result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|;
-    expect result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|;
-  }
-
-  // Test case for combination {1}:
-  //   POST: result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|
-  //   POST: result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|
-  {
-    var a: seq<int> := [2];
-    var result := DetermineElection<int>(a);
-    expect result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|;
-    expect result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   POST: result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|
-  //   POST: result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|
-  {
-    var a: seq<int> := [4, 3];
-    var result := DetermineElection<int>(a);
-    expect result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|;
-    expect result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|
-  //   POST: result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|
-  {
-    var a: seq<int> := [5, 4, 6];
-    var result := DetermineElection<int>(a);
-    expect result.Winner? ==> 2 * Count(a, 0, |a|, result.cand) > |a|;
-    expect result.NoWinner? ==> forall c: Candidate {:trigger Count(a, 0, |a|, c)} :: 2 * Count(a, 0, |a|, c) <= |a|;
-  }
-
-}
-
 method GeneratedTests_SearchForWinner()
 {
   // Test case for combination P{1}/{1,2}:
@@ -512,8 +468,6 @@ method Main()
 {
   GeneratedTests_FindWinner();
   print "GeneratedTests_FindWinner: all tests passed!\n";
-  GeneratedTests_DetermineElection();
-  print "GeneratedTests_DetermineElection: all tests passed!\n";
   GeneratedTests_SearchForWinner();
   print "GeneratedTests_SearchForWinner: all tests passed!\n";
   GeneratedTests_FindWinner'();

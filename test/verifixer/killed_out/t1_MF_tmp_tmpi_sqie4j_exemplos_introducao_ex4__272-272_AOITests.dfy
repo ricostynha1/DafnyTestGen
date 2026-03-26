@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4__272-272_AOI.dfy
 // Method: Fatorial
-// Generated: 2026-03-25 22:59:04
+// Generated: 2026-03-26 15:08:05
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4.dfy
 

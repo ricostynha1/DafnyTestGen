@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\dafny-synthesis_task_id_809__453-464_COI.dfy
 // Method: IsSmaller
-// Generated: 2026-03-25 22:44:12
+// Generated: 2026-03-26 16:19:46
 
 // dafny-synthesis_task_id_809.dfy
 

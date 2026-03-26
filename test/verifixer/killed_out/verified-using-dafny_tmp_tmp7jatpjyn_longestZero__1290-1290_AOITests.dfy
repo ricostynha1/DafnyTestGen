@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\verified-using-dafny_tmp_tmp7jatpjyn_longestZero__1290-1290_AOI.dfy
 // Method: longestZero
-// Generated: 2026-03-25 23:00:07
+// Generated: 2026-03-26 15:09:12
 
 // verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 

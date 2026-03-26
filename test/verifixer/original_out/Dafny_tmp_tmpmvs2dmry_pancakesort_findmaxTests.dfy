@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_pancakesort_findmax.dfy
 // Method: findMax
-// Generated: 2026-03-25 22:37:16
+// Generated: 2026-03-26 14:55:59
 
 // Dafny_tmp_tmpmvs2dmry_pancakesort_findmax.dfy
 

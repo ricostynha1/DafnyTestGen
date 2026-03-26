@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_135__-_ODL_Sub-left.dfy
 // Method: NthHexagonalNumber
-// Generated: 2026-03-25 22:50:49
+// Generated: 2026-03-26 14:59:44
 
 // dafny-synthesis_task_id_135.dfy
 

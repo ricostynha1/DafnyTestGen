@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-03-25 22:39:13
+// Generated: 2026-03-26 14:58:03
 
 // dafny-synthesis_task_id_605.dfy
 

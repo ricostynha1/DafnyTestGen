@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpv_d3qi10_2_min.dfy
 // Method: minMethod
-// Generated: 2026-03-25 22:37:19
+// Generated: 2026-03-26 14:56:02
 
 // Dafny_tmp_tmpv_d3qi10_2_min.dfy
 

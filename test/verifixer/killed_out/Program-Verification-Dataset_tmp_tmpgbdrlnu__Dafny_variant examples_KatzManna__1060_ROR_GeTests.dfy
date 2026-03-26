@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna__1060_ROR_Ge.dfy
 // Method: NinetyOne
-// Generated: 2026-03-25 22:55:57
+// Generated: 2026-03-26 15:05:02
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna.dfy
 

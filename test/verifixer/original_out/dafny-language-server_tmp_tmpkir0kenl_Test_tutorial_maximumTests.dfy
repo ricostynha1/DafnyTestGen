@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-language-server_tmp_tmpkir0kenl_Test_tutorial_maximum.dfy
 // Method: Maximum
-// Generated: 2026-03-25 22:38:16
+// Generated: 2026-03-26 14:57:04
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_tutorial_maximum.dfy
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 // Method: ComputeFib
-// Generated: 2026-03-25 22:36:46
+// Generated: 2026-03-26 14:55:28
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 
