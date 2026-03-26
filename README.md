@@ -278,6 +278,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - `IsSorted` predicate (built-in translation)
 - `old()` expressions in postconditions (array params captured as sequences before method call, supporting quantifier-bound indices)
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
+- **Simple class methods**: methods inside classes with `modifies this` are supported when all non-ghost fields have supported types and the class has no `{:autocontracts}` attribute or trait parents. Fields are treated as synthetic mutable parameters with pre/post SMT variables. Test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
@@ -293,7 +294,8 @@ The following are detected and automatically skipped because there is nothing to
 
 The following are auto-detected and skipped. Some may be addressed in the future.
 
-- **Methods inside classes or traits**: require object construction, field state setup, `modifies this` handling, etc.
+- **Complex class methods**: classes with `{:autocontracts}`, trait parents, `requires Valid()`/`RepInv()`, or unsupported field types are skipped (simple classes are supported — see above)
+- **Trait methods**: require dynamic dispatch and inheritance handling
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
 - **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics

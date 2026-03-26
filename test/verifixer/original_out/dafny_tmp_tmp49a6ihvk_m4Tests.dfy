@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny_tmp_tmp49a6ihvk_m4.dfy
 // Method: DutchFlag
-// Generated: 2026-03-26 21:20:09
+// Generated: 2026-03-26 22:53:21
 
 // dafny_tmp_tmp49a6ihvk_m4.dfy
 
@@ -41,7 +41,7 @@ method DutchFlag(a: array<Color>)
 datatype Color = Red | White | Blue
 
 
-method Passing()
+method GeneratedTests_DutchFlag()
 {
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
@@ -89,13 +89,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_DutchFlag();
+  print "GeneratedTests_DutchFlag: all tests passed!\n";
 }
