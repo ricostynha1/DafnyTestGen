@@ -122,13 +122,17 @@ cd DafnyTestGen
 dotnet build
 ```
 
-Or publish a standalone executable:
+Or publish a self-contained standalone executable to the `publish/` folder:
 
 ```bash
 dotnet publish -c Release -o ../publish
 ```
 
+This produces `publish/DafnyTestGen.exe` (Windows) or `publish/DafnyTestGen` (Linux/macOS), which can be run directly without .NET installed on the target machine.
+
 ## Usage
+
+Using `dotnet run` (development):
 
 ```bash
 # Generate tests for a single file
@@ -148,6 +152,17 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 
 # Validate tests and split into Passing/Failing methods
 dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
+```
+
+Using the published standalone executable:
+
+```bash
+# Windows
+publish\DafnyTestGen.exe test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
+publish\DafnyTestGen.exe test/correct_progs/in/ -o test/correct_progs/out/
+
+# Linux / macOS
+publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 ```
 
 ### Command-Line Options
@@ -271,6 +286,11 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - Methods inside classes or traits are not supported — they require object construction, field state setup, `modifies this` handling, etc. Such methods are automatically detected and skipped
+- **Bodyless methods** (abstract or declared without an implementation body) are automatically skipped — there is no code to test
+- **Bodyless functions/predicates in contracts**: if a method's `requires` or `ensures` clauses reference a function or predicate that has no body (abstract/opaque), the method is automatically skipped — the function's semantics are unknown and cannot be used for SMT solving or as `expect` assertions
+- **User-defined datatype parameters**: methods whose signature includes a parameter or return value of a user-defined `datatype` type — including when nested inside generic types (e.g., `array<Color>`, `seq<Tree>`) — are automatically skipped, as datatypes are not yet supported in the SMT translation
+- **Map/imap/multiset parameters**: methods whose signature includes a `map<K,V>`, `imap<K,V>`, or `multiset<T>` parameter are automatically skipped — these collection types are not yet supported in the SMT translation
+- **Twostate predicates/functions in contracts**: if a method's `requires` or `ensures` clauses reference a `twostate predicate` or `twostate function`, the method is automatically skipped — twostate predicates reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - Function-typed parameters (e.g., `P: T -> bool`, `f: int ~> int`) are not supported — methods with such parameters are automatically skipped
 - Tuple types (e.g., `(real, real)`) are not supported — methods with tuple parameters or return types are automatically skipped
 - Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
