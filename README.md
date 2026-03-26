@@ -281,25 +281,27 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
-## Excluded (Auto-Skipped)
+## Not Testable (Auto-Skipped)
 
-The following constructs are detected and automatically skipped because they cannot be meaningfully tested or translated to SMT. These are not bugs or limitations of the tool — they are cases where test generation is not applicable. A message is printed when a method or file is skipped.
+The following are detected and automatically skipped because there is nothing to test. A message is printed when a method or file is skipped.
 
 - **Programs with bodyless methods**: if the source file contains any non-ghost method without a body, the entire file is skipped — such programs cannot be compiled by `dafny build`
 - **Bodyless methods**: abstract methods (without an implementation body) are skipped — there is no code to test
 - **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
-- **Methods inside classes or traits**: require object construction, field state setup, `modifies this` handling, etc. — automatically detected and skipped
+
+## Limitations
+
+The following are currently not supported (auto-detected and skipped). Some may be addressed in the future.
+
+- **Methods inside classes or traits**: require object construction, field state setup, `modifies this` handling, etc.
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
-- **Complex datatype parameters**: methods with non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics — are skipped, as recursive/parameterized datatypes cannot be encoded as bounded integers
+- **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
 - **Tuple types** (e.g., `(real, real)`)
 - **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
 - **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
 - **Map/imap/multiset parameters** (`map<K,V>`, `imap<K,V>`, `multiset<T>`)
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
-
-## Limitations
-
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
