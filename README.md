@@ -289,9 +289,9 @@ The following are detected and automatically skipped because there is nothing to
 - **Bodyless methods**: abstract methods (without an implementation body) are skipped — there is no code to test
 - **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
 
-## Limitations
+## Not Currently Supported (Auto-Skipped)
 
-The following are currently not supported (auto-detected and skipped). Some may be addressed in the future.
+The following are auto-detected and skipped. Some may be addressed in the future.
 
 - **Methods inside classes or traits**: require object construction, field state setup, `modifies this` handling, etc.
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
@@ -302,6 +302,9 @@ The following are currently not supported (auto-detected and skipped). Some may 
 - **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
 - **Map/imap/multiset parameters** (`map<K,V>`, `imap<K,V>`, `multiset<T>`)
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
+
+## Supported with Limitations
+
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
