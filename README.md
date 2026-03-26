@@ -286,7 +286,8 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - Methods inside classes or traits are not supported — they require object construction, field state setup, `modifies this` handling, etc. Such methods are automatically detected and skipped
-- **Bodyless methods** (abstract or declared without an implementation body) are automatically skipped — there is no code to test
+- **Programs with bodyless methods**: if the Dafny source file contains any non-ghost method without a body, the entire file is skipped — such programs cannot be compiled by `dafny build`, so generated tests would produce build errors
+- **Bodyless methods** (abstract or declared without an implementation body) are also individually skipped — there is no code to test
 - **Bodyless functions/predicates in contracts**: if a method's `requires` or `ensures` clauses reference a function or predicate that has no body (abstract/opaque), the method is automatically skipped — the function's semantics are unknown and cannot be used for SMT solving or as `expect` assertions
 - **User-defined datatype parameters**: methods whose signature includes a parameter or return value of a user-defined `datatype` type — including when nested inside generic types (e.g., `array<Color>`, `seq<Tree>`) — are automatically skipped, as datatypes are not yet supported in the SMT translation
 - **Map/imap/multiset parameters**: methods whose signature includes a `map<K,V>`, `imap<K,V>`, or `multiset<T>` parameter are automatically skipped — these collection types are not yet supported in the SMT translation
