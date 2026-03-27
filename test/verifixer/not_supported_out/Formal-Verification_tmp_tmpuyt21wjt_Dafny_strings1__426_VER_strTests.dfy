@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1__426_VER_str.dfy
 // Method: isPrefix
-// Generated: 2026-03-27 19:21:51
+// Generated: 2026-03-27 20:10:03
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1.dfy
 
@@ -150,6 +150,7 @@ method Passing()
     var str: seq<char> := [' '];
     var res := isPrefix(pre, str);
     expect res == true;
+    expect !(|pre| > |str|);
   }
 
   // Test case for combination {1}:
@@ -158,7 +159,7 @@ method Passing()
     var sub: seq<char> := [];
     var str: seq<char> := [];
     var res := isSubstring(sub, str);
-    expect res == true; // == isSubstringPredicate(sub, str)
+    expect res == true;
   }
 
   // Test case for combination {1}:
@@ -167,7 +168,7 @@ method Passing()
     var sub: seq<char> := [' '];
     var str: seq<char> := [];
     var res := isSubstring(sub, str);
-    expect res == false; // == isSubstringPredicate(sub, str)
+    expect res == false;
   }
 
   // Test case for combination {1}/Bsub=3,str=1:
@@ -176,7 +177,7 @@ method Passing()
     var sub: seq<char> := ['!', ' ', '"'];
     var str: seq<char> := ['F'];
     var res := isSubstring(sub, str);
-    expect res == false; // == isSubstringPredicate(sub, str)
+    expect res == false;
   }
 
   // Test case for combination {1}/Bsub=3,str=0:
@@ -185,7 +186,7 @@ method Passing()
     var sub: seq<char> := [' ', '"', '!'];
     var str: seq<char> := [];
     var res := isSubstring(sub, str);
-    expect res == false; // == isSubstringPredicate(sub, str)
+    expect res == false;
   }
 
   // Test case for combination {1}:
@@ -289,6 +290,7 @@ method Failing()
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
     // expect res == false;
+    // expect !(|pre| > |str|);
   }
 
   // Test case for combination {1}/Bk=1,str1=3,str2=1:

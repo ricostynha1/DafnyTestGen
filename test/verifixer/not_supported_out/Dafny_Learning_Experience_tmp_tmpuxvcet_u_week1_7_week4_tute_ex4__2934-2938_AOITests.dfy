@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4__2934-2938_AOI.dfy
 // Method: LinearSearch2
-// Generated: 2026-03-27 19:21:18
+// Generated: 2026-03-27 20:09:38
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4.dfy
 
@@ -133,6 +133,7 @@ method Passing()
     var s1: seq<int> := [];
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == -1;
+    expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element;
   }
 
   // Test case for combination {7}:
@@ -147,6 +148,7 @@ method Passing()
     var s1: seq<int> := [9];
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == 1;
+    expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element;
   }
 
   // Test case for combination {2}:
@@ -161,6 +163,7 @@ method Passing()
     var s1: seq<int> := [11];
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == -1;
+    expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element;
   }
 
   // Test case for combination {7}:
@@ -175,6 +178,7 @@ method Passing()
     var s1: seq<int> := [10];
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == 1;
+    expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element;
   }
 
   // Test case for combination {1}:
@@ -202,6 +206,7 @@ method Passing()
     var s1: seq<int> := [10];
     var position := LinearSearch3<int>(data, Element, s1);
     expect position == -1;
+    expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0;
   }
 
   // Test case for combination {1}:
@@ -232,6 +237,7 @@ method Failing()
     var s1: seq<int> := [9];
     var position := LinearSearch3<int>(data, Element, s1);
     // expect position == 1;
+    // expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0;
   }
 
 }

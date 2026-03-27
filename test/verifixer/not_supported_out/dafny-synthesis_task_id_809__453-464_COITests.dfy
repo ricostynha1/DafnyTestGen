@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\dafny-synthesis_task_id_809__453-464_COI.dfy
 // Method: IsSmaller
-// Generated: 2026-03-27 19:21:25
+// Generated: 2026-03-27 20:09:45
 
 // dafny-synthesis_task_id_809.dfy
 
@@ -37,6 +37,8 @@ method Passing()
     var b: seq<int> := [];
     var result := IsSmaller(a, b);
     expect result == true;
+    expect forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i];
+    expect !exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i];
   }
 
   // Test case for combination {3}:
@@ -49,6 +51,8 @@ method Passing()
     var b: seq<int> := [38, 22];
     var result := IsSmaller(a, b);
     expect result == false;
+    expect !forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i];
+    expect exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i];
   }
 
 }
@@ -65,6 +69,8 @@ method Failing()
     var b: seq<int> := [38];
     var result := IsSmaller(a, b);
     // expect result == false;
+    // expect !forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i];
+    // expect exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i];
   }
 
   // Test case for combination {2}:
@@ -77,6 +83,8 @@ method Failing()
     var b: seq<int> := [7718];
     var result := IsSmaller(a, b);
     // expect result == true;
+    // expect forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i];
+    // expect !exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i];
   }
 
 }
