@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0.dfy
-// Method: pop1
-// Generated: 2026-03-27 22:11:10
+// Method: push1
+// Generated: 2026-03-27 22:31:23
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2.dfy
 
@@ -241,6 +241,216 @@ class TwoStacks<T(==,0)> {
 }
 
 
+method GeneratedTests_push1()
+{
+  // Test case for combination {9}:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s1|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [33];
+    obj.Repr := {obj, obj.data};
+    var element := 0;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s1 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {14}:
+  //   PRE:  Valid()
+  //   POST: s1 == old(s1) + [element]
+  //   POST: !(old(|s1|) == N)
+  //   POST: !(old(|s1|) + old(|s2|) == N)
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [12];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 0;
+    var old_s1 := obj.s1;
+    var old_s12 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect obj.s1 == old_s1 + [element];
+    expect !(old_s12 == obj.N);
+    expect !(old_s12 + old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R2:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s1|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [33];
+    obj.Repr := {obj, obj.data};
+    var element := 1;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s1 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R3:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s1|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [33];
+    obj.Repr := {obj, obj.data};
+    var element := 34;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s1 == obj.N);
+    expect obj.Valid();
+  }
+
+}
+
+method GeneratedTests_push2()
+{
+  // Test case for combination {9}:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s2|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 1;
+    obj.n2 := 0;
+    obj.s1 := [33];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 0;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push2(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {14}:
+  //   PRE:  Valid()
+  //   POST: s2 == old(s2) + [element]
+  //   POST: !(old(|s2|) == N)
+  //   POST: !(old(|s1|) + old(|s2|) == N)
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [12];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 0;
+    var old_s2 := obj.s2;
+    var old_s22 := |obj.s2|;
+    var old_s1 := |obj.s1|;
+    var FullStatus := obj.push2(element);
+    expect obj.s2 == old_s2 + [element];
+    expect !(old_s22 == obj.N);
+    expect !(old_s1 + old_s22 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R2:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s2|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 1;
+    obj.n2 := 0;
+    obj.s1 := [33];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 1;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push2(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R3:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s2|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 1;
+    obj.n2 := 0;
+    obj.s1 := [33];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 34;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push2(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+}
+
 method GeneratedTests_pop1()
 {
   // Test case for combination {2}:
@@ -264,7 +474,7 @@ method GeneratedTests_pop1()
     expect obj.Valid();
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Bdata=0,n1=0,n2=0,N=0,s1=0,s2=0:
   //   PRE:  Valid()
   //   POST: !(old(|s1|) != 0)
   //   POST: EmptyStatus == false
@@ -331,7 +541,7 @@ method GeneratedTests_pop2()
     expect obj.Valid();
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Bdata=0,n1=0,n2=0,N=0,s1=0,s2=0:
   //   PRE:  Valid()
   //   POST: !(old(|s2|) != 0)
   //   POST: EmptyStatus == false
@@ -419,48 +629,6 @@ method GeneratedTests_peek1()
     expect obj.Valid();
   }
 
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST: !Empty1()
-  //   POST: EmptyStatus == true
-  //   POST: TopItem == s1[|s1| - 1]
-  //   POST: Valid()
-  {
-    var obj := new TwoStacks<int>(2);
-    var tmp_data := new int[2] [11, 20];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 1;
-    obj.s1 := [11];
-    obj.s2 := [20];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect EmptyStatus == true;
-    expect TopItem == 11;
-    expect !obj.Empty1();
-    expect obj.Valid();
-  }
-
-  // Test case for combination {3}:
-  //   PRE:  Valid()
-  //   POST: EmptyStatus == false
-  //   POST: Empty1()
-  //   POST: Valid()
-  {
-    var obj := new TwoStacks<int>(0);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect EmptyStatus == false;
-    expect obj.Empty1();
-    expect obj.Valid();
-  }
-
 }
 
 method GeneratedTests_peek2()
@@ -499,48 +667,6 @@ method GeneratedTests_peek2()
     obj.n1 := 1;
     obj.n2 := 0;
     obj.s1 := [10];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect EmptyStatus == false;
-    expect obj.Empty2();
-    expect obj.Valid();
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST: !Empty2()
-  //   POST: EmptyStatus == true
-  //   POST: TopItem == s2[|s2| - 1]
-  //   POST: Valid()
-  {
-    var obj := new TwoStacks<int>(2);
-    var tmp_data := new int[2] [11, 20];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 1;
-    obj.s1 := [11];
-    obj.s2 := [20];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect EmptyStatus == true;
-    expect TopItem == 20;
-    expect !obj.Empty2();
-    expect obj.Valid();
-  }
-
-  // Test case for combination {3}:
-  //   PRE:  Valid()
-  //   POST: EmptyStatus == false
-  //   POST: Empty2()
-  //   POST: Valid()
-  {
-    var obj := new TwoStacks<int>(0);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
     obj.s2 := [];
     obj.Repr := {obj, obj.data};
     var EmptyStatus, TopItem := obj.peek2();
@@ -597,47 +723,47 @@ method GeneratedTests_search1()
     expect obj.Valid();
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/BElement=1,data=1,n1=0,n2=1,N=1,s1=0,s2=1:
   //   PRE:  Valid()
   //   POST: position == -1
   //   POST: !(position >= 1)
   //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
   //   POST: Valid()
   {
-    var obj := new TwoStacks<int>(0);
-    var tmp_data := new int[0] [];
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [2];
     obj.data := tmp_data;
     obj.n1 := 0;
-    obj.n2 := 0;
+    obj.n2 := 1;
     obj.s1 := [];
-    obj.s2 := [];
+    obj.s2 := [2];
     obj.Repr := {obj, obj.data};
-    var Element := 0;
+    var Element := 1;
     var position := obj.search1(Element);
     expect position == -1;
     expect forall i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
     expect obj.Valid();
   }
 
-  // Test case for combination {7}:
+  // Test case for combination {2}/BElement=1,data=1,n1=0,n2=0,N=1,s1=0,s2=0:
   //   PRE:  Valid()
-  //   POST: position >= 1
-  //   POST: exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && !Empty1()
-  //   POST: !(position == -1)
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
   //   POST: Valid()
   {
     var obj := new TwoStacks<int>(1);
-    var tmp_data := new int[1] [11];
+    var tmp_data := new int[1] [2];
     obj.data := tmp_data;
-    obj.n1 := 1;
+    obj.n1 := 0;
     obj.n2 := 0;
-    obj.s1 := [11];
+    obj.s1 := [];
     obj.s2 := [];
     obj.Repr := {obj, obj.data};
-    var Element := 11;
+    var Element := 1;
     var position := obj.search1(Element);
-    expect position == 1;
-    expect exists i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
+    expect position == -1;
+    expect forall i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
     expect obj.Valid();
   }
 
@@ -708,21 +834,21 @@ method GeneratedTests_search3()
     expect exists i: int {:trigger obj.s2[i]} :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BElement=0,data=0,n1=0,n2=0,N=0,s1=0,s2=0:
   //   PRE:  Valid()
   //   POST: position == -1
   //   POST: !(position >= 1)
   //   POST: Valid()
   {
-    var obj := new TwoStacks<int>(1);
-    var tmp_data := new int[1] [19];
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
     obj.data := tmp_data;
     obj.n1 := 0;
-    obj.n2 := 1;
+    obj.n2 := 0;
     obj.s1 := [];
-    obj.s2 := [19];
+    obj.s2 := [];
     obj.Repr := {obj, obj.data};
-    var Element := 35;
+    var Element := 0;
     var position := obj.search3(Element);
     expect position == -1;
     expect obj.Valid();
@@ -732,6 +858,10 @@ method GeneratedTests_search3()
 
 method Main()
 {
+  GeneratedTests_push1();
+  print "GeneratedTests_push1: all tests passed!\n";
+  GeneratedTests_push2();
+  print "GeneratedTests_push2: all tests passed!\n";
   GeneratedTests_pop1();
   print "GeneratedTests_pop1: all tests passed!\n";
   GeneratedTests_pop2();

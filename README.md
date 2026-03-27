@@ -103,11 +103,19 @@ The `--repeat <n>` option generates **N distinct test cases** per scenario. Afte
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — All-combinations**: Run DNF all-combinations mode. If enough SAT results, stop.
-2. **Phase 2 — Boundary analysis**: Add boundary value tiers. Solve only the new entries, stopping early once the minimum is reached.
-3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition until the minimum is reached.
+1. **Phase 1 — Tiered combinations**: Run DNF combinations with automatic tier escalation based on clause count:
+   - **n ≤ 5 clauses**: full all-combinations (all 2^n − 1 subsets)
+   - **n ≤ 8 clauses**: up to triples (3-way combinations)
+   - **n ≤ 10 clauses**: up to pairs (2-way combinations)
+   - **n > 10 clauses**: singletons only (one clause at a time)
 
-This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (all-combinations without escalation).
+   Higher tiers are also subject to a time budget — if earlier tiers consume too much time, later tiers are skipped.
+
+2. **Phase 2 — Boundary analysis** (only when n ≤ 10): Add boundary value tiers crossed with singleton combinations. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits. This phase is skipped entirely for high-clause methods (n > 10) where singletons alone provide sufficient coverage.
+
+3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
+
+This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (tiered combinations without escalation).
 
 ## Prerequisites
 

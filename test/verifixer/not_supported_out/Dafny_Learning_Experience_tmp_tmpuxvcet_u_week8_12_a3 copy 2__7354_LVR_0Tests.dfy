@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0.dfy
 // Method: push1
-// Generated: 2026-03-27 22:04:41
+// Generated: 2026-03-27 22:40:27
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2.dfy
 
@@ -243,7 +243,7 @@ class TwoStacks<T(==,0)> {
 
 method Passing()
 {
-  // Test case for combination 9:
+  // Test case for combination {9}:
   //   PRE:  Valid()
   //   POST: !(old(|s1|) + old(|s2|) != N)
   //   POST: !(old(|s1|) == N)
@@ -262,13 +262,13 @@ method Passing()
     var old_s1 := |obj.s1|;
     var old_s2 := |obj.s2|;
     var FullStatus := obj.push1(element);
+    expect FullStatus == false;
     expect !(old_s1 + old_s2 != obj.N);
     expect !(old_s1 == obj.N);
-    expect FullStatus == false;
     expect obj.Valid();
   }
 
-  // Test case for combination 14:
+  // Test case for combination {14}:
   //   PRE:  Valid()
   //   POST: s1 == old(s1) + [element]
   //   POST: !(old(|s1|) == N)
@@ -294,7 +294,57 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 9:
+  // Test case for combination {9}/R2:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s1|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [33];
+    obj.Repr := {obj, obj.data};
+    var element := 1;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s1 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R3:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s1|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [33];
+    obj.Repr := {obj, obj.data};
+    var element := 34;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push1(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s1 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}:
   //   PRE:  Valid()
   //   POST: !(old(|s1|) + old(|s2|) != N)
   //   POST: !(old(|s2|) == N)
@@ -313,13 +363,13 @@ method Passing()
     var old_s1 := |obj.s1|;
     var old_s2 := |obj.s2|;
     var FullStatus := obj.push2(element);
+    expect FullStatus == false;
     expect !(old_s1 + old_s2 != obj.N);
     expect !(old_s2 == obj.N);
-    expect FullStatus == false;
     expect obj.Valid();
   }
 
-  // Test case for combination 14:
+  // Test case for combination {14}:
   //   PRE:  Valid()
   //   POST: s2 == old(s2) + [element]
   //   POST: !(old(|s2|) == N)
@@ -345,7 +395,57 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 2:
+  // Test case for combination {9}/R2:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s2|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 1;
+    obj.n2 := 0;
+    obj.s1 := [33];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 1;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push2(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {9}/R3:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) + old(|s2|) != N)
+  //   POST: !(old(|s2|) == N)
+  //   POST: FullStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [33];
+    obj.data := tmp_data;
+    obj.n1 := 1;
+    obj.n2 := 0;
+    obj.s1 := [33];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var element := 34;
+    var old_s1 := |obj.s1|;
+    var old_s2 := |obj.s2|;
+    var FullStatus := obj.push2(element);
+    expect FullStatus == false;
+    expect !(old_s1 + old_s2 != obj.N);
+    expect !(old_s2 == obj.N);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}:
   //   PRE:  Valid()
   //   POST: !(old(|s1|) != 0)
   //   POST: EmptyStatus == false
@@ -366,7 +466,49 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 2:
+  // Test case for combination {2}/Bn1=0,n2=0,N=0,s2=0:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) != 0)
+  //   POST: EmptyStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var old_s1 := |obj.s1|;
+    var EmptyStatus, PopedItem := obj.pop1();
+    expect EmptyStatus == false;
+    expect !(old_s1 != 0);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}/Bn1=0,n2=0,N=1,s2=0:
+  //   PRE:  Valid()
+  //   POST: !(old(|s1|) != 0)
+  //   POST: EmptyStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [3];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var old_s1 := |obj.s1|;
+    var EmptyStatus, PopedItem := obj.pop1();
+    expect EmptyStatus == false;
+    expect !(old_s1 != 0);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}:
   //   PRE:  Valid()
   //   POST: !(old(|s2|) != 0)
   //   POST: EmptyStatus == false
@@ -387,7 +529,49 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 2:
+  // Test case for combination {2}/Bn1=0,n2=0,N=0,s2=0:
+  //   PRE:  Valid()
+  //   POST: !(old(|s2|) != 0)
+  //   POST: EmptyStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var old_s2 := |obj.s2|;
+    var EmptyStatus, PopedItem := obj.pop2();
+    expect EmptyStatus == false;
+    expect !(old_s2 != 0);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}/Bn1=0,n2=0,N=1,s2=0:
+  //   PRE:  Valid()
+  //   POST: !(old(|s2|) != 0)
+  //   POST: EmptyStatus == false
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [3];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var old_s2 := |obj.s2|;
+    var EmptyStatus, PopedItem := obj.pop2();
+    expect EmptyStatus == false;
+    expect !(old_s2 != 0);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}:
   //   PRE:  Valid()
   //   POST: !Empty1()
   //   POST: EmptyStatus == true
@@ -409,7 +593,7 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 3:
+  // Test case for combination {3}:
   //   PRE:  Valid()
   //   POST: EmptyStatus == false
   //   POST: Empty1()
@@ -429,7 +613,47 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 2:
+  // Test case for combination {3}/Bn1=0,n2=0,N=0,s2=0:
+  //   PRE:  Valid()
+  //   POST: EmptyStatus == false
+  //   POST: Empty1()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var EmptyStatus, TopItem := obj.peek1();
+    expect EmptyStatus == false;
+    expect obj.Empty1();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {3}/Bn1=0,n2=0,N=1,s2=0:
+  //   PRE:  Valid()
+  //   POST: EmptyStatus == false
+  //   POST: Empty1()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [2];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var EmptyStatus, TopItem := obj.peek1();
+    expect EmptyStatus == false;
+    expect obj.Empty1();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}:
   //   PRE:  Valid()
   //   POST: !Empty2()
   //   POST: EmptyStatus == true
@@ -451,7 +675,7 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 3:
+  // Test case for combination {3}:
   //   PRE:  Valid()
   //   POST: EmptyStatus == false
   //   POST: Empty2()
@@ -471,7 +695,47 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 2:
+  // Test case for combination {3}/Bn1=0,n2=0,N=0,s2=0:
+  //   PRE:  Valid()
+  //   POST: EmptyStatus == false
+  //   POST: Empty2()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var EmptyStatus, TopItem := obj.peek2();
+    expect EmptyStatus == false;
+    expect obj.Empty2();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {3}/Bn1=0,n2=0,N=1,s2=0:
+  //   PRE:  Valid()
+  //   POST: EmptyStatus == false
+  //   POST: Empty2()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [2];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var EmptyStatus, TopItem := obj.peek2();
+    expect EmptyStatus == false;
+    expect obj.Empty2();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}:
   //   PRE:  Valid()
   //   POST: position == -1
   //   POST: !(position >= 1)
@@ -493,7 +757,7 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 7:
+  // Test case for combination {7}:
   //   PRE:  Valid()
   //   POST: position >= 1
   //   POST: exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && !Empty1()
@@ -515,7 +779,51 @@ method Passing()
     expect obj.Valid();
   }
 
-  // Test case for combination 4:
+  // Test case for combination {2}/BElement=1,n1=0,n2=1,N=1,s2=1:
+  //   PRE:  Valid()
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [2];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [2];
+    obj.Repr := {obj, obj.data};
+    var Element := 1;
+    var position := obj.search1(Element);
+    expect position == -1;
+    expect forall i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {2}/BElement=1,n1=0,n2=0,N=1,s2=0:
+  //   PRE:  Valid()
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [2];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var Element := 1;
+    var position := obj.search1(Element);
+    expect position == -1;
+    expect forall i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
+    expect obj.Valid();
+  }
+
+  // Test case for combination {4}:
   //   PRE:  Valid()
   //   POST: position >= 1
   //   POST: exists i: int {:trigger s2[i]} :: 0 <= i < |s2| && s2[i] == Element && !Empty2()
@@ -536,11 +844,31 @@ method Passing()
     expect obj.Valid();
   }
 
+  // Test case for combination {1}/BElement=0,n1=0,n2=0,N=0,s2=0:
+  //   PRE:  Valid()
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: Valid()
+  {
+    var obj := new TwoStacks<int>(0);
+    var tmp_data := new int[0] [];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 0;
+    obj.s1 := [];
+    obj.s2 := [];
+    obj.Repr := {obj, obj.data};
+    var Element := 0;
+    var position := obj.search3(Element);
+    expect position == -1;
+    expect obj.Valid();
+  }
+
 }
 
 method Failing()
 {
-  // Test case for combination 1:
+  // Test case for combination {1}:
   //   PRE:  Valid()
   //   POST: position == -1
   //   POST: !(position >= 1)
@@ -558,6 +886,28 @@ method Failing()
     var position := obj.search3(Element);
     // expect position == -1;
     // expect obj.Valid();
+  }
+
+  // Test case for combination {1,2}:
+  //   PRE:  Valid()
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: Valid()
+  //   POST: exists i: int {:trigger s2[i]} :: 0 <= i < |s2| && s2[i] == Element && !Empty2()
+  {
+    var obj := new TwoStacks<int>(1);
+    var tmp_data := new int[1] [19];
+    obj.data := tmp_data;
+    obj.n1 := 0;
+    obj.n2 := 1;
+    obj.s1 := [];
+    obj.s2 := [19];
+    obj.Repr := {obj, obj.data};
+    var Element := 19;
+    var position := obj.search3(Element);
+    // expect position == -1;
+    // expect obj.Valid();
+    // expect exists i: int {:trigger obj.s2[i]} :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
   }
 
 }
