@@ -1,0 +1,15 @@
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.AssemblyInfoInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.AssemblyInfo.cs
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.csproj.CoreCompileInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.sourcelink.json
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.exe
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.dll
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\refint\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.dll
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.pdb
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.deps.json
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.genruntimeconfig.cache
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.runtimeconfig.json
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.dll
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\obj\Debug\net8.0\ref\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.dll
+C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0Tests.pdb
