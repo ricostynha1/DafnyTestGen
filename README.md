@@ -278,7 +278,8 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - `IsSorted` predicate (built-in translation)
 - `old()` expressions in postconditions (array params captured as sequences before method call, supporting quantifier-bound indices)
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
-- **Simple class methods**: methods inside classes with `modifies this` are supported when all non-ghost fields have supported types and the class has no `{:autocontracts}` attribute or trait parents. Fields are treated as synthetic mutable parameters with pre/post SMT variables. Test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references
+- **Simple class methods**: methods inside classes with `modifies this` are supported when all non-ghost fields have supported types and the class has no trait parents. Fields are treated as synthetic mutable parameters with pre/post SMT variables. Test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references
+- **`{:autocontracts}` classes**: classes with the `{:autocontracts}` attribute are supported. `Valid()` is automatically injected as an implicit precondition (inlined to its body for SMT translation). Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via ensures clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions
 - Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
@@ -294,7 +295,7 @@ The following are detected and automatically skipped because there is nothing to
 
 The following are auto-detected and skipped. Some may be addressed in the future.
 
-- **Complex class methods**: classes with `{:autocontracts}`, trait parents, `requires Valid()`/`RepInv()`, or unsupported field types are skipped (simple classes are supported — see above)
+- **Complex class methods**: classes with trait parents, `requires Valid()`/`RepInv()` (non-autocontracts), or unsupported field types are skipped (simple classes and `{:autocontracts}` classes are supported — see above)
 - **Trait methods**: require dynamic dispatch and inheritance handling
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
