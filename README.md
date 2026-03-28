@@ -288,12 +288,28 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - **`set<T>` input parameters**: sets are encoded as `(Array Int Bool)` characteristic functions in SMT with a bounded element universe (8 values). The universe is element-type-dependent: `int` uses `{-2, -1, 0, 1, 2, 3, 4, 5}`, `nat` uses `{0..7}`, `char` uses `{'a'..'h'}` (codes 97–104), and enum datatypes use ordinals `{0..min(N,8)-1}`. Membership (`x in S`), cardinality (`|S|`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements), capped at the number of constructors + 1 for enum element types. Set literals are emitted as Dafny set display expressions with proper formatting (e.g., `{-1, 0, 3}` for int, `{'a', 'c'}` for char, `{Red, Blue}` for enums). Supported element types: `int`, `nat`, `char`, enum datatypes, and generic `T` (treated as int)
 - **`multiset<T>` parameters**: multisets are encoded as `(Array Int Int)` count functions in SMT with the same element-type-dependent bounded universe as sets, where each element maps to its multiplicity. Multiset variables are constructed from a zero-default base array with per-element variables, ensuring out-of-universe indices are always 0 without quantifier constraints. Membership (`x in M`), cardinality (`|M|`), element count (`M[x]`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Operations are expanded pointwise over the bounded universe. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements). Multiset literals are emitted as Dafny multiset display expressions with proper formatting (e.g., `multiset{0, 2, 2, 5}` for int, `multiset{0, 3, 3}` for nat). Supported element types: `int`, `nat`, `char`, enum datatypes, and generic `T` (treated as int)
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
-- **Simple class methods**: methods inside classes with `modifies this` are supported when all non-ghost fields have supported types and the class has no trait parents. Fields are treated as synthetic mutable parameters with pre/post SMT variables. Test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references
-- **`{:autocontracts}` classes**: classes with the `{:autocontracts}` attribute are supported. `Valid()` is automatically injected as both an implicit precondition and postcondition (inlined to its body for SMT translation, constraining both pre-state and post-state). Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via ensures clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions
-- **Non-autocontracts classes with `requires Valid()`**: classes that use a manual `Valid()` predicate (without `{:autocontracts}`) are supported, including those with ghost fields, `modifies Repr`, and class-level type parameters. The `Valid()` body is inlined into preconditions and postconditions for SMT translation. Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding, since they cannot be represented in the solver — when one conjunct of a `&&` chain is untranslatable, it is silently dropped while preserving the remaining constraints. See **Ghost Field Handling** below
-- **Ghost fields**: ghost fields (`ghost var`, `ghost const`) in non-autocontracts classes are fully supported. In the generated test file, `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables. This allows the test code to directly assign and read ghost state. Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals. Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged. The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields. The `old()` wrapper is also stripped from method bodies, since it is invalid for non-ghost variables in compiled code — the semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point
-- Ghost function/predicate/field removal for runtime use (ghost keywords stripped in test copies)
 - Uninterpreted functions (postcondition literals used as assertions)
+
+### Class Method Support
+
+Methods inside Dafny classes are supported in three tiers, with increasing complexity. In all cases, fields are treated as synthetic mutable parameters with pre/post SMT variables; test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references. Classes with trait parents or unsupported field types are auto-skipped.
+
+**Simple classes** — classes with `modifies this` whose non-ghost fields all have supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, enums). No `Valid()` predicate is required.
+
+**`{:autocontracts}` classes** — classes with the `{:autocontracts}` attribute. `Valid()` is automatically injected as both an implicit precondition and postcondition (its body is inlined for SMT translation, constraining both pre-state and post-state). Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via `ensures` clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions.
+
+**Non-autocontracts classes with `requires Valid()`** — classes that use a manual `Valid()` predicate (without `{:autocontracts}`), including those with ghost fields, `modifies Repr`, and class-level type parameters. The `Valid()` body is inlined into preconditions and postconditions for SMT translation. Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding — when one conjunct of a `&&` chain is untranslatable, it is silently dropped while preserving the remaining constraints.
+
+#### Ghost Field Handling
+
+Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. In the generated test file:
+
+- `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
+- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals
+- Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
+- The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields
+- `old()` wrappers are stripped from method bodies (invalid for non-ghost variables in compiled code — semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point)
+- Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions
 
 ## Not Testable (Auto-Skipped)
 
@@ -307,8 +323,7 @@ The following are detected and automatically skipped because there is nothing to
 
 The following are auto-detected and skipped. Some may be addressed in the future.
 
-- **Complex class methods**: classes with trait parents or unsupported field types are skipped (simple classes, `{:autocontracts}` classes, and non-autocontracts classes with `requires Valid()` are supported — see above)
-- **Trait methods**: require dynamic dispatch and inheritance handling
+- **Trait methods and classes with traits**: require dynamic dispatch and inheritance handling (classes with trait parents are auto-skipped)
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
 - **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
