@@ -42,3 +42,18 @@ method AddElement(M: multiset<int>, x: int) returns (C: multiset<int>)
 {
   C := M + multiset{x};
 }
+
+// --- multiset<nat> ---
+
+method MultisetContainsNat(M: multiset<nat>, x: nat) returns (r: bool)
+  requires |M| > 0
+  ensures r == (x in M)
+{
+  r := x in M;
+}
+
+method MultisetUnionNat(A: multiset<nat>, B: multiset<nat>) returns (C: multiset<nat>)
+  ensures C == A + B
+{
+  C := A + B;
+}

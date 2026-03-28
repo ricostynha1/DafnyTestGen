@@ -64,3 +64,50 @@ method RemoveElement(S: set<int>, x: int) returns (C: set<int>)
 {
   C := S - {x};
 }
+
+// --- set<nat> ---
+
+method SetContainsNat(S: set<nat>, x: nat) returns (r: bool)
+  requires |S| > 0
+  ensures r == (x in S)
+{
+  r := x in S;
+}
+
+method SetUnionNat(A: set<nat>, B: set<nat>) returns (C: set<nat>)
+  ensures C == A + B
+{
+  C := A + B;
+}
+
+// --- set<char> ---
+
+method SetContainsChar(S: set<char>, c: char) returns (r: bool)
+  requires |S| > 0
+  ensures r == (c in S)
+{
+  r := c in S;
+}
+
+method SetUnionChar(A: set<char>, B: set<char>) returns (C: set<char>)
+  ensures C == A + B
+{
+  C := A + B;
+}
+
+// --- set<enum> ---
+
+datatype Color = Red | White | Blue
+
+method SetContainsColor(S: set<Color>, c: Color) returns (r: bool)
+  requires |S| > 0
+  ensures r == (c in S)
+{
+  r := c in S;
+}
+
+method SetUnionColor(A: set<Color>, B: set<Color>) returns (C: set<Color>)
+  ensures C == A + B
+{
+  C := A + B;
+}
