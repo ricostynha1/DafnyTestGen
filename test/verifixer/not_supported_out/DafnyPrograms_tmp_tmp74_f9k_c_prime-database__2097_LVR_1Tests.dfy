@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2097_LVR_1.dfy
 // Method: InsertPrime
-// Generated: 2026-03-28 19:26:21
+// Generated: 2026-03-28 21:32:56
 
 // DafnyPrograms_tmp_tmp74_f9k_c_prime-database.dfy
 
@@ -147,7 +147,7 @@ method GeneratedTests_InsertPrime()
     var tmp_database: map<nat, bool> := map[];
     obj.database := tmp_database;
     obj.Repr := {obj};
-    var n := 0;
+    var n := 2;
     var old_database_Keys := obj.database.Keys;
     obj.InsertPrime(n);
     expect obj.Valid();
