@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2097_LVR_1.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2104_ROR_Lt.dfy
 // Method: InsertPrime
-// Generated: 2026-03-28 19:26:21
+// Generated: 2026-03-28 19:26:07
 
 // DafnyPrograms_tmp_tmp74_f9k_c_prime-database.dfy
 
@@ -113,7 +113,7 @@ class {:autocontracts} PrimeMap {
     ensures result <==> prime(n)
     decreases n
   {
-    if n == 1 || n == 1 {
+    if n == 0 || n < 1 {
       return false;
     }
     var i := 2;
