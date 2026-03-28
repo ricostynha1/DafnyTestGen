@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\formal-verification_tmp_tmpoepcssay_strings3__1473-1844_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-03-28 10:06:16
+// Generated: 2026-03-28 19:27:49
 
 // formal-verification_tmp_tmpoepcssay_strings3.dfy
 
@@ -218,10 +218,9 @@ method GeneratedTests_isSubstring()
   {
     var sub: seq<char> := [];
     var str: seq<char> := [];
-    var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
-    expect res == check_res;
+    expect res ==> isSubstringPred(sub, str);
     expect isSubstringPred(sub, str) ==> res;
     expect isSubstringPred(sub, str) ==> res;
     expect !res <==> isNotSubstringPred(sub, str);
@@ -236,10 +235,9 @@ method GeneratedTests_isSubstring()
   {
     var sub: seq<char> := [];
     var str: seq<char> := [' '];
-    var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
-    expect res == check_res;
+    expect res ==> isSubstringPred(sub, str);
     expect isSubstringPred(sub, str) ==> res;
     expect isSubstringPred(sub, str) ==> res;
     expect !res <==> isNotSubstringPred(sub, str);
@@ -254,10 +252,9 @@ method GeneratedTests_isSubstring()
   {
     var sub: seq<char> := [];
     var str: seq<char> := [' ', '!'];
-    var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
-    expect res == check_res;
+    expect res ==> isSubstringPred(sub, str);
     expect isSubstringPred(sub, str) ==> res;
     expect isSubstringPred(sub, str) ==> res;
     expect !res <==> isNotSubstringPred(sub, str);
@@ -272,10 +269,9 @@ method GeneratedTests_isSubstring()
   {
     var sub: seq<char> := [];
     var str: seq<char> := [' ', '"', '!'];
-    var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
-    expect res == check_res;
+    expect res ==> isSubstringPred(sub, str);
     expect isSubstringPred(sub, str) ==> res;
     expect isSubstringPred(sub, str) ==> res;
     expect !res <==> isNotSubstringPred(sub, str);
