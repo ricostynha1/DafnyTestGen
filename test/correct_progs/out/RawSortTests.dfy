@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-25 13:50:22
+// Generated: 2026-03-28 00:33:26
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -29,14 +29,14 @@ function Inversions(a: array<T>): set<(nat, nat)>
 method RawSort(a: array<T>)
    modifies a
    ensures Sorted(a)
-   ensures multiset(a[..]) == multiset(old(a[..]))
+   ensures multiset(a[..]) == multiset((a[..]))
    decreases |Inversions(a)|
 {
    if i, j :| 0 <= i < j < a.Length && a[i] > a[j]  {
-      ghost var bef := Inversions(a); // helper, inversions before swapping
+      var bef := Inversions(a); // helper, inversions before swapping
       a[i], a[j] := a[j], a[i]; // swap
-      ghost var aft := Inversions(a); // helper, inversions after swapping  
-      ghost var aft2bef := map p | p in aft :: // helper, maps inversions in 'aft' to 'bef'
+      var aft := Inversions(a); // helper, inversions after swapping  
+      var aft2bef := map p | p in aft :: // helper, maps inversions in 'aft' to 'bef'
                   (if p.0 == i && p.1 > j then j else if p.0 == j then i else p.0,  // helper, cont.
                    if p.1 == i then j else if p.1 == j && p.0 < i then i else p.1); // helper, cont.   
       assert forall a, b :: (a, b) in aft ==> a != b; // helper, injective              
@@ -70,18 +70,18 @@ method Passing()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: Sorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[1] [5];
+    var a := new T[1] [3];
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -92,7 +92,7 @@ method Passing()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -103,7 +103,7 @@ method Passing()
     var old_a := a[..];
     RawSort(a);
     expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }

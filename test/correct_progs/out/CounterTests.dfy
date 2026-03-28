@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-03-26 23:22:34
+// Generated: 2026-03-28 00:32:32
 
 class Counter {
     var count: int
@@ -9,7 +9,7 @@ class Counter {
     method Increment()
         modifies this
         requires count >= 0
-        ensures count == old(count) + 1
+        ensures count == (count) + 1
     {
         count := count + 1;
     }
@@ -36,7 +36,7 @@ method Passing()
     expect obj.count == old_count + 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bcount=1:
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
   {
@@ -67,7 +67,7 @@ method Passing()
     expect obj.count == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bcount=1:
   //   POST: count == 0
   {
     var obj := new Counter;

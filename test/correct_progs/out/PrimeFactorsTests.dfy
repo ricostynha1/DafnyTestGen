@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-03-25 13:50:16
+// Generated: 2026-03-28 00:33:21
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -282,6 +282,11 @@ function BezoutCoefficients(a: nat, b: nat): (r: (int, int))
 
 method Passing()
 {
+  // (no passing tests)
+}
+
+method Failing()
+{
   // Test case for combination {1}:
   //   PRE:  n > 1
   //   POST: AllPrime(f)
@@ -290,12 +295,10 @@ method Passing()
   {
     var n := 2;
     var f := PrimeFactors(n);
-    expect AllPrime(f);
-    expect IsSorted(f);
-    expect ProdF(f) == n;
+    // expect f == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=3:
   //   PRE:  n > 1
   //   POST: AllPrime(f)
   //   POST: IsSorted(f)
@@ -303,9 +306,7 @@ method Passing()
   {
     var n := 3;
     var f := PrimeFactors(n);
-    expect AllPrime(f);
-    expect IsSorted(f);
-    expect ProdF(f) == n;
+    // expect f == [];
   }
 
   // Test case for combination {1}/R3:
@@ -316,16 +317,9 @@ method Passing()
   {
     var n := 4;
     var f := PrimeFactors(n);
-    expect AllPrime(f);
-    expect IsSorted(f);
-    expect ProdF(f) == n;
+    // expect f == [];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()

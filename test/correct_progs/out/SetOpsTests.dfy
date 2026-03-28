@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-03-27 20:09:10
+// Generated: 2026-03-28 00:33:41
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -71,7 +71,7 @@ method RemoveElement(S: set<int>, x: int) returns (C: set<int>)
 }
 
 
-method GeneratedTests_SetContains()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |S| > 0
@@ -79,16 +79,6 @@ method GeneratedTests_SetContains()
   {
     var S: set<int> := {0, 1, 2, 3, 4, 5, 6};
     var x := 0;
-    var r := SetContains(S, x);
-    expect r == true;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  |S| > 0
-  //   POST: r == (x in S)
-  {
-    var S: set<int> := {0, 1, 2, 3, 4, 5, 6, 7};
-    var x := 1;
     var r := SetContains(S, x);
     expect r == true;
   }
@@ -113,10 +103,16 @@ method GeneratedTests_SetContains()
     expect r == false;
   }
 
-}
+  // Test case for combination {1}/BS=2,x=0:
+  //   PRE:  |S| > 0
+  //   POST: r == (x in S)
+  {
+    var S: set<int> := {6, 7};
+    var x := 0;
+    var r := SetContains(S, x);
+    expect r == false;
+  }
 
-method GeneratedTests_SetUnion()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -126,37 +122,33 @@ method GeneratedTests_SetUnion()
     expect C == {};
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
   {
-    var A: set<int> := {2, 3, 4, 6};
-    var B: set<int> := {2, 3, 4, 6};
+    var A: set<int> := {};
+    var B: set<int> := {2};
     var C := SetUnion(A, B);
-    expect C == {2, 3, 4, 6};
+    expect C == {2};
   }
 
-  // Test case for combination {1}/BA=3,B=1:
+  // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
   {
-    var A: set<int> := {0, 2, 5};
-    var B: set<int> := {7};
+    var A: set<int> := {};
+    var B: set<int> := {3, 5};
     var C := SetUnion(A, B);
-    expect C == {0, 2, 5, 7};
+    expect C == {3, 5};
   }
 
-  // Test case for combination {1}/BA=3,B=0:
+  // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A + B
   {
-    var A: set<int> := {0, 1, 7};
-    var B: set<int> := {};
+    var A: set<int> := {};
+    var B: set<int> := {3, 4, 5};
     var C := SetUnion(A, B);
-    expect C == {0, 1, 7};
+    expect C == {3, 4, 5};
   }
 
-}
-
-method GeneratedTests_SetIntersection()
-{
   // Test case for combination {1}:
   //   POST: C == A * B
   {
@@ -166,37 +158,33 @@ method GeneratedTests_SetIntersection()
     expect C == {};
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A * B
   {
-    var A: set<int> := {2, 3, 4, 6};
-    var B: set<int> := {2, 3, 4, 6};
-    var C := SetIntersection(A, B);
-    expect C == {2, 3, 4, 6};
-  }
-
-  // Test case for combination {1}/BA=3,B=1:
-  //   POST: C == A * B
-  {
-    var A: set<int> := {0, 2, 5};
-    var B: set<int> := {7};
+    var A: set<int> := {};
+    var B: set<int> := {2};
     var C := SetIntersection(A, B);
     expect C == {};
   }
 
-  // Test case for combination {1}/BA=3,B=0:
+  // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A * B
   {
-    var A: set<int> := {0, 1, 7};
-    var B: set<int> := {};
+    var A: set<int> := {};
+    var B: set<int> := {3, 5};
     var C := SetIntersection(A, B);
     expect C == {};
   }
 
-}
+  // Test case for combination {1}/BA=0,B=3:
+  //   POST: C == A * B
+  {
+    var A: set<int> := {};
+    var B: set<int> := {3, 4, 5};
+    var C := SetIntersection(A, B);
+    expect C == {};
+  }
 
-method GeneratedTests_SetDifference()
-{
   // Test case for combination {1}:
   //   POST: C == A - B
   {
@@ -206,37 +194,33 @@ method GeneratedTests_SetDifference()
     expect C == {};
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A - B
   {
-    var A: set<int> := {2, 3, 4, 6};
-    var B: set<int> := {2, 3, 4, 6};
+    var A: set<int> := {};
+    var B: set<int> := {2};
     var C := SetDifference(A, B);
     expect C == {};
   }
 
-  // Test case for combination {1}/BA=3,B=1:
+  // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A - B
   {
-    var A: set<int> := {0, 2, 5};
-    var B: set<int> := {7};
+    var A: set<int> := {};
+    var B: set<int> := {3, 5};
     var C := SetDifference(A, B);
-    expect C == {0, 2, 5};
+    expect C == {};
   }
 
-  // Test case for combination {1}/BA=3,B=0:
+  // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A - B
   {
-    var A: set<int> := {0, 1, 7};
-    var B: set<int> := {};
+    var A: set<int> := {};
+    var B: set<int> := {3, 4, 5};
     var C := SetDifference(A, B);
-    expect C == {0, 1, 7};
+    expect C == {};
   }
 
-}
-
-method GeneratedTests_SetSubset()
-{
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
@@ -257,30 +241,26 @@ method GeneratedTests_SetSubset()
     expect r == false;
   }
 
-  // Test case for combination P{1}/{1}:
+  // Test case for combination P{1}/{1}/BA=3,B=3:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: set<int> := {5};
-    var B: set<int> := {2, 3, 4, 5};
+    var A: set<int> := {3, 5, 7};
+    var B: set<int> := {3, 5, 7};
     var r := SetSubset(A, B);
     expect r == true;
   }
 
-  // Test case for combination P{2}/{1}:
+  // Test case for combination P{1}/{1}/BA=2,B=2:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: set<int> := {0};
-    var B: set<int> := {2, 5};
+    var A: set<int> := {3, 7};
+    var B: set<int> := {3, 7};
     var r := SetSubset(A, B);
-    expect r == false;
+    expect r == true;
   }
 
-}
-
-method GeneratedTests_AllPositive()
-{
   // Test case for combination {1}:
   //   POST: r == forall x :: x in S ==> x > 0
   {
@@ -289,37 +269,30 @@ method GeneratedTests_AllPositive()
     expect r == true;
   }
 
-  // Test case for combination {1}:
-  //   POST: r == forall x :: x in S ==> x > 0
-  {
-    var S: set<int> := {6, 7};
-    var check_r := forall x :: x in S ==> x > 0;
-    var r := AllPositive(S);
-    expect r == check_r;
-  }
-
   // Test case for combination {1}/BS=1:
   //   POST: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {0};
-    var check_r := forall x :: x in S ==> x > 0;
     var r := AllPositive(S);
-    expect r == check_r;
+    expect r == false;
   }
 
   // Test case for combination {1}/BS=2:
   //   POST: r == forall x :: x in S ==> x > 0
   {
-    var S: set<int> := {1, 6};
-    var check_r := forall x :: x in S ==> x > 0;
+    var S: set<int> := {6, 7};
     var r := AllPositive(S);
-    expect r == check_r;
+    expect r == true;
   }
 
-}
+  // Test case for combination {1}/BS=3:
+  //   POST: r == forall x :: x in S ==> x > 0
+  {
+    var S: set<int> := {5, 6, 7};
+    var r := AllPositive(S);
+    expect r == true;
+  }
 
-method GeneratedTests_HasZero()
-{
   // Test case for combination {1}:
   //   POST: r == exists x :: x in S && x == 0
   {
@@ -328,7 +301,15 @@ method GeneratedTests_HasZero()
     expect r == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BS=1:
+  //   POST: r == exists x :: x in S && x == 0
+  {
+    var S: set<int> := {0};
+    var r := HasZero(S);
+    expect r == true;
+  }
+
+  // Test case for combination {1}/BS=2:
   //   POST: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {6, 7};
@@ -336,28 +317,14 @@ method GeneratedTests_HasZero()
     expect r == false;
   }
 
-  // Test case for combination {1}/BS=1:
+  // Test case for combination {1}/BS=3:
   //   POST: r == exists x :: x in S && x == 0
   {
-    var S: set<int> := {0};
-    var check_r := exists x :: x in S && x == 0;
+    var S: set<int> := {5, 6, 7};
     var r := HasZero(S);
-    expect r == check_r;
+    expect r == false;
   }
 
-  // Test case for combination {1}/BS=2:
-  //   POST: r == exists x :: x in S && x == 0
-  {
-    var S: set<int> := {1, 6};
-    var check_r := exists x :: x in S && x == 0;
-    var r := HasZero(S);
-    expect r == check_r;
-  }
-
-}
-
-method GeneratedTests_SubsetForall()
-{
   // Test case for combination {1}:
   //   POST: r == forall x :: x in A ==> x in B
   {
@@ -367,39 +334,33 @@ method GeneratedTests_SubsetForall()
     expect r == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BA=0,B=1:
   //   POST: r == forall x :: x in A ==> x in B
   {
-    var A: set<int> := {3, 5, 6, 7};
-    var B: set<int> := {3, 5, 6, 7};
+    var A: set<int> := {};
+    var B: set<int> := {3};
     var r := SubsetForall(A, B);
     expect r == true;
   }
 
-  // Test case for combination {1}/BA=3,B=1:
+  // Test case for combination {1}/BA=0,B=2:
   //   POST: r == forall x :: x in A ==> x in B
   {
-    var A: set<int> := {0, 1, 2};
-    var B: set<int> := {7};
-    var check_r := forall x :: x in A ==> x in B;
+    var A: set<int> := {};
+    var B: set<int> := {4, 6};
     var r := SubsetForall(A, B);
-    expect r == check_r;
+    expect r == true;
   }
 
-  // Test case for combination {1}/BA=3,B=0:
+  // Test case for combination {1}/BA=0,B=3:
   //   POST: r == forall x :: x in A ==> x in B
   {
-    var A: set<int> := {1, 3, 7};
-    var B: set<int> := {};
-    var check_r := forall x :: x in A ==> x in B;
+    var A: set<int> := {};
+    var B: set<int> := {0, 2, 3};
     var r := SubsetForall(A, B);
-    expect r == check_r;
+    expect r == true;
   }
 
-}
-
-method GeneratedTests_AddElement()
-{
   // Test case for combination {1}:
   //   POST: C == S + {x}
   //   POST: x in C
@@ -409,17 +370,6 @@ method GeneratedTests_AddElement()
     var x := 0;
     var C := AddElement(S, x);
     expect C == {0};
-  }
-
-  // Test case for combination {1}:
-  //   POST: C == S + {x}
-  //   POST: x in C
-  //   POST: forall y :: y in S ==> y in C
-  {
-    var S: set<int> := {};
-    var x := 5;
-    var C := AddElement(S, x);
-    expect C == {5};
   }
 
   // Test case for combination {1}/BS=0,x=1:
@@ -444,10 +394,17 @@ method GeneratedTests_AddElement()
     expect C == {0, 4};
   }
 
-}
+  // Test case for combination {1}/BS=1,x=1:
+  //   POST: C == S + {x}
+  //   POST: x in C
+  //   POST: forall y :: y in S ==> y in C
+  {
+    var S: set<int> := {4};
+    var x := 1;
+    var C := AddElement(S, x);
+    expect C == {1, 4};
+  }
 
-method GeneratedTests_RemoveElement()
-{
   // Test case for combination {1}:
   //   PRE:  x in S
   //   POST: C == S - {x}
@@ -460,7 +417,7 @@ method GeneratedTests_RemoveElement()
     expect C == {};
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BS=1,x=1:
   //   PRE:  x in S
   //   POST: C == S - {x}
   //   POST: x !in C
@@ -498,26 +455,13 @@ method GeneratedTests_RemoveElement()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SetContains();
-  print "GeneratedTests_SetContains: all tests passed!\n";
-  GeneratedTests_SetUnion();
-  print "GeneratedTests_SetUnion: all tests passed!\n";
-  GeneratedTests_SetIntersection();
-  print "GeneratedTests_SetIntersection: all tests passed!\n";
-  GeneratedTests_SetDifference();
-  print "GeneratedTests_SetDifference: all tests passed!\n";
-  GeneratedTests_SetSubset();
-  print "GeneratedTests_SetSubset: all tests passed!\n";
-  GeneratedTests_AllPositive();
-  print "GeneratedTests_AllPositive: all tests passed!\n";
-  GeneratedTests_HasZero();
-  print "GeneratedTests_HasZero: all tests passed!\n";
-  GeneratedTests_SubsetForall();
-  print "GeneratedTests_SubsetForall: all tests passed!\n";
-  GeneratedTests_AddElement();
-  print "GeneratedTests_AddElement: all tests passed!\n";
-  GeneratedTests_RemoveElement();
-  print "GeneratedTests_RemoveElement: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-03-25 13:49:47
+// Generated: 2026-03-28 00:32:50
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -34,7 +34,7 @@ method Passing()
     expect max == 0.0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]

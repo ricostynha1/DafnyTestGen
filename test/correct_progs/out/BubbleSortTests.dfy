@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-03-25 13:49:18
+// Generated: 2026-03-28 00:32:15
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -26,7 +26,7 @@ predicate IsPartitionedAndRightSorted(s: seq<int>, n: int)
 method BubbleSort(a: array<int>)
   modifies a
   ensures IsSorted(a[..])
-  ensures multiset(a[..]) == multiset(old(a[..]))
+  ensures multiset(a[..]) == multiset((a[..]))
 {
   var n := a.Length; // sorted elements are a[n..] (and greater than a[..n])
 
@@ -34,7 +34,7 @@ method BubbleSort(a: array<int>)
   while n  > 1
     invariant 0 <= n <= a.Length
     invariant IsPartitionedAndRightSorted(a[..], n)
-    invariant multiset(a[..]) == multiset(old(a[..]))
+    invariant multiset(a[..]) == multiset((a[..]))
   {
     // Scans the array a[..n] from left to right, swapping adjacent elements if they
     // are in the wrong order. At the same time, keeps the index of the last swap (newn). 
@@ -43,7 +43,7 @@ method BubbleSort(a: array<int>)
       invariant 0 <= newn < i 
       invariant IsPartitionedAndRightSorted(a[..i], newn)
       invariant IsPartitionedAndRightSorted(a[..], n)
-      invariant multiset(a[..]) == multiset(old(a[..]))
+      invariant multiset(a[..]) == multiset((a[..]))
     {
       if (a[i-1] > a[i]) { 
         a[i-1], a[i] := a[i], a[i-1]; 
@@ -66,18 +66,18 @@ method Passing()
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [3];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -88,7 +88,7 @@ method Passing()
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -99,7 +99,7 @@ method Passing()
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }

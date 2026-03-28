@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-03-25 13:50:02
+// Generated: 2026-03-28 00:33:02
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -25,7 +25,7 @@ method MakeBuckets(a: array<nat>) returns(b: array<nat>)
    forall k | 0 <= k <= max {
      b[k] := 0;
    }
-   assert a[..] == old(a[..]); // proof helper
+   assert a[..] == (a[..]); // proof helper
    for i := 0 to a.Length
     invariant forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..i])
    {
@@ -62,12 +62,12 @@ method Passing()
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[2] [3, 4];
+    var a := new nat[2] [4, 3];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);

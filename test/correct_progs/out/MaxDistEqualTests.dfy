@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-03-25 13:50:05
+// Generated: 2026-03-28 00:33:04
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -44,14 +44,14 @@ method Passing()
     expect maxDist == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[2] [10, 10];
+    var a := new int[2] [5, 4];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 1;
+    expect maxDist == 0;
   }
 
   // Test case for combination {1}/Ba=3:
