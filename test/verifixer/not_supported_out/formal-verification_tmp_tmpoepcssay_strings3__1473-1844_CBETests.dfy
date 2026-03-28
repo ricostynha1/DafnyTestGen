@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\formal-verification_tmp_tmpoepcssay_strings3__1473-1844_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-03-27 20:09:49
+// Generated: 2026-03-28 10:06:16
 
 // formal-verification_tmp_tmpoepcssay_strings3.dfy
 
@@ -158,7 +158,7 @@ method GeneratedTests_isPrefix()
   //   POST: isNotPrefixPred(pre, str)
   //   POST: !isPrefixPred(pre, str)
   {
-    var pre: seq<char> := [];
+    var pre: seq<char> := [' '];
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
     expect !res;
@@ -166,13 +166,39 @@ method GeneratedTests_isPrefix()
     expect !isPrefixPred(pre, str);
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {3}:
+  //   POST: res
+  //   POST: !isNotPrefixPred(pre, str)
+  //   POST: isPrefixPred(pre, str)
+  {
+    var pre: seq<char> := [];
+    var str: seq<char> := [];
+    var res := isPrefix(pre, str);
+    expect res;
+    expect !isNotPrefixPred(pre, str);
+    expect isPrefixPred(pre, str);
+  }
+
+  // Test case for combination {2}/Bpre=2,str=1:
   //   POST: !res
   //   POST: isNotPrefixPred(pre, str)
   //   POST: !isPrefixPred(pre, str)
   {
-    var pre: seq<char> := [' '];
-    var str: seq<char> := [' '];
+    var pre: seq<char> := [' ', '!'];
+    var str: seq<char> := ['F'];
+    var res := isPrefix(pre, str);
+    expect !res;
+    expect isNotPrefixPred(pre, str);
+    expect !isPrefixPred(pre, str);
+  }
+
+  // Test case for combination {2}/Bpre=3,str=2:
+  //   POST: !res
+  //   POST: isNotPrefixPred(pre, str)
+  //   POST: !isPrefixPred(pre, str)
+  {
+    var pre: seq<char> := [' ', '!', '"'];
+    var str: seq<char> := ['+', ','];
     var res := isPrefix(pre, str);
     expect !res;
     expect isNotPrefixPred(pre, str);
@@ -201,15 +227,15 @@ method GeneratedTests_isSubstring()
     expect !res <==> isNotSubstringPred(sub, str);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bsub=0,str=1:
   //   POST: res <==> isSubstringPred(sub, str)
   //   POST: res ==> isSubstringPred(sub, str)
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: !res <==> isNotSubstringPred(sub, str)
   {
-    var sub: seq<char> := [' '];
-    var str: seq<char> := [];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' '];
     var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
@@ -219,15 +245,15 @@ method GeneratedTests_isSubstring()
     expect !res <==> isNotSubstringPred(sub, str);
   }
 
-  // Test case for combination {1}/Bsub=3,str=1:
+  // Test case for combination {1}/Bsub=0,str=2:
   //   POST: res <==> isSubstringPred(sub, str)
   //   POST: res ==> isSubstringPred(sub, str)
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: !res <==> isNotSubstringPred(sub, str)
   {
-    var sub: seq<char> := ['!', ' ', '"'];
-    var str: seq<char> := ['F'];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' ', '!'];
     var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
@@ -237,15 +263,15 @@ method GeneratedTests_isSubstring()
     expect !res <==> isNotSubstringPred(sub, str);
   }
 
-  // Test case for combination {1}/Bsub=3,str=0:
+  // Test case for combination {1}/Bsub=0,str=3:
   //   POST: res <==> isSubstringPred(sub, str)
   //   POST: res ==> isSubstringPred(sub, str)
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: isSubstringPred(sub, str) ==> res
   //   POST: !res <==> isNotSubstringPred(sub, str)
   {
-    var sub: seq<char> := [' ', '"', '!'];
-    var str: seq<char> := [];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' ', '"', '!'];
     var check_res := > isSubstringPred(sub, str);
     var res := isSubstring(sub, str);
     expect res <==> isSubstringPred(sub, str);
@@ -266,18 +292,6 @@ method GeneratedTests_haveCommonKSubstring()
     var k := 0;
     var str1: seq<char> := [];
     var str2: seq<char> := [];
-    var found := haveCommonKSubstring(k, str1, str2);
-    expect found <==> haveCommonKSubstringPred(k, str1, str2);
-    expect !found <==> haveNotCommonKSubstringPred(k, str1, str2);
-  }
-
-  // Test case for combination {1}:
-  //   POST: found <==> haveCommonKSubstringPred(k, str1, str2)
-  //   POST: !found <==> haveNotCommonKSubstringPred(k, str1, str2)
-  {
-    var k := 1;
-    var str1: seq<char> := ['U'];
-    var str2: seq<char> := ['U'];
     var found := haveCommonKSubstring(k, str1, str2);
     expect found <==> haveCommonKSubstringPred(k, str1, str2);
     expect !found <==> haveNotCommonKSubstringPred(k, str1, str2);
@@ -307,6 +321,18 @@ method GeneratedTests_haveCommonKSubstring()
     expect !found <==> haveNotCommonKSubstringPred(k, str1, str2);
   }
 
+  // Test case for combination {1}/Bk=1,str1=2,str2=3:
+  //   POST: found <==> haveCommonKSubstringPred(k, str1, str2)
+  //   POST: !found <==> haveNotCommonKSubstringPred(k, str1, str2)
+  {
+    var k := 1;
+    var str1: seq<char> := [' ', '!'];
+    var str2: seq<char> := [' ', '!', '"'];
+    var found := haveCommonKSubstring(k, str1, str2);
+    expect found <==> haveCommonKSubstringPred(k, str1, str2);
+    expect !found <==> haveNotCommonKSubstringPred(k, str1, str2);
+  }
+
 }
 
 method GeneratedTests_maxCommonSubstringLength()
@@ -323,37 +349,37 @@ method GeneratedTests_maxCommonSubstringLength()
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bstr1=0,str2=1:
   //   PRE:  |str1| <= |str2|
   //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
   //   POST: haveCommonKSubstringPred(len, str1, str2)
   {
-    var str1: seq<char> := ['U'];
-    var str2: seq<char> := ['U'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' '];
     var len := maxCommonSubstringLength(str1, str2);
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 
-  // Test case for combination {1}/Bstr1=2,str2=3:
+  // Test case for combination {1}/Bstr1=0,str2=2:
   //   PRE:  |str1| <= |str2|
   //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
   //   POST: haveCommonKSubstringPred(len, str1, str2)
   {
-    var str1: seq<char> := [' ', '!'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '!'];
+    var len := maxCommonSubstringLength(str1, str2);
+    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
+    expect haveCommonKSubstringPred(len, str1, str2);
+  }
+
+  // Test case for combination {1}/Bstr1=0,str2=3:
+  //   PRE:  |str1| <= |str2|
+  //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
+  //   POST: haveCommonKSubstringPred(len, str1, str2)
+  {
+    var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!', '"'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
-    expect haveCommonKSubstringPred(len, str1, str2);
-  }
-
-  // Test case for combination {1}/Bstr1=2,str2=2:
-  //   PRE:  |str1| <= |str2|
-  //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   POST: haveCommonKSubstringPred(len, str1, str2)
-  {
-    var str1: seq<char> := [' ', '!'];
-    var str2: seq<char> := ['+', ','];
     var len := maxCommonSubstringLength(str1, str2);
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);

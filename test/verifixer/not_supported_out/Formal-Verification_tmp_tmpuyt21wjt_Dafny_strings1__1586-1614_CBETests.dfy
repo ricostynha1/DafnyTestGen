@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1__1586-1614_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-03-27 20:09:53
+// Generated: 2026-03-28 10:06:17
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1.dfy
 
@@ -140,12 +140,12 @@ method Passing()
     expect res == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bpre=2,str=3:
   //   POST: !(|pre| > |str|)
   //   POST: res == isPrefixPredicate(pre, str)
   {
-    var pre: seq<char> := [' '];
-    var str: seq<char> := [' '];
+    var pre: seq<char> := [' ', '!'];
+    var str: seq<char> := [' ', '!', '"'];
     var res := isPrefix(pre, str);
     expect res == true;
     expect !(|pre| > |str|);
@@ -160,31 +160,31 @@ method Passing()
     expect res == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bsub=0,str=1:
   //   POST: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := [' '];
-    var str: seq<char> := [];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' '];
     var res := isSubstring(sub, str);
-    expect res == false;
+    expect res == true;
   }
 
-  // Test case for combination {1}/Bsub=3,str=1:
+  // Test case for combination {1}/Bsub=0,str=2:
   //   POST: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := ['!', ' ', '"'];
-    var str: seq<char> := ['F'];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' ', '!'];
     var res := isSubstring(sub, str);
-    expect res == false;
+    expect res == true;
   }
 
-  // Test case for combination {1}/Bsub=3,str=0:
+  // Test case for combination {1}/Bsub=0,str=3:
   //   POST: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := [' ', '"', '!'];
-    var str: seq<char> := [];
+    var sub: seq<char> := [];
+    var str: seq<char> := [' ', '"', '!'];
     var res := isSubstring(sub, str);
-    expect res == false;
+    expect res == true;
   }
 
   // Test case for combination {1}/Bk=1,str1=3,str2=1:
@@ -224,7 +224,7 @@ method Passing()
     expect maxCommonSubstringPredicate(str1, str2, len);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bstr1=0,str2=1:
   //   POST: len <= |str1| && len <= |str2|
   //   POST: len >= 0
   //   POST: maxCommonSubstringPredicate(str1, str2, len)
@@ -237,26 +237,26 @@ method Passing()
     expect maxCommonSubstringPredicate(str1, str2, len);
   }
 
-  // Test case for combination {1}/Bstr1=3,str2=1:
+  // Test case for combination {1}/Bstr1=0,str2=2:
   //   POST: len <= |str1| && len <= |str2|
   //   POST: len >= 0
   //   POST: maxCommonSubstringPredicate(str1, str2, len)
   {
-    var str1: seq<char> := ['!', ' ', '"'];
-    var str2: seq<char> := ['F'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '!'];
     var len := maxCommonSubstringLength(str1, str2);
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
     expect maxCommonSubstringPredicate(str1, str2, len);
   }
 
-  // Test case for combination {1}/Bstr1=3,str2=0:
+  // Test case for combination {1}/Bstr1=0,str2=3:
   //   POST: len <= |str1| && len <= |str2|
   //   POST: len >= 0
   //   POST: maxCommonSubstringPredicate(str1, str2, len)
   {
-    var str1: seq<char> := [' ', '!', '"'];
-    var str2: seq<char> := [];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '!', '"'];
     var len := maxCommonSubstringLength(str1, str2);
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
@@ -291,13 +291,13 @@ method Failing()
     // expect haveCommonKSubstringPredicate(k, str1, str2) == found;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bk=1,str1=2,str2=3:
   //   POST: |str1| < k || |str2| < k ==> !found
   //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
   {
     var k := 1;
-    var str1: seq<char> := ['U'];
-    var str2: seq<char> := ['U'];
+    var str1: seq<char> := [' ', '!'];
+    var str2: seq<char> := [' ', '!', '"'];
     var found := haveCommonKSubstring(k, str1, str2);
     // expect |str1| < k || |str2| < k ==> !found;
     // expect haveCommonKSubstringPredicate(k, str1, str2) == found;
