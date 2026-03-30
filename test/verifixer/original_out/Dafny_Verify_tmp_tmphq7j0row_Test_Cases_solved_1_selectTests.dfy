@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select.dfy
 // Method: SelectionSort
-// Generated: 2026-03-26 14:56:26
+// Generated: 2026-03-30 09:03:33
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select.dfy
 
@@ -53,11 +53,11 @@ method Passing()
     expect multiset(a[..]) == old_multiset_a;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [3];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
     expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
