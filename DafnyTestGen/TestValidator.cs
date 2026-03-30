@@ -1,21 +1,51 @@
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DafnyTestGen;
 
 static class TestValidator
 {
+    /// <summary>Timeout for the single `dafny build` compilation step.</summary>
+    const int BuildTimeoutMs = 60_000;
+
     /// <summary>
-    /// Validates each test case by running Dafny (--no-verify), then produces
-    /// a split output with Passing() and Failing() methods.
+    /// Timeout for running all tests in batch (first pass).
+    /// If a crash/timeout kills the process, completed results are kept.
     /// </summary>
-    internal static async Task<string> CheckAndSplitTests(string generatedCode, string originalSource, string outputPath)
+    const int BatchRunTimeoutMs = 15_000;
+
+    /// <summary>
+    /// Per-test run timeout when re-checking incomplete tests individually.
+    /// Only execution time — the binary is already compiled.
+    /// </summary>
+    const int SingleRunTimeoutMs = 10_000;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Public entry point
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Validates all test cases and returns a split output with
+    /// Passing() and Failing() methods.
+    ///
+    /// Strategy:
+    ///   1. Generate a single .dfy file with CheckExpect helper, TestCase_0..N methods,
+    ///      and a Main that accepts an optional arg to run a specific test.
+    ///   2. `dafny build` once → compiled .dll
+    ///   3. Run the exe (no args) → all tests. Parse DONE:N / FAIL:N markers.
+    ///   4. For tests that didn't complete (crash/timeout), re-run the same exe
+    ///      with the test index as argument — no recompilation needed.
+    /// </summary>
+    internal static async Task<string> CheckAndSplitTests(
+        string generatedCode, string originalSource, string outputPath)
     {
         var dafnyPath = Z3Runner.FindDafnyPath();
         Console.WriteLine($"[DafnyTestGen] Checking tests with: {dafnyPath}");
 
-        // Extract the source header (everything before "method GeneratedTests_")
-        var genMethodMatch = Regex.Match(generatedCode, @"^method GeneratedTests_\w+\(\)\s*$", RegexOptions.Multiline);
+        // ── Extract source header (everything before "method GeneratedTests_") ──
+        var genMethodMatch = Regex.Match(
+            generatedCode, @"^method GeneratedTests_\w+\(\)\s*$", RegexOptions.Multiline);
         if (!genMethodMatch.Success)
         {
             Console.Error.WriteLine("[DafnyTestGen] Could not find GeneratedTests method in output");
@@ -23,20 +53,17 @@ static class TestValidator
         }
         var sourceHeader = generatedCode.Substring(0, genMethodMatch.Index);
 
-        // If the source header contains a Main() method, rename it to avoid conflicts
-        // with the Main() we generate for test execution.
+        // Rename any Main() in the source to avoid conflicts with our generated Main
         sourceHeader = Regex.Replace(sourceHeader, @"\bmethod\s+Main\s*\(\s*\)", "method OriginalMain()");
         sourceHeader = Regex.Replace(sourceHeader, @"\bMain\s*\(\s*\)\s*;", "OriginalMain();");
 
-        // Extract individual test case blocks
+        // ── Extract individual test-case blocks ─────────────────────────────────
         var testBlocks = new List<(string comment, string body)>();
         var blockPattern = new Regex(
             @"(  // Test case[^\r\n]*\r?\n(?:  //[^\r\n]*\r?\n)*)  \{\r?\n(.*?)  \}",
             RegexOptions.Singleline);
         foreach (Match m in blockPattern.Matches(generatedCode))
-        {
             testBlocks.Add((m.Groups[1].Value.TrimEnd(), m.Groups[2].Value));
-        }
 
         if (testBlocks.Count == 0)
         {
@@ -46,114 +73,445 @@ static class TestValidator
 
         Console.WriteLine($"[DafnyTestGen] Checking {testBlocks.Count} test case(s)...");
 
-        var passingBlocks = new List<(string comment, string body)>();
-        var failingBlocks = new List<(string comment, string body)>();
-
-        for (int i = 0; i < testBlocks.Count; i++)
-        {
-            var (comment, body) = testBlocks[i];
-            bool passed = await RunDafnyTest(dafnyPath, sourceHeader, body, i, outputPath);
-            if (passed)
-            {
-                passingBlocks.Add((comment, body));
-                Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: PASS");
-            }
-            else
-            {
-                failingBlocks.Add((comment, body));
-                Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: FAIL");
-            }
-        }
-
-        Console.WriteLine($"[DafnyTestGen] Results: {passingBlocks.Count} passing, {failingBlocks.Count} failing");
-
-        return EmitSplitTests(sourceHeader, passingBlocks, failingBlocks);
-    }
-
-    static async Task<bool> RunDafnyTest(string dafnyPath, string sourceHeader, string testBody, int index, string outputPath)
-    {
-        var tempDir = Path.Combine(Path.GetTempPath(), "DafnyTestGen");
-        if (!Directory.Exists(tempDir))
-            Directory.CreateDirectory(tempDir);
-        var tempFile = Path.Combine(tempDir, $"_dafnytestgen_check_{index}.dfy");
-
-        var sb = new System.Text.StringBuilder();
-        sb.Append(sourceHeader);
-        sb.AppendLine($"method TestCase_{index}()");
-        sb.AppendLine("{");
-        sb.Append(testBody);
-        sb.AppendLine("}");
-        sb.AppendLine();
-        sb.AppendLine("method Main()");
-        sb.AppendLine("{");
-        sb.AppendLine($"  TestCase_{index}();");
-        sb.AppendLine("}");
-
-        File.WriteAllText(tempFile, sb.ToString());
+        // ── Generate single check file and build ─────────────────────────────────
+        var tempDir = Path.Combine(Path.GetTempPath(),
+            "DafnyTestGen_" + Path.GetRandomFileName().Replace(".", ""));
+        Directory.CreateDirectory(tempDir);
 
         try
         {
-            var psi = new ProcessStartInfo
+            var testFile = Path.Combine(tempDir, "check_all.dfy");
+            var runnerBase = Path.Combine(tempDir, "runner");
+
+            WriteCheckFile(testFile, sourceHeader, testBlocks);
+
+            // ── Phase 1: compile once ────────────────────────────────────────────
+            var (buildExited, buildCode, buildOut, buildErr) = await RunProcess(
+                dafnyPath,
+                $"build --allow-warnings --no-verify \"{testFile}\" -o \"{runnerBase}\"",
+                BuildTimeoutMs);
+
+            if (!buildExited || buildCode != 0)
             {
-                FileName = dafnyPath,
-                Arguments = $"run --allow-warnings --no-verify \"{tempFile}\"",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using var process = Process.Start(psi)!;
-
-            var outputTask = process.StandardOutput.ReadToEndAsync();
-            var errTask = process.StandardError.ReadToEndAsync();
-            var allDone = Task.WhenAll(outputTask, errTask);
-
-            if (await Task.WhenAny(allDone, Task.Delay(60000)) != allDone)
-            {
-                try { process.Kill(); } catch { }
-                return false;
+                Console.Error.WriteLine($"[DafnyTestGen] Build failed (exit={buildCode}), check file: {testFile}");
+                if (!string.IsNullOrWhiteSpace(buildOut))
+                    Console.Error.WriteLine(buildOut);
+                if (!string.IsNullOrWhiteSpace(buildErr))
+                    Console.Error.WriteLine(buildErr);
+                return generatedCode;
             }
 
-            if (!process.HasExited)
-                process.WaitForExit(5000);
+            // ── Phase 2: run all tests at once ──────────────────────────────────
+            var (runExe, runArgs) = FindRunCommand(runnerBase);
+            if (runExe == null)
+            {
+                Console.Error.WriteLine("[DafnyTestGen] Cannot find compiled output");
+                return generatedCode;
+            }
 
-            return process.ExitCode == 0;
+            var (batchExited, _, batchOut, _) = await RunProcess(
+                runExe, runArgs, BatchRunTimeoutMs);
+
+            var failedIds = new HashSet<int>();
+            ParseFailMarkers(batchOut, failedIds);
+            var completedIds = ParseDoneMarkers(batchOut);
+            var skippedIds = ParseSkipMarkers(batchOut);
+            var capturedVals = ParseValMarkers(batchOut);
+
+            // ── Phase 3: re-check incomplete tests individually ─────────────────
+            var incompleteIds = new HashSet<int>();
+            for (int i = 0; i < testBlocks.Count; i++)
+            {
+                if (!completedIds.Contains(i) && !failedIds.Contains(i))
+                    incompleteIds.Add(i);
+            }
+
+            if (incompleteIds.Count > 0)
+            {
+                var reason = batchExited ? "crash" : "timeout";
+                Console.WriteLine(
+                    $"  Batch: {completedIds.Count}/{testBlocks.Count} completed, " +
+                    $"{incompleteIds.Count} incomplete ({reason}) — re-checking individually...");
+
+                foreach (var idx in incompleteIds.OrderBy(x => x))
+                {
+                    var (reExited, reCode, reOut, _) = await RunProcess(
+                        runExe, $"{runArgs} {idx}".Trim(), SingleRunTimeoutMs);
+
+                    if (!reExited)
+                    {
+                        failedIds.Add(idx);  // timeout → fail
+                    }
+                    else
+                    {
+                        // Check for SKIP, FAIL marker or non-zero exit
+                        var reSkipped = ParseSkipMarkers(reOut);
+                        skippedIds.UnionWith(reSkipped);
+                        var reFailed = new HashSet<int>();
+                        ParseFailMarkers(reOut, reFailed);
+                        if (reFailed.Count > 0 || reCode != 0)
+                            failedIds.Add(idx);
+
+                        // Merge captured values from individual run
+                        var reVals = ParseValMarkers(reOut);
+                        foreach (var (id, vars) in reVals)
+                        {
+                            if (!capturedVals.ContainsKey(id))
+                                capturedVals[id] = new Dictionary<string, string>();
+                            foreach (var (k, v) in vars)
+                                capturedVals[id][k] = v;
+                        }
+                    }
+                }
+            }
+
+            // ── Report and split ────────────────────────────────────────────────
+            var passingBlocks = new List<(string comment, string body)>();
+            var failingBlocks = new List<(string comment, string body)>();
+            int skippedCount = 0;
+
+            for (int i = 0; i < testBlocks.Count; i++)
+            {
+                if (skippedIds.Contains(i))
+                {
+                    skippedCount++;
+                    Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: SKIP (precondition violated)");
+                }
+                else if (failedIds.Contains(i))
+                {
+                    failingBlocks.Add(testBlocks[i]);
+                    Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: FAIL");
+                }
+                else
+                {
+                    passingBlocks.Add((testBlocks[i].comment,
+                        InjectCapturedValues(testBlocks[i].body, i, capturedVals)));
+                    Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: PASS");
+                }
+            }
+
+            var resultMsg = $"[DafnyTestGen] Results: {passingBlocks.Count} passing, {failingBlocks.Count} failing";
+            if (skippedCount > 0) resultMsg += $", {skippedCount} skipped (precondition violated)";
+            Console.WriteLine(resultMsg);
+
+            return EmitSplitTests(sourceHeader, passingBlocks, failingBlocks);
         }
         finally
         {
-            CleanupDafnyArtifacts(tempFile);
+            CleanupTempDir(tempDir);
         }
     }
 
-    static void CleanupDafnyArtifacts(string dfyPath)
+    // ─────────────────────────────────────────────────────────────────────────
+    // Check file generation
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Writes a single Dafny file with:
+    ///   - The source header (program under test)
+    ///   - CheckExpect helper (prints FAIL:N instead of aborting)
+    ///   - TestCase_0() .. TestCase_N() methods (with DONE:N markers)
+    ///   - Main(args) that runs all tests, or a specific test by index arg
+    /// </summary>
+    static void WriteCheckFile(string path, string sourceHeader,
+        List<(string comment, string body)> testBlocks)
     {
-        try
+        var sb = new StringBuilder();
+        sb.Append(sourceHeader);
+
+        // CheckExpect helper
+        sb.AppendLine("method CheckExpect(condition: bool, testId: int)");
+        sb.AppendLine("{");
+        sb.AppendLine("  if !condition {");
+        sb.AppendLine("    print \"FAIL:\", testId, \"\\n\";");
+        sb.AppendLine("  }");
+        sb.AppendLine("}");
+        sb.AppendLine();
+
+        // Individual test methods
+        for (int i = 0; i < testBlocks.Count; i++)
         {
-            var dir = Path.GetDirectoryName(dfyPath)!;
-            var baseName = Path.GetFileNameWithoutExtension(dfyPath);
-
-            if (File.Exists(dfyPath)) File.Delete(dfyPath);
-
-            foreach (var ext in new[] { ".cs", ".csproj", ".dll", ".exe", ".pdb", ".deps.json", ".runtimeconfig.json" })
-            {
-                var artifact = Path.Combine(dir, baseName + ext);
-                if (File.Exists(artifact)) File.Delete(artifact);
-            }
-
-            var objDir = Path.Combine(dir, "obj");
-            if (Directory.Exists(objDir))
-                Directory.Delete(objDir, true);
+            var body = ReplaceExpectsWithChecks(testBlocks[i].body, i);
+            sb.AppendLine($"method TestCase_{i}()");
+            sb.AppendLine("{");
+            sb.Append(body);
+            sb.AppendLine($"  print \"DONE:{i}\\n\";");
+            sb.AppendLine("}");
+            sb.AppendLine();
         }
+
+        // Main: no args → run all; with arg → run specific test by index
+        sb.AppendLine("method Main(args: seq<string>)");
+        sb.AppendLine("{");
+        sb.AppendLine("  if |args| > 1 {");
+        // Simple string matching for test index (Dafny has no built-in parseInt)
+        for (int i = 0; i < testBlocks.Count; i++)
+        {
+            var prefix = i == 0 ? "    if" : "    else if";
+            sb.AppendLine($"{prefix} args[1] == \"{i}\" {{ TestCase_{i}(); }}");
+        }
+        sb.AppendLine("  } else {");
+        for (int i = 0; i < testBlocks.Count; i++)
+            sb.AppendLine($"    TestCase_{i}();");
+        sb.AppendLine("  }");
+        sb.AppendLine("}");
+
+        File.WriteAllText(path, sb.ToString());
+    }
+
+    /// <summary>
+    /// Replaces `expect expr;` with `CheckExpect(expr, testId);` in a test body.
+    /// For expects of the form `expect var == FuncCall(...);`, also adds a
+    /// print statement to capture the actual value: `print "VAL:testId:var=", var, "\n";`
+    /// </summary>
+    static string ReplaceExpectsWithChecks(string body, int testId)
+    {
+        return Regex.Replace(body,
+            @"^(\s*)expect (.+);(?: // PRE-CHECK)?",
+            m =>
+            {
+                var indent = m.Groups[1].Value;
+                var exprAndComment = m.Groups[2].Value;
+                var isPreCheck = m.Value.Contains("// PRE-CHECK");
+
+                // Strip any trailing comment from the expression
+                var expr = Regex.Replace(exprAndComment, @"\s*//.*$", "").TrimEnd();
+
+                if (isPreCheck)
+                {
+                    // Precondition check: if violated, print SKIP and return early
+                    return $"{indent}if !({expr}) {{ print \"SKIP:{testId}\\n\"; print \"DONE:{testId}\\n\"; return; }}";
+                }
+
+                var checkLine = $"{indent}CheckExpect({expr}, {testId});";
+
+                // Detect `var == ExprWithFuncCall` and emit VAL print for the variable
+                var valPrint = TryMakeValPrint(expr, testId, indent);
+                if (valPrint != null)
+                    return valPrint + "\n" + checkLine;
+                return checkLine;
+            },
+            RegexOptions.Multiline);
+    }
+
+    /// <summary>
+    /// If the expect expression is `var == ExprContainingFunctionCall(...)` or
+    /// `var == check_var` (pre-call captured value), returns a print statement
+    /// like: print "VAL:testId:var=", var, "\n";
+    /// Returns null if the expect doesn't match these patterns.
+    /// </summary>
+    static string? TryMakeValPrint(string expr, int testId, string indent)
+    {
+        // Match: varName == <expr>
+        // e.g., "f == Fact(n)" or "r == check_r"
+        var m = Regex.Match(expr, @"^(\w+)\s*==\s*(.+)$");
+        if (!m.Success) return null;
+
+        var varName = m.Groups[1].Value;
+        var rhs = m.Groups[2].Value;
+
+        // Emit VAL print if the RHS contains a function call OR is a check_ variable
+        if (!Regex.IsMatch(rhs, @"[A-Z]\w*\s*\(") && !Regex.IsMatch(rhs, @"^check_\w+$"))
+            return null;
+
+        return $"{indent}print \"VAL:{testId}:{varName}=\", {varName}, \"\\n\";";
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Marker parsing
+    // ─────────────────────────────────────────────────────────────────────────
+
+    static void ParseFailMarkers(string output, HashSet<int> failedIds)
+    {
+        foreach (Match m in Regex.Matches(output, @"FAIL:(\d+)"))
+            if (int.TryParse(m.Groups[1].Value, out var id))
+                failedIds.Add(id);
+    }
+
+    static HashSet<int> ParseDoneMarkers(string output)
+    {
+        var ids = new HashSet<int>();
+        foreach (Match m in Regex.Matches(output, @"DONE:(\d+)"))
+            if (int.TryParse(m.Groups[1].Value, out var id))
+                ids.Add(id);
+        return ids;
+    }
+
+    static HashSet<int> ParseSkipMarkers(string output)
+    {
+        var ids = new HashSet<int>();
+        foreach (Match m in Regex.Matches(output, @"SKIP:(\d+)"))
+            if (int.TryParse(m.Groups[1].Value, out var id))
+                ids.Add(id);
+        return ids;
+    }
+
+    /// <summary>
+    /// Parses VAL:testId:varName=value markers from output.
+    /// Returns a dict: testId → { varName → value }
+    /// </summary>
+    static Dictionary<int, Dictionary<string, string>> ParseValMarkers(string output)
+    {
+        var result = new Dictionary<int, Dictionary<string, string>>();
+        foreach (Match m in Regex.Matches(output, @"VAL:(\d+):(\w+)=(.+)"))
+        {
+            if (!int.TryParse(m.Groups[1].Value, out var id)) continue;
+            var varName = m.Groups[2].Value;
+            var value = m.Groups[3].Value.Trim();
+            if (!result.ContainsKey(id))
+                result[id] = new Dictionary<string, string>();
+            result[id][varName] = value;
+        }
+        return result;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Value injection
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// For passing tests with captured output values, replaces
+    /// `expect var == FuncCall(...);` or `expect var == check_var;` with
+    /// `expect var == concreteValue; // == original_rhs`
+    /// and removes the now-unused `var check_var := ...;` line.
+    /// </summary>
+    static string InjectCapturedValues(string body, int testId,
+        Dictionary<int, Dictionary<string, string>> capturedVals)
+    {
+        if (!capturedVals.TryGetValue(testId, out var vars) || vars.Count == 0)
+            return body;
+
+        var result = Regex.Replace(body,
+            @"^(\s*expect\s+)(\w+)(\s*==\s*)(.+)(;)",
+            m =>
+            {
+                var indent = m.Groups[1].Value;
+                var varName = m.Groups[2].Value;
+                var eq = m.Groups[3].Value;
+                var rhs = m.Groups[4].Value;
+                var semi = m.Groups[5].Value;
+
+                // Only replace if RHS has a function call or is check_var,
+                // we captured the value, and the value is a valid Dafny literal
+                if (vars.TryGetValue(varName, out var value) &&
+                    (Regex.IsMatch(rhs, @"[A-Z]\w*\s*\(") || Regex.IsMatch(rhs, @"^check_\w+$")) &&
+                    IsValidDafnyLiteral(value))
+                {
+                    return $"{indent}{varName}{eq}{value}{semi}";
+                }
+                return m.Value;
+            },
+            RegexOptions.Multiline);
+
+        // Remove unused check_ variable declarations when the value was injected
+        foreach (var varName in vars.Keys)
+        {
+            if (vars.TryGetValue(varName, out var value) && IsValidDafnyLiteral(value))
+            {
+                // Remove lines like: "    var check_varName := <expr>;"
+                result = Regex.Replace(result,
+                    @"^[ \t]*var check_" + Regex.Escape(varName) + @"\s*:=\s*[^;]+;\r?\n",
+                    "",
+                    RegexOptions.Multiline);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Checks if a captured value is a valid Dafny literal that can be injected.
+    /// Accepts: integers (-?digits), reals (-?digits.digits), booleans, char literals.
+    /// Rejects: strings, sequences, objects, or any other printed representation.
+    /// </summary>
+    static bool IsValidDafnyLiteral(string value)
+    {
+        return Regex.IsMatch(value, @"^-?\d+(\.\d+)?$")  // int or real
+            || value == "true" || value == "false"         // bool
+            || Regex.IsMatch(value, @"^'.'$");             // char
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Process helpers
+    // ─────────────────────────────────────────────────────────────────────────
+
+    static (string? exe, string args) FindRunCommand(string runnerBase)
+    {
+        var dll = runnerBase + ".dll";
+        if (File.Exists(dll)) return ("dotnet", $"\"{dll}\"");
+
+        var winExe = runnerBase + ".exe";
+        if (File.Exists(winExe)) return (winExe, "");
+
+        if (File.Exists(runnerBase)) return (runnerBase, "");
+
+        // Fallback: any .dll in the temp dir
+        var dir = Path.GetDirectoryName(runnerBase)!;
+        if (Directory.Exists(dir))
+        {
+            var anyDll = Directory.GetFiles(dir, "*.dll")
+                .FirstOrDefault(f => !f.Contains("runtimeconfig"));
+            if (anyDll != null) return ("dotnet", $"\"{anyDll}\"");
+        }
+
+        return (null, "");
+    }
+
+    static async Task<(bool exited, int exitCode, string stdout, string stderr)>
+        RunProcess(string fileName, string arguments, int timeoutMs)
+    {
+        var psi = new ProcessStartInfo
+        {
+            FileName               = fileName,
+            Arguments              = arguments,
+            RedirectStandardOutput = true,
+            RedirectStandardError  = true,
+            UseShellExecute        = false,
+            CreateNoWindow         = true
+        };
+
+        using var proc = Process.Start(psi)!;
+
+        var outLines = new List<string>();
+        var errLines = new List<string>();
+        proc.OutputDataReceived += (_, e) => { if (e.Data != null) lock (outLines) outLines.Add(e.Data); };
+        proc.ErrorDataReceived  += (_, e) => { if (e.Data != null) lock (errLines) errLines.Add(e.Data); };
+        proc.BeginOutputReadLine();
+        proc.BeginErrorReadLine();
+
+        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        proc.EnableRaisingEvents = true;
+        proc.Exited += (_, _) => tcs.TrySetResult(true);
+        if (proc.HasExited) tcs.TrySetResult(true);
+
+        bool completed = await Task.WhenAny(tcs.Task, Task.Delay(timeoutMs)) == tcs.Task;
+        if (!completed)
+            try { proc.Kill(entireProcessTree: true); } catch { }
+        if (!proc.HasExited) proc.WaitForExit(3000);
+
+        string stdout, stderr;
+        lock (outLines) stdout = string.Join("\n", outLines);
+        lock (errLines) stderr = string.Join("\n", errLines);
+
+        return (completed, completed ? proc.ExitCode : -1, stdout, stderr);
+    }
+
+    static void CleanupTempDir(string tempDir)
+    {
+        try { if (Directory.Exists(tempDir)) Directory.Delete(tempDir, true); }
         catch { }
     }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Output emitter
+    // ─────────────────────────────────────────────────────────────────────────
 
     static string EmitSplitTests(
         string sourceHeader,
         List<(string comment, string body)> passingBlocks,
         List<(string comment, string body)> failingBlocks)
     {
-        var sb = new System.Text.StringBuilder();
+        var sb = new StringBuilder();
         sb.Append(sourceHeader);
 
         sb.AppendLine("method Passing()");

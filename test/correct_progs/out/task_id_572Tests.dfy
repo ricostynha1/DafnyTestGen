@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-03-24 09:48:03
+// Generated: 2026-03-25 13:53:09
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -60,15 +60,15 @@ method Passing()
   {
     var a := new int[0] [];
     var res := RemoveDuplicates<int>(a);
-    expect res == DeDup(a[..]);
+    expect res == []; // == DeDup(a[..])
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[1] [2];
     var res := RemoveDuplicates<int>(a);
-    expect res == DeDup(a[..]);
+    expect res == [2]; // == DeDup(a[..])
   }
 
   // Test case for combination {1}/Ba=2:
@@ -76,7 +76,7 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var res := RemoveDuplicates<int>(a);
-    expect res == DeDup(a[..]);
+    expect res == [4, 3]; // == DeDup(a[..])
   }
 
   // Test case for combination {1}/Ba=3:
@@ -84,7 +84,7 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var res := RemoveDuplicates<int>(a);
-    expect res == DeDup(a[..]);
+    expect res == [5, 4, 6]; // == DeDup(a[..])
   }
 
 }

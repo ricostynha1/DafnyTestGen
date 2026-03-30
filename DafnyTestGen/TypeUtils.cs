@@ -10,15 +10,35 @@ static class TypeUtils
     internal static bool IsArrayType(string type) =>
         type.StartsWith("array<") || type == "array";
 
+    internal static bool IsSetType(string type) =>
+        type.StartsWith("set<") || type == "set" || type.StartsWith("iset<") || type == "iset";
+
+    internal static bool IsMultisetType(string type) =>
+        type.StartsWith("multiset<") || type == "multiset";
+
+    internal static bool IsMapType(string type) =>
+        type.StartsWith("map<") || type == "map";
+
     /// <summary>
     /// Returns true if the type is a nested collection (seq of seq, seq of array, array of seq, etc.)
     /// These are not yet supported for SMT element parsing and Dafny emission.
     /// </summary>
+    internal static bool IsTupleType(string type) => type.StartsWith("(") && type.EndsWith(")");
+
     internal static bool IsNestedCollectionType(string type)
     {
-        if (!IsSeqType(type) && !IsArrayType(type)) return false;
-        var elemType = GetSeqElementType(type);
-        return IsSeqType(elemType) || IsArrayType(elemType);
+        if (IsMapType(type))
+        {
+            var keyType = GetMapKeyType(type);
+            var valType = GetMapValueType(type);
+            return IsSeqType(keyType) || IsArrayType(keyType) || IsSetType(keyType) || IsMultisetType(keyType) || IsMapType(keyType) || IsTupleType(keyType)
+                || IsSeqType(valType) || IsArrayType(valType) || IsSetType(valType) || IsMultisetType(valType) || IsMapType(valType) || IsTupleType(valType);
+        }
+        if (!IsSeqType(type) && !IsArrayType(type) && !IsSetType(type) && !IsMultisetType(type)) return false;
+        var elemType = IsSetType(type) ? GetSetElementType(type)
+            : IsMultisetType(type) ? GetMultisetElementType(type)
+            : GetSeqElementType(type);
+        return IsSeqType(elemType) || IsArrayType(elemType) || IsSetType(elemType) || IsMultisetType(elemType) || IsMapType(elemType) || IsTupleType(elemType);
     }
 
     internal static string GetSeqElementType(string type)
@@ -27,6 +47,70 @@ static class TypeUtils
         if (type.StartsWith("array<")) return type.Substring(6, type.Length - 7);
         if (type == "string") return "char";
         return "int";
+    }
+
+    internal static string GetSetElementType(string type)
+    {
+        if (type.StartsWith("set<")) return type.Substring(4, type.Length - 5);
+        if (type.StartsWith("iset<")) return type.Substring(5, type.Length - 6);
+        return "int";
+    }
+
+    internal static string GetMultisetElementType(string type)
+    {
+        if (type.StartsWith("multiset<")) return type.Substring(9, type.Length - 10);
+        return "int";
+    }
+
+    /// <summary>
+    /// Extracts the key and value types from a map type string like "map<int, bool>".
+    /// Must handle nested generics (e.g., "map<int, seq<int>>") by tracking angle brackets.
+    /// </summary>
+    internal static string GetMapKeyType(string type)
+    {
+        if (!type.StartsWith("map<")) return "int";
+        var inner = type.Substring(4, type.Length - 5); // strip "map<" and ">"
+        int depth = 0;
+        for (int i = 0; i < inner.Length; i++)
+        {
+            if (inner[i] == '<') depth++;
+            else if (inner[i] == '>') depth--;
+            else if (inner[i] == ',' && depth == 0)
+                return inner.Substring(0, i).Trim();
+        }
+        return "int";
+    }
+
+    internal static string GetMapValueType(string type)
+    {
+        if (!type.StartsWith("map<")) return "int";
+        var inner = type.Substring(4, type.Length - 5);
+        int depth = 0;
+        for (int i = 0; i < inner.Length; i++)
+        {
+            if (inner[i] == '<') depth++;
+            else if (inner[i] == '>') depth--;
+            else if (inner[i] == ',' && depth == 0)
+                return inner.Substring(i + 1).Trim();
+        }
+        return "int";
+    }
+
+    /// <summary>
+    /// Returns the concrete SMT integer values that form the bounded universe for
+    /// set/multiset elements of the given type. All supported element types map to
+    /// Int in SMT, but use different representative value ranges.
+    /// </summary>
+    internal static int[] GetElementUniverse(string elementType)
+    {
+        if (elementType == "nat")
+            return Enumerable.Range(0, SmtTranslator.MAX_SET_UNIVERSE).ToArray();
+        if (elementType == "char")
+            return Enumerable.Range(97, SmtTranslator.MAX_SET_UNIVERSE).ToArray(); // 'a'..'h'
+        if (SmtTranslator._enumDatatypes.TryGetValue(elementType, out var ctors))
+            return Enumerable.Range(0, Math.Min(ctors.Count, SmtTranslator.MAX_SET_UNIVERSE)).ToArray();
+        // int, T, fallback: include some negatives for better coverage
+        return new[] { -2, -1, 0, 1, 2, 3, 4, 5 };
     }
 
     /// <summary>
@@ -45,6 +129,12 @@ static class TypeUtils
         if (dafnyType == "string") return "(Seq Int)"; // model as Seq Int to avoid Unicode sort mismatch
         if (dafnyType.StartsWith("seq<")) return $"(Seq {DafnyTypeToSmt(dafnyType.Substring(4, dafnyType.Length - 5))})";
         if (dafnyType.StartsWith("array<")) return "Int"; // represent as length; actual array modeled separately
+        if (dafnyType.StartsWith("set<") || dafnyType.StartsWith("iset<"))
+            return $"(Array {DafnyTypeToSmt(GetSetElementType(dafnyType))} Bool)";
+        if (dafnyType.StartsWith("multiset<"))
+            return $"(Array {DafnyTypeToSmt(GetMultisetElementType(dafnyType))} Int)";
+        if (dafnyType.StartsWith("map<"))
+            return "Int"; // placeholder — maps are encoded as domain+values arrays, not a single SMT type
         return "Int"; // fallback
     }
 
@@ -56,8 +146,8 @@ static class TypeUtils
         // Look for (define-fun varname () Type value) patterns in the model
         foreach (var (name, type) in vars)
         {
-            if (IsArrayType(type) || IsSeqType(type))
-                continue; // sequences handled separately below
+            if (IsArrayType(type) || IsSeqType(type) || IsSetType(type) || IsMultisetType(type) || IsMapType(type))
+                continue; // collections handled separately below
 
             if (type == "real")
             {
@@ -68,6 +158,14 @@ static class TypeUtils
                 {
                     result[name] = NormalizeZ3Real(realMatch.Groups[1].Value);
                 }
+                else
+                {
+                    // Also try get-value response format: ((name value))
+                    var gvPattern = new Regex(@$"\(\({Regex.Escape(name)}\s+((?:\([^()]*(?:\([^()]*\)[^()]*)*\)|\d+\.\d+|\d+))\)\)");
+                    var gvMatch = gvPattern.Match(fullText);
+                    if (gvMatch.Success)
+                        result[name] = NormalizeZ3Real(gvMatch.Groups[1].Value);
+                }
             }
             else if (type == "bool")
             {
@@ -76,6 +174,14 @@ static class TypeUtils
                 if (match.Success)
                 {
                     result[name] = match.Groups[1].Value;
+                }
+                else
+                {
+                    // Also try get-value response format: ((name true/false))
+                    var gvPattern = new Regex(@$"\(\({Regex.Escape(name)}\s+(true|false)\)\)");
+                    var gvMatch = gvPattern.Match(fullText);
+                    if (gvMatch.Success)
+                        result[name] = gvMatch.Groups[1].Value;
                 }
             }
             else
@@ -86,14 +192,125 @@ static class TypeUtils
                 {
                     result[name] = NormalizeZ3Int(match.Groups[1].Value);
                 }
+                else
+                {
+                    // Also try get-value response format: ((name value))
+                    var gvPattern = new Regex(@$"\(\({Regex.Escape(name)}\s+([-\d]+|\(- \d+\))\)\)");
+                    var gvMatch = gvPattern.Match(fullText);
+                    if (gvMatch.Success)
+                        result[name] = NormalizeZ3Int(gvMatch.Groups[1].Value);
+                }
             }
         }
 
         // Extract sequence/array values from get-value responses
         foreach (var (name, type) in vars)
         {
-            if (!IsArrayType(type) && !IsSeqType(type))
+            if (!IsArrayType(type) && !IsSeqType(type) && !IsSetType(type) && !IsMultisetType(type) && !IsMapType(type))
                 continue;
+
+            if (IsSetType(type))
+            {
+                // Parse set membership from get-value responses: ((select setName v) true/false)
+                var members = new List<string>();
+                var setElemType = GetSetElementType(type);
+                var universe = GetElementUniverse(setElemType);
+                foreach (var v in universe)
+                {
+                    // Z3 get-value returns negative indices as -2 (not (- 2))
+                    var escapedV = v < 0 ? $"(?:\\(- {-v}\\)|{v})" : v.ToString();
+                    var memberPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}\s+{escapedV}\)\s+(true|false)\)");
+                    var memberMatch = memberPattern.Match(fullText);
+                    if (memberMatch.Success && memberMatch.Groups[1].Value == "true")
+                    {
+                        members.Add(v.ToString());
+                    }
+                }
+                result[name + "_card"] = members.Count.ToString();
+                if (members.Count > 0)
+                    result[name + "_members"] = string.Join(",", members);
+                continue;
+            }
+
+            if (IsMultisetType(type))
+            {
+                // Parse multiset counts from get-value responses: ((select msetName v) N)
+                var members = new List<string>();
+                int totalCard = 0;
+                var msetElemType = GetMultisetElementType(type);
+                var universe = GetElementUniverse(msetElemType);
+                foreach (var v in universe)
+                {
+                    // Z3 get-value returns negative indices as -2 (not (- 2))
+                    var escapedV = v < 0 ? $"(?:\\(- {-v}\\)|{v})" : v.ToString();
+                    var countPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}\s+{escapedV}\)\s+([-\d]+|\(- \d+\))\)");
+                    var countMatch = countPattern.Match(fullText);
+                    if (countMatch.Success)
+                    {
+                        int count = int.Parse(NormalizeZ3Int(countMatch.Groups[1].Value));
+                        if (count > 0)
+                        {
+                            for (int j = 0; j < count; j++)
+                                members.Add(v.ToString());
+                            totalCard += count;
+                        }
+                    }
+                }
+                result[name + "_card"] = totalCard.ToString();
+                if (members.Count > 0)
+                    result[name + "_members"] = string.Join(",", members);
+                continue;
+            }
+
+            if (IsMapType(type))
+            {
+                // Parse map domain+values from get-value responses:
+                //   ((select name_domain v) true/false)  — key presence
+                //   ((select name_values v) val)          — value at key
+                var mapKeyType = GetMapKeyType(type);
+                var mapValType = GetMapValueType(type);
+                var universe = GetElementUniverse(mapKeyType);
+                var keys = new List<string>();
+                var vals = new List<string>();
+                foreach (var v in universe)
+                {
+                    // Z3 get-value returns negative indices as -2 (not (- 2))
+                    var escapedV = v < 0 ? $"(?:\\(- {-v}\\)|{v})" : v.ToString();
+                    // Check domain membership
+                    var domPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}_domain\s+{escapedV}\)\s+(true|false)\)");
+                    var domMatch = domPattern.Match(fullText);
+                    if (domMatch.Success && domMatch.Groups[1].Value == "true")
+                    {
+                        keys.Add(v.ToString());
+                        // Get value for this key
+                        if (mapValType == "bool")
+                        {
+                            var valPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}_values\s+{escapedV}\)\s+(true|false)\)");
+                            var valMatch = valPattern.Match(fullText);
+                            vals.Add(valMatch.Success ? valMatch.Groups[1].Value : "false");
+                        }
+                        else if (mapValType == "real")
+                        {
+                            var valPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}_values\s+{escapedV}\)\s+((?:\([^()]*(?:\([^()]*\)[^()]*)*\)|\d+\.\d+|\d+))\)");
+                            var valMatch = valPattern.Match(fullText);
+                            vals.Add(valMatch.Success ? NormalizeZ3Real(valMatch.Groups[1].Value) : "0.0");
+                        }
+                        else
+                        {
+                            var valPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}_values\s+{escapedV}\)\s+([-\d]+|\(- \d+\))\)");
+                            var valMatch = valPattern.Match(fullText);
+                            vals.Add(valMatch.Success ? NormalizeZ3Int(valMatch.Groups[1].Value) : "0");
+                        }
+                    }
+                }
+                result[name + "_card"] = keys.Count.ToString();
+                if (keys.Count > 0)
+                {
+                    result[name + "_keys"] = string.Join(",", keys);
+                    result[name + "_vals"] = string.Join(",", vals);
+                }
+                continue;
+            }
 
             var smtName = SeqSmtName(name, type);
 
@@ -220,6 +437,35 @@ static class TypeUtils
     internal static bool IsSpecOnlyLiteral(string literal)
     {
         var trimmed = literal.Trim();
-        return Regex.IsMatch(trimmed, @"\bfresh\s*\(");
+        if (Regex.IsMatch(trimmed, @"\bfresh\s*\(")) return true;
+        // "this in Repr" standalone is spec-only (but don't match Repr inside larger expressions like Valid() body)
+        if (Regex.IsMatch(trimmed, @"^(this|data|\w+)\s+in\s+Repr$")) return true;
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if the postcondition literal references any ghost field name
+    /// (not runtime-checkable in test code).
+    /// </summary>
+    internal static bool ReferencesGhostField(string literal, HashSet<string> ghostFieldNames)
+    {
+        foreach (var gf in ghostFieldNames)
+        {
+            if (Regex.IsMatch(literal, @"(?<![a-zA-Z_0-9])" + Regex.Escape(gf) + @"(?![a-zA-Z_0-9])"))
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if the type is supported as a class field for simple class testing.
+    /// </summary>
+    internal static bool IsSupportedFieldType(string type, Dictionary<string, List<string>>? enumDatatypes = null)
+    {
+        if (type is "int" or "nat" or "bool" or "real" or "char") return true;
+        if (IsArrayType(type) || IsSeqType(type) || IsSetType(type) || IsMultisetType(type) || IsMapType(type))
+            return !IsNestedCollectionType(type);
+        if (enumDatatypes != null && enumDatatypes.ContainsKey(type)) return true;
+        return false;
     }
 }

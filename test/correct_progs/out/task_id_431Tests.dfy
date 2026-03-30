@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-03-24 09:27:37
+// Generated: 2026-03-25 13:52:23
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -51,11 +51,9 @@ method HasCommonElementTest(){
 
 method Passing()
 {
-  // Test case for combination {1,2}:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
-  //   POST: !result
-  //   POST: !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
     var a := new int[1] [4];
     var b := new int[1] [4];
@@ -73,14 +71,24 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=1,b=2:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[1] [4];
-    var b := new int[2] [8, 4];
+    var a := new int[2] [6, 16];
+    var b := new int[1] [6];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[1] [2];
+    var b := new int[1] [5];
+    var result := HasCommonElement<int>(a, b);
+    expect result == false;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-03-24 09:49:04
+// Generated: 2026-03-25 13:53:23
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -76,29 +76,29 @@ method Passing()
     expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
   }
 
-  // Test case for combination {1}/Ba=0,b=1:
+  // Test case for combination {1}:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
-    var a := new int[0] [];
-    var b := new int[1] [2];
+    var a := new int[1] [2];
+    var b := new int[1] [6];
     var res := DissimilarElements<int>(a, b);
     expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
   }
 
-  // Test case for combination {1}/Ba=0,b=2:
+  // Test case for combination {1}/Ba=3,b=1:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
-    var a := new int[0] [];
-    var b := new int[2] [4, 3];
+    var a := new int[3] [5, 4, 6];
+    var b := new int[1] [14];
     var res := DissimilarElements<int>(a, b);
     expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
   }
 
-  // Test case for combination {1}/Ba=0,b=3:
+  // Test case for combination {1}/Ba=3,b=0:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
-    var a := new int[0] [];
-    var b := new int[3] [5, 4, 6];
+    var a := new int[3] [5, 4, 6];
+    var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
     expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
   }
@@ -123,24 +123,24 @@ method Passing()
     expect res == false;
   }
 
-  // Test case for combination {1}/Ba=1,x=0:
+  // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
   {
-    var a := new int[1] [0];
-    var x := 0;
+    var a := new int[1] [9];
+    var x := 9;
     var res := contains<int>(a, x);
     expect res == true;
   }
 
-  // Test case for combination {1}/Ba=1,x=1:
-  //   POST: res
-  //   POST: x in a[..]
+  // Test case for combination {2}:
+  //   POST: !res
+  //   POST: !(x in a[..])
   {
-    var a := new int[1] [1];
-    var x := 1;
+    var a := new int[0] [];
+    var x := 9;
     var res := contains<int>(a, x);
-    expect res == true;
+    expect res == false;
   }
 
 }

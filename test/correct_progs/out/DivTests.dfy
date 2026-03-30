@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Div.dfy
 // Method: Div
-// Generated: 2026-03-24 09:04:24
+// Generated: 2026-03-28 00:32:36
 
 // Computes the quotient 'q' and remainder 'r' of  the integer division
 // of a (non-negative) dividend 'n' by a (positive) divisor 'd'.

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-03-24 10:17:18
+// Generated: 2026-03-25 13:53:43
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -51,7 +51,7 @@ method Passing()
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i];
   }
 
-  // Test case for combination {1}/Ba=0,b=0:
+  // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
   //   PRE:  forall i :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length

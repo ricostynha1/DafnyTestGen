@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-03-24 09:08:46
+// Generated: 2026-03-28 00:33:19
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -9,13 +9,13 @@
 method PartitionOddEven(a: array<nat>) 
   modifies a
   ensures ! exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])  
-  ensures multiset(a[..]) == multiset(old(a[..]))
+  ensures multiset(a[..]) == multiset((a[..]))
 {
     var i := 0; // odd numbers are placed to the left of i
     var j := a.Length - 1; // even numbers are placed to the right of j
     while i <= j
       invariant 0 <= i <= j + 1 <= a.Length
-      invariant multiset(a[..]) == old(multiset(a[..]))
+      invariant multiset(a[..]) == (multiset(a[..]))
       invariant forall k :: 0 <= k < i ==> IsOdd(a[k])
       invariant forall k :: j < k < a.Length ==> IsEven(a[k])
      {
@@ -45,7 +45,7 @@ method Passing()
     var old_a := a[..];
     PartitionOddEven(a);
     expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=1:
@@ -56,7 +56,7 @@ method Passing()
     var old_a := a[..];
     PartitionOddEven(a);
     expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -67,7 +67,7 @@ method Passing()
     var old_a := a[..];
     PartitionOddEven(a);
     expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -78,7 +78,7 @@ method Passing()
     var old_a := a[..];
     PartitionOddEven(a);
     expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }

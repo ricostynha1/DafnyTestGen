@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_594.dfy
 // Method: FirstEvenOddDifference
-// Generated: 2026-03-24 10:15:12
+// Generated: 2026-03-25 13:53:28
 
 // Returns the difference between the first even and the first odd number in the array.
 method FirstEvenOddDifference(a: array<int>) returns (diff: int)
@@ -73,6 +73,16 @@ method Passing()
     expect diff == 563;
   }
 
+  // Test case for combination {1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[4] [9359, 562, 52, 53];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -8797;
+  }
+
   // Test case for combination {1}/Ba=3:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
@@ -81,16 +91,6 @@ method Passing()
     var a := new int[3] [-2, -4, -3];
     var diff := FirstEvenOddDifference(a);
     expect diff == 1;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
-  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
-  {
-    var a := new int[4] [4911, 3189, 2284, 11841];
-    var diff := FirstEvenOddDifference(a);
-    expect diff == -2627;
   }
 
 }

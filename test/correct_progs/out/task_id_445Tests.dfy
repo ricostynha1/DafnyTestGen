@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-03-24 09:28:18
+// Generated: 2026-03-25 13:52:32
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -40,7 +40,7 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] * b[i]

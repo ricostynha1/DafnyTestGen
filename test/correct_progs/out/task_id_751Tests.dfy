@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-03-24 10:25:47
+// Generated: 2026-03-25 13:54:21
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -49,11 +49,9 @@ method IsMinHeapTest(){
 
 method Passing()
 {
-  // Test case for combination {1,2}:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
-  //   POST: !result
-  //   POST: !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
     var a := new int[1] [13];
     var result := IsMinHeap(a);
@@ -69,13 +67,22 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
     var a := new int[0] [];
     var result := IsMinHeap(a);
     expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[3] [38, 37, 7719];
+    var result := IsMinHeap(a);
+    expect result == false;
   }
 
 }

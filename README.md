@@ -55,7 +55,13 @@ Each precondition scenario is crossed with postcondition scenarios.
 
 **Simple mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
 
-**All-combinations mode** (`-a`): generates tests for all **2^n − 1** non-empty subsets of DNF clauses, testing which combinations can hold simultaneously. For each combination {i, j, ...}, the selected clauses are asserted and all non-selected clauses are **negated** (exclusions). For Classify with 8 clauses, this tries 255 combinations — but since the clauses are mutually exclusive, only the same 3 singleton combinations are SAT.
+**All-combinations mode** (`-a`): generates tests for all **2^n − 1** non-empty subsets of DNF clauses, testing which combinations can hold simultaneously. For each combination {i, j, ...}, the selected clauses are asserted and all non-selected clauses are **negated** (exclusions). For Classify with 8 clauses, this produces 255 combinations — but two pruning optimizations eliminate most of them without calling Z3:
+
+1. **Syntactic contradiction detection**: Before invoking Z3, the merged literals are checked for obvious contradictions — direct complements (`L` ∧ `!(L)`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`), including numeric range analysis. For Classify, this instantly detects 7 contradictory combinations (e.g., clause {4} has `r == 0` ∧ `r == 1`).
+
+2. **UNSAT superset pruning**: When a combination's literals are contradictory, any superset is also contradictory (adding more literals to a contradiction stays contradictory). The contradictory mask is recorded, and all 2^(n-k) supersets are instantly pruned. For Classify, this prunes 241 additional combinations.
+
+Together, these reduce Z3 calls from **255 to just 7** (a 97% reduction), while producing the same 3 SAT results. The pruning is fully automatic and applies to all modes (all-combinations, simple, progressive).
 
 With more complex contracts, all-combinations discovers scenarios where multiple clauses hold simultaneously. For example, FindMax with `ensures exists k :: ...` and `ensures forall k :: ...` produces combinations like {1,3} (max at both first and last position — a single-element array).
 
@@ -97,11 +103,19 @@ The `--repeat <n>` option generates **N distinct test cases** per scenario. Afte
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — All-combinations**: Run DNF all-combinations mode. If enough SAT results, stop.
-2. **Phase 2 — Boundary analysis**: Add boundary value tiers. Solve only the new entries, stopping early once the minimum is reached.
-3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition until the minimum is reached.
+1. **Phase 1 — Tiered combinations**: Run DNF combinations with automatic tier escalation based on clause count:
+   - **n ≤ 5 clauses**: full all-combinations (all 2^n − 1 subsets)
+   - **n ≤ 8 clauses**: up to triples (3-way combinations)
+   - **n ≤ 10 clauses**: up to pairs (2-way combinations)
+   - **n > 10 clauses**: singletons only (one clause at a time)
 
-This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (all-combinations without escalation).
+   Higher tiers are also subject to a time budget — if earlier tiers consume too much time, later tiers are skipped.
+
+2. **Phase 2 — Boundary analysis** (only when n ≤ 10): Add boundary value tiers crossed with singleton combinations. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits. This phase is skipped entirely for high-clause methods (n > 10) where singletons alone provide sufficient coverage.
+
+3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
+
+This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (tiered combinations without escalation).
 
 ## Prerequisites
 
@@ -116,13 +130,17 @@ cd DafnyTestGen
 dotnet build
 ```
 
-Or publish a standalone executable:
+Or publish a self-contained standalone executable to the `publish/` folder:
 
 ```bash
 dotnet publish -c Release -o ../publish
 ```
 
+This produces `publish/DafnyTestGen.exe` (Windows) or `publish/DafnyTestGen` (Linux/macOS), which can be run directly without .NET installed on the target machine.
+
 ## Usage
+
+Using `dotnet run` (development):
 
 ```bash
 # Generate tests for a single file
@@ -144,6 +162,17 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
 ```
 
+Using the published standalone executable:
+
+```bash
+# Windows
+publish\DafnyTestGen.exe test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
+publish\DafnyTestGen.exe test/correct_progs/in/ -o test/correct_progs/out/
+
+# Linux / macOS
+publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
+```
+
 ### Command-Line Options
 
 | Option | Alias | Description |
@@ -158,6 +187,8 @@ dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ 
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
+| `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
+| `--timeout <n>` | | Timeout in seconds for test generation per method (0 = unlimited) |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 ### Z3 Path Resolution
@@ -209,10 +240,12 @@ When postconditions involve quantifiers or predicates that cannot be directly us
 
 ## Check Mode (`-c`)
 
-When `--check` is enabled, each generated test is executed with `dafny run --no-verify` to determine if it passes or fails. The output is split into two methods:
+When `--check` is enabled, DafnyTestGen compiles all tests into a **single** Dafny file with `dafny build --no-verify` (one compilation), then runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `FAIL:N` / `DONE:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (e.g., infinite loop), the remaining incomplete tests are automatically **re-checked individually** using the same compiled binary with a test index argument — no recompilation needed. The output is split into two methods:
 
 - **`Passing()`** &mdash; tests that pass at runtime (expects remain active)
 - **`Failing()`** &mdash; tests that fail at runtime (expects are commented out)
+
+When postconditions use recursive or ghost functions (e.g., `expect f == Fact(n);`), check mode captures the actual output values at runtime and injects them as concrete literals in the final test file (e.g., `expect f == 120;`). The same mechanism applies to postconditions with quantifiers over sets (e.g., `r == (forall x :: x in S ==> x > 0)`) where Z3 cannot evaluate the quantifier to a concrete boolean — the check phase runs the expression via Dafny and injects the result (e.g., `expect r == true;`).
 
 This is useful for evaluating buggy implementations against their contracts.
 
@@ -238,7 +271,7 @@ test/
   buggy_progs/           # Buggy programs for --check mode
     in/                  #   Source files with known bugs
     out/                 #   Check mode output (Passing/Failing split)
-  unsupported_progs/     # Programs not currently supported (e.g., tuple types)
+  unsupported_progs/     # Programs not currently supported (tuple types, recursive functions in postconditions, etc.)
 ```
 
 The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis** + **SmtTranslator** → **Z3Runner** → **TypeUtils** (model parsing) → **TestEmitter** → **TestValidator** (optional).
@@ -247,24 +280,69 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 
 - Integer, natural, real, char, bool types
 - Arrays and sequences (including `array<T>`, `seq<T>`, `string`)
+- **Simple enum datatypes**: datatypes where all constructors are parameterless (e.g., `datatype Color = Red | White | Blue`) are supported. Constructors are mapped to bounded integers in SMT (Red→0, White→1, Blue→2) with range constraints, and mapped back to constructor names in generated test code. Boundary analysis generates one tier per constructor for exhaustive value coverage. This works for direct parameters (`c: Color`), arrays (`array<Color>`), and sequences (`seq<Color>`)
 - Quantifiers (`forall`, `exists`)
 - Implications, logical operators, chain comparisons
 - `IsSorted` predicate (built-in translation)
 - `old()` expressions in postconditions (array params captured as sequences before method call, supporting quantifier-bound indices)
+- **`set<T>` input parameters**: sets are encoded as `(Array Int Bool)` characteristic functions in SMT with a bounded element universe (8 values). The universe is element-type-dependent: `int` uses `{-2, -1, 0, 1, 2, 3, 4, 5}`, `nat` uses `{0..7}`, `char` uses `{'a'..'h'}` (codes 97–104), and enum datatypes use ordinals `{0..min(N,8)-1}`. Membership (`x in S`), cardinality (`|S|`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements), capped at the number of constructors + 1 for enum element types. Set literals are emitted as Dafny set display expressions with proper formatting (e.g., `{-1, 0, 3}` for int, `{'a', 'c'}` for char, `{Red, Blue}` for enums). Supported element types: `int`, `nat`, `char`, enum datatypes, and generic `T` (treated as int)
+- **`multiset<T>` parameters**: multisets are encoded as `(Array Int Int)` count functions in SMT with the same element-type-dependent bounded universe as sets, where each element maps to its multiplicity. Multiset variables are constructed from a zero-default base array with per-element variables, ensuring out-of-universe indices are always 0 without quantifier constraints. Membership (`x in M`), cardinality (`|M|`), element count (`M[x]`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Operations are expanded pointwise over the bounded universe. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements). Multiset literals are emitted as Dafny multiset display expressions with proper formatting (e.g., `multiset{0, 2, 2, 5}` for int, `multiset{0, 3, 3}` for nat). Supported element types: `int`, `nat`, `char`, enum datatypes, and generic `T` (treated as int)
+- **`map<K,V>` parameters**: maps are encoded as two parallel SMT arrays — a domain `(Array K Bool)` for key presence and a values `(Array K V)` for values at each key — over the same bounded key universe as sets. Membership (`k in m`), cardinality (`|m|`), key lookup (`m[k]`), and map merge (`a + b`) are translated to SMT constraints on the domain/values arrays. Map update (`m[k := v]`), key removal (`m - {k}`), and `m.Keys` are handled via runtime evaluation: postconditions of the form `r == <expr>` capture the RHS before the method call and use Dafny's own evaluation for the `expect` assertion. Boundary analysis generates cardinality tiers (0, 1, 2, 3 keys), capped at the number of constructors + 1 for enum key types. Map literals are emitted as Dafny map display expressions (e.g., `map[-1 := 5, 0 := 3]`). Supported key types: `int`, `nat`, `char`, enum datatypes, and generic `T`. Supported value types: `int`, `nat`, `bool`, `real`, `char`, enum datatypes
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
-- Ghost function/predicate removal for runtime use
 - Uninterpreted functions (postcondition literals used as assertions)
 
-## Limitations
+### Class Method Support
+
+Methods inside Dafny classes are supported in three tiers, with increasing complexity. In all cases, fields are treated as synthetic mutable parameters with pre/post SMT variables; test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references. Classes with trait parents or unsupported field types are auto-skipped.
+
+**Simple classes** — classes with `modifies this` whose non-ghost fields all have supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, enums). No `Valid()` predicate is required.
+
+**`{:autocontracts}` classes** — classes with the `{:autocontracts}` attribute. `Valid()` is automatically injected as both an implicit precondition and postcondition (its body is inlined for SMT translation, constraining both pre-state and post-state). Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via `ensures` clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions.
+
+**Non-autocontracts classes with `requires Valid()`** — classes that use a manual `Valid()` predicate (without `{:autocontracts}`), including those with ghost fields, `modifies Repr`, and class-level type parameters. `Valid()` is not treated specially — it is handled like any other predicate in the contracts (inlined if its body is simple enough, otherwise used as a literal). Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding — when one conjunct of a `&&` chain is untranslatable, it is silently dropped while preserving the remaining constraints.
+
+#### Ghost Field Handling
+
+Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. In the generated test file:
+
+- `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
+- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals
+- Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
+- The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields
+- `old()` wrappers are stripped from method bodies (invalid for non-ghost variables in compiled code — semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point)
+- Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions
+
+## Not Testable (Auto-Skipped)
+
+The following are detected and automatically skipped because there is nothing to test. A message is printed when a method or file is skipped.
+
+- **Programs with bodyless methods**: if the source file contains any non-ghost method without a body, the entire file is skipped — such programs cannot be compiled by `dafny build`
+- **Bodyless methods**: abstract methods (without an implementation body) are skipped — there is no code to test
+- **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
+
+## Not Currently Supported (Auto-Skipped)
+
+The following are auto-detected and skipped. Some may be addressed in the future.
+
+- **Trait methods and classes with traits**: require dynamic dispatch and inheritance handling (classes with trait parents are auto-skipped)
+- **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
+- **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
+- **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
+- **Tuple types** (e.g., `(real, real)`)
+- **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
+- **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
+- **iset/imap input parameters** (`iset<T>`, `imap<K,V>`). Note: these types as **return types** work fine when the input parameters are of supported types — the postcondition is used as the `expect` assertion and Dafny evaluates the expressions at runtime
+- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
+
+## Supported with Limitations
 
 - Generic type parameters are mapped to `Int` in SMT
-- Complex quantifier nesting may cause Z3 timeouts (5-second limit per query)
+- Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- Tuple types (e.g., `(real, real)`) are not supported — test generation produces incorrect syntax for tuple values and tuple arrays
-- Nested collection types (e.g., `seq<seq<int>>`, `array<seq<T>>`) are not supported — methods with such parameters are skipped
-- When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), Z3 picks one concrete value, but the implementation may return a different valid one — this can cause false negatives in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted).
-- Methods whose contracts (after predicate inlining) involve `multiset` or quantifiers on variable-indexed sequence slices (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) are automatically skipped — these produce unsolvable SMT constraints that cause every Z3 query to timeout
-- Not all Dafny expressions are translatable to SMT2
+- Recursive functions in postconditions (e.g., `ensures result == Fact(n)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`). Predicates that transitively call other predicates (e.g., `isSubstringPred` -> `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
+- When a postcondition allows multiple valid outputs (e.g., `ensures a <= r <= b`), the generated `expect` uses the concrete value from Z3 (e.g., `expect r == 5`), not the range condition. If the implementation returns a different valid value, this causes a false negative in check mode (test moved to `Failing` even though the method is correct). Output variables not mentioned in any active postcondition literal are already handled (no `expect` emitted)
+- **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
+- Not all Dafny expressions are translatable to SMT2. Preconditions that cannot be converted to SMT (e.g., those referencing autocontracts `Valid()` or complex predicates) are emitted as runtime `expect` checks with `// PRE-CHECK` markers. In `--check` mode, test cases whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than counted as failures. This handles cases where Z3 picks input values that satisfy the translated constraints but violate untranslated preconditions
 
 ## License
 

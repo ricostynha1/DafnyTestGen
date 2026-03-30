@@ -18,7 +18,8 @@ static class BoundaryAnalysis
         bool verbose,
         int tierCount = 4,
         List<string>? preLiterals = null,
-        HashSet<string>? mutableNames = null)
+        HashSet<string>? mutableNames = null,
+        Dictionary<string, List<string>>? enumDatatypes = null)
     {
         mutableNames ??= new HashSet<string>();
 
@@ -56,8 +57,46 @@ static class BoundaryAnalysis
                     tiers.Add(($"{sz}", constraint));
                 }
             }
+            else if (TypeUtils.IsSetType(type))
+            {
+                // Cap tiers for enum element types (can't have more elements than constructors)
+                var setElemType = TypeUtils.GetSetElementType(type);
+                var universe = TypeUtils.GetElementUniverse(setElemType);
+                var maxCard = Math.Min(tierCount, universe.Length + 1);
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
+                for (int sz = 0; sz < maxCard; sz++)
+                {
+                    var constraint = $"(= {smtName}_card {sz})";
+                    tiers.Add(($"{sz}", constraint));
+                }
+            }
+            else if (TypeUtils.IsMultisetType(type))
+            {
+                // Cardinality tiers: 0, 1, ..., tierCount-1
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
+                for (int sz = 0; sz < tierCount; sz++)
+                {
+                    var constraint = $"(= {smtName}_card {sz})";
+                    tiers.Add(($"{sz}", constraint));
+                }
+            }
+            else if (TypeUtils.IsMapType(type))
+            {
+                // Cap tiers for enum key types (can't have more keys than constructors)
+                var mapKeyType = TypeUtils.GetMapKeyType(type);
+                var keyUniverse = TypeUtils.GetElementUniverse(mapKeyType);
+                var maxCard = Math.Min(tierCount, keyUniverse.Length + 1);
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
+                for (int sz = 0; sz < maxCard; sz++)
+                {
+                    var constraint = $"(= {smtName}_card {sz})";
+                    tiers.Add(($"{sz}", constraint));
+                }
+            }
             else if (type == "int" || type == "nat" || type == "T")
             {
+                // For mutable scalar fields, boundary tiers constrain the pre-state
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
                 // Extract bounds from preconditions
                 var bounds = ExtractBounds(name, preStrings);
                 var boundaryValues = new HashSet<int>();
@@ -88,18 +127,18 @@ static class BoundaryAnalysis
 
                 foreach (var val in boundaryValues.OrderBy(v => v))
                 {
-                    tiers.Add(($"{val}", $"(= {name} {(val < 0 ? $"(- {-val})" : val.ToString())})"));
+                    tiers.Add(($"{val}", $"(= {smtName} {(val < 0 ? $"(- {-val})" : val.ToString())})"));
                 }
 
                 // Add relational boundary: param == otherParam
                 foreach (var rel in relBounds)
                 {
-                    tiers.Add(($"={rel}", $"(= {name} {rel})"));
+                    tiers.Add(($"={rel}", $"(= {smtName} {rel})"));
                 }
             }
             else if (type == "real")
             {
-                // For real parameters, use representative boundary values
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
                 var realBoundaryValues = new List<(string label, string smtValue)>
                 {
                     ("0.0", "0.0"),
@@ -110,8 +149,14 @@ static class BoundaryAnalysis
 
                 foreach (var (lbl, smtVal) in realBoundaryValues)
                 {
-                    tiers.Add((lbl, $"(= {name} {smtVal})"));
+                    tiers.Add((lbl, $"(= {smtName} {smtVal})"));
                 }
+            }
+            else if (enumDatatypes != null && enumDatatypes.TryGetValue(type, out var enumCtors))
+            {
+                var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
+                for (int i = 0; i < enumCtors.Count; i++)
+                    tiers.Add((enumCtors[i], $"(= {smtName} {i})"));
             }
 
             if (tiers.Count > 0)
@@ -121,8 +166,30 @@ static class BoundaryAnalysis
         if (paramTiers.Count == 0)
             return new List<(string, List<string>)> { ("", new List<string>()) };
 
-        // Cross-product of all parameter tiers (pairwise to limit explosion)
+        // Cross-product of all parameter tiers, capped to avoid explosion
         var result = new List<(string tierLabel, List<string> tierConstraints)>();
+        // Estimate cross-product size; if too large, keep only the parameters with fewest tiers
+        long estimated = 1;
+        foreach (var (_, t) in paramTiers)
+            estimated *= t.Count;
+        const int maxBoundaryTiers = 64;
+        if (estimated > maxBoundaryTiers)
+        {
+            // Greedily drop the parameter with the most tiers until feasible
+            var trimmed = new List<(string paramName, List<(string label, string smtConstraint)> tiers)>(paramTiers);
+            while (trimmed.Count > 0)
+            {
+                long sz = 1;
+                foreach (var (_, t) in trimmed) sz *= t.Count;
+                if (sz <= maxBoundaryTiers) break;
+                // Drop the parameter with the most tiers
+                int maxIdx = 0;
+                for (int i = 1; i < trimmed.Count; i++)
+                    if (trimmed[i].tiers.Count > trimmed[maxIdx].tiers.Count) maxIdx = i;
+                trimmed.RemoveAt(maxIdx);
+            }
+            paramTiers = trimmed;
+        }
         CrossProductTiers(paramTiers, 0, "", new List<string>(), result);
 
         if (verbose)

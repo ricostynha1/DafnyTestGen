@@ -1,0 +1,85 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_142.dfy
+// Method: CountIdenticalPositions
+// Generated: 2026-03-26 14:57:33
+
+// dafny-synthesis_task_id_142.dfy
+
+method CountIdenticalPositions(a: seq<int>, b: seq<int>, c: seq<int>)
+    returns (count: int)
+  requires |a| == |b| && |b| == |c|
+  ensures count >= 0
+  ensures count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|
+  decreases a, b, c
+{
+  var identical := set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i];
+  count := |identical|;
+}
+
+
+method Passing()
+{
+  // Test case for combination {1}:
+  //   PRE:  |a| == |b| && |b| == |c|
+  //   POST: count >= 0
+  //   POST: count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|
+  {
+    var a: seq<int> := [];
+    var b: seq<int> := [];
+    var c: seq<int> := [];
+    var count := CountIdenticalPositions(a, b, c);
+    expect count >= 0;
+    expect count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|;
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  |a| == |b| && |b| == |c|
+  //   POST: count >= 0
+  //   POST: count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|
+  {
+    var a: seq<int> := [5];
+    var b: seq<int> := [7];
+    var c: seq<int> := [9];
+    var count := CountIdenticalPositions(a, b, c);
+    expect count >= 0;
+    expect count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|;
+  }
+
+  // Test case for combination {1}/Ba=2,b=2,c=2:
+  //   PRE:  |a| == |b| && |b| == |c|
+  //   POST: count >= 0
+  //   POST: count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|
+  {
+    var a: seq<int> := [4, 3];
+    var b: seq<int> := [6, 5];
+    var c: seq<int> := [8, 7];
+    var count := CountIdenticalPositions(a, b, c);
+    expect count >= 0;
+    expect count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|;
+  }
+
+  // Test case for combination {1}/Ba=3,b=3,c=3:
+  //   PRE:  |a| == |b| && |b| == |c|
+  //   POST: count >= 0
+  //   POST: count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|
+  {
+    var a: seq<int> := [5, 4, 6];
+    var b: seq<int> := [8, 7, 9];
+    var c: seq<int> := [11, 10, 12];
+    var count := CountIdenticalPositions(a, b, c);
+    expect count >= 0;
+    expect count == |set i: int {:trigger c[i]} {:trigger b[i]} {:trigger a[i]} | 0 <= i < |a| && a[i] == b[i] && b[i] == c[i]|;
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

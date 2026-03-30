@@ -6,16 +6,34 @@ namespace DafnyTestGen;
 static class TestEmitter
 {
     /// <summary>
+    /// Extracts "free variables" from an expression string — identifiers that are NOT
+    /// member accesses (not preceded by '.') and not Dafny keywords.
+    /// E.g., "elems[..size]" → {"elems", "size"}, "a.Length" → {"a"}, "a[k + 1]" → {"a", "k"}
+    /// </summary>
+    static HashSet<string> ExtractFreeVariables(string expr)
+    {
+        var keywords = new HashSet<string> { "forall", "exists", "old", "true", "false", "null", "this", "var", "in", "if", "then", "else", "match", "case", "multiset", "set", "seq", "map", "iset", "imap", "int", "nat", "real", "bool", "char", "string" };
+        var result = new HashSet<string>();
+        foreach (Match m in Regex.Matches(expr, @"\b([a-zA-Z_]\w*)\b"))
+        {
+            if (m.Index > 0 && expr[m.Index - 1] == '.') continue; // member access
+            var id = m.Groups[1].Value;
+            if (!keywords.Contains(id))
+                result.Add(id);
+        }
+        return result;
+    }
+
+    /// <summary>
     /// Extracts all old(expr) occurrences from postcondition literals and returns
     /// a list of (innerExpr, captureVarName, isArrayCapture) triples for pre-call capture.
-    /// When old(a[indexExpr]) references an array parameter, the entire array is captured
-    /// as a sequence (a[..]) so that quantifier-bound indices work correctly.
-    /// E.g., old(a[k + 1]) with array param 'a' -> ("a[..]", "old_a", true)
-    /// E.g., old(a[0]) with array param 'a' -> ("a[..]", "old_a", true)
-    /// E.g., old(x) -> ("x", "old_x", false)
+    /// When all free variables in the inner expression are known (method params, fields, etc.),
+    /// the entire expression is captured as a single variable (whole-expression capture).
+    /// When unknown variables are present (e.g., quantifier-bound), falls back to array
+    /// consolidation: capturing the entire array as a sequence so quantifier-bound indices work.
     /// </summary>
     internal static List<(string innerExpr, string varName, bool isArrayCapture)> ExtractOldCaptures(
-        List<string> literals, HashSet<string> arrayParamNames)
+        List<string> literals, HashSet<string> arrayParamNames, HashSet<string> knownIdentifiers)
     {
         var captures = new Dictionary<string, (string varName, bool isArray)>(); // captureExpr -> (varName, isArray)
         foreach (var lit in literals)
@@ -36,30 +54,40 @@ static class TestEmitter
                 {
                     var innerExpr = lit.Substring(start, pos - 1 - start).Trim();
 
-                    // Check if this is an array access: arrayName[indexExpr]
-                    var arrayAccessMatch = Regex.Match(innerExpr, @"^(\w+)\[");
-                    if (arrayAccessMatch.Success && arrayParamNames.Contains(arrayAccessMatch.Groups[1].Value))
+                    // Check if all free variables in the expression are known (capturable)
+                    var freeVars = ExtractFreeVariables(innerExpr);
+                    bool allKnown = freeVars.All(v => knownIdentifiers.Contains(v));
+
+                    if (allKnown)
                     {
-                        // Consolidate all old(a[...]) into a single capture of a[..]
-                        var arrayName = arrayAccessMatch.Groups[1].Value;
-                        var captureExpr = arrayName + "[..]";
-                        if (!captures.ContainsKey(captureExpr))
-                            captures[captureExpr] = ("old_" + arrayName, true);
-                    }
-                    else if (!captures.ContainsKey(innerExpr))
-                    {
-                        // Generate a clean variable name from the expression
-                        var varName = "old_" + Regex.Replace(innerExpr, @"[^a-zA-Z0-9_]", "_")
-                            .Trim('_');
-                        // Deduplicate variable names
-                        var baseName = varName;
-                        int suffix = 2;
-                        while (captures.Values.Any(v => v.varName == varName))
+                        // Whole-expression capture: capture the entire old(expr) as a variable
+                        if (!captures.ContainsKey(innerExpr))
                         {
-                            varName = baseName + suffix;
-                            suffix++;
+                            var varName = "old_" + Regex.Replace(innerExpr, @"[^a-zA-Z0-9_]+", "_")
+                                .Trim('_');
+                            var baseName = varName;
+                            int suffix = 2;
+                            while (captures.Values.Any(v => v.varName == varName))
+                            {
+                                varName = baseName + suffix;
+                                suffix++;
+                            }
+                            captures[innerExpr] = (varName, false);
                         }
-                        captures[innerExpr] = (varName, false);
+                    }
+                    else
+                    {
+                        // Some free vars are unknown (likely quantifier-bound).
+                        // Fall back to array consolidation if this is an array access.
+                        var arrayAccessMatch = Regex.Match(innerExpr, @"^(\w+)\[");
+                        if (arrayAccessMatch.Success && arrayParamNames.Contains(arrayAccessMatch.Groups[1].Value))
+                        {
+                            var arrayName = arrayAccessMatch.Groups[1].Value;
+                            var captureExpr = arrayName + "[..]";
+                            if (!captures.ContainsKey(captureExpr))
+                                captures[captureExpr] = ("old_" + arrayName, true);
+                        }
+                        // else: can't capture this old() expression — will remain untranslated
                     }
                 }
             }
@@ -78,7 +106,18 @@ static class TestEmitter
     {
         var result = literal;
 
-        // First handle array captures: old(arrayName[...]) -> old_arrayName[...]
+        // First handle non-array (whole-expression) captures: old(expr) -> varName
+        // These are more specific and must run before array consolidation, which uses
+        // a general pattern that could match the same old() expressions.
+        foreach (var (innerExpr, varName, isArrayCapture) in oldCaptures)
+        {
+            if (isArrayCapture) continue;
+            var pattern = @"\bold\s*\(" + Regex.Escape(innerExpr) + @"\)";
+            result = Regex.Replace(result, pattern, varName);
+        }
+
+        // Then handle array captures: old(arrayName[...]) -> old_arrayName[...]
+        // This is the fallback for quantifier-bound index expressions.
         foreach (var (_, varName, isArrayCapture) in oldCaptures)
         {
             if (!isArrayCapture) continue;
@@ -118,13 +157,6 @@ static class TestEmitter
             }
         }
 
-        // Then handle non-array captures: old(expr) -> varName
-        foreach (var (innerExpr, varName, isArrayCapture) in oldCaptures)
-        {
-            if (isArrayCapture) continue;
-            var pattern = @"\bold\s*\(" + Regex.Escape(innerExpr) + @"\)";
-            result = Regex.Replace(result, pattern, varName);
-        }
         return result;
     }
 
@@ -139,7 +171,8 @@ static class TestEmitter
         return typeStr;
     }
 
-    internal static string EmitVarDecl(string name, string typeStr, Dictionary<string, string> values)
+    internal static string EmitVarDecl(string name, string typeStr, Dictionary<string, string> values,
+        Dictionary<string, List<string>>? enumDatatypes = null)
     {
         if (TypeUtils.IsArrayType(typeStr))
         {
@@ -147,7 +180,8 @@ static class TestEmitter
                 ? typeStr.Substring(6, typeStr.Length - 7)
                 : "int";
 
-            var defaultElem = elemType == "bool" ? "false" : elemType == "real" ? "0.0" : "0";
+            var defaultElem = elemType == "bool" ? "false" : elemType == "real" ? "0.0" :
+                (enumDatatypes != null && enumDatatypes.TryGetValue(elemType, out var defCtors) ? defCtors[0] : "0");
 
             if (values.TryGetValue(name + "_len", out var lenStr) && int.TryParse(lenStr, out var len) && len >= 0)
             {
@@ -164,6 +198,26 @@ static class TestEmitter
                 // Ensure bool elements are true/false (not 0/1)
                 if (elemType == "bool")
                     elems = elems.Select(e => e == "true" ? "true" : "false").ToArray();
+
+                // Ensure char elements are char literals (not integers)
+                if (elemType == "char")
+                    elems = elems.Select(e =>
+                    {
+                        if (int.TryParse(e, out var code) && code >= 32 && code < 127 && code != '\'' && code != '\\')
+                            return $"'{(char)code}'";
+                        if (int.TryParse(e, out var c))
+                            return $"'\\U{{{c:X4}}}'";
+                        return e; // already a char literal
+                    }).ToArray();
+
+                // Map enum ordinals back to constructor names
+                if (enumDatatypes != null && enumDatatypes.TryGetValue(elemType, out var enumCtors))
+                    elems = elems.Select(e =>
+                    {
+                        if (int.TryParse(e, out var ord) && ord >= 0 && ord < enumCtors.Count)
+                            return enumCtors[ord];
+                        return enumCtors[0];
+                    }).ToArray();
 
                 if (len == 0)
                     return $"    var {name} := new {elemType}[0] [];";
@@ -202,15 +256,74 @@ static class TestEmitter
                     });
                     return $"    var {name}: seq<char> := [{string.Join(", ", charElems)}];";
                 }
-                else
+
+                // Map enum ordinals back to constructor names for seq<EnumType>
+                var seqElemType = TypeUtils.GetSeqElementType(typeStr);
+                if (enumDatatypes != null && enumDatatypes.TryGetValue(seqElemType, out var seqEnumCtors))
                 {
-                    // Generic seq<T>
+                    elems = elems.Select(e =>
+                    {
+                        if (int.TryParse(e, out var ord) && ord >= 0 && ord < seqEnumCtors.Count)
+                            return seqEnumCtors[ord];
+                        return seqEnumCtors[0];
+                    }).ToArray();
                     if (len == 0)
                         return $"    var {name}: {typeStr} := [];";
                     return $"    var {name}: {typeStr} := [{string.Join(", ", elems)}];";
                 }
+
+                // Generic seq<T>
+                if (len == 0)
+                    return $"    var {name}: {typeStr} := [];";
+                return $"    var {name}: {typeStr} := [{string.Join(", ", elems)}];";
             }
             return $"    var {name}: {typeStr} := [];";
+        }
+
+        if (TypeUtils.IsSetType(typeStr))
+        {
+            if (values.TryGetValue(name + "_members", out var membersStr))
+            {
+                var elemType = TypeUtils.GetSetElementType(typeStr);
+                var members = membersStr.Split(',').Select(m => FormatScalarValue(m.Trim(), elemType, enumDatatypes));
+                return $"    var {name}: {typeStr} := {{{string.Join(", ", members)}}};";
+            }
+            return $"    var {name}: {typeStr} := {{}};";
+        }
+
+        if (TypeUtils.IsMultisetType(typeStr))
+        {
+            if (values.TryGetValue(name + "_members", out var membersStr))
+            {
+                var elemType = TypeUtils.GetMultisetElementType(typeStr);
+                var members = membersStr.Split(',').Select(m => FormatScalarValue(m.Trim(), elemType, enumDatatypes));
+                return $"    var {name}: {typeStr} := multiset{{{string.Join(", ", members)}}};";
+            }
+            return $"    var {name}: {typeStr} := multiset{{}};";
+        }
+
+        if (TypeUtils.IsMapType(typeStr))
+        {
+            if (values.TryGetValue(name + "_keys", out var keysStr) && values.TryGetValue(name + "_vals", out var valsStr))
+            {
+                var keyType = TypeUtils.GetMapKeyType(typeStr);
+                var valType = TypeUtils.GetMapValueType(typeStr);
+                var keys = keysStr.Split(',');
+                var vals = valsStr.Split(',');
+                var entries = keys.Zip(vals, (k, v) =>
+                    $"{FormatScalarValue(k.Trim(), keyType, enumDatatypes)} := {FormatScalarValue(v.Trim(), valType, enumDatatypes)}");
+                return $"    var {name}: {typeStr} := map[{string.Join(", ", entries)}];";
+            }
+            return $"    var {name}: {typeStr} := map[];";
+        }
+
+        // Enum datatype: map integer ordinal back to constructor name
+        if (enumDatatypes != null && enumDatatypes.TryGetValue(typeStr, out var scalarEnumCtors))
+        {
+            if (values.TryGetValue(name, out var enumVal) && int.TryParse(enumVal, out var ord)
+                && ord >= 0 && ord < scalarEnumCtors.Count)
+                return $"    var {name} := {scalarEnumCtors[ord]};";
+            return $"    var {name} := {scalarEnumCtors[0]};";
         }
 
         if (values.TryGetValue(name, out var val))
@@ -233,6 +346,30 @@ static class TestEmitter
         return $"    var {name} := {defaultVal}; // Z3 did not assign a value";
     }
 
+    /// <summary>
+    /// Formats a scalar Z3 value for Dafny emission (used for class field assignments).
+    /// </summary>
+    static string FormatScalarValue(string val, string typeStr, Dictionary<string, List<string>>? enumDatatypes)
+    {
+        if (enumDatatypes != null && enumDatatypes.TryGetValue(typeStr, out var ctors))
+        {
+            if (int.TryParse(val, out var ord) && ord >= 0 && ord < ctors.Count)
+                return ctors[ord];
+            return ctors[0];
+        }
+        if (typeStr == "real" && !val.Contains('.'))
+            return val + ".0";
+        if (typeStr == "char" && int.TryParse(val, out var charCode))
+        {
+            if (charCode >= 32 && charCode < 127 && charCode != '\'' && charCode != '\\')
+                return $"'{(char)charCode}'";
+            return $"'\\U{{{charCode:X4}}}'";
+        }
+        if (typeStr == "bool")
+            return val == "true" ? "true" : "false";
+        return val;
+    }
+
     internal static string EmitDafnyTests(
         string filePath,
         string methodName,
@@ -243,7 +380,10 @@ static class TestEmitter
         List<Expression> preClauses,
         bool hasArrayParam,
         bool hasUninterpFuncs = false,
-        HashSet<string>? mutableNames = null)
+        HashSet<string>? mutableNames = null,
+        Dictionary<string, List<string>>? enumDatatypes = null,
+        ClassInfo? classInfo = null,
+        List<(string name, List<string> paramNames, string body, bool isClassMember)>? inlinablePredicates = null)
     {
         var sb = new System.Text.StringBuilder();
         sb.AppendLine("// Auto-generated test cases by DafnyTestGen");
@@ -252,10 +392,23 @@ static class TestEmitter
         sb.AppendLine($"// Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine();
 
-        // Include original source, removing 'ghost' from functions/predicates
-        // so they can be used in 'expect' statements at runtime
+        // Include original source, removing 'ghost' from fields, constants, functions, and predicates
+        // so they can be assigned and used in 'expect' statements at runtime
         var testSource = Regex.Replace(originalSource, @"\bghost\s+function\b", "function");
         testSource = Regex.Replace(testSource, @"\bghost\s+predicate\b", "predicate");
+        testSource = Regex.Replace(testSource, @"\bghost\s+var\b", "var");
+        testSource = Regex.Replace(testSource, @"\bghost\s+const\b", "const");
+        // Strip old() wrappers only in non-spec lines (statements, assertions).
+        // old() in ensures/invariant/requires/decreases clauses must be preserved
+        // because it has valid semantics there (refers to pre-state values).
+        var specKeywords = new[] { "ensures", "invariant", "requires", "decreases", "modifies" };
+        testSource = string.Join("\n", testSource.Split('\n').Select(line =>
+        {
+            var trimmed = line.TrimStart();
+            if (specKeywords.Any(kw => trimmed.StartsWith(kw + " ") || trimmed.StartsWith(kw + "(")))
+                return line; // preserve old() in spec clauses
+            return Regex.Replace(line, @"\bold\(", "(");
+        }));
         sb.AppendLine(testSource);
         sb.AppendLine();
 
@@ -264,10 +417,16 @@ static class TestEmitter
         if (method.TypeArgs != null)
             foreach (var tp in method.TypeArgs)
                 typeParamMap[tp.Name] = "int";
+        // Also include class-level type parameters
+        if (classInfo?.ClassTypeParams != null)
+            foreach (var tp in classInfo.ClassTypeParams)
+                if (!typeParamMap.ContainsKey(tp))
+                    typeParamMap[tp] = "int";
 
-        // Build the method call name with type instantiation if generic
-        var methodCallName = typeParamMap.Count > 0
-            ? $"{methodName}<{string.Join(", ", typeParamMap.Values)}>"
+        // Build the method call name with type instantiation if generic (method-level type args only)
+        var methodTypeArgs = method.TypeArgs?.Select(tp => tp.Name).ToList() ?? new List<string>();
+        var methodCallName = methodTypeArgs.Count > 0
+            ? $"{methodName}<{string.Join(", ", methodTypeArgs.Select(tp => typeParamMap.TryGetValue(tp, out var t) ? t : "int"))}>"
             : methodName;
 
         sb.AppendLine($"method GeneratedTests_{methodName}()");
@@ -276,6 +435,12 @@ static class TestEmitter
         // Collect array parameter names for old() capture handling
         var arrayParamNames = new HashSet<string>(
             method.Ins.Where(inp => TypeUtils.IsArrayType(inp.Type.ToString())).Select(inp => inp.Name));
+        // Include class array fields (var and const) for old() capture
+        if (classInfo != null)
+        {
+            foreach (var (fn, ft) in classInfo.Fields.Concat(classInfo.ConstFields ?? new List<(string, string)>()))
+                if (TypeUtils.IsArrayType(ft)) arrayParamNames.Add(fn);
+        }
 
         foreach (var (label, values, literals) in testCases)
         {
@@ -290,10 +455,198 @@ static class TestEmitter
 
             sb.AppendLine("  {");
 
-            // Emit variable declarations from Z3 model, substituting type parameters.
-            // For mutable arrays, use _pre values (the input/pre-state).
+            // For class methods: construct object and assign fields
+            var fieldNames = classInfo != null ? new HashSet<string>(classInfo.Fields.Select(f => f.Name)) : new HashSet<string>();
+            var constFieldNames = classInfo is { ConstFields: not null }
+                ? new HashSet<string>(classInfo.ConstFields.Select(f => f.Name)) : new HashSet<string>();
+            var ctorParamNames = classInfo is { ConstructorParams: not null }
+                ? new HashSet<string>(classInfo.ConstructorParams.Select(p => p.Name)) : new HashSet<string>();
+            var ghostFieldNames = classInfo?.GhostFields != null
+                ? new HashSet<string>(classInfo.GhostFields.Select(f => f.Name)) : new HashSet<string>();
+            // Ghost fields are now concrete in the test copy, so include them in allClassFields
+            var ghostVarFields = classInfo?.GhostFields != null
+                ? classInfo.GhostFields.Where(f => f.Name != "Repr").ToList()
+                : new List<(string Name, string Type)>();
+            if (classInfo != null)
+            {
+                // Build class name with type instantiation for generic classes
+                var classNameWithTypes = classInfo.ClassName;
+                if (classInfo.ClassTypeParams != null && classInfo.ClassTypeParams.Count > 0)
+                    classNameWithTypes += $"<{string.Join(", ", classInfo.ClassTypeParams.Select(tp => typeParamMap.TryGetValue(tp, out var t) ? t : "int"))}>";
+
+                if (classInfo.ConstructorParams != null && classInfo.ConstructorParams.Count > 0)
+                {
+                    // Use constructor with Z3-chosen parameter values
+                    var ctorArgs = classInfo.ConstructorParams.Select(p =>
+                    {
+                        if (values.TryGetValue(p.Name, out var val))
+                        {
+                            val = FormatScalarValue(val, p.Type, enumDatatypes);
+                            return val;
+                        }
+                        return p.Type switch { "real" => "0.0", "char" => "' '", "bool" => "false", "nat" => "1", _ => "1" };
+                    });
+                    sb.AppendLine($"    var obj := new {classNameWithTypes}({string.Join(", ", ctorArgs)});");
+                }
+                else if (classInfo.ConstructorParams != null)
+                {
+                    // Constructor exists but has no params — still need parens
+                    sb.AppendLine($"    var obj := new {classNameWithTypes}();");
+                }
+                else
+                {
+                    sb.AppendLine($"    var obj := new {classNameWithTypes};");
+                }
+
+                // Assign var fields
+                foreach (var (fieldName, fieldType) in classInfo.Fields)
+                {
+                    var fType = SubstTypeParams(fieldType, typeParamMap);
+                    if (TypeUtils.IsArrayType(fType))
+                    {
+                        // Array field: emit temp var, then assign to obj.field
+                        var emitValues = new Dictionary<string, string>(values);
+                        var isMut = mutableNames != null && mutableNames.Contains(fieldName);
+                        var lenKey = isMut ? $"{fieldName}_pre_len" : $"{fieldName}_len";
+                        if (values.TryGetValue(lenKey, out var arrLen))
+                        {
+                            emitValues[fieldName + "_len"] = arrLen;
+                            emitValues[$"tmp_{fieldName}_len"] = arrLen;
+                        }
+                        var elemsKey = isMut ? $"{fieldName}_pre_elems" : $"{fieldName}_elems";
+                        if (values.TryGetValue(elemsKey, out var arrElems))
+                        {
+                            emitValues[fieldName + "_elems"] = arrElems;
+                            emitValues[$"tmp_{fieldName}_elems"] = arrElems;
+                        }
+                        sb.AppendLine(EmitVarDecl($"tmp_{fieldName}", fType, emitValues, enumDatatypes));
+                        sb.AppendLine($"    obj.{fieldName} := tmp_{fieldName};");
+                    }
+                    else if (TypeUtils.IsSeqType(fType) || TypeUtils.IsSetType(fType) || TypeUtils.IsMultisetType(fType) || TypeUtils.IsMapType(fType))
+                    {
+                        // Collection field: emit via EmitVarDecl with proper key remapping
+                        var emitValues = new Dictionary<string, string>(values);
+                        var isMut = mutableNames != null && mutableNames.Contains(fieldName);
+                        var prefix = isMut ? $"{fieldName}_pre" : fieldName;
+                        // Remap collection keys from field prefix to tmp name
+                        foreach (var suffix in new[] { "_len", "_elems", "_card", "_members", "_keys", "_vals" })
+                        {
+                            if (values.TryGetValue(prefix + suffix, out var v))
+                            {
+                                emitValues[$"tmp_{fieldName}" + suffix] = v;
+                                emitValues[fieldName + suffix] = v;
+                            }
+                        }
+                        sb.AppendLine(EmitVarDecl($"tmp_{fieldName}", fType, emitValues, enumDatatypes));
+                        sb.AppendLine($"    obj.{fieldName} := tmp_{fieldName};");
+                    }
+                    else
+                    {
+                        // Scalar field: obj.field := value;
+                        var valKey = mutableNames != null && mutableNames.Contains(fieldName) ? $"{fieldName}_pre" : fieldName;
+                        if (values.TryGetValue(valKey, out var val))
+                        {
+                            val = FormatScalarValue(val, fType, enumDatatypes);
+                            sb.AppendLine($"    obj.{fieldName} := {val};");
+                        }
+                        else
+                        {
+                            var defaultVal = fType switch { "real" => "0.0", "char" => "' '", "bool" => "false", _ => "0" };
+                            sb.AppendLine($"    obj.{fieldName} := {defaultVal};");
+                        }
+                    }
+                }
+
+                // Assign const array field elements (pointer set by constructor)
+                if (classInfo.ConstFields != null)
+                {
+                    foreach (var (cfName, cfType) in classInfo.ConstFields)
+                    {
+                        var fType = SubstTypeParams(cfType, typeParamMap);
+                        if (TypeUtils.IsArrayType(fType))
+                        {
+                            var elemType = fType.StartsWith("array<") ? fType.Substring(6, fType.Length - 7) : "int";
+                            var lenKey = mutableNames != null && mutableNames.Contains(cfName) ? $"{cfName}_pre_len" : $"{cfName}_len";
+                            if (values.TryGetValue(lenKey, out var lenStr) && int.TryParse(lenStr, out var len))
+                            {
+                                var elemsKey = mutableNames != null && mutableNames.Contains(cfName) ? $"{cfName}_pre_elems" : $"{cfName}_elems";
+                                string[] elems;
+                                if (values.TryGetValue(elemsKey, out var elemsStr))
+                                    elems = elemsStr.Split(',');
+                                else
+                                    elems = Enumerable.Range(0, len).Select(_ => "0").ToArray();
+                                for (int idx = 0; idx < len && idx < elems.Length; idx++)
+                                {
+                                    var elemVal = FormatScalarValue(elems[idx].Trim(), elemType, enumDatatypes);
+                                    sb.AppendLine($"    obj.{cfName}[{idx}] := {elemVal};");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Assign ghost var fields (now concrete in the test copy).
+                // Seq/scalar ghosts from Z3 values; Repr = {obj} + object-typed fields.
+                foreach (var (gfName, gfType) in ghostVarFields)
+                {
+                    // Skip ghost consts (set by constructor, can't reassign)
+                    if (ctorParamNames.Contains(gfName)) continue;
+                    var fType = SubstTypeParams(gfType, typeParamMap);
+                    if (TypeUtils.IsSeqType(fType))
+                    {
+                        var lenKey = $"{gfName}_len";
+                        if (values.TryGetValue(lenKey, out var lenStr) && int.TryParse(lenStr, out var len) && len >= 0)
+                        {
+                            var elemType = fType.StartsWith("seq<") ? fType.Substring(4, fType.Length - 5) : "int";
+                            string[] elems;
+                            if (values.TryGetValue($"{gfName}_elems", out var elemsStr))
+                                elems = elemsStr.Split(',');
+                            else
+                                elems = Enumerable.Range(0, len).Select(_ => "0").ToArray();
+                            if (len == 0)
+                                sb.AppendLine($"    obj.{gfName} := [];");
+                            else
+                            {
+                                var trimmed = elems.Take(len).Select(e => FormatScalarValue(e.Trim(), elemType, enumDatatypes));
+                                sb.AppendLine($"    obj.{gfName} := [{string.Join(", ", trimmed)}];");
+                            }
+                        }
+                        else
+                            sb.AppendLine($"    obj.{gfName} := [];");
+                    }
+                    else
+                    {
+                        var valKey = mutableNames != null && mutableNames.Contains(gfName) ? $"{gfName}_pre" : gfName;
+                        if (values.TryGetValue(valKey, out var val))
+                        {
+                            val = FormatScalarValue(val, fType, enumDatatypes);
+                            sb.AppendLine($"    obj.{gfName} := {val};");
+                        }
+                    }
+                }
+
+                // Assign Repr = {obj} + all object-typed fields (arrays)
+                // Repr is a ghost set<object> not in ghostFields (excluded in parser), detect from source
+                bool hasReprField = Regex.IsMatch(originalSource, @"\bghost\s+var\s+Repr\b");
+                if (hasReprField)
+                {
+                    var reprMembers = new List<string> { "obj" };
+                    foreach (var (fn, ft) in classInfo.Fields)
+                        if (TypeUtils.IsArrayType(SubstTypeParams(ft, typeParamMap)))
+                            reprMembers.Add($"obj.{fn}");
+                    if (classInfo.ConstFields != null)
+                        foreach (var (fn, ft) in classInfo.ConstFields)
+                            if (TypeUtils.IsArrayType(SubstTypeParams(ft, typeParamMap)))
+                                reprMembers.Add($"obj.{fn}");
+                    sb.AppendLine($"    obj.Repr := {{{string.Join(", ", reprMembers)}}};");
+                }
+            }
             foreach (var inp in method.Ins)
             {
+                if (fieldNames.Contains(inp.Name)) continue; // already emitted as obj.field
+                if (ghostFieldNames.Contains(inp.Name)) continue; // ghost fields not in test code
+                if (constFieldNames.Contains(inp.Name)) continue; // const fields set by constructor
+                if (ctorParamNames.Contains(inp.Name)) continue; // constructor params already used
                 var typeStr = SubstTypeParams(inp.Type.ToString(), typeParamMap);
                 var emitValues = values;
                 if (mutableNames != null && mutableNames.Contains(inp.Name) && TypeUtils.IsArrayType(typeStr))
@@ -305,55 +658,199 @@ static class TestEmitter
                     if (values.TryGetValue($"{inp.Name}_pre_elems", out var preElems))
                         emitValues[inp.Name + "_elems"] = preElems;
                 }
-                sb.AppendLine(EmitVarDecl(inp.Name, typeStr, emitValues));
+                sb.AppendLine(EmitVarDecl(inp.Name, typeStr, emitValues, enumDatatypes));
             }
 
             // Capture old() expressions before the method call.
-            // For array params, capture the whole array as a sequence (a[..])
-            // so quantifier-bound indices like old(a[k+1]) work correctly.
-            var oldCaptures = ExtractOldCaptures(literals, arrayParamNames);
-            foreach (var (oldExpr, varName, _) in oldCaptures)
+            // Build known identifiers: all names that are in scope before the call.
+            var knownIdentifiers = new HashSet<string>(method.Ins.Select(i => i.Name));
+            knownIdentifiers.UnionWith(fieldNames);
+            knownIdentifiers.UnionWith(constFieldNames);
+            knownIdentifiers.UnionWith(ctorParamNames);
+            knownIdentifiers.UnionWith(ghostFieldNames);
+            var oldCaptures = ExtractOldCaptures(literals, arrayParamNames, knownIdentifiers);
+            foreach (var (oldExpr, varName, isArrayCapture) in oldCaptures)
             {
-                sb.AppendLine($"    var {varName} := {oldExpr};");
+                var captureExpr = oldExpr;
+                if (classInfo != null)
+                {
+                    if (isArrayCapture)
+                    {
+                        // Array consolidation: simple obj. prefix (expr is "arrayName[..]")
+                        if (fieldNames.Any(f => oldExpr == f || oldExpr.StartsWith(f + "["))
+                            || constFieldNames.Any(f => oldExpr == f || oldExpr.StartsWith(f + "[")))
+                            captureExpr = "obj." + oldExpr;
+                    }
+                    else
+                    {
+                        // Whole-expression capture: replace all field references with obj.field
+                        var allClassFields = classInfo.Fields
+                            .Concat(classInfo.ConstFields ?? new List<(string, string)>())
+                            .Concat(ghostVarFields);
+                        foreach (var (fn, _) in allClassFields)
+                            captureExpr = Regex.Replace(captureExpr,
+                                @"(?<![a-zA-Z_0-9])(?<!obj\.)" + Regex.Escape(fn) + @"(?![a-zA-Z_0-9])",
+                                $"obj.{fn}");
+                    }
+                }
+                sb.AppendLine($"    var {varName} := {captureExpr};");
             }
 
-            // Call the method
-            if (method.Outs.Count > 0)
-            {
-                var outNames = string.Join(", ", method.Outs.Select(o => o.Name));
-                sb.AppendLine($"    var {outNames} := {methodCallName}({string.Join(", ", method.Ins.Select(i => i.Name))});");
-            }
-            else
-            {
-                sb.AppendLine($"    {methodCallName}({string.Join(", ", method.Ins.Select(i => i.Name))});");
-            }
-
-            // Replace old() references in literals for expect statements
+            // Build expectLiterals early (before the call) so we can capture RHS expressions.
+            // Replace old() references and field prefixes.
             var expectLiterals = literals
                 .Where(lit => !TypeUtils.IsSpecOnlyLiteral(lit))
+                // For autocontracts, Valid() is auto-injected as expect obj.Valid() — skip from literals
+                .Where(lit => !(classInfo is { IsAutoContracts: true } && Regex.IsMatch(lit.Trim(), @"^Valid\s*\(\s*\)$")))
                 .Select(lit => ReplaceOldReferences(lit, oldCaptures, arrayParamNames))
                 .ToList();
 
-            // Emit expect assertions.
-            // Use postcondition literals when: uninterpreted functions, or method modifies
-            // state (the interesting outputs are in the modified variables, not return values).
-            bool useLiteralExpects = hasUninterpFuncs || (mutableNames != null && mutableNames.Count > 0);
-            if (useLiteralExpects)
+            // For class methods, replace bare field references with obj.field in expects
+            if (classInfo != null)
             {
-                foreach (var lit in expectLiterals)
-                    sb.AppendLine($"    expect {lit};");
+                var allClassFields = classInfo.Fields
+                    .Concat(classInfo.ConstFields ?? new List<(string, string)>())
+                    .Concat(ghostVarFields);
+                expectLiterals = expectLiterals.Select(lit =>
+                {
+                    var result = lit;
+                    foreach (var (fieldName, _) in allClassFields)
+                    {
+                        // Replace bare field name with obj.field, but not inside old_field captures
+                        // or when already prefixed with obj.
+                        result = Regex.Replace(result,
+                            @"(?<![a-zA-Z_0-9])(?<!old_)(?<!obj\.)" + Regex.Escape(fieldName) + @"(?![a-zA-Z_0-9])",
+                            $"obj.{fieldName}");
+                    }
+                    // Replace bare member predicate/function calls with obj.pred()
+                    if (inlinablePredicates != null)
+                    {
+                        foreach (var (predName, _, _, isClassMember) in inlinablePredicates)
+                        {
+                            if (!isClassMember) continue; // skip module-level predicates
+                            result = Regex.Replace(result,
+                                @"(?<![a-zA-Z_0-9.])(?<!obj\.)" + Regex.Escape(predName) + @"(?=\s*\()",
+                                $"obj.{predName}");
+                        }
+                    }
+                    // Also replace bare Valid() calls for class methods (may not be in inlinablePredicates)
+                    result = Regex.Replace(result,
+                        @"(?<![a-zA-Z_0-9.])(?<!obj\.)Valid(?=\s*\()",
+                        "obj.Valid");
+                    return result;
+                }).ToList();
             }
-            else foreach (var outp in method.Outs)
+
+            // Determine which outputs have concrete Z3 values (before emitting any code)
+            var coveredOutputs = new HashSet<string>();
+            foreach (var outp in method.Outs)
             {
-                // If no active postcondition literal mentions this output variable,
-                // the postcondition doesn't constrain it — the Z3 value is arbitrary,
-                // so skip the concrete expect to avoid false negatives.
+                var outPattern = @"\b" + Regex.Escape(outp.Name) + @"\b";
+                if (!literals.Any(lit => Regex.IsMatch(lit, outPattern)))
+                    continue;
+                var typeStr = SubstTypeParams(outp.Type.ToString(), typeParamMap);
+                if (!hasUninterpFuncs && values.TryGetValue(outp.Name, out _) && !TypeUtils.IsSeqType(typeStr) && !TypeUtils.IsArrayType(typeStr) && !TypeUtils.IsSetType(typeStr) && !TypeUtils.IsMultisetType(typeStr))
+                    coveredOutputs.Add(outp.Name);
+                else if (TypeUtils.IsSeqType(typeStr) && values.TryGetValue(outp.Name + "_len", out var lenStr2) && int.TryParse(lenStr2, out var seqLen2) && seqLen2 >= 0)
+                    coveredOutputs.Add(outp.Name);
+                else if (!hasUninterpFuncs && (TypeUtils.IsSetType(typeStr) || TypeUtils.IsMultisetType(typeStr)) && (values.ContainsKey(outp.Name + "_members") || values.ContainsKey(outp.Name + "_card")))
+                    coveredOutputs.Add(outp.Name);
+            }
+
+            // For postconditions of the form "outName == <expr>" where <expr> only references
+            // inputs (not outputs), capture the RHS before the call so we get a concrete value.
+            // Only capture for outputs NOT already covered by concrete Z3 values.
+            var outNames_set = new HashSet<string>(method.Outs.Select(o => o.Name));
+            var rhsCaptures = new Dictionary<string, string>(); // outName -> check_outName
+            foreach (var lit in expectLiterals)
+            {
+                // Match "outName == <expr>" at the start of the literal (but not <==> or ==>)
+                var m = Regex.Match(lit, @"^(\w+)\s*==\s*(?![>=])(.+)$", RegexOptions.Singleline);
+                if (!m.Success) continue;
+                var lhs = m.Groups[1].Value;
+                var rhs = m.Groups[2].Value.Trim();
+                if (!outNames_set.Contains(lhs)) continue;
+                if (coveredOutputs.Contains(lhs)) continue; // Z3 already gave a concrete value
+                if (rhsCaptures.ContainsKey(lhs)) continue; // already captured from first matching literal
+                // Check that the RHS doesn't reference any output variable
+                bool rhsRefsOutput = false;
+                foreach (var outp in method.Outs)
+                {
+                    if (Regex.IsMatch(rhs, @"\b" + Regex.Escape(outp.Name) + @"\b"))
+                    { rhsRefsOutput = true; break; }
+                }
+                if (rhsRefsOutput) continue;
+                rhsCaptures[lhs] = "check_" + lhs;
+                sb.AppendLine($"    var check_{lhs} := {rhs};");
+            }
+
+            // Emit precondition checks (used by check mode to discard invalid test cases)
+            foreach (var pre in preClauses)
+            {
+                var preStr = DnfEngine.ExprToString(pre);
+                if (TypeUtils.IsSpecOnlyLiteral(preStr)) continue; // skip fresh(), etc.
+                // For class methods: replace field refs with obj.field, predicates with obj.pred
+                if (classInfo != null)
+                {
+                    var allClassFields = classInfo.Fields
+                        .Concat(classInfo.ConstFields ?? new List<(string, string)>())
+                        .Concat(ghostVarFields);
+                    foreach (var (fn, _) in allClassFields)
+                        preStr = Regex.Replace(preStr,
+                            @"(?<![a-zA-Z_0-9])(?<!old_)(?<!obj\.)" + Regex.Escape(fn) + @"(?![a-zA-Z_0-9])",
+                            $"obj.{fn}");
+                    // Replace bare Valid() with obj.Valid()
+                    preStr = Regex.Replace(preStr,
+                        @"(?<![a-zA-Z_0-9.])(?<!obj\.)Valid(?=\s*\()",
+                        "obj.Valid");
+                    // Replace class-member predicates with obj.pred
+                    if (inlinablePredicates != null)
+                    {
+                        foreach (var (predName, _, _, isClassMember) in inlinablePredicates)
+                        {
+                            if (!isClassMember) continue;
+                            preStr = Regex.Replace(preStr,
+                                @"(?<![a-zA-Z_0-9.])(?<!obj\.)" + Regex.Escape(predName) + @"(?=\s*\()",
+                                $"obj.{predName}");
+                        }
+                    }
+                }
+                sb.AppendLine($"    expect {preStr}; // PRE-CHECK");
+            }
+
+            // Call the method
+            var callPrefix = classInfo != null ? "obj." : "";
+            var callArgs = string.Join(", ", method.Ins.Select(i => i.Name));
+            if (method.Outs.Count > 0)
+            {
+                var outNames = string.Join(", ", method.Outs.Select(o => o.Name));
+                sb.AppendLine($"    var {outNames} := {callPrefix}{methodCallName}({callArgs});");
+            }
+            else
+            {
+                sb.AppendLine($"    {callPrefix}{methodCallName}({callArgs});");
+            }
+
+            // For autocontracts methods that modify this: verify Valid() holds after the call
+            if (classInfo is { IsAutoContracts: true } && mutableNames != null && mutableNames.Count > 0)
+                sb.AppendLine("    expect obj.Valid();");
+
+            // Emit expect assertions.
+            // For each output, prefer a concrete Z3 value when available (scalar, seq, set).
+            // If Z3 didn't provide a parseable value for an output, fall back to
+            // postcondition literals that mention it.
+            // Postcondition literals that mention NO output (e.g. "x in C") are always emitted.
+            foreach (var outp in method.Outs)
+            {
+                // Skip outputs not constrained by any postcondition
                 var outPattern = @"\b" + Regex.Escape(outp.Name) + @"\b";
                 if (!literals.Any(lit => Regex.IsMatch(lit, outPattern)))
                     continue;
 
                 var typeStr = SubstTypeParams(outp.Type.ToString(), typeParamMap);
-                if (values.TryGetValue(outp.Name, out var val) && !TypeUtils.IsSeqType(typeStr) && !TypeUtils.IsArrayType(typeStr))
+                // When postconditions use non-inlinable functions, Z3's scalar output
+                // values are unreliable (arbitrary satisfying assignments), so skip them.
+                if (!hasUninterpFuncs && values.TryGetValue(outp.Name, out var val) && !TypeUtils.IsSeqType(typeStr) && !TypeUtils.IsArrayType(typeStr) && !TypeUtils.IsSetType(typeStr) && !TypeUtils.IsMultisetType(typeStr))
                 {
                     // Ensure real output values have a decimal point
                     if (typeStr == "real" && !val.Contains('.'))
@@ -367,6 +864,7 @@ static class TestEmitter
                             val = $"'\\U{{{charCode:X4}}}'";
                     }
                     sb.AppendLine($"    expect {outp.Name} == {val};");
+                    coveredOutputs.Add(outp.Name);
                 }
                 else if (TypeUtils.IsSeqType(typeStr) && values.TryGetValue(outp.Name + "_len", out var lenStr)
                          && int.TryParse(lenStr, out var seqLen) && seqLen >= 0)
@@ -393,6 +891,98 @@ static class TestEmitter
                     {
                         sb.AppendLine($"    expect {outp.Name} == [{string.Join(", ", elems.Take(seqLen))}];");
                     }
+                    coveredOutputs.Add(outp.Name);
+                }
+                else if (TypeUtils.IsSetType(typeStr))
+                {
+                    if (rhsCaptures.ContainsKey(outp.Name))
+                    {
+                        // Let the literal expect mechanism use check_outName
+                    }
+                    else if (values.TryGetValue(outp.Name + "_members", out var setMembers))
+                    {
+                        var setElemType = TypeUtils.GetSetElementType(typeStr);
+                        var members = setMembers.Split(',').Select(m => FormatScalarValue(m.Trim(), setElemType, enumDatatypes));
+                        sb.AppendLine($"    expect {outp.Name} == {{{string.Join(", ", members)}}};");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                    else
+                    {
+                        sb.AppendLine($"    expect {outp.Name} == {{}};");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                }
+                else if (TypeUtils.IsMultisetType(typeStr))
+                {
+                    if (rhsCaptures.ContainsKey(outp.Name))
+                    {
+                        // Let the literal expect mechanism use check_outName
+                    }
+                    else if (values.TryGetValue(outp.Name + "_members", out var msetMembers))
+                    {
+                        var msetElemType = TypeUtils.GetMultisetElementType(typeStr);
+                        var members = msetMembers.Split(',').Select(m => FormatScalarValue(m.Trim(), msetElemType, enumDatatypes));
+                        sb.AppendLine($"    expect {outp.Name} == multiset{{{string.Join(", ", members)}}};");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                    else
+                    {
+                        sb.AppendLine($"    expect {outp.Name} == multiset{{}};");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                }
+                else if (TypeUtils.IsMapType(typeStr))
+                {
+                    // Prefer literal expect with check variable (runtime evaluation) over
+                    // Z3-computed map values, since map postconditions may not be fully translated.
+                    if (rhsCaptures.ContainsKey(outp.Name))
+                    {
+                        // Let the literal expect mechanism use check_outName
+                    }
+                    else if (values.TryGetValue(outp.Name + "_keys", out var mapKeys) && values.TryGetValue(outp.Name + "_vals", out var mapVals))
+                    {
+                        var mapKeyType = TypeUtils.GetMapKeyType(typeStr);
+                        var mapValType = TypeUtils.GetMapValueType(typeStr);
+                        var keys = mapKeys.Split(',');
+                        var vals = mapVals.Split(',');
+                        var entries = keys.Zip(vals, (k, v) =>
+                            $"{FormatScalarValue(k.Trim(), mapKeyType, enumDatatypes)} := {FormatScalarValue(v.Trim(), mapValType, enumDatatypes)}");
+                        sb.AppendLine($"    expect {outp.Name} == map[{string.Join(", ", entries)}];");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                    else
+                    {
+                        sb.AppendLine($"    expect {outp.Name} == map[];");
+                        coveredOutputs.Add(outp.Name);
+                    }
+                }
+            }
+            // Emit postcondition literals for outputs not covered by concrete values,
+            // plus any literals that don't reference output variables at all.
+            // For "outName == <expr>" literals with a pre-call RHS capture, use check_outName.
+            foreach (var lit in expectLiterals)
+            {
+                bool mentionsOnlyCoveredOutputs = true;
+                bool mentionsAnyOutput = false;
+                foreach (var outp in method.Outs)
+                {
+                    var outPattern = @"\b" + Regex.Escape(outp.Name) + @"\b";
+                    if (Regex.IsMatch(lit, outPattern))
+                    {
+                        mentionsAnyOutput = true;
+                        if (!coveredOutputs.Contains(outp.Name))
+                            mentionsOnlyCoveredOutputs = false;
+                    }
+                }
+                // Emit if: mentions no output (e.g. "x in C"), or mentions an uncovered output
+                if (!mentionsAnyOutput || !mentionsOnlyCoveredOutputs)
+                {
+                    // If this literal is "outName == <expr>" and we captured RHS, use check_outName
+                    var litMatch = Regex.Match(lit, @"^(\w+)\s*==\s*(?![>=])(.+)$", RegexOptions.Singleline);
+                    if (litMatch.Success && rhsCaptures.TryGetValue(litMatch.Groups[1].Value, out var checkVar))
+                        sb.AppendLine($"    expect {litMatch.Groups[1].Value} == {checkVar};");
+                    else
+                        sb.AppendLine($"    expect {lit};");
                 }
             }
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-03-24 09:15:32
+// Generated: 2026-03-25 14:01:02
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -55,29 +55,29 @@ method Passing()
     expect v == Filter(s1, c => !(c in s2));
   }
 
-  // Test case for combination {1}/Bs1=0,s2=1:
+  // Test case for combination {1}:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [];
+    var s1: seq<char> := [' '];
     var s2: seq<char> := [' '];
     var v := RemoveChars(s1, s2);
     expect v == Filter(s1, c => !(c in s2));
   }
 
-  // Test case for combination {1}/Bs1=0,s2=2:
+  // Test case for combination {1}/Bs1=3,s2=1:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [];
-    var s2: seq<char> := [' ', '!'];
+    var s1: seq<char> := ['!', ' ', '"'];
+    var s2: seq<char> := ['F'];
     var v := RemoveChars(s1, s2);
     expect v == Filter(s1, c => !(c in s2));
   }
 
-  // Test case for combination {1}/Bs1=0,s2=3:
+  // Test case for combination {1}/Bs1=3,s2=0:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [];
-    var s2: seq<char> := [' ', '!', '"'];
+    var s1: seq<char> := [' ', '!', '"'];
+    var s2: seq<char> := [];
     var v := RemoveChars(s1, s2);
     expect v == Filter(s1, c => !(c in s2));
   }

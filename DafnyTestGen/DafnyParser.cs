@@ -3,6 +3,16 @@ using Microsoft.Dafny;
 
 namespace DafnyTestGen;
 
+record ClassInfo(
+    string ClassName,
+    List<(string Name, string Type)> Fields,
+    bool IsAutoContracts = false,
+    List<(string Name, string Type)>? ConstFields = null,
+    List<(string Name, string Type)>? ConstructorParams = null,
+    List<Expression>? ConstructorRequires = null,
+    List<(string Name, string Type)>? GhostFields = null,
+    List<string>? ClassTypeParams = null);
+
 static class DafnyParser
 {
     internal static async Task<Microsoft.Dafny.Program?> ParseProgram(string source, Uri uri, DafnyOptions options, ErrorReporter reporter)
@@ -56,7 +66,8 @@ static class DafnyParser
         return result;
     }
 
-    internal static List<Method> FindTestableMethodsAuto(Microsoft.Dafny.Program program)
+    internal static List<Method> FindTestableMethodsAuto(Microsoft.Dafny.Program program,
+        Dictionary<string, List<string>>? enumDatatypes = null)
     {
         var result = new List<Method>();
         foreach (var topDecl in AllTopLevelDecls(program))
@@ -68,8 +79,26 @@ static class DafnyParser
                     if (member is Method m && !m.IsGhost && m.Ens.Count > 0
                         && !m.Name.Contains("test", StringComparison.OrdinalIgnoreCase)
                         && !m.Name.Contains("Test", StringComparison.OrdinalIgnoreCase)
-                        && m.Name != "Main")
+                        && m.Name != "Main"
+                        && m.Name != "_ctor")
+                    {
+                        // Skip methods inside traits (not supported)
+                        if (cls is TraitDecl)
+                        {
+                            Console.WriteLine($"  Skipping '{m.Name}' (trait method in '{cls.Name}' — not supported)");
+                            continue;
+                        }
+                        // For methods inside classes, allow simple classes through
+                        if (cls is ClassDecl && cls is not DefaultClassDecl)
+                        {
+                            var ci = GetClassInfo(m, (ClassDecl)cls, enumDatatypes);
+                            if (ci == null)
+                            {
+                                continue; // reason already printed by GetClassInfo
+                            }
+                        }
                         result.Add(m);
+                    }
                 }
             }
         }
@@ -77,17 +106,123 @@ static class DafnyParser
     }
 
     /// <summary>
+    /// Returns ClassInfo for a method inside a simple class, or null if the class is too complex.
+    /// A "simple class" has no {:autocontracts}, no trait parents, all non-ghost fields have
+    /// supported types, and the method doesn't require Valid()/RepInv().
+    /// </summary>
+    internal static ClassInfo? GetClassInfo(Method method,
+        Dictionary<string, List<string>>? enumDatatypes = null)
+    {
+        // Try to get the enclosing class from the method's AST
+        if (method.EnclosingClass is ClassDecl cls)
+            return GetClassInfo(method, cls, enumDatatypes);
+        return null;
+    }
+
+    static ClassInfo? RejectClass(string methodName, string className, string reason)
+    {
+        Console.WriteLine($"  Skipping '{methodName}' (class '{className}': {reason})");
+        return null;
+    }
+
+    internal static ClassInfo? GetClassInfo(Method method, ClassDecl cls,
+        Dictionary<string, List<string>>? enumDatatypes = null)
+    {
+        // Detect {:autocontracts}
+        bool isAutoContracts = false;
+        if (cls.Attributes != null)
+        {
+            for (var attr = cls.Attributes; attr != null; attr = attr.Prev)
+                if (attr.Name == "autocontracts") { isAutoContracts = true; break; }
+        }
+
+        // Check for trait parents (skip autocontracts: Dafny may inject object trait)
+        if (!isAutoContracts && cls.ParentTraitHeads.Count > 0)
+            return RejectClass(method.Name, cls.Name, "extends a trait");
+
+        // Collect non-ghost var fields
+        var fields = new List<(string Name, string Type)>();
+        foreach (var member in cls.Members)
+        {
+            if (member is Field f && f is not ConstantField && !f.IsGhost && f.Name != "Repr")
+                fields.Add((f.Name, f.Type.ToString()));
+        }
+
+        // Collect const fields (constructor initializes them)
+        var constFields = new List<(string Name, string Type)>();
+        foreach (var member in cls.Members)
+        {
+            if (member is ConstantField cf && !cf.IsGhost && cf.Name != "Repr")
+                constFields.Add((cf.Name, cf.Type.ToString()));
+        }
+
+        // Collect ghost fields (for non-autocontracts: pass to Z3, skip in test code)
+        var ghostFields = new List<(string Name, string Type)>();
+        if (!isAutoContracts)
+        {
+            foreach (var member in cls.Members)
+            {
+                if (member is Field f && f is not ConstantField && f.IsGhost && f.Name != "Repr")
+                {
+                    var ft = f.Type.ToString();
+                    if (TypeUtils.IsSupportedFieldType(ft, enumDatatypes))
+                        ghostFields.Add((f.Name, ft));
+                }
+                if (member is ConstantField cf && cf.IsGhost && cf.Name != "Repr")
+                {
+                    var ct = cf.Type.ToString();
+                    if (TypeUtils.IsSupportedFieldType(ct, enumDatatypes))
+                        ghostFields.Add((cf.Name, ct));
+                }
+            }
+        }
+
+        // All fields (var + const) must have supported types
+        foreach (var (name, type) in fields.Concat(constFields))
+            if (!TypeUtils.IsSupportedFieldType(type, enumDatatypes))
+                return RejectClass(method.Name, cls.Name, $"field '{name}' has unsupported type '{type}'");
+
+        // Find the constructor and its params/requires
+        List<(string Name, string Type)>? ctorParams = null;
+        List<Expression>? ctorRequires = null;
+        foreach (var member in cls.Members)
+        {
+            if (member.Name == "_ctor")
+            {
+                // Constructor may not be a Method subtype in this Dafny version — use dynamic
+                try
+                {
+                    dynamic ctor = member;
+                    var ins = (IEnumerable<Formal>)ctor.Ins;
+                    var reqs = (IEnumerable<AttributedExpression>)ctor.Req;
+                    ctorParams = ins.Select(p => (p.Name, Type: p.Type.ToString())).ToList();
+                    ctorRequires = reqs.Select(r => (Expression)r.E).ToList();
+                }
+                catch { /* ignore if properties don't exist */ }
+                break; // use the first constructor
+            }
+        }
+
+        // Capture class-level type parameters
+        var classTypeParams = cls.TypeArgs?.Select(tp => tp.Name).ToList();
+
+        return new ClassInfo(cls.Name, fields, isAutoContracts, constFields, ctorParams, ctorRequires, ghostFields, classTypeParams);
+    }
+
+    /// <summary>
     /// Finds non-recursive predicates and functions that can be inlined into postcondition literals.
     /// Returns a list of (name, paramNames, bodyString) for each inlinable predicate/function.
     /// </summary>
-    internal static List<(string name, List<string> paramNames, string body)> FindInlinablePredicates(
+    internal static List<(string name, List<string> paramNames, string body, bool isClassMember)> FindInlinablePredicates(
         Microsoft.Dafny.Program program)
     {
-        var result = new List<(string name, List<string> paramNames, string body)>();
+        var result = new List<(string name, List<string> paramNames, string body, bool isClassMember)>();
         foreach (var topDecl in AllTopLevelDecls(program))
         {
             if (topDecl is TopLevelDeclWithMembers cls)
             {
+                // Module-level predicates are in DefaultClassDecl; class members are in user classes
+                bool isClassMember = cls is not DefaultClassDecl;
                 foreach (var member in cls.Members)
                 {
                     if (member is Function func && func.Body != null)
@@ -96,11 +231,23 @@ static class DafnyParser
                         // Skip recursive functions (body references the function name)
                         if (bodyStr.Contains(func.Name + "(")) continue;
                         var paramNames = func.Ins.Select(p => p.Name).ToList();
-                        result.Add((func.Name, paramNames, bodyStr));
+                        result.Add((func.Name, paramNames, bodyStr, isClassMember));
                     }
                 }
             }
         }
+        // Remove predicates whose body calls another inlinable predicate.
+        // Transitive inlining of nested predicates with quantifiers causes
+        // exponential SMT expansion (e.g., 8^3 = 512 instances for 3 levels).
+        var names = new HashSet<string>(result.Select(r => r.name));
+        result = result.Where(r =>
+        {
+            var callsOther = names.Any(n => n != r.name && r.body.Contains(n + "("));
+            if (callsOther)
+                Console.WriteLine($"  Note: predicate '{r.name}' calls other predicates — not inlining (would cause SMT explosion)");
+            return !callsOther;
+        }).ToList();
+
         return result;
     }
 
@@ -111,17 +258,18 @@ static class DafnyParser
     /// Applies repeatedly to handle nested inlining (up to a depth limit).
     /// </summary>
     internal static string InlinePredicates(string literal,
-        List<(string name, List<string> paramNames, string body)> predicates)
+        List<(string name, List<string> paramNames, string body, bool isClassMember)> predicates)
     {
         var result = literal;
+        const int maxInlinedLength = 50_000; // safety limit to prevent exponential growth
         for (int pass = 0; pass < 3; pass++) // max 3 inlining passes for nested calls
         {
             var changed = false;
-            foreach (var (name, paramNames, body) in predicates)
+            foreach (var (name, paramNames, body, _) in predicates)
             {
                 // Find occurrences of name(args...)
                 var pattern = @"\b" + Regex.Escape(name) + @"\s*\(";
-                while (Regex.IsMatch(result, pattern))
+                while (result.Length < maxInlinedLength && Regex.IsMatch(result, pattern))
                 {
                     var match = Regex.Match(result, pattern);
                     int argsStart = match.Index + match.Length;

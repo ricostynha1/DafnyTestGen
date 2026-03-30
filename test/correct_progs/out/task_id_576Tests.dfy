@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-03-24 09:48:36
+// Generated: 2026-03-25 13:53:14
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.
@@ -49,11 +49,9 @@ method IsSublistTest(){
 
 method Passing()
 {
-  // Test case for combination {1,2}:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
-  //   POST: !result
-  //   POST: !exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [11];
     var t: seq<int> := [11];
@@ -71,14 +69,24 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bs=0,t=0:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [];
-    var t: seq<int> := [];
+    var t: seq<int> := [12];
     var result := IsSublist<int>(s, t);
     expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [3];
+    var t: seq<int> := [2];
+    var result := IsSublist<int>(s, t);
+    expect result == false;
   }
 
 }

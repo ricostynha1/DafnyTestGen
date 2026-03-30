@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_310.dfy
 // Method: ToCharArray
-// Generated: 2026-03-24 09:26:12
+// Generated: 2026-03-25 13:52:05
 
 // Converts a string (sequence of characters) to an array of characters.
 method ToCharArray(s: string) returns (a: array<char>)
@@ -39,7 +39,7 @@ method Passing()
     var a := ToCharArray(s);
   }
 
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}:
   //   POST: a[..] == s
   {
     var s: seq<char> := [' '];

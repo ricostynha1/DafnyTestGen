@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-03-24 10:28:25
+// Generated: 2026-03-25 13:55:00
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -62,10 +62,10 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}:
   //   POST: IsFirstOdd(a, index)
   {
-    var a := new int[2] [17713, 14];
+    var a := new int[2] [1, 29];
     var index := FindFirstOdd(a);
     expect index == 0;
   }

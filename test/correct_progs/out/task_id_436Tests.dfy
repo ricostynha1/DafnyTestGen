@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-03-24 09:28:01
+// Generated: 2026-03-25 13:52:29
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.
@@ -49,15 +49,15 @@ method Passing()
   {
     var a := new int[0] [];
     var res := FindNegativeNumbers(a);
-    expect res == Filter(a[..], x => x < 0);
+    expect res == []; // == Filter(a[..], x => x < 0)
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}:
   //   POST: res == Filter(a[..], x => x < 0)
   {
     var a := new int[1] [2];
     var res := FindNegativeNumbers(a);
-    expect res == Filter(a[..], x => x < 0);
+    expect res == []; // == Filter(a[..], x => x < 0)
   }
 
   // Test case for combination {1}/Ba=2:
@@ -65,7 +65,7 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var res := FindNegativeNumbers(a);
-    expect res == Filter(a[..], x => x < 0);
+    expect res == []; // == Filter(a[..], x => x < 0)
   }
 
   // Test case for combination {1}/Ba=3:
@@ -73,7 +73,7 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var res := FindNegativeNumbers(a);
-    expect res == Filter(a[..], x => x < 0);
+    expect res == []; // == Filter(a[..], x => x < 0)
   }
 
 }

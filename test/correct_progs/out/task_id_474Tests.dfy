@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
 // Method: ReplaceChars
-// Generated: 2026-03-24 09:44:39
+// Generated: 2026-03-25 13:52:48
 
 // Replace all occurrences of oldChar in string s by newChar 
 // and return the resulting string.
@@ -54,11 +54,21 @@ method Passing()
     expect v == ['f'];
   }
 
-  // Test case for combination {1}/Bs=0:
+  // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, c => if c == oldChar then newChar else c)
   {
     var s: seq<char> := [];
     var oldChar := ' ';
+    var newChar := '!';
+    var v := ReplaceChars(s, oldChar, newChar);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/Bs=0:
+  //   POST: IsMapSeq(s, v, c => if c == oldChar then newChar else c)
+  {
+    var s: seq<char> := [];
+    var oldChar := '!';
     var newChar := ' ';
     var v := ReplaceChars(s, oldChar, newChar);
     expect v == [];
@@ -72,16 +82,6 @@ method Passing()
     var newChar := '!';
     var v := ReplaceChars(s, oldChar, newChar);
     expect v == ['!'];
-  }
-
-  // Test case for combination {1}/Bs=2:
-  //   POST: IsMapSeq(s, v, c => if c == oldChar then newChar else c)
-  {
-    var s: seq<char> := ['+', ','];
-    var oldChar := ',';
-    var newChar := ' ';
-    var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['+', ' '];
   }
 
 }

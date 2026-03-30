@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-03-24 09:06:04
+// Generated: 2026-03-28 00:32:52
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -18,13 +18,13 @@ predicate IsSorted(s: seq<T>) {
 method InsertionSort(a: array<T>) 
     modifies a    
     ensures IsSorted(a[..])
-    ensures multiset(a[..]) == multiset(old(a[..]))
+    ensures multiset(a[..]) == multiset((a[..]))
 {    
     // In each iteration, it picks the next element from the unsorted part of the array (on the right)
     // and inserts it into the correct position in the sorted part of the array (on the left).  
     for i := 0 to a.Length
       invariant IsSorted(a[..i]) 
-      invariant multiset(a[..]) == multiset(old(a[..]))
+      invariant multiset(a[..]) == multiset((a[..]))
     {
       var j := i; 
       // Move the element at index 'i' to the left as needed (position 'j'),
@@ -32,7 +32,7 @@ method InsertionSort(a: array<T>)
       while j > 0 && a[j-1] > a[j]
         invariant 0 <= j <= i
         invariant forall l, r :: 0 <= l < r <= i && r != j ==> a[l] <= a[r] 
-        invariant multiset(a[..]) == multiset(old(a[..]))
+        invariant multiset(a[..]) == multiset((a[..]))
       {
         a[j-1], a[j] := a[j], a[j-1]; // swap (parallel assignment)
         j := j - 1;
@@ -52,7 +52,7 @@ method Passing()
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=1:
@@ -63,7 +63,7 @@ method Passing()
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -74,7 +74,7 @@ method Passing()
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -85,7 +85,7 @@ method Passing()
     var old_a := a[..];
     InsertionSort(a);
     expect IsSorted(a[..]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }

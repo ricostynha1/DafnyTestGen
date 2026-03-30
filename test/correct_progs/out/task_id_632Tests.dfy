@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-03-24 10:23:59
+// Generated: 2026-03-25 13:53:59
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -71,7 +71,7 @@ method Passing()
   //   POST: a[..nz] == Filter(old(a[..]), x => x != 0)
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[1] [36];
+    var a := new int[0] [];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
@@ -79,12 +79,12 @@ method Passing()
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
   }
 
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == Filter(old(a[..]), x => x != 0)
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[0] [];
+    var a := new int[1] [6];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;

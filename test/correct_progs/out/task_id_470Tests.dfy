@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-03-24 09:43:50
+// Generated: 2026-03-25 13:52:42
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -44,19 +44,15 @@ method Passing()
   {
     var a := new int[0] [];
     var result := PairwiseAddition(a);
-    expect result.Length == a.Length / 2;
-    expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [6, 8];
     var result := PairwiseAddition(a);
-    expect result.Length == a.Length / 2;
-    expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
   }
 
   // Test case for combination {1}/R3:
@@ -66,8 +62,6 @@ method Passing()
   {
     var a := new int[4] [8, 10, 14, 18];
     var result := PairwiseAddition(a);
-    expect result.Length == a.Length / 2;
-    expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
   }
 
 }

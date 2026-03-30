@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-03-24 09:27:49
+// Generated: 2026-03-25 13:52:26
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -30,11 +30,9 @@ method IsGreaterTest(){
 
 method Passing()
 {
-  // Test case for combination {1,2}:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
-  //   POST: !result
-  //   POST: !forall i :: 0 <= i < a.Length ==> n > a[i]
   {
     var n := 8365;
     var a := new int[1] [8364];
@@ -52,7 +50,7 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bn=0,a=0:
+  // Test case for combination {1}:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
   {
@@ -60,6 +58,16 @@ method Passing()
     var a := new int[0] [];
     var result := IsGreater(n, a);
     expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !result
+  //   POST: !forall i :: 0 <= i < a.Length ==> n > a[i]
+  {
+    var n := 39;
+    var a := new int[1] [39];
+    var result := IsGreater(n, a);
+    expect result == false;
   }
 
 }

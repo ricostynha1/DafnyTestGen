@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-24 09:19:46
+// Generated: 2026-03-25 13:51:57
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -46,13 +46,13 @@ method Passing()
     var result := ElementWiseSubtraction(a, b);
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[1] [2];
-    var b := new int[1] [3];
+    var a := new int[1] [4];
+    var b := new int[1] [6];
     var result := ElementWiseSubtraction(a, b);
   }
 
