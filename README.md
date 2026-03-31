@@ -306,11 +306,12 @@ Methods inside Dafny classes are supported in three tiers, with increasing compl
 Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. In the generated test file:
 
 - `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
-- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals
+- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals; for `{:autocontracts}` classes these fields (e.g., `ghost var Elements: seq<int>`) are also included as Z3 inputs and assigned accordingly
 - Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
 - The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields
 - `old()` wrappers are stripped from method bodies (invalid for non-ghost variables in compiled code — semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point)
 - Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions
+- Member predicates and functions (e.g., `Empty()`, `Full()`) referenced inside `old()` in postconditions are captured in a pre-call variable (e.g., `var old_Empty := obj.Empty();`) so `old(Empty())` can be tested at runtime
 
 ## Not Testable (Auto-Skipped)
 
@@ -328,9 +329,12 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
 - **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
+- **Class/reference-typed method parameters** (e.g., `method foo(m: Message, addr: Address)`): methods whose parameters include user-defined class or reference types are auto-skipped — such values cannot be synthesised by Z3
 - **Tuple types** (e.g., `(real, real)`)
 - **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
 - **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
+- **Classes with collection fields containing class element types** (e.g., `var messages: set<Message>`, `var recipients: seq<Address>`, `var cache: map<int, Entry>`): the class is auto-skipped because its field values cannot be synthesised by Z3
+- **Classes with tuple-typed collection fields** (e.g., `var pairs: map<int, (int, int)>`): same reason — tuple element types are not supported
 - **iset/imap input parameters** (`iset<T>`, `imap<K,V>`). Note: these types as **return types** work fine when the input parameters are of supported types — the postcondition is used as the `expect` assertion and Dafny evaluates the expressions at runtime
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
 
