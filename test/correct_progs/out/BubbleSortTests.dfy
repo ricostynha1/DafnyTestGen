@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-03-28 00:32:15
+// Generated: 2026-03-31 21:28:53
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -26,7 +26,7 @@ predicate IsPartitionedAndRightSorted(s: seq<int>, n: int)
 method BubbleSort(a: array<int>)
   modifies a
   ensures IsSorted(a[..])
-  ensures multiset(a[..]) == multiset((a[..]))
+  ensures multiset(a[..]) == multiset(old(a[..]))
 {
   var n := a.Length; // sorted elements are a[n..] (and greater than a[..n])
 
@@ -34,7 +34,7 @@ method BubbleSort(a: array<int>)
   while n  > 1
     invariant 0 <= n <= a.Length
     invariant IsPartitionedAndRightSorted(a[..], n)
-    invariant multiset(a[..]) == multiset((a[..]))
+    invariant multiset(a[..]) == multiset(old(a[..]))
   {
     // Scans the array a[..n] from left to right, swapping adjacent elements if they
     // are in the wrong order. At the same time, keeps the index of the last swap (newn). 
@@ -43,7 +43,7 @@ method BubbleSort(a: array<int>)
       invariant 0 <= newn < i 
       invariant IsPartitionedAndRightSorted(a[..i], newn)
       invariant IsPartitionedAndRightSorted(a[..], n)
-      invariant multiset(a[..]) == multiset((a[..]))
+      invariant multiset(a[..]) == multiset(old(a[..]))
     {
       if (a[i-1] > a[i]) { 
         a[i-1], a[i] := a[i], a[i-1]; 
@@ -56,7 +56,7 @@ method BubbleSort(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_BubbleSort()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
@@ -104,13 +104,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_BubbleSort();
+  print "GeneratedTests_BubbleSort: all tests passed!\n";
 }

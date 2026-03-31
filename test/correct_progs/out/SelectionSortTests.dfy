@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-28 00:33:36
+// Generated: 2026-03-31 21:29:14
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -12,13 +12,13 @@
 method SelectionSort(a: array<int>)
   modifies a
   ensures IsSorted(a) 
-  ensures multiset(a[..]) == multiset((a[..]))
+  ensures multiset(a[..]) == multiset(old(a[..]))
 {
     // In each iteration, find the minimum value in the unsorted part of the array
     // (on the right) and append it (by swapping) to the sorted part (on the left).
     for i := 0 to a.Length 
       invariant forall l, r :: 0 <= l < i && l < r < a.Length ==> a[l] <= a[r] // a[..i] sorted and <= a[i..]
-      invariant multiset(a[..]) == multiset((a[..]))
+      invariant multiset(a[..]) == multiset(old(a[..]))
     {
         // Find the minimum value in the unsorted part of the array
         var jMin := i;
@@ -45,7 +45,7 @@ predicate IsSorted(a: array<int>)
 }
 
 
-method Passing()
+method GeneratedTests_SelectionSort()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a)
@@ -93,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SelectionSort();
+  print "GeneratedTests_SelectionSort: all tests passed!\n";
 }

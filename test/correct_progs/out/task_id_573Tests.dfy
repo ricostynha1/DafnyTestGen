@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-03-25 13:53:11
+// Generated: 2026-03-31 21:30:04
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -79,49 +79,48 @@ method UniqueProductTest(){
   assert out2 == 0; // so the product can be calculated as 0 * ... = 0
 }
 
-method Passing()
+method GeneratedTests_UniqueProduct()
 {
   // Test case for combination {1}:
   //   POST: product == SetProduct(elems(a))
   {
     var a := new int[0] [];
+    var check_product := SetProduct(elems(a));
     var product := UniqueProduct(a);
-    expect product == 1; // == SetProduct(elems(a))
+    expect product == check_product;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: product == SetProduct(elems(a))
   {
     var a := new int[1] [2];
+    var check_product := SetProduct(elems(a));
     var product := UniqueProduct(a);
-    expect product == 2; // == SetProduct(elems(a))
+    expect product == check_product;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: product == SetProduct(elems(a))
   {
     var a := new int[2] [4, 3];
+    var check_product := SetProduct(elems(a));
     var product := UniqueProduct(a);
-    expect product == 12; // == SetProduct(elems(a))
+    expect product == check_product;
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: product == SetProduct(elems(a))
   {
     var a := new int[3] [5, 4, 6];
+    var check_product := SetProduct(elems(a));
     var product := UniqueProduct(a);
-    expect product == 120; // == SetProduct(elems(a))
+    expect product == check_product;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_UniqueProduct();
+  print "GeneratedTests_UniqueProduct: all tests passed!\n";
 }

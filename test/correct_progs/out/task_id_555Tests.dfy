@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-03-25 13:52:56
+// Generated: 2026-03-31 21:30:01
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -58,7 +58,7 @@ method DifferenceSumCubesAndSumNumbersTest(){
   assert res1==30;
 }
 
-method Passing()
+method GeneratedTests_DifferenceSumCubesAndSumNumbers()
 {
   // Test case for combination {1}:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
@@ -68,7 +68,7 @@ method Passing()
     expect diff == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 1;
@@ -84,20 +84,16 @@ method Passing()
     expect diff == 90;
   }
 
+}
+
+method GeneratedTests_SumCubes()
+{
   // Test case for combination {1}:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 0;
     var s := SumCubes(n);
     expect s == 0;
-  }
-
-  // Test case for combination {1}:
-  //   POST: s == n * n * (n + 1) * (n + 1) / 4
-  {
-    var n := 5;
-    var s := SumCubes(n);
-    expect s == 225;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -108,6 +104,18 @@ method Passing()
     expect s == 1;
   }
 
+  // Test case for combination {1}/R3:
+  //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 2;
+    var s := SumCubes(n);
+    expect s == 9;
+  }
+
+}
+
+method GeneratedTests_SumNumbers()
+{
   // Test case for combination {1}:
   //   POST: s == n * (n + 1) / 2
   {
@@ -116,7 +124,15 @@ method Passing()
     expect s == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
+  //   POST: s == n * (n + 1) / 2
+  {
+    var n := 1;
+    var s := SumNumbers(n);
+    expect s == 1;
+  }
+
+  // Test case for combination {1}/R3:
   //   POST: s == n * (n + 1) / 2
   {
     var n := 2;
@@ -124,23 +140,14 @@ method Passing()
     expect s == 3;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: s == n * (n + 1) / 2
-  {
-    var n := 1;
-    var s := SumNumbers(n);
-    expect s == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_DifferenceSumCubesAndSumNumbers();
+  print "GeneratedTests_DifferenceSumCubesAndSumNumbers: all tests passed!\n";
+  GeneratedTests_SumCubes();
+  print "GeneratedTests_SumCubes: all tests passed!\n";
+  GeneratedTests_SumNumbers();
+  print "GeneratedTests_SumNumbers: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-03-28 00:33:09
+// Generated: 2026-03-31 21:29:06
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -53,7 +53,7 @@ predicate IsSorted(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_Mode()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a)
@@ -62,6 +62,8 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[1] [2];
+    expect IsSorted(a); // PRE-CHECK
+    expect a.Length > 0; // PRE-CHECK
     var m := Mode(a);
     expect m in a[..];
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
@@ -74,6 +76,8 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[2] [4, 3];
+    expect IsSorted(a); // PRE-CHECK
+    expect a.Length > 0; // PRE-CHECK
     var m := Mode(a);
     expect m in a[..];
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
@@ -86,6 +90,8 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[3] [5, 4, 6];
+    expect IsSorted(a); // PRE-CHECK
+    expect a.Length > 0; // PRE-CHECK
     var m := Mode(a);
     expect m in a[..];
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
@@ -93,13 +99,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Mode();
+  print "GeneratedTests_Mode: all tests passed!\n";
 }

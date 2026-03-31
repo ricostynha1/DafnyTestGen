@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-03-25 13:54:21
+// Generated: 2026-03-31 21:30:24
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -47,7 +47,7 @@ method IsMinHeapTest(){
 
 }
 
-method Passing()
+method GeneratedTests_IsMinHeap()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -56,6 +56,7 @@ method Passing()
     var a := new int[1] [13];
     var result := IsMinHeap(a);
     expect result == true;
+    expect forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i];
   }
 
   // Test case for combination {2}:
@@ -65,35 +66,33 @@ method Passing()
     var a := new int[2] [38, 37];
     var result := IsMinHeap(a);
     expect result == false;
+    expect !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=0:
   //   POST: result
   //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
     var a := new int[0] [];
     var result := IsMinHeap(a);
     expect result == true;
+    expect forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i];
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  // Test case for combination {1}/Ba=2:
+  //   POST: result
+  //   POST: forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[3] [38, 37, 7719];
+    var a := new int[2] [28957, 28958];
     var result := IsMinHeap(a);
-    expect result == false;
+    expect result == true;
+    expect forall i :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsMinHeap();
+  print "GeneratedTests_IsMinHeap: all tests passed!\n";
 }

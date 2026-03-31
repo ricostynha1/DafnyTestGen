@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-03-25 13:52:23
+// Generated: 2026-03-31 21:29:53
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -49,7 +49,7 @@ method HasCommonElementTest(){
     assert out3;
 }
 
-method Passing()
+method GeneratedTests_HasCommonElement()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -59,6 +59,7 @@ method Passing()
     var b := new int[1] [4];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j];
   }
 
   // Test case for combination {2}:
@@ -69,37 +70,35 @@ method Passing()
     var b := new int[0] [];
     var result := HasCommonElement<int>(a, b);
     expect result == false;
+    expect !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=3,b=2:
   //   POST: result
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[2] [6, 16];
-    var b := new int[1] [6];
+    var a := new int[3] [5, 9, 10];
+    var b := new int[2] [5, 11];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j];
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  // Test case for combination {1}/Ba=3,b=1:
+  //   POST: result
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[1] [2];
+    var a := new int[3] [10, 9, 5];
     var b := new int[1] [5];
     var result := HasCommonElement<int>(a, b);
-    expect result == false;
+    expect result == true;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_HasCommonElement();
+  print "GeneratedTests_HasCommonElement: all tests passed!\n";
 }

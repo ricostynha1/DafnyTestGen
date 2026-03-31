@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-28 00:33:29
+// Generated: 2026-03-31 21:29:12
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -56,7 +56,7 @@ method Recaman(n: nat) returns (res: nat)
 
 
 
-method Passing()
+method GeneratedTests_Contains()
 {
   // Test case for combination {1}:
   //   PRE:  len <= a.Length
@@ -66,6 +66,7 @@ method Passing()
     var x := 8;
     var a := new nat[1] [8];
     var len := 1;
+    expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
     expect x in a[..len];
@@ -79,6 +80,7 @@ method Passing()
     var x := 8;
     var a := new nat[0] [];
     var len := 0;
+    expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == false;
     expect !(x in a[..len]);
@@ -92,6 +94,7 @@ method Passing()
     var x := 1;
     var a := new nat[3] [1, 4, 5];
     var len := 1;
+    expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
     expect x in a[..len];
@@ -105,44 +108,49 @@ method Passing()
     var x := 1;
     var a := new nat[2] [1, 3];
     var len := 1;
+    expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
     expect x in a[..len];
   }
 
+}
+
+method GeneratedTests_Recaman()
+{
   // Test case for combination {1}:
   //   POST: res == R(n)
   {
     var n := 0;
+    var check_res := R(n);
     var res := Recaman(n);
-    expect res == 0;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bn=1:
   //   POST: res == R(n)
   {
     var n := 1;
+    var check_res := R(n);
     var res := Recaman(n);
-    expect res == 1;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/R3:
   //   POST: res == R(n)
   {
     var n := 2;
+    var check_res := R(n);
     var res := Recaman(n);
-    expect res == 3;
+    expect res == check_res;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Contains();
+  print "GeneratedTests_Contains: all tests passed!\n";
+  GeneratedTests_Recaman();
+  print "GeneratedTests_Recaman: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-03-25 13:53:59
+// Generated: 2026-03-31 21:30:17
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -24,9 +24,9 @@ method MoveZeroesToEnd(a: array<int>) returns (nz: nat)
             }
             nz := nz + 1; // increment number of non-zero elements
         }
-        assert old(a[..i+1] == a[..i] + [a[i]]); // helper
+        assert (a[..i+1] == a[..i] + [a[i]]); // helper
     }    
-    assert old(a[..] == a[..a.Length]); // helper
+    assert (a[..] == a[..a.Length]); // helper
 }
 
 // Filters a sequence 's' using a predicate 'p'.
@@ -64,7 +64,7 @@ method MoveZeroesToEndTest(){
     assert nz2 == 2 && a2[..] == [1, 1, 0, 0];
 }
 
-method Passing()
+method GeneratedTests_MoveZeroesToEnd()
 {
   // Test case for combination {1}:
   //   POST: 0 <= nz <= a.Length
@@ -75,20 +75,20 @@ method Passing()
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
-    expect a[..nz] == Filter(old_a[..], x => x != 0);
+    expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == Filter(old(a[..]), x => x != 0)
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[1] [6];
+    var a := new int[1] [3];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
-    expect a[..nz] == Filter(old_a[..], x => x != 0);
+    expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
   }
 
@@ -101,7 +101,7 @@ method Passing()
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
-    expect a[..nz] == Filter(old_a[..], x => x != 0);
+    expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
   }
 
@@ -114,19 +114,14 @@ method Passing()
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
-    expect a[..nz] == Filter(old_a[..], x => x != 0);
+    expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MoveZeroesToEnd();
+  print "GeneratedTests_MoveZeroesToEnd: all tests passed!\n";
 }

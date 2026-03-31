@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-03-25 13:53:37
+// Generated: 2026-03-31 21:30:12
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -34,7 +34,7 @@ method IsPrimeTest(){
     assert out3;
 }
 
-method Passing()
+method GeneratedTests_IsPrime()
 {
   // Test case for combination {1}:
   //   PRE:  n > 1
@@ -42,8 +42,10 @@ method Passing()
   //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
+    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
+    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
   // Test case for combination {2}:
@@ -52,39 +54,40 @@ method Passing()
   //   POST: !forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
+    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == false;
+    expect !forall k :: 2 <= k < n ==> n % k != 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=3:
   //   PRE:  n > 1
   //   POST: result
   //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
+    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
+    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/R3:
   //   PRE:  n > 1
-  //   POST: !result
-  //   POST: !forall k :: 2 <= k < n ==> n % k != 0
+  //   POST: result
+  //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
-    var n := 6;
+    var n := 5;
+    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
-    expect result == false;
+    expect result == true;
+    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsPrime();
+  print "GeneratedTests_IsPrime: all tests passed!\n";
 }

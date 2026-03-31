@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_770.dfy
 // Method: SumOfFourthPowerOfOddNumbers
-// Generated: 2026-03-25 13:54:33
+// Generated: 2026-03-31 21:30:26
 
 // Returns the sum of the fourth power of the first n odd numbers.
 method SumOfFourthPowerOfOddNumbers(n: nat) returns (sum: nat)
@@ -33,7 +33,7 @@ method SumOfFourthPowerOfOddNumbersTest(){
     assert out2 == 707;
 }
 
-method Passing()
+method GeneratedTests_SumOfFourthPowerOfOddNumbers()
 {
   // Test case for combination {1}:
   //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
@@ -41,14 +41,6 @@ method Passing()
     var n := 0;
     var sum := SumOfFourthPowerOfOddNumbers(n);
     expect sum == 0;
-  }
-
-  // Test case for combination {1}:
-  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
-  {
-    var n := 45;
-    var sum := SumOfFourthPowerOfOddNumbers(n);
-    expect sum == 590247021;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -59,15 +51,18 @@ method Passing()
     expect sum == 1;
   }
 
-}
+  // Test case for combination {1}/R3:
+  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 45;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 590247021;
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SumOfFourthPowerOfOddNumbers();
+  print "GeneratedTests_SumOfFourthPowerOfOddNumbers: all tests passed!\n";
 }

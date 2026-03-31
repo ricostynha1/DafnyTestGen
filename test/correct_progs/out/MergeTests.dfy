@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-03-28 00:33:07
+// Generated: 2026-03-31 21:29:06
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -46,7 +46,7 @@ method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_Merge()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
@@ -55,6 +55,7 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[0] [];
+    expect IsSorted(a[..]) && IsSorted(b[..]); // PRE-CHECK
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
@@ -67,6 +68,7 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[1] [2];
+    expect IsSorted(a[..]) && IsSorted(b[..]); // PRE-CHECK
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
@@ -79,6 +81,7 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[2] [1236, 1237];
+    expect IsSorted(a[..]) && IsSorted(b[..]); // PRE-CHECK
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
@@ -91,6 +94,7 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[3] [1796, 1797, 1798];
+    expect IsSorted(a[..]) && IsSorted(b[..]); // PRE-CHECK
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
@@ -98,13 +102,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Merge();
+  print "GeneratedTests_Merge: all tests passed!\n";
 }

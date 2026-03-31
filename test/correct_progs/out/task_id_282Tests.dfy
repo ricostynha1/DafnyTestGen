@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-25 13:51:57
+// Generated: 2026-03-31 21:29:48
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -34,7 +34,7 @@ method ElementWiseSubtractionTest(){
   assert res3[..] == [40, 50];
 }
 
-method Passing()
+method GeneratedTests_ElementWiseSubtraction()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
@@ -43,17 +43,23 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[0] [];
+    expect a.Length == b.Length; // PRE-CHECK
     var result := ElementWiseSubtraction(a, b);
+    expect result.Length == a.Length;
+    expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[1] [4];
-    var b := new int[1] [6];
+    var a := new int[1] [2];
+    var b := new int[1] [3];
+    expect a.Length == b.Length; // PRE-CHECK
     var result := ElementWiseSubtraction(a, b);
+    expect result.Length == a.Length;
+    expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -63,7 +69,10 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var b := new int[2] [6, 5];
+    expect a.Length == b.Length; // PRE-CHECK
     var result := ElementWiseSubtraction(a, b);
+    expect result.Length == a.Length;
+    expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
@@ -73,18 +82,16 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var b := new int[3] [8, 7, 9];
+    expect a.Length == b.Length; // PRE-CHECK
     var result := ElementWiseSubtraction(a, b);
+    expect result.Length == a.Length;
+    expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseSubtraction();
+  print "GeneratedTests_ElementWiseSubtraction: all tests passed!\n";
 }

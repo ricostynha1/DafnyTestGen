@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-03-28 10:00:29
+// Generated: 2026-03-31 21:28:53
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -37,7 +37,7 @@ method BinarySearch(a: array<T>, x: T) returns (index: int)
 }
 
 
-method Passing()
+method GeneratedTests_BinarySearch()
 {
   // Test case for combination {2}:
   //   PRE:  IsSorted(a[..])
@@ -46,6 +46,7 @@ method Passing()
   {
     var a := new T[0] [];
     var x := 0;
+    expect IsSorted(a[..]); // PRE-CHECK
     var index := BinarySearch(a, x);
     expect index == -1;
     expect x !in a[..];
@@ -59,6 +60,7 @@ method Passing()
   {
     var a := new T[1] [38];
     var x := 38;
+    expect IsSorted(a[..]); // PRE-CHECK
     var index := BinarySearch(a, x);
     expect index == 0;
   }
@@ -70,6 +72,7 @@ method Passing()
   {
     var a := new T[3] [4, 5, 6];
     var x := 0;
+    expect IsSorted(a[..]); // PRE-CHECK
     var index := BinarySearch(a, x);
     expect index == -1;
     expect x !in a[..];
@@ -82,6 +85,7 @@ method Passing()
   {
     var a := new T[2] [3, 4];
     var x := 1;
+    expect IsSorted(a[..]); // PRE-CHECK
     var index := BinarySearch(a, x);
     expect index == -1;
     expect x !in a[..];
@@ -89,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_BinarySearch();
+  print "GeneratedTests_BinarySearch: all tests passed!\n";
 }

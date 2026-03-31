@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-03-25 13:54:57
+// Generated: 2026-03-31 21:30:32
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -40,7 +40,7 @@ method ContainsEvenNumberTest(){
 }
 
 
-method Passing()
+method GeneratedTests_ContainsEvenNumber()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -49,6 +49,7 @@ method Passing()
     var a := new int[1] [0];
     var result := ContainsEvenNumber(a);
     expect result == true;
+    expect exists i :: 0 <= i < a.Length && IsEven(a[i]);
   }
 
   // Test case for combination {2}:
@@ -58,35 +59,33 @@ method Passing()
     var a := new int[0] [];
     var result := ContainsEvenNumber(a);
     expect result == false;
+    expect !exists i :: 0 <= i < a.Length && IsEven(a[i]);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   POST: result
   //   POST: exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[2] [0, 12];
+    var a := new int[2] [0, 3];
     var result := ContainsEvenNumber(a);
     expect result == true;
+    expect exists i :: 0 <= i < a.Length && IsEven(a[i]);
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i :: 0 <= i < a.Length && IsEven(a[i])
+  // Test case for combination {1}/Ba=3:
+  //   POST: result
+  //   POST: exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[1] [42479];
+    var a := new int[3] [0, 4, 5];
     var result := ContainsEvenNumber(a);
-    expect result == false;
+    expect result == true;
+    expect exists i :: 0 <= i < a.Length && IsEven(a[i]);
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ContainsEvenNumber();
+  print "GeneratedTests_ContainsEvenNumber: all tests passed!\n";
 }

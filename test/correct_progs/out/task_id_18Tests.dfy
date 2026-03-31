@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-03-25 14:01:02
+// Generated: 2026-03-31 21:29:26
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -44,53 +44,52 @@ method RemoveCharsTest(){
 }
 
 
-method Passing()
+method GeneratedTests_RemoveChars()
 {
   // Test case for combination {1}:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
     var s1: seq<char> := [];
     var s2: seq<char> := [];
+    var check_v := Filter(s1, c => !(c in s2));
     var v := RemoveChars(s1, s2);
-    expect v == Filter(s1, c => !(c in s2));
+    expect v == check_v;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs1=0,s2=1:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [' '];
+    var s1: seq<char> := [];
     var s2: seq<char> := [' '];
+    var check_v := Filter(s1, c => !(c in s2));
     var v := RemoveChars(s1, s2);
-    expect v == Filter(s1, c => !(c in s2));
+    expect v == check_v;
   }
 
-  // Test case for combination {1}/Bs1=3,s2=1:
+  // Test case for combination {1}/Bs1=0,s2=2:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := ['!', ' ', '"'];
-    var s2: seq<char> := ['F'];
+    var s1: seq<char> := [];
+    var s2: seq<char> := [' ', '!'];
+    var check_v := Filter(s1, c => !(c in s2));
     var v := RemoveChars(s1, s2);
-    expect v == Filter(s1, c => !(c in s2));
+    expect v == check_v;
   }
 
-  // Test case for combination {1}/Bs1=3,s2=0:
+  // Test case for combination {1}/Bs1=0,s2=3:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [' ', '!', '"'];
-    var s2: seq<char> := [];
+    var s1: seq<char> := [];
+    var s2: seq<char> := [' ', '!', '"'];
+    var check_v := Filter(s1, c => !(c in s2));
     var v := RemoveChars(s1, s2);
-    expect v == Filter(s1, c => !(c in s2));
+    expect v == check_v;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RemoveChars();
+  print "GeneratedTests_RemoveChars: all tests passed!\n";
 }

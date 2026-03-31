@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-03-25 13:53:40
+// Generated: 2026-03-31 21:30:13
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -38,7 +38,7 @@ method RemoveElementTest(){
     assert res3[..] == [1, 1, 2, 3, 4, 4, 5];
 }
 
-method Passing()
+method GeneratedTests_RemoveElementAt()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k < s.Length
@@ -46,16 +46,7 @@ method Passing()
   {
     var s := new int[1] [4];
     var k := 0;
-    var v := RemoveElementAt(s, k);
-    expect v[..] == s[..k] + s[k + 1..];
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= k < s.Length
-  //   POST: v[..] == s[..k] + s[k + 1..]
-  {
-    var s := new int[2] [5, 6];
-    var k := 1;
+    expect 0 <= k < s.Length; // PRE-CHECK
     var v := RemoveElementAt(s, k);
     expect v[..] == s[..k] + s[k + 1..];
   }
@@ -66,6 +57,18 @@ method Passing()
   {
     var s := new int[2] [4, 3];
     var k := 0;
+    expect 0 <= k < s.Length; // PRE-CHECK
+    var v := RemoveElementAt(s, k);
+    expect v[..] == s[..k] + s[k + 1..];
+  }
+
+  // Test case for combination {1}/Bs=2,k=1:
+  //   PRE:  0 <= k < s.Length
+  //   POST: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[2] [4, 3];
+    var k := 1;
+    expect 0 <= k < s.Length; // PRE-CHECK
     var v := RemoveElementAt(s, k);
     expect v[..] == s[..k] + s[k + 1..];
   }
@@ -76,19 +79,15 @@ method Passing()
   {
     var s := new int[3] [5, 4, 6];
     var k := 0;
+    expect 0 <= k < s.Length; // PRE-CHECK
     var v := RemoveElementAt(s, k);
     expect v[..] == s[..k] + s[k + 1..];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RemoveElementAt();
+  print "GeneratedTests_RemoveElementAt: all tests passed!\n";
 }

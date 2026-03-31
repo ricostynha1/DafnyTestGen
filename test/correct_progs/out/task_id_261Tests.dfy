@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-03-25 13:51:48
+// Generated: 2026-03-31 21:29:45
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -38,7 +38,7 @@ method ElementWiseDivisionTest(){
 }
 
 
-method Passing()
+method GeneratedTests_ElementWiseDivision()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -48,20 +48,24 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
+    expect |a| == |b|; // PRE-CHECK
+    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [1];
+    var a: seq<int> := [0];
     var b: seq<int> := [1];
+    expect |a| == |b|; // PRE-CHECK
+    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
-    expect result == [1];
+    expect result == [0];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -72,6 +76,8 @@ method Passing()
   {
     var a: seq<int> := [0, 1];
     var b: seq<int> := [1, 2];
+    expect |a| == |b|; // PRE-CHECK
+    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [0, 0];
   }
@@ -84,19 +90,16 @@ method Passing()
   {
     var a: seq<int> := [0, 4, 6];
     var b: seq<int> := [1, 2, 3];
+    expect |a| == |b|; // PRE-CHECK
+    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [0, 2, 2];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseDivision();
+  print "GeneratedTests_ElementWiseDivision: all tests passed!\n";
 }

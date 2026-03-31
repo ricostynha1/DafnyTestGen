@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-03-25 13:54:54
+// Generated: 2026-03-31 21:30:32
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -43,7 +43,7 @@ method IsPerfectSquareTest(){
     r := IsPerfectSquare(1000001); assert !r;
 }
 
-method Passing()
+method GeneratedTests_IsPerfectSquare()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -52,6 +52,7 @@ method Passing()
     var n := 0;
     var result := IsPerfectSquare(n);
     expect result == true;
+    expect exists i: nat :: i * i == n;
   }
 
   // Test case for combination {2}:
@@ -61,35 +62,33 @@ method Passing()
     var n := 2;
     var result := IsPerfectSquare(n);
     expect result == false;
+    expect !exists i: nat :: i * i == n;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: result
   //   POST: exists i: nat :: i * i == n
   {
     var n := 1;
     var result := IsPerfectSquare(n);
     expect result == true;
+    expect exists i: nat :: i * i == n;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: nat :: i * i == n
+  // Test case for combination {1}/R3:
+  //   POST: result
+  //   POST: exists i: nat :: i * i == n
   {
-    var n := 3;
+    var n := 4;
     var result := IsPerfectSquare(n);
-    expect result == false;
+    expect result == true;
+    expect exists i: nat :: i * i == n;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsPerfectSquare();
+  print "GeneratedTests_IsPerfectSquare: all tests passed!\n";
 }

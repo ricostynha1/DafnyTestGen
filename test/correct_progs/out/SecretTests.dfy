@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-03-28 00:33:33
+// Generated: 2026-03-31 21:29:13
 
 class Secret {
     var secret: int
@@ -12,8 +12,8 @@ class Secret {
         modifies this
         requires known == false
         requires count >= 0
-        ensures count == (count) + 1 && guesses == count
-        ensures if g == (secret) then result == true && known == true else result == false && known == false
+        ensures count == old(count) + 1 && guesses == count
+        ensures if g == old(secret) then result == true && known == true else result == false && known == false
     {
         count := count + 1;
         guesses := count;
@@ -27,7 +27,7 @@ class Secret {
 }
 
 
-method Passing()
+method GeneratedTests_Guess()
 {
   // Test case for combination {1}:
   //   PRE:  known == false
@@ -45,6 +45,8 @@ method Passing()
     var g := 0;
     var old_count := obj.count;
     var old_secret := obj.secret;
+    expect obj.known == false; // PRE-CHECK
+    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 1;
@@ -69,6 +71,8 @@ method Passing()
     var g := 1;
     var old_count := obj.count;
     var old_secret := obj.secret;
+    expect obj.known == false; // PRE-CHECK
+    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == false;
     expect guesses == 1;
@@ -93,6 +97,8 @@ method Passing()
     var g := 0;
     var old_count := obj.count;
     var old_secret := obj.secret;
+    expect obj.known == false; // PRE-CHECK
+    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 2;
@@ -117,6 +123,8 @@ method Passing()
     var g := 1;
     var old_count := obj.count;
     var old_secret := obj.secret;
+    expect obj.known == false; // PRE-CHECK
+    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 1;
@@ -127,13 +135,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Guess();
+  print "GeneratedTests_Guess: all tests passed!\n";
 }

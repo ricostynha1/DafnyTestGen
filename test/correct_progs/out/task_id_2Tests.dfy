@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-03-25 13:51:03
+// Generated: 2026-03-31 21:29:26
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -47,53 +47,52 @@ method SharedElementsTest(){
   assert res3 == {};
 }
 
-method Passing()
+method GeneratedTests_SharedElements()
 {
   // Test case for combination {1}:
   //   POST: result == elems(a[..]) * elems(b[..])
   {
     var a := new int[0] [];
     var b := new int[0] [];
+    var check_result := elems(a[..]) * elems(b[..]);
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == check_result;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=0,b=1:
   //   POST: result == elems(a[..]) * elems(b[..])
   {
-    var a := new int[1] [2];
-    var b := new int[1] [6];
+    var a := new int[0] [];
+    var b := new int[1] [2];
+    var check_result := elems(a[..]) * elems(b[..]);
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == check_result;
   }
 
-  // Test case for combination {1}/Ba=3,b=1:
+  // Test case for combination {1}/Ba=0,b=2:
   //   POST: result == elems(a[..]) * elems(b[..])
   {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[1] [14];
+    var a := new int[0] [];
+    var b := new int[2] [4, 3];
+    var check_result := elems(a[..]) * elems(b[..]);
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == check_result;
   }
 
-  // Test case for combination {1}/Ba=3,b=0:
+  // Test case for combination {1}/Ba=0,b=3:
   //   POST: result == elems(a[..]) * elems(b[..])
   {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[0] [];
+    var a := new int[0] [];
+    var b := new int[3] [5, 4, 6];
+    var check_result := elems(a[..]) * elems(b[..]);
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == check_result;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SharedElements();
+  print "GeneratedTests_SharedElements: all tests passed!\n";
 }

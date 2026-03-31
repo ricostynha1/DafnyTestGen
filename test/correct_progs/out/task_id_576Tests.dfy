@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-03-25 13:53:14
+// Generated: 2026-03-31 21:30:05
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.
@@ -47,7 +47,7 @@ method IsSublistTest(){
     assert r4;
 }
 
-method Passing()
+method GeneratedTests_IsSublist()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -57,6 +57,7 @@ method Passing()
     var t: seq<int> := [11];
     var result := IsSublist<int>(s, t);
     expect result == true;
+    expect exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j];
   }
 
   // Test case for combination {2}:
@@ -67,37 +68,35 @@ method Passing()
     var t: seq<int> := [];
     var result := IsSublist<int>(s, t);
     expect result == false;
+    expect !exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=0,t=0:
   //   POST: result
   //   POST: exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [];
-    var t: seq<int> := [12];
+    var t: seq<int> := [];
     var result := IsSublist<int>(s, t);
     expect result == true;
+    expect exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j];
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
+  // Test case for combination {1}/Bs=2,t=3:
+  //   POST: result
+  //   POST: exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
-    var s: seq<int> := [3];
-    var t: seq<int> := [2];
+    var s: seq<int> := [8, 7];
+    var t: seq<int> := [8, 7, 9];
     var result := IsSublist<int>(s, t);
-    expect result == false;
+    expect result == true;
+    expect exists i, j :: 0 <= i <= j <= |t| && s == t[i .. j];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsSublist();
+  print "GeneratedTests_IsSublist: all tests passed!\n";
 }

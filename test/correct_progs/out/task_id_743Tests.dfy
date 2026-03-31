@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-03-25 13:54:19
+// Generated: 2026-03-31 21:30:23
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -32,7 +32,7 @@ method RotateRightTest(){
     assert res4 == [];
 }
 
-method Passing()
+method GeneratedTests_RotateRight()
 {
   // Test case for combination {1}:
   //   POST: |r| == |l|
@@ -40,16 +40,6 @@ method Passing()
   {
     var l: seq<int> := [];
     var n := 8;
-    var r := RotateRight(l, n);
-    expect r == [];
-  }
-
-  // Test case for combination {1}:
-  //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  {
-    var l: seq<int> := [];
-    var n := 7;
     var r := RotateRight(l, n);
     expect r == [];
   }
@@ -74,15 +64,20 @@ method Passing()
     expect r == [];
   }
 
-}
+  // Test case for combination {1}/Bl=1,n=0:
+  //   POST: |r| == |l|
+  //   POST: forall i :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [2];
+    var n := 0;
+    var r := RotateRight(l, n);
+    expect r == [2];
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RotateRight();
+  print "GeneratedTests_RotateRight: all tests passed!\n";
 }

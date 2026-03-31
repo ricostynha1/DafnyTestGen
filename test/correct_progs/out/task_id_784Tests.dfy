@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-03-25 13:54:39
+// Generated: 2026-03-31 21:30:27
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -80,26 +80,18 @@ method ProductEvenOddTest(){
     assert out2 == 10;
 }
 
-method Passing()
+method GeneratedTests_ProductFirstEvenOdd()
 {
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [1, -2];
+    var lst: seq<int> := [0, 42479];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductFirstEvenOdd(lst);
-    expect product == -2;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [-2, 1, 16196, 1948];
-    var product := ProductFirstEvenOdd(lst);
-    expect product == -2;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
   // Test case for combination {1}/Blst=3:
@@ -107,56 +99,77 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [0, 564, -3];
+    var lst: seq<int> := [4, 15439, 0];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductFirstEvenOdd(lst);
-    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/R3:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [0, 16731];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 0;
-    expect oddIndex == 1;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [29363, 41955, 1, 0];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 3;
-    expect oddIndex == 0;
-  }
-
-  // Test case for combination {1}/Blst=3:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [0, 40326, 16731];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 0;
-    expect oddIndex == 2;
+    var lst: seq<int> := [11, 0, 42477, 21];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var product := ProductFirstEvenOdd(lst);
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
 }
 
-method Failing()
+method GeneratedTests_FirstEvenOddIndices()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [42479, 0];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect IsFirstEven(evenIndex, lst);
+    expect IsFirstOdd(oddIndex, lst);
+  }
+
+  // Test case for combination {1}/Blst=3:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [15439, 4, 0];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect IsFirstEven(evenIndex, lst);
+    expect IsFirstOdd(oddIndex, lst);
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 15, 16, -1];
+    expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect IsFirstEven(evenIndex, lst);
+    expect IsFirstOdd(oddIndex, lst);
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ProductFirstEvenOdd();
+  print "GeneratedTests_ProductFirstEvenOdd: all tests passed!\n";
+  GeneratedTests_FirstEvenOddIndices();
+  print "GeneratedTests_FirstEvenOddIndices: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-03-25 13:50:54
+// Generated: 2026-03-31 21:29:25
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates
@@ -82,53 +82,52 @@ method RemoveElementsDups(){
 }
 
 
-method Passing()
+method GeneratedTests_RemoveElements()
 {
   // Test case for combination {1}:
   //   POST: res == removeElems(a[..], b[..])
   {
     var a := new int[0] [];
     var b := new int[0] [];
+    var check_res := removeElems(a[..], b[..]);
     var res := RemoveElements<int>(a, b);
-    expect res == []; // == removeElems(a[..], b[..])
+    expect res == check_res;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=0,b=1:
   //   POST: res == removeElems(a[..], b[..])
   {
-    var a := new int[1] [2];
-    var b := new int[1] [6];
+    var a := new int[0] [];
+    var b := new int[1] [2];
+    var check_res := removeElems(a[..], b[..]);
     var res := RemoveElements<int>(a, b);
-    expect res == [2]; // == removeElems(a[..], b[..])
+    expect res == check_res;
   }
 
-  // Test case for combination {1}/Ba=3,b=1:
+  // Test case for combination {1}/Ba=0,b=2:
   //   POST: res == removeElems(a[..], b[..])
   {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[1] [14];
+    var a := new int[0] [];
+    var b := new int[2] [4, 3];
+    var check_res := removeElems(a[..], b[..]);
     var res := RemoveElements<int>(a, b);
-    expect res == [5, 4, 6]; // == removeElems(a[..], b[..])
+    expect res == check_res;
   }
 
-  // Test case for combination {1}/Ba=3,b=0:
+  // Test case for combination {1}/Ba=0,b=3:
   //   POST: res == removeElems(a[..], b[..])
   {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[0] [];
+    var a := new int[0] [];
+    var b := new int[3] [5, 4, 6];
+    var check_res := removeElems(a[..], b[..]);
     var res := RemoveElements<int>(a, b);
-    expect res == [5, 4, 6]; // == removeElems(a[..], b[..])
+    expect res == check_res;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RemoveElements();
+  print "GeneratedTests_RemoveElements: all tests passed!\n";
 }

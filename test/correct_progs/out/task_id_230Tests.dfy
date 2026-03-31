@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-03-25 13:51:06
+// Generated: 2026-03-31 21:29:27
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -38,7 +38,7 @@ method ReplaceBlanksWithCharTest(){
   assert res3=="blank-space";
 }
 
-method Passing()
+method GeneratedTests_ReplaceBlanksWithChar()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
@@ -49,20 +49,11 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}:
-  //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
-  {
-    var s: seq<char> := [];
-    var ch := '!';
-    var v := ReplaceBlanksWithChar(s, ch);
-    expect v == [];
-  }
-
   // Test case for combination {1}/Bs=0:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [];
-    var ch := '"';
+    var ch := '!';
     var v := ReplaceBlanksWithChar(s, ch);
     expect v == [];
   }
@@ -76,15 +67,19 @@ method Passing()
     expect v == ['F'];
   }
 
-}
+  // Test case for combination {1}/Bs=2:
+  //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  {
+    var s: seq<char> := [' ', '!'];
+    var ch := 'F';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == ['F', '!'];
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ReplaceBlanksWithChar();
+  print "GeneratedTests_ReplaceBlanksWithChar: all tests passed!\n";
 }

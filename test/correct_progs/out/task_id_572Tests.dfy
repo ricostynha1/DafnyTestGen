@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-03-25 13:53:09
+// Generated: 2026-03-31 21:30:04
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -53,49 +53,48 @@ method RemoveDuplicatesTest(){
   assert res2 == [1];
 }
 
-method Passing()
+method GeneratedTests_RemoveDuplicates()
 {
   // Test case for combination {1}:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[0] [];
+    var check_res := DeDup(a[..]);
     var res := RemoveDuplicates<int>(a);
-    expect res == []; // == DeDup(a[..])
+    expect res == check_res;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[1] [2];
+    var check_res := DeDup(a[..]);
     var res := RemoveDuplicates<int>(a);
-    expect res == [2]; // == DeDup(a[..])
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[2] [4, 3];
+    var check_res := DeDup(a[..]);
     var res := RemoveDuplicates<int>(a);
-    expect res == [4, 3]; // == DeDup(a[..])
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[3] [5, 4, 6];
+    var check_res := DeDup(a[..]);
     var res := RemoveDuplicates<int>(a);
-    expect res == [5, 4, 6]; // == DeDup(a[..])
+    expect res == check_res;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RemoveDuplicates();
+  print "GeneratedTests_RemoveDuplicates: all tests passed!\n";
 }

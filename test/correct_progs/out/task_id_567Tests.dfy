@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-03-25 13:53:06
+// Generated: 2026-03-31 21:30:03
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -31,7 +31,7 @@ method IsSortedTest(){
   assert ! out2;
 }
 
-method Passing()
+method GeneratedTests_IsSortedArr()
 {
   // Test case for combination {1}:
   //   POST: sorted
@@ -40,6 +40,7 @@ method Passing()
     var a := new int[0] [];
     var sorted := IsSortedArr(a);
     expect sorted == true;
+    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
   // Test case for combination {2}:
@@ -49,35 +50,33 @@ method Passing()
     var a := new int[2] [7719, 7718];
     var sorted := IsSortedArr(a);
     expect sorted == false;
+    expect !forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: sorted
   //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[1] [16];
+    var a := new int[1] [2];
     var sorted := IsSortedArr(a);
     expect sorted == true;
+    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
-  // Test case for combination {2}:
-  //   POST: !sorted
-  //   POST: !forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  // Test case for combination {1}/Ba=2:
+  //   POST: sorted
+  //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[3] [7719, 7718, 21238];
+    var a := new int[2] [28957, 28958];
     var sorted := IsSortedArr(a);
-    expect sorted == false;
+    expect sorted == true;
+    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsSortedArr();
+  print "GeneratedTests_IsSortedArr: all tests passed!\n";
 }

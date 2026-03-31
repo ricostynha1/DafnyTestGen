@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-28 00:32:45
+// Generated: 2026-03-31 21:28:59
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -128,15 +128,16 @@ lemma ProdLemma(a: int, b: nat)
 
 
 
-method Passing()
+method GeneratedTests_FastExponentiation()
 {
   // Test case for combination {1}:
   //   POST: p == Power(x, n)
   {
     var x := 0;
     var n := 0;
+    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == 1;
+    expect p == check_p;
   }
 
   // Test case for combination {1}/Bx=0,n=1:
@@ -144,8 +145,9 @@ method Passing()
   {
     var x := 0;
     var n := 1;
+    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == 0;
+    expect p == check_p;
   }
 
   // Test case for combination {1}/Bx=1,n=0:
@@ -153,8 +155,9 @@ method Passing()
   {
     var x := 1;
     var n := 0;
+    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == 1;
+    expect p == check_p;
   }
 
   // Test case for combination {1}/Bx=1,n=1:
@@ -162,10 +165,15 @@ method Passing()
   {
     var x := 1;
     var n := 1;
+    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == 1;
+    expect p == check_p;
   }
 
+}
+
+method GeneratedTests_FastModularExponentiation()
+{
   // Test case for combination {1}:
   //   PRE:  m > 0
   //   POST: res == Power(x, n) % m
@@ -173,8 +181,10 @@ method Passing()
     var x := 0;
     var n := 0;
     var m := 1;
+    var check_res := Power(x, n) % m;
+    expect m > 0; // PRE-CHECK
     var res := FastModularExponentiation(x, n, m);
-    expect res == 0;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bx=0,n=0,m=2:
@@ -184,8 +194,10 @@ method Passing()
     var x := 0;
     var n := 0;
     var m := 2;
+    var check_res := Power(x, n) % m;
+    expect m > 0; // PRE-CHECK
     var res := FastModularExponentiation(x, n, m);
-    expect res == 1;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bx=0,n=1,m=1:
@@ -195,8 +207,10 @@ method Passing()
     var x := 0;
     var n := 1;
     var m := 1;
+    var check_res := Power(x, n) % m;
+    expect m > 0; // PRE-CHECK
     var res := FastModularExponentiation(x, n, m);
-    expect res == 0;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bx=0,n=1,m=2:
@@ -206,19 +220,18 @@ method Passing()
     var x := 0;
     var n := 1;
     var m := 2;
+    var check_res := Power(x, n) % m;
+    expect m > 0; // PRE-CHECK
     var res := FastModularExponentiation(x, n, m);
-    expect res == 0;
+    expect res == check_res;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FastExponentiation();
+  print "GeneratedTests_FastExponentiation: all tests passed!\n";
+  GeneratedTests_FastModularExponentiation();
+  print "GeneratedTests_FastModularExponentiation: all tests passed!\n";
 }

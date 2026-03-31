@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-03-25 13:52:17
+// Generated: 2026-03-31 21:29:52
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -37,7 +37,7 @@ method AnyValueExistsTest(){
   assert !res3;
 }
 
-method Passing()
+method GeneratedTests_AnyValueExists()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -47,6 +47,7 @@ method Passing()
     var seq2: seq<int> := [7];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == true;
+    expect exists x :: x in seq1 && x in seq2;
   }
 
   // Test case for combination {2}:
@@ -57,37 +58,35 @@ method Passing()
     var seq2: seq<int> := [];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == false;
+    expect !exists x :: x in seq1 && x in seq2;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bseq1=3,seq2=2:
   //   POST: result
   //   POST: exists x :: x in seq1 && x in seq2
   {
-    var seq1: seq<int> := [0, 0];
-    var seq2: seq<int> := [0, 0];
+    var seq1: seq<int> := [7, 8, 9];
+    var seq2: seq<int> := [7, 10];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == true;
+    expect exists x :: x in seq1 && x in seq2;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists x :: x in seq1 && x in seq2
+  // Test case for combination {1}/Bseq1=3,seq2=1:
+  //   POST: result
+  //   POST: exists x :: x in seq1 && x in seq2
   {
-    var seq1: seq<int> := [2];
-    var seq2: seq<int> := [24];
+    var seq1: seq<int> := [7, 8, 9];
+    var seq2: seq<int> := [7];
     var result := AnyValueExists<int>(seq1, seq2);
-    expect result == false;
+    expect result == true;
+    expect exists x :: x in seq1 && x in seq2;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_AnyValueExists();
+  print "GeneratedTests_AnyValueExists: all tests passed!\n";
 }

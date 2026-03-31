@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-03-25 13:53:56
+// Generated: 2026-03-31 21:30:17
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -72,49 +72,48 @@ method FindEvenNumbersTest(){
     assert res5 == [];
 }
 
-method Passing()
+method GeneratedTests_FindEvenNumbers()
 {
   // Test case for combination {1}:
   //   POST: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[0] [];
+    var check_evenList := Filter(arr[..], IsEven);
     var evenList := FindEvenNumbers(arr);
-    expect evenList == []; // == Filter(arr[..], IsEven)
+    expect evenList == check_evenList;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Barr=1:
   //   POST: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[1] [2];
+    var check_evenList := Filter(arr[..], IsEven);
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [2]; // == Filter(arr[..], IsEven)
+    expect evenList == check_evenList;
   }
 
   // Test case for combination {1}/Barr=2:
   //   POST: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[2] [4, 3];
+    var check_evenList := Filter(arr[..], IsEven);
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [4]; // == Filter(arr[..], IsEven)
+    expect evenList == check_evenList;
   }
 
   // Test case for combination {1}/Barr=3:
   //   POST: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[3] [5, 4, 6];
+    var check_evenList := Filter(arr[..], IsEven);
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [4, 6]; // == Filter(arr[..], IsEven)
+    expect evenList == check_evenList;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindEvenNumbers();
+  print "GeneratedTests_FindEvenNumbers: all tests passed!\n";
 }

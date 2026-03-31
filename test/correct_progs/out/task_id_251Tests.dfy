@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_251.dfy
 // Method: InsertBeforeEach
-// Generated: 2026-03-25 13:51:44
+// Generated: 2026-03-31 21:29:44
 
 // Given a list s = [e1, e2, ...] and an element x, 
 // returns a new list [x, e1, x, e2, ...].
@@ -30,7 +30,7 @@ method InsertBeforeEachTest(){
 
 }
 
-method Passing()
+method GeneratedTests_InsertBeforeEach()
 {
   // Test case for combination {1}:
   //   POST: |v| == 2 * |s|
@@ -38,16 +38,6 @@ method Passing()
   {
     var s: seq<int> := [];
     var x := 0;
-    var v := InsertBeforeEach<int>(s, x);
-    expect v == [];
-  }
-
-  // Test case for combination {1}:
-  //   POST: |v| == 2 * |s|
-  //   POST: forall i :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
-  {
-    var s: seq<int> := [];
-    var x := 20;
     var v := InsertBeforeEach<int>(s, x);
     expect v == [];
   }
@@ -72,15 +62,20 @@ method Passing()
     expect v == [0, 3];
   }
 
-}
+  // Test case for combination {1}/Bs=1,x=1:
+  //   POST: |v| == 2 * |s|
+  //   POST: forall i :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [3];
+    var x := 1;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [1, 3];
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_InsertBeforeEach();
+  print "GeneratedTests_InsertBeforeEach: all tests passed!\n";
 }

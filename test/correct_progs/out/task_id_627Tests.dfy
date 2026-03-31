@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-03-25 13:53:54
+// Generated: 2026-03-31 21:30:16
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -51,22 +51,24 @@ method SmallestMissingNumberTest() {
 }
 
 
-method Passing()
+method GeneratedTests_SmallestMissingNumber()
 {
   // Test case for combination {1}:
   //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
   //   POST: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [3];
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]; // PRE-CHECK
     var v := SmallestMissingNumber(s);
     expect v == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=0:
   //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
   //   POST: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [];
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]; // PRE-CHECK
     var v := SmallestMissingNumber(s);
     expect v == 0;
   }
@@ -76,6 +78,7 @@ method Passing()
   //   POST: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [-2, -1];
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]; // PRE-CHECK
     var v := SmallestMissingNumber(s);
     expect v == 0;
   }
@@ -85,19 +88,15 @@ method Passing()
   //   POST: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [0, 8, 9];
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]; // PRE-CHECK
     var v := SmallestMissingNumber(s);
     expect v == 1;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SmallestMissingNumber();
+  print "GeneratedTests_SmallestMissingNumber: all tests passed!\n";
 }

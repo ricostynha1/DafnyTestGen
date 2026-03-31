@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-03-25 13:53:34
+// Generated: 2026-03-31 21:30:12
 
 // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -48,7 +48,7 @@ method FindFirstRepeatedCharTest(){
     assert !found4;
 }
 
-method Passing()
+method GeneratedTests_FindFirstRepeatedChar()
 {
   // Test case for combination {2}:
   //   POST: !found
@@ -57,6 +57,7 @@ method Passing()
     var s: seq<char> := [];
     var found, c := FindFirstRepeatedChar(s);
     expect found == false;
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
   // Test case for combination {3}:
@@ -69,34 +70,30 @@ method Passing()
     expect c == '!';
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Bs=1:
   //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [' '];
     var found, c := FindFirstRepeatedChar(s);
     expect found == false;
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
-  // Test case for combination {3}:
-  //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: found
+  // Test case for combination {2}/Bs=2:
+  //   POST: !found
+  //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
-    var s: seq<char> := ['!', ' ', ' ', '!'];
+    var s: seq<char> := [' ', '!'];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == true;
-    expect c == '!';
+    expect found == false;
+    expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindFirstRepeatedChar();
+  print "GeneratedTests_FindFirstRepeatedChar: all tests passed!\n";
 }

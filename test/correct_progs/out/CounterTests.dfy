@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-03-28 00:32:32
+// Generated: 2026-03-31 21:28:56
 
 class Counter {
     var count: int
@@ -9,7 +9,7 @@ class Counter {
     method Increment()
         modifies this
         requires count >= 0
-        ensures count == (count) + 1
+        ensures count == old(count) + 1
     {
         count := count + 1;
     }
@@ -23,7 +23,7 @@ class Counter {
 }
 
 
-method Passing()
+method GeneratedTests_Increment()
 {
   // Test case for combination {1}:
   //   PRE:  count >= 0
@@ -32,6 +32,7 @@ method Passing()
     var obj := new Counter;
     obj.count := 0;
     var old_count := obj.count;
+    expect obj.count >= 0; // PRE-CHECK
     obj.Increment();
     expect obj.count == old_count + 1;
   }
@@ -43,6 +44,7 @@ method Passing()
     var obj := new Counter;
     obj.count := 1;
     var old_count := obj.count;
+    expect obj.count >= 0; // PRE-CHECK
     obj.Increment();
     expect obj.count == old_count + 1;
   }
@@ -54,10 +56,15 @@ method Passing()
     var obj := new Counter;
     obj.count := 2;
     var old_count := obj.count;
+    expect obj.count >= 0; // PRE-CHECK
     obj.Increment();
     expect obj.count == old_count + 1;
   }
 
+}
+
+method GeneratedTests_Reset()
+{
   // Test case for combination {1}:
   //   POST: count == 0
   {
@@ -87,13 +94,10 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Increment();
+  print "GeneratedTests_Increment: all tests passed!\n";
+  GeneratedTests_Reset();
+  print "GeneratedTests_Reset: all tests passed!\n";
 }

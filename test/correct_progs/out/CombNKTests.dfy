@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-03-28 00:32:27
+// Generated: 2026-03-31 21:28:55
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -47,7 +47,7 @@ method CalcComb(n: nat, k: nat) returns (res: nat)
 }
 
 
-method Passing()
+method GeneratedTests_CalcComb()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= n
@@ -55,8 +55,10 @@ method Passing()
   {
     var n := 0;
     var k := 0;
+    var check_res := Comb(n, k);
+    expect 0 <= k <= n; // PRE-CHECK
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bn=1,k=0:
@@ -65,8 +67,10 @@ method Passing()
   {
     var n := 1;
     var k := 0;
+    var check_res := Comb(n, k);
+    expect 0 <= k <= n; // PRE-CHECK
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == check_res;
   }
 
   // Test case for combination {1}/Bn=1,k=1:
@@ -75,19 +79,16 @@ method Passing()
   {
     var n := 1;
     var k := 1;
+    var check_res := Comb(n, k);
+    expect 0 <= k <= n; // PRE-CHECK
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == check_res;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcComb();
+  print "GeneratedTests_CalcComb: all tests passed!\n";
 }
