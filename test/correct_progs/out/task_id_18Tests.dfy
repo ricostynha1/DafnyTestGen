@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-03-31 21:29:26
+// Generated: 2026-03-31 21:46:12
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.

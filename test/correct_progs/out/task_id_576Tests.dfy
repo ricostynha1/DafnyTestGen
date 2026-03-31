@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-03-31 21:30:05
+// Generated: 2026-03-31 21:46:51
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.

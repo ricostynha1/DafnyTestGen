@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-31 21:29:12
+// Generated: 2026-03-31 21:45:59
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0

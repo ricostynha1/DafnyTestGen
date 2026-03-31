@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-31 21:29:47
+// Generated: 2026-03-31 21:46:33
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)

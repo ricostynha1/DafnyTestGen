@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-03-31 21:29:13
+// Generated: 2026-03-31 21:46:01
 
 class Secret {
     var secret: int

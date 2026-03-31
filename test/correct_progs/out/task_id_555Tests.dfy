@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-03-31 21:30:01
+// Generated: 2026-03-31 21:46:47
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
