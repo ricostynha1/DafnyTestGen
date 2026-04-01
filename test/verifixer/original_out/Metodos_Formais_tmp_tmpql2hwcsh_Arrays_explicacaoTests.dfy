@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao.dfy
 // Method: buscar
-// Generated: 2026-03-26 14:58:55
+// Generated: 2026-04-01 13:52:49
 
 // Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao.dfy
 
@@ -34,7 +34,9 @@ method Passing()
     var a := new int[1] [10];
     var x := 8;
     var r := buscar(a, x);
-    expect r == -1;
+    // expect r == -1; // (actual runtime value — not uniquely determined by spec)
+    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x;
+    expect !(0 <= r < a.Length);
   }
 
 }
@@ -48,7 +50,8 @@ method Failing()
     var a := new int[1] [10];
     var x := 10;
     var r := buscar(a, x);
-    // expect r == 1;
+    // expect !(r < 0);
+    // expect !(0 <= r < a.Length);
   }
 
   // Test case for combination {1,3}:
@@ -59,7 +62,9 @@ method Failing()
     var a := new int[1] [12];
     var x := 10;
     var r := buscar(a, x);
-    // expect r == 1;
+    // expect !(r < 0);
+    // expect !(0 <= r < a.Length);
+    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x;
   }
 
 }

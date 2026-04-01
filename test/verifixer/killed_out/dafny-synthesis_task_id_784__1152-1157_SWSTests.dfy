@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_784__1152-1157_SWS.dfy
 // Method: FirstEvenOddIndices
-// Generated: 2026-03-26 15:01:45
+// Generated: 2026-04-01 13:58:49
 
 // dafny-synthesis_task_id_784.dfy
 
@@ -90,7 +90,50 @@ method Passing()
   //   POST: IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst)
   //   POST: IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [4, 5, 6];
+    var lst: seq<int> := [0, 42479];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect 0 <= evenIndex < |lst|;
+    expect 0 <= oddIndex < |lst|;
+    expect IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst);
+    expect IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst);
+  }
+
+  // Test case for combination {1}/Blst=3:
+  //   PRE:  |lst| >= 2
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: 0 <= evenIndex < |lst|
+  //   POST: 0 <= oddIndex < |lst|
+  //   POST: IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst)
+  //   POST: IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [4, 15439, 0];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect 0 <= evenIndex < |lst|;
+    expect 0 <= oddIndex < |lst|;
+    expect IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst);
+    expect IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst);
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  |lst| >= 2
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: 0 <= evenIndex < |lst|
+  //   POST: 0 <= oddIndex < |lst|
+  //   POST: IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst)
+  //   POST: IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 11, 12, 13, 42479];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect 0 <= evenIndex < |lst|;
     expect 0 <= oddIndex < |lst|;
@@ -104,8 +147,42 @@ method Passing()
   //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [4, 5, 6];
+    var lst: seq<int> := [0, 42479];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductEvenOdd(lst);
+    // expect product == 0; // (actual runtime value — not uniquely determined by spec)
+    expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination {1}/Blst=3:
+  //   PRE:  |lst| >= 2
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [4, 15439, 0];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var product := ProductEvenOdd(lst);
+    // expect product == 61756; // (actual runtime value — not uniquely determined by spec)
+    expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  |lst| >= 2
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 11, 12, 13, 42479];
+    expect |lst| >= 2; // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
+    expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
+    var product := ProductEvenOdd(lst);
+    // expect product == 0; // (actual runtime value — not uniquely determined by spec)
     expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
@@ -113,62 +190,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   PRE:  |lst| >= 2
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: 0 <= evenIndex < |lst|
-  //   POST: 0 <= oddIndex < |lst|
-  //   POST: IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst)
-  //   POST: IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [3, 4];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    // expect 0 <= evenIndex < |lst|;
-    // expect 0 <= oddIndex < |lst|;
-    // expect IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst);
-    // expect IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst);
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  |lst| >= 2
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: 0 <= evenIndex < |lst|
-  //   POST: 0 <= oddIndex < |lst|
-  //   POST: IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst)
-  //   POST: IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [5, 6, 7, 8];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    // expect 0 <= evenIndex < |lst|;
-    // expect 0 <= oddIndex < |lst|;
-    // expect IsEven(lst[evenIndex]) && IsFirstEven(evenIndex, lst);
-    // expect IsOdd(lst[oddIndex]) && IsFirstOdd(oddIndex, lst);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  |lst| >= 2
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [3, 4];
-    var product := ProductEvenOdd(lst);
-    // expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  |lst| >= 2
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [5, 6, 7, 8];
-    var product := ProductEvenOdd(lst);
-    // expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
-  }
-
+  // (no failing tests)
 }
 
 method Main()

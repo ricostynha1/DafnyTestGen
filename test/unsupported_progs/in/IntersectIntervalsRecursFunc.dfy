@@ -4,7 +4,8 @@ method IntersectIntervals(left: array<real>, right: array<real>) returns (l : re
   requires left.Length == right.Length 
   requires left.Length > 0
   requires forall i :: 0 <= i < left.Length ==> left[i] < right[i]  
-  ensures if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0
+  ensures l == if Max(left) < Min(right) then Max(left) else 0.0
+  ensures r == if Max(left) < Min(right) then Min(right) else 0.0
 {
     l := left[0];
     r := right[0];

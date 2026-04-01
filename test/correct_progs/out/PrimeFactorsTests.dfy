@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-03-31 21:50:56
+// Generated: 2026-04-01 13:44:12
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -291,6 +291,7 @@ method Passing()
     var n := 2;
     expect n > 1; // PRE-CHECK
     var f := PrimeFactors(n);
+    // expect f == [2]; // (actual runtime value — not uniquely determined by spec)
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
@@ -305,6 +306,7 @@ method Passing()
     var n := 3;
     expect n > 1; // PRE-CHECK
     var f := PrimeFactors(n);
+    // expect f == [3]; // (actual runtime value — not uniquely determined by spec)
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
@@ -319,6 +321,7 @@ method Passing()
     var n := 4;
     expect n > 1; // PRE-CHECK
     var f := PrimeFactors(n);
+    // expect f == [2, 2]; // (actual runtime value — not uniquely determined by spec)
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;

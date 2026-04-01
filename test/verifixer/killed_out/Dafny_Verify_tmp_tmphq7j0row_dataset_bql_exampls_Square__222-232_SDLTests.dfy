@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square__222-232_SDL.dfy
 // Method: square
-// Generated: 2026-03-26 14:57:15
+// Generated: 2026-04-01 13:54:43
 
 // Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
 
@@ -34,6 +34,7 @@ method Passing()
   //   POST: r == n * n
   {
     var n := 0;
+    expect 0 <= n; // PRE-CHECK
     var r := square(n);
     expect r == 0;
   }
@@ -42,11 +43,12 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  0 <= n
   //   POST: r == n * n
   {
     var n := 1;
+    // expect 0 <= n; // PRE-CHECK
     var r := square(n);
     // expect r == 1;
   }
@@ -56,6 +58,7 @@ method Failing()
   //   POST: r == n * n
   {
     var n := 4;
+    // expect 0 <= n; // PRE-CHECK
     var r := square(n);
     // expect r == 16;
   }

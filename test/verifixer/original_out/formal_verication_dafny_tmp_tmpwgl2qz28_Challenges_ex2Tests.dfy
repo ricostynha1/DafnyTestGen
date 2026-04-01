@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2.dfy
 // Method: Forbid42
-// Generated: 2026-03-26 14:58:37
+// Generated: 2026-04-01 13:52:16
 
 // formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2.dfy
 
@@ -56,16 +56,7 @@ method Passing()
   {
     var x := 0;
     var y := 43;
-    var z := Forbid42(x, y);
-    expect z == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  y != 42
-  //   POST: z == x / (42 - y)
-  {
-    var x := 1;
-    var y := -64;
+    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -76,6 +67,7 @@ method Passing()
   {
     var x := 0;
     var y := 0;
+    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -86,6 +78,18 @@ method Passing()
   {
     var x := 0;
     var y := 1;
+    expect y != 42; // PRE-CHECK
+    var z := Forbid42(x, y);
+    expect z == 0;
+  }
+
+  // Test case for combination {1}/Bx=1,y=0:
+  //   PRE:  y != 42
+  //   POST: z == x / (42 - y)
+  {
+    var x := 1;
+    var y := 0;
+    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -114,27 +118,27 @@ method Passing()
     expect err == false;
   }
 
-  // Test case for combination {2}:
-  //   POST: !(y != 42)
-  //   POST: z == 0
-  //   POST: err == true
-  {
-    var x := 1;
-    var y := 42;
-    var z, err := Allow42(x, y);
-    expect z == 0;
-    expect err == true;
-  }
-
-  // Test case for combination {3}:
+  // Test case for combination {3}/Bx=0,y=0:
   //   POST: z == x / (42 - y)
   //   POST: err == false
   //   POST: !(y == 42)
   {
-    var x := 1;
-    var y := 43;
+    var x := 0;
+    var y := 0;
     var z, err := Allow42(x, y);
-    expect z == -1;
+    expect z == 0;
+    expect err == false;
+  }
+
+  // Test case for combination {3}/Bx=0,y=1:
+  //   POST: z == x / (42 - y)
+  //   POST: err == false
+  //   POST: !(y == 42)
+  {
+    var x := 0;
+    var y := 1;
+    var z, err := Allow42(x, y);
+    expect z == 0;
     expect err == false;
   }
 

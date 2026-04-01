@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates__3952_LVR_0.dfy
 // Method: Search
-// Generated: 2026-03-26 15:04:54
+// Generated: 2026-04-01 14:02:47
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates.dfy
 
@@ -65,7 +65,7 @@ method Search(a: array<int>) returns (p: int, q: int)
 }
 
 
-method Passing()
+method GeneratedTests_Search()
 {
   // Test case for combination {1}:
   //   PRE:  4 <= a.Length
@@ -74,6 +74,23 @@ method Passing()
   //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
     var a := new int[4] [0, 1, 0, 1];
+    expect 4 <= a.Length; // PRE-CHECK
+    expect exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q); // PRE-CHECK
+    expect forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2); // PRE-CHECK
+    var p, q := Search(a);
+    expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  4 <= a.Length
+  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
+  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  {
+    var a := new int[5] [2, 0, 1, 1, 2];
+    expect 4 <= a.Length; // PRE-CHECK
+    expect exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q); // PRE-CHECK
+    expect forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2); // PRE-CHECK
     var p, q := Search(a);
     expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
   }
@@ -85,29 +102,31 @@ method Passing()
   //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
     var a := new int[6] [2, 3, 2, 1, 3, 1];
+    expect 4 <= a.Length; // PRE-CHECK
+    expect exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q); // PRE-CHECK
+    expect forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2); // PRE-CHECK
+    var p, q := Search(a);
+    expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  4 <= a.Length
+  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
+  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  {
+    var a := new int[7] [3, 4, 3, 2, 0, 2, 0];
+    expect 4 <= a.Length; // PRE-CHECK
+    expect exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q); // PRE-CHECK
+    expect forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2); // PRE-CHECK
     var p, q := Search(a);
     expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
   }
 
 }
 
-method Failing()
-{
-  // Test case for combination {1}:
-  //   PRE:  4 <= a.Length
-  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  {
-    var a := new int[5] [2, 0, 1, 1, 2];
-    var p, q := Search(a);
-    // expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
-  }
-
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Search();
+  print "GeneratedTests_Search: all tests passed!\n";
 }

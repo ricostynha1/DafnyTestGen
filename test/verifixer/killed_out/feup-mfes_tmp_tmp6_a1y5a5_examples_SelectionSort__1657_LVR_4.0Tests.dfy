@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort__1657_LVR_4.0.dfy
 // Method: selectionSort
-// Generated: 2026-03-26 15:01:50
+// Generated: 2026-04-01 13:58:54
 
 // feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 
@@ -83,10 +83,10 @@ method Passing()
     var old_a := a[..];
     selectionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
@@ -94,7 +94,7 @@ method Passing()
     var old_a := a[..];
     selectionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -105,7 +105,7 @@ method Passing()
     var old_a := a[..];
     selectionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -116,7 +116,7 @@ method Passing()
     var old_a := a[..];
     selectionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}:
@@ -127,18 +127,7 @@ method Passing()
     var a := new real[1] [0.0];
     var from := 0;
     var to := 1;
-    var index := findMin(a, from, to);
-    expect index == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[2] [0.0, 12.0];
-    var from := 0;
-    var to := 1;
+    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 0;
   }
@@ -151,6 +140,7 @@ method Passing()
     var a := new real[3] [0.0, 0.25, 0.5];
     var from := 0;
     var to := 1;
+    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 0;
   }
@@ -163,8 +153,22 @@ method Passing()
     var a := new real[2] [4.0, 0.0];
     var from := 1;
     var to := 2;
+    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 1;
+  }
+
+  // Test case for combination {1}/Ba=2,from=0,to==a:
+  //   PRE:  0 <= from < to <= a.Length
+  //   POST: from <= index < to
+  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
+  {
+    var a := new real[2] [0.0, 0.5];
+    var from := 0;
+    var to := 1;
+    expect 0 <= from < to <= a.Length; // PRE-CHECK
+    var index := findMin(a, from, to);
+    expect index == 0;
   }
 
 }

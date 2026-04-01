@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38.dfy
 // Method: main
-// Generated: 2026-03-26 14:56:14
+// Generated: 2026-04-01 13:49:53
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38.dfy
 
@@ -32,13 +32,14 @@ method main(n: int)
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: i % 2 != 0
   {
     var n := 1;
+    expect n >= 0; // PRE-CHECK
     var i, x, y := main(n);
-    expect i == 1;
+    expect i % 2 != 0;
   }
 
 }
@@ -51,10 +52,10 @@ method Failing()
   //   POST: x == 2 * y
   {
     var n := 0;
+    // expect n >= 0; // PRE-CHECK
     var i, x, y := main(n);
-    // expect i == 1;
-    // expect x == 0;
-    // expect y == 0;
+    // expect i % 2 != 0;
+    // expect x == 2 * y;
   }
 
 }

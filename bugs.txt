@@ -1,0 +1,14 @@
+1) C:\Dados\Dafny\DafnyTestGen\test\verifixer\original_out\dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-arrayTests.dfy
+
+C:/cygwin64/tmp/DafnyTestGen_nk3qwpfqcpq/check_all.dfy(97,80): Error: old expressions are allowed only in specification and ghost contexts
+   |
+97 |     CheckExpect(forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length], 0);
+
+
+
+2) C:\Dados\Dafny\DafnyTestGen\test\verifixer\original_out\Trab1-Metodos-Formais_tmp_tmp_8fa4trr_circular-arrayTests.dfy
+
+C:/cygwin64/tmp/DafnyTestGen_tiv4tdu2v2n/check_all.dfy(219,12): Error: when allocating an object of type 'CircularArray', one of its constructor methods must be called
+    |
+219 |     var obj := new CircularArray;
+    |             ^^

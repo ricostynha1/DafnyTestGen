@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4.dfy
 // Method: Fatorial
-// Generated: 2026-03-26 15:01:07
+// Generated: 2026-04-01 13:54:57
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4.dfy
 
@@ -38,15 +38,15 @@ method Passing()
   {
     var n := 0;
     var r := Fatorial(n);
-    expect r == 1; // == Fat(n)
+    expect r == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: r == Fat(n)
   {
     var n := 1;
     var r := Fatorial(n);
-    expect r == 1; // == Fat(n)
+    expect r == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -54,7 +54,7 @@ method Passing()
   {
     var n := 2;
     var r := Fatorial(n);
-    expect r == 2; // == Fat(n)
+    expect r == 2;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt__607-613_AOI.dfy
 // Method: mySqrt
-// Generated: 2026-03-26 14:56:45
+// Generated: 2026-04-01 13:53:55
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 
@@ -46,20 +46,12 @@ method mySqrt(x: int) returns (res: int)
 
 method Passing()
 {
-  // Test case for combination {1}:
-  //   PRE:  0 <= x
-  //   POST: sqrt(x, res)
-  {
-    var x := 5;
-    var res := mySqrt(x);
-    expect res == 2;
-  }
-
   // Test case for combination {1}/Bx=0:
   //   PRE:  0 <= x
   //   POST: sqrt(x, res)
   {
     var x := 0;
+    expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     expect res == 0;
   }
@@ -69,6 +61,7 @@ method Passing()
   //   POST: sqrt(x, res)
   {
     var x := 1;
+    expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     expect res == 1;
   }
@@ -82,6 +75,7 @@ method Failing()
   //   POST: sqrt(x, res)
   {
     var x := 7;
+    // expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     // expect res == 2;
   }

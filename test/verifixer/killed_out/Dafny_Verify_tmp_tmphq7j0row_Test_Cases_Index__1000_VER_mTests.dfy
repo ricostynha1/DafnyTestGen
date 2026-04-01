@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index__1000_VER_m.dfy
 // Method: Index
-// Generated: 2026-03-26 14:57:32
+// Generated: 2026-04-01 13:55:01
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index.dfy
 
@@ -88,8 +88,31 @@ method Passing()
   //   POST: 0 <= i < n
   {
     var n := 1;
+    expect 1 <= n; // PRE-CHECK
     var i := Index(n);
     expect i == 0;
+  }
+
+  // Test case for combination {1}/Bn=2:
+  //   PRE:  1 <= n
+  //   POST: 0 <= i < n
+  {
+    var n := 2;
+    expect 1 <= n; // PRE-CHECK
+    var i := Index(n);
+    // expect i == 1; // (actual runtime value — not uniquely determined by spec)
+    expect 0 <= i < n;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  1 <= n
+  //   POST: 0 <= i < n
+  {
+    var n := 3;
+    expect 1 <= n; // PRE-CHECK
+    var i := Index(n);
+    // expect i == 1; // (actual runtime value — not uniquely determined by spec)
+    expect 0 <= i < n;
   }
 
   // Test case for combination {1}:
@@ -126,15 +149,15 @@ method Passing()
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}/Bx=1,y=0:
   //   POST: m <= x
   //   POST: m <= y
-  //   POST: m == x
+  //   POST: m == y
   {
-    var x := -1;
-    var y := 2;
+    var x := 1;
+    var y := 0;
     var m := Min(x, y);
-    expect m == -1;
+    expect m == 0;
   }
 
   // Test case for combination {1}:
@@ -148,7 +171,7 @@ method Passing()
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,y=1:
   //   POST: s == x + y
   //   POST: m == if x >= y then x else y
   {
@@ -191,8 +214,24 @@ method Passing()
   {
     var s := 0;
     var m := 0;
+    expect s <= 2 * m; // PRE-CHECK
     var x, y := ReconstructFromMaxSum(s, m);
     expect x == 0;
+    expect y == 0;
+  }
+
+  // Test case for combination {1}/Bs=1,m=1:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: x <= m
+  //   POST: y <= m
+  {
+    var s := 1;
+    var m := 1;
+    expect s <= 2 * m; // PRE-CHECK
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 1;
     expect y == 0;
   }
 
@@ -200,24 +239,6 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   PRE:  1 <= n
-  //   POST: 0 <= i < n
-  {
-    var n := 2;
-    var i := Index(n);
-    // expect i == 0;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  1 <= n
-  //   POST: 0 <= i < n
-  {
-    var n := 3;
-    var i := Index(n);
-    // expect i == 0;
-  }
-
   // Test case for combination {1}:
   //   PRE:  s <= 2 * m
   //   POST: s == x + y
@@ -227,23 +248,10 @@ method Failing()
   {
     var s := 0;
     var m := 1;
+    // expect s <= 2 * m; // PRE-CHECK
     var x, y := ReconstructFromMaxSum(s, m);
     // expect x == 1;
     // expect y == -1;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  s <= 2 * m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  {
-    var s := -1;
-    var m := 2;
-    var x, y := ReconstructFromMaxSum(s, m);
-    // expect x == 2;
-    // expect y == -3;
   }
 
 }

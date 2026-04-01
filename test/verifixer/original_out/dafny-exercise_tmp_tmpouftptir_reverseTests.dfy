@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_reverse.dfy
 // Method: Reverse
-// Generated: 2026-03-26 14:56:36
+// Generated: 2026-04-01 13:50:16
 
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
@@ -47,18 +47,26 @@ method Passing()
   {
     var a := new char[1] [' '];
     var old_a := a;
+    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
+    expect a == old_a;
+    expect b.Length == a.Length;
+    expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: a == old(a)
   //   POST: b.Length == a.Length
   //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
-    var a := new char[2] ['U', ' '];
+    var a := new char[2] [' ', '!'];
     var old_a := a;
+    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
+    expect a == old_a;
+    expect b.Length == a.Length;
+    expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -69,7 +77,11 @@ method Passing()
   {
     var a := new char[3] [' ', '!', '"'];
     var old_a := a;
+    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
+    expect a == old_a;
+    expect b.Length == a.Length;
+    expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
 }

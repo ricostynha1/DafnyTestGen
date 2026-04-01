@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-03-31 21:54:09
+// Generated: 2026-04-01 13:47:19
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -74,6 +74,7 @@ method Passing()
     var a := new int[0] [];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
+    // expect nz == 0; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= nz <= a.Length;
     expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -87,6 +88,7 @@ method Passing()
     var a := new int[1] [3];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
+    // expect nz == 1; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= nz <= a.Length;
     expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -100,6 +102,7 @@ method Passing()
     var a := new int[2] [4, 3];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
+    // expect nz == 2; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= nz <= a.Length;
     expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -113,6 +116,7 @@ method Passing()
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
+    // expect nz == 3; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= nz <= a.Length;
     expect a[..nz] == Filter(old_a, x => x != 0);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;

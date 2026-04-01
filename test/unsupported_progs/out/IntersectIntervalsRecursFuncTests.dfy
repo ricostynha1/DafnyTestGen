@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\unsupported_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-03-24 19:23:42
+// Generated: 2026-04-01 13:44:21
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -9,7 +9,8 @@ method IntersectIntervals(left: array<real>, right: array<real>) returns (l : re
   requires left.Length == right.Length 
   requires left.Length > 0
   requires forall i :: 0 <= i < left.Length ==> left[i] < right[i]  
-  ensures if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0
+  ensures l == if Max(left) < Min(right) then Max(left) else 0.0
+  ensures r == if Max(left) < Min(right) then Min(right) else 0.0
 {
     l := left[0];
     r := right[0];
@@ -63,36 +64,51 @@ method Passing()
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0
+  //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[1] [0.0];
     var right := new real[1] [0.5];
+    expect left.Length == right.Length; // PRE-CHECK
+    expect left.Length > 0; // PRE-CHECK
+    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
-    expect if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0;
+    expect l == 0.0;
+    expect r == 0.5;
   }
 
   // Test case for combination {1}/Bleft=2,right=2:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0
+  //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[2] [2437.0, 2438.0];
     var right := new real[2] [2438.0, 2439.0];
+    expect left.Length == right.Length; // PRE-CHECK
+    expect left.Length > 0; // PRE-CHECK
+    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
-    expect if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0;
+    expect l == 0.0;
+    expect r == 0.0;
   }
 
   // Test case for combination {1}/Bleft=3,right=3:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0
+  //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[3] [11797.0, 11796.5, 11797.5];
     var right := new real[3] [11797.5, 11798.0, 11798.5];
+    expect left.Length == right.Length; // PRE-CHECK
+    expect left.Length > 0; // PRE-CHECK
+    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
-    expect if Max(left) < Min(right) then l == Max(left) && r == Min(right) else l == 0.0 && r == 0.0;
+    expect l == 0.0;
+    expect r == 0.0;
   }
 
 }

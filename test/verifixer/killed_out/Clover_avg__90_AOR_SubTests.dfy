@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_avg__90_AOR_Sub.dfy
 // Method: ComputeAvg
-// Generated: 2026-03-26 14:55:07
+// Generated: 2026-04-01 13:52:03
 
 // Clover_avg.dfy
 
@@ -24,7 +24,7 @@ method Passing()
     expect avg == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=0:
   //   POST: avg == (a + b) / 2
   {
     var a := 1;

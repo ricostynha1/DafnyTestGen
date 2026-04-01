@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive.dfy
 // Method: mpositive
-// Generated: 2026-03-26 14:56:42
+// Generated: 2026-04-01 13:50:22
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive.dfy
 
@@ -85,15 +85,15 @@ method Passing()
   {
     var v := new int[0] [];
     var b := mpositive(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=1:
   //   POST: b == positive(v[0 .. v.Length])
   {
     var v := new int[1] [2];
     var b := mpositive(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=2:
@@ -101,7 +101,7 @@ method Passing()
   {
     var v := new int[2] [4, 3];
     var b := mpositive(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -109,7 +109,7 @@ method Passing()
   {
     var v := new int[3] [5, 4, 6];
     var b := mpositive(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}:
@@ -117,15 +117,15 @@ method Passing()
   {
     var v := new int[0] [];
     var b := mpositive3(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=1:
   //   POST: b == positive(v[0 .. v.Length])
   {
     var v := new int[1] [2];
     var b := mpositive3(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=2:
@@ -133,7 +133,7 @@ method Passing()
   {
     var v := new int[2] [4, 3];
     var b := mpositive3(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -141,7 +141,7 @@ method Passing()
   {
     var v := new int[3] [5, 4, 6];
     var b := mpositive3(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}:
@@ -149,15 +149,15 @@ method Passing()
   {
     var v := new int[0] [];
     var b := mpositive4(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=1:
   //   POST: b == positive(v[0 .. v.Length])
   {
     var v := new int[1] [2];
     var b := mpositive4(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=2:
@@ -165,7 +165,7 @@ method Passing()
   {
     var v := new int[2] [4, 3];
     var b := mpositive4(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -173,7 +173,7 @@ method Passing()
   {
     var v := new int[3] [5, 4, 6];
     var b := mpositive4(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}:
@@ -181,15 +181,15 @@ method Passing()
   {
     var v := new int[0] [];
     var b := mpositivertl(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=1:
   //   POST: b == positive(v[0 .. v.Length])
   {
     var v := new int[1] [2];
     var b := mpositivertl(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=2:
@@ -197,7 +197,7 @@ method Passing()
   {
     var v := new int[2] [4, 3];
     var b := mpositivertl(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -205,7 +205,7 @@ method Passing()
   {
     var v := new int[3] [5, 4, 6];
     var b := mpositivertl(v);
-    expect b == positive(v[0 .. v.Length]);
+    expect b == true;
   }
 
 }

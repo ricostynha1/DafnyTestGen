@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 // Method: BinarySearch
-// Generated: 2026-03-26 14:55:48
+// Generated: 2026-04-01 13:49:23
 
 // Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 
@@ -47,10 +47,13 @@ method Passing()
   //   POST: !(0 <= index)
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[1] [11];
-    var value := 9;
+    var a := new int[1] [9];
+    var value := 8;
+    expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
-    expect index == -1;
+    // expect index == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= index);
+    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
   }
 
   // Test case for combination {3}:
@@ -59,33 +62,39 @@ method Passing()
   //   POST: a[index] == value
   //   POST: !(index < 0)
   {
-    var a := new int[1] [10];
-    var value := 10;
+    var a := new int[1] [9];
+    var value := 9;
+    expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
     expect index == 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Ba=3,value=0:
   //   PRE:  a != null && 0 <= a.Length && sorted(a)
   //   POST: !(0 <= index)
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[0] [];
-    var value := 10;
+    var a := new int[3] [4, 5, 6];
+    var value := 0;
+    expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
-    expect index == -1;
+    // expect index == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= index);
+    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {2}/Ba=2,value=1:
   //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: index < a.Length
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
+  //   POST: !(0 <= index)
+  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[1] [12];
-    var value := 12;
+    var a := new int[2] [3, 4];
+    var value := 1;
+    expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
-    expect index == 0;
+    // expect index == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= index);
+    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
   }
 
 }

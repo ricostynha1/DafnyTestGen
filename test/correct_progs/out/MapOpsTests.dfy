@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-03-31 21:50:39
+// Generated: 2026-04-01 13:43:52
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -182,9 +182,8 @@ method Passing()
     var m: map<int, int> := map[];
     var k := 5;
     var v := 0;
-    var check_r := m[k := v];
     var r := MapUpdate(m, k, v);
-    expect r == check_r;
+    expect r == m[k := v];
     expect k in r;
     expect r[k] == v;
   }
@@ -197,9 +196,8 @@ method Passing()
     var m: map<int, int> := map[];
     var k := 0;
     var v := 0;
-    var check_r := m[k := v];
     var r := MapUpdate(m, k, v);
-    expect r == check_r;
+    expect r == m[k := v];
     expect k in r;
     expect r[k] == v;
   }
@@ -212,9 +210,8 @@ method Passing()
     var m: map<int, int> := map[];
     var k := 0;
     var v := 1;
-    var check_r := m[k := v];
     var r := MapUpdate(m, k, v);
-    expect r == check_r;
+    expect r == m[k := v];
     expect k in r;
     expect r[k] == v;
   }
@@ -227,9 +224,8 @@ method Passing()
     var m: map<int, int> := map[];
     var k := 1;
     var v := 0;
-    var check_r := m[k := v];
     var r := MapUpdate(m, k, v);
-    expect r == check_r;
+    expect r == m[k := v];
     expect k in r;
     expect r[k] == v;
   }
@@ -239,9 +235,8 @@ method Passing()
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[];
-    var check_r := a + b;
     var r := MapMerge(a, b);
-    expect r == check_r;
+    expect r == a + b;
   }
 
   // Test case for combination {1}/Ba=0,b=1:
@@ -249,9 +244,8 @@ method Passing()
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0];
-    var check_r := a + b;
     var r := MapMerge(a, b);
-    expect r == check_r;
+    expect r == a + b;
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -259,9 +253,8 @@ method Passing()
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0, 4 := 0];
-    var check_r := a + b;
     var r := MapMerge(a, b);
-    expect r == check_r;
+    expect r == a + b;
   }
 
   // Test case for combination {1}/Ba=0,b=3:
@@ -269,9 +262,8 @@ method Passing()
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0, 2 := 0, 4 := 0];
-    var check_r := a + b;
     var r := MapMerge(a, b);
-    expect r == check_r;
+    expect r == a + b;
   }
 
   // Test case for combination {1}:
@@ -281,10 +273,9 @@ method Passing()
   {
     var m: map<int, int> := map[-1 := 0];
     var k := -1;
-    var check_r := m - {k};
     expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
-    expect r == check_r;
+    expect r == m - {k};
     expect k !in r;
   }
 
@@ -295,10 +286,9 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0];
     var k := 0;
-    var check_r := m - {k};
     expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
-    expect r == check_r;
+    expect r == m - {k};
     expect k !in r;
   }
 
@@ -309,10 +299,9 @@ method Passing()
   {
     var m: map<int, int> := map[1 := 0];
     var k := 1;
-    var check_r := m - {k};
     expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
-    expect r == check_r;
+    expect r == m - {k};
     expect k !in r;
   }
 
@@ -323,10 +312,9 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0, 2 := 0];
     var k := 0;
-    var check_r := m - {k};
     expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
-    expect r == check_r;
+    expect r == m - {k};
     expect k !in r;
   }
 
@@ -334,36 +322,32 @@ method Passing()
   //   POST: r == m.Keys
   {
     var m: map<int, int> := map[];
-    var check_r := m.Keys;
     var r := MapKeys(m);
-    expect r == check_r;
+    expect r == {};
   }
 
   // Test case for combination {1}/Bm=1:
   //   POST: r == m.Keys
   {
     var m: map<int, int> := map[-2 := 0];
-    var check_r := m.Keys;
     var r := MapKeys(m);
-    expect r == check_r;
+    expect r == {-2};
   }
 
   // Test case for combination {1}/Bm=2:
   //   POST: r == m.Keys
   {
     var m: map<int, int> := map[4 := 0, 5 := 0];
-    var check_r := m.Keys;
     var r := MapKeys(m);
-    expect r == check_r;
+    expect r == {4, 5};
   }
 
   // Test case for combination {1}/Bm=3:
   //   POST: r == m.Keys
   {
     var m: map<int, int> := map[3 := 0, 4 := 0, 5 := 0];
-    var check_r := m.Keys;
     var r := MapKeys(m);
-    expect r == check_r;
+    expect r == {3, 4, 5};
   }
 
 }

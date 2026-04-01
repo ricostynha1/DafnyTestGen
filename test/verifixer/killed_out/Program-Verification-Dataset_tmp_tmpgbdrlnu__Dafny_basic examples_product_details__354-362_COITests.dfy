@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details__354-362_COI.dfy
 // Method: CalcProduct
-// Generated: 2026-03-26 15:04:46
+// Generated: 2026-04-01 14:02:39
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details.dfy
 
@@ -20,7 +20,7 @@ method CalcProduct(m: nat, n: nat) returns (res: nat)
     res, n1 := *, *;
     assume res == (m - m1) * n + n - n1;
     if !(n1 != 0) {
-      ghost var old_n1 := n1;
+      var old_n1 := n1;
       res := res + 1;
       n1 := n1 - 1;
       assert res == (m - m1) * n + n - n1;
@@ -68,10 +68,10 @@ method Failing()
     // expect res == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bm=1,n=0:
   //   POST: res == m * n
   {
-    var m := 16;
+    var m := 1;
     var n := 0;
     var res := CalcProduct(m, n);
     // expect res == 0;

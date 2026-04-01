@@ -1,0 +1,271 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_tests_Search1000__1882_VER_x.dfy
+// Method: Search2PowLoop
+// Generated: 2026-04-01 13:53:10
+
+// Dafny_tmp_tmp0wu8wmfr_tests_Search1000.dfy
+
+method Search1000(a: array<int>, x: int) returns (k: int)
+  requires a.Length >= 1000
+  requires forall p: int, q: int {:trigger a[q], a[p]} | 0 <= p < q < 1000 :: a[p] <= a[q]
+  ensures 0 <= k <= 1000
+  ensures forall r: int {:trigger a[r]} | 0 <= r < k :: a[r] < x
+  ensures forall r: int {:trigger a[r]} | k <= r < 1000 :: a[r] >= x
+  decreases a, x
+{
+  k := 0;
+  if a[500] < x {
+    k := 489;
+  }
+  if a[k + 255] < x {
+    k := k + 256;
+  }
+  if a[k + 127] < x {
+    k := k + 128;
+  }
+  if a[k + 63] < x {
+    k := k + 64;
+  }
+  if a[k + 31] < x {
+    k := k + 32;
+  }
+  if a[k + 15] < x {
+    k := k + 16;
+  }
+  if a[k + 7] < x {
+    k := k + 8;
+  }
+  if a[k + 3] < x {
+    k := k + 4;
+  }
+  if a[k + 1] < x {
+    k := k + 2;
+  }
+  if a[k] < x {
+    k := k + 1;
+  }
+}
+
+predicate Is2Pow(n: int)
+  decreases n
+{
+  if n < 1 then
+    false
+  else if n == 1 then
+    true
+  else
+    n % 2 == 0 && Is2Pow(n / 2)
+}
+
+method Search2PowLoop(a: array<int>, i: int, n: int, x: int)
+    returns (k: int)
+  requires 0 <= i <= i + n <= a.Length
+  requires forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  requires Is2Pow(n + 1)
+  ensures i <= k <= i + n
+  ensures forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  ensures forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  decreases a, i, n, x
+{
+  k := x;
+  var c := n;
+  while c != 0
+    invariant Is2Pow(c + 1)
+    invariant i <= k <= k + c <= i + n
+    invariant forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+    invariant forall r: int {:trigger a[r]} | k + c <= r < i + n :: a[r] >= x
+    decreases c
+  {
+    c := c / 2;
+    if a[k + c] < x {
+      k := k + c + 1;
+    }
+  }
+}
+
+method Search2PowRecursive(a: array<int>, i: int, n: int, x: int)
+    returns (k: int)
+  requires 0 <= i <= i + n <= a.Length
+  requires forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  requires Is2Pow(n + 1)
+  ensures i <= k <= i + n
+  ensures forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  ensures forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  decreases n
+{
+  if n == 0 {
+    return i;
+  }
+  if a[i + n / 2] < x {
+    k := Search2PowRecursive(a, i + n / 2 + 1, n / 2, x);
+  } else {
+    k := Search2PowRecursive(a, i, n / 2, x);
+  }
+}
+
+
+method Passing()
+{
+  // Test case for combination {1}/Ba=0,i=0,n=0,x=0:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[0] [];
+    var i := 0;
+    var n := 0;
+    var x := 0;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowLoop(a, i, n, x);
+    expect k == 0;
+  }
+
+  // Test case for combination {1}/Ba=2,i=0,n=1,x=0:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[2] [-1, 8];
+    var i := 0;
+    var n := 1;
+    var x := 0;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowLoop(a, i, n, x);
+    expect k == 1;
+  }
+
+  // Test case for combination {1}/Ba=2,i=0,n=1,x=1:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[2] [-38, 8];
+    var i := 0;
+    var n := 1;
+    var x := 1;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowLoop(a, i, n, x);
+    expect k == 1;
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[1] [15];
+    var i := 1;
+    var n := 0;
+    var x := 0;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowRecursive(a, i, n, x);
+    expect k == 1;
+  }
+
+  // Test case for combination {1}/Ba=0,i=0,n=0,x=0:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[0] [];
+    var i := 0;
+    var n := 0;
+    var x := 0;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowRecursive(a, i, n, x);
+    expect k == 0;
+  }
+
+  // Test case for combination {1}/Ba=2,i=0,n=1,x=0:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[2] [-1, 8];
+    var i := 0;
+    var n := 1;
+    var x := 0;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowRecursive(a, i, n, x);
+    expect k == 1;
+  }
+
+  // Test case for combination {1}/Ba=2,i=0,n=1,x=1:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[2] [-38, 8];
+    var i := 0;
+    var n := 1;
+    var x := 1;
+    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowRecursive(a, i, n, x);
+    expect k == 1;
+  }
+
+}
+
+method Failing()
+{
+  // Test case for combination {1}:
+  //   PRE:  0 <= i <= i + n <= a.Length
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
+  //   PRE:  Is2Pow(n + 1)
+  //   POST: i <= k <= i + n
+  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
+  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
+  {
+    var a := new int[1] [15];
+    var i := 1;
+    var n := 0;
+    var x := 0;
+    // expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
+    // expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
+    // expect Is2Pow(n + 1); // PRE-CHECK
+    var k := Search2PowLoop(a, i, n, x);
+    // expect k == 1;
+  }
+
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}

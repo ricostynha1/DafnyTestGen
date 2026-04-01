@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_732__643-643_EVR_string.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-03-26 15:01:38
+// Generated: 2026-04-01 13:58:41
 
 // dafny-synthesis_task_id_732.dfy
 
@@ -43,7 +43,7 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=1:
   //   POST: |v| == |s|
   //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
   {

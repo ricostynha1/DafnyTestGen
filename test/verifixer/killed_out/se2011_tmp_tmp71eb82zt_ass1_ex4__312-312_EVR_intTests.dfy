@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\se2011_tmp_tmp71eb82zt_ass1_ex4__312-312_EVR_int.dfy
 // Method: Eval
-// Generated: 2026-03-26 15:06:42
+// Generated: 2026-04-01 14:04:40
 
 // se2011_tmp_tmp71eb82zt_ass1_ex4.dfy
 
@@ -30,15 +30,17 @@ method Passing()
   //   POST: r == x * x
   {
     var x := 0;
+    expect x >= 0; // PRE-CHECK
     var r := Eval(x);
     expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1:
   //   PRE:  x >= 0
   //   POST: r == x * x
   {
     var x := 1;
+    expect x >= 0; // PRE-CHECK
     var r := Eval(x);
     expect r == 1;
   }
@@ -52,6 +54,7 @@ method Failing()
   //   POST: r == x * x
   {
     var x := 4;
+    // expect x >= 0; // PRE-CHECK
     var r := Eval(x);
     // expect r == 16;
   }

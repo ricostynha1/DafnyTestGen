@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select__497-499_AOI.dfy
 // Method: SelectionSort
-// Generated: 2026-03-26 14:57:35
+// Generated: 2026-04-01 13:55:05
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select.dfy
 
@@ -48,6 +48,7 @@ method Passing()
   {
     var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
+    // expect old_multiset_a == multiset{}; // (actual runtime value — not uniquely determined by spec)
     SelectionSort(a);
     expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
@@ -57,11 +58,11 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [3];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
     // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];

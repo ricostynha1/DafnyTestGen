@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_399__450_LVR_0.dfy
 // Method: BitwiseXOR
-// Generated: 2026-03-26 15:00:25
+// Generated: 2026-04-01 13:57:26
 
 // dafny-synthesis_task_id_399.dfy
 
@@ -34,7 +34,9 @@ method Passing()
   {
     var a: seq<bv32> := [];
     var b: seq<bv32> := [];
+    expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
+    // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
     expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
@@ -43,13 +45,14 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
-    var a: seq<bv32> := [5];
-    var b: seq<bv32> := [9];
+    var a: seq<bv32> := [2];
+    var b: seq<bv32> := [3];
+    // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
     // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
@@ -62,6 +65,7 @@ method Failing()
   {
     var a: seq<bv32> := [4, 3];
     var b: seq<bv32> := [6, 5];
+    // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
     // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
@@ -74,6 +78,7 @@ method Failing()
   {
     var a: seq<bv32> := [5, 4, 6];
     var b: seq<bv32> := [8, 7, 9];
+    // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
     // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];

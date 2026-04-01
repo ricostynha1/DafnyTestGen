@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-03-31 21:53:47
+// Generated: 2026-04-01 13:46:57
 
 // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -56,7 +56,7 @@ method Passing()
   {
     var s: seq<char> := [];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == false;
+    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
@@ -76,7 +76,7 @@ method Passing()
   {
     var s: seq<char> := [' '];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == false;
+    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
@@ -86,7 +86,7 @@ method Passing()
   {
     var s: seq<char> := [' ', '!'];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == false;
+    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 

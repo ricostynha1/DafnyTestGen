@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\ProjectosCVS_tmp_tmp_02_gmcw_Handout 1_CVS_handout1_55754_55780.dfy
 // Method: peasantMult
-// Generated: 2026-03-26 14:59:47
+// Generated: 2026-04-01 13:53:56
 
 // ProjectosCVS_tmp_tmp_02_gmcw_Handout 1_CVS_handout1_55754_55780.dfy
 
@@ -71,18 +71,9 @@ method Passing()
   {
     var a := 0;
     var b := 1;
+    expect b > 0; // PRE-CHECK
     var r := peasantMult(a, b);
     expect r == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  b > 0
-  //   POST: r == a * b
-  {
-    var a := 1;
-    var b := 1;
-    var r := peasantMult(a, b);
-    expect r == 1;
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -91,8 +82,20 @@ method Passing()
   {
     var a := 0;
     var b := 2;
+    expect b > 0; // PRE-CHECK
     var r := peasantMult(a, b);
     expect r == 0;
+  }
+
+  // Test case for combination {1}/Ba=1,b=1:
+  //   PRE:  b > 0
+  //   POST: r == a * b
+  {
+    var a := 1;
+    var b := 1;
+    expect b > 0; // PRE-CHECK
+    var r := peasantMult(a, b);
+    expect r == 1;
   }
 
   // Test case for combination {1}/Ba=1,b=2:
@@ -101,6 +104,7 @@ method Passing()
   {
     var a := 1;
     var b := 2;
+    expect b > 0; // PRE-CHECK
     var r := peasantMult(a, b);
     expect r == 2;
   }
@@ -112,9 +116,10 @@ method Passing()
   {
     var a := 0;
     var b := 1;
+    expect a >= 0; // PRE-CHECK
+    expect b > 0; // PRE-CHECK
     var q, r := euclidianDiv(a, b);
-    expect q == 0;
-    expect r == 0;
+    expect a == 0;
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -124,9 +129,23 @@ method Passing()
   {
     var a := 0;
     var b := 2;
+    expect a >= 0; // PRE-CHECK
+    expect b > 0; // PRE-CHECK
     var q, r := euclidianDiv(a, b);
-    expect q == 0;
-    expect r == 0;
+    expect a == 0;
+  }
+
+  // Test case for combination {1}/Ba=1,b=1:
+  //   PRE:  a >= 0
+  //   PRE:  b > 0
+  //   POST: a == b * q + r
+  {
+    var a := 1;
+    var b := 1;
+    expect a >= 0; // PRE-CHECK
+    expect b > 0; // PRE-CHECK
+    var q, r := euclidianDiv(a, b);
+    expect a == 1;
   }
 
   // Test case for combination {1}/Ba=1,b=2:
@@ -136,27 +155,17 @@ method Passing()
   {
     var a := 1;
     var b := 2;
+    expect a >= 0; // PRE-CHECK
+    expect b > 0; // PRE-CHECK
     var q, r := euclidianDiv(a, b);
-    expect q == 0;
-    expect r == 1;
+    expect a == 1;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   PRE:  a >= 0
-  //   PRE:  b > 0
-  //   POST: a == b * q + r
-  {
-    var a := 1;
-    var b := 1;
-    var q, r := euclidianDiv(a, b);
-    // expect q == 0;
-    // expect r == 1;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

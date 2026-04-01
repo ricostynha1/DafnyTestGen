@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details.dfy
 // Method: plus_one
-// Generated: 2026-03-26 14:59:20
+// Generated: 2026-04-01 13:53:22
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details.dfy
 
@@ -48,15 +48,17 @@ method Passing()
   //   POST: r == x + 1
   {
     var x := 0;
+    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1:
   //   PRE:  x >= 0
   //   POST: r == x + 1
   {
     var x := 1;
+    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 2;
   }
@@ -66,6 +68,7 @@ method Passing()
   //   POST: r == x + 1
   {
     var x := 2;
+    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 3;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_error_data_completion_07__372-376_AOI.dfy
 // Method: main
-// Generated: 2026-03-26 14:57:22
+// Generated: 2026-04-01 13:54:50
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_error_data_completion_07.dfy
 
@@ -37,23 +37,19 @@ method Passing()
   //   POST: a + b == 3 * n
   {
     var n := 0;
+    expect n >= 0; // PRE-CHECK
     var a, b := main(n);
-    expect a == 0;
-    expect b == 0;
+    expect a + b == 3 * n;
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: a + b == 3 * n
   {
     var n := 1;
+    expect n >= 0; // PRE-CHECK
     var a, b := main(n);
-    // expect a == 3;
-    // expect b == 0;
+    expect a + b == 3 * n;
   }
 
   // Test case for combination {1}/R3:
@@ -61,11 +57,16 @@ method Failing()
   //   POST: a + b == 3 * n
   {
     var n := 2;
+    expect n >= 0; // PRE-CHECK
     var a, b := main(n);
-    // expect a == 6;
-    // expect b == 0;
+    expect a + b == 3 * n;
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()

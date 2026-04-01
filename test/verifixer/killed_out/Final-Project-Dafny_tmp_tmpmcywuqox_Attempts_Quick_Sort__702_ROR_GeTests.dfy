@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort__702_ROR_Ge.dfy
-// Method: quickSort
-// Generated: 2026-03-26 15:02:48
+// Method: threshold
+// Generated: 2026-04-01 13:59:54
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort.dfy
 
@@ -49,7 +49,7 @@ lemma Lemma_1(Seq_1: seq, Seq_2: seq)
   forall x | x in Seq_1
     ensures x in multiset(Seq_1)
   {
-    ghost var i := 0;
+    var i := 0;
     while i < |Seq_1|
       invariant 0 <= i <= |Seq_1|
       invariant forall idx_1: int {:trigger Seq_1[idx_1]} | 0 <= idx_1 < i :: Seq_1[idx_1] in multiset(Seq_1)
@@ -82,6 +82,19 @@ method quickSort(Seq: seq<int>) returns (Seq': seq<int>)
 
 method Passing()
 {
+  // Test case for combination {1}/Bthres=0,Seq=0:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := 0;
+    var Seq: seq<int> := [];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    expect Seq_1 == [];
+    expect Seq_2 == [];
+  }
+
   // Test case for combination {1}:
   //   POST: multiset(Seq) == multiset(Seq')
   {
@@ -90,7 +103,7 @@ method Passing()
     expect multiset(Seq) == multiset(Seq');
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BSeq=1:
   //   POST: multiset(Seq) == multiset(Seq')
   {
     var Seq: seq<int> := [2];
@@ -118,7 +131,51 @@ method Passing()
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := 0;
+    var Seq: seq<int> := [30];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres;
+    // expect forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/Bthres=0,Seq=2:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := 0;
+    var Seq: seq<int> := [17, 16];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres;
+    // expect forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/Bthres=0,Seq=3:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := 0;
+    var Seq: seq<int> := [17, 16, 18];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres;
+    // expect forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
 }
 
 method Main()

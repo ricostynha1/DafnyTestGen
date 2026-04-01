@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1__1586-1614_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-03-28 10:06:17
+// Generated: 2026-04-01 13:53:49
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1.dfy
 
@@ -148,7 +148,6 @@ method Passing()
     var str: seq<char> := [' ', '!', '"'];
     var res := isPrefix(pre, str);
     expect res == true;
-    expect !(|pre| > |str|);
   }
 
   // Test case for combination {1}:
@@ -195,6 +194,7 @@ method Passing()
     var str1: seq<char> := ['!', ' ', '"'];
     var str2: seq<char> := ['F'];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == false; // (actual runtime value — not uniquely determined by spec)
     expect |str1| < k || |str2| < k ==> !found;
     expect haveCommonKSubstringPredicate(k, str1, str2) == found;
   }
@@ -207,6 +207,7 @@ method Passing()
     var str1: seq<char> := [' ', '"', '!'];
     var str2: seq<char> := [];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == false; // (actual runtime value — not uniquely determined by spec)
     expect |str1| < k || |str2| < k ==> !found;
     expect haveCommonKSubstringPredicate(k, str1, str2) == found;
   }
@@ -219,6 +220,7 @@ method Passing()
     var str1: seq<char> := [];
     var str2: seq<char> := [];
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
     expect maxCommonSubstringPredicate(str1, str2, len);
@@ -232,6 +234,7 @@ method Passing()
     var str1: seq<char> := [];
     var str2: seq<char> := [' '];
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
     expect maxCommonSubstringPredicate(str1, str2, len);
@@ -245,6 +248,7 @@ method Passing()
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!'];
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
     expect maxCommonSubstringPredicate(str1, str2, len);
@@ -258,6 +262,7 @@ method Passing()
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!', '"'];
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect len <= |str1| && len <= |str2|;
     expect len >= 0;
     expect maxCommonSubstringPredicate(str1, str2, len);
@@ -276,7 +281,6 @@ method Failing()
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
     // expect res == false;
-    // expect !(|pre| > |str|);
   }
 
   // Test case for combination {1}:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_binary_search.dfy
 // Method: BinarySearch
-// Generated: 2026-03-26 14:55:04
+// Generated: 2026-04-01 13:48:38
 
 // Clover_binary_search.dfy
 
@@ -42,6 +42,7 @@ method Passing()
   {
     var a := new int[1] [1236];
     var key := 0;
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     expect n == 0;
   }
@@ -55,34 +56,37 @@ method Passing()
   {
     var a := new int[1] [-1];
     var key := 0;
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     expect n == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,key=1:
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: 0 <= n <= a.Length
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < n ==> a[i] < key
   //   POST: !(n == a.Length)
   //   POST: forall i: int {:trigger a[i]} :: n <= i < a.Length ==> a[i] >= key
   {
-    var a := new int[1] [-1];
-    var key := -1;
+    var a := new int[1] [1];
+    var key := 1;
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     expect n == 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/Ba=2,key=0:
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: 0 <= n <= a.Length
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < n ==> a[i] < key
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] < key
+  //   POST: !(n == a.Length)
   //   POST: forall i: int {:trigger a[i]} :: n <= i < a.Length ==> a[i] >= key
   {
-    var a := new int[0] [];
-    var key := -1;
+    var a := new int[2] [-1, 0];
+    var key := 0;
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
-    expect n == 0;
+    expect n == 1;
   }
 
 }

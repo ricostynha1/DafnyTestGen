@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_triple4.dfy
 // Method: Triple
-// Generated: 2026-03-26 14:55:20
+// Generated: 2026-04-01 13:48:53
 
 // Clover_triple4.dfy
 
@@ -24,7 +24,7 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1:
   //   POST: r == 3 * x
   {
     var x := 1;

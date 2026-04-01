@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-03-31 21:53:49
+// Generated: 2026-04-01 13:47:00
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -45,7 +45,6 @@ method Passing()
     expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
-    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
   // Test case for combination {2}:
@@ -57,7 +56,6 @@ method Passing()
     expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == false;
-    expect !forall k :: 2 <= k < n ==> n % k != 0;
   }
 
   // Test case for combination {1}/Bn=3:
@@ -69,7 +67,6 @@ method Passing()
     expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
-    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
   // Test case for combination {1}/R3:
@@ -81,7 +78,6 @@ method Passing()
     expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
-    expect forall k :: 2 <= k < n ==> n % k != 0;
   }
 
 }

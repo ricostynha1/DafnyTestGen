@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-03-26 14:54:32
+// Generated: 2026-04-01 13:51:05
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 
@@ -43,17 +43,6 @@ method BinarySearch(a: array<int>, x: int) returns (index: int)
 
 method Passing()
 {
-  // Test case for combination {2}:
-  //   PRE:  sorted(a)
-  //   POST: !(0 <= index < a.Length)
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[1] [11];
-    var x := 9;
-    var index := BinarySearch(a, x);
-    expect index == -1;
-  }
-
   // Test case for combination {3}:
   //   PRE:  sorted(a)
   //   POST: a[index] == x
@@ -61,6 +50,7 @@ method Passing()
   {
     var a := new int[1] [9];
     var x := 9;
+    expect sorted(a); // PRE-CHECK
     var index := BinarySearch(a, x);
     expect index == 0;
   }
@@ -76,8 +66,10 @@ method Failing()
   {
     var a := new int[1] [8];
     var x := 8;
+    // expect sorted(a); // PRE-CHECK
     var index := BinarySearch(a, x);
-    // expect index == -2;
+    // expect !(0 <= index < a.Length);
+    // expect !(index == -1);
   }
 
   // Test case for combination {1,2}:
@@ -88,8 +80,11 @@ method Failing()
   {
     var a := new int[1] [10];
     var x := 8;
+    // expect sorted(a); // PRE-CHECK
     var index := BinarySearch(a, x);
-    // expect index == -2;
+    // expect !(0 <= index < a.Length);
+    // expect !(index == -1);
+    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x;
   }
 
 }

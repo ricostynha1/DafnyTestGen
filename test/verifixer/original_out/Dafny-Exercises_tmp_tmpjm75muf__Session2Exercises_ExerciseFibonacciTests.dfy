@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci.dfy
 // Method: fibonacci1
-// Generated: 2026-03-26 14:56:39
+// Generated: 2026-04-01 13:50:19
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci.dfy
 
@@ -81,15 +81,15 @@ method Passing()
   {
     var n := 0;
     var f := fibonacci1(n);
-    expect f == fib(n);
+    expect f == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: f == fib(n)
   {
     var n := 1;
     var f := fibonacci1(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -97,7 +97,7 @@ method Passing()
   {
     var n := 2;
     var f := fibonacci1(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
   // Test case for combination {1}:
@@ -105,15 +105,15 @@ method Passing()
   {
     var n := 0;
     var f := fibonacci2(n);
-    expect f == fib(n);
+    expect f == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: f == fib(n)
   {
     var n := 1;
     var f := fibonacci2(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -121,7 +121,7 @@ method Passing()
   {
     var n := 2;
     var f := fibonacci2(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
   // Test case for combination {1}:
@@ -129,15 +129,15 @@ method Passing()
   {
     var n := 0;
     var f := fibonacci3(n);
-    expect f == fib(n);
+    expect f == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: f == fib(n)
   {
     var n := 1;
     var f := fibonacci3(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -145,7 +145,7 @@ method Passing()
   {
     var n := 2;
     var f := fibonacci3(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
 }

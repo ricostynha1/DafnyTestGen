@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-31 21:50:16
+// Generated: 2026-04-01 13:43:33
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  

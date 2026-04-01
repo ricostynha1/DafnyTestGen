@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 // Method: Fib
-// Generated: 2026-03-26 15:00:54
+// Generated: 2026-04-01 13:54:37
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 
@@ -144,15 +144,15 @@ method Passing()
   {
     var n := 0;
     var r := Fib(n);
-    expect r == fib(n);
+    expect r == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: r == fib(n)
   {
     var n := 1;
     var r := Fib(n);
-    expect r == fib(n);
+    expect r == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -160,7 +160,7 @@ method Passing()
   {
     var n := 2;
     var r := Fib(n);
-    expect r == fib(n);
+    expect r == 2;
   }
 
   // Test case for combination {1}:
@@ -169,18 +169,20 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[1] [0];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
     expect max == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Barr=2:
   //   PRE:  arr.Length > 0
   //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
-    var arr := new int[2] [-1, 0];
+    var arr := new int[2] [28958, 28957];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
-    expect max == 0;
+    expect max == 28958;
   }
 
   // Test case for combination {1}/Barr=3:
@@ -189,6 +191,7 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[3] [7757, 7755, 7756];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
     expect max == 7757;
   }
@@ -199,18 +202,20 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[1] [0];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
     expect max == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Barr=2:
   //   PRE:  arr.Length > 0
   //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
-    var arr := new int[2] [-1, 0];
+    var arr := new int[2] [28958, 28957];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
-    expect max == 0;
+    expect max == 28958;
   }
 
   // Test case for combination {1}/Barr=3:
@@ -219,6 +224,7 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[3] [7757, 7755, 7756];
+    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
     expect max == 7757;
   }
@@ -228,15 +234,15 @@ method Passing()
   {
     var n := 0;
     var r := sumBackwards(n);
-    expect r == sum(n);
+    expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: r == sum(n)
   {
     var n := 1;
     var r := sumBackwards(n);
-    expect r == sum(n);
+    expect r == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -244,7 +250,7 @@ method Passing()
   {
     var n := 2;
     var r := sumBackwards(n);
-    expect r == sum(n);
+    expect r == 3;
   }
 
 }

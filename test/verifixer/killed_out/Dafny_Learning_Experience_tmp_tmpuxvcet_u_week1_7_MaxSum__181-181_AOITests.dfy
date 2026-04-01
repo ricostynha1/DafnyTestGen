@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_MaxSum__181-181_AOI.dfy
 // Method: MaxSum
-// Generated: 2026-03-26 14:56:51
+// Generated: 2026-04-01 13:54:05
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_MaxSum.dfy
 
@@ -59,17 +59,17 @@ method Passing()
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1,y=0:
   //   POST: s == x + y
   //   POST: m == x
   //   POST: x <= m
   //   POST: y <= m
   {
-    var x := 2;
-    var y := -2;
+    var x := 1;
+    var y := 0;
     var s, m := MaxSum(x, y);
-    expect s == 0;
-    expect m == 2;
+    expect s == 1;
+    expect m == 1;
   }
 
 }

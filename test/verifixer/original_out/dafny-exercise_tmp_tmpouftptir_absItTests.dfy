@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_absIt.dfy
 // Method: AbsIt
-// Generated: 2026-03-26 14:56:34
+// Generated: 2026-04-01 13:50:14
 
 // dafny-exercise_tmp_tmpouftptir_absIt.dfy
 
@@ -67,7 +67,7 @@ method Passing()
     expect s.Length == old_s2.Length;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=1:
   //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
   //   POST: s.Length == old(s).Length
   {

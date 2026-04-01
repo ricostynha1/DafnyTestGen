@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-03-31 21:50:50
+// Generated: 2026-04-01 13:44:05
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -306,6 +306,7 @@ method Passing()
     var x := 5;
     var C := AddElement(M, x);
     expect C == multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5};
+    expect x in C;
   }
 
   // Test case for combination {1}/BM=0,x=0:
@@ -316,6 +317,7 @@ method Passing()
     var x := 0;
     var C := AddElement(M, x);
     expect C == multiset{0};
+    expect x in C;
   }
 
   // Test case for combination {1}/BM=0,x=1:
@@ -326,6 +328,7 @@ method Passing()
     var x := 1;
     var C := AddElement(M, x);
     expect C == multiset{1};
+    expect x in C;
   }
 
   // Test case for combination {1}/BM=1,x=0:
@@ -336,6 +339,7 @@ method Passing()
     var x := 0;
     var C := AddElement(M, x);
     expect C == multiset{0, 0};
+    expect x in C;
   }
 
   // Test case for combination {1}:

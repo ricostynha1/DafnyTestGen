@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-duck_tmp_tmplawbgxjo_p4.dfy
 // Method: single
-// Generated: 2026-03-26 14:56:29
+// Generated: 2026-04-01 13:50:09
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -57,37 +57,49 @@ method Passing()
   {
     var x := new int[1] [2];
     var y := new int[1] [6];
+    expect x.Length > 0; // PRE-CHECK
+    expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
+    expect b[..] == x[..] + y[..];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1,y=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
   //   POST: b[..] == x[..] + y[..]
   {
-    var x := new int[2] [3, 9];
-    var y := new int[2] [6, 10];
+    var x := new int[1] [9];
+    var y := new int[2] [4, 3];
+    expect x.Length > 0; // PRE-CHECK
+    expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
+    expect b[..] == x[..] + y[..];
   }
 
-  // Test case for combination {1}/Bx=3,y=1:
+  // Test case for combination {1}/Bx=1,y=3:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
   //   POST: b[..] == x[..] + y[..]
   {
-    var x := new int[3] [5, 4, 6];
-    var y := new int[1] [14];
+    var x := new int[1] [14];
+    var y := new int[3] [5, 4, 6];
+    expect x.Length > 0; // PRE-CHECK
+    expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
+    expect b[..] == x[..] + y[..];
   }
 
-  // Test case for combination {1}/Bx=2,y=3:
+  // Test case for combination {1}/Bx=2,y=1:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
   //   POST: b[..] == x[..] + y[..]
   {
-    var x := new int[2] [5, 4];
-    var y := new int[3] [7, 6, 8];
+    var x := new int[2] [4, 3];
+    var y := new int[1] [9];
+    expect x.Length > 0; // PRE-CHECK
+    expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
+    expect b[..] == x[..] + y[..];
   }
 
 }

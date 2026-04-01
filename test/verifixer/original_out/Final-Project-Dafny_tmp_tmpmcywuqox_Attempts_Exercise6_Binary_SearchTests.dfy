@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search.dfy
 // Method: binarySearch
-// Generated: 2026-03-26 14:58:25
+// Generated: 2026-04-01 13:52:00
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search.dfy
 
@@ -48,8 +48,12 @@ method Passing()
   {
     var a := new int[1] [9];
     var val := 8;
+    expect a.Length > 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
-    expect pos == -1;
+    // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= pos < a.Length);
+    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val;
   }
 
   // Test case for combination {3}:
@@ -61,33 +65,42 @@ method Passing()
   {
     var a := new int[1] [9];
     var val := 9;
+    expect a.Length > 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
     expect pos == 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Ba=3,val=0:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: !(0 <= pos < a.Length)
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
   {
-    var a := new int[1] [10];
-    var val := 9;
+    var a := new int[3] [4, 5, 6];
+    var val := 0;
+    expect a.Length > 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
-    expect pos == -1;
+    // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= pos < a.Length);
+    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {2}/Ba=2,val=1:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
+  //   POST: !(0 <= pos < a.Length)
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
   {
-    var a := new int[1] [11];
-    var val := 11;
+    var a := new int[2] [3, 4];
+    var val := 1;
+    expect a.Length > 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
-    expect pos == 0;
+    // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
+    expect !(0 <= pos < a.Length);
+    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val;
   }
 
 }

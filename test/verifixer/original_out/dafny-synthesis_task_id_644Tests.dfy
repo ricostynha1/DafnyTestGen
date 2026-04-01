@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_644.dfy
 // Method: Reverse
-// Generated: 2026-03-26 14:58:05
+// Generated: 2026-04-01 13:51:36
 
 // dafny-synthesis_task_id_644.dfy
 
@@ -56,10 +56,10 @@ method Passing()
     expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[1] [8];
+    var a := new int[1] [2];
     var old_a := a[..];
     Reverse(a);
     expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
@@ -91,19 +91,7 @@ method Passing()
     var s := new int[2] [13, 9];
     var k := 2;
     var old_s := s[..];
-    ReverseUptoK(s, k);
-    expect forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
-    expect forall i: int {:trigger old_s[i]} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old_s[i];
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  2 <= k <= s.Length
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  {
-    var s := new int[3] [16, 13, 9];
-    var k := 3;
-    var old_s := s[..];
+    expect 2 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK(s, k);
     expect forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i: int {:trigger old_s[i]} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -117,6 +105,21 @@ method Passing()
     var s := new int[3] [5, 4, 6];
     var k := 2;
     var old_s := s[..];
+    expect 2 <= k <= s.Length; // PRE-CHECK
+    ReverseUptoK(s, k);
+    expect forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
+    expect forall i: int {:trigger old_s[i]} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old_s[i];
+  }
+
+  // Test case for combination {1}/Bs=3,k=3:
+  //   PRE:  2 <= k <= s.Length
+  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[3] [6, 5, 4];
+    var k := 3;
+    var old_s := s[..];
+    expect 2 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK(s, k);
     expect forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i: int {:trigger old_s[i]} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old_s[i];

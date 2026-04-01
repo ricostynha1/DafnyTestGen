@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2__-_ODL_Mul-right.dfy
 // Method: HoareTripleReqEns
-// Generated: 2026-03-26 15:02:59
+// Generated: 2026-04-01 14:00:15
 
 // formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2.dfy
 
@@ -148,31 +148,15 @@ method OriginalMain()
 
 method Passing()
 {
-  // Test case for combination {1}:
-  //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  {
-    var i := 0;
-    var k := 0;
-    var k' := HoareTripleReqEns(i, k);
-  }
-
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bi=1,k=1:
   //   PRE:  k == i * i
   //   POST: k' == (i + 1) * (i + 1)
   {
     var i := 1;
     var k := 1;
+    expect k == i * i; // PRE-CHECK
     var k' := HoareTripleReqEns(i, k);
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  {
-    var i := -2;
-    var k := 4;
-    var k' := HoareTripleReqEns(i, k);
+    expect k' == (i + 1) * (i + 1);
   }
 
   // Test case for combination {1}:
@@ -180,17 +164,19 @@ method Passing()
   //   POST: s == SqrSumRec(n)
   {
     var n := 0;
+    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
-    expect s == 0; // == SqrSumRec(n)
+    expect s == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: s == SqrSumRec(n)
   {
     var n := 1;
+    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
-    expect s == 1; // == SqrSumRec(n)
+    expect s == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -198,8 +184,9 @@ method Passing()
   //   POST: s == SqrSumRec(n)
   {
     var n := 2;
+    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
-    expect s == 5; // == SqrSumRec(n)
+    expect s == 5;
   }
 
   // Test case for combination {1}:
@@ -209,21 +196,10 @@ method Passing()
   {
     var a := 0;
     var b := 8;
+    expect b > 0 && a >= 0; // PRE-CHECK
     var q, r := DivMod1(a, b);
     expect q == 0;
     expect r == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  {
-    var a := 4;
-    var b := 8;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 4;
   }
 
   // Test case for combination {1}/Ba=0,b=1:
@@ -233,6 +209,7 @@ method Passing()
   {
     var a := 0;
     var b := 1;
+    expect b > 0 && a >= 0; // PRE-CHECK
     var q, r := DivMod1(a, b);
     expect q == 0;
     expect r == 0;
@@ -245,8 +222,22 @@ method Passing()
   {
     var a := 0;
     var b := 2;
+    expect b > 0 && a >= 0; // PRE-CHECK
     var q, r := DivMod1(a, b);
     expect q == 0;
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Ba=1,b=1:
+  //   PRE:  b > 0 && a >= 0
+  //   POST: a == b * q + r
+  //   POST: 0 <= r < b
+  {
+    var a := 1;
+    var b := 1;
+    expect b > 0 && a >= 0; // PRE-CHECK
+    var q, r := DivMod1(a, b);
+    expect q == 1;
     expect r == 0;
   }
 
@@ -254,7 +245,28 @@ method Passing()
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   PRE:  k == i * i
+  //   POST: k' == (i + 1) * (i + 1)
+  {
+    var i := 0;
+    var k := 0;
+    // expect k == i * i; // PRE-CHECK
+    var k' := HoareTripleReqEns(i, k);
+    // expect k' == (i + 1) * (i + 1);
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  k == i * i
+  //   POST: k' == (i + 1) * (i + 1)
+  {
+    var i := -2;
+    var k := 4;
+    // expect k == i * i; // PRE-CHECK
+    var k' := HoareTripleReqEns(i, k);
+    // expect k' == (i + 1) * (i + 1);
+  }
+
 }
 
 method Main()

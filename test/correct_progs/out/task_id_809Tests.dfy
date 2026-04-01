@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-03-31 21:55:10
+// Generated: 2026-04-01 13:48:18
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -51,7 +51,6 @@ method Passing()
     expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
-    expect forall i :: 0 <= i < |a| ==> a[i] < b[i];
   }
 
   // Test case for combination {2}:
@@ -64,7 +63,6 @@ method Passing()
     expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == false;
-    expect !forall i :: 0 <= i < |a| ==> a[i] < b[i];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -77,7 +75,6 @@ method Passing()
     expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
-    expect forall i :: 0 <= i < |a| ==> a[i] < b[i];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
@@ -90,7 +87,6 @@ method Passing()
     expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
-    expect forall i :: 0 <= i < |a| ==> a[i] < b[i];
   }
 
 }

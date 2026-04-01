@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_swap__103-115_SWS.dfy
 // Method: Swap
-// Generated: 2026-03-26 14:55:52
+// Generated: 2026-04-01 13:52:51
 
 // Clover_swap.dfy
 
@@ -47,7 +47,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/BX=1,Y=0:
   //   POST: x == Y
   //   POST: y == X
   {

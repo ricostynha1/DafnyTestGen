@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9.dfy
 // Method: ComputeFib
-// Generated: 2026-03-26 14:58:49
+// Generated: 2026-04-01 13:52:43
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9.dfy
 
@@ -42,15 +42,15 @@ method Passing()
   {
     var n := 0;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: b == fib(n)
   {
     var n := 1;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -58,7 +58,7 @@ method Passing()
   {
     var n := 2;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 1;
   }
 
 }

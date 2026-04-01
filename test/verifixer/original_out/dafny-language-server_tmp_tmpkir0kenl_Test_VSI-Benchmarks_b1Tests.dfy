@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-language-server_tmp_tmpkir0kenl_Test_VSI-Benchmarks_b1.dfy
 // Method: Add
-// Generated: 2026-03-26 14:57:06
+// Generated: 2026-04-01 13:50:49
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_VSI-Benchmarks_b1.dfy
 
@@ -87,7 +87,7 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,y=1:
   //   POST: r == x + y
   {
     var x := 0;
@@ -123,15 +123,6 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {1}:
-  //   POST: r == x * y
-  {
-    var x := 1;
-    var y := 1;
-    var r := Mul(x, y);
-    expect r == 1;
-  }
-
   // Test case for combination {1}/Bx=0,y=0:
   //   POST: r == x * y
   {
@@ -148,6 +139,15 @@ method Passing()
     var y := 0;
     var r := Mul(x, y);
     expect r == 0;
+  }
+
+  // Test case for combination {1}/Bx=1,y=1:
+  //   POST: r == x * y
+  {
+    var x := 1;
+    var y := 1;
+    var r := Mul(x, y);
+    expect r == 1;
   }
 
 }

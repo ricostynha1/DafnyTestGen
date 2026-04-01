@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-03-31 21:54:52
+// Generated: 2026-04-01 13:48:00
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -55,7 +55,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
-    expect !(elem in arr[..]);
   }
 
   // Test case for combination {3}/Barr=3,elem=1:
@@ -68,7 +67,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
-    expect !(elem in arr[..]);
   }
 
   // Test case for combination {3}/Barr=3,elem=0:
@@ -81,7 +79,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
-    expect !(elem in arr[..]);
   }
 
   // Test case for combination {3}/Barr=2,elem=0:
@@ -94,7 +91,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
-    expect !(elem in arr[..]);
   }
 
 }

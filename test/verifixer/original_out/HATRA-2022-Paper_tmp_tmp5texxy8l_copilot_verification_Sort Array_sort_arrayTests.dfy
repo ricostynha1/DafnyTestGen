@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Sort Array_sort_array.dfy
 // Method: sortArray
-// Generated: 2026-03-26 14:58:43
+// Generated: 2026-04-01 13:52:31
 
 // HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Sort Array_sort_array.dfy
 
@@ -72,17 +72,19 @@ method Passing()
   //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
   {
     var arr := new int[0] [];
+    expect 0 <= arr.Length < 10000; // PRE-CHECK
     var arr_sorted := sortArray(arr);
     expect sorted(arr_sorted, 0, arr_sorted.Length);
     expect multiset(arr[..]) == multiset(arr_sorted[..]);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Barr=1:
   //   PRE:  0 <= arr.Length < 10000
   //   POST: sorted(arr_sorted, 0, arr_sorted.Length)
   //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
   {
-    var arr := new int[1] [6];
+    var arr := new int[1] [3];
+    expect 0 <= arr.Length < 10000; // PRE-CHECK
     var arr_sorted := sortArray(arr);
     expect sorted(arr_sorted, 0, arr_sorted.Length);
     expect multiset(arr[..]) == multiset(arr_sorted[..]);
@@ -94,6 +96,7 @@ method Passing()
   //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
   {
     var arr := new int[2] [4, 3];
+    expect 0 <= arr.Length < 10000; // PRE-CHECK
     var arr_sorted := sortArray(arr);
     expect sorted(arr_sorted, 0, arr_sorted.Length);
     expect multiset(arr[..]) == multiset(arr_sorted[..]);
@@ -105,6 +108,7 @@ method Passing()
   //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
   {
     var arr := new int[3] [5, 4, 6];
+    expect 0 <= arr.Length < 10000; // PRE-CHECK
     var arr_sorted := sortArray(arr);
     expect sorted(arr_sorted, 0, arr_sorted.Length);
     expect multiset(arr[..]) == multiset(arr_sorted[..]);

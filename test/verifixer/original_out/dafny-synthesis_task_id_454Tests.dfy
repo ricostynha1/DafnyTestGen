@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_454.dfy
 // Method: ContainsZ
-// Generated: 2026-03-26 14:57:50
+// Generated: 2026-04-01 13:51:18
 
 // dafny-synthesis_task_id_454.dfy
 
@@ -42,22 +42,22 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=2:
   //   POST: result
   //   POST: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
   {
-    var s: seq<char> := ['Z', ' '];
+    var s: seq<char> := ['z', '{'];
     var result := ContainsZ(s);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
+  // Test case for combination {1}/Bs=3:
+  //   POST: result
+  //   POST: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
   {
-    var s: seq<char> := [];
+    var s: seq<char> := ['z', '{', '|'];
     var result := ContainsZ(s);
-    expect result == false;
+    expect result == true;
   }
 
 }

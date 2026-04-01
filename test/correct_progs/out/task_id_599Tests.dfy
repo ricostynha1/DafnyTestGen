@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-03-31 21:53:43
+// Generated: 2026-04-01 13:46:54
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -45,7 +45,7 @@ method Passing()
     expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
     expect sum == 3;
-    expect average == sum as real / n as real;
+    expect average == 1.5;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -57,7 +57,7 @@ method Passing()
     expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
     expect sum == 1;
-    expect average == sum as real / n as real;
+    expect average == 1.0;
   }
 
   // Test case for combination {1}/R3:
@@ -69,7 +69,7 @@ method Passing()
     expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
     expect sum == 10;
-    expect average == sum as real / n as real;
+    expect average == 2.50;
   }
 
 }

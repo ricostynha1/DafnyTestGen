@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\M2_tmp_tmp2laaavvl_Software Verification_Exercices_Exo4-CountAndReturn.dfy
 // Method: CountToAndReturnN
-// Generated: 2026-03-26 14:58:52
+// Generated: 2026-04-01 13:52:46
 
 // M2_tmp_tmp2laaavvl_Software Verification_Exercices_Exo4-CountAndReturn.dfy
 
@@ -28,15 +28,17 @@ method Passing()
   //   POST: r == n
   {
     var n := 0;
+    expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: r == n
   {
     var n := 1;
+    expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     expect r == 1;
   }
@@ -46,6 +48,7 @@ method Passing()
   //   POST: r == n
   {
     var n := 2;
+    expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     expect r == 2;
   }

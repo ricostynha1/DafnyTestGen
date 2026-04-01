@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_406.dfy
 // Method: IsOdd
-// Generated: 2026-03-26 14:57:45
+// Generated: 2026-04-01 13:51:12
 
 // dafny-synthesis_task_id_406.dfy
 
@@ -33,7 +33,7 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/R2:
   //   POST: result
   //   POST: n % 2 == 1
   {
@@ -42,13 +42,13 @@ method Passing()
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !(n % 2 == 1)
+  // Test case for combination {1}/R3:
+  //   POST: result
+  //   POST: n % 2 == 1
   {
-    var n := -2;
+    var n := -1;
     var result := IsOdd(n);
-    expect result == false;
+    expect result == true;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_445.dfy
 // Method: MultiplyElements
-// Generated: 2026-03-26 14:57:47
+// Generated: 2026-04-01 13:51:16
 
 // dafny-synthesis_task_id_445.dfy
 
@@ -34,17 +34,19 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
+    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
+    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0];
   }
@@ -56,6 +58,7 @@ method Passing()
   {
     var a: seq<int> := [-1, 0];
     var b: seq<int> := [0, 1];
+    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0, 0];
   }
@@ -67,6 +70,7 @@ method Passing()
   {
     var a: seq<int> := [0, 1, 2];
     var b: seq<int> := [-1, 0, 1];
+    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0, 0, 2];
   }

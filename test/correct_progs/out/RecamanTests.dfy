@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-31 21:51:04
+// Generated: 2026-04-01 13:44:20
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -69,7 +69,6 @@ method Passing()
     expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
   // Test case for combination {2}:
@@ -83,7 +82,6 @@ method Passing()
     expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == false;
-    expect !(x in a[..len]);
   }
 
   // Test case for combination {1}/Bx=1,a=3,len=1:
@@ -97,7 +95,6 @@ method Passing()
     expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
   // Test case for combination {1}/Bx=1,a=2,len==a:
@@ -111,7 +108,6 @@ method Passing()
     expect len <= a.Length; // PRE-CHECK
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
   // Test case for combination {1}:

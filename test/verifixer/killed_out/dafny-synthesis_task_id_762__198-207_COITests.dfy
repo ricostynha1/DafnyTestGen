@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_762__198-207_COI.dfy
 // Method: IsMonthWith30Days
-// Generated: 2026-03-26 15:01:43
+// Generated: 2026-04-01 13:58:47
 
 // dafny-synthesis_task_id_762.dfy
 
@@ -22,6 +22,7 @@ method Passing()
   //   POST: month == 4
   {
     var month := 4;
+    expect 1 <= month <= 12; // PRE-CHECK
     var result := IsMonthWith30Days(month);
     expect result == true;
   }
@@ -32,6 +33,7 @@ method Passing()
   //   POST: month == 9
   {
     var month := 9;
+    expect 1 <= month <= 12; // PRE-CHECK
     var result := IsMonthWith30Days(month);
     expect result == true;
   }
@@ -42,6 +44,7 @@ method Passing()
   //   POST: month == 11
   {
     var month := 11;
+    expect 1 <= month <= 12; // PRE-CHECK
     var result := IsMonthWith30Days(month);
     expect result == true;
   }
@@ -56,6 +59,7 @@ method Failing()
   //   POST: month == 6
   {
     var month := 6;
+    // expect 1 <= month <= 12; // PRE-CHECK
     var result := IsMonthWith30Days(month);
     // expect result == true;
   }
@@ -69,6 +73,7 @@ method Failing()
   //   POST: !(month == 11)
   {
     var month := 1;
+    // expect 1 <= month <= 12; // PRE-CHECK
     var result := IsMonthWith30Days(month);
     // expect result == false;
   }

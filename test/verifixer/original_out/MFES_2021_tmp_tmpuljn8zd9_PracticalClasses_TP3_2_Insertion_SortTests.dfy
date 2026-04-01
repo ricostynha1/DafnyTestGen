@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort.dfy
 // Method: insertionSort
-// Generated: 2026-03-26 14:59:00
+// Generated: 2026-04-01 13:52:55
 
 // MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort.dfy
 
@@ -61,18 +61,18 @@ method Passing()
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [6];
+    var a := new int[1] [3];
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -83,7 +83,7 @@ method Passing()
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -94,7 +94,7 @@ method Passing()
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }

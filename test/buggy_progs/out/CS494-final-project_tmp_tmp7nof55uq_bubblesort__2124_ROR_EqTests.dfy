@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
 // Method: BubbleSort
-// Generated: 2026-03-25 13:28:00
+// Generated: 2026-04-01 13:44:23
 
 // CS494-final-project_tmp_tmp7nof55uq_bubblesort.dfy
 
@@ -65,11 +65,12 @@ method Passing()
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [6];
+    var a := new int[1] [5];
     var old_a := a[..];
+    expect a != null && a.Length > 0; // PRE-CHECK
     BubbleSort(a);
     expect sorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect multiset(a[..]) == multiset(old_a);
   }
 
 }
@@ -83,9 +84,10 @@ method Failing()
   {
     var a := new int[2] [4, 3];
     var old_a := a[..];
+    // expect a != null && a.Length > 0; // PRE-CHECK
     BubbleSort(a);
     // expect sorted(a, 0, a.Length);
-    // expect multiset(a[..]) == multiset(old_a[..]);
+    // expect multiset(a[..]) == multiset(old_a);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -95,9 +97,10 @@ method Failing()
   {
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];
+    // expect a != null && a.Length > 0; // PRE-CHECK
     BubbleSort(a);
     // expect sorted(a, 0, a.Length);
-    // expect multiset(a[..]) == multiset(old_a[..]);
+    // expect multiset(a[..]) == multiset(old_a);
   }
 
 }

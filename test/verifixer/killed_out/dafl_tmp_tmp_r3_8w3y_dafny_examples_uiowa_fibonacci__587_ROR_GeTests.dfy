@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci__587_ROR_Ge.dfy
 // Method: ComputeFib
-// Generated: 2026-03-26 14:56:04
+// Generated: 2026-04-01 13:53:07
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 
@@ -49,7 +49,7 @@ method Passing()
   {
     var n := 0;
     var f := ComputeFib(n);
-    expect f == fib(n);
+    expect f == 0;
   }
 
   // Test case for combination {1}/R3:
@@ -57,14 +57,14 @@ method Passing()
   {
     var n := 2;
     var f := ComputeFib(n);
-    expect f == fib(n);
+    expect f == 1;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: f == fib(n)
   {
     var n := 1;

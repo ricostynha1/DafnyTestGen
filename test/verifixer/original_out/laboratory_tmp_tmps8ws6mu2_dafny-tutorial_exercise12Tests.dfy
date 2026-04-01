@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12.dfy
 // Method: FindMax
-// Generated: 2026-03-26 14:58:47
+// Generated: 2026-04-01 13:52:40
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12.dfy
 
@@ -39,16 +39,18 @@ method Passing()
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
     var a := new int[1] [38];
+    expect 0 < a.Length; // PRE-CHECK
     var i := FindMax(a);
     expect i == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  0 < a.Length
   //   POST: 0 <= i < a.Length
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
-    var a := new int[2] [-7719, 38];
+    var a := new int[2] [35472, 35473];
+    expect 0 < a.Length; // PRE-CHECK
     var i := FindMax(a);
     expect i == 1;
   }
@@ -59,6 +61,7 @@ method Passing()
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
     var a := new int[3] [23675, 23674, 23676];
+    expect 0 < a.Length; // PRE-CHECK
     var i := FindMax(a);
     expect i == 2;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-03-26 14:58:03
+// Generated: 2026-04-01 13:51:33
 
 // dafny-synthesis_task_id_605.dfy
 
@@ -34,6 +34,7 @@ method Passing()
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
+    expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
   }
@@ -44,28 +45,31 @@ method Passing()
   //   POST: !forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
+    expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=3:
   //   PRE:  n >= 2
   //   POST: result
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
+    expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/R3:
   //   PRE:  n >= 2
-  //   POST: !result
-  //   POST: !forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST: result
+  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
-    var n := 6;
+    var n := 5;
+    expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
-    expect result == false;
+    expect result == true;
   }
 
 }

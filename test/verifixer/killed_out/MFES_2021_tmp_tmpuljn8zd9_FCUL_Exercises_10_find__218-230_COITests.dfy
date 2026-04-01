@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find__218-230_COI.dfy
 // Method: find
-// Generated: 2026-03-26 15:04:05
+// Generated: 2026-04-01 14:01:53
 
 // MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 
@@ -36,6 +36,7 @@ method Failing()
   {
     var a := new int[1] [4];
     var key := 0;
+    // expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     // expect index == 1;
   }
@@ -47,30 +48,33 @@ method Failing()
   {
     var a := new int[1] [4];
     var key := 4;
+    // expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     // expect index == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,key=1:
   //   PRE:  a.Length > 0
   //   POST: 0 <= index <= a.Length
   //   POST: !(index < a.Length)
   {
-    var a := new int[1] [4];
+    var a := new int[1] [2];
     var key := 1;
+    // expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     // expect index == 1;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/Ba=2,key=0:
   //   PRE:  a.Length > 0
   //   POST: 0 <= index <= a.Length
-  //   POST: a[index] == key
+  //   POST: !(index < a.Length)
   {
-    var a := new int[1] [6];
-    var key := 6;
+    var a := new int[2] [4, 3];
+    var key := 0;
+    // expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
-    // expect index == 0;
+    // expect index == 2;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-03-31 21:53:59
+// Generated: 2026-04-01 13:47:10
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -46,6 +46,7 @@ method Passing()
     var n := 0;
     expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
+    // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -59,6 +60,7 @@ method Passing()
     var n := 1;
     expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
+    // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -72,6 +74,7 @@ method Passing()
     var n := 0;
     expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
+    // expect result == [1]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -85,6 +88,7 @@ method Passing()
     var n := 1;
     expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
+    // expect result == [2]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }

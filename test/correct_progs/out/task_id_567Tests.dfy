@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-03-31 21:53:20
+// Generated: 2026-04-01 13:46:33
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -40,7 +40,6 @@ method Passing()
     var a := new int[0] [];
     var sorted := IsSortedArr(a);
     expect sorted == true;
-    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
   // Test case for combination {2}:
@@ -50,7 +49,6 @@ method Passing()
     var a := new int[2] [7719, 7718];
     var sorted := IsSortedArr(a);
     expect sorted == false;
-    expect !forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
   // Test case for combination {1}/Ba=1:
@@ -60,7 +58,6 @@ method Passing()
     var a := new int[1] [2];
     var sorted := IsSortedArr(a);
     expect sorted == true;
-    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -70,7 +67,6 @@ method Passing()
     var a := new int[2] [28957, 28958];
     var sorted := IsSortedArr(a);
     expect sorted == true;
-    expect forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1];
   }
 
 }

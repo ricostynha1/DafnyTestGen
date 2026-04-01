@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\AssertivePrograming_tmp_tmpwf43uz0e_Find_Substring.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-03-26 14:54:51
+// Generated: 2026-04-01 13:48:21
 
 // AssertivePrograming_tmp_tmpwf43uz0e_Find_Substring.dfy
 
@@ -46,8 +46,8 @@ method {:verify true} FindFirstOccurrence(str1: string, str2: string)
       assert |str2| > 0;
       assert !found && i < |str1|;
       var j := |str2| - 1;
-      ghost var old_i := i;
-      ghost var old_j := j;
+      var old_i := i;
+      var old_j := j;
       while !found && str1[i] == str2[j]
         invariant Inner_Inv_Termination(str1, str2, i, j, old_i, old_j)
         invariant Inner_Inv_correctness(str1, str2, i, j, found)
@@ -127,7 +127,7 @@ method OriginalMain()
   var found, i := FindFirstOccurrence(str1, str2);
   assert found by {
     assert ExistsSubstring(str1, str2) by {
-      ghost var offset := 2;
+      var offset := 2;
       assert 0 <= offset <= |str1|;
       assert str2 <= str1[offset..] by {
         assert str2 == str1[offset..][..4];
@@ -302,7 +302,7 @@ lemma Lemma3(str1: string, str2: string, i: nat)
   ensures exists offset: int {:trigger str1[offset .. i]} :: (0 <= offset <= i + 1 && str2 <= str1[offset .. i + 1] && !(offset <= i)) || (0 <= offset <= i + 1 && str2 <= str1[offset .. i + 1] && !(str2 <= str1[offset .. i]))
   decreases str1, str2, i
 {
-  ghost var offset :| 0 <= offset <= i + 1 && str2 <= str1[offset .. i + 1];
+  var offset :| 0 <= offset <= i + 1 && str2 <= str1[offset .. i + 1];
   assert 0 <= offset <= i + 1 ==> offset <= i ==> !(str2 <= str1[offset .. i]);
 }
 
@@ -318,7 +318,7 @@ method Passing()
     expect Post(str1, str2, found, i);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bstr1=0,str2=1:
   //   POST: Post(str1, str2, found, i)
   {
     var str1: seq<char> := [];
@@ -327,20 +327,20 @@ method Passing()
     expect Post(str1, str2, found, i);
   }
 
-  // Test case for combination {1}/Bstr1=3,str2=1:
+  // Test case for combination {1}/Bstr1=0,str2=2:
   //   POST: Post(str1, str2, found, i)
   {
-    var str1: seq<char> := ['!', ' ', '"'];
-    var str2: seq<char> := ['F'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '!'];
     var found, i := FindFirstOccurrence(str1, str2);
     expect Post(str1, str2, found, i);
   }
 
-  // Test case for combination {1}/Bstr1=3,str2=0:
+  // Test case for combination {1}/Bstr1=0,str2=3:
   //   POST: Post(str1, str2, found, i)
   {
-    var str1: seq<char> := [' ', '!', '"'];
-    var str2: seq<char> := [];
+    var str1: seq<char> := [];
+    var str2: seq<char> := [' ', '!', '"'];
     var found, i := FindFirstOccurrence(str1, str2);
     expect Post(str1, str2, found, i);
   }

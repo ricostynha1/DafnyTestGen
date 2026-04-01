@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-03-26 14:58:00
+// Generated: 2026-04-01 13:51:30
 
 // dafny-synthesis_task_id_602.dfy
 
@@ -48,7 +48,8 @@ method Passing()
   {
     var s: seq<char> := [];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == false;
+    expect !found;
+    expect forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
   // Test case for combination {3}:
@@ -61,29 +62,31 @@ method Passing()
     expect c == ' ';
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Bs=1:
   //   POST: !found
   //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [' '];
     var found, c := FindFirstRepeatedChar(s);
-    expect found == false;
+    expect !found;
+    expect forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j];
+  }
+
+  // Test case for combination {2}/Bs=2:
+  //   POST: !found
+  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
+  {
+    var s: seq<char> := [' ', '!'];
+    var found, c := FindFirstRepeatedChar(s);
+    expect !found;
+    expect forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {3}:
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   POST: found
-  {
-    var s: seq<char> := ['!', ' ', ' ', '!'];
-    var found, c := FindFirstRepeatedChar(s);
-    // expect found == true;
-    // expect c == ' ';
-  }
-
+  // (no failing tests)
 }
 
 method Main()

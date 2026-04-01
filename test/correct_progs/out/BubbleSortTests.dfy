@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-03-31 21:49:51
+// Generated: 2026-04-01 13:43:10
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -84,7 +84,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [6, 5];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);
@@ -95,7 +95,7 @@ method Passing()
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [8, 7, 9];
     var old_a := a[..];
     BubbleSort(a);
     expect IsSorted(a[..]);

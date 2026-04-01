@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-03-31 21:51:14
+// Generated: 2026-04-01 13:44:32
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -425,6 +425,8 @@ method Passing()
     var x := 0;
     var C := AddElement(S, x);
     expect C == {0};
+    expect x in C;
+    expect forall y :: y in S ==> y in C;
   }
 
   // Test case for combination {1}/BS=0,x=1:
@@ -436,6 +438,8 @@ method Passing()
     var x := 1;
     var C := AddElement(S, x);
     expect C == {1};
+    expect x in C;
+    expect forall y :: y in S ==> y in C;
   }
 
   // Test case for combination {1}/BS=1,x=0:
@@ -447,6 +451,8 @@ method Passing()
     var x := 0;
     var C := AddElement(S, x);
     expect C == {0, 1};
+    expect x in C;
+    expect forall y :: y in S ==> y in C;
   }
 
   // Test case for combination {1}/BS=1,x=1:
@@ -458,6 +464,8 @@ method Passing()
     var x := 1;
     var C := AddElement(S, x);
     expect C == {1};
+    expect x in C;
+    expect forall y :: y in S ==> y in C;
   }
 
   // Test case for combination {1}:
@@ -471,6 +479,8 @@ method Passing()
     expect x in S; // PRE-CHECK
     var C := RemoveElement(S, x);
     expect C == {};
+    expect x !in C;
+    expect forall y :: y in S && y != x ==> y in C;
   }
 
   // Test case for combination {1}/BS=1,x=0:
@@ -484,6 +494,8 @@ method Passing()
     expect x in S; // PRE-CHECK
     var C := RemoveElement(S, x);
     expect C == {};
+    expect x !in C;
+    expect forall y :: y in S && y != x ==> y in C;
   }
 
   // Test case for combination {1}/BS=1,x=1:
@@ -497,6 +509,8 @@ method Passing()
     expect x in S; // PRE-CHECK
     var C := RemoveElement(S, x);
     expect C == {};
+    expect x !in C;
+    expect forall y :: y in S && y != x ==> y in C;
   }
 
   // Test case for combination {1}/BS=2,x=0:
@@ -510,6 +524,8 @@ method Passing()
     expect x in S; // PRE-CHECK
     var C := RemoveElement(S, x);
     expect C == {1};
+    expect x !in C;
+    expect forall y :: y in S && y != x ==> y in C;
   }
 
   // Test case for combination {1}:
@@ -651,7 +667,7 @@ method Passing()
     var A: set<char> := {};
     var B: set<char> := {'c'};
     var C := SetUnionChar(A, B);
-    expect C == {'c'};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -660,7 +676,7 @@ method Passing()
     var A: set<char> := {};
     var B: set<char> := {'d', 'f'};
     var C := SetUnionChar(A, B);
-    expect C == {'d', 'f'};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=3:
@@ -669,7 +685,7 @@ method Passing()
     var A: set<char> := {};
     var B: set<char> := {'d', 'f', 'h'};
     var C := SetUnionChar(A, B);
-    expect C == {'d', 'f', 'h'};
+    expect C == A + B;
   }
 
   // Test case for combination {1}:
@@ -731,7 +747,7 @@ method Passing()
     var A: set<Color> := {};
     var B: set<Color> := {Blue};
     var C := SetUnionColor(A, B);
-    expect C == {Blue};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -740,7 +756,7 @@ method Passing()
     var A: set<Color> := {};
     var B: set<Color> := {Red, Blue};
     var C := SetUnionColor(A, B);
-    expect C == {Red, Blue};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=3:
@@ -749,7 +765,7 @@ method Passing()
     var A: set<Color> := {};
     var B: set<Color> := {Red, White, Blue};
     var C := SetUnionColor(A, B);
-    expect C == {Red, White, Blue};
+    expect C == A + B;
   }
 
 }

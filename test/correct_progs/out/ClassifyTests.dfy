@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-03-31 21:49:57
+// Generated: 2026-04-01 13:43:16
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -32,8 +32,6 @@ method Passing()
     expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 1;
-    expect !(x < 0);
-    expect !(x == 0);
   }
 
   // Test case for combination {3}:
@@ -46,8 +44,6 @@ method Passing()
     expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 0;
-    expect !(x < 0);
-    expect !(x > 0);
   }
 
   // Test case for combination {5}:
@@ -60,8 +56,6 @@ method Passing()
     expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == -1;
-    expect !(x == 0);
-    expect !(x > 0);
   }
 
   // Test case for combination {2}/Bx=100:
@@ -74,8 +68,6 @@ method Passing()
     expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 1;
-    expect !(x < 0);
-    expect !(x == 0);
   }
 
 }

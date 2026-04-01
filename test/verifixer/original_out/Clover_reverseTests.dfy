@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_reverse.dfy
 // Method: reverse
-// Generated: 2026-03-26 14:55:16
+// Generated: 2026-04-01 13:48:48
 
 // Clover_reverse.dfy
 
@@ -34,10 +34,10 @@ method Passing()
     expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[1] [8];
+    var a := new int[1] [2];
     var old_a := a[..];
     reverse(a);
     expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];

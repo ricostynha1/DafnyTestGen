@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search__689_ROR_Eq.dfy
 // Method: binSearch
-// Generated: 2026-03-26 14:56:01
+// Generated: 2026-04-01 13:53:04
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search.dfy
 
@@ -54,16 +54,7 @@ method Passing()
   {
     var a := new int[0] [];
     var K := 0;
-    var b := binSearch(a, K);
-    expect b == false;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[1] [2];
-    var K := 1;
+    expect isSorted(a); // PRE-CHECK
     var b := binSearch(a, K);
     expect b == false;
   }
@@ -74,6 +65,7 @@ method Passing()
   {
     var a := new int[0] [];
     var K := 1;
+    expect isSorted(a); // PRE-CHECK
     var b := binSearch(a, K);
     expect b == false;
   }
@@ -84,6 +76,18 @@ method Passing()
   {
     var a := new int[1] [2];
     var K := 0;
+    expect isSorted(a); // PRE-CHECK
+    var b := binSearch(a, K);
+    expect b == false;
+  }
+
+  // Test case for combination {1}/Ba=1,K=1:
+  //   PRE:  isSorted(a)
+  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
+  {
+    var a := new int[1] [2];
+    var K := 1;
+    expect isSorted(a); // PRE-CHECK
     var b := binSearch(a, K);
     expect b == false;
   }

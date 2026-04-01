@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\SENG2011_tmp_tmpgk5jq85q_ass2_ex1.dfy
 // Method: StringSwap
-// Generated: 2026-03-26 15:00:49
+// Generated: 2026-04-01 13:54:31
 
 // SENG2011_tmp_tmpgk5jq85q_ass2_ex1.dfy
 
@@ -49,12 +49,10 @@ method Passing()
     var s: seq<char> := [];
     var i := 0;
     var j := 0;
+    expect i >= 0 && j >= 0 && |s| >= 0; // PRE-CHECK
+    expect |s| > 0 ==> i < |s| && j < |s|; // PRE-CHECK
     var t := StringSwap(s, i, j);
-    expect multiset(s[..]) == multiset(t[..]);
-    expect |s| == |t|;
-    expect forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k];
-    expect !(|s| > 0);
-    expect t == s;
+    expect t == [];
   }
 
   // Test case for combination P{2}/{7}:
@@ -70,13 +68,10 @@ method Passing()
     var s: seq<char> := ['\U{0027}', '&'];
     var i := 0;
     var j := 1;
+    expect i >= 0 && j >= 0 && |s| >= 0; // PRE-CHECK
+    expect |s| > 0 ==> i < |s| && j < |s|; // PRE-CHECK
     var t := StringSwap(s, i, j);
-    expect multiset(s[..]) == multiset(t[..]);
-    expect |s| == |t|;
-    expect forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k];
-    expect t[i] == s[j];
-    expect t[j] == s[i];
-    expect !(|s| == 0);
+    expect t == ['&', '\U{0027}'];
   }
 
   // Test case for combination P{2}/{7,8}:
@@ -93,14 +88,10 @@ method Passing()
     var s: seq<char> := [' '];
     var i := 0;
     var j := 0;
+    expect i >= 0 && j >= 0 && |s| >= 0; // PRE-CHECK
+    expect |s| > 0 ==> i < |s| && j < |s|; // PRE-CHECK
     var t := StringSwap(s, i, j);
-    expect multiset(s[..]) == multiset(t[..]);
-    expect |s| == |t|;
-    expect forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k];
-    expect t[i] == s[j];
-    expect t[j] == s[i];
-    expect !(|s| == 0);
-    expect t == s;
+    expect t == [' '];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-03-31 21:51:09
+// Generated: 2026-04-01 13:44:26
 
 class Secret {
     var secret: int
@@ -51,7 +51,7 @@ method Passing()
     expect result == true;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect g == old_secret;
+    expect guesses == 1;
     expect obj.known == true;
   }
 
@@ -77,7 +77,7 @@ method Passing()
     expect result == false;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect !(g == old_secret);
+    expect guesses == 1;
     expect obj.known == false;
   }
 
@@ -103,7 +103,7 @@ method Passing()
     expect result == true;
     expect guesses == 2;
     expect obj.count == old_count + 1;
-    expect g == old_secret;
+    expect guesses == 2;
     expect obj.known == true;
   }
 
@@ -129,7 +129,7 @@ method Passing()
     expect result == true;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect g == old_secret;
+    expect guesses == 1;
     expect obj.known == true;
   }
 

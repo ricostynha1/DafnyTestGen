@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Two Sum_two_sum.dfy
 // Method: twoSum
-// Generated: 2026-03-26 14:58:45
+// Generated: 2026-04-01 13:52:34
 
 // HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Two Sum_two_sum.dfy
 
@@ -50,11 +50,15 @@ method Passing()
   //   POST: 0 <= index2 < nums.Length
   //   POST: nums[index1] + nums[index2] == target
   {
-    var nums := new int[2] [1796, 2924];
-    var target := 4720;
+    var nums := new int[2] [2437, 2282];
+    var target := 4719;
+    expect 2 <= nums.Length; // PRE-CHECK
+    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var index1, index2 := twoSum(nums, target);
-    expect index1 == 0;
-    expect index2 == 1;
+    expect index1 != index2;
+    expect 0 <= index1 < nums.Length;
+    expect 0 <= index2 < nums.Length;
+    expect nums[index1] + nums[index2] == target;
   }
 
   // Test case for combination {1}/Bnums=2,target=0:
@@ -67,28 +71,13 @@ method Passing()
   {
     var nums := new int[2] [975, -975];
     var target := 0;
+    expect 2 <= nums.Length; // PRE-CHECK
+    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var index1, index2 := twoSum(nums, target);
-    expect index1 == 0;
-    expect index2 == 1;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
-  //   PRE:  2 <= nums.Length
-  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
-  //   POST: index1 != index2
-  //   POST: 0 <= index1 < nums.Length
-  //   POST: 0 <= index2 < nums.Length
-  //   POST: nums[index1] + nums[index2] == target
-  {
-    var nums := new int[2] [2437, 2282];
-    var target := 4719;
-    var index1, index2 := twoSum(nums, target);
-    // expect index1 == 1;
-    // expect index2 == 0;
+    expect index1 != index2;
+    expect 0 <= index1 < nums.Length;
+    expect 0 <= index2 < nums.Length;
+    expect nums[index1] + nums[index2] == target;
   }
 
   // Test case for combination {1}/Bnums=2,target=1:
@@ -101,11 +90,39 @@ method Failing()
   {
     var nums := new int[2] [-1795, 1796];
     var target := 1;
+    expect 2 <= nums.Length; // PRE-CHECK
+    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var index1, index2 := twoSum(nums, target);
-    // expect index1 == 1;
-    // expect index2 == 0;
+    expect index1 != index2;
+    expect 0 <= index1 < nums.Length;
+    expect 0 <= index2 < nums.Length;
+    expect nums[index1] + nums[index2] == target;
   }
 
+  // Test case for combination {1}/Bnums=3,target=0:
+  //   PRE:  2 <= nums.Length
+  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
+  //   POST: index1 != index2
+  //   POST: 0 <= index1 < nums.Length
+  //   POST: 0 <= index2 < nums.Length
+  //   POST: nums[index1] + nums[index2] == target
+  {
+    var nums := new int[3] [-281, 9, 281];
+    var target := 0;
+    expect 2 <= nums.Length; // PRE-CHECK
+    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
+    var index1, index2 := twoSum(nums, target);
+    expect index1 != index2;
+    expect 0 <= index1 < nums.Length;
+    expect 0 <= index2 < nums.Length;
+    expect nums[index1] + nums[index2] == target;
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()

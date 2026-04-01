@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpv_d3qi10_2_min.dfy
 // Method: minMethod
-// Generated: 2026-03-26 14:56:02
+// Generated: 2026-04-01 13:49:41
 
 // Dafny_tmp_tmpv_d3qi10_2_min.dfy
 
@@ -107,16 +107,16 @@ method Passing()
     expect c == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}/Ba=1,b=0:
   //   POST: c <= a
   //   POST: c <= b
-  //   POST: c == a
+  //   POST: c == b
   //   POST: c == min(a, b)
   {
-    var a := -1;
+    var a := 1;
     var b := 0;
     var c := minMethod(a, b);
-    expect c == -1;
+    expect c == 0;
   }
 
   // Test case for combination {1}:
@@ -125,16 +125,18 @@ method Passing()
   //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
     var a := new int[1] [0];
+    expect a != null && a.Length > 0; // PRE-CHECK
     var m := minArray(a);
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a != null && a.Length > 0
   //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
   //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
     var a := new int[2] [0, 39];
+    expect a != null && a.Length > 0; // PRE-CHECK
     var m := minArray(a);
     expect m == 0;
   }
@@ -144,9 +146,10 @@ method Passing()
   //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
   //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
-    var a := new int[3] [28957, 28958, 28959];
+    var a := new int[3] [7718, 7719, 7720];
+    expect a != null && a.Length > 0; // PRE-CHECK
     var m := minArray(a);
-    expect m == 28957;
+    expect m == 7718;
   }
 
 }

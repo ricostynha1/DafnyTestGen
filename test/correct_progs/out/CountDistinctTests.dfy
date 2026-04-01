@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-03-31 21:50:03
+// Generated: 2026-04-01 13:43:21
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -63,6 +63,26 @@ method Passing()
     expect IsSorted(a); // PRE-CHECK
     var count := CountDistinct(a);
     expect count == 1;
+  }
+
+  // Test case for combination {1}/Ba=2:
+  //   PRE:  IsSorted(a)
+  //   POST: count == |AsSet(a)|
+  {
+    var a := new int[2] [28957, 28958];
+    expect IsSorted(a); // PRE-CHECK
+    var count := CountDistinct(a);
+    expect count == 2;
+  }
+
+  // Test case for combination {1}/Ba=3:
+  //   PRE:  IsSorted(a)
+  //   POST: count == |AsSet(a)|
+  {
+    var a := new int[3] [37, 38, 39];
+    expect IsSorted(a); // PRE-CHECK
+    var count := CountDistinct(a);
+    expect count == 3;
   }
 
 }

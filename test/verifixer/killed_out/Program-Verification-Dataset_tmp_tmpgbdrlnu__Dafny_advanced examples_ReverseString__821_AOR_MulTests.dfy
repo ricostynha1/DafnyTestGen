@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_advanced examples_ReverseString__821_AOR_Mul.dfy
 // Method: yarra
-// Generated: 2026-03-26 15:04:19
+// Generated: 2026-04-01 14:02:08
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_advanced examples_ReverseString.dfy
 
@@ -60,19 +60,31 @@ method Passing()
   //   POST: reversed(arr, outarr)
   {
     var arr := new char[1] [' '];
+    expect arr != null && arr.Length > 0; // PRE-CHECK
     var outarr := yarra(arr);
+    expect outarr != null;
+    expect arr.Length == outarr.Length;
+    expect reversed(arr, outarr);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Barr=2:
   //   PRE:  arr != null && arr.Length > 0
   //   POST: outarr != null
   //   POST: arr.Length == outarr.Length
   //   POST: reversed(arr, outarr)
   {
-    var arr := new char[2] ['U', ' '];
+    var arr := new char[2] [' ', '!'];
+    expect arr != null && arr.Length > 0; // PRE-CHECK
     var outarr := yarra(arr);
+    expect outarr != null;
+    expect arr.Length == outarr.Length;
+    expect reversed(arr, outarr);
   }
 
+}
+
+method Failing()
+{
   // Test case for combination {1}/Barr=3:
   //   PRE:  arr != null && arr.Length > 0
   //   POST: outarr != null
@@ -80,14 +92,13 @@ method Passing()
   //   POST: reversed(arr, outarr)
   {
     var arr := new char[3] [' ', '!', '"'];
+    // expect arr != null && arr.Length > 0; // PRE-CHECK
     var outarr := yarra(arr);
+    // expect outarr != null;
+    // expect arr.Length == outarr.Length;
+    // expect reversed(arr, outarr);
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()

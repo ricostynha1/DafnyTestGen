@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-language-server_tmp_tmpkir0kenl_Test_tutorial_maximum.dfy
 // Method: Maximum
-// Generated: 2026-03-26 14:57:04
+// Generated: 2026-04-01 13:50:47
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_tutorial_maximum.dfy
 
@@ -43,16 +43,18 @@ method Passing()
   //   POST: forall i: int {:trigger values[i]} | 0 <= i < |values| :: values[i] <= max
   {
     var values: seq<int> := [0];
+    expect values != []; // PRE-CHECK
     var max := Maximum(values);
     expect max == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bvalues=2:
   //   PRE:  values != []
   //   POST: max in values
   //   POST: forall i: int {:trigger values[i]} | 0 <= i < |values| :: values[i] <= max
   {
-    var values: seq<int> := [0, -38];
+    var values: seq<int> := [-1, 0];
+    expect values != []; // PRE-CHECK
     var max := Maximum(values);
     expect max == 0;
   }
@@ -62,9 +64,10 @@ method Passing()
   //   POST: max in values
   //   POST: forall i: int {:trigger values[i]} | 0 <= i < |values| :: values[i] <= max
   {
-    var values: seq<int> := [7717, 7718, 7719];
+    var values: seq<int> := [28955, 28956, 28957];
+    expect values != []; // PRE-CHECK
     var max := Maximum(values);
-    expect max == 7719;
+    expect max == 28957;
   }
 
 }

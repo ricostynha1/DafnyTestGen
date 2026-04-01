@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Insertion_Sorted_Standard__775-775_EVR_int.dfy
 // Method: sorting
-// Generated: 2026-03-26 15:02:45
+// Generated: 2026-04-01 13:59:51
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Insertion_Sorted_Standard.dfy
 
@@ -46,16 +46,18 @@ method Passing()
   //   PRE:  Array.Length > 1
   //   POST: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[2] [10, 11];
+    var Array := new int[2] [9, 10];
+    expect Array.Length > 1; // PRE-CHECK
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BArray=3:
   //   PRE:  Array.Length > 1
   //   POST: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[3] [16, 17, 18];
+    var Array := new int[3] [5, 4, 6];
+    expect Array.Length > 1; // PRE-CHECK
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }
@@ -64,7 +66,8 @@ method Passing()
   //   PRE:  Array.Length > 1
   //   POST: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[4] [21, 22, 23, 24];
+    var Array := new int[4] [20, 21, 22, 23];
+    expect Array.Length > 1; // PRE-CHECK
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 // Method: mPeekSum
-// Generated: 2026-03-26 14:56:56
+// Generated: 2026-04-01 13:50:36
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 
@@ -59,17 +59,19 @@ method Passing()
   //   POST: sum == peekSum(v, v.Length)
   {
     var v := new int[1] [2];
+    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
-    expect sum == 2; // == peekSum(v, v.Length)
+    expect sum == 2;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=2:
   //   PRE:  v.Length > 0
   //   POST: sum == peekSum(v, v.Length)
   {
-    var v := new int[2] [3, 4];
+    var v := new int[2] [4, 3];
+    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
-    expect sum == 7; // == peekSum(v, v.Length)
+    expect sum == 4;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -77,8 +79,9 @@ method Passing()
   //   POST: sum == peekSum(v, v.Length)
   {
     var v := new int[3] [5, 4, 6];
+    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
-    expect sum == 11; // == peekSum(v, v.Length)
+    expect sum == 11;
   }
 
 }

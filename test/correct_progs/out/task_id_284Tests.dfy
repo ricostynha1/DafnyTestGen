@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-03-31 21:52:25
+// Generated: 2026-04-01 13:45:42
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -44,7 +44,6 @@ method Passing()
     var x := 0;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == true;
-    expect forall i :: 0 <= i < a.Length ==> a[i] == x;
   }
 
   // Test case for combination {2}:
@@ -55,7 +54,6 @@ method Passing()
     var x := 8;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == false;
-    expect !forall i :: 0 <= i < a.Length ==> a[i] == x;
   }
 
   // Test case for combination {1}/Ba=0,x=1:
@@ -66,7 +64,6 @@ method Passing()
     var x := 1;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == true;
-    expect forall i :: 0 <= i < a.Length ==> a[i] == x;
   }
 
   // Test case for combination {1}/Ba=1,x=0:
@@ -77,7 +74,6 @@ method Passing()
     var x := 0;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == true;
-    expect forall i :: 0 <= i < a.Length ==> a[i] == x;
   }
 
 }

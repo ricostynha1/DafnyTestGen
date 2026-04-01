@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples1.dfy
 // Method: Abs
-// Generated: 2026-03-26 14:55:51
+// Generated: 2026-04-01 13:49:31
 
 // Dafny_tmp_tmpmvs2dmry_examples1.dfy
 
@@ -95,7 +95,7 @@ method Passing()
     expect y == 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/R2:
   //   POST: y >= 0
   //   POST: !(x >= 0)
   //   POST: -x == y
@@ -112,9 +112,20 @@ method Passing()
   {
     var x := 0;
     var y := 0;
+    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
-    expect more == 0;
-    expect less == 0;
+    expect less <= x <= more;
+  }
+
+  // Test case for combination {1}/Bx=0,y=1:
+  //   PRE:  y >= 0
+  //   POST: less <= x <= more
+  {
+    var x := 0;
+    var y := 1;
+    expect y >= 0; // PRE-CHECK
+    var more, less := MultiReturn(x, y);
+    expect less <= x <= more;
   }
 
   // Test case for combination {1}/Bx=1,y=0:
@@ -123,9 +134,20 @@ method Passing()
   {
     var x := 1;
     var y := 0;
+    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
-    expect more == 1;
-    expect less == 1;
+    expect less <= x <= more;
+  }
+
+  // Test case for combination {1}/Bx=1,y=1:
+  //   PRE:  y >= 0
+  //   POST: less <= x <= more
+  {
+    var x := 1;
+    var y := 1;
+    expect y >= 0; // PRE-CHECK
+    var more, less := MultiReturn(x, y);
+    expect less <= x <= more;
   }
 
   // Test case for combination {2}:
@@ -225,43 +247,11 @@ method Passing()
     expect a == -4;
   }
 
-  // Test case for combination {2,4,6,8}:
-  //   POST: a == x
-  //   POST: !(x > y)
-  //   POST: a == y
-  {
-    var x := 3;
-    var y := 3;
-    var a := Max(x, y);
-    expect a == 3;
-  }
-
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  {
-    var x := 0;
-    var y := 1;
-    var more, less := MultiReturn(x, y);
-    // expect more == 0;
-    // expect less == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  {
-    var x := 1;
-    var y := 1;
-    var more, less := MultiReturn(x, y);
-    // expect more == 1;
-    // expect less == 1;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

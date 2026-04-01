@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-03-31 21:54:23
+// Generated: 2026-04-01 13:47:32
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -53,7 +53,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
-    expect !(target !in arr[..]);
   }
 
   // Test case for combination {3}:
@@ -66,7 +65,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
-    expect !(target in arr[..]);
   }
 
   // Test case for combination {2}/Barr=3,target=0:
@@ -81,7 +79,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
-    expect !(target !in arr[..]);
   }
 
   // Test case for combination {2}/Barr=2,target=1:
@@ -96,7 +93,6 @@ method Passing()
     expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
-    expect !(target !in arr[..]);
   }
 
 }

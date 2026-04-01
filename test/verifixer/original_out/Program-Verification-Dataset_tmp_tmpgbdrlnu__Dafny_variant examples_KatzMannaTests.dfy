@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna.dfy
 // Method: NinetyOne
-// Generated: 2026-03-26 14:59:42
+// Generated: 2026-04-01 13:53:50
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna.dfy
 
@@ -113,12 +113,13 @@ method Passing()
     expect z == 91;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=1:
   //   POST: !proveFunctionalPostcondition
   {
     var x := 1;
     var proveFunctionalPostcondition := false;
     var z := NinetyOne(x, proveFunctionalPostcondition);
+    expect !proveFunctionalPostcondition;
   }
 
 }

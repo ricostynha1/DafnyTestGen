@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\assertive-programming-assignment-1_tmp_tmp3h_cj44u_FindRange__3998-3998_EVR_int.dfy
 // Method: FindRange
-// Generated: 2026-03-26 14:54:35
+// Generated: 2026-04-01 13:51:07
 
 // assertive-programming-assignment-1_tmp_tmp3h_cj44u_FindRange.dfy
 
@@ -202,36 +202,9 @@ method Passing()
   //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
   //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
   {
-    var q: seq<int> := [7719];
-    var key := -1;
-    var left, right := FindRange(q, key);
-    expect left == 0;
-    expect right == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Sorted(q)
-  //   POST: left <= right <= |q|
-  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
-  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
-  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
-  {
-    var q: seq<int> := [];
-    var key := -2;
-    var left, right := FindRange(q, key);
-    expect left == 0;
-    expect right == 0;
-  }
-
-  // Test case for combination {1}/Bq=0,key=0:
-  //   PRE:  Sorted(q)
-  //   POST: left <= right <= |q|
-  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
-  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
-  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
-  {
     var q: seq<int> := [];
     var key := 0;
+    expect Sorted(q); // PRE-CHECK
     var left, right := FindRange(q, key);
     expect left == 0;
     expect right == 0;
@@ -246,9 +219,40 @@ method Passing()
   {
     var q: seq<int> := [];
     var key := 1;
+    expect Sorted(q); // PRE-CHECK
     var left, right := FindRange(q, key);
     expect left == 0;
     expect right == 0;
+  }
+
+  // Test case for combination {1}/Bq=1,key=0:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-1];
+    var key := 0;
+    expect Sorted(q); // PRE-CHECK
+    var left, right := FindRange(q, key);
+    expect left == 1;
+    expect right == 1;
+  }
+
+  // Test case for combination {1}/Bq=1,key=1:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-38];
+    var key := 1;
+    expect Sorted(q); // PRE-CHECK
+    var left, right := FindRange(q, key);
+    expect left == 1;
+    expect right == 1;
   }
 
 }

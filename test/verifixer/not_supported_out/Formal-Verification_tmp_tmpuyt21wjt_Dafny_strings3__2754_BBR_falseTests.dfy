@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings3__2754_BBR_false.dfy
 // Method: isPrefix
-// Generated: 2026-03-28 10:06:28
+// Generated: 2026-04-01 13:54:05
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings3.dfy
 
@@ -175,9 +175,7 @@ method Passing()
     var pre: seq<char> := [' '];
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
-    expect !res;
-    expect isNotPrefixPred(pre, str);
-    expect !isPrefixPred(pre, str);
+    expect res == false;
   }
 
   // Test case for combination {3}:
@@ -188,9 +186,7 @@ method Passing()
     var pre: seq<char> := [];
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
-    expect res;
-    expect !isNotPrefixPred(pre, str);
-    expect isPrefixPred(pre, str);
+    expect res == true;
   }
 
   // Test case for combination {2}/Bpre=2,str=1:
@@ -201,9 +197,7 @@ method Passing()
     var pre: seq<char> := [' ', '!'];
     var str: seq<char> := ['F'];
     var res := isPrefix(pre, str);
-    expect !res;
-    expect isNotPrefixPred(pre, str);
-    expect !isPrefixPred(pre, str);
+    expect res == false;
   }
 
   // Test case for combination {2}/Bpre=3,str=2:
@@ -214,9 +208,7 @@ method Passing()
     var pre: seq<char> := [' ', '!', '"'];
     var str: seq<char> := ['+', ','];
     var res := isPrefix(pre, str);
-    expect !res;
-    expect isNotPrefixPred(pre, str);
-    expect !isPrefixPred(pre, str);
+    expect res == false;
   }
 
   // Test case for combination {1}:
@@ -225,6 +217,7 @@ method Passing()
     var sub: seq<char> := [];
     var str: seq<char> := [];
     var res := isSubstring(sub, str);
+    // expect res == true; // (actual runtime value — not uniquely determined by spec)
     expect res <==> isSubstringPred(sub, str);
   }
 
@@ -234,6 +227,7 @@ method Passing()
     var sub: seq<char> := [];
     var str: seq<char> := [' '];
     var res := isSubstring(sub, str);
+    // expect res == true; // (actual runtime value — not uniquely determined by spec)
     expect res <==> isSubstringPred(sub, str);
   }
 
@@ -243,6 +237,7 @@ method Passing()
     var sub: seq<char> := [];
     var str: seq<char> := [' ', '!'];
     var res := isSubstring(sub, str);
+    // expect res == true; // (actual runtime value — not uniquely determined by spec)
     expect res <==> isSubstringPred(sub, str);
   }
 
@@ -252,6 +247,7 @@ method Passing()
     var sub: seq<char> := [];
     var str: seq<char> := [' ', '"', '!'];
     var res := isSubstring(sub, str);
+    // expect res == true; // (actual runtime value — not uniquely determined by spec)
     expect res <==> isSubstringPred(sub, str);
   }
 
@@ -262,6 +258,7 @@ method Passing()
     var str1: seq<char> := [];
     var str2: seq<char> := [];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == true; // (actual runtime value — not uniquely determined by spec)
     expect found <==> haveCommonKSubstringPred(k, str1, str2);
   }
 
@@ -272,6 +269,7 @@ method Passing()
     var str1: seq<char> := ['!', ' ', '"'];
     var str2: seq<char> := ['F'];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == false; // (actual runtime value — not uniquely determined by spec)
     expect found <==> haveCommonKSubstringPred(k, str1, str2);
   }
 
@@ -282,6 +280,7 @@ method Passing()
     var str1: seq<char> := [' ', '"', '!'];
     var str2: seq<char> := [];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == false; // (actual runtime value — not uniquely determined by spec)
     expect found <==> haveCommonKSubstringPred(k, str1, str2);
   }
 
@@ -292,6 +291,7 @@ method Passing()
     var str1: seq<char> := [' ', '!'];
     var str2: seq<char> := [' ', '!', '"'];
     var found := haveCommonKSubstring(k, str1, str2);
+    // expect found == true; // (actual runtime value — not uniquely determined by spec)
     expect found <==> haveCommonKSubstringPred(k, str1, str2);
   }
 
@@ -302,7 +302,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [];
+    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
@@ -314,7 +316,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' '];
+    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
@@ -326,7 +330,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!'];
+    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
@@ -338,7 +344,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!', '"'];
+    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
+    // expect len == 0; // (actual runtime value — not uniquely determined by spec)
     expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9__427_BBR_true.dfy
 // Method: ComputeFib
-// Generated: 2026-03-26 15:03:11
+// Generated: 2026-04-01 14:00:58
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9.dfy
 
@@ -49,7 +49,7 @@ method Failing()
     // expect b == fib(n);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: b == fib(n)
   {
     var n := 1;

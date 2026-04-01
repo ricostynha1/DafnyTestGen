@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2097_LVR_1.dfy
 // Method: InsertPrime
-// Generated: 2026-03-28 21:52:27
+// Generated: 2026-04-01 13:53:34
 
 // DafnyPrograms_tmp_tmp74_f9k_c_prime-database.dfy
 
@@ -64,8 +64,8 @@ class {:autocontracts} PrimeMap {
     requires prime(n)
     modifies this
     ensures Valid()
-    ensures fresh(Repr - (Repr))
-    ensures database.Keys == (database.Keys) + {n}
+    ensures fresh(Repr - old(Repr))
+    ensures database.Keys == old(database.Keys) + {n}
     ensures database == database[n := true]
     decreases n
   {
@@ -76,8 +76,8 @@ class {:autocontracts} PrimeMap {
     requires Valid()
     modifies this
     ensures Valid()
-    ensures fresh(Repr - (Repr))
-    ensures database.Keys == (database.Keys) + {n}
+    ensures fresh(Repr - old(Repr))
+    ensures database.Keys == old(database.Keys) + {n}
     ensures prime(n) <==> database == database[n := true]
     ensures !prime(n) <==> database == database[n := false]
     decreases n
@@ -91,8 +91,8 @@ class {:autocontracts} PrimeMap {
     requires Valid()
     modifies Repr
     ensures Valid()
-    ensures fresh(Repr - (Repr))
-    ensures database.Keys == (database.Keys)
+    ensures fresh(Repr - old(Repr))
+    ensures database.Keys == old(database.Keys)
     ensures n in database && prime(n) <==> answer == Yes
     ensures n in database && !prime(n) <==> answer == No
     ensures !(n in database) <==> answer == Unknown

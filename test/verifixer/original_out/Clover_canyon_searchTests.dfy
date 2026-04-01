@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_canyon_search.dfy
 // Method: CanyonSearch
-// Generated: 2026-03-26 14:55:10
+// Generated: 2026-04-01 13:48:43
 
 // Clover_canyon_search.dfy
 
@@ -43,47 +43,59 @@ method Passing()
   {
     var a := new int[1] [19257];
     var b := new int[1] [9531];
+    expect a.Length != 0 && b.Length != 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    expect forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]; // PRE-CHECK
     var d := CanyonSearch(a, b);
     expect d == 9726;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=2:
   //   PRE:  a.Length != 0 && b.Length != 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   PRE:  forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]
   //   POST: exists i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length && d == if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   //   POST: forall i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length ==> d <= if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   {
-    var a := new int[1] [-5762];
-    var b := new int[2] [-6906, -6905];
+    var a := new int[1] [6602];
+    var b := new int[2] [7, 749];
+    expect a.Length != 0 && b.Length != 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    expect forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]; // PRE-CHECK
     var d := CanyonSearch(a, b);
-    expect d == 1143;
+    expect d == 5853;
   }
 
-  // Test case for combination {1}/Ba=3,b=1:
+  // Test case for combination {1}/Ba=1,b=3:
   //   PRE:  a.Length != 0 && b.Length != 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   PRE:  forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]
   //   POST: exists i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length && d == if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   //   POST: forall i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length ==> d <= if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   {
-    var a := new int[3] [-9931, -9930, -3934];
-    var b := new int[1] [-6932];
+    var a := new int[1] [4600];
+    var b := new int[3] [2322, 6878, 10488];
+    expect a.Length != 0 && b.Length != 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    expect forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]; // PRE-CHECK
     var d := CanyonSearch(a, b);
-    expect d == 2998;
+    expect d == 2278;
   }
 
-  // Test case for combination {1}/Ba=2,b=3:
+  // Test case for combination {1}/Ba=2,b=1:
   //   PRE:  a.Length != 0 && b.Length != 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   PRE:  forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]
   //   POST: exists i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length && d == if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   //   POST: forall i: int, j: int {:trigger b[j], a[i]} :: 0 <= i < a.Length && 0 <= j < b.Length ==> d <= if a[i] < b[j] then b[j] - a[i] else a[i] - b[j]
   {
-    var a := new int[2] [9402, 12907];
-    var b := new int[3] [-4517, 5015, 17294];
+    var a := new int[2] [6818, 6819];
+    var b := new int[1] [6283];
+    expect a.Length != 0 && b.Length != 0; // PRE-CHECK
+    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    expect forall i: int, j: int {:trigger b[j], b[i]} :: 0 <= i < j < b.Length ==> b[i] <= b[j]; // PRE-CHECK
     var d := CanyonSearch(a, b);
-    expect d == 4387;
+    expect d == 535;
   }
 
 }

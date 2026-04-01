@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-03-31 21:54:48
+// Generated: 2026-04-01 13:47:57
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -48,7 +48,6 @@ method Passing()
     var s: seq<int> := [];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
-    expect forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i]);
   }
 
   // Test case for combination {2}:
@@ -58,7 +57,6 @@ method Passing()
     var s: seq<int> := [3];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
-    expect !forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i]);
   }
 
   // Test case for combination {1}/Bs=1:
@@ -68,7 +66,6 @@ method Passing()
     var s: seq<int> := [0];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
-    expect forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i]);
   }
 
   // Test case for combination {1}/Bs=2:
@@ -78,7 +75,6 @@ method Passing()
     var s: seq<int> := [0, 6];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
-    expect forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i]);
   }
 
 }

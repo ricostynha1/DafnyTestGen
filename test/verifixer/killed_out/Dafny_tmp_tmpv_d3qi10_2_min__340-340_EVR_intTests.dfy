@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmpv_d3qi10_2_min__340-340_EVR_int.dfy
 // Method: minMethod
-// Generated: 2026-03-26 14:57:08
+// Generated: 2026-04-01 13:54:34
 
 // Dafny_tmp_tmpv_d3qi10_2_min.dfy
 
@@ -107,14 +107,16 @@ method Passing()
     expect c == 0;
   }
 
-  // Test case for combination {1}:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
+  // Test case for combination {2}/Ba=1,b=0:
+  //   POST: c <= a
+  //   POST: c <= b
+  //   POST: c == b
+  //   POST: c == min(a, b)
   {
-    var a := new int[1] [0];
-    var m := minArray(a);
-    expect m == 0;
+    var a := 1;
+    var b := 0;
+    var c := minMethod(a, b);
+    expect c == 0;
   }
 
   // Test case for combination {1}:
@@ -122,7 +124,19 @@ method Passing()
   //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
   //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
+    var a := new int[1] [0];
+    expect a != null && a.Length > 0; // PRE-CHECK
+    var m := minArray(a);
+    expect m == 0;
+  }
+
+  // Test case for combination {1}/Ba=2:
+  //   PRE:  a != null && a.Length > 0
+  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
+  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
+  {
     var a := new int[2] [0, 39];
+    expect a != null && a.Length > 0; // PRE-CHECK
     var m := minArray(a);
     expect m == 0;
   }
@@ -132,27 +146,17 @@ method Passing()
   //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
   //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
-    var a := new int[3] [28957, 28958, 28959];
+    var a := new int[3] [7718, 7719, 7720];
+    expect a != null && a.Length > 0; // PRE-CHECK
     var m := minArray(a);
-    expect m == 28957;
+    expect m == 7718;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == a
-  //   POST: c == min(a, b)
-  {
-    var a := -1;
-    var b := 0;
-    var c := minMethod(a, b);
-    // expect c == -1;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

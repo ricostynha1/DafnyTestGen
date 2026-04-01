@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p6__942_ROR_Gt.dfy
 // Method: FilterVowelsArray
-// Generated: 2026-03-26 14:57:45
+// Generated: 2026-04-01 13:55:16
 
 // dafny-duck_tmp_tmplawbgxjo_p6.dfy
 
@@ -69,7 +69,7 @@ method Passing()
     expect FilterVowels(xs[..]) == ys[..];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bxs=1:
   //   POST: FilterVowels(xs[..]) == ys[..]
   {
     var xs := new char[1] [' '];

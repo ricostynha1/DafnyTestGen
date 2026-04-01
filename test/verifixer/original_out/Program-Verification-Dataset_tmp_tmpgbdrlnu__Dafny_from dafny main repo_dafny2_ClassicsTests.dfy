@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 // Method: AdditiveFactorial
-// Generated: 2026-03-26 14:59:33
+// Generated: 2026-04-01 13:53:38
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 
@@ -66,7 +66,7 @@ method FIND(A: array<int>, N: int, f: int)
       invariant (i == m && j == n && r == A[f]) || (m < i && j < n)
       decreases j - i
     {
-      ghost var firstIteration := i == m && j == n;
+      var firstIteration := i == m && j == n;
       while A[i] < r
         invariant m <= i <= N && (firstIteration ==> i <= f)
         invariant exists g: int {:trigger A[g]} :: i <= g < N && r <= A[g]
@@ -112,15 +112,15 @@ method Passing()
   {
     var n := 0;
     var u := AdditiveFactorial(n);
-    expect u == 1; // == Factorial(n)
+    expect u == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: u == Factorial(n)
   {
     var n := 1;
     var u := AdditiveFactorial(n);
-    expect u == 1; // == Factorial(n)
+    expect u == 1;
   }
 
   // Test case for combination {1}/R3:
@@ -128,7 +128,7 @@ method Passing()
   {
     var n := 2;
     var u := AdditiveFactorial(n);
-    expect u == 2; // == Factorial(n)
+    expect u == 2;
   }
 
   // Test case for combination {1}:
@@ -139,11 +139,13 @@ method Passing()
     var A := new int[1] [6];
     var N := 1;
     var f := 0;
+    expect A.Length == N; // PRE-CHECK
+    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/R2:
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
@@ -151,6 +153,8 @@ method Passing()
     var A := new int[2] [10, 11];
     var N := 2;
     var f := 1;
+    expect A.Length == N; // PRE-CHECK
+    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
@@ -163,6 +167,22 @@ method Passing()
     var A := new int[2] [9, 8];
     var N := 2;
     var f := 0;
+    expect A.Length == N; // PRE-CHECK
+    expect 0 <= f < N; // PRE-CHECK
+    FIND(A, N, f);
+    expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  A.Length == N
+  //   PRE:  0 <= f < N
+  //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  {
+    var A := new int[3] [9, 8, 10];
+    var N := 3;
+    var f := 0;
+    expect A.Length == N; // PRE-CHECK
+    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
