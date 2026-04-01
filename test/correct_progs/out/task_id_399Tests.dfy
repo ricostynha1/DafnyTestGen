@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-03-31 21:46:37
+// Generated: 2026-03-31 21:52:33
 
 // Performs the bitwise XOR operation on two sequences of bv32 values (with equal length).
 method BitwiseXOR(a: seq<bv32>, b: seq<bv32>) returns (result: seq<bv32>)
@@ -30,7 +30,7 @@ method BitwiseXORTest(){
 }
 
 
-method GeneratedTests_BitwiseXOR()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -86,8 +86,13 @@ method GeneratedTests_BitwiseXOR()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_BitwiseXOR();
-  print "GeneratedTests_BitwiseXOR: all tests passed!\n";
+  Passing();
+  Failing();
 }

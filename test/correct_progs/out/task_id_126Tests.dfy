@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-03-31 21:46:10
+// Generated: 2026-03-31 21:51:33
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -69,7 +69,7 @@ method SumOfCommonDivisorsTest(){
 
 }
 
-method GeneratedTests_SumOfCommonDivisors()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a > 0 && b > 0
@@ -77,10 +77,9 @@ method GeneratedTests_SumOfCommonDivisors()
   {
     var a := 1;
     var b := 1;
-    var check_sum := sumSeq(commonDivisors(a, b));
     expect a > 0 && b > 0; // PRE-CHECK
     var sum := SumOfCommonDivisors(a, b);
-    expect sum == check_sum;
+    expect sum == 1;
   }
 
   // Test case for combination {1}/Ba=1,b=2:
@@ -89,10 +88,9 @@ method GeneratedTests_SumOfCommonDivisors()
   {
     var a := 1;
     var b := 2;
-    var check_sum := sumSeq(commonDivisors(a, b));
     expect a > 0 && b > 0; // PRE-CHECK
     var sum := SumOfCommonDivisors(a, b);
-    expect sum == check_sum;
+    expect sum == 1;
   }
 
   // Test case for combination {1}/Ba=2,b=1:
@@ -101,10 +99,9 @@ method GeneratedTests_SumOfCommonDivisors()
   {
     var a := 2;
     var b := 1;
-    var check_sum := sumSeq(commonDivisors(a, b));
     expect a > 0 && b > 0; // PRE-CHECK
     var sum := SumOfCommonDivisors(a, b);
-    expect sum == check_sum;
+    expect sum == 1;
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -113,16 +110,20 @@ method GeneratedTests_SumOfCommonDivisors()
   {
     var a := 2;
     var b := 2;
-    var check_sum := sumSeq(commonDivisors(a, b));
     expect a > 0 && b > 0; // PRE-CHECK
     var sum := SumOfCommonDivisors(a, b);
-    expect sum == check_sum;
+    expect sum == 3;
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SumOfCommonDivisors();
-  print "GeneratedTests_SumOfCommonDivisors: all tests passed!\n";
+  Passing();
+  Failing();
 }

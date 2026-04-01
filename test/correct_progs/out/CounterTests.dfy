@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-03-31 21:45:45
+// Generated: 2026-03-31 21:50:06
 
 class Counter {
     var count: int
@@ -23,7 +23,7 @@ class Counter {
 }
 
 
-method GeneratedTests_Increment()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  count >= 0
@@ -61,10 +61,6 @@ method GeneratedTests_Increment()
     expect obj.count == old_count + 1;
   }
 
-}
-
-method GeneratedTests_Reset()
-{
   // Test case for combination {1}:
   //   POST: count == 0
   {
@@ -94,10 +90,13 @@ method GeneratedTests_Reset()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Increment();
-  print "GeneratedTests_Increment: all tests passed!\n";
-  GeneratedTests_Reset();
-  print "GeneratedTests_Reset: all tests passed!\n";
+  Passing();
+  Failing();
 }

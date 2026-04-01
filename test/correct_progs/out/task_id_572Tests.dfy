@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-03-31 21:46:50
+// Generated: 2026-03-31 21:53:23
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -53,7 +53,7 @@ method RemoveDuplicatesTest(){
   assert res2 == [1];
 }
 
-method GeneratedTests_RemoveDuplicates()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == DeDup(a[..])
@@ -93,8 +93,13 @@ method GeneratedTests_RemoveDuplicates()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_RemoveDuplicates();
-  print "GeneratedTests_RemoveDuplicates: all tests passed!\n";
+  Passing();
+  Failing();
 }

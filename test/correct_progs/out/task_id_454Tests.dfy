@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_454.dfy
 // Method: ContainsZ
-// Generated: 2026-03-31 21:46:44
+// Generated: 2026-03-31 21:52:57
 
 // Checks if a string contains the letter 'z' or 'Z'
 method ContainsZ(s: string) returns (result: bool)
@@ -33,7 +33,7 @@ method ContainsZTest() {
   assert !out3;
 }
 
-method GeneratedTests_ContainsZ()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -81,8 +81,13 @@ method GeneratedTests_ContainsZ()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ContainsZ();
-  print "GeneratedTests_ContainsZ: all tests passed!\n";
+  Passing();
+  Failing();
 }

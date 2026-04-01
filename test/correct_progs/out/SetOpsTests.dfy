@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-03-31 21:46:02
+// Generated: 2026-03-31 21:51:14
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -118,7 +118,7 @@ method SetUnionColor(A: set<Color>, B: set<Color>) returns (C: set<Color>)
 }
 
 
-method GeneratedTests_SetContains()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |S| > 0
@@ -164,10 +164,6 @@ method GeneratedTests_SetContains()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_SetUnion()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -204,10 +200,6 @@ method GeneratedTests_SetUnion()
     expect C == {-2, -1, 1};
   }
 
-}
-
-method GeneratedTests_SetIntersection()
-{
   // Test case for combination {1}:
   //   POST: C == A * B
   {
@@ -244,10 +236,6 @@ method GeneratedTests_SetIntersection()
     expect C == {};
   }
 
-}
-
-method GeneratedTests_SetDifference()
-{
   // Test case for combination {1}:
   //   POST: C == A - B
   {
@@ -284,10 +272,6 @@ method GeneratedTests_SetDifference()
     expect C == {};
   }
 
-}
-
-method GeneratedTests_SetSubset()
-{
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
@@ -332,10 +316,6 @@ method GeneratedTests_SetSubset()
     expect r == true;
   }
 
-}
-
-method GeneratedTests_AllPositive()
-{
   // Test case for combination {1}:
   //   POST: r == forall x :: x in S ==> x > 0
   {
@@ -348,33 +328,26 @@ method GeneratedTests_AllPositive()
   //   POST: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {1};
-    var check_r := forall x :: x in S ==> x > 0;
     var r := AllPositive(S);
-    expect r == check_r;
+    expect r == true;
   }
 
   // Test case for combination {1}/BS=2:
   //   POST: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {4, 5};
-    var check_r := forall x :: x in S ==> x > 0;
     var r := AllPositive(S);
-    expect r == check_r;
+    expect r == true;
   }
 
   // Test case for combination {1}/BS=3:
   //   POST: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {3, 4, 5};
-    var check_r := forall x :: x in S ==> x > 0;
     var r := AllPositive(S);
-    expect r == check_r;
+    expect r == true;
   }
 
-}
-
-method GeneratedTests_HasZero()
-{
   // Test case for combination {1}:
   //   POST: r == exists x :: x in S && x == 0
   {
@@ -387,9 +360,8 @@ method GeneratedTests_HasZero()
   //   POST: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {1};
-    var check_r := exists x :: x in S && x == 0;
     var r := HasZero(S);
-    expect r == check_r;
+    expect r == false;
   }
 
   // Test case for combination {1}/BS=2:
@@ -408,10 +380,6 @@ method GeneratedTests_HasZero()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_SubsetForall()
-{
   // Test case for combination {1}:
   //   POST: r == forall x :: x in A ==> x in B
   {
@@ -448,10 +416,6 @@ method GeneratedTests_SubsetForall()
     expect r == true;
   }
 
-}
-
-method GeneratedTests_AddElement()
-{
   // Test case for combination {1}:
   //   POST: C == S + {x}
   //   POST: x in C
@@ -496,10 +460,6 @@ method GeneratedTests_AddElement()
     expect C == {1};
   }
 
-}
-
-method GeneratedTests_RemoveElement()
-{
   // Test case for combination {1}:
   //   PRE:  x in S
   //   POST: C == S - {x}
@@ -552,10 +512,6 @@ method GeneratedTests_RemoveElement()
     expect C == {1};
   }
 
-}
-
-method GeneratedTests_SetContainsNat()
-{
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
@@ -600,10 +556,6 @@ method GeneratedTests_SetContainsNat()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_SetUnionNat()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -640,10 +592,6 @@ method GeneratedTests_SetUnionNat()
     expect C == {3, 4, 5};
   }
 
-}
-
-method GeneratedTests_SetContainsChar()
-{
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
@@ -688,10 +636,6 @@ method GeneratedTests_SetContainsChar()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_SetUnionChar()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -728,10 +672,6 @@ method GeneratedTests_SetUnionChar()
     expect C == {'d', 'f', 'h'};
   }
 
-}
-
-method GeneratedTests_SetContainsColor()
-{
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
@@ -776,10 +716,6 @@ method GeneratedTests_SetContainsColor()
     expect r == true;
   }
 
-}
-
-method GeneratedTests_SetUnionColor()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -818,38 +754,13 @@ method GeneratedTests_SetUnionColor()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SetContains();
-  print "GeneratedTests_SetContains: all tests passed!\n";
-  GeneratedTests_SetUnion();
-  print "GeneratedTests_SetUnion: all tests passed!\n";
-  GeneratedTests_SetIntersection();
-  print "GeneratedTests_SetIntersection: all tests passed!\n";
-  GeneratedTests_SetDifference();
-  print "GeneratedTests_SetDifference: all tests passed!\n";
-  GeneratedTests_SetSubset();
-  print "GeneratedTests_SetSubset: all tests passed!\n";
-  GeneratedTests_AllPositive();
-  print "GeneratedTests_AllPositive: all tests passed!\n";
-  GeneratedTests_HasZero();
-  print "GeneratedTests_HasZero: all tests passed!\n";
-  GeneratedTests_SubsetForall();
-  print "GeneratedTests_SubsetForall: all tests passed!\n";
-  GeneratedTests_AddElement();
-  print "GeneratedTests_AddElement: all tests passed!\n";
-  GeneratedTests_RemoveElement();
-  print "GeneratedTests_RemoveElement: all tests passed!\n";
-  GeneratedTests_SetContainsNat();
-  print "GeneratedTests_SetContainsNat: all tests passed!\n";
-  GeneratedTests_SetUnionNat();
-  print "GeneratedTests_SetUnionNat: all tests passed!\n";
-  GeneratedTests_SetContainsChar();
-  print "GeneratedTests_SetContainsChar: all tests passed!\n";
-  GeneratedTests_SetUnionChar();
-  print "GeneratedTests_SetUnionChar: all tests passed!\n";
-  GeneratedTests_SetContainsColor();
-  print "GeneratedTests_SetContainsColor: all tests passed!\n";
-  GeneratedTests_SetUnionColor();
-  print "GeneratedTests_SetUnionColor: all tests passed!\n";
+  Passing();
+  Failing();
 }

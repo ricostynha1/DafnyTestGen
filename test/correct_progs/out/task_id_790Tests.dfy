@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-03-31 21:47:13
+// Generated: 2026-03-31 21:54:48
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -39,7 +39,7 @@ method IsEvenAtIndexEvenTest(){
   assert res3;
 }
 
-method GeneratedTests_IsEvenAtIndexEven()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -83,8 +83,13 @@ method GeneratedTests_IsEvenAtIndexEven()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_IsEvenAtIndexEven();
-  print "GeneratedTests_IsEvenAtIndexEven: all tests passed!\n";
+  Passing();
+  Failing();
 }

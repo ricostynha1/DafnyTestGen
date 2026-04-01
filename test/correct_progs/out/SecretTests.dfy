@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-03-31 21:46:01
+// Generated: 2026-03-31 21:51:09
 
 class Secret {
     var secret: int
@@ -27,7 +27,7 @@ class Secret {
 }
 
 
-method GeneratedTests_Guess()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  known == false
@@ -135,8 +135,13 @@ method GeneratedTests_Guess()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_Guess();
-  print "GeneratedTests_Guess: all tests passed!\n";
+  Passing();
+  Failing();
 }

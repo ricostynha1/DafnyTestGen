@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-03-31 21:46:51
+// Generated: 2026-03-31 21:53:28
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.
@@ -47,7 +47,7 @@ method IsSublistTest(){
     assert r4;
 }
 
-method GeneratedTests_IsSublist()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -95,8 +95,13 @@ method GeneratedTests_IsSublist()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_IsSublist();
-  print "GeneratedTests_IsSublist: all tests passed!\n";
+  Passing();
+  Failing();
 }

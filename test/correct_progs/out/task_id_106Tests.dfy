@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-03-31 21:46:08
+// Generated: 2026-03-31 21:51:28
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)
@@ -32,7 +32,7 @@ method AppendArrayToSeqTest(){
   assert res3 == [11, 12, 7, 8, 9];
 }
 
-method GeneratedTests_AppendArrayToSeq()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: r == s + a[..]
@@ -72,8 +72,13 @@ method GeneratedTests_AppendArrayToSeq()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_AppendArrayToSeq();
-  print "GeneratedTests_AppendArrayToSeq: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-03-31 21:47:02
+// Generated: 2026-03-31 21:54:04
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -51,7 +51,7 @@ method SmallestMissingNumberTest() {
 }
 
 
-method GeneratedTests_SmallestMissingNumber()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
@@ -95,8 +95,13 @@ method GeneratedTests_SmallestMissingNumber()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SmallestMissingNumber();
-  print "GeneratedTests_SmallestMissingNumber: all tests passed!\n";
+  Passing();
+  Failing();
 }

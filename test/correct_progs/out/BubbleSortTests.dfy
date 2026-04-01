@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-03-31 21:45:42
+// Generated: 2026-03-31 21:49:51
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -56,7 +56,7 @@ method BubbleSort(a: array<int>)
 
 
 
-method GeneratedTests_BubbleSort()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
@@ -104,8 +104,13 @@ method GeneratedTests_BubbleSort()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_BubbleSort();
-  print "GeneratedTests_BubbleSort: all tests passed!\n";
+  Passing();
+  Failing();
 }

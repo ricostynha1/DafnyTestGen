@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-03-31 21:47:02
+// Generated: 2026-03-31 21:54:07
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -72,7 +72,7 @@ method FindEvenNumbersTest(){
     assert res5 == [];
 }
 
-method GeneratedTests_FindEvenNumbers()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: evenList == Filter(arr[..], IsEven)
@@ -112,8 +112,13 @@ method GeneratedTests_FindEvenNumbers()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FindEvenNumbers();
-  print "GeneratedTests_FindEvenNumbers: all tests passed!\n";
+  Passing();
+  Failing();
 }

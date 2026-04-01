@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-03-31 21:45:52
+// Generated: 2026-03-31 21:50:39
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -52,7 +52,7 @@ method MapKeys(m: map<int, int>) returns (r: set<int>)
 }
 
 
-method GeneratedTests_MapContains()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |m| > 0
@@ -98,10 +98,6 @@ method GeneratedTests_MapContains()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_MapLookup()
-{
   // Test case for combination {1}:
   //   PRE:  k in m
   //   POST: r == m[k]
@@ -146,10 +142,6 @@ method GeneratedTests_MapLookup()
     expect r == 0;
   }
 
-}
-
-method GeneratedTests_MapSize()
-{
   // Test case for combination {1}:
   //   POST: r == |m|
   {
@@ -182,10 +174,6 @@ method GeneratedTests_MapSize()
     expect r == 2;
   }
 
-}
-
-method GeneratedTests_MapUpdate()
-{
   // Test case for combination {1}:
   //   POST: r == m[k := v]
   //   POST: k in r
@@ -246,10 +234,6 @@ method GeneratedTests_MapUpdate()
     expect r[k] == v;
   }
 
-}
-
-method GeneratedTests_MapMerge()
-{
   // Test case for combination {1}:
   //   POST: r == a + b
   {
@@ -290,10 +274,6 @@ method GeneratedTests_MapMerge()
     expect r == check_r;
   }
 
-}
-
-method GeneratedTests_MapRemoveKey()
-{
   // Test case for combination {1}:
   //   PRE:  k in m
   //   POST: r == m - {k}
@@ -350,10 +330,6 @@ method GeneratedTests_MapRemoveKey()
     expect k !in r;
   }
 
-}
-
-method GeneratedTests_MapKeys()
-{
   // Test case for combination {1}:
   //   POST: r == m.Keys
   {
@@ -392,20 +368,13 @@ method GeneratedTests_MapKeys()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_MapContains();
-  print "GeneratedTests_MapContains: all tests passed!\n";
-  GeneratedTests_MapLookup();
-  print "GeneratedTests_MapLookup: all tests passed!\n";
-  GeneratedTests_MapSize();
-  print "GeneratedTests_MapSize: all tests passed!\n";
-  GeneratedTests_MapUpdate();
-  print "GeneratedTests_MapUpdate: all tests passed!\n";
-  GeneratedTests_MapMerge();
-  print "GeneratedTests_MapMerge: all tests passed!\n";
-  GeneratedTests_MapRemoveKey();
-  print "GeneratedTests_MapRemoveKey: all tests passed!\n";
-  GeneratedTests_MapKeys();
-  print "GeneratedTests_MapKeys: all tests passed!\n";
+  Passing();
+  Failing();
 }

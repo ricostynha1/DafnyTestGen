@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_624.dfy
 // Method: ToUppercase
-// Generated: 2026-03-31 21:47:01
+// Generated: 2026-03-31 21:54:02
 
 // Converts a string to uppercase (only 'a' to 'z' characters are converted).
 method ToUppercase(s: string) returns (v: string)
@@ -35,7 +35,7 @@ method ToUppercaseTest(){
 
 }
 
-method GeneratedTests_ToUppercase()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToUpper)
@@ -71,8 +71,13 @@ method GeneratedTests_ToUppercase()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ToUppercase();
-  print "GeneratedTests_ToUppercase: all tests passed!\n";
+  Passing();
+  Failing();
 }

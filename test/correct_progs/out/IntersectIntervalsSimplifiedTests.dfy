@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-03-31 21:45:50
+// Generated: 2026-03-31 21:50:28
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -51,7 +51,7 @@ predicate IsMin(a: array<real>, min: real, len : nat := a.Length)
 
 
 
-method GeneratedTests_IntersectIntervals()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
@@ -106,8 +106,13 @@ method GeneratedTests_IntersectIntervals()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_IntersectIntervals();
-  print "GeneratedTests_IntersectIntervals: all tests passed!\n";
+  Passing();
+  Failing();
 }

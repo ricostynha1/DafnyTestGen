@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-31 21:45:46
+// Generated: 2026-03-31 21:50:14
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -42,16 +42,15 @@ lemma PowerSquareLemma(x: real, n: nat)
 
 
 
-method GeneratedTests_FastExponentiation()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: p == Power(x, n)
   {
     var x := 0.0;
     var n := 0;
-    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == check_p;
+    expect p == 1.0;
   }
 
   // Test case for combination {1}/Bx=0.0,n=1:
@@ -59,9 +58,8 @@ method GeneratedTests_FastExponentiation()
   {
     var x := 0.0;
     var n := 1;
-    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == check_p;
+    expect p == 0.0;
   }
 
   // Test case for combination {1}/Bx=1.0,n=0:
@@ -69,9 +67,8 @@ method GeneratedTests_FastExponentiation()
   {
     var x := 1.0;
     var n := 0;
-    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == check_p;
+    expect p == 1.0;
   }
 
   // Test case for combination {1}/Bx=1.0,n=1:
@@ -79,15 +76,19 @@ method GeneratedTests_FastExponentiation()
   {
     var x := 1.0;
     var n := 1;
-    var check_p := Power(x, n);
     var p := FastExponentiation(x, n);
-    expect p == check_p;
+    expect p == 1.0;
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FastExponentiation();
-  print "GeneratedTests_FastExponentiation: all tests passed!\n";
+  Passing();
+  Failing();
 }

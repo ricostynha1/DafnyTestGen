@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-03-31 21:47:15
+// Generated: 2026-03-31 21:54:52
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -43,7 +43,7 @@ method LastPositionTest(){
     assert out3 == -1;
 }
 
-method GeneratedTests_LastPosition()
+method Passing()
 {
   // Test case for combination {3}:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
@@ -99,8 +99,13 @@ method GeneratedTests_LastPosition()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_LastPosition();
-  print "GeneratedTests_LastPosition: all tests passed!\n";
+  Passing();
+  Failing();
 }

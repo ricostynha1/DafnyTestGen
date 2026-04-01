@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-03-31 21:45:55
+// Generated: 2026-03-31 21:50:50
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -64,7 +64,7 @@ method MultisetUnionNat(A: multiset<nat>, B: multiset<nat>) returns (C: multiset
 }
 
 
-method GeneratedTests_MultisetContains()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |M| > 0
@@ -110,10 +110,6 @@ method GeneratedTests_MultisetContains()
     expect r == false;
   }
 
-}
-
-method GeneratedTests_MultisetUnion()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -150,10 +146,6 @@ method GeneratedTests_MultisetUnion()
     expect C == multiset{4, 5};
   }
 
-}
-
-method GeneratedTests_MultisetIntersection()
-{
   // Test case for combination {1}:
   //   POST: C == A * B
   {
@@ -190,10 +182,6 @@ method GeneratedTests_MultisetIntersection()
     expect C == multiset{};
   }
 
-}
-
-method GeneratedTests_MultisetDifference()
-{
   // Test case for combination {1}:
   //   POST: C == A - B
   {
@@ -230,10 +218,6 @@ method GeneratedTests_MultisetDifference()
     expect C == multiset{};
   }
 
-}
-
-method GeneratedTests_MultisetSubset()
-{
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
@@ -278,10 +262,6 @@ method GeneratedTests_MultisetSubset()
     expect r == true;
   }
 
-}
-
-method GeneratedTests_MultisetCount()
-{
   // Test case for combination {1}:
   //   POST: r == M[x]
   {
@@ -318,10 +298,6 @@ method GeneratedTests_MultisetCount()
     expect r == 0;
   }
 
-}
-
-method GeneratedTests_AddElement()
-{
   // Test case for combination {1}:
   //   POST: C == M + multiset{x}
   //   POST: x in C
@@ -362,10 +338,6 @@ method GeneratedTests_AddElement()
     expect C == multiset{0, 0};
   }
 
-}
-
-method GeneratedTests_MultisetContainsNat()
-{
   // Test case for combination {1}:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
@@ -410,10 +382,6 @@ method GeneratedTests_MultisetContainsNat()
     expect r == true;
   }
 
-}
-
-method GeneratedTests_MultisetUnionNat()
-{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
@@ -452,24 +420,13 @@ method GeneratedTests_MultisetUnionNat()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_MultisetContains();
-  print "GeneratedTests_MultisetContains: all tests passed!\n";
-  GeneratedTests_MultisetUnion();
-  print "GeneratedTests_MultisetUnion: all tests passed!\n";
-  GeneratedTests_MultisetIntersection();
-  print "GeneratedTests_MultisetIntersection: all tests passed!\n";
-  GeneratedTests_MultisetDifference();
-  print "GeneratedTests_MultisetDifference: all tests passed!\n";
-  GeneratedTests_MultisetSubset();
-  print "GeneratedTests_MultisetSubset: all tests passed!\n";
-  GeneratedTests_MultisetCount();
-  print "GeneratedTests_MultisetCount: all tests passed!\n";
-  GeneratedTests_AddElement();
-  print "GeneratedTests_AddElement: all tests passed!\n";
-  GeneratedTests_MultisetContainsNat();
-  print "GeneratedTests_MultisetContainsNat: all tests passed!\n";
-  GeneratedTests_MultisetUnionNat();
-  print "GeneratedTests_MultisetUnionNat: all tests passed!\n";
+  Passing();
+  Failing();
 }

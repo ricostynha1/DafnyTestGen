@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-03-31 21:46:06
+// Generated: 2026-03-31 21:51:21
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -80,7 +80,7 @@ method testStack()
     print "top = ", y, " \n";
 }
 
-method GeneratedTests_push()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  !isFull()
@@ -156,10 +156,6 @@ method GeneratedTests_push()
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
-}
-
-method GeneratedTests_top()
-{
   // Test case for combination {1}:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
@@ -206,10 +202,6 @@ method GeneratedTests_top()
     expect res == 5;
   }
 
-}
-
-method GeneratedTests_pop()
-{
   // Test case for combination {1}:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
@@ -264,12 +256,13 @@ method GeneratedTests_pop()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_push();
-  print "GeneratedTests_push: all tests passed!\n";
-  GeneratedTests_top();
-  print "GeneratedTests_top: all tests passed!\n";
-  GeneratedTests_pop();
-  print "GeneratedTests_pop: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-03-31 21:46:08
+// Generated: 2026-03-31 21:51:25
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -36,39 +36,41 @@ method CountTrueTest(){
 }
 
 
-method GeneratedTests_CalcCountTrue()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: count == multiset(a[..])[true]
   {
     var a := new bool[0] [];
-    var check_count := multiset(a[..])[true];
     var count := CalcCountTrue(a);
-    expect count == check_count;
+    expect count == 0;
   }
 
   // Test case for combination {1}/Ba=1:
   //   POST: count == multiset(a[..])[true]
   {
     var a := new bool[1] [false];
-    var check_count := multiset(a[..])[true];
     var count := CalcCountTrue(a);
-    expect count == check_count;
+    expect count == 0;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: count == multiset(a[..])[true]
   {
     var a := new bool[2] [true, false];
-    var check_count := multiset(a[..])[true];
     var count := CalcCountTrue(a);
-    expect count == check_count;
+    expect count == 1;
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcCountTrue();
-  print "GeneratedTests_CalcCountTrue: all tests passed!\n";
+  Passing();
+  Failing();
 }

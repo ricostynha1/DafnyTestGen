@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-03-31 21:47:18
+// Generated: 2026-03-31 21:55:04
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -52,7 +52,7 @@ method FindFirstOddTest(){
     assert out3 == -1;
 }
 
-method GeneratedTests_FindFirstOdd()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsFirstOdd(a, index)
@@ -88,8 +88,13 @@ method GeneratedTests_FindFirstOdd()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FindFirstOdd();
-  print "GeneratedTests_FindFirstOdd: all tests passed!\n";
+  Passing();
+  Failing();
 }

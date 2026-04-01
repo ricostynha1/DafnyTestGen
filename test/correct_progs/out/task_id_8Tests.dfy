@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
 // Method: SquareElements
-// Generated: 2026-03-31 21:47:16
+// Generated: 2026-03-31 21:54:58
 
 // Returns an array of the same length as the input array, 
 // with each element of the input array squared.
@@ -35,7 +35,7 @@ method SquareElementsTest(){
   assert res3[..] == [];
 }
 
-method GeneratedTests_SquareElements()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: squared.Length == a.Length
@@ -79,8 +79,13 @@ method GeneratedTests_SquareElements()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SquareElements();
-  print "GeneratedTests_SquareElements: all tests passed!\n";
+  Passing();
+  Failing();
 }

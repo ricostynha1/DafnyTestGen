@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-03-31 21:47:15
+// Generated: 2026-03-31 21:54:55
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -48,7 +48,7 @@ method ArraySumTest(){
   assert s3 == 0;
 }
 
-method GeneratedTests_CalcArraySum()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= n <= a.Length
@@ -56,10 +56,9 @@ method GeneratedTests_CalcArraySum()
   {
     var a := new int[0] [];
     var n := 0;
-    var check_sum := ArraySum(a, 0, n);
     expect 0 <= n <= a.Length; // PRE-CHECK
     var sum := CalcArraySum(a, n);
-    expect sum == check_sum;
+    expect sum == 0;
   }
 
   // Test case for combination {1}/Ba=1,n=0:
@@ -68,10 +67,9 @@ method GeneratedTests_CalcArraySum()
   {
     var a := new int[1] [2];
     var n := 0;
-    var check_sum := ArraySum(a, 0, n);
     expect 0 <= n <= a.Length; // PRE-CHECK
     var sum := CalcArraySum(a, n);
-    expect sum == check_sum;
+    expect sum == 0;
   }
 
   // Test case for combination {1}/Ba=1,n=1:
@@ -80,10 +78,9 @@ method GeneratedTests_CalcArraySum()
   {
     var a := new int[1] [2];
     var n := 1;
-    var check_sum := ArraySum(a, 0, n);
     expect 0 <= n <= a.Length; // PRE-CHECK
     var sum := CalcArraySum(a, n);
-    expect sum == check_sum;
+    expect sum == 2;
   }
 
   // Test case for combination {1}/Ba=2,n=0:
@@ -92,16 +89,20 @@ method GeneratedTests_CalcArraySum()
   {
     var a := new int[2] [4, 3];
     var n := 0;
-    var check_sum := ArraySum(a, 0, n);
     expect 0 <= n <= a.Length; // PRE-CHECK
     var sum := CalcArraySum(a, n);
-    expect sum == check_sum;
+    expect sum == 0;
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcArraySum();
-  print "GeneratedTests_CalcArraySum: all tests passed!\n";
+  Passing();
+  Failing();
 }

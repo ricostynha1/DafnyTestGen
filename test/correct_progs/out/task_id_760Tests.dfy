@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_760.dfy
 // Method: HasOnlyOneDistinctElement
-// Generated: 2026-03-31 21:47:10
+// Generated: 2026-03-31 21:54:35
 
 // Checks if the given array has only one distinct element (or is empty).
 method HasOnlyOneDistinctElement<T(==)>(a: array<T>) returns (result: bool)
@@ -38,7 +38,7 @@ method HasOnlyOneDistinctElementTest(){
 }
 
 
-method GeneratedTests_HasOnlyOneDistinctElement()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -82,8 +82,13 @@ method GeneratedTests_HasOnlyOneDistinctElement()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_HasOnlyOneDistinctElement();
-  print "GeneratedTests_HasOnlyOneDistinctElement: all tests passed!\n";
+  Passing();
+  Failing();
 }

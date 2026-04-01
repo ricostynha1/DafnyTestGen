@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-03-31 21:46:39
+// Generated: 2026-04-01 08:49:32
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -48,48 +48,49 @@ method FilterOddNumbersTest(){
 }
 
 
-method GeneratedTests_FilterOddNumbers()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: oddList == Filter(arr[..], IsOdd)
   {
     var arr := new int[0] [];
-    var check_oddList := Filter(arr[..], IsOdd);
     var oddList := FilterOddNumbers(arr);
-    expect oddList == check_oddList;
+    expect oddList == [];
   }
 
   // Test case for combination {1}/Barr=1:
   //   POST: oddList == Filter(arr[..], IsOdd)
   {
     var arr := new int[1] [2];
-    var check_oddList := Filter(arr[..], IsOdd);
     var oddList := FilterOddNumbers(arr);
-    expect oddList == check_oddList;
+    expect oddList == [];
   }
 
   // Test case for combination {1}/Barr=2:
   //   POST: oddList == Filter(arr[..], IsOdd)
   {
     var arr := new int[2] [4, 3];
-    var check_oddList := Filter(arr[..], IsOdd);
     var oddList := FilterOddNumbers(arr);
-    expect oddList == check_oddList;
+    expect oddList == [3];
   }
 
   // Test case for combination {1}/Barr=3:
   //   POST: oddList == Filter(arr[..], IsOdd)
   {
     var arr := new int[3] [5, 4, 6];
-    var check_oddList := Filter(arr[..], IsOdd);
     var oddList := FilterOddNumbers(arr);
-    expect oddList == check_oddList;
+    expect oddList == [5];
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FilterOddNumbers();
-  print "GeneratedTests_FilterOddNumbers: all tests passed!\n";
+  Passing();
+  Failing();
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-31 21:46:33
+// Generated: 2026-03-31 21:52:20
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -35,7 +35,7 @@ method SubtractSequencesTest(){
   assert res3 == [-3, 7, -3];
 }
 
-method GeneratedTests_ElementWiseSubtraction()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -87,8 +87,13 @@ method GeneratedTests_ElementWiseSubtraction()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ElementWiseSubtraction();
-  print "GeneratedTests_ElementWiseSubtraction: all tests passed!\n";
+  Passing();
+  Failing();
 }

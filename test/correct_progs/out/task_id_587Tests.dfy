@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_587.dfy
 // Method: ArrayToSeq
-// Generated: 2026-03-31 21:46:55
+// Generated: 2026-03-31 21:53:39
 
 // Converts an array to a sequence
 method ArrayToSeq<T>(a: array<T>) returns (s: seq<T>)
@@ -22,7 +22,7 @@ method ArrayToSeqTest(){
 }
 
 
-method GeneratedTests_ArrayToSeq()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: s == a[..]
@@ -58,8 +58,13 @@ method GeneratedTests_ArrayToSeq()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ArrayToSeq();
-  print "GeneratedTests_ArrayToSeq: all tests passed!\n";
+  Passing();
+  Failing();
 }

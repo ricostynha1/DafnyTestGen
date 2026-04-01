@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-03-31 21:47:05
+// Generated: 2026-03-31 21:54:17
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -31,7 +31,7 @@ method AddListsTest(){
   assert res2 == [6, 8, 10];
 }
 
-method GeneratedTests_ElementWiseAddition()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -83,8 +83,13 @@ method GeneratedTests_ElementWiseAddition()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ElementWiseAddition();
-  print "GeneratedTests_ElementWiseAddition: all tests passed!\n";
+  Passing();
+  Failing();
 }
