@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny_tmp_tmp49a6ihvk_m4__713-713_AOI.dfy
 // Method: DutchFlag
-// Generated: 2026-04-01 13:54:17
+// Generated: 2026-04-01 22:26:05
 
 // dafny_tmp_tmp49a6ihvk_m4.dfy
 
@@ -50,7 +50,7 @@ method Passing()
     var a := new Color[0] [];
     var old_a := a[..];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
     expect multiset(a[..]) == multiset(old_a);
   }
 
@@ -61,7 +61,7 @@ method Passing()
     var a := new Color[1] [Red];
     var old_a := a[..];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
     expect multiset(a[..]) == multiset(old_a);
   }
 
@@ -72,7 +72,7 @@ method Passing()
     var a := new Color[2] [Blue, White];
     var old_a := a[..];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
     expect multiset(a[..]) == multiset(old_a);
   }
 
@@ -83,7 +83,7 @@ method Passing()
     var a := new Color[3] [White, Blue, Red];
     var old_a := a[..];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
     expect multiset(a[..]) == multiset(old_a);
   }
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals.dfy
 // Method: RoundDown
-// Generated: 2026-04-01 13:50:44
+// Generated: 2026-04-01 22:27:21
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals.dfy
 

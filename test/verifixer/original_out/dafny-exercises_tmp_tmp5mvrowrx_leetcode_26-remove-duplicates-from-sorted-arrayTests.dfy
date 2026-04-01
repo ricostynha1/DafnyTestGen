@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-array.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-01 13:50:18
+// Generated: 2026-04-01 22:26:39
 
 // dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-array.dfy
 
@@ -67,13 +67,13 @@ method Testing()
   print "nums2: ", nums2[..], ", num_length2: ", num_length2, "\n";
 }
 
-method Main()
+method OriginalMain()
 {
   Testing();
 }
 
 
-method GeneratedTests_RemoveDuplicates()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]
@@ -91,9 +91,9 @@ method GeneratedTests_RemoveDuplicates()
     expect num_length == 1;
     expect nums.Length == old_nums.Length;
     expect 0 <= num_length <= nums.Length;
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < num_length :: nums[i] != nums[j];
-    expect forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old_nums2;
-    expect forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length];
+    expect forall i: int, j: int | 0 <= i < j < num_length :: nums[i] != nums[j];
+    expect forall i: int | 0 <= i < num_length :: nums[i] in old_nums2;
+    expect forall i: int | 0 <= i < nums.Length :: old_nums2[i] in nums[..num_length];
   }
 
   // Test case for combination {1}/Bnums=0:
@@ -112,9 +112,9 @@ method GeneratedTests_RemoveDuplicates()
     expect num_length == 0;
     expect nums.Length == old_nums.Length;
     expect 0 <= num_length <= nums.Length;
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < num_length :: nums[i] != nums[j];
-    expect forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old_nums2;
-    expect forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length];
+    expect forall i: int, j: int | 0 <= i < j < num_length :: nums[i] != nums[j];
+    expect forall i: int | 0 <= i < num_length :: nums[i] in old_nums2;
+    expect forall i: int | 0 <= i < nums.Length :: old_nums2[i] in nums[..num_length];
   }
 
   // Test case for combination {1}/Bnums=2:
@@ -130,11 +130,12 @@ method GeneratedTests_RemoveDuplicates()
     var old_nums2 := nums[..];
     expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
+    // expect num_length == 2; // (actual runtime value — not uniquely determined by spec)
     expect nums.Length == old_nums.Length;
     expect 0 <= num_length <= nums.Length;
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < num_length :: nums[i] != nums[j];
-    expect forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old_nums2;
-    expect forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length];
+    expect forall i: int, j: int | 0 <= i < j < num_length :: nums[i] != nums[j];
+    expect forall i: int | 0 <= i < num_length :: nums[i] in old_nums2;
+    expect forall i: int | 0 <= i < nums.Length :: old_nums2[i] in nums[..num_length];
   }
 
   // Test case for combination {1}/Bnums=3:
@@ -150,11 +151,23 @@ method GeneratedTests_RemoveDuplicates()
     var old_nums2 := nums[..];
     expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
+    // expect num_length == 3; // (actual runtime value — not uniquely determined by spec)
     expect nums.Length == old_nums.Length;
     expect 0 <= num_length <= nums.Length;
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < num_length :: nums[i] != nums[j];
-    expect forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old_nums2;
-    expect forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length];
+    expect forall i: int, j: int | 0 <= i < j < num_length :: nums[i] != nums[j];
+    expect forall i: int | 0 <= i < num_length :: nums[i] in old_nums2;
+    expect forall i: int | 0 <= i < nums.Length :: old_nums2[i] in nums[..num_length];
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
 }

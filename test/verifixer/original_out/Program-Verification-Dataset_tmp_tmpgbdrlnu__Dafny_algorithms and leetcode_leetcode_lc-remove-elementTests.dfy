@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element.dfy
 // Method: removeElement
-// Generated: 2026-04-01 13:53:16
+// Generated: 2026-04-01 22:30:25
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element.dfy
 
@@ -49,7 +49,7 @@ method Passing()
     var val := 9;
     var i := removeElement(nums, val);
     // expect i == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
   }
 
   // Test case for combination {1}/Bnums=0,val=0:
@@ -59,7 +59,7 @@ method Passing()
     var val := 0;
     var i := removeElement(nums, val);
     // expect i == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
   }
 
   // Test case for combination {1}/Bnums=0,val=1:
@@ -69,7 +69,7 @@ method Passing()
     var val := 1;
     var i := removeElement(nums, val);
     // expect i == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
   }
 
   // Test case for combination {1}/Bnums=1,val=0:
@@ -79,7 +79,7 @@ method Passing()
     var val := 0;
     var i := removeElement(nums, val);
     // expect i == 1; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
   }
 
 }

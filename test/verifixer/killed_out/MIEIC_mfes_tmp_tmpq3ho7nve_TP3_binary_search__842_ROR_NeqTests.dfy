@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search__842_ROR_Neq.dfy
 // Method: binarySearch
-// Generated: 2026-04-01 14:02:00
+// Generated: 2026-04-01 22:36:48
 
 // MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search.dfy
 

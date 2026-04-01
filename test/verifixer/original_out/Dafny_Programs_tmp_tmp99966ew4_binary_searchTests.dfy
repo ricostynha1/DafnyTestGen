@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 // Method: BinarySearch
-// Generated: 2026-04-01 13:49:23
+// Generated: 2026-04-01 22:25:05
 
 // Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 
@@ -53,7 +53,7 @@ method Passing()
     var index := BinarySearch(a, value);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] != value;
   }
 
   // Test case for combination {3}:
@@ -80,7 +80,7 @@ method Passing()
     var index := BinarySearch(a, value);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] != value;
   }
 
   // Test case for combination {2}/Ba=2,value=1:
@@ -94,7 +94,7 @@ method Passing()
     var index := BinarySearch(a, value);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value;
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] != value;
   }
 
 }

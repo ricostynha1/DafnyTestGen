@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt__339_VER_x.dfy
 // Method: mySqrt
-// Generated: 2026-04-01 13:53:52
+// Generated: 2026-04-01 22:25:28
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 

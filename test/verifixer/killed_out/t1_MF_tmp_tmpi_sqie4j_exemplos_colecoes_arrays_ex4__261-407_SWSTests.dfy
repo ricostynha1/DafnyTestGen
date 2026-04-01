@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4__261-407_SWS.dfy
 // Method: Somatorio
-// Generated: 2026-04-01 14:05:56
+// Generated: 2026-04-01 22:42:09
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4.dfy
 

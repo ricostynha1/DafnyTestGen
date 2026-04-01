@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring__6949_SAR_6961.dfy
 // Method: expand_from_center
-// Generated: 2026-04-01 13:53:47
+// Generated: 2026-04-01 22:25:22
 
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
@@ -404,7 +404,7 @@ method GeneratedTests_expand_from_center()
     expect palindromic(s, i0, j0); // PRE-CHECK
     var lo, hi := expand_from_center(s, i0, j0);
     expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=3,i0=1,j0=1:
@@ -420,7 +420,7 @@ method GeneratedTests_expand_from_center()
     expect palindromic(s, i0, j0); // PRE-CHECK
     var lo, hi := expand_from_center(s, i0, j0);
     expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=3,i0=0,j0=1:
@@ -436,7 +436,7 @@ method GeneratedTests_expand_from_center()
     expect palindromic(s, i0, j0); // PRE-CHECK
     var lo, hi := expand_from_center(s, i0, j0);
     expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=3,i0=0,j0=0:
@@ -452,7 +452,7 @@ method GeneratedTests_expand_from_center()
     expect palindromic(s, i0, j0); // PRE-CHECK
     var lo, hi := expand_from_center(s, i0, j0);
     expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
   }
 
 }
@@ -468,7 +468,7 @@ method GeneratedTests_longestPalindrome()
     var ans, lo, hi := longestPalindrome(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=1:
@@ -480,7 +480,7 @@ method GeneratedTests_longestPalindrome()
     var ans, lo, hi := longestPalindrome(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=2:
@@ -492,7 +492,7 @@ method GeneratedTests_longestPalindrome()
     var ans, lo, hi := longestPalindrome(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=3:
@@ -504,7 +504,7 @@ method GeneratedTests_longestPalindrome()
     var ans, lo, hi := longestPalindrome(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
 }
@@ -520,7 +520,7 @@ method GeneratedTests_longestPalindrome'()
     var ans, lo, hi := longestPalindrome'(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=1:
@@ -532,7 +532,7 @@ method GeneratedTests_longestPalindrome'()
     var ans, lo, hi := longestPalindrome'(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=2:
@@ -544,7 +544,7 @@ method GeneratedTests_longestPalindrome'()
     var ans, lo, hi := longestPalindrome'(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
   // Test case for combination {1}/Bs=3:
@@ -556,7 +556,7 @@ method GeneratedTests_longestPalindrome'()
     var ans, lo, hi := longestPalindrome'(s);
     expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
     expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
   }
 
 }

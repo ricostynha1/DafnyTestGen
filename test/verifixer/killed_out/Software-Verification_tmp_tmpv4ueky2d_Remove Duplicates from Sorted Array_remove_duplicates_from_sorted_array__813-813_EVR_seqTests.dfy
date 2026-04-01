@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-Verification_tmp_tmpv4ueky2d_Remove Duplicates from Sorted Array_remove_duplicates_from_sorted_array__813-813_EVR_seq.dfy
 // Method: remove_duplicates_from_sorted_array
-// Generated: 2026-04-01 14:05:55
+// Generated: 2026-04-01 22:42:08
 
 // Software-Verification_tmp_tmpv4ueky2d_Remove Duplicates from Sorted Array_remove_duplicates_from_sorted_array.dfy
 
@@ -65,7 +65,7 @@ method GeneratedTests_remove_duplicates_from_sorted_array()
     expect forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100); // PRE-CHECK
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
-    expect forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result;
+    expect forall i: int  :: i in nums <==> i in result;
   }
 
   // Test case for combination {1}/Bnums=2:
@@ -81,7 +81,7 @@ method GeneratedTests_remove_duplicates_from_sorted_array()
     expect forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100); // PRE-CHECK
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
-    expect forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result;
+    expect forall i: int  :: i in nums <==> i in result;
   }
 
   // Test case for combination {1}/Bnums=3:
@@ -97,7 +97,7 @@ method GeneratedTests_remove_duplicates_from_sorted_array()
     expect forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100); // PRE-CHECK
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
-    expect forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result;
+    expect forall i: int  :: i in nums <==> i in result;
   }
 
 }

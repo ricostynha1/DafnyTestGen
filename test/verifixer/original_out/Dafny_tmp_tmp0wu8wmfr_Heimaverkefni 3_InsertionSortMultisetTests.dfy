@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset.dfy
 // Method: Search
-// Generated: 2026-04-01 13:49:26
+// Generated: 2026-04-01 22:25:09
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset.dfy
 
@@ -77,10 +77,10 @@ method Passing()
     var k := Search(s, x);
     // expect k == 0; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= k <= |s|;
-    expect forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x;
-    expect forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x;
-    expect forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x;
-    expect forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x;
+    expect forall i: int | 0 <= i < k :: s[i] <= x;
+    expect forall i: int | k <= i < |s| :: s[i] >= x;
+    expect forall z: int | z in s[..k] :: z <= x;
+    expect forall z: int | z in s[k..] :: z >= x;
     expect s == [2];
   }
 
@@ -131,10 +131,10 @@ method Passing()
     var k := Search(s, x);
     // expect k == 0; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= k <= |s|;
-    expect forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x;
-    expect forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x;
-    expect forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x;
-    expect forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x;
+    expect forall i: int | 0 <= i < k :: s[i] <= x;
+    expect forall i: int | k <= i < |s| :: s[i] >= x;
+    expect forall z: int | z in s[..k] :: z <= x;
+    expect forall z: int | z in s[k..] :: z >= x;
     expect s == [0];
   }
 
@@ -146,7 +146,7 @@ method Passing()
     var r := Sort(m);
     // expect r == []; // (actual runtime value — not uniquely determined by spec)
     expect multiset(r) == m;
-    expect forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q];
+    expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
   }
 
   // Test case for combination {1}/Bm=1:
@@ -157,7 +157,7 @@ method Passing()
     var r := Sort(m);
     // expect r == [-2]; // (actual runtime value — not uniquely determined by spec)
     expect multiset(r) == m;
-    expect forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q];
+    expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
   }
 
   // Test case for combination {1}/Bm=2:
@@ -168,7 +168,7 @@ method Passing()
     var r := Sort(m);
     // expect r == [-2, -2]; // (actual runtime value — not uniquely determined by spec)
     expect multiset(r) == m;
-    expect forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q];
+    expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
   }
 
   // Test case for combination {1}/Bm=3:
@@ -179,7 +179,7 @@ method Passing()
     var r := Sort(m);
     // expect r == [-2, -2, -2]; // (actual runtime value — not uniquely determined by spec)
     expect multiset(r) == m;
-    expect forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q];
+    expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
   }
 
 }

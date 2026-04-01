@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15__684_VER_n.dfy
 // Method: SelectionSort
-// Generated: 2026-04-01 14:02:17
+// Generated: 2026-04-01 22:37:17
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15.dfy
 
@@ -127,7 +127,7 @@ method Passing()
     var old_multiset_a := multiset(a[..]);
     // expect old_multiset_a == multiset{}; // (actual runtime value — not uniquely determined by spec)
     SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -139,7 +139,7 @@ method Passing()
     var old_multiset_a := multiset(a[..]);
     // expect old_multiset_a == multiset{}; // (actual runtime value — not uniquely determined by spec)
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -151,7 +151,7 @@ method Passing()
     var old_multiset_a := multiset(a[..]);
     // expect old_multiset_a == multiset{3}; // (actual runtime value — not uniquely determined by spec)
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -163,7 +163,7 @@ method Passing()
     var old_multiset_a := multiset(a[..]);
     // expect old_multiset_a == multiset{3, 4}; // (actual runtime value — not uniquely determined by spec)
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -175,7 +175,7 @@ method Passing()
     var old_multiset_a := multiset(a[..]);
     // expect old_multiset_a == multiset{4, 5, 6}; // (actual runtime value — not uniquely determined by spec)
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -190,7 +190,7 @@ method Failing()
     var a := new int[1] [3];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     // expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -201,7 +201,7 @@ method Failing()
     var a := new int[2] [4, 3];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     // expect multiset(a[..]) == old_multiset_a;
   }
 
@@ -212,7 +212,7 @@ method Failing()
     var a := new int[3] [5, 4, 6];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     // expect multiset(a[..]) == old_multiset_a;
   }
 

@@ -1,11 +1,11 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Trab1-Metodos-Formais_tmp_tmp_8fa4trr_circular-array__4884_MRR_int.dfy
 // Method: Enqueue
-// Generated: 2026-04-01 14:07:00
+// Generated: 2026-04-01 22:43:18
 
 // Trab1-Metodos-Formais_tmp_tmp_8fa4trr_circular-array.dfy
 
-method Main()
+method OriginalMain()
 {
   var q := new CircularArray.EmptyQueue(10);
   assert q.IsEmpty();
@@ -207,173 +207,15 @@ class {:autocontracts} CircularArray {
 }
 
 
-method GeneratedTests_Enqueue()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  Valid()
-  //   PRE:  !IsFull()
-  //   POST: Valid()
-  //   POST: Elements == old(Elements) + [e]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [4];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 0;
-    obj.Capacity := 0;
-    obj.Elements := [];
-    obj.Repr := {obj, obj.arr};
-    var e := 0;
-    var old_Elements := obj.Elements;
-    expect obj.Valid(); // PRE-CHECK
-    expect !obj.IsFull(); // PRE-CHECK
-    obj.Enqueue(e);
-    expect obj.Valid();
-    expect obj.Elements == old_Elements + [e];
-  }
-
-  // Test case for combination {1}/Be=0,start=0,size=0,Capacity=0:
-  //   PRE:  Valid()
-  //   PRE:  !IsFull()
-  //   POST: Valid()
-  //   POST: Elements == old(Elements) + [e]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [2];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 0;
-    obj.Capacity := 0;
-    obj.Elements := [5];
-    obj.Repr := {obj, obj.arr};
-    var e := 0;
-    var old_Elements := obj.Elements;
-    expect obj.Valid(); // PRE-CHECK
-    expect !obj.IsFull(); // PRE-CHECK
-    obj.Enqueue(e);
-    expect obj.Valid();
-    expect obj.Elements == old_Elements + [e];
-  }
-
-  // Test case for combination {1}/Be=1,start=1,size=1,Capacity=0:
-  //   PRE:  Valid()
-  //   PRE:  !IsFull()
-  //   POST: Valid()
-  //   POST: Elements == old(Elements) + [e]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[0] [];
-    obj.arr := tmp_arr;
-    obj.start := 1;
-    obj.size := 1;
-    obj.Capacity := 0;
-    obj.Elements := [];
-    obj.Repr := {obj, obj.arr};
-    var e := 1;
-    var old_Elements := obj.Elements;
-    expect obj.Valid(); // PRE-CHECK
-    expect !obj.IsFull(); // PRE-CHECK
-    obj.Enqueue(e);
-    expect obj.Valid();
-    expect obj.Elements == old_Elements + [e];
-  }
-
-  // Test case for combination {1}/Be=1,start=1,size=1,Capacity=1:
-  //   PRE:  Valid()
-  //   PRE:  !IsFull()
-  //   POST: Valid()
-  //   POST: Elements == old(Elements) + [e]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[0] [];
-    obj.arr := tmp_arr;
-    obj.start := 1;
-    obj.size := 1;
-    obj.Capacity := 1;
-    obj.Elements := [];
-    obj.Repr := {obj, obj.arr};
-    var e := 1;
-    var old_Elements := obj.Elements;
-    expect obj.Valid(); // PRE-CHECK
-    expect !obj.IsFull(); // PRE-CHECK
-    obj.Enqueue(e);
-    expect obj.Valid();
-    expect obj.Elements == old_Elements + [e];
-  }
-
-}
-
-method GeneratedTests_GetAt()
-{
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   PRE:  i < size
-  //   POST: e == Elements[i]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [6];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 1;
-    obj.Capacity := 1;
-    obj.Elements := [9];
-    obj.Repr := {obj, obj.arr};
-    var i := 0;
-    expect obj.Valid(); // PRE-CHECK
-    expect i < obj.size; // PRE-CHECK
-    var e := obj.GetAt(i);
-    expect e == 9;
-  }
-
-  // Test case for combination {1}/Bi=0,start=0,size==arr,Capacity=1:
-  //   PRE:  Valid()
-  //   PRE:  i < size
-  //   POST: e == Elements[i]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [3];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 1;
-    obj.Capacity := 1;
-    obj.Elements := [4, 5];
-    obj.Repr := {obj, obj.arr};
-    var i := 0;
-    expect obj.Valid(); // PRE-CHECK
-    expect i < obj.size; // PRE-CHECK
-    var e := obj.GetAt(i);
-    expect e == 4;
-  }
-
-  // Test case for combination {1}/Bi=0,start=0,size=1,Capacity=1:
-  //   PRE:  Valid()
-  //   PRE:  i < size
-  //   POST: e == Elements[i]
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [4];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 1;
-    obj.Capacity := 1;
-    obj.Elements := [5, 6, 7];
-    obj.Repr := {obj, obj.arr};
-    var i := 0;
-    expect obj.Valid(); // PRE-CHECK
-    expect i < obj.size; // PRE-CHECK
-    var e := obj.GetAt(i);
-    expect e == 5;
-  }
-
-}
-
-method GeneratedTests_AsSequence()
-{
-  // Test case for combination {1}:
-  //   PRE:  Valid()
+  //   PRE:  capacity > 0
   //   POST: s == Elements
   {
-    var obj := new CircularArray;
+    var capacity := 1;
+    var obj := new CircularArray.EmptyQueue(capacity);
     var tmp_arr := new int[1] [4];
     obj.arr := tmp_arr;
     obj.start := 0;
@@ -382,59 +224,40 @@ method GeneratedTests_AsSequence()
     obj.Elements := [];
     obj.Repr := {obj, obj.arr};
     expect obj.Valid(); // PRE-CHECK
+    expect capacity > 0; // PRE-CHECK
     var s := obj.AsSequence();
     expect s == [];
   }
 
-  // Test case for combination {1}/Bstart=0,size==arr,Capacity=1,Elements=3:
+  // Test case for combination {1}/Bstart=0,size==arr,capacity=2,Capacity=1:
   //   PRE:  Valid()
+  //   PRE:  capacity > 0
   //   POST: s == Elements
   {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [14];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 0;
-    obj.Capacity := 1;
-    obj.Elements := [5, 4, 6];
-    obj.Repr := {obj, obj.arr};
-    expect obj.Valid(); // PRE-CHECK
-    var s := obj.AsSequence();
-    expect s == [5, 4, 6];
-  }
-
-  // Test case for combination {1}/Bstart=0,size==arr,Capacity=1,Elements=2:
-  //   PRE:  Valid()
-  //   POST: s == Elements
-  {
-    var obj := new CircularArray;
-    var tmp_arr := new int[1] [9];
-    obj.arr := tmp_arr;
-    obj.start := 0;
-    obj.size := 0;
-    obj.Capacity := 1;
-    obj.Elements := [4, 3];
-    obj.Repr := {obj, obj.arr};
-    expect obj.Valid(); // PRE-CHECK
-    var s := obj.AsSequence();
-    expect s == [4, 3];
-  }
-
-  // Test case for combination {1}/Bstart=0,size=0,Capacity=1,Elements=1:
-  //   PRE:  Valid()
-  //   POST: s == Elements
-  {
-    var obj := new CircularArray;
+    var capacity := 2;
+    var obj := new CircularArray.EmptyQueue(capacity);
     var tmp_arr := new int[1] [2];
     obj.arr := tmp_arr;
     obj.start := 0;
     obj.size := 0;
     obj.Capacity := 1;
-    obj.Elements := [3];
+    obj.Elements := [];
     obj.Repr := {obj, obj.arr};
     expect obj.Valid(); // PRE-CHECK
+    expect capacity > 0; // PRE-CHECK
     var s := obj.AsSequence();
-    expect s == [3];
+    expect s == [];
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
 }

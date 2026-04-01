@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details__358_BBR_false.dfy
 // Method: CalcProduct
-// Generated: 2026-04-01 14:02:41
+// Generated: 2026-04-01 22:37:55
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details.dfy
 

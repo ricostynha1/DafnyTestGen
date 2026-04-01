@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack__2526_ROR_Eq.dfy
 // Method: Init
-// Generated: 2026-04-01 14:00:08
+// Generated: 2026-04-01 22:34:31
 
 // Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack.dfy
 
@@ -407,7 +407,7 @@ method Failing()
     // expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     obj.Shift();
     // expect obj.Valid();
-    // expect forall i: int {:trigger obj.arr[i]} :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
+    // expect forall i: int :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
     // expect obj.top == old_top - 1;
   }
 
@@ -427,7 +427,7 @@ method Failing()
     // expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     obj.Shift();
     // expect obj.Valid();
-    // expect forall i: int {:trigger obj.arr[i]} :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
+    // expect forall i: int :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
     // expect obj.top == old_top - 1;
   }
 

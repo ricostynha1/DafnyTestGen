@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\FlexWeek_tmp_tmpc_tfdj_3_ex4.dfy
 // Method: join
-// Generated: 2026-04-01 13:52:13
+// Generated: 2026-04-01 22:28:52
 
 // FlexWeek_tmp_tmpc_tfdj_3_ex4.dfy
 
@@ -80,8 +80,8 @@ method Passing()
     expect multiset(a[..] + b[..]) == multiset(c[..]);
     expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
     expect a.Length + b.Length == c.Length;
-    expect forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i];
-    expect forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
   }
 
   // Test case for combination {1}/Ba=0,b=1:
@@ -99,8 +99,8 @@ method Passing()
     expect multiset(a[..] + b[..]) == multiset(c[..]);
     expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
     expect a.Length + b.Length == c.Length;
-    expect forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i];
-    expect forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -118,8 +118,8 @@ method Passing()
     expect multiset(a[..] + b[..]) == multiset(c[..]);
     expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
     expect a.Length + b.Length == c.Length;
-    expect forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i];
-    expect forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
   }
 
   // Test case for combination {1}/Ba=0,b=3:
@@ -137,8 +137,8 @@ method Passing()
     expect multiset(a[..] + b[..]) == multiset(c[..]);
     expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
     expect a.Length + b.Length == c.Length;
-    expect forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i];
-    expect forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
   }
 
 }

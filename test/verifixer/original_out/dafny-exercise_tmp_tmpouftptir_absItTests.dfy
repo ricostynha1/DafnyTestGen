@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_absIt.dfy
 // Method: AbsIt
-// Generated: 2026-04-01 13:50:14
+// Generated: 2026-04-01 22:26:32
 
 // dafny-exercise_tmp_tmpouftptir_absIt.dfy
 
@@ -63,7 +63,7 @@ method Passing()
     var old_s := s[..];
     var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
+    expect forall i: int  :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
     expect s.Length == old_s2.Length;
   }
 
@@ -75,7 +75,7 @@ method Passing()
     var old_s := s[..];
     var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
+    expect forall i: int  :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
     expect s.Length == old_s2.Length;
   }
 
@@ -87,7 +87,7 @@ method Passing()
     var old_s := s[..];
     var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
+    expect forall i: int  :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
     expect s.Length == old_s2.Length;
   }
 
@@ -99,7 +99,7 @@ method Passing()
     var old_s := s[..];
     var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
+    expect forall i: int  :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
     expect s.Length == old_s2.Length;
   }
 

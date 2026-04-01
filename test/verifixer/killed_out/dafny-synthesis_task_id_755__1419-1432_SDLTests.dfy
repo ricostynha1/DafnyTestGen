@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_755__1419-1432_SDL.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-01 13:58:44
+// Generated: 2026-04-01 22:32:48
 
 // dafny-synthesis_task_id_755.dfy
 
@@ -72,8 +72,8 @@ method Passing()
     expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 4; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
-    expect forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
   }
 
   // Test case for combination {1}/Bs=3:
@@ -87,8 +87,8 @@ method Passing()
     expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 5; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
-    expect forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
   }
 
   // Test case for combination {1}/R3:
@@ -102,8 +102,8 @@ method Passing()
     expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 6; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
-    expect forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
   }
 
 }

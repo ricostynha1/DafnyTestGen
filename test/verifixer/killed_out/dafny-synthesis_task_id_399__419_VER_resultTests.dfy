@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_399__419_VER_result.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-01 13:57:23
+// Generated: 2026-04-01 22:30:11
 
 // dafny-synthesis_task_id_399.dfy
 
@@ -38,7 +38,7 @@ method Passing()
     var result := BitwiseXOR(a, b);
     // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
-    expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
 }
@@ -55,7 +55,7 @@ method Failing()
     // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
-    // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    // expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -68,7 +68,7 @@ method Failing()
     // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
-    // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    // expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
@@ -81,7 +81,7 @@ method Failing()
     // expect |a| == |b|; // PRE-CHECK
     var result := BitwiseXOR(a, b);
     // expect |result| == |a|;
-    // expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    // expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_267__359-363_EVR_int.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-01 13:57:20
+// Generated: 2026-04-01 22:30:05
 
 // dafny-synthesis_task_id_267.dfy
 

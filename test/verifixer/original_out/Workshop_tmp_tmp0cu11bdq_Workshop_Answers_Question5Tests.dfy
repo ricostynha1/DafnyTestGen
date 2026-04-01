@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5.dfy
 // Method: rev
-// Generated: 2026-04-01 13:55:32
+// Generated: 2026-04-01 22:34:47
 
 // Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5.dfy
 
@@ -34,7 +34,7 @@ method Passing()
     var old_a := a[..];
     expect a != null; // PRE-CHECK
     rev(a);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
   }
 
   // Test case for combination {1}/Ba=1:
@@ -45,7 +45,7 @@ method Passing()
     var old_a := a[..];
     expect a != null; // PRE-CHECK
     rev(a);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -56,7 +56,7 @@ method Passing()
     var old_a := a[..];
     expect a != null; // PRE-CHECK
     rev(a);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -67,7 +67,7 @@ method Passing()
     var old_a := a[..];
     expect a != null; // PRE-CHECK
     rev(a);
-    expect forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
   }
 
 }

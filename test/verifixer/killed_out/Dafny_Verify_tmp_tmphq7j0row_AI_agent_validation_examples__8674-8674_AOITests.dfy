@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples__8674-8674_AOI.dfy
 // Method: ComputePower
-// Generated: 2026-04-01 13:54:37
+// Generated: 2026-04-01 22:26:37
 
 // Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples.dfy
 
@@ -278,7 +278,7 @@ method Passing()
     var old_src := src[..];
     expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
-    expect forall i: int {:trigger old_src[i]} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
 
   // Test case for combination {1}/Bsrc=1,dst=1:
@@ -290,7 +290,7 @@ method Passing()
     var old_src := src[..];
     expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
-    expect forall i: int {:trigger old_src[i]} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
 
   // Test case for combination {1}:
@@ -303,7 +303,7 @@ method Passing()
     var old_a_0 := a[0];
     expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
+    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
   }
 
@@ -317,7 +317,7 @@ method Passing()
     var old_a_0 := a[0];
     expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
+    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
   }
 
@@ -331,7 +331,7 @@ method Passing()
     var old_a_0 := a[0];
     expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
+    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
   }
 
@@ -345,7 +345,7 @@ method Passing()
     var old_a_a_Length_1 := a[a.Length - 1];
     expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
-    expect forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
+    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;
   }
 
@@ -359,7 +359,7 @@ method Passing()
     var old_a_a_Length_1 := a[a.Length - 1];
     expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
-    expect forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
+    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;
   }
 
@@ -373,7 +373,7 @@ method Passing()
     var old_a_a_Length_1 := a[a.Length - 1];
     expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
-    expect forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
+    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;
   }
 
@@ -399,7 +399,7 @@ method Failing()
     var old_src := src[..];
     // expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
-    // expect forall i: int {:trigger old_src[i]} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    // expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
 
   // Test case for combination {1}/Bsrc=3,dst=3:
@@ -411,7 +411,7 @@ method Failing()
     var old_src := src[..];
     // expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
-    // expect forall i: int {:trigger old_src[i]} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    // expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics__3477_VER_N.dfy
 // Method: AdditiveFactorial
-// Generated: 2026-04-01 14:02:43
+// Generated: 2026-04-01 22:37:59
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 
@@ -142,7 +142,7 @@ method Passing()
     expect A.Length == N; // PRE-CHECK
     expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
-    expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
   // Test case for combination {1}/R2:
@@ -156,7 +156,7 @@ method Passing()
     expect A.Length == N; // PRE-CHECK
     expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
-    expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
   // Test case for combination {1}/R3:
@@ -170,7 +170,7 @@ method Passing()
     expect A.Length == N; // PRE-CHECK
     expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
-    expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
   // Test case for combination {1}/R4:
@@ -184,7 +184,7 @@ method Passing()
     expect A.Length == N; // PRE-CHECK
     expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
-    expect forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
 }

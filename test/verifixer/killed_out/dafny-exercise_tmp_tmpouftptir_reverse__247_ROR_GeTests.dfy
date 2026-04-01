@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-exercise_tmp_tmpouftptir_reverse__247_ROR_Ge.dfy
 // Method: Reverse
-// Generated: 2026-04-01 13:55:23
+// Generated: 2026-04-01 22:27:38
 
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
@@ -56,7 +56,7 @@ method Failing()
     var b := Reverse(a);
     // expect a == old_a;
     // expect b.Length == a.Length;
-    // expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -71,7 +71,7 @@ method Failing()
     var b := Reverse(a);
     // expect a == old_a;
     // expect b.Length == a.Length;
-    // expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -86,7 +86,7 @@ method Failing()
     var b := Reverse(a);
     // expect a == old_a;
     // expect b.Length == a.Length;
-    // expect forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
   }
 
 }

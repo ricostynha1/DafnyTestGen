@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-01 13:51:10
+// Generated: 2026-04-01 22:27:51
 
 // dafny-synthesis_task_id_399.dfy
 
@@ -38,7 +38,7 @@ method Passing()
     var result := BitwiseXOR(a, b);
     // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
-    expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
   // Test case for combination {1}/Ba=1,b=1:
@@ -52,7 +52,7 @@ method Passing()
     var result := BitwiseXOR(a, b);
     // expect result == [1]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
-    expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
@@ -66,7 +66,7 @@ method Passing()
     var result := BitwiseXOR(a, b);
     // expect result == [2, 6]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
-    expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
@@ -80,7 +80,7 @@ method Passing()
     var result := BitwiseXOR(a, b);
     // expect result == [13, 3, 15]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |a|;
-    expect forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
 
 }

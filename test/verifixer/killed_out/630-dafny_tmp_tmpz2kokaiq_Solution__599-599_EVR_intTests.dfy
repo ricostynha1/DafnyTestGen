@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-04-01 13:51:05
+// Generated: 2026-04-01 22:22:33
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 
@@ -84,7 +84,7 @@ method Failing()
     var index := BinarySearch(a, x);
     // expect !(0 <= index < a.Length);
     // expect !(index == -1);
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x;
+    // expect forall i: int :: 0 <= i < a.Length ==> a[i] != x;
   }
 
 }

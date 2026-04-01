@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_vampire project_original_Searching.dfy
 // Method: Find
-// Generated: 2026-04-01 13:53:46
+// Generated: 2026-04-01 22:31:56
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_vampire project_original_Searching.dfy
 
@@ -39,7 +39,7 @@ method Passing()
     var index := Find(blood, key);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key;
+    expect forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
   }
 
   // Test case for combination {3}:
@@ -66,7 +66,7 @@ method Passing()
     var index := Find(blood, key);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key;
+    expect forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
   }
 
   // Test case for combination {2}/Bblood=2,key=1:
@@ -80,7 +80,7 @@ method Passing()
     var index := Find(blood, key);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= index);
-    expect forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key;
+    expect forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
   }
 
 }

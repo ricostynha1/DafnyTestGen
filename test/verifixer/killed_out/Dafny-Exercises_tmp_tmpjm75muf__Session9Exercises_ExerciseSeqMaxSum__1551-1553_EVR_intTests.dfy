@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session9Exercises_ExerciseSeqMaxSum__1551-1553_EVR_int.dfy
 // Method: segMaxSum
-// Generated: 2026-04-01 13:56:50
+// Generated: 2026-04-01 22:29:11
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session9Exercises_ExerciseSeqMaxSum.dfy
 

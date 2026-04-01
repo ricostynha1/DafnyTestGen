@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_triple4.dfy
 // Method: Triple
-// Generated: 2026-04-01 13:48:53
+// Generated: 2026-04-01 22:24:25
 
 // Clover_triple4.dfy
 

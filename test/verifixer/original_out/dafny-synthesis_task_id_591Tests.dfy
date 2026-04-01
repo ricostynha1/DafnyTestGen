@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_591.dfy
 // Method: SwapFirstAndLast
-// Generated: 2026-04-01 13:51:27
+// Generated: 2026-04-01 22:28:08
 
 // dafny-synthesis_task_id_591.dfy
 
@@ -34,7 +34,7 @@ method Passing()
     SwapFirstAndLast(a);
     expect a[0] == old_a_a_Length_1;
     expect a[a.Length - 1] == old_a_0;
-    expect forall k: int {:trigger old_a[k]} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
+    expect forall k: int  :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -51,7 +51,7 @@ method Passing()
     SwapFirstAndLast(a);
     expect a[0] == old_a_a_Length_1;
     expect a[a.Length - 1] == old_a_0;
-    expect forall k: int {:trigger old_a[k]} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
+    expect forall k: int  :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -68,7 +68,7 @@ method Passing()
     SwapFirstAndLast(a);
     expect a[0] == old_a_a_Length_1;
     expect a[a.Length - 1] == old_a_0;
-    expect forall k: int {:trigger old_a[k]} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
+    expect forall k: int  :: 1 <= k < a.Length - 1 ==> a[k] == old_a[k];
   }
 
 }

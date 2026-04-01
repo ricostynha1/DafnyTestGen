@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_784__1152-1157_SWS.dfy
 // Method: FirstEvenOddIndices
-// Generated: 2026-04-01 13:58:49
+// Generated: 2026-04-01 22:32:57
 
 // dafny-synthesis_task_id_784.dfy
 
@@ -153,7 +153,7 @@ method Passing()
     expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductEvenOdd(lst);
     // expect product == 0; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+    expect exists i: int, j: int   :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
   // Test case for combination {1}/Blst=3:
@@ -168,7 +168,7 @@ method Passing()
     expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductEvenOdd(lst);
     // expect product == 61756; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+    expect exists i: int, j: int   :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
   // Test case for combination {1}/R3:
@@ -183,7 +183,7 @@ method Passing()
     expect exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductEvenOdd(lst);
     // expect product == 0; // (actual runtime value — not uniquely determined by spec)
-    expect exists i: int, j: int {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} {:trigger IsFirstOdd(j, lst), lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[j], lst[i]} :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+    expect exists i: int, j: int   :: 0 <= i < |lst| && IsEven(lst[i]) && IsFirstEven(i, lst) && 0 <= j < |lst| && IsOdd(lst[j]) && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
 }

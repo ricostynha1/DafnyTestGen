@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 // Method: longestZero
-// Generated: 2026-04-01 13:55:30
+// Generated: 2026-04-01 22:34:44
 
 // verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 
@@ -92,8 +92,8 @@ method Passing()
     expect 0 <= sz <= a.Length;
     expect 0 <= pos < a.Length;
     expect pos + sz <= a.Length;
-    expect forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0;
+    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
+    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
   }
 
   // Test case for combination {1}/Ba=2:
@@ -110,8 +110,8 @@ method Passing()
     expect 0 <= sz <= a.Length;
     expect 0 <= pos < a.Length;
     expect pos + sz <= a.Length;
-    expect forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0;
+    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
+    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
   }
 
   // Test case for combination {1}/Ba=3:
@@ -128,8 +128,8 @@ method Passing()
     expect 0 <= sz <= a.Length;
     expect 0 <= pos < a.Length;
     expect pos + sz <= a.Length;
-    expect forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0;
+    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
+    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
   }
 
 }

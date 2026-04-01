@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_reverse__435-435_AOI.dfy
 // Method: reverse
-// Generated: 2026-04-01 13:52:48
+// Generated: 2026-04-01 22:24:23
 
 // Clover_reverse.dfy
 
@@ -31,7 +31,7 @@ method Passing()
     var a := new int[0] [];
     var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect forall i: int :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
   }
 
   // Test case for combination {1}/Ba=1:
@@ -40,7 +40,7 @@ method Passing()
     var a := new int[1] [2];
     var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect forall i: int :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -49,7 +49,7 @@ method Passing()
     var a := new int[2] [4, 3];
     var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect forall i: int :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -58,7 +58,7 @@ method Passing()
     var a := new int[3] [6, 5, 4];
     var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect forall i: int :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
   }
 
 }

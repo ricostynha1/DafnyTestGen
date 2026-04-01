@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples2.dfy
 // Method: add_by_inc
-// Generated: 2026-04-01 13:49:35
+// Generated: 2026-04-01 22:25:24
 
 // Dafny_tmp_tmpmvs2dmry_examples2.dfy
 
