@@ -104,6 +104,41 @@ BVA is **combined with DNF**: each equivalence class (DNF scenario) is tested at
 
 The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
 
+#### Recursive Function Finite Unrolling
+
+Dafny postconditions often reference recursive functions (e.g., `ensures f == Fact(n)`). By default, Z3 treats these as uninterpreted — it knows `Fact` is a function but not its definition, so it cannot compute concrete expected values. DafnyTestGen automatically detects simple recursive functions and compiles them into finite SMT `define-fun` definitions, replacing the opaque declaration with a concrete nested `ite` (if-then-else) chain.
+
+**Supported recursion patterns:**
+
+| Pattern | Example | How it works |
+|---------|---------|-------------|
+| **IntCountdown** | `Fact(n)`, `Catalan(n)`, `SumOfDigits(n)` | Integer parameter counts down to base case. Values are precomputed by a C# mini-evaluator for n=0..10, producing a nested `ite` chain with concrete results |
+| **SeqFold** | `SumSeq(s)`, `ProdB(s)` | Sequence parameter shrinks via slicing (`s[..len-1]`, `s[1..]`). A symbolic `ite` chain is built over `seq.len` for lengths 0..8, folding with `+` or `*` |
+| **ArrayIndexedCountdown** | `SumOfNegatives(a, n)`, `ArraySum(a, n)` | Array + integer index parameter; index counts down. A symbolic `ite` chain is built over the index for n=0..8, with per-element array access via `seq.nth` on the array's sequence view |
+
+**Detection criteria:** A function is eligible for unrolling when it is recursive (body contains exactly one self-call), has a scalar return type (`int`, `nat`, `real`, `bool`), and has no higher-order parameters (no `->` or `~>` types). Classification is based on parameter types: functions with `array<T>` parameters get `ArrayIndexedCountdown`, those with `seq<T>` get `SeqFold`, and the rest get `IntCountdown`.
+
+**Example — Factorial:**
+
+```dafny
+function Fact(n: nat): nat { if n == 0 then 1 else n * Fact(n - 1) }
+```
+
+Generates the SMT definition:
+```smt2
+(define-fun Fact ((n Int)) Int
+  (ite (= n 0) 1
+  (ite (= n 1) 1
+  (ite (= n 2) 2
+  (ite (= n 3) 6
+  (ite (= n 4) 24
+  ... ))))))
+```
+
+This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expect f == 1;`, `expect f == 24;` with correct concrete values instead of leaving `Fact(n)` as an opaque assertion.
+
+**Call-site array→seq substitution:** When a `define-fun` takes a `(Seq Int)` parameter but the postcondition passes an array handle (Int-typed in SMT), the call site is automatically rewritten to pass the `_seq` variable instead (e.g., `(Fact a)` → `(Fact a_seq)`), ensuring sort compatibility.
+
 #### Progressive Auto Strategy (default)
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
@@ -276,7 +311,7 @@ test/
   buggy_progs/           # Buggy programs for --check mode
     in/                  #   Source files with known bugs
     out/                 #   Check mode output (Passing/Failing split)
-  unsupported_progs/     # Programs not currently supported (tuple types, recursive functions in postconditions, etc.)
+  unsupported_progs/     # Programs not currently supported (complex datatypes, higher-order functions, etc.)
 ```
 
 The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis** + **SmtTranslator** → **Z3Runner** → **TypeUtils** (model parsing) → **TestEmitter** → **TestValidator** (optional).
@@ -296,6 +331,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - **Tuple types** (e.g., `(int, int)`, `(real, real)`): supported as standalone parameters, return types, array element types (`array<(T, U)>`), and sequence element types (`seq<(T, U)>`). Tuple components are decomposed into separate SMT variables (e.g., `t: (int, int)` → `t_0: Int`, `t_1: Int`; `a: array<(real, real)>` → parallel component sequences `a_seq_0: (Seq Real)`, `a_seq_1: (Seq Real)` with equal-length constraints). Tuple field access (`t.0`, `a[i].1`) is translated to the corresponding component variable or sequence element. Generated test code uses Dafny tuple literals (e.g., `var t := (3, 5);`, `var a := new (real, real)[2] [(1.0, 2.0), (3.0, 4.0)];`). Supported component types: `int`, `nat`, `real`, `char`, `bool`. Nested tuples and tuples in sets/maps are not yet supported
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
 - Uninterpreted functions (postcondition literals used as assertions)
+- **Recursive function finite unrolling**: simple recursive functions in postconditions (e.g., `Fact(n)`, `SumSeq(s)`, `SumOfNegatives(a, n)`) are automatically detected, classified by recursion pattern, and compiled into finite SMT `define-fun` definitions — allowing Z3 to compute concrete expected values instead of treating the function as opaque (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below)
 
 ### Class Method Support
 
@@ -348,7 +384,7 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- Recursive functions or predicates in postconditions (e.g., `ensures result == Fact(n)`) cannot be decomposed into DNF branches by the SMT solver. Instead, inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`). Predicates that transitively call other predicates (e.g., `isSubstringPred` -> `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
+- **Recursive functions in postconditions** (e.g., `ensures result == Fact(n)`): simple recursive functions are automatically unrolled into finite SMT `define-fun` definitions, allowing Z3 to compute concrete expected values (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below). Functions that don't match any supported recursion pattern are left as uninterpreted — inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`). Predicates that transitively call other predicates (e.g., `isSubstringPred` -> `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
 - When postconditions constrain the results (returned values and final array or object states) implicitly (e.g., `ensures a <= r <= b`) and not explicitly (e.g., `ensures result == expression`),  an attempt is made to determine if a concrete result value provided by Z3 is unique (via a second call to Z3). If so, it is generated an `expect` statement using the concrete value from Z3 (e.g., `expect r == 5`). Otherwise, it are generated `expect` statements corresponding to the original postconditions, and the concrete value is included in comments.
 - **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
 - Not all Dafny expressions are translatable to SMT2. Preconditions that cannot be converted to SMT (e.g., those referencing recursove predicates) are emitted as runtime `expect` checks with `// PRE-CHECK` markers. In `--check` mode, test cases whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than counted as failures. This handles cases where Z3 picks input values that satisfy the translated constraints but violate untranslated preconditions.
