@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-04-02 13:47:59
+// Generated: 2026-04-02 18:12:27
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0

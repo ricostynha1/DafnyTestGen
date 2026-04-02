@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-02 13:49:06
+// Generated: 2026-04-02 18:13:33
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)

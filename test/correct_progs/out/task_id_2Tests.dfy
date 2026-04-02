@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-02 13:48:16
+// Generated: 2026-04-02 18:12:43
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)

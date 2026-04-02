@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_624.dfy
 // Method: ToUppercase
-// Generated: 2026-04-02 13:49:07
+// Generated: 2026-04-02 18:13:34
 
 // Converts a string to uppercase (only 'a' to 'z' characters are converted).
 method ToUppercase(s: string) returns (v: string)

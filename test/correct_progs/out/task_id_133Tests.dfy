@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-02 13:48:12
+// Generated: 2026-04-02 18:12:40
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  

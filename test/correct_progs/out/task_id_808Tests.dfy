@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_808.dfy
 // Method: Contains
-// Generated: 2026-04-02 13:49:27
+// Generated: 2026-04-02 18:13:55
 
 // Checks if a sequence 's' contains a value 'x'.
 method Contains<T(==)>(s: seq<T>, x: T) returns (result: bool)
