@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-01 13:44:39
+// Generated: 2026-04-02 13:48:04
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -80,7 +80,7 @@ method testStack()
     print "top = ", y, " \n";
 }
 
-method Passing()
+method GeneratedTests_push()
 {
   // Test case for combination {1}:
   //   PRE:  !isFull()
@@ -94,7 +94,6 @@ method Passing()
     var x := 0;
     var old_elems_size := obj.elems[..obj.size];
     expect !obj.isFull(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.push(x);
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size + [x];
@@ -113,7 +112,6 @@ method Passing()
     var x := 1;
     var old_elems_size := obj.elems[..obj.size];
     expect !obj.isFull(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.push(x);
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size + [x];
@@ -132,7 +130,6 @@ method Passing()
     var x := 1;
     var old_elems_size := obj.elems[..obj.size];
     expect !obj.isFull(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.push(x);
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size + [x];
@@ -150,12 +147,15 @@ method Passing()
     var x := 1;
     var old_elems_size := obj.elems[..obj.size];
     expect !obj.isFull(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.push(x);
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
+}
+
+method GeneratedTests_top()
+{
   // Test case for combination {1}:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
@@ -166,7 +166,6 @@ method Passing()
     obj.size := 1;
     obj.elems[0] := 4;
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     var res := obj.top();
     expect res == 4;
   }
@@ -182,7 +181,6 @@ method Passing()
     obj.elems[0] := 4;
     obj.elems[1] := 3;
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     var res := obj.top();
     expect res == 4;
   }
@@ -197,11 +195,14 @@ method Passing()
     obj.size := 1;
     obj.elems[0] := 5;
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     var res := obj.top();
     expect res == 5;
   }
 
+}
+
+method GeneratedTests_pop()
+{
   // Test case for combination {1}:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
@@ -213,7 +214,6 @@ method Passing()
     obj.elems[0] := 10;
     var old_elems_size_1 := obj.elems[..obj.size - 1];
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.pop();
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size_1;
@@ -231,7 +231,6 @@ method Passing()
     obj.elems[1] := 3;
     var old_elems_size_1 := obj.elems[..obj.size - 1];
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.pop();
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size_1;
@@ -248,7 +247,6 @@ method Passing()
     obj.elems[0] := 13;
     var old_elems_size_1 := obj.elems[..obj.size - 1];
     expect !obj.isEmpty(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     obj.pop();
     expect obj.Valid();
     expect obj.elems[..obj.size] == old_elems_size_1;
@@ -256,13 +254,12 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_push();
+  print "GeneratedTests_push: all tests passed!\n";
+  GeneratedTests_top();
+  print "GeneratedTests_top: all tests passed!\n";
+  GeneratedTests_pop();
+  print "GeneratedTests_pop: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-01 13:47:54
+// Generated: 2026-04-02 13:49:20
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -80,7 +80,7 @@ method ProductEvenOddTest(){
     assert out2 == 10;
 }
 
-method Passing()
+method GeneratedTests_ProductFirstEvenOdd()
 {
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
@@ -91,7 +91,6 @@ method Passing()
     expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductFirstEvenOdd(lst);
-    // expect product == 0; // (actual runtime value — not uniquely determined by spec)
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
@@ -104,7 +103,6 @@ method Passing()
     expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductFirstEvenOdd(lst);
-    // expect product == 61756; // (actual runtime value — not uniquely determined by spec)
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
@@ -117,10 +115,13 @@ method Passing()
     expect exists i :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var product := ProductFirstEvenOdd(lst);
-    // expect product == 0; // (actual runtime value — not uniquely determined by spec)
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
+}
+
+method GeneratedTests_FirstEvenOddIndices()
+{
   // Test case for combination {1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
@@ -165,13 +166,10 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ProductFirstEvenOdd();
+  print "GeneratedTests_ProductFirstEvenOdd: all tests passed!\n";
+  GeneratedTests_FirstEvenOddIndices();
+  print "GeneratedTests_FirstEvenOddIndices: all tests passed!\n";
 }

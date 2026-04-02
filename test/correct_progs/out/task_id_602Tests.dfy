@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-04-01 13:46:57
+// Generated: 2026-04-02 13:49:02
 
 // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -48,7 +48,7 @@ method FindFirstRepeatedCharTest(){
     assert !found4;
 }
 
-method Passing()
+method GeneratedTests_FindFirstRepeatedChar()
 {
   // Test case for combination {2}:
   //   POST: !found
@@ -92,13 +92,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindFirstRepeatedChar();
+  print "GeneratedTests_FindFirstRepeatedChar: all tests passed!\n";
 }

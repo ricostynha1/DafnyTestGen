@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-01 13:47:22
+// Generated: 2026-04-02 13:49:09
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -40,7 +40,7 @@ method ReverseUptoKTest(){
   assert a3[..] == [];
 }
 
-method Passing()
+method GeneratedTests_ReverseUptoK()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= s.Length
@@ -50,7 +50,6 @@ method Passing()
     var s := new int[0] [];
     var k := 0;
     var old_s := s[..];
-    expect 0 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK<int>(s, k);
     expect forall i :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -64,7 +63,6 @@ method Passing()
     var s := new int[1] [2];
     var k := 0;
     var old_s := s[..];
-    expect 0 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK<int>(s, k);
     expect forall i :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -78,7 +76,6 @@ method Passing()
     var s := new int[1] [2];
     var k := 1;
     var old_s := s[..];
-    expect 0 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK<int>(s, k);
     expect forall i :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -92,7 +89,6 @@ method Passing()
     var s := new int[2] [3, 4];
     var k := 0;
     var old_s := s[..];
-    expect 0 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK<int>(s, k);
     expect forall i :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     expect forall i :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -100,13 +96,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ReverseUptoK();
+  print "GeneratedTests_ReverseUptoK: all tests passed!\n";
 }

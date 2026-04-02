@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-01 13:48:18
+// Generated: 2026-04-02 13:49:28
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -39,7 +39,7 @@ method TestIsSmaller(){
   assert res3 == false;
 }
 
-method Passing()
+method GeneratedTests_IsSmaller()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -48,7 +48,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
   }
@@ -60,7 +59,6 @@ method Passing()
   {
     var a: seq<int> := [7719];
     var b: seq<int> := [-38];
-    expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -72,7 +70,6 @@ method Passing()
   {
     var a: seq<int> := [11292, 11293];
     var b: seq<int> := [11293, 11294];
-    expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
   }
@@ -84,20 +81,14 @@ method Passing()
   {
     var a: seq<int> := [20162, 20161, 20163];
     var b: seq<int> := [20163, 20164, 20165];
-    expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsSmaller();
+  print "GeneratedTests_IsSmaller: all tests passed!\n";
 }

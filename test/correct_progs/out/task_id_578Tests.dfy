@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-04-01 13:46:45
+// Generated: 2026-04-02 13:48:58
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -30,7 +30,7 @@ method InterleaveTest(){
   assert res1 == [1, 10, 100, 2, 20, 200, 3, 30, 300];
 }
 
-method Passing()
+method GeneratedTests_Interleave()
 {
   // Test case for combination {1}:
   //   PRE:  |s1| == |s2| == |s3|
@@ -40,7 +40,6 @@ method Passing()
     var s1: seq<int> := [];
     var s2: seq<int> := [];
     var s3: seq<int> := [];
-    expect |s1| == |s2| == |s3|; // PRE-CHECK
     var r := Interleave<int>(s1, s2, s3);
     expect r == [];
   }
@@ -53,7 +52,6 @@ method Passing()
     var s1: seq<int> := [7, 8];
     var s2: seq<int> := [9, 10];
     var s3: seq<int> := [11, 12];
-    expect |s1| == |s2| == |s3|; // PRE-CHECK
     var r := Interleave<int>(s1, s2, s3);
     expect r == [7, 9, 11, 8, 10, 12];
   }
@@ -66,20 +64,14 @@ method Passing()
     var s1: seq<int> := [4];
     var s2: seq<int> := [5];
     var s3: seq<int> := [6];
-    expect |s1| == |s2| == |s3|; // PRE-CHECK
     var r := Interleave<int>(s1, s2, s3);
     expect r == [4, 5, 6];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Interleave();
+  print "GeneratedTests_Interleave: all tests passed!\n";
 }

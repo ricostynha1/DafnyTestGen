@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-01 13:43:52
+// Generated: 2026-04-02 13:47:47
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -52,7 +52,7 @@ method MapKeys(m: map<int, int>) returns (r: set<int>)
 }
 
 
-method Passing()
+method GeneratedTests_MapContains()
 {
   // Test case for combination {1}:
   //   PRE:  |m| > 0
@@ -60,9 +60,8 @@ method Passing()
   {
     var m: map<int, int> := map[5 := 0];
     var k := 0;
-    expect |m| > 0; // PRE-CHECK
     var r := MapContains(m, k);
-    expect r == false;
+    expect r == (k in m);
   }
 
   // Test case for combination {1}/Bm=1,k=0:
@@ -71,9 +70,8 @@ method Passing()
   {
     var m: map<int, int> := map[1 := 0];
     var k := 0;
-    expect |m| > 0; // PRE-CHECK
     var r := MapContains(m, k);
-    expect r == false;
+    expect r == (k in m);
   }
 
   // Test case for combination {1}/Bm=1,k=1:
@@ -82,9 +80,8 @@ method Passing()
   {
     var m: map<int, int> := map[2 := 0];
     var k := 1;
-    expect |m| > 0; // PRE-CHECK
     var r := MapContains(m, k);
-    expect r == false;
+    expect r == (k in m);
   }
 
   // Test case for combination {1}/Bm=2,k=0:
@@ -93,20 +90,22 @@ method Passing()
   {
     var m: map<int, int> := map[2 := 0, 5 := 0];
     var k := 0;
-    expect |m| > 0; // PRE-CHECK
     var r := MapContains(m, k);
-    expect r == false;
+    expect r == (k in m);
   }
 
+}
+
+method GeneratedTests_MapLookup()
+{
   // Test case for combination {1}:
   //   PRE:  k in m
   //   POST: r == m[k]
   {
     var m: map<int, int> := map[5 := 0];
     var k := 5;
-    expect k in m; // PRE-CHECK
     var r := MapLookup(m, k);
-    expect r == 0;
+    expect r == m[k];
   }
 
   // Test case for combination {1}/Bm=1,k=0:
@@ -115,9 +114,8 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0];
     var k := 0;
-    expect k in m; // PRE-CHECK
     var r := MapLookup(m, k);
-    expect r == 0;
+    expect r == m[k];
   }
 
   // Test case for combination {1}/Bm=1,k=1:
@@ -126,9 +124,8 @@ method Passing()
   {
     var m: map<int, int> := map[1 := 0];
     var k := 1;
-    expect k in m; // PRE-CHECK
     var r := MapLookup(m, k);
-    expect r == 0;
+    expect r == m[k];
   }
 
   // Test case for combination {1}/Bm=2,k=0:
@@ -137,17 +134,20 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0, 2 := 0];
     var k := 0;
-    expect k in m; // PRE-CHECK
     var r := MapLookup(m, k);
-    expect r == 0;
+    expect r == m[k];
   }
 
+}
+
+method GeneratedTests_MapSize()
+{
   // Test case for combination {1}:
   //   POST: r == |m|
   {
     var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
     var r := MapSize(m);
-    expect r == 8;
+    expect r == |m|;
   }
 
   // Test case for combination {1}/Bm=0:
@@ -174,6 +174,10 @@ method Passing()
     expect r == 2;
   }
 
+}
+
+method GeneratedTests_MapUpdate()
+{
   // Test case for combination {1}:
   //   POST: r == m[k := v]
   //   POST: k in r
@@ -230,6 +234,10 @@ method Passing()
     expect r[k] == v;
   }
 
+}
+
+method GeneratedTests_MapMerge()
+{
   // Test case for combination {1}:
   //   POST: r == a + b
   {
@@ -266,6 +274,10 @@ method Passing()
     expect r == a + b;
   }
 
+}
+
+method GeneratedTests_MapRemoveKey()
+{
   // Test case for combination {1}:
   //   PRE:  k in m
   //   POST: r == m - {k}
@@ -273,7 +285,6 @@ method Passing()
   {
     var m: map<int, int> := map[-1 := 0];
     var k := -1;
-    expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
     expect k !in r;
@@ -286,7 +297,6 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0];
     var k := 0;
-    expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
     expect k !in r;
@@ -299,7 +309,6 @@ method Passing()
   {
     var m: map<int, int> := map[1 := 0];
     var k := 1;
-    expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
     expect k !in r;
@@ -312,18 +321,21 @@ method Passing()
   {
     var m: map<int, int> := map[0 := 0, 2 := 0];
     var k := 0;
-    expect k in m; // PRE-CHECK
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
     expect k !in r;
   }
 
+}
+
+method GeneratedTests_MapKeys()
+{
   // Test case for combination {1}:
   //   POST: r == m.Keys
   {
     var m: map<int, int> := map[];
     var r := MapKeys(m);
-    expect r == {};
+    expect r == m.Keys;
   }
 
   // Test case for combination {1}/Bm=1:
@@ -331,7 +343,7 @@ method Passing()
   {
     var m: map<int, int> := map[-2 := 0];
     var r := MapKeys(m);
-    expect r == {-2};
+    expect r == m.Keys;
   }
 
   // Test case for combination {1}/Bm=2:
@@ -339,7 +351,7 @@ method Passing()
   {
     var m: map<int, int> := map[4 := 0, 5 := 0];
     var r := MapKeys(m);
-    expect r == {4, 5};
+    expect r == m.Keys;
   }
 
   // Test case for combination {1}/Bm=3:
@@ -347,18 +359,25 @@ method Passing()
   {
     var m: map<int, int> := map[3 := 0, 4 := 0, 5 := 0];
     var r := MapKeys(m);
-    expect r == {3, 4, 5};
+    expect r == m.Keys;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MapContains();
+  print "GeneratedTests_MapContains: all tests passed!\n";
+  GeneratedTests_MapLookup();
+  print "GeneratedTests_MapLookup: all tests passed!\n";
+  GeneratedTests_MapSize();
+  print "GeneratedTests_MapSize: all tests passed!\n";
+  GeneratedTests_MapUpdate();
+  print "GeneratedTests_MapUpdate: all tests passed!\n";
+  GeneratedTests_MapMerge();
+  print "GeneratedTests_MapMerge: all tests passed!\n";
+  GeneratedTests_MapRemoveKey();
+  print "GeneratedTests_MapRemoveKey: all tests passed!\n";
+  GeneratedTests_MapKeys();
+  print "GeneratedTests_MapKeys: all tests passed!\n";
 }

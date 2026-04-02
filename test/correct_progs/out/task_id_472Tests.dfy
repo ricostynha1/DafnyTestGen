@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-01 13:46:16
+// Generated: 2026-04-02 13:48:48
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -48,7 +48,7 @@ method ContainsConsecutiveNumbersTest(){
     assert !out5;
 }
 
-method Passing()
+method GeneratedTests_ContainsConsecutiveNumbers()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -88,13 +88,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ContainsConsecutiveNumbers();
+  print "GeneratedTests_ContainsConsecutiveNumbers: all tests passed!\n";
 }

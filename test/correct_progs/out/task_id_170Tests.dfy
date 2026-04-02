@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-01 13:45:01
+// Generated: 2026-04-02 13:48:14
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -40,7 +40,7 @@ method SumInRangeTest(){
   assert s5 == 14;
 }
 
-method Passing()
+method GeneratedTests_CalcSumRange()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= start <= end <= a.Length
@@ -49,7 +49,6 @@ method Passing()
     var a := new int[0] [];
     var start := 0;
     var end := 0;
-    expect 0 <= start <= end <= a.Length; // PRE-CHECK
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }
@@ -61,7 +60,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var start := 0;
     var end := 0;
-    expect 0 <= start <= end <= a.Length; // PRE-CHECK
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }
@@ -73,7 +71,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var start := 1;
     var end := 1;
-    expect 0 <= start <= end <= a.Length; // PRE-CHECK
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }
@@ -85,20 +82,14 @@ method Passing()
     var a := new int[2] [4, 3];
     var start := 1;
     var end := 2;
-    expect 0 <= start <= end <= a.Length; // PRE-CHECK
     var sum := CalcSumRange(a, start, end);
     expect sum == 3;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcSumRange();
+  print "GeneratedTests_CalcSumRange: all tests passed!\n";
 }

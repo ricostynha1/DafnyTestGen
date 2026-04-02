@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-04-01 13:44:26
+// Generated: 2026-04-02 13:47:58
 
 class Secret {
     var secret: int
@@ -27,7 +27,7 @@ class Secret {
 }
 
 
-method Passing()
+method GeneratedTests_Guess()
 {
   // Test case for combination {1}:
   //   PRE:  known == false
@@ -45,13 +45,11 @@ method Passing()
     var g := 0;
     var old_count := obj.count;
     var old_secret := obj.secret;
-    expect obj.known == false; // PRE-CHECK
-    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect guesses == 1;
+    expect guesses == obj.count;
     expect obj.known == true;
   }
 
@@ -71,13 +69,11 @@ method Passing()
     var g := 1;
     var old_count := obj.count;
     var old_secret := obj.secret;
-    expect obj.known == false; // PRE-CHECK
-    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == false;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect guesses == 1;
+    expect guesses == obj.count;
     expect obj.known == false;
   }
 
@@ -97,13 +93,11 @@ method Passing()
     var g := 0;
     var old_count := obj.count;
     var old_secret := obj.secret;
-    expect obj.known == false; // PRE-CHECK
-    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 2;
     expect obj.count == old_count + 1;
-    expect guesses == 2;
+    expect guesses == obj.count;
     expect obj.known == true;
   }
 
@@ -123,25 +117,18 @@ method Passing()
     var g := 1;
     var old_count := obj.count;
     var old_secret := obj.secret;
-    expect obj.known == false; // PRE-CHECK
-    expect obj.count >= 0; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 1;
     expect obj.count == old_count + 1;
-    expect guesses == 1;
+    expect guesses == obj.count;
     expect obj.known == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Guess();
+  print "GeneratedTests_Guess: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-01 13:45:27
+// Generated: 2026-04-02 13:48:32
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -55,7 +55,7 @@ method IntersectionTest(){
   //@invalid assert res3 == [3, 1]; // not guaranteed
 }
 
-method Passing()
+method GeneratedTests_Intersection()
 {
   // Test case for combination {1}/Ba=0,b=0:
   //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
@@ -107,13 +107,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Intersection();
+  print "GeneratedTests_Intersection: all tests passed!\n";
 }

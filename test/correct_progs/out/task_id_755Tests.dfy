@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-01 13:47:42
+// Generated: 2026-04-02 13:49:17
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -54,7 +54,7 @@ method SecondSmallestTest(){
     assert s3 == -3 && out3 == -2;
 }
 
-method Passing()
+method GeneratedTests_SecondSmallest()
 {
   // Test case for combination {1}:
   //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
@@ -65,7 +65,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[2] [8365, 10803];
-    expect exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]; // PRE-CHECK
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 8365;
     expect secondSmallest == 10803;
@@ -80,7 +79,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[3] [1798, 1796, 1797];
-    expect exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]; // PRE-CHECK
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 1796;
     expect secondSmallest == 1797;
@@ -95,7 +93,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[4] [449, 1059, 6912, 9157];
-    expect exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]; // PRE-CHECK
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 449;
     expect secondSmallest == 1059;
@@ -103,13 +100,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SecondSmallest();
+  print "GeneratedTests_SecondSmallest: all tests passed!\n";
 }

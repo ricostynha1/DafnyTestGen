@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-01 13:47:37
+// Generated: 2026-04-02 13:49:15
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -32,7 +32,7 @@ method RotateRightTest(){
     assert res4 == [];
 }
 
-method Passing()
+method GeneratedTests_RotateRight()
 {
   // Test case for combination {1}:
   //   POST: |r| == |l|
@@ -76,13 +76,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RotateRight();
+  print "GeneratedTests_RotateRight: all tests passed!\n";
 }

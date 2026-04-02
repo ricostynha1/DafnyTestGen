@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-01 13:45:45
+// Generated: 2026-04-02 13:48:38
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -33,7 +33,7 @@ method IsNonPrimeTest(){
 }
 
 
-method Passing()
+method GeneratedTests_IsNonPrime()
 {
   // Test case for combination {1}:
   //   PRE:  n > 1
@@ -41,7 +41,6 @@ method Passing()
   //   POST: exists k :: 1 < k < n && n % k == 0
   {
     var n := 4;
-    expect n > 1; // PRE-CHECK
     var result := IsNonPrime(n);
     expect result == true;
   }
@@ -52,7 +51,6 @@ method Passing()
   //   POST: !exists k :: 1 < k < n && n % k == 0
   {
     var n := 2;
-    expect n > 1; // PRE-CHECK
     var result := IsNonPrime(n);
     expect result == false;
   }
@@ -63,7 +61,6 @@ method Passing()
   //   POST: !exists k :: 1 < k < n && n % k == 0
   {
     var n := 3;
-    expect n > 1; // PRE-CHECK
     var result := IsNonPrime(n);
     expect result == false;
   }
@@ -74,20 +71,14 @@ method Passing()
   //   POST: exists k :: 1 < k < n && n % k == 0
   {
     var n := 6;
-    expect n > 1; // PRE-CHECK
     var result := IsNonPrime(n);
     expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsNonPrime();
+  print "GeneratedTests_IsNonPrime: all tests passed!\n";
 }

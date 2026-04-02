@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-01 13:47:32
+// Generated: 2026-04-02 13:49:14
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -39,7 +39,7 @@ method FindFirstOccurrenceTest(){
 }
 
 
-method Passing()
+method GeneratedTests_FindFirstOccurrence()
 {
   // Test case for combination {2}:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
@@ -50,7 +50,6 @@ method Passing()
   {
     var arr := new int[1] [609];
     var target := 609;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -62,48 +61,40 @@ method Passing()
   {
     var arr := new int[0] [];
     var target := 0;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
 
-  // Test case for combination {2}/Barr=3,target=0:
+  // Test case for combination {2}/Barr=2,target=0,arr-shape=strict-asc:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: !(target !in arr[..])
   //   POST: 0 <= index < arr.Length
   //   POST: arr[index] == target
   //   POST: target !in arr[..index]
   {
-    var arr := new int[3] [0, 5, 6];
+    var arr := new int[2] [0, 7720];
     var target := 0;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
 
-  // Test case for combination {2}/Barr=2,target=1:
+  // Test case for combination {2}/Barr=3,target=1,arr-shape=const:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: !(target !in arr[..])
   //   POST: 0 <= index < arr.Length
   //   POST: arr[index] == target
   //   POST: target !in arr[..index]
   {
-    var arr := new int[2] [1, 4];
+    var arr := new int[3] [1, 1, 1];
     var target := 1;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindFirstOccurrence();
+  print "GeneratedTests_FindFirstOccurrence: all tests passed!\n";
 }

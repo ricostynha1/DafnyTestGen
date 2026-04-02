@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-04-01 13:47:05
+// Generated: 2026-04-02 13:49:05
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -36,7 +36,7 @@ method ElementWiseModuloTest(){
 
 
 
-method Passing()
+method GeneratedTests_ElementWiseModulo()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
@@ -46,8 +46,6 @@ method Passing()
   {
     var a := new int[1] [18];
     var b := new int[1] [12];
-    expect a.Length == b.Length; // PRE-CHECK
-    expect forall i :: 0 <= i < b.Length ==> b[i] != 0; // PRE-CHECK
     var result := ElementWiseModulo(a, b);
     expect result.Length == a.Length;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i];
@@ -61,8 +59,6 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[0] [];
-    expect a.Length == b.Length; // PRE-CHECK
-    expect forall i :: 0 <= i < b.Length ==> b[i] != 0; // PRE-CHECK
     var result := ElementWiseModulo(a, b);
     expect result.Length == a.Length;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i];
@@ -76,8 +72,6 @@ method Passing()
   {
     var a := new int[2] [6, 5];
     var b := new int[2] [3, 4];
-    expect a.Length == b.Length; // PRE-CHECK
-    expect forall i :: 0 <= i < b.Length ==> b[i] != 0; // PRE-CHECK
     var result := ElementWiseModulo(a, b);
     expect result.Length == a.Length;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i];
@@ -91,8 +85,6 @@ method Passing()
   {
     var a := new int[3] [8, 7, 9];
     var b := new int[3] [4, 5, 6];
-    expect a.Length == b.Length; // PRE-CHECK
-    expect forall i :: 0 <= i < b.Length ==> b[i] != 0; // PRE-CHECK
     var result := ElementWiseModulo(a, b);
     expect result.Length == a.Length;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i];
@@ -100,13 +92,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseModulo();
+  print "GeneratedTests_ElementWiseModulo: all tests passed!\n";
 }

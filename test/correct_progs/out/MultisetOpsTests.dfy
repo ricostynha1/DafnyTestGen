@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-01 13:44:05
+// Generated: 2026-04-02 13:47:51
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -64,7 +64,7 @@ method MultisetUnionNat(A: multiset<nat>, B: multiset<nat>) returns (C: multiset
 }
 
 
-method Passing()
+method GeneratedTests_MultisetContains()
 {
   // Test case for combination {1}:
   //   PRE:  |M| > 0
@@ -72,9 +72,8 @@ method Passing()
   {
     var M: multiset<int> := multiset{5};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContains(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=1,x=0:
@@ -83,9 +82,8 @@ method Passing()
   {
     var M: multiset<int> := multiset{-2};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContains(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=1,x=1:
@@ -94,9 +92,8 @@ method Passing()
   {
     var M: multiset<int> := multiset{-2};
     var x := 1;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContains(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=2,x=0:
@@ -105,18 +102,21 @@ method Passing()
   {
     var M: multiset<int> := multiset{-2, -2};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContains(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
+}
+
+method GeneratedTests_MultisetUnion()
+{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
     var A: multiset<int> := multiset{1, 1, 1};
     var B: multiset<int> := multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4};
     var C := MultisetUnion(A, B);
-    expect C == multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=0:
@@ -125,7 +125,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
     var C := MultisetUnion(A, B);
-    expect C == multiset{};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=1:
@@ -134,7 +134,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-2};
     var C := MultisetUnion(A, B);
-    expect C == multiset{-2};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -143,16 +143,20 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{4, 5};
     var C := MultisetUnion(A, B);
-    expect C == multiset{4, 5};
+    expect C == A + B;
   }
 
+}
+
+method GeneratedTests_MultisetIntersection()
+{
   // Test case for combination {1}:
   //   POST: C == A * B
   {
     var A: multiset<int> := multiset{-2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4};
     var B: multiset<int> := multiset{-2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
     var C := MultisetIntersection(A, B);
-    expect C == multiset{-2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
+    expect C == A * B;
   }
 
   // Test case for combination {1}/BA=0,B=0:
@@ -161,7 +165,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
     var C := MultisetIntersection(A, B);
-    expect C == multiset{};
+    expect C == A * B;
   }
 
   // Test case for combination {1}/BA=0,B=1:
@@ -170,7 +174,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-1};
     var C := MultisetIntersection(A, B);
-    expect C == multiset{};
+    expect C == A * B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -179,16 +183,20 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{0, 2};
     var C := MultisetIntersection(A, B);
-    expect C == multiset{};
+    expect C == A * B;
   }
 
+}
+
+method GeneratedTests_MultisetDifference()
+{
   // Test case for combination {1}:
   //   POST: C == A - B
   {
     var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 5};
     var B: multiset<int> := multiset{4};
     var C := MultisetDifference(A, B);
-    expect C == multiset{-2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 5};
+    expect C == A - B;
   }
 
   // Test case for combination {1}/BA=0,B=0:
@@ -197,7 +205,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
     var C := MultisetDifference(A, B);
-    expect C == multiset{};
+    expect C == A - B;
   }
 
   // Test case for combination {1}/BA=0,B=1:
@@ -206,7 +214,7 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{2};
     var C := MultisetDifference(A, B);
-    expect C == multiset{};
+    expect C == A - B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -215,9 +223,13 @@ method Passing()
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{2, 3};
     var C := MultisetDifference(A, B);
-    expect C == multiset{};
+    expect C == A - B;
   }
 
+}
+
+method GeneratedTests_MultisetSubset()
+{
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
@@ -262,13 +274,17 @@ method Passing()
     expect r == true;
   }
 
+}
+
+method GeneratedTests_MultisetCount()
+{
   // Test case for combination {1}:
   //   POST: r == M[x]
   {
     var M: multiset<int> := multiset{-2, -2, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
     var x := 5;
     var r := MultisetCount(M, x);
-    expect r == 0;
+    expect r == M[x];
   }
 
   // Test case for combination {1}/BM=0,x=0:
@@ -295,9 +311,13 @@ method Passing()
     var M: multiset<int> := multiset{-2};
     var x := 0;
     var r := MultisetCount(M, x);
-    expect r == 0;
+    expect r == M[x];
   }
 
+}
+
+method GeneratedTests_AddElement()
+{
   // Test case for combination {1}:
   //   POST: C == M + multiset{x}
   //   POST: x in C
@@ -305,7 +325,7 @@ method Passing()
     var M: multiset<int> := multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
     var x := 5;
     var C := AddElement(M, x);
-    expect C == multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5};
+    expect C == M + multiset{x};
     expect x in C;
   }
 
@@ -316,7 +336,7 @@ method Passing()
     var M: multiset<int> := multiset{};
     var x := 0;
     var C := AddElement(M, x);
-    expect C == multiset{0};
+    expect C == M + multiset{x};
     expect x in C;
   }
 
@@ -327,7 +347,7 @@ method Passing()
     var M: multiset<int> := multiset{};
     var x := 1;
     var C := AddElement(M, x);
-    expect C == multiset{1};
+    expect C == M + multiset{x};
     expect x in C;
   }
 
@@ -338,19 +358,22 @@ method Passing()
     var M: multiset<int> := multiset{0};
     var x := 0;
     var C := AddElement(M, x);
-    expect C == multiset{0, 0};
+    expect C == M + multiset{x};
     expect x in C;
   }
 
+}
+
+method GeneratedTests_MultisetContainsNat()
+{
   // Test case for combination {1}:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
   {
     var M: multiset<nat> := multiset{7};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContainsNat(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=1,x=0:
@@ -359,9 +382,8 @@ method Passing()
   {
     var M: multiset<nat> := multiset{0};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContainsNat(M, x);
-    expect r == true;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=1,x=1:
@@ -370,9 +392,8 @@ method Passing()
   {
     var M: multiset<nat> := multiset{0};
     var x := 1;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContainsNat(M, x);
-    expect r == false;
+    expect r == (x in M);
   }
 
   // Test case for combination {1}/BM=2,x=0:
@@ -381,18 +402,21 @@ method Passing()
   {
     var M: multiset<nat> := multiset{0, 0};
     var x := 0;
-    expect |M| > 0; // PRE-CHECK
     var r := MultisetContainsNat(M, x);
-    expect r == true;
+    expect r == (x in M);
   }
 
+}
+
+method GeneratedTests_MultisetUnionNat()
+{
   // Test case for combination {1}:
   //   POST: C == A + B
   {
     var A: multiset<nat> := multiset{3, 3, 3};
     var B: multiset<nat> := multiset{0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=0:
@@ -401,7 +425,7 @@ method Passing()
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=1:
@@ -410,7 +434,7 @@ method Passing()
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{0};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{0};
+    expect C == A + B;
   }
 
   // Test case for combination {1}/BA=0,B=2:
@@ -419,18 +443,29 @@ method Passing()
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{1, 1};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{1, 1};
+    expect C == A + B;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MultisetContains();
+  print "GeneratedTests_MultisetContains: all tests passed!\n";
+  GeneratedTests_MultisetUnion();
+  print "GeneratedTests_MultisetUnion: all tests passed!\n";
+  GeneratedTests_MultisetIntersection();
+  print "GeneratedTests_MultisetIntersection: all tests passed!\n";
+  GeneratedTests_MultisetDifference();
+  print "GeneratedTests_MultisetDifference: all tests passed!\n";
+  GeneratedTests_MultisetSubset();
+  print "GeneratedTests_MultisetSubset: all tests passed!\n";
+  GeneratedTests_MultisetCount();
+  print "GeneratedTests_MultisetCount: all tests passed!\n";
+  GeneratedTests_AddElement();
+  print "GeneratedTests_AddElement: all tests passed!\n";
+  GeneratedTests_MultisetContainsNat();
+  print "GeneratedTests_MultisetContainsNat: all tests passed!\n";
+  GeneratedTests_MultisetUnionNat();
+  print "GeneratedTests_MultisetUnionNat: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-01 13:47:00
+// Generated: 2026-04-02 13:49:03
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -34,7 +34,7 @@ method IsPrimeTest(){
     assert out3;
 }
 
-method Passing()
+method GeneratedTests_IsPrime()
 {
   // Test case for combination {1}:
   //   PRE:  n > 1
@@ -42,7 +42,6 @@ method Passing()
   //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
-    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
   }
@@ -53,7 +52,6 @@ method Passing()
   //   POST: !forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
-    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == false;
   }
@@ -64,7 +62,6 @@ method Passing()
   //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
-    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
   }
@@ -75,20 +72,14 @@ method Passing()
   //   POST: forall k :: 2 <= k < n ==> n % k != 0
   {
     var n := 5;
-    expect n > 1; // PRE-CHECK
     var result := IsPrime(n);
     expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsPrime();
+  print "GeneratedTests_IsPrime: all tests passed!\n";
 }

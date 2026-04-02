@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-01 13:43:45
+// Generated: 2026-04-02 13:47:45
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -22,7 +22,7 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 }
 
 
-method Passing()
+method GeneratedTests_LinearSearch()
 {
   // Test case for combination {2}:
   //   POST: !(0 <= index < a.Length)
@@ -69,13 +69,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_LinearSearch();
+  print "GeneratedTests_LinearSearch: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-01 13:46:14
+// Generated: 2026-04-02 13:48:47
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -35,7 +35,7 @@ method PairwiseAdditionTest(){
 }
 
 
-method Passing()
+method GeneratedTests_PairwiseAddition()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length % 2 == 0
@@ -43,7 +43,6 @@ method Passing()
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[0] [];
-    expect a.Length % 2 == 0; // PRE-CHECK
     var result := PairwiseAddition(a);
     expect result.Length == a.Length / 2;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
@@ -55,7 +54,6 @@ method Passing()
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[2] [4, 3];
-    expect a.Length % 2 == 0; // PRE-CHECK
     var result := PairwiseAddition(a);
     expect result.Length == a.Length / 2;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
@@ -67,7 +65,6 @@ method Passing()
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[4] [8, 10, 14, 18];
-    expect a.Length % 2 == 0; // PRE-CHECK
     var result := PairwiseAddition(a);
     expect result.Length == a.Length / 2;
     expect forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1];
@@ -75,13 +72,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_PairwiseAddition();
+  print "GeneratedTests_PairwiseAddition: all tests passed!\n";
 }

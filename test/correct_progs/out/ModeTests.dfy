@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-01 13:44:02
+// Generated: 2026-04-02 13:47:51
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -53,7 +53,7 @@ predicate IsSorted(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_Mode()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a)
@@ -62,53 +62,36 @@ method Passing()
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[1] [38];
-    expect IsSorted(a); // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
     var m := Mode(a);
-    // expect m == 38; // (actual runtime value — not uniquely determined by spec)
-    expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == 38;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/Ba=2,a-shape=const:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[2] [28957, 28958];
-    expect IsSorted(a); // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
+    var a := new int[2] [3, 3];
     var m := Mode(a);
-    // expect m == 28957; // (actual runtime value — not uniquely determined by spec)
-    expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == 3;
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/Ba=3,a-shape=const:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[3] [37, 38, 39];
-    expect IsSorted(a); // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
+    var a := new int[3] [4, 4, 4];
     var m := Mode(a);
-    // expect m == 37; // (actual runtime value — not uniquely determined by spec)
-    expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == 4;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Mode();
+  print "GeneratedTests_Mode: all tests passed!\n";
 }

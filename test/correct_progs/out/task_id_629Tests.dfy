@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-01 13:47:17
+// Generated: 2026-04-02 13:49:08
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -72,14 +72,14 @@ method FindEvenNumbersTest(){
     assert res5 == [];
 }
 
-method Passing()
+method GeneratedTests_FindEvenNumbers()
 {
   // Test case for combination {1}:
   //   POST: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[0] [];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [];
+    expect evenList == Filter(arr[..], IsEven);
   }
 
   // Test case for combination {1}/Barr=1:
@@ -87,7 +87,7 @@ method Passing()
   {
     var arr := new int[1] [2];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [2];
+    expect evenList == Filter(arr[..], IsEven);
   }
 
   // Test case for combination {1}/Barr=2:
@@ -95,7 +95,7 @@ method Passing()
   {
     var arr := new int[2] [4, 3];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [4];
+    expect evenList == Filter(arr[..], IsEven);
   }
 
   // Test case for combination {1}/Barr=3:
@@ -103,18 +103,13 @@ method Passing()
   {
     var arr := new int[3] [5, 4, 6];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [4, 6];
+    expect evenList == Filter(arr[..], IsEven);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindEvenNumbers();
+  print "GeneratedTests_FindEvenNumbers: all tests passed!\n";
 }

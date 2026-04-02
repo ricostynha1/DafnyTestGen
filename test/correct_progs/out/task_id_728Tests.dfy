@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-04-01 13:47:27
+// Generated: 2026-04-02 13:49:11
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -31,7 +31,7 @@ method AddListsTest(){
   assert res2 == [6, 8, 10];
 }
 
-method Passing()
+method GeneratedTests_ElementWiseAddition()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -40,7 +40,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseAddition(a, b);
     expect result == [];
   }
@@ -52,7 +51,6 @@ method Passing()
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseAddition(a, b);
     expect result == [0];
   }
@@ -64,7 +62,6 @@ method Passing()
   {
     var a: seq<int> := [0, 21239];
     var b: seq<int> := [0, 7720];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseAddition(a, b);
     expect result == [0, 28959];
   }
@@ -76,20 +73,14 @@ method Passing()
   {
     var a: seq<int> := [-10158, -2438, 0];
     var b: seq<int> := [-21240, -21239, 0];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseAddition(a, b);
     expect result == [-31398, -23677, 0];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseAddition();
+  print "GeneratedTests_ElementWiseAddition: all tests passed!\n";
 }

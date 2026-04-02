@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-01 13:46:28
+// Generated: 2026-04-02 13:48:52
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -37,7 +37,7 @@ method ToggleCaseTest(){
   assert out2=="liTTle";
 }
 
-method Passing()
+method GeneratedTests_ToggleCase()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, Toggle)
@@ -73,13 +73,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ToggleCase();
+  print "GeneratedTests_ToggleCase: all tests passed!\n";
 }

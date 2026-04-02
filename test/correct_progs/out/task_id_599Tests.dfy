@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-01 13:46:54
+// Generated: 2026-04-02 13:49:01
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -34,7 +34,7 @@ method SumAndAverageTest(){
 }
 
 
-method Passing()
+method GeneratedTests_SumAndAverage()
 {
   // Test case for combination {1}:
   //   PRE:  n > 0
@@ -42,10 +42,9 @@ method Passing()
   //   POST: average == sum as real / n as real
   {
     var n := 2;
-    expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
-    expect sum == 3;
-    expect average == 1.5;
+    expect sum == n * (n + 1) / 2;
+    expect average == sum as real / n as real;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -54,10 +53,9 @@ method Passing()
   //   POST: average == sum as real / n as real
   {
     var n := 1;
-    expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
-    expect sum == 1;
-    expect average == 1.0;
+    expect sum == n * (n + 1) / 2;
+    expect average == sum as real / n as real;
   }
 
   // Test case for combination {1}/R3:
@@ -66,21 +64,15 @@ method Passing()
   //   POST: average == sum as real / n as real
   {
     var n := 4;
-    expect n > 0; // PRE-CHECK
     var sum, average := SumAndAverage(n);
-    expect sum == 10;
-    expect average == 2.50;
+    expect sum == n * (n + 1) / 2;
+    expect average == sum as real / n as real;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SumAndAverage();
+  print "GeneratedTests_SumAndAverage: all tests passed!\n";
 }

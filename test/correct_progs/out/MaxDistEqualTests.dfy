@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-01 13:43:57
+// Generated: 2026-04-02 13:47:49
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -32,7 +32,7 @@ method MaxDistEqual(a: array<int>) returns (maxDist: nat)
 
 
 
-method Passing()
+method GeneratedTests_MaxDistEqual()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -40,7 +40,6 @@ method Passing()
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[1] [9];
-    expect a.Length > 0; // PRE-CHECK
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }
@@ -51,7 +50,6 @@ method Passing()
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[2] [5, 4];
-    expect a.Length > 0; // PRE-CHECK
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }
@@ -62,20 +60,14 @@ method Passing()
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[3] [6, 7, 8];
-    expect a.Length > 0; // PRE-CHECK
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MaxDistEqual();
+  print "GeneratedTests_MaxDistEqual: all tests passed!\n";
 }

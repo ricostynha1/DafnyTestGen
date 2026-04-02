@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-01 13:47:47
+// Generated: 2026-04-02 13:49:18
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -46,7 +46,7 @@ method DifferenceTest(){
 }
 
 
-method Passing()
+method GeneratedTests_Difference()
 {
   // Test case for combination {1}:
   //   POST: diff == filter(a, x => x !in b)
@@ -54,7 +54,7 @@ method Passing()
     var a: seq<int> := [];
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, x => x !in b);
   }
 
   // Test case for combination {1}/Ba=0,b=1:
@@ -63,7 +63,7 @@ method Passing()
     var a: seq<int> := [];
     var b: seq<int> := [2];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, x => x !in b);
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -72,7 +72,7 @@ method Passing()
     var a: seq<int> := [];
     var b: seq<int> := [4, 3];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, x => x !in b);
   }
 
   // Test case for combination {1}/Ba=0,b=3:
@@ -81,18 +81,13 @@ method Passing()
     var a: seq<int> := [];
     var b: seq<int> := [5, 4, 6];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, x => x !in b);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Difference();
+  print "GeneratedTests_Difference: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-01 13:43:50
+// Generated: 2026-04-02 13:47:47
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -49,7 +49,7 @@ function count(x: nat, s: seq<nat>) : nat {
 
 
 
-method Passing()
+method GeneratedTests_MakeBuckets()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -57,7 +57,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[1] [2];
-    expect a.Length > 0; // PRE-CHECK
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
@@ -69,7 +68,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[2] [4, 3];
-    expect a.Length > 0; // PRE-CHECK
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
@@ -81,7 +79,6 @@ method Passing()
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[3] [5, 4, 6];
-    expect a.Length > 0; // PRE-CHECK
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
@@ -89,13 +86,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_MakeBuckets();
+  print "GeneratedTests_MakeBuckets: all tests passed!\n";
 }

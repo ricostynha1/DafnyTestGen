@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-01 13:48:08
+// Generated: 2026-04-02 13:49:25
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -43,7 +43,7 @@ method IsPerfectSquareTest(){
     r := IsPerfectSquare(1000001); assert !r;
 }
 
-method Passing()
+method GeneratedTests_IsPerfectSquare()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -83,13 +83,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsPerfectSquare();
+  print "GeneratedTests_IsPerfectSquare: all tests passed!\n";
 }

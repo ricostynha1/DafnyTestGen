@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-01 13:45:32
+// Generated: 2026-04-02 13:48:34
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -38,7 +38,7 @@ method ElementWiseDivisionTest(){
 }
 
 
-method Passing()
+method GeneratedTests_ElementWiseDivision()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -48,8 +48,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
-    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [];
   }
@@ -62,8 +60,6 @@ method Passing()
   {
     var a: seq<int> := [0];
     var b: seq<int> := [1];
-    expect |a| == |b|; // PRE-CHECK
-    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [0];
   }
@@ -76,8 +72,6 @@ method Passing()
   {
     var a: seq<int> := [0, 1];
     var b: seq<int> := [1, 2];
-    expect |a| == |b|; // PRE-CHECK
-    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [0, 0];
   }
@@ -90,21 +84,14 @@ method Passing()
   {
     var a: seq<int> := [0, 4, 6];
     var b: seq<int> := [1, 2, 3];
-    expect |a| == |b|; // PRE-CHECK
-    expect 0 !in b; // PRE-CHECK
     var result := ElementWiseDivision(a, b);
     expect result == [0, 2, 2];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseDivision();
+  print "GeneratedTests_ElementWiseDivision: all tests passed!\n";
 }

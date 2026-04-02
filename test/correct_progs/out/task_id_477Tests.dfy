@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-01 13:46:23
+// Generated: 2026-04-02 13:48:50
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -47,7 +47,7 @@ method TestToLowercase()
     assert result == "1234567890";
 }
 
-method Passing()
+method GeneratedTests_ToLowercase()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToLower)
@@ -83,13 +83,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ToLowercase();
+  print "GeneratedTests_ToLowercase: all tests passed!\n";
 }

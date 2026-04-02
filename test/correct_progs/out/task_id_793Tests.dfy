@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-01 13:48:00
+// Generated: 2026-04-02 13:49:23
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -43,7 +43,7 @@ method LastPositionTest(){
     assert out3 == -1;
 }
 
-method Passing()
+method GeneratedTests_LastPosition()
 {
   // Test case for combination {3}:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
@@ -52,56 +52,47 @@ method Passing()
   {
     var arr := new int[0] [];
     var elem := 0;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }
 
-  // Test case for combination {3}/Barr=3,elem=1:
+  // Test case for combination {3}/Barr=3,elem=1,arr-shape=strict-asc:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: pos == -1
   //   POST: !(elem in arr[..])
   {
-    var arr := new int[3] [4, 5, 6];
+    var arr := new int[3] [-40, -39, -38];
     var elem := 1;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }
 
-  // Test case for combination {3}/Barr=3,elem=0:
+  // Test case for combination {3}/Barr=3,elem=0,arr-shape=strict-asc:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: pos == -1
   //   POST: !(elem in arr[..])
   {
-    var arr := new int[3] [4, 5, 6];
+    var arr := new int[3] [-3, -2, -1];
     var elem := 0;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }
 
-  // Test case for combination {3}/Barr=2,elem=0:
+  // Test case for combination {3}/Barr=2,elem=1,arr-shape=const:
   //   PRE:  forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: pos == -1
   //   POST: !(elem in arr[..])
   {
-    var arr := new int[2] [3, 4];
-    var elem := 0;
-    expect forall i, j :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]; // PRE-CHECK
+    var arr := new int[2] [3, 3];
+    var elem := 1;
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_LastPosition();
+  print "GeneratedTests_LastPosition: all tests passed!\n";
 }

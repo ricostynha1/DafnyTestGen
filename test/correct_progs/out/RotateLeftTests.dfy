@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-04-01 13:44:23
+// Generated: 2026-04-02 13:47:57
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -22,7 +22,7 @@ method RotateLeft(a: array<int>)
 
 
 
-method Passing()
+method GeneratedTests_RotateLeft()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -32,7 +32,6 @@ method Passing()
     var a := new int[1] [16];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -46,7 +45,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -60,7 +58,6 @@ method Passing()
     var a := new int[3] [6, 4, 5];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -68,13 +65,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_RotateLeft();
+  print "GeneratedTests_RotateLeft: all tests passed!\n";
 }

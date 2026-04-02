@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-01 13:43:43
+// Generated: 2026-04-02 13:47:44
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -51,7 +51,7 @@ predicate IsMin(a: array<real>, min: real, len : nat := a.Length)
 
 
 
-method Passing()
+method GeneratedTests_IntersectIntervals()
 {
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
@@ -62,9 +62,6 @@ method Passing()
   {
     var left := new real[1] [0.0];
     var right := new real[1] [0.5];
-    expect left.Length == right.Length; // PRE-CHECK
-    expect left.Length > 0; // PRE-CHECK
-    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
     expect IsMax(left, l);
     expect IsMin(right, r);
@@ -79,9 +76,6 @@ method Passing()
   {
     var left := new real[2] [2437.0, 2438.0];
     var right := new real[2] [2438.0, 2439.0];
-    expect left.Length == right.Length; // PRE-CHECK
-    expect left.Length > 0; // PRE-CHECK
-    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
     expect IsMax(left, l);
     expect IsMin(right, r);
@@ -96,9 +90,6 @@ method Passing()
   {
     var left := new real[3] [11797.0, 11796.5, 11797.5];
     var right := new real[3] [11797.5, 11798.0, 11798.5];
-    expect left.Length == right.Length; // PRE-CHECK
-    expect left.Length > 0; // PRE-CHECK
-    expect forall i :: 0 <= i < left.Length ==> left[i] < right[i]; // PRE-CHECK
     var l, r := IntersectIntervals(left, right);
     expect IsMax(left, l);
     expect IsMin(right, r);
@@ -106,13 +97,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IntersectIntervals();
+  print "GeneratedTests_IntersectIntervals: all tests passed!\n";
 }

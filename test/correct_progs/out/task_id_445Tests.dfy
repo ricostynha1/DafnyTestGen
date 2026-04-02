@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-01 13:46:07
+// Generated: 2026-04-02 13:48:45
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -27,7 +27,7 @@ method MultiplyElementsTest(){
 
 
 
-method Passing()
+method GeneratedTests_ElementWiseMultiplication()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -36,7 +36,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseMultiplication(a, b);
     expect result == [];
   }
@@ -48,7 +47,6 @@ method Passing()
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseMultiplication(a, b);
     expect result == [0];
   }
@@ -60,7 +58,6 @@ method Passing()
   {
     var a: seq<int> := [-1, 0];
     var b: seq<int> := [0, 1];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseMultiplication(a, b);
     expect result == [0, 0];
   }
@@ -72,20 +69,14 @@ method Passing()
   {
     var a: seq<int> := [0, 1, 2];
     var b: seq<int> := [-1, 0, 1];
-    expect |a| == |b|; // PRE-CHECK
     var result := ElementWiseMultiplication(a, b);
     expect result == [0, 0, 2];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ElementWiseMultiplication();
+  print "GeneratedTests_ElementWiseMultiplication: all tests passed!\n";
 }

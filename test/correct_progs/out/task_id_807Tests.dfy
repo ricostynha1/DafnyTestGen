@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-04-01 13:48:13
+// Generated: 2026-04-02 13:49:27
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -52,14 +52,13 @@ method FindFirstOddTest(){
     assert out3 == -1;
 }
 
-method Passing()
+method GeneratedTests_FindFirstOdd()
 {
   // Test case for combination {1}:
   //   POST: IsFirstOdd(a, index)
   {
     var a := new int[0] [];
     var index := FindFirstOdd(a);
-    // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect IsFirstOdd(a, index);
   }
 
@@ -68,7 +67,6 @@ method Passing()
   {
     var a := new int[1] [2];
     var index := FindFirstOdd(a);
-    // expect index == -1; // (actual runtime value — not uniquely determined by spec)
     expect IsFirstOdd(a, index);
   }
 
@@ -77,7 +75,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var index := FindFirstOdd(a);
-    // expect index == 1; // (actual runtime value — not uniquely determined by spec)
     expect IsFirstOdd(a, index);
   }
 
@@ -86,19 +83,13 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var index := FindFirstOdd(a);
-    // expect index == 0; // (actual runtime value — not uniquely determined by spec)
     expect IsFirstOdd(a, index);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FindFirstOdd();
+  print "GeneratedTests_FindFirstOdd: all tests passed!\n";
 }

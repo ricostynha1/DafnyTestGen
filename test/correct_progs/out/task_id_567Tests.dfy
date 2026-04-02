@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-01 13:46:33
+// Generated: 2026-04-02 13:48:53
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -31,7 +31,7 @@ method IsSortedTest(){
   assert ! out2;
 }
 
-method Passing()
+method GeneratedTests_IsSortedArr()
 {
   // Test case for combination {1}:
   //   POST: sorted
@@ -71,13 +71,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsSortedArr();
+  print "GeneratedTests_IsSortedArr: all tests passed!\n";
 }

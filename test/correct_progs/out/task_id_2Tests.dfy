@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-01 13:45:06
+// Generated: 2026-04-02 13:48:16
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -47,7 +47,7 @@ method SharedElementsTest(){
   assert res3 == {};
 }
 
-method Passing()
+method GeneratedTests_SharedElements()
 {
   // Test case for combination {1}:
   //   POST: result == elems(a[..]) * elems(b[..])
@@ -55,7 +55,7 @@ method Passing()
     var a := new int[0] [];
     var b := new int[0] [];
     var result := SharedElements<int>(a, b);
-    expect result == {};
+    expect result == elems(a[..]) * elems(b[..]);
   }
 
   // Test case for combination {1}/Ba=0,b=1:
@@ -64,7 +64,7 @@ method Passing()
     var a := new int[0] [];
     var b := new int[1] [2];
     var result := SharedElements<int>(a, b);
-    expect result == {};
+    expect result == elems(a[..]) * elems(b[..]);
   }
 
   // Test case for combination {1}/Ba=0,b=2:
@@ -73,7 +73,7 @@ method Passing()
     var a := new int[0] [];
     var b := new int[2] [4, 3];
     var result := SharedElements<int>(a, b);
-    expect result == {};
+    expect result == elems(a[..]) * elems(b[..]);
   }
 
   // Test case for combination {1}/Ba=0,b=3:
@@ -82,18 +82,13 @@ method Passing()
     var a := new int[0] [];
     var b := new int[3] [5, 4, 6];
     var result := SharedElements<int>(a, b);
-    expect result == {};
+    expect result == elems(a[..]) * elems(b[..]);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_SharedElements();
+  print "GeneratedTests_SharedElements: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-01 13:47:10
+// Generated: 2026-04-02 13:49:06
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -35,7 +35,7 @@ method PowerOfListElementsTest(){
 }
 
 
-method Passing()
+method GeneratedTests_PowerOfListElements()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
@@ -44,9 +44,7 @@ method Passing()
   {
     var l: seq<int> := [];
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
-    // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -58,9 +56,7 @@ method Passing()
   {
     var l: seq<int> := [];
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
-    // expect result == []; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -72,9 +68,7 @@ method Passing()
   {
     var l: seq<int> := [2];
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
-    // expect result == [1]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
@@ -86,22 +80,15 @@ method Passing()
   {
     var l: seq<int> := [2];
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var result := PowerOfListElements(l, n);
-    // expect result == [2]; // (actual runtime value — not uniquely determined by spec)
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_PowerOfListElements();
+  print "GeneratedTests_PowerOfListElements: all tests passed!\n";
 }

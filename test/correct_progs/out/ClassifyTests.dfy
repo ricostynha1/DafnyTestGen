@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-04-01 13:43:16
+// Generated: 2026-04-02 13:47:35
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -20,7 +20,7 @@ method Classify(x: int) returns (r: int)
 }
 
 
-method Passing()
+method GeneratedTests_Classify()
 {
   // Test case for combination {2}:
   //   PRE:  -100 <= x <= 100
@@ -29,7 +29,6 @@ method Passing()
   //   POST: r == 1
   {
     var x := 97;
-    expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 1;
   }
@@ -41,7 +40,6 @@ method Passing()
   //   POST: !(x > 0)
   {
     var x := 0;
-    expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 0;
   }
@@ -53,7 +51,6 @@ method Passing()
   //   POST: !(x > 0)
   {
     var x := -4;
-    expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == -1;
   }
@@ -65,20 +62,14 @@ method Passing()
   //   POST: r == 1
   {
     var x := 100;
-    expect -100 <= x <= 100; // PRE-CHECK
     var r := Classify(x);
     expect r == 1;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_Classify();
+  print "GeneratedTests_Classify: all tests passed!\n";
 }

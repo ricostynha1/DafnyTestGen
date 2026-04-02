@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-04-01 13:45:59
+// Generated: 2026-04-02 13:48:43
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -49,7 +49,7 @@ method HasCommonElementTest(){
     assert out3;
 }
 
-method Passing()
+method GeneratedTests_HasCommonElement()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -93,13 +93,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_HasCommonElement();
+  print "GeneratedTests_HasCommonElement: all tests passed!\n";
 }
