@@ -311,7 +311,7 @@ test/
   buggy_progs/           # Buggy programs for --check mode
     in/                  #   Source files with known bugs
     out/                 #   Check mode output (Passing/Failing split)
-  unsupported_progs/     # Programs not currently supported (complex datatypes, higher-order functions, etc.)
+  unsupported_progs/     # Programs with features not fully supported (nested seqs with complex quantifiers, etc.)
 ```
 
 The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis** + **SmtTranslator** → **Z3Runner** → **TypeUtils** (model parsing) → **TestEmitter** → **TestValidator** (optional).
@@ -332,6 +332,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
 - Uninterpreted functions (postcondition literals used as assertions)
 - **Recursive function finite unrolling**: simple recursive functions in postconditions (e.g., `Fact(n)`, `SumSeq(s)`, `SumOfNegatives(a, n)`) are automatically detected, classified by recursion pattern, and compiled into finite SMT `define-fun` definitions — allowing Z3 to compute concrete expected values instead of treating the function as opaque (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below)
+- **Nested sequence types** (`seq<seq<T>>`, `seq<string>`): nested sequences with scalar inner element types (`int`, `nat`, `real`, `char`, `bool`) are encoded using Z3's native `(Seq (Seq T))` sort. Outer sequence length is bounded to 8, inner sequence lengths to 4. Inner length and element values are extracted from Z3 models via nested `get-value` queries (e.g., `(seq.len (seq.nth s i))`, `(seq.nth (seq.nth s i) j)`). Test code emits Dafny nested seq literals (e.g., `var s: seq<seq<int>> := [[1, 2], [3]];`) or string seq literals (e.g., `var l: seq<string> := ["abc", "de"];`). Note: postconditions with multi-variable quantifiers over nested seqs often cause Z3 to return `unknown`, limiting test coverage for complex contracts
 
 ### Class Method Support
 
@@ -372,7 +373,7 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
 - **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
 - **Class/reference-typed method parameters** (e.g., `method foo(m: Message, addr: Address)`): methods whose parameters include user-defined class or reference types are auto-skipped — such values cannot be synthesised by Z3
-- **Nested collection types** (e.g., `seq<seq<int>>`, `array<seq<T>>`)
+- **Nested collection types** other than `seq<seq<T>>` and `seq<string>` (e.g., `array<seq<T>>`, `set<seq<int>>`, `seq<set<int>>`)
 - **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
 - **Classes with collection fields containing class element types** (e.g., `var messages: set<Message>`, `var recipients: seq<Address>`, `var cache: map<int, Entry>`): the class is auto-skipped because its field values cannot be synthesised by Z3
 - **Classes with tuple-typed collection fields** (e.g., `var pairs: map<int, (int, int)>`): same reason — tuple element types in class fields are not yet supported
