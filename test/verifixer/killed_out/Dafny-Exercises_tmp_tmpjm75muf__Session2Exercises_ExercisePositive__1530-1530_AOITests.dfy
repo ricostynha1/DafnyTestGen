@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive__1530-1530_AOI.dfy
 // Method: mpositive
-// Generated: 2026-04-01 22:27:48
+// Generated: 2026-04-05 23:38:53
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive.dfy
 
@@ -201,7 +201,7 @@ method Failing()
   {
     var v := new int[2] [4, 3];
     var b := mpositivertl(v);
-    // expect b == positive(v[0 .. v.Length]);
+    // expect b == true;
   }
 
   // Test case for combination {1}/Bv=3:
@@ -209,7 +209,7 @@ method Failing()
   {
     var v := new int[3] [5, 4, 6];
     var b := mpositivertl(v);
-    // expect b == positive(v[0 .. v.Length]);
+    // expect b == true;
   }
 
 }

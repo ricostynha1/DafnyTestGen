@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_reverse.dfy
 // Method: Reverse
-// Generated: 2026-04-01 22:26:35
+// Generated: 2026-04-05 23:37:33
 
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
@@ -47,7 +47,6 @@ method Passing()
   {
     var a := new char[1] [' '];
     var old_a := a;
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a == old_a;
     expect b.Length == a.Length;
@@ -62,7 +61,6 @@ method Passing()
   {
     var a := new char[2] [' ', '!'];
     var old_a := a;
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a == old_a;
     expect b.Length == a.Length;
@@ -77,7 +75,6 @@ method Passing()
   {
     var a := new char[3] [' ', '!', '"'];
     var old_a := a;
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a == old_a;
     expect b.Length == a.Length;

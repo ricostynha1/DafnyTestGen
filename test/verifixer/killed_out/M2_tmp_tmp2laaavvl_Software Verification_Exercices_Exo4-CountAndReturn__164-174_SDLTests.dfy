@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\M2_tmp_tmp2laaavvl_Software Verification_Exercices_Exo4-CountAndReturn__164-174_SDL.dfy
 // Method: CountToAndReturnN
-// Generated: 2026-04-01 22:36:26
+// Generated: 2026-04-05 23:54:40
 
 // M2_tmp_tmp2laaavvl_Software Verification_Exercices_Exo4-CountAndReturn.dfy
 
@@ -27,7 +27,6 @@ method Passing()
   //   POST: r == n
   {
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     expect r == 0;
   }
@@ -41,7 +40,6 @@ method Failing()
   //   POST: r == n
   {
     var n := 1;
-    // expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     // expect r == 1;
   }
@@ -51,7 +49,6 @@ method Failing()
   //   POST: r == n
   {
     var n := 2;
-    // expect n >= 0; // PRE-CHECK
     var r := CountToAndReturnN(n);
     // expect r == 2;
   }

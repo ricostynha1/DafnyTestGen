@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort__913_ROR_Le.dfy
 // Method: bubbleSort
-// Generated: 2026-04-01 22:37:40
+// Generated: 2026-04-05 23:55:56
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort.dfy
 
@@ -68,7 +68,7 @@ method Passing()
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [6];
     var old_a := a[..];
     expect a != null && a.Length > 0; // PRE-CHECK
     bubbleSort(a);

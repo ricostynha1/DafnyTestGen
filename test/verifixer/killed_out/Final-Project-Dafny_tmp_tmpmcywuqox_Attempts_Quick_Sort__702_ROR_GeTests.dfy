@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort__702_ROR_Ge.dfy
 // Method: threshold
-// Generated: 2026-04-01 22:34:15
+// Generated: 2026-04-05 23:43:57
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort.dfy
 
@@ -82,7 +82,7 @@ method quickSort(Seq: seq<int>) returns (Seq': seq<int>)
 
 method Passing()
 {
-  // Test case for combination {1}/Bthres=0,Seq=0:
+  // Test case for combination {1}:
   //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
@@ -131,14 +131,14 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bthres=0,Seq=1:
   //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
-    var Seq: seq<int> := [30];
+    var Seq: seq<int> := [26];
     var Seq_1, Seq_2 := threshold(thres, Seq);
     // expect forall x: int | x in Seq_1 :: x <= thres;
     // expect forall x: int | x in Seq_2 :: x >= thres;
@@ -168,7 +168,7 @@ method Failing()
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
-    var Seq: seq<int> := [17, 16, 18];
+    var Seq: seq<int> := [25, 24, 26];
     var Seq_1, Seq_2 := threshold(thres, Seq);
     // expect forall x: int | x in Seq_1 :: x <= thres;
     // expect forall x: int | x in Seq_2 :: x >= thres;

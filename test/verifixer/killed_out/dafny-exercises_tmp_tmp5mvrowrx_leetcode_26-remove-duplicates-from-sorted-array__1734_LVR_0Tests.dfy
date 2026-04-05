@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-array__1734_LVR_0.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-01 22:27:41
+// Generated: 2026-04-05 23:38:45
 
 // dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-array.dfy
 
@@ -83,10 +83,9 @@ method Passing()
   //   POST: forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old(nums[..])
   //   POST: forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length]
   {
-    var nums := new int[1] [5853];
+    var nums := new int[1] [38];
     var old_nums := nums;
     var old_nums2 := nums[..];
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
     expect num_length == 1;
     expect nums.Length == old_nums.Length;
@@ -107,7 +106,6 @@ method Passing()
     var nums := new int[0] [];
     var old_nums := nums;
     var old_nums2 := nums[..];
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
     expect num_length == 0;
     expect nums.Length == old_nums.Length;
@@ -125,10 +123,9 @@ method Passing()
   //   POST: forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old(nums[..])
   //   POST: forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length]
   {
-    var nums := new int[2] [1236, 1237];
+    var nums := new int[2] [28957, 28958];
     var old_nums := nums;
     var old_nums2 := nums[..];
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
     // expect num_length == 2; // (actual runtime value — not uniquely determined by spec)
     expect nums.Length == old_nums.Length;
@@ -146,10 +143,9 @@ method Passing()
   //   POST: forall i: int {:trigger nums[i]} | 0 <= i < num_length :: nums[i] in old(nums[..])
   //   POST: forall i: int {:trigger old(nums[i])} | 0 <= i < nums.Length :: old(nums[i]) in nums[..num_length]
   {
-    var nums := new int[3] [5853, 5854, 5855];
+    var nums := new int[3] [23675, 23676, 23677];
     var old_nums := nums;
     var old_nums2 := nums[..];
-    expect forall i: int, j: int {:trigger nums[j], nums[i]} | 0 <= i < j < nums.Length :: nums[i] <= nums[j]; // PRE-CHECK
     var num_length := RemoveDuplicates(nums);
     // expect num_length == 3; // (actual runtime value — not uniquely determined by spec)
     expect nums.Length == old_nums.Length;

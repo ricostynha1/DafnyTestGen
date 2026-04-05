@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 8_H8__2020_AOR_Sub.dfy
 // Method: Partition
-// Generated: 2026-04-01 13:53:02
+// Generated: 2026-04-05 22:48:53
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 8_H8.dfy
 
@@ -77,12 +77,11 @@ method Passing()
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{1, 3, 5};
-    expect |m| > 0; // PRE-CHECK
     var pre, p, post := Partition(m);
     expect p in m;
     expect m == multiset{1, 3, 5};
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= p;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= p;
+    expect forall z: int | z in pre :: z <= p;
+    expect forall z: int | z in post :: z >= p;
   }
 
   // Test case for combination {1}/Bm=1:
@@ -93,12 +92,11 @@ method Passing()
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{5};
-    expect |m| > 0; // PRE-CHECK
     var pre, p, post := Partition(m);
     expect p in m;
     expect m == multiset{5};
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= p;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= p;
+    expect forall z: int | z in pre :: z <= p;
+    expect forall z: int | z in post :: z >= p;
   }
 
   // Test case for combination {1}/Bm=2:
@@ -109,12 +107,11 @@ method Passing()
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{-2, 5};
-    expect |m| > 0; // PRE-CHECK
     var pre, p, post := Partition(m);
     expect p in m;
     expect m == multiset{-2, 5};
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= p;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= p;
+    expect forall z: int | z in pre :: z <= p;
+    expect forall z: int | z in post :: z >= p;
   }
 
   // Test case for combination {1}/Bm=3:
@@ -125,12 +122,11 @@ method Passing()
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{2, 4, 4};
-    expect |m| > 0; // PRE-CHECK
     var pre, p, post := Partition(m);
     expect p in m;
     expect m == multiset{2, 4, 4};
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= p;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= p;
+    expect forall z: int | z in pre :: z <= p;
+    expect forall z: int | z in post :: z >= p;
   }
 
   // Test case for combination {1}:
@@ -143,13 +139,12 @@ method Passing()
   {
     var m: multiset<int> := multiset{1, 3, 5};
     var k := 2;
-    expect 0 <= k < |m|; // PRE-CHECK
     var pre, kth, post := QuickSelect(m, k);
     expect kth in m;
     expect m == multiset{1, 3, 5};
     expect |pre| == k;
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= kth;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= kth;
+    expect forall z: int | z in pre :: z <= kth;
+    expect forall z: int | z in post :: z >= kth;
   }
 
   // Test case for combination {1}/Bm=1,k=0:
@@ -162,13 +157,12 @@ method Passing()
   {
     var m: multiset<int> := multiset{5};
     var k := 0;
-    expect 0 <= k < |m|; // PRE-CHECK
     var pre, kth, post := QuickSelect(m, k);
     expect kth in m;
     expect m == multiset{5};
     expect |pre| == k;
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= kth;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= kth;
+    expect forall z: int | z in pre :: z <= kth;
+    expect forall z: int | z in post :: z >= kth;
   }
 
   // Test case for combination {1}/Bm=2,k=0:
@@ -181,13 +175,12 @@ method Passing()
   {
     var m: multiset<int> := multiset{-2, 5};
     var k := 0;
-    expect 0 <= k < |m|; // PRE-CHECK
     var pre, kth, post := QuickSelect(m, k);
     expect kth in m;
     expect m == multiset{-2, 5};
     expect |pre| == k;
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= kth;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= kth;
+    expect forall z: int | z in pre :: z <= kth;
+    expect forall z: int | z in post :: z >= kth;
   }
 
   // Test case for combination {1}/Bm=2,k=1:
@@ -200,13 +193,12 @@ method Passing()
   {
     var m: multiset<int> := multiset{-2, 5};
     var k := 1;
-    expect 0 <= k < |m|; // PRE-CHECK
     var pre, kth, post := QuickSelect(m, k);
     expect kth in m;
     expect m == multiset{-2, 5};
     expect |pre| == k;
-    expect forall z: int {:trigger pre[z]} | z in pre :: z <= kth;
-    expect forall z: int {:trigger post[z]} | z in post :: z >= kth;
+    expect forall z: int | z in pre :: z <= kth;
+    expect forall z: int | z in post :: z >= kth;
   }
 
 }

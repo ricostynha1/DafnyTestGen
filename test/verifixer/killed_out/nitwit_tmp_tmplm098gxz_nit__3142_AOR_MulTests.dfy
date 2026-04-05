@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\nitwit_tmp_tmplm098gxz_nit__3142_AOR_Mul.dfy
 // Method: nit_increment
-// Generated: 2026-04-01 22:36:53
+// Generated: 2026-04-05 23:55:08
 
 // nitwit_tmp_tmplm098gxz_nit.dfy
 
@@ -445,6 +445,206 @@ method Failing()
     var sum, carry := nit_increment(b, n);
     // expect nitness(b, sum);
     // expect nitness(b, carry);
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [];
+    var q: seq<nat> := [];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_add(b, p, q);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=3,p=3,q=1:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST: bibble(b, r)
+  {
+    var b := 3;
+    var p: seq<nat> := [5, 4, 6];
+    var q: seq<nat> := [14];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_add(b, p, q);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=3,p=3,q=0:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST: bibble(b, r)
+  {
+    var b := 3;
+    var p: seq<nat> := [5, 4, 6];
+    var q: seq<nat> := [];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_add(b, p, q);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=3,p=2,q=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST: bibble(b, r)
+  {
+    var b := 3;
+    var p: seq<nat> := [5, 4];
+    var q: seq<nat> := [7, 6, 8];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_add(b, p, q);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_increment(b, p);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=2,p=1:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [2];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_increment(b, p);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=2,p=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [4, 3];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_increment(b, p);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}/Bb=2,p=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [5, 4, 6];
+    // expect valid_base(b); // PRE-CHECK
+    var r := bibble_increment(b, p);
+    // expect bibble(b, r);
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, fp)
+  {
+    var b := 2;
+    var p: seq<nat> := [];
+    // expect valid_base(b); // PRE-CHECK
+    var fp := bibble_flip(b, p);
+    // expect bibble(b, fp);
+  }
+
+  // Test case for combination {1}/Bb=2,p=1:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, fp)
+  {
+    var b := 2;
+    var p: seq<nat> := [2];
+    // expect valid_base(b); // PRE-CHECK
+    var fp := bibble_flip(b, p);
+    // expect bibble(b, fp);
+  }
+
+  // Test case for combination {1}/Bb=2,p=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, fp)
+  {
+    var b := 2;
+    var p: seq<nat> := [4, 3];
+    // expect valid_base(b); // PRE-CHECK
+    var fp := bibble_flip(b, p);
+    // expect bibble(b, fp);
+  }
+
+  // Test case for combination {1}/Bb=2,p=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, fp)
+  {
+    var b := 2;
+    var p: seq<nat> := [5, 4, 6];
+    // expect valid_base(b); // PRE-CHECK
+    var fp := bibble_flip(b, p);
+    // expect bibble(b, fp);
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, com)
+  {
+    var b := 2;
+    var p: seq<nat> := [];
+    // expect valid_base(b); // PRE-CHECK
+    var com := n_complement(b, p);
+    // expect bibble(b, com);
+  }
+
+  // Test case for combination {1}/Bb=2,p=1:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, com)
+  {
+    var b := 2;
+    var p: seq<nat> := [2];
+    // expect valid_base(b); // PRE-CHECK
+    var com := n_complement(b, p);
+    // expect bibble(b, com);
+  }
+
+  // Test case for combination {1}/Bb=2,p=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, com)
+  {
+    var b := 2;
+    var p: seq<nat> := [4, 3];
+    // expect valid_base(b); // PRE-CHECK
+    var com := n_complement(b, p);
+    // expect bibble(b, com);
+  }
+
+  // Test case for combination {1}/Bb=2,p=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST: bibble(b, com)
+  {
+    var b := 2;
+    var p: seq<nat> := [5, 4, 6];
+    // expect valid_base(b); // PRE-CHECK
+    var com := n_complement(b, p);
+    // expect bibble(b, com);
   }
 
 }

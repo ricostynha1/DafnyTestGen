@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_tests_Search1000__1882_VER_x.dfy
 // Method: Search2PowLoop
-// Generated: 2026-04-01 13:53:10
+// Generated: 2026-04-05 22:49:03
 
 // Dafny_tmp_tmp0wu8wmfr_tests_Search1000.dfy
 
@@ -118,9 +118,6 @@ method Passing()
     var i := 0;
     var n := 0;
     var x := 0;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowLoop(a, i, n, x);
     expect k == 0;
   }
@@ -137,9 +134,6 @@ method Passing()
     var i := 0;
     var n := 1;
     var x := 0;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowLoop(a, i, n, x);
     expect k == 1;
   }
@@ -156,9 +150,6 @@ method Passing()
     var i := 0;
     var n := 1;
     var x := 1;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowLoop(a, i, n, x);
     expect k == 1;
   }
@@ -171,13 +162,10 @@ method Passing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
   //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
   {
-    var a := new int[1] [15];
+    var a := new int[1] [20];
     var i := 1;
     var n := 0;
-    var x := 0;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
+    var x := 7720;
     var k := Search2PowRecursive(a, i, n, x);
     expect k == 1;
   }
@@ -194,9 +182,6 @@ method Passing()
     var i := 0;
     var n := 0;
     var x := 0;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowRecursive(a, i, n, x);
     expect k == 0;
   }
@@ -213,9 +198,6 @@ method Passing()
     var i := 0;
     var n := 1;
     var x := 0;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowRecursive(a, i, n, x);
     expect k == 1;
   }
@@ -232,9 +214,6 @@ method Passing()
     var i := 0;
     var n := 1;
     var x := 1;
-    expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    expect Is2Pow(n + 1); // PRE-CHECK
     var k := Search2PowRecursive(a, i, n, x);
     expect k == 1;
   }
@@ -251,13 +230,10 @@ method Failing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
   //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
   {
-    var a := new int[1] [15];
+    var a := new int[1] [20];
     var i := 1;
     var n := 0;
-    var x := 0;
-    // expect 0 <= i <= i + n <= a.Length; // PRE-CHECK
-    // expect forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]; // PRE-CHECK
-    // expect Is2Pow(n + 1); // PRE-CHECK
+    var x := 7720;
     var k := Search2PowLoop(a, i, n, x);
     // expect k == 1;
   }

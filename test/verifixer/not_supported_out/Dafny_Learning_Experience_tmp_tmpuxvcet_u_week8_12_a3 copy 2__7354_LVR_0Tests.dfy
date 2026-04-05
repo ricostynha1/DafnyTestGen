@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__7354_LVR_0.dfy
 // Method: push1
-// Generated: 2026-04-01 13:52:02
+// Generated: 2026-04-05 22:47:49
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2.dfy
 
@@ -799,7 +799,7 @@ method Passing()
     expect obj.Valid(); // PRE-CHECK
     var position := obj.search1(Element);
     expect position >= 1;
-    expect exists i: int {:trigger obj.s1[i]} :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
+    expect exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect !(position == -1);
     expect obj.Valid();
   }
@@ -867,7 +867,7 @@ method Passing()
     expect obj.Valid(); // PRE-CHECK
     var position := obj.search3(Element);
     expect position >= 1;
-    expect exists i: int {:trigger obj.s2[i]} :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
+    expect exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
     expect obj.Valid();
   }
 

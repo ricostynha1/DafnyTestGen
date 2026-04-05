@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 // Method: AdditiveFactorial
-// Generated: 2026-04-01 22:31:35
+// Generated: 2026-04-05 23:41:40
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 
@@ -136,11 +136,9 @@ method Passing()
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[1] [6];
+    var A := new int[1] [24];
     var N := 1;
     var f := 0;
-    expect A.Length == N; // PRE-CHECK
-    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
@@ -150,11 +148,9 @@ method Passing()
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[2] [10, 11];
+    var A := new int[2] [25, 24];
     var N := 2;
     var f := 1;
-    expect A.Length == N; // PRE-CHECK
-    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
@@ -164,11 +160,9 @@ method Passing()
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[2] [9, 8];
+    var A := new int[2] [24, 23];
     var N := 2;
     var f := 0;
-    expect A.Length == N; // PRE-CHECK
-    expect 0 <= f < N; // PRE-CHECK
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
@@ -178,11 +172,9 @@ method Passing()
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[3] [9, 8, 10];
+    var A := new int[3] [26, 28, 27];
     var N := 3;
-    var f := 0;
-    expect A.Length == N; // PRE-CHECK
-    expect 0 <= f < N; // PRE-CHECK
+    var f := 2;
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }

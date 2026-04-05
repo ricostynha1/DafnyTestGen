@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_445.dfy
 // Method: MultiplyElements
-// Generated: 2026-04-01 22:27:57
+// Generated: 2026-04-05 23:38:57
 
 // dafny-synthesis_task_id_445.dfy
 
@@ -34,7 +34,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [];
   }
@@ -46,7 +45,6 @@ method Passing()
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
-    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0];
   }
@@ -58,7 +56,6 @@ method Passing()
   {
     var a: seq<int> := [-1, 0];
     var b: seq<int> := [0, 1];
-    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0, 0];
   }
@@ -70,7 +67,6 @@ method Passing()
   {
     var a: seq<int> := [0, 1, 2];
     var b: seq<int> := [-1, 0, 1];
-    expect |a| == |b|; // PRE-CHECK
     var result := MultiplyElements(a, b);
     expect result == [0, 0, 2];
   }

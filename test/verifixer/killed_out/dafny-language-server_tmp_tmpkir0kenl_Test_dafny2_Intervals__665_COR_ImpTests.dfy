@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals__665_COR_Imp.dfy
 // Method: RoundDown
-// Generated: 2026-04-01 22:29:20
+// Generated: 2026-04-05 23:40:28
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals.dfy
 
@@ -84,9 +84,9 @@ method Passing()
   //   POST: !(0 <= r)
   {
     var obj := new Rounding;
-    var tmp_thresholds := new int[1] [39];
+    var tmp_thresholds := new int[1] [7719];
     obj.thresholds := tmp_thresholds;
-    var k := 38;
+    var k := 7718;
     expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundDown(k);
     expect r == -1;
@@ -116,7 +116,7 @@ method Passing()
     var obj := new Rounding;
     var tmp_thresholds := new int[0] [];
     obj.thresholds := tmp_thresholds;
-    var k := 0;
+    var k := 21239;
     expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundUp(k);
     expect r == 0;
@@ -137,6 +137,21 @@ method Passing()
     expect r == 0;
   }
 
+  // Test case for combination {1}/Bk=0,thresholds=0:
+  //   PRE:  Valid()
+  //   POST: 0 <= r <= thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: !(r < thresholds.Length)
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[0] [];
+    obj.thresholds := tmp_thresholds;
+    var k := 0;
+    expect obj.Valid(); // PRE-CHECK
+    var r := obj.RoundUp(k);
+    expect r == 0;
+  }
+
   // Test case for combination {1}/Bk=0,thresholds=1:
   //   PRE:  Valid()
   //   POST: 0 <= r <= thresholds.Length
@@ -150,21 +165,6 @@ method Passing()
     expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundUp(k);
     expect r == 1;
-  }
-
-  // Test case for combination {1}/Bk=0,thresholds=2:
-  //   PRE:  Valid()
-  //   POST: 0 <= r <= thresholds.Length
-  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
-  //   POST: !(r < thresholds.Length)
-  {
-    var obj := new Rounding;
-    var tmp_thresholds := new int[2] [-2, -1];
-    obj.thresholds := tmp_thresholds;
-    var k := 0;
-    expect obj.Valid(); // PRE-CHECK
-    var r := obj.RoundUp(k);
-    expect r == 2;
   }
 
 }

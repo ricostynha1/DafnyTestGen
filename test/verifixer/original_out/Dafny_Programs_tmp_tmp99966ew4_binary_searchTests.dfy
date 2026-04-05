@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 // Method: BinarySearch
-// Generated: 2026-04-01 22:25:05
+// Generated: 2026-04-05 23:36:11
 
 // Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 
@@ -47,8 +47,8 @@ method Passing()
   //   POST: !(0 <= index)
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[1] [9];
-    var value := 8;
+    var a := new int[1] [11];
+    var value := 9;
     expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
     // expect index == -1; // (actual runtime value — not uniquely determined by spec)
@@ -62,8 +62,8 @@ method Passing()
   //   POST: a[index] == value
   //   POST: !(index < 0)
   {
-    var a := new int[1] [9];
-    var value := 9;
+    var a := new int[1] [10];
+    var value := 10;
     expect a != null && 0 <= a.Length && sorted(a); // PRE-CHECK
     var index := BinarySearch(a, value);
     expect index == 0;

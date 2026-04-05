@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_MaxSum.dfy
 // Method: MaxSum
-// Generated: 2026-04-01 22:24:56
+// Generated: 2026-04-05 23:36:03
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_MaxSum.dfy
 

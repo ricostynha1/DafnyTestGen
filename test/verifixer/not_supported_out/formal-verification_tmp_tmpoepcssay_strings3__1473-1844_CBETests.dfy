@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\formal-verification_tmp_tmpoepcssay_strings3__1473-1844_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-04-01 13:53:45
+// Generated: 2026-04-05 22:49:46
 
 // formal-verification_tmp_tmpoepcssay_strings3.dfy
 
@@ -324,10 +324,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [];
-    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
     // expect len == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
+    expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 
@@ -338,10 +337,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' '];
-    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
     // expect len == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
+    expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 
@@ -352,10 +350,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!'];
-    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
     // expect len == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
+    expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 
@@ -366,10 +363,9 @@ method Passing()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [' ', '!', '"'];
-    expect |str1| <= |str2|; // PRE-CHECK
     var len := maxCommonSubstringLength(str1, str2);
     // expect len == 0; // (actual runtime value — not uniquely determined by spec)
-    expect forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
+    expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
   }
 

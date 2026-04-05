@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 // Method: query
-// Generated: 2026-04-01 22:34:02
+// Generated: 2026-04-05 23:42:43
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 
@@ -101,7 +101,6 @@ method Passing()
     var a := new int[0] [];
     var i := 0;
     var j := 0;
-    expect 0 <= i <= j <= a.Length; // PRE-CHECK
     var res := query(a, i, j);
     expect res == 0;
   }
@@ -113,7 +112,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var i := 0;
     var j := 0;
-    expect 0 <= i <= j <= a.Length; // PRE-CHECK
     var res := query(a, i, j);
     expect res == 0;
   }
@@ -125,7 +123,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var i := 1;
     var j := 1;
-    expect 0 <= i <= j <= a.Length; // PRE-CHECK
     var res := query(a, i, j);
     expect res == 0;
   }
@@ -137,7 +134,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var i := 1;
     var j := 2;
-    expect 0 <= i <= j <= a.Length; // PRE-CHECK
     var res := query(a, i, j);
     expect res == 3;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one.dfy
 // Method: add_by_one
-// Generated: 2026-04-01 22:30:57
+// Generated: 2026-04-05 23:41:27
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one.dfy
 
@@ -56,7 +56,6 @@ method Passing()
   {
     var x := 0;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var r := add_by_one(x, y);
     expect r == 0;
   }
@@ -67,7 +66,6 @@ method Passing()
   {
     var x := 0;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var r := add_by_one(x, y);
     expect r == 1;
   }
@@ -78,7 +76,6 @@ method Passing()
   {
     var x := 1;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var r := add_by_one(x, y);
     expect r == 1;
   }
@@ -89,7 +86,6 @@ method Passing()
   {
     var x := 1;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var r := add_by_one(x, y);
     expect r == 2;
   }
@@ -100,7 +96,6 @@ method Passing()
   {
     var x := 0;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var r := bar(x, y);
     expect r == 0;
   }
@@ -111,7 +106,6 @@ method Passing()
   {
     var x := 0;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var r := bar(x, y);
     expect r == 1;
   }
@@ -122,7 +116,6 @@ method Passing()
   {
     var x := 1;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var r := bar(x, y);
     expect r == 1;
   }
@@ -133,7 +126,6 @@ method Passing()
   {
     var x := 1;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var r := bar(x, y);
     expect r == 2;
   }

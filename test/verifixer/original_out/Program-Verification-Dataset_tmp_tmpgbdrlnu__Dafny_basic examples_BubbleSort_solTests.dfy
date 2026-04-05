@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort_sol.dfy
 // Method: bubbleSort
-// Generated: 2026-04-01 22:31:07
+// Generated: 2026-04-05 23:41:31
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort_sol.dfy
 
@@ -72,8 +72,6 @@ method Passing()
   {
     var a := new int[1] [6];
     var old_a := a[..];
-    expect a != null; // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
     bubbleSort(a);
     expect sorted(a);
     expect multiset(old_a) == multiset(a[..]);
@@ -87,8 +85,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var old_a := a[..];
-    expect a != null; // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
     bubbleSort(a);
     expect sorted(a);
     expect multiset(old_a) == multiset(a[..]);
@@ -102,8 +98,6 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];
-    expect a != null; // PRE-CHECK
-    expect a.Length > 0; // PRE-CHECK
     bubbleSort(a);
     expect sorted(a);
     expect multiset(old_a) == multiset(a[..]);

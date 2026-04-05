@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index__1000_VER_m.dfy
 // Method: Index
-// Generated: 2026-04-01 22:27:12
+// Generated: 2026-04-05 23:38:12
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index.dfy
 
@@ -88,7 +88,6 @@ method Passing()
   //   POST: 0 <= i < n
   {
     var n := 1;
-    expect 1 <= n; // PRE-CHECK
     var i := Index(n);
     expect i == 0;
   }
@@ -98,7 +97,6 @@ method Passing()
   //   POST: 0 <= i < n
   {
     var n := 2;
-    expect 1 <= n; // PRE-CHECK
     var i := Index(n);
     // expect i == 1; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= i < n;
@@ -109,7 +107,6 @@ method Passing()
   //   POST: 0 <= i < n
   {
     var n := 3;
-    expect 1 <= n; // PRE-CHECK
     var i := Index(n);
     // expect i == 1; // (actual runtime value — not uniquely determined by spec)
     expect 0 <= i < n;
@@ -214,7 +211,6 @@ method Passing()
   {
     var s := 0;
     var m := 0;
-    expect s <= 2 * m; // PRE-CHECK
     var x, y := ReconstructFromMaxSum(s, m);
     expect x == 0;
     expect y == 0;
@@ -229,7 +225,6 @@ method Passing()
   {
     var s := 1;
     var m := 1;
-    expect s <= 2 * m; // PRE-CHECK
     var x, y := ReconstructFromMaxSum(s, m);
     expect x == 1;
     expect y == 0;
@@ -248,7 +243,6 @@ method Failing()
   {
     var s := 0;
     var m := 1;
-    // expect s <= 2 * m; // PRE-CHECK
     var x, y := ReconstructFromMaxSum(s, m);
     // expect x == 1;
     // expect y == -1;

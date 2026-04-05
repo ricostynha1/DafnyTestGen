@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack__2526_ROR_Eq.dfy
 // Method: Init
-// Generated: 2026-04-01 22:34:31
+// Generated: 2026-04-05 23:44:14
 
 // Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack.dfy
 
@@ -171,7 +171,6 @@ method Passing()
     obj.arr := tmp_arr;
     obj.top := 0;
     var c := 1;
-    expect c > 0; // PRE-CHECK
     obj.Init(c);
     expect c == 1;
   }
@@ -188,7 +187,6 @@ method Passing()
     obj.arr := tmp_arr;
     obj.top := 1;
     var c := 2;
-    expect c > 0; // PRE-CHECK
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();
@@ -207,7 +205,6 @@ method Passing()
     obj.arr := tmp_arr;
     obj.top := 0;
     var c := 2;
-    expect c > 0; // PRE-CHECK
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();
@@ -226,7 +223,6 @@ method Passing()
     obj.arr := tmp_arr;
     obj.top := 1;
     var c := 2;
-    expect c > 0; // PRE-CHECK
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();

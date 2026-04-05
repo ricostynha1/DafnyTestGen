@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 // Method: GetInsertIndex
-// Generated: 2026-04-01 22:23:41
+// Generated: 2026-04-05 23:34:49
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -316,8 +316,6 @@ method Passing()
     var a := new int[0] [];
     var limit := 0;
     var x := 0;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 0;
@@ -335,8 +333,6 @@ method Passing()
     var a := new int[1] [7720];
     var limit := 1;
     var x := 7719;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 0;
@@ -354,8 +350,6 @@ method Passing()
     var a := new int[1] [-1];
     var limit := 1;
     var x := 0;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 1;
@@ -373,8 +367,6 @@ method Passing()
     var a := new int[2] [7717, 7719];
     var limit := 2;
     var x := 7718;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 1;
@@ -393,8 +385,6 @@ method Passing()
     var a := new int[1] [7720];
     var limit := 0;
     var x := 7719;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 0;
@@ -413,8 +403,6 @@ method Passing()
     var a := new int[2] [7717, 7719];
     var limit := 1;
     var x := 7718;
-    expect x !in a[..]; // PRE-CHECK
-    expect 0 <= limit <= a.Length; // PRE-CHECK
     expect SortedSeq(a[..limit]); // PRE-CHECK
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 1;
@@ -436,11 +424,6 @@ method Passing()
     var a := new int[1] [0];
     var limit := 0;
     var key := 1;
-    expect key > 0; // PRE-CHECK
-    expect key !in a[..]; // PRE-CHECK
-    expect 0 <= limit < a.Length; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0; // PRE-CHECK
     expect sorted(a[..limit]); // PRE-CHECK
     var b := InsertIntoSorted(a, limit, key);
     expect b.Length == a.Length;
@@ -466,11 +449,6 @@ method Passing()
     var a := new int[1] [0];
     var limit := 0;
     var key := 2;
-    expect key > 0; // PRE-CHECK
-    expect key !in a[..]; // PRE-CHECK
-    expect 0 <= limit < a.Length; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0; // PRE-CHECK
     expect sorted(a[..limit]); // PRE-CHECK
     var b := InsertIntoSorted(a, limit, key);
     expect b.Length == a.Length;
@@ -496,11 +474,6 @@ method Passing()
     var a := new int[2] [2, 0];
     var limit := 1;
     var key := 1;
-    expect key > 0; // PRE-CHECK
-    expect key !in a[..]; // PRE-CHECK
-    expect 0 <= limit < a.Length; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0; // PRE-CHECK
     expect sorted(a[..limit]); // PRE-CHECK
     var b := InsertIntoSorted(a, limit, key);
     expect b.Length == a.Length;
@@ -526,11 +499,6 @@ method Passing()
     var a := new int[2] [1, 0];
     var limit := 1;
     var key := 2;
-    expect key > 0; // PRE-CHECK
-    expect key !in a[..]; // PRE-CHECK
-    expect 0 <= limit < a.Length; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0; // PRE-CHECK
-    expect forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0; // PRE-CHECK
     expect sorted(a[..limit]); // PRE-CHECK
     var b := InsertIntoSorted(a, limit, key);
     expect b.Length == a.Length;

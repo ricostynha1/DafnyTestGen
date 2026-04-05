@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\SENG2011_tmp_tmpgk5jq85q_p1__903-991_SDL.dfy
 // Method: Reverse
-// Generated: 2026-04-01 22:41:28
+// Generated: 2026-04-05 23:59:19
 
 // SENG2011_tmp_tmpgk5jq85q_p1.dfy
 
@@ -45,7 +45,6 @@ method Passing()
   //   POST: forall x: int {:trigger b[x]} :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1]
   {
     var a := new char[1] [' '];
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a.Length == b.Length;
     expect forall x: int :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1];
@@ -57,7 +56,6 @@ method Passing()
   //   POST: forall x: int {:trigger b[x]} :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1]
   {
     var a := new char[2] [' ', '!'];
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a.Length == b.Length;
     expect forall x: int :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1];
@@ -69,7 +67,6 @@ method Passing()
   //   POST: forall x: int {:trigger b[x]} :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1]
   {
     var a := new char[3] [' ', '!', '"'];
-    expect a.Length > 0; // PRE-CHECK
     var b := Reverse(a);
     expect a.Length == b.Length;
     expect forall x: int :: 0 <= x < a.Length ==> b[x] == a[a.Length - x - 1];

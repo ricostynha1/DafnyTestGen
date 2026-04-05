@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort.dfy
 // Method: threshold
-// Generated: 2026-04-01 22:28:47
+// Generated: 2026-04-05 23:39:59
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort.dfy
 
@@ -89,25 +89,25 @@ method Passing()
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
-    var Seq: seq<int> := [30];
+    var Seq: seq<int> := [];
     var Seq_1, Seq_2 := threshold(thres, Seq);
-    expect forall x: int | x in Seq_1 :: x <= thres;
-    expect forall x: int | x in Seq_2 :: x >= thres;
-    expect |Seq_1| + |Seq_2| == |Seq|;
-    expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+    expect Seq_1 == [];
+    expect Seq_2 == [];
   }
 
-  // Test case for combination {1}/Bthres=0,Seq=0:
+  // Test case for combination {1}/Bthres=0,Seq=1:
   //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
-    var Seq: seq<int> := [];
+    var Seq: seq<int> := [26];
     var Seq_1, Seq_2 := threshold(thres, Seq);
-    expect Seq_1 == [];
-    expect Seq_2 == [];
+    expect forall x: int | x in Seq_1 :: x <= thres;
+    expect forall x: int | x in Seq_2 :: x >= thres;
+    expect |Seq_1| + |Seq_2| == |Seq|;
+    expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
   }
 
   // Test case for combination {1}/Bthres=0,Seq=2:
@@ -132,7 +132,7 @@ method Passing()
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
-    var Seq: seq<int> := [17, 16, 18];
+    var Seq: seq<int> := [25, 24, 26];
     var Seq_1, Seq_2 := threshold(thres, Seq);
     expect forall x: int | x in Seq_1 :: x <= thres;
     expect forall x: int | x in Seq_2 :: x >= thres;

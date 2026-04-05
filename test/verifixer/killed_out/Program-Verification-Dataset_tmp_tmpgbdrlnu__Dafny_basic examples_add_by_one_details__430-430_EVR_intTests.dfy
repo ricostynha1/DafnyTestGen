@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details__430-430_EVR_int.dfy
 // Method: plus_one
-// Generated: 2026-04-01 22:37:33
+// Generated: 2026-04-05 23:55:48
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details.dfy
 
@@ -48,7 +48,6 @@ method Passing()
   //   POST: r == x + 1
   {
     var x := 0;
-    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 1;
   }
@@ -58,7 +57,6 @@ method Passing()
   //   POST: r == x + 1
   {
     var x := 1;
-    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 2;
   }
@@ -68,7 +66,6 @@ method Passing()
   //   POST: r == x + 1
   {
     var x := 2;
-    expect x >= 0; // PRE-CHECK
     var r := plus_one(x);
     expect r == 3;
   }

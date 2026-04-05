@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples1.dfy
 // Method: Abs
-// Generated: 2026-04-01 22:25:18
+// Generated: 2026-04-05 23:36:22
 
 // Dafny_tmp_tmpmvs2dmry_examples1.dfy
 
@@ -112,7 +112,6 @@ method Passing()
   {
     var x := 0;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
   }
@@ -123,7 +122,6 @@ method Passing()
   {
     var x := 0;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
   }
@@ -134,7 +132,6 @@ method Passing()
   {
     var x := 1;
     var y := 0;
-    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
   }
@@ -145,7 +142,6 @@ method Passing()
   {
     var x := 1;
     var y := 1;
-    expect y >= 0; // PRE-CHECK
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
   }

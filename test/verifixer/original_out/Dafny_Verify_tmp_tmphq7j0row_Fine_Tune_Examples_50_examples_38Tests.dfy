@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38.dfy
 // Method: main
-// Generated: 2026-04-01 22:25:56
+// Generated: 2026-04-05 23:36:57
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38.dfy
 
@@ -37,7 +37,6 @@ method Passing()
   //   POST: i % 2 != 0
   {
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var i, x, y := main(n);
     expect i % 2 != 0;
   }
@@ -52,7 +51,6 @@ method Failing()
   //   POST: x == 2 * y
   {
     var n := 0;
-    // expect n >= 0; // PRE-CHECK
     var i, x, y := main(n);
     // expect i % 2 != 0;
     // expect x == 2 * y;

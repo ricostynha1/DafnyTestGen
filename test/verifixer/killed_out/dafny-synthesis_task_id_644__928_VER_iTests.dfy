@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_644__928_VER_i.dfy
 // Method: Reverse
-// Generated: 2026-04-01 22:32:38
+// Generated: 2026-04-05 23:42:34
 
 // dafny-synthesis_task_id_644.dfy
 
@@ -95,7 +95,6 @@ method Failing()
     var s := new int[2] [13, 9];
     var k := 2;
     var old_s := s[..];
-    // expect 2 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK(s, k);
     // expect forall i: int :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     // expect forall i: int  :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -109,7 +108,6 @@ method Failing()
     var s := new int[3] [5, 4, 6];
     var k := 2;
     var old_s := s[..];
-    // expect 2 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK(s, k);
     // expect forall i: int :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     // expect forall i: int  :: k <= i < s.Length ==> s[i] == old_s[i];
@@ -123,7 +121,6 @@ method Failing()
     var s := new int[3] [6, 5, 4];
     var k := 3;
     var old_s := s[..];
-    // expect 2 <= k <= s.Length; // PRE-CHECK
     ReverseUptoK(s, k);
     // expect forall i: int :: 0 <= i < k ==> s[i] == old_s[k - 1 - i];
     // expect forall i: int  :: k <= i < s.Length ==> s[i] == old_s[i];

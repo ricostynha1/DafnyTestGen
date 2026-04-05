@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote__8235-8235_AOI.dfy
 // Method: FindWinner
-// Generated: 2026-04-01 22:38:06
+// Generated: 2026-04-05 23:56:31
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote.dfy
 
@@ -361,7 +361,6 @@ method GeneratedTests_SearchForWinner()
     var a: seq<int> := [2];
     var hasWinner := false;
     var K := 0;
-    expect |a| != 0; // PRE-CHECK
     expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
     var k := SearchForWinner<int>(a, hasWinner, K);
     expect k == 0;
@@ -375,7 +374,6 @@ method GeneratedTests_SearchForWinner()
     var a: seq<int> := [2];
     var hasWinner := true;
     var K := 0;
-    expect |a| != 0; // PRE-CHECK
     expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
     var k := SearchForWinner<int>(a, hasWinner, K);
     expect k == 0;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search.dfy
 // Method: binarySearch
-// Generated: 2026-04-01 22:29:57
+// Generated: 2026-04-05 23:41:02
 
 // MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search.dfy
 
@@ -74,8 +74,8 @@ method Passing()
   //   POST: !(index != -1)
   //   POST: x !in a[..]
   {
-    var a := new int[0] [];
-    var x := 0;
+    var a := new int[1] [9];
+    var x := 8;
     expect isSorted(a); // PRE-CHECK
     var index := binarySearch(a, x);
     expect index == -1;

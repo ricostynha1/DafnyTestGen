@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_267__359-363_EVR_int.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-01 22:30:05
+// Generated: 2026-04-05 23:41:03
 
 // dafny-synthesis_task_id_267.dfy
 
@@ -30,7 +30,6 @@ method Passing()
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 0;
   }
@@ -40,7 +39,6 @@ method Passing()
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 1;
   }
@@ -54,7 +52,6 @@ method Failing()
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 4;
-    // expect n >= 0; // PRE-CHECK
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     // expect sum == 84;
   }

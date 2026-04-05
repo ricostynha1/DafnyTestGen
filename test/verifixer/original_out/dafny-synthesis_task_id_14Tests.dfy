@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_14.dfy
 // Method: TriangularPrismVolume
-// Generated: 2026-04-01 22:27:36
+// Generated: 2026-04-05 23:38:30
 
 // dafny-synthesis_task_id_14.dfy
 
@@ -28,9 +28,6 @@ method Passing()
     var base := 1;
     var height := 1;
     var length := 1;
-    expect base > 0; // PRE-CHECK
-    expect height > 0; // PRE-CHECK
-    expect length > 0; // PRE-CHECK
     var volume := TriangularPrismVolume(base, height, length);
     expect volume == 0;
   }
@@ -44,9 +41,6 @@ method Passing()
     var base := 1;
     var height := 1;
     var length := 2;
-    expect base > 0; // PRE-CHECK
-    expect height > 0; // PRE-CHECK
-    expect length > 0; // PRE-CHECK
     var volume := TriangularPrismVolume(base, height, length);
     expect volume == 1;
   }
@@ -60,9 +54,6 @@ method Passing()
     var base := 1;
     var height := 2;
     var length := 1;
-    expect base > 0; // PRE-CHECK
-    expect height > 0; // PRE-CHECK
-    expect length > 0; // PRE-CHECK
     var volume := TriangularPrismVolume(base, height, length);
     expect volume == 1;
   }
@@ -76,9 +67,6 @@ method Passing()
     var base := 1;
     var height := 2;
     var length := 2;
-    expect base > 0; // PRE-CHECK
-    expect height > 0; // PRE-CHECK
-    expect length > 0; // PRE-CHECK
     var volume := TriangularPrismVolume(base, height, length);
     expect volume == 2;
   }

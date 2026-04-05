@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_605__165_LVR_0.dfy
 // Method: IsPrime
-// Generated: 2026-04-01 22:32:34
+// Generated: 2026-04-05 23:42:30
 
 // dafny-synthesis_task_id_605.dfy
 
@@ -39,7 +39,6 @@ method Failing()
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
-    // expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     // expect result == true;
   }
@@ -50,7 +49,6 @@ method Failing()
   //   POST: !forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
-    // expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     // expect result == false;
   }
@@ -61,7 +59,6 @@ method Failing()
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
-    // expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     // expect result == true;
   }
@@ -72,7 +69,6 @@ method Failing()
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 5;
-    // expect n >= 2; // PRE-CHECK
     var result := IsPrime(n);
     // expect result == true;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search__693-693_AOI.dfy
 // Method: binarySearch
-// Generated: 2026-04-01 22:34:07
+// Generated: 2026-04-05 23:43:50
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search.dfy
 
@@ -46,10 +46,8 @@ method Passing()
   //   POST: !(0 <= pos < a.Length)
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
   {
-    var a := new int[1] [9];
-    var val := 8;
-    expect a.Length > 0; // PRE-CHECK
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    var a := new int[1] [38];
+    var val := 9;
     var pos := binarySearch(a, val);
     // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= pos < a.Length);
@@ -63,10 +61,8 @@ method Passing()
   //   POST: !(pos < 0)
   //   POST: !(pos >= a.Length)
   {
-    var a := new int[1] [9];
-    var val := 9;
-    expect a.Length > 0; // PRE-CHECK
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
+    var a := new int[1] [38];
+    var val := 38;
     var pos := binarySearch(a, val);
     expect pos == 0;
   }
@@ -77,10 +73,8 @@ method Passing()
   //   POST: !(0 <= pos < a.Length)
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
   {
-    var a := new int[3] [4, 5, 6];
+    var a := new int[3] [-3, -2, -1];
     var val := 0;
-    expect a.Length > 0; // PRE-CHECK
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
     // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= pos < a.Length);
@@ -93,10 +87,8 @@ method Passing()
   //   POST: !(0 <= pos < a.Length)
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
   {
-    var a := new int[2] [3, 4];
+    var a := new int[2] [-7720, -7719];
     var val := 1;
-    expect a.Length > 0; // PRE-CHECK
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var pos := binarySearch(a, val);
     // expect pos == -1; // (actual runtime value — not uniquely determined by spec)
     expect !(0 <= pos < a.Length);

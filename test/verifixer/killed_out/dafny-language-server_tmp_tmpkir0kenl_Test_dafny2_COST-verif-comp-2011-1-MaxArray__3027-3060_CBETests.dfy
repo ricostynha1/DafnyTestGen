@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_COST-verif-comp-2011-1-MaxArray__3027-3060_CBE.dfy
 // Method: max
-// Generated: 2026-04-01 22:29:16
+// Generated: 2026-04-05 23:40:24
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_COST-verif-comp-2011-1-MaxArray.dfy
 
@@ -36,7 +36,6 @@ method Passing()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
     var a := new int[1] [38];
-    expect a.Length != 0; // PRE-CHECK
     var x := max(a);
     expect x == 0;
   }
@@ -47,7 +46,6 @@ method Passing()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
     var a := new int[2] [35472, 35473];
-    expect a.Length != 0; // PRE-CHECK
     var x := max(a);
     expect x == 1;
   }
@@ -58,7 +56,6 @@ method Passing()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
     var a := new int[3] [23675, 23674, 23676];
-    expect a.Length != 0; // PRE-CHECK
     var x := max(a);
     expect x == 2;
   }

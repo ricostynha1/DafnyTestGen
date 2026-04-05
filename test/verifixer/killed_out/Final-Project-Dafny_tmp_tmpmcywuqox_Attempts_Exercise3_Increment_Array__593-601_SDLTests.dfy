@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise3_Increment_Array__593-601_SDL.dfy
 // Method: incrementArray
-// Generated: 2026-04-01 22:33:11
+// Generated: 2026-04-05 23:42:57
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise3_Increment_Array.dfy
 
@@ -40,7 +40,6 @@ method Failing()
   {
     var a := new int[1] [7718];
     var old_a := a[..];
-    // expect a.Length > 0; // PRE-CHECK
     incrementArray(a);
     // expect forall i: int  :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
   }
@@ -51,7 +50,6 @@ method Failing()
   {
     var a := new int[2] [-21239, 2437];
     var old_a := a[..];
-    // expect a.Length > 0; // PRE-CHECK
     incrementArray(a);
     // expect forall i: int  :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
   }
@@ -62,7 +60,6 @@ method Failing()
   {
     var a := new int[3] [-8856, 11797, 11798];
     var old_a := a[..];
-    // expect a.Length > 0; // PRE-CHECK
     incrementArray(a);
     // expect forall i: int  :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
   }

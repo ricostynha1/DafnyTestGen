@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 // Method: mySqrt
-// Generated: 2026-04-01 22:24:47
+// Generated: 2026-04-05 23:35:52
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 
@@ -51,7 +51,6 @@ method Passing()
   //   POST: sqrt(x, res)
   {
     var x := 7;
-    expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     expect res == 2;
   }
@@ -61,7 +60,6 @@ method Passing()
   //   POST: sqrt(x, res)
   {
     var x := 0;
-    expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     expect res == 0;
   }
@@ -71,7 +69,6 @@ method Passing()
   //   POST: sqrt(x, res)
   {
     var x := 1;
-    expect 0 <= x; // PRE-CHECK
     var res := mySqrt(x);
     expect res == 1;
   }

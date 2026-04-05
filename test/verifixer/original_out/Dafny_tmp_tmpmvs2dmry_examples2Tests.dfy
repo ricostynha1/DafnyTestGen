@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples2.dfy
 // Method: add_by_inc
-// Generated: 2026-04-01 22:25:24
+// Generated: 2026-04-05 23:36:28
 
 // Dafny_tmp_tmpmvs2dmry_examples2.dfy
 
@@ -250,7 +250,6 @@ method Passing()
   {
     var x0 := 0.0;
     var n0 := 0;
-    expect x0 >= 0.0; // PRE-CHECK
     var r := exp_by_sqr(x0, n0);
     expect r == 1.0;
   }
@@ -261,7 +260,6 @@ method Passing()
   {
     var x0 := 0.0;
     var n0 := 1;
-    expect x0 >= 0.0; // PRE-CHECK
     var r := exp_by_sqr(x0, n0);
     expect r == 0.0;
   }
@@ -272,7 +270,6 @@ method Passing()
   {
     var x0 := 1.0;
     var n0 := 0;
-    expect x0 >= 0.0; // PRE-CHECK
     var r := exp_by_sqr(x0, n0);
     expect r == 1.0;
   }
@@ -283,7 +280,6 @@ method Passing()
   {
     var x0 := 1.0;
     var n0 := 1;
-    expect x0 >= 0.0; // PRE-CHECK
     var r := exp_by_sqr(x0, n0);
     expect r == 1.0;
   }

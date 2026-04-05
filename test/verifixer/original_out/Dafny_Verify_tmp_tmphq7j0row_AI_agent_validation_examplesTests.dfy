@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples.dfy
 // Method: ComputePower
-// Generated: 2026-04-01 22:25:41
+// Generated: 2026-04-05 23:36:42
 
 // Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples.dfy
 
@@ -192,7 +192,6 @@ method Passing()
   //   POST: y == Power(N)
   {
     var N := 0;
-    expect N >= 0; // PRE-CHECK
     var y := ComputePower(N);
     expect y == 1;
   }
@@ -202,7 +201,6 @@ method Passing()
   //   POST: y == Power(N)
   {
     var N := 1;
-    expect N >= 0; // PRE-CHECK
     var y := ComputePower(N);
     expect y == 2;
   }
@@ -212,7 +210,6 @@ method Passing()
   //   POST: y == Power(N)
   {
     var N := 2;
-    expect N >= 0; // PRE-CHECK
     var y := ComputePower(N);
     expect y == 4;
   }
@@ -276,7 +273,6 @@ method Passing()
     var src := new int[0] [];
     var dst := new int[0] [];
     var old_src := src[..];
-    expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
     expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
@@ -288,7 +284,6 @@ method Passing()
     var src := new int[1] [0];
     var dst := new int[1] [8];
     var old_src := src[..];
-    expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
     expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
@@ -300,7 +295,6 @@ method Passing()
     var src := new int[2] [0, 7720];
     var dst := new int[2] [9, 8];
     var old_src := src[..];
-    expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
     expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
@@ -312,7 +306,6 @@ method Passing()
     var src := new int[3] [-21240, -21239, 0];
     var dst := new int[3] [12, 11, 13];
     var old_src := src[..];
-    expect src.Length == dst.Length; // PRE-CHECK
     DoubleArray(src, dst);
     expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
   }
@@ -325,7 +318,6 @@ method Passing()
     var a := new int[1] [16];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -339,7 +331,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -353,7 +344,6 @@ method Passing()
     var a := new int[3] [6, 4, 5];
     var old_a := a[..];
     var old_a_0 := a[0];
-    expect a.Length > 0; // PRE-CHECK
     RotateLeft(a);
     expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
     expect a[a.Length - 1] == old_a_0;
@@ -367,7 +357,6 @@ method Passing()
     var a := new int[1] [15];
     var old_a := a[..];
     var old_a_a_Length_1 := a[a.Length - 1];
-    expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
     expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;
@@ -381,7 +370,6 @@ method Passing()
     var a := new int[2] [3, 4];
     var old_a := a[..];
     var old_a_a_Length_1 := a[a.Length - 1];
-    expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
     expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;
@@ -395,7 +383,6 @@ method Passing()
     var a := new int[3] [4, 5, 6];
     var old_a := a[..];
     var old_a_a_Length_1 := a[a.Length - 1];
-    expect a.Length > 0; // PRE-CHECK
     RotateRight(a);
     expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
     expect a[0] == old_a_a_Length_1;

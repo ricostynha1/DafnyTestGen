@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_binary_search__556_BBR_false.dfy
 // Method: BinarySearch
-// Generated: 2026-04-01 22:23:42
+// Generated: 2026-04-05 23:34:42
 
 // Clover_binary_search.dfy
 
@@ -40,9 +40,8 @@ method Passing()
   //   POST: !(n == a.Length)
   //   POST: forall i: int {:trigger a[i]} :: n <= i < a.Length ==> a[i] >= key
   {
-    var a := new int[1] [1236];
+    var a := new int[1] [0];
     var key := 0;
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     expect n == 0;
   }
@@ -56,7 +55,6 @@ method Passing()
   {
     var a := new int[1] [1];
     var key := 1;
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     expect n == 0;
   }
@@ -74,7 +72,6 @@ method Failing()
   {
     var a := new int[1] [-1];
     var key := 0;
-    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     // expect n == 1;
   }
@@ -88,7 +85,6 @@ method Failing()
   {
     var a := new int[2] [-1, 0];
     var key := 0;
-    // expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]; // PRE-CHECK
     var n := BinarySearch(a, key);
     // expect n == 1;
   }

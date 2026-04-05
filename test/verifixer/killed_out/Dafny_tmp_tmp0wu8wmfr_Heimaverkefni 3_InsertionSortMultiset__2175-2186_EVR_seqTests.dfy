@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset__2175-2186_EVR_seq.dfy
 // Method: Search
-// Generated: 2026-04-01 22:26:00
+// Generated: 2026-04-05 23:37:10
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset.dfy
 
@@ -71,17 +71,10 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
   {
-    var s: seq<int> := [2];
-    var x := 2;
-    expect forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]; // PRE-CHECK
+    var s: seq<int> := [7719];
+    var x := 0;
     var k := Search(s, x);
-    // expect k == 0; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= k <= |s|;
-    expect forall i: int | 0 <= i < k :: s[i] <= x;
-    expect forall i: int | k <= i < |s| :: s[i] >= x;
-    expect forall z: int | z in s[..k] :: z <= x;
-    expect forall z: int | z in s[k..] :: z >= x;
-    expect s == [2];
+    expect k == 0;
   }
 
   // Test case for combination {1}/Bs=0,x=0:
@@ -95,7 +88,6 @@ method Passing()
   {
     var s: seq<int> := [];
     var x := 0;
-    expect forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]; // PRE-CHECK
     var k := Search(s, x);
     expect k == 0;
   }
@@ -111,12 +103,11 @@ method Passing()
   {
     var s: seq<int> := [];
     var x := 1;
-    expect forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]; // PRE-CHECK
     var k := Search(s, x);
     expect k == 0;
   }
 
-  // Test case for combination {1}/Bs=1,x=0:
+  // Test case for combination {1}/Bs=1,x=1:
   //   PRE:  forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]
   //   POST: 0 <= k <= |s|
   //   POST: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
@@ -125,17 +116,10 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
   {
-    var s: seq<int> := [0];
-    var x := 0;
-    expect forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]; // PRE-CHECK
+    var s: seq<int> := [39];
+    var x := 1;
     var k := Search(s, x);
-    // expect k == 0; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= k <= |s|;
-    expect forall i: int | 0 <= i < k :: s[i] <= x;
-    expect forall i: int | k <= i < |s| :: s[i] >= x;
-    expect forall z: int | z in s[..k] :: z <= x;
-    expect forall z: int | z in s[k..] :: z >= x;
-    expect s == [0];
+    expect k == 0;
   }
 
   // Test case for combination {1}:

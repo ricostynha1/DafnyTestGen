@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 // Method: copyArr
-// Generated: 2026-04-01 22:32:29
+// Generated: 2026-04-05 23:42:04
 
 // QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 
@@ -116,7 +116,6 @@ method Passing()
     var a := new int[1] [4];
     var l := 0;
     var r := 1;
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     var ret := copyArr(a, l, r);
     expect ret[..] == a[l .. r];
   }
@@ -128,7 +127,6 @@ method Passing()
     var a := new int[3] [5, 4, 6];
     var l := 0;
     var r := 1;
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     var ret := copyArr(a, l, r);
     expect ret[..] == a[l .. r];
   }
@@ -140,7 +138,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var l := 1;
     var r := 2;
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     var ret := copyArr(a, l, r);
     expect ret[..] == a[l .. r];
   }
@@ -152,7 +149,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var l := 0;
     var r := 1;
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     var ret := copyArr(a, l, r);
     expect ret[..] == a[l .. r];
   }
@@ -170,7 +166,6 @@ method Passing()
     var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < m < r <= a.Length; // PRE-CHECK
     expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
@@ -191,7 +186,6 @@ method Passing()
     var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < m < r <= a.Length; // PRE-CHECK
     expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
@@ -212,7 +206,6 @@ method Passing()
     var r := 3;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < m < r <= a.Length; // PRE-CHECK
     expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
@@ -263,7 +256,6 @@ method Passing()
     var r := 1;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     sortAux(a, l, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
@@ -281,7 +273,6 @@ method Passing()
     var r := 1;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     sortAux(a, l, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
@@ -299,7 +290,6 @@ method Passing()
     var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     sortAux(a, l, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
@@ -317,7 +307,6 @@ method Passing()
     var r := 1;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect 0 <= l < r <= a.Length; // PRE-CHECK
     sortAux(a, l, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_two_sum__833-843_SDL.dfy
 // Method: twoSum
-// Generated: 2026-04-01 22:24:31
+// Generated: 2026-04-05 23:35:38
 
 // Clover_two_sum.dfy
 
@@ -47,10 +47,8 @@ method Passing()
   //   POST: forall ii: int, jj: int {:trigger nums[jj], nums[ii]} :: 0 <= ii < i && ii < jj < nums.Length ==> nums[ii] + nums[jj] != target
   //   POST: forall jj: int {:trigger nums[jj]} :: i < jj < j ==> nums[i] + nums[jj] != target
   {
-    var nums := new int[2] [1323, 1236];
-    var target := 2559;
-    expect nums.Length > 1; // PRE-CHECK
-    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
+    var nums := new int[2] [2437, 30093];
+    var target := 32530;
     var i, j := twoSum(nums, target);
     expect i == 0;
     expect j == 1;
@@ -64,10 +62,8 @@ method Passing()
   //   POST: forall ii: int, jj: int {:trigger nums[jj], nums[ii]} :: 0 <= ii < i && ii < jj < nums.Length ==> nums[ii] + nums[jj] != target
   //   POST: forall jj: int {:trigger nums[jj]} :: i < jj < j ==> nums[i] + nums[jj] != target
   {
-    var nums := new int[2] [-4680, 4680];
+    var nums := new int[2] [-39, 39];
     var target := 0;
-    expect nums.Length > 1; // PRE-CHECK
-    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var i, j := twoSum(nums, target);
     expect i == 0;
     expect j == 1;
@@ -81,10 +77,8 @@ method Passing()
   //   POST: forall ii: int, jj: int {:trigger nums[jj], nums[ii]} :: 0 <= ii < i && ii < jj < nums.Length ==> nums[ii] + nums[jj] != target
   //   POST: forall jj: int {:trigger nums[jj]} :: i < jj < j ==> nums[i] + nums[jj] != target
   {
-    var nums := new int[2] [8098, -8097];
+    var nums := new int[2] [-38, 39];
     var target := 1;
-    expect nums.Length > 1; // PRE-CHECK
-    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var i, j := twoSum(nums, target);
     expect i == 0;
     expect j == 1;
@@ -98,10 +92,8 @@ method Passing()
   //   POST: forall ii: int, jj: int {:trigger nums[jj], nums[ii]} :: 0 <= ii < i && ii < jj < nums.Length ==> nums[ii] + nums[jj] != target
   //   POST: forall jj: int {:trigger nums[jj]} :: i < jj < j ==> nums[i] + nums[jj] != target
   {
-    var nums := new int[3] [-1649, -1650, 1649];
+    var nums := new int[3] [-7720, 7719, 7720];
     var target := 0;
-    expect nums.Length > 1; // PRE-CHECK
-    expect exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target; // PRE-CHECK
     var i, j := twoSum(nums, target);
     expect i == 0;
     expect j == 2;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__5409_LVR_2.dfy
 // Method: FooCount
-// Generated: 2026-04-01 22:25:39
+// Generated: 2026-04-05 23:36:49
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -269,7 +269,6 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[0] [];
-    expect a.Length == b.Length; // PRE-CHECK
     var p := PreCompute(a, b);
     // expect p == 0; // (actual runtime value — not uniquely determined by spec)
     expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
@@ -281,7 +280,6 @@ method Passing()
   {
     var a := new int[1] [3];
     var b := new int[1] [4];
-    expect a.Length == b.Length; // PRE-CHECK
     var p := PreCompute(a, b);
     // expect p == 0; // (actual runtime value — not uniquely determined by spec)
     expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
@@ -293,7 +291,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var b := new int[2] [6, 5];
-    expect a.Length == b.Length; // PRE-CHECK
     var p := PreCompute(a, b);
     // expect p == 1; // (actual runtime value — not uniquely determined by spec)
     expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
@@ -305,7 +302,6 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var b := new int[3] [8, 7, 9];
-    expect a.Length == b.Length; // PRE-CHECK
     var p := PreCompute(a, b);
     // expect p == 2; // (actual runtime value — not uniquely determined by spec)
     expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);

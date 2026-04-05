@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\dafny-synthesis_task_id_809__453-464_COI.dfy
 // Method: IsSmaller
-// Generated: 2026-04-01 13:53:32
+// Generated: 2026-04-05 22:49:31
 
 // dafny-synthesis_task_id_809.dfy
 
@@ -35,7 +35,6 @@ method Passing()
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
-    expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     expect result == true;
   }
@@ -52,7 +51,6 @@ method Failing()
   {
     var a: seq<int> := [-7719];
     var b: seq<int> := [38];
-    // expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     // expect result == false;
   }
@@ -65,7 +63,6 @@ method Failing()
   {
     var a: seq<int> := [2437, 2438];
     var b: seq<int> := [2436, 2437];
-    // expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     // expect result == true;
   }
@@ -78,7 +75,6 @@ method Failing()
   {
     var a: seq<int> := [20163, 20162, 20164];
     var b: seq<int> := [20160, 20161, 20163];
-    // expect |a| == |b|; // PRE-CHECK
     var result := IsSmaller(a, b);
     // expect result == true;
   }

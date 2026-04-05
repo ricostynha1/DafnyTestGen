@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Trab1-Metodos-Formais_tmp_tmp_8fa4trr_circular-array.dfy
 // Method: Enqueue
-// Generated: 2026-04-01 22:34:23
+// Generated: 2026-04-05 23:43:11
 
 // Trab1-Metodos-Formais_tmp_tmp_8fa4trr_circular-array.dfy
 
@@ -224,7 +224,6 @@ method Passing()
     obj.Elements := [];
     obj.Repr := {obj, obj.arr};
     expect obj.Valid(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     var s := obj.AsSequence();
     expect s == [];
   }
@@ -244,7 +243,6 @@ method Passing()
     obj.Elements := [];
     obj.Repr := {obj, obj.arr};
     expect obj.Valid(); // PRE-CHECK
-    expect capacity > 0; // PRE-CHECK
     var s := obj.AsSequence();
     expect s == [];
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4.dfy
 // Method: Somatorio
-// Generated: 2026-04-01 22:34:09
+// Generated: 2026-04-05 23:42:53
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4.dfy
 
@@ -46,25 +46,25 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: s == SomaAte(a, a.Length)
   {
-    var a := new nat[1] [2];
+    var a := new nat[1] [38];
     var s := Somatorio(a);
-    expect s == 2;
+    expect s == 38;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: s == SomaAte(a, a.Length)
   {
-    var a := new nat[2] [4, 3];
+    var a := new nat[2] [28957, 28958];
     var s := Somatorio(a);
-    expect s == 7;
+    expect s == 57915;
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: s == SomaAte(a, a.Length)
   {
-    var a := new nat[3] [5, 4, 6];
+    var a := new nat[3] [28956, 28957, 28958];
     var s := Somatorio(a);
-    expect s == 15;
+    expect s == 86871;
   }
 
 }

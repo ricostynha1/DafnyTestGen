@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_86.dfy
 // Method: CenteredHexagonalNumber
-// Generated: 2026-04-01 22:28:31
+// Generated: 2026-04-05 23:39:37
 
 // dafny-synthesis_task_id_86.dfy
 
@@ -21,7 +21,6 @@ method Passing()
   //   POST: result == 3 * n * (n - 1) + 1
   {
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var result := CenteredHexagonalNumber(n);
     expect result == 1;
   }
@@ -31,7 +30,6 @@ method Passing()
   //   POST: result == 3 * n * (n - 1) + 1
   {
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var result := CenteredHexagonalNumber(n);
     expect result == 1;
   }
@@ -41,7 +39,6 @@ method Passing()
   //   POST: result == 3 * n * (n - 1) + 1
   {
     var n := 2;
-    expect n >= 0; // PRE-CHECK
     var result := CenteredHexagonalNumber(n);
     expect result == 7;
   }

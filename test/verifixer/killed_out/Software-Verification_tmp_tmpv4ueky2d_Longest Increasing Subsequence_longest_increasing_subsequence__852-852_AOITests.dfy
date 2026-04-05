@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence__852-852_AOI.dfy
 // Method: longest_increasing_subsequence
-// Generated: 2026-04-01 22:42:07
+// Generated: 2026-04-05 23:59:56
 
 // Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 
@@ -49,7 +49,7 @@ function find_max(x: int, y: int): int
 }
 
 
-method GeneratedTests_longest_increasing_subsequence()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  1 <= nums.Length <= 2500
@@ -57,22 +57,23 @@ method GeneratedTests_longest_increasing_subsequence()
   //   POST: max >= 1
   {
     var nums := new int[1] [-9962];
-    expect 1 <= nums.Length <= 2500; // PRE-CHECK
-    expect forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000); // PRE-CHECK
     var max := longest_increasing_subsequence(nums);
+    // expect max == 1; // (actual runtime value — not uniquely determined by spec)
     expect max >= 1;
   }
 
+}
+
+method Failing()
+{
   // Test case for combination {1}/Bnums=2:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
   //   POST: max >= 1
   {
     var nums := new int[2] [-2281, -2280];
-    expect 1 <= nums.Length <= 2500; // PRE-CHECK
-    expect forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000); // PRE-CHECK
     var max := longest_increasing_subsequence(nums);
-    expect max >= 1;
+    // expect max >= 1;
   }
 
   // Test case for combination {1}/Bnums=3:
@@ -81,16 +82,14 @@ method GeneratedTests_longest_increasing_subsequence()
   //   POST: max >= 1
   {
     var nums := new int[3] [-2281, -2280, -2279];
-    expect 1 <= nums.Length <= 2500; // PRE-CHECK
-    expect forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000); // PRE-CHECK
     var max := longest_increasing_subsequence(nums);
-    expect max >= 1;
+    // expect max >= 1;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_longest_increasing_subsequence();
-  print "GeneratedTests_longest_increasing_subsequence: all tests passed!\n";
+  Passing();
+  Failing();
 }

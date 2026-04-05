@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2.dfy
 // Method: Forbid42
-// Generated: 2026-04-01 22:28:55
+// Generated: 2026-04-05 23:40:10
 
 // formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2.dfy
 
@@ -56,7 +56,6 @@ method Passing()
   {
     var x := 0;
     var y := 43;
-    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -67,7 +66,6 @@ method Passing()
   {
     var x := 0;
     var y := 0;
-    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -78,7 +76,6 @@ method Passing()
   {
     var x := 0;
     var y := 1;
-    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }
@@ -89,7 +86,6 @@ method Passing()
   {
     var x := 1;
     var y := 0;
-    expect y != 42; // PRE-CHECK
     var z := Forbid42(x, y);
     expect z == 0;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_avg__90_AOR_Sub.dfy
 // Method: ComputeAvg
-// Generated: 2026-04-01 22:23:39
+// Generated: 2026-04-05 23:34:39
 
 // Clover_avg.dfy
 

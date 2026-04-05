@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 // Method: InitArray
-// Generated: 2026-04-01 22:24:41
+// Generated: 2026-04-05 23:35:41
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -190,7 +190,6 @@ method Passing()
     var a := new int[0] [];
     var b := new int[0] [];
     var old_a := a[..];
-    expect a.Length == b.Length; // PRE-CHECK
     CopyArray<int>(a, b);
     expect forall i: int  :: 0 <= i < a.Length ==> b[i] == old_a[i];
   }
@@ -202,7 +201,6 @@ method Passing()
     var a := new int[1] [2];
     var b := new int[1] [6];
     var old_a := a[..];
-    expect a.Length == b.Length; // PRE-CHECK
     CopyArray<int>(a, b);
     expect forall i: int  :: 0 <= i < a.Length ==> b[i] == old_a[i];
   }
@@ -214,7 +212,6 @@ method Passing()
     var a := new int[2] [3, 4];
     var b := new int[2] [6, 5];
     var old_a := a[..];
-    expect a.Length == b.Length; // PRE-CHECK
     CopyArray<int>(a, b);
     expect forall i: int  :: 0 <= i < a.Length ==> b[i] == old_a[i];
   }
@@ -226,7 +223,6 @@ method Passing()
     var a := new int[3] [4, 5, 6];
     var b := new int[3] [8, 7, 9];
     var old_a := a[..];
-    expect a.Length == b.Length; // PRE-CHECK
     CopyArray<int>(a, b);
     expect forall i: int  :: 0 <= i < a.Length ==> b[i] == old_a[i];
   }

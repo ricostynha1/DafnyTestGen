@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_BoatsToSavePeople__953_AOR_Mul.dfy
 // Method: numRescueBoats
-// Generated: 2026-04-01 22:37:07
+// Generated: 2026-04-05 23:55:23
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_BoatsToSavePeople.dfy
 
@@ -127,9 +127,7 @@ method GeneratedTests_numRescueBoats()
   {
     var people: seq<nat> := [39];
     var limit := 39;
-    expect |people| >= 1; // PRE-CHECK
     expect sorted(people); // PRE-CHECK
-    expect forall i: nat {:trigger people[i]} :: (i < |people| ==> 1 <= people[i]) && (i < |people| ==> people[i] <= limit); // PRE-CHECK
     var boats := numRescueBoats(people, limit);
     expect exists boatConfig: seq<seq<nat>>  :: multisetEqual(boatConfig, people) && allSafe(boatConfig, limit) && boats == |boatConfig|;
   }
@@ -142,9 +140,7 @@ method GeneratedTests_numRescueBoats()
   {
     var people: seq<nat> := [1];
     var limit := 1;
-    expect |people| >= 1; // PRE-CHECK
     expect sorted(people); // PRE-CHECK
-    expect forall i: nat {:trigger people[i]} :: (i < |people| ==> 1 <= people[i]) && (i < |people| ==> people[i] <= limit); // PRE-CHECK
     var boats := numRescueBoats(people, limit);
     expect exists boatConfig: seq<seq<nat>>  :: multisetEqual(boatConfig, people) && allSafe(boatConfig, limit) && boats == |boatConfig|;
   }
@@ -155,11 +151,9 @@ method GeneratedTests_numRescueBoats()
   //   PRE:  forall i: nat {:trigger people[i]} :: (i < |people| ==> 1 <= people[i]) && (i < |people| ==> people[i] <= limit)
   //   POST: exists boatConfig: seq<seq<nat>> {:trigger |boatConfig|} {:trigger allSafe(boatConfig, limit)} {:trigger multisetEqual(boatConfig, people)} :: multisetEqual(boatConfig, people) && allSafe(boatConfig, limit) && boats == |boatConfig|
   {
-    var people: seq<nat> := [2];
-    var limit := 2;
-    expect |people| >= 1; // PRE-CHECK
+    var people: seq<nat> := [25];
+    var limit := 25;
     expect sorted(people); // PRE-CHECK
-    expect forall i: nat {:trigger people[i]} :: (i < |people| ==> 1 <= people[i]) && (i < |people| ==> people[i] <= limit); // PRE-CHECK
     var boats := numRescueBoats(people, limit);
     expect exists boatConfig: seq<seq<nat>>  :: multisetEqual(boatConfig, people) && allSafe(boatConfig, limit) && boats == |boatConfig|;
   }

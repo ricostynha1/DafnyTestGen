@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_755__1419-1432_SDL.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-01 22:32:48
+// Generated: 2026-04-05 23:42:39
 
 // dafny-synthesis_task_id_755.dfy
 
@@ -68,8 +68,6 @@ method Passing()
   //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
     var s := new int[2] [3, 4];
-    expect s.Length >= 2; // PRE-CHECK
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 4; // (actual runtime value — not uniquely determined by spec)
     expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
@@ -83,8 +81,6 @@ method Passing()
   //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
     var s := new int[3] [5, 4, 6];
-    expect s.Length >= 2; // PRE-CHECK
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 5; // (actual runtime value — not uniquely determined by spec)
     expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
@@ -98,8 +94,6 @@ method Passing()
   //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
     var s := new int[4] [5, 6, 7, 8];
-    expect s.Length >= 2; // PRE-CHECK
-    expect exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]; // PRE-CHECK
     var secondSmallest := SecondSmallest(s);
     // expect secondSmallest == 6; // (actual runtime value — not uniquely determined by spec)
     expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;

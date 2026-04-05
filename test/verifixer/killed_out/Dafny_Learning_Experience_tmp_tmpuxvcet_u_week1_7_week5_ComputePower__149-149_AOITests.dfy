@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower__149-149_AOI.dfy
 // Method: CalcPower
-// Generated: 2026-04-01 22:25:51
+// Generated: 2026-04-05 23:37:01
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower.dfy
 
@@ -89,7 +89,7 @@ method Failing()
   {
     var n := 1;
     var p := ComputePower(n);
-    // expect p == Power(n);
+    // expect p == 2;
   }
 
 }

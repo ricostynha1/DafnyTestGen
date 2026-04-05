@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_pancakesort_findmax.dfy
 // Method: findMax
-// Generated: 2026-04-01 22:25:30
+// Generated: 2026-04-05 23:36:33
 
 // Dafny_tmp_tmpmvs2dmry_pancakesort_findmax.dfy
 
@@ -44,8 +44,6 @@ method Passing()
     var a := new int[1] [7719];
     var n := 1;
     var old_a := a[..];
-    expect a.Length > 0; // PRE-CHECK
-    expect 0 < n <= a.Length; // PRE-CHECK
     var r := findMax(a, n);
     expect r == 0;
   }
@@ -60,8 +58,6 @@ method Passing()
     var a := new int[2] [0, 6];
     var n := 1;
     var old_a := a[..];
-    expect a.Length > 0; // PRE-CHECK
-    expect 0 < n <= a.Length; // PRE-CHECK
     var r := findMax(a, n);
     expect r == 0;
   }
@@ -76,8 +72,6 @@ method Passing()
     var a := new int[2] [7719, 7720];
     var n := 2;
     var old_a := a[..];
-    expect a.Length > 0; // PRE-CHECK
-    expect 0 < n <= a.Length; // PRE-CHECK
     var r := findMax(a, n);
     expect r == 1;
   }
@@ -92,8 +86,6 @@ method Passing()
     var a := new int[3] [0, 7, 8];
     var n := 1;
     var old_a := a[..];
-    expect a.Length > 0; // PRE-CHECK
-    expect 0 < n <= a.Length; // PRE-CHECK
     var r := findMax(a, n);
     expect r == 0;
   }

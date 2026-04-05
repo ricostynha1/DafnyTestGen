@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 // Method: find
-// Generated: 2026-04-01 22:29:41
+// Generated: 2026-04-05 23:40:52
 
 // MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 
@@ -31,7 +31,6 @@ method Passing()
   {
     var a := new int[1] [4];
     var key := 0;
-    expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     expect index == 1;
   }
@@ -43,7 +42,6 @@ method Passing()
   {
     var a := new int[1] [4];
     var key := 4;
-    expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     expect index == 0;
   }
@@ -55,7 +53,6 @@ method Passing()
   {
     var a := new int[1] [2];
     var key := 1;
-    expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     expect index == 1;
   }
@@ -67,7 +64,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var key := 0;
-    expect a.Length > 0; // PRE-CHECK
     var index := find(a, key);
     expect index == 2;
   }

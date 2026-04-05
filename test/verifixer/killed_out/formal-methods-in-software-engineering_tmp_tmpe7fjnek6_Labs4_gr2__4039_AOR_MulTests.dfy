@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2__4039_AOR_Mul.dfy
 // Method: HoareTripleReqEns
-// Generated: 2026-04-01 22:34:42
+// Generated: 2026-04-05 23:44:26
 
 // formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2.dfy
 
@@ -154,7 +154,6 @@ method Passing()
   {
     var i := 0;
     var k := 0;
-    expect k == i * i; // PRE-CHECK
     var k' := HoareTripleReqEns(i, k);
     expect k' == (i + 1) * (i + 1);
   }
@@ -165,7 +164,6 @@ method Passing()
   {
     var i := 1;
     var k := 1;
-    expect k == i * i; // PRE-CHECK
     var k' := HoareTripleReqEns(i, k);
     expect k' == (i + 1) * (i + 1);
   }
@@ -176,7 +174,6 @@ method Passing()
   {
     var i := -2;
     var k := 4;
-    expect k == i * i; // PRE-CHECK
     var k' := HoareTripleReqEns(i, k);
     expect k' == (i + 1) * (i + 1);
   }
@@ -186,7 +183,6 @@ method Passing()
   //   POST: s == SqrSumRec(n)
   {
     var n := 0;
-    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
     expect s == 0;
   }
@@ -196,7 +192,6 @@ method Passing()
   //   POST: s == SqrSumRec(n)
   {
     var n := 1;
-    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
     expect s == 1;
   }
@@ -206,7 +201,6 @@ method Passing()
   //   POST: s == SqrSumRec(n)
   {
     var n := 2;
-    expect n >= 0; // PRE-CHECK
     var s := SqrSum1(n);
     expect s == 5;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-04-01 22:22:33
+// Generated: 2026-04-05 23:33:58
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 
@@ -43,6 +43,18 @@ method BinarySearch(a: array<int>, x: int) returns (index: int)
 
 method Passing()
 {
+  // Test case for combination {2}:
+  //   PRE:  sorted(a)
+  //   POST: !(0 <= index < a.Length)
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  {
+    var a := new int[1] [11];
+    var x := 9;
+    expect sorted(a); // PRE-CHECK
+    var index := BinarySearch(a, x);
+    expect index == -1;
+  }
+
   // Test case for combination {3}:
   //   PRE:  sorted(a)
   //   POST: a[index] == x

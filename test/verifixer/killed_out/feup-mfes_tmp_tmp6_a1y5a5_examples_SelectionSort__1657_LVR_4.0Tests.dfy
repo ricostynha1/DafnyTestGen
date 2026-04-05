@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort__1657_LVR_4.0.dfy
 // Method: selectionSort
-// Generated: 2026-04-01 22:33:06
+// Generated: 2026-04-05 23:42:53
 
 // feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 
@@ -127,7 +127,6 @@ method Passing()
     var a := new real[1] [0.0];
     var from := 0;
     var to := 1;
-    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 0;
   }
@@ -140,7 +139,6 @@ method Passing()
     var a := new real[3] [0.0, 0.25, 0.5];
     var from := 0;
     var to := 1;
-    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 0;
   }
@@ -153,7 +151,6 @@ method Passing()
     var a := new real[2] [4.0, 0.0];
     var from := 1;
     var to := 2;
-    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 1;
   }
@@ -166,7 +163,6 @@ method Passing()
     var a := new real[2] [0.0, 0.5];
     var from := 0;
     var to := 1;
-    expect 0 <= from < to <= a.Length; // PRE-CHECK
     var index := findMin(a, from, to);
     expect index == 0;
   }

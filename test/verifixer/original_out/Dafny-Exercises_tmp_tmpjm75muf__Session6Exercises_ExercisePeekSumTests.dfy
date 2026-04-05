@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 // Method: mPeekSum
-// Generated: 2026-04-01 22:27:10
+// Generated: 2026-04-05 23:38:01
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 
@@ -59,7 +59,6 @@ method Passing()
   //   POST: sum == peekSum(v, v.Length)
   {
     var v := new int[1] [2];
-    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
     expect sum == 2;
   }
@@ -69,7 +68,6 @@ method Passing()
   //   POST: sum == peekSum(v, v.Length)
   {
     var v := new int[2] [4, 3];
-    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
     expect sum == 4;
   }
@@ -79,7 +77,6 @@ method Passing()
   //   POST: sum == peekSum(v, v.Length)
   {
     var v := new int[3] [5, 4, 6];
-    expect v.Length > 0; // PRE-CHECK
     var sum := mPeekSum(v);
     expect sum == 11;
   }

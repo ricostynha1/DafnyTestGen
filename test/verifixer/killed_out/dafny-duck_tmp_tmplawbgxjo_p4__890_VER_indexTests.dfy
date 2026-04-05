@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p4__890_VER_index.dfy
 // Method: single
-// Generated: 2026-04-01 22:27:27
+// Generated: 2026-04-05 23:38:28
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -62,8 +62,6 @@ method Failing()
   {
     var x := new int[1] [2];
     var y := new int[1] [6];
-    // expect x.Length > 0; // PRE-CHECK
-    // expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
     // expect b[..] == x[..] + y[..];
   }
@@ -75,8 +73,6 @@ method Failing()
   {
     var x := new int[1] [9];
     var y := new int[2] [4, 3];
-    // expect x.Length > 0; // PRE-CHECK
-    // expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
     // expect b[..] == x[..] + y[..];
   }
@@ -88,8 +84,6 @@ method Failing()
   {
     var x := new int[1] [14];
     var y := new int[3] [5, 4, 6];
-    // expect x.Length > 0; // PRE-CHECK
-    // expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
     // expect b[..] == x[..] + y[..];
   }
@@ -101,8 +95,6 @@ method Failing()
   {
     var x := new int[2] [4, 3];
     var y := new int[1] [9];
-    // expect x.Length > 0; // PRE-CHECK
-    // expect y.Length > 0; // PRE-CHECK
     var b := single(x, y);
     // expect b[..] == x[..] + y[..];
   }

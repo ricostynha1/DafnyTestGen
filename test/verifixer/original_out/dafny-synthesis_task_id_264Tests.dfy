@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_264.dfy
 // Method: DogYears
-// Generated: 2026-04-01 22:27:45
+// Generated: 2026-04-05 23:38:41
 
 // dafny-synthesis_task_id_264.dfy
 
@@ -21,7 +21,6 @@ method Passing()
   //   POST: dogYears == 7 * humanYears
   {
     var humanYears := 0;
-    expect humanYears >= 0; // PRE-CHECK
     var dogYears := DogYears(humanYears);
     expect dogYears == 0;
   }
@@ -31,7 +30,6 @@ method Passing()
   //   POST: dogYears == 7 * humanYears
   {
     var humanYears := 1;
-    expect humanYears >= 0; // PRE-CHECK
     var dogYears := DogYears(humanYears);
     expect dogYears == 7;
   }
@@ -41,7 +39,6 @@ method Passing()
   //   POST: dogYears == 7 * humanYears
   {
     var humanYears := 2;
-    expect humanYears >= 0; // PRE-CHECK
     var dogYears := DogYears(humanYears);
     expect dogYears == 14;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 2_BinarySearchDec__873_AOR_Mod.dfy
 // Method: SearchRecursive
-// Generated: 2026-04-01 13:52:58
+// Generated: 2026-04-05 22:48:49
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 2_BinarySearchDec.dfy
 
@@ -77,12 +77,10 @@ method Passing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
   //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [4.0];
+    var a: seq<real> := [11.0];
     var i := 1;
     var j := 1;
-    var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
+    var x := 0.5;
     var k := SearchRecursive(a, i, j, x);
     expect k == 1;
   }
@@ -98,8 +96,6 @@ method Passing()
     var i := 0;
     var j := 0;
     var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchRecursive(a, i, j, x);
     expect k == 0;
   }
@@ -115,8 +111,6 @@ method Passing()
     var i := 1;
     var j := 1;
     var x := 1.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchRecursive(a, i, j, x);
     expect k == 1;
   }
@@ -128,12 +122,10 @@ method Passing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
   //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [2.0, 3.0];
+    var a: seq<real> := [2.0];
     var i := 1;
     var j := 1;
     var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchRecursive(a, i, j, x);
     expect k == 1;
   }
@@ -145,12 +137,10 @@ method Passing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
   //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [4.0];
+    var a: seq<real> := [11.0];
     var i := 1;
     var j := 1;
-    var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
+    var x := 0.5;
     var k := SearchLoop(a, i, j, x);
     expect k == 1;
   }
@@ -166,8 +156,6 @@ method Passing()
     var i := 0;
     var j := 0;
     var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchLoop(a, i, j, x);
     expect k == 0;
   }
@@ -183,8 +171,6 @@ method Passing()
     var i := 1;
     var j := 1;
     var x := 1.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchLoop(a, i, j, x);
     expect k == 1;
   }
@@ -196,12 +182,10 @@ method Passing()
   //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
   //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [2.0, 3.0];
+    var a: seq<real> := [2.0];
     var i := 1;
     var j := 1;
     var x := 0.0;
-    expect 0 <= i <= j <= |a|; // PRE-CHECK
-    expect forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]; // PRE-CHECK
     var k := SearchLoop(a, i, j, x);
     expect k == 1;
   }

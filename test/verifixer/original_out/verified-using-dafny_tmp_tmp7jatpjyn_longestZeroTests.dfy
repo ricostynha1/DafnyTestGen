@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 // Method: longestZero
-// Generated: 2026-04-01 22:34:44
+// Generated: 2026-04-05 23:43:57
 
 // verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 
@@ -86,14 +86,10 @@ method Passing()
   //   POST: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
   //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
-    var a := new int[1] [0];
-    expect 1 <= a.Length; // PRE-CHECK
+    var a := new int[1] [19];
     var sz, pos := longestZero(a);
-    expect 0 <= sz <= a.Length;
-    expect 0 <= pos < a.Length;
-    expect pos + sz <= a.Length;
-    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
+    expect sz == 0;
+    expect pos == 0;
   }
 
   // Test case for combination {1}/Ba=2:
@@ -105,7 +101,6 @@ method Passing()
   //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
     var a := new int[2] [14, 13];
-    expect 1 <= a.Length; // PRE-CHECK
     var sz, pos := longestZero(a);
     expect 0 <= sz <= a.Length;
     expect 0 <= pos < a.Length;
@@ -123,7 +118,6 @@ method Passing()
   //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
     var a := new int[3] [13, 12, 14];
-    expect 1 <= a.Length; // PRE-CHECK
     var sz, pos := longestZero(a);
     expect 0 <= sz <= a.Length;
     expect 0 <= pos < a.Length;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\cs686_tmp_tmpdhuh5dza_classNotes_notes-9-8-21__1967-1983_SWS.dfy
 // Method: Init
-// Generated: 2026-04-01 22:24:34
+// Generated: 2026-04-05 23:35:40
 
 // cs686_tmp_tmpdhuh5dza_classNotes_notes-9-8-21.dfy
 
@@ -84,7 +84,6 @@ method Passing()
     obj.known := false;
     obj.count := 0;
     var x := 1;
-    expect 1 <= x <= 10; // PRE-CHECK
     obj.Init(x);
     expect obj.secret == x;
     expect obj.known == false;
@@ -102,7 +101,6 @@ method Passing()
     obj.known := true;
     obj.count := 0;
     var x := 1;
-    expect 1 <= x <= 10; // PRE-CHECK
     obj.Init(x);
     expect obj.secret == x;
     expect obj.known == false;
@@ -120,7 +118,6 @@ method Passing()
     obj.known := false;
     obj.count := 1;
     var x := 1;
-    expect 1 <= x <= 10; // PRE-CHECK
     obj.Init(x);
     expect obj.secret == x;
     expect obj.known == false;
@@ -138,7 +135,6 @@ method Passing()
     obj.known := false;
     obj.count := 0;
     var x := 1;
-    expect 1 <= x <= 10; // PRE-CHECK
     obj.Init(x);
     expect obj.secret == x;
     expect obj.known == false;
@@ -163,7 +159,6 @@ method Failing()
     obj.count := -1;
     var g := 0;
     var old_count := obj.count;
-    // expect obj.known == false; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     // expect result == true;
     // expect guesses == 0;
@@ -187,7 +182,6 @@ method Failing()
     obj.count := -1;
     var g := 1;
     var old_count := obj.count;
-    // expect obj.known == false; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     // expect result == false;
     // expect guesses == 0;
@@ -211,7 +205,6 @@ method Failing()
     obj.count := 0;
     var g := 0;
     var old_count := obj.count;
-    // expect obj.known == false; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     // expect result == true;
     // expect guesses == 1;
@@ -235,7 +228,6 @@ method Failing()
     obj.count := 1;
     var g := 0;
     var old_count := obj.count;
-    // expect obj.known == false; // PRE-CHECK
     var result, guesses := obj.Guess(g);
     // expect result == true;
     // expect guesses == 2;

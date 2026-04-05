@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3__162-192_SDL.dfy
 // Method: Fib
-// Generated: 2026-04-01 22:41:31
+// Generated: 2026-04-05 23:59:23
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 
@@ -166,7 +166,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[1] [0];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
     expect max == 0;
   }
@@ -177,7 +176,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[2] [28958, 28957];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
     expect max == 28958;
   }
@@ -188,7 +186,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[3] [7757, 7755, 7756];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArray(arr);
     expect max == 7757;
   }
@@ -199,7 +196,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[1] [0];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
     expect max == 0;
   }
@@ -210,7 +206,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[2] [28958, 28957];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
     expect max == 28958;
   }
@@ -221,7 +216,6 @@ method Passing()
   //   POST: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
   {
     var arr := new int[3] [7757, 7755, 7756];
-    expect arr.Length > 0; // PRE-CHECK
     var max := maxArrayReverse(arr);
     expect max == 7757;
   }

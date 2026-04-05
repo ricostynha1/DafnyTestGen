@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\TFG_tmp_tmpbvsao41w_Algoritmos Dafny_div_ent_it__251_ROR_Le.dfy
 // Method: div_ent_it
-// Generated: 2026-04-01 22:42:18
+// Generated: 2026-04-06 00:00:18
 
 // TFG_tmp_tmpbvsao41w_Algoritmos Dafny_div_ent_it.dfy
 

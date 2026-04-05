@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2__647-658_SDL.dfy
 // Method: max
-// Generated: 2026-04-01 22:27:00
+// Generated: 2026-04-05 23:38:02
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2.dfy
 
@@ -61,7 +61,6 @@ method Passing()
   {
     var a := new int[1] [4];
     var n := 1;
-    expect 0 < n <= a.Length; // PRE-CHECK
     var max := max(a, n);
     // expect max == 4; // (actual runtime value — not uniquely determined by spec)
     expect is_max(max, a, n);
@@ -73,7 +72,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var n := 1;
-    expect 0 < n <= a.Length; // PRE-CHECK
     var max := max(a, n);
     // expect max == 4; // (actual runtime value — not uniquely determined by spec)
     expect is_max(max, a, n);
@@ -85,7 +83,6 @@ method Passing()
   {
     var a := new int[2] [4, 3];
     var n := 2;
-    expect 0 < n <= a.Length; // PRE-CHECK
     var max := max(a, n);
     // expect max == 4; // (actual runtime value — not uniquely determined by spec)
     expect is_max(max, a, n);
@@ -97,7 +94,6 @@ method Passing()
   {
     var a := new int[3] [5, 4, 6];
     var n := 1;
-    expect 0 < n <= a.Length; // PRE-CHECK
     var max := max(a, n);
     // expect max == 5; // (actual runtime value — not uniquely determined by spec)
     expect is_max(max, a, n);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao__1364-1364_EVR_int.dfy
 // Method: buscar
-// Generated: 2026-04-01 22:36:31
+// Generated: 2026-04-05 23:54:45
 
 // Metodos_Formais_tmp_tmpql2hwcsh_Arrays_explicacao.dfy
 

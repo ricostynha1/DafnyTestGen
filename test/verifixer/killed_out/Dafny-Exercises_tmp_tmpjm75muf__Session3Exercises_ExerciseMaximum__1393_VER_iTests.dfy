@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session3Exercises_ExerciseMaximum__1393_VER_i.dfy
 // Method: mmaximum1
-// Generated: 2026-04-01 22:28:32
+// Generated: 2026-04-05 23:39:37
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session3Exercises_ExerciseMaximum.dfy
 
@@ -122,7 +122,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[1] [-38];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum1(v);
     expect i == 0;
   }
@@ -133,7 +132,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[2] [7719, 7720];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum1(v);
     expect i == 1;
   }
@@ -144,7 +142,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[3] [-12385, -12384, -12383];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum1(v);
     expect i == 2;
   }
@@ -155,7 +152,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[1] [-38];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum2(v);
     expect i == 0;
   }
@@ -166,7 +162,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[2] [7719, 7720];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum2(v);
     expect i == 1;
   }
@@ -177,7 +172,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
     var v := new int[3] [-12385, -12384, -12383];
-    expect v.Length > 0; // PRE-CHECK
     var i := mmaximum2(v);
     expect i == 2;
   }
@@ -189,7 +183,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
   {
     var v := new int[1] [0];
-    expect v.Length > 0; // PRE-CHECK
     var i := mfirstMaximum(v);
     expect i == 0;
   }
@@ -201,7 +194,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
   {
     var v := new int[2] [57702, 57703];
-    expect v.Length > 0; // PRE-CHECK
     var i := mfirstMaximum(v);
     expect i == 1;
   }
@@ -213,7 +205,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
   {
     var v := new int[3] [7717, 7718, 7719];
-    expect v.Length > 0; // PRE-CHECK
     var i := mfirstMaximum(v);
     expect i == 2;
   }
@@ -225,7 +216,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
   {
     var v := new int[1] [-38];
-    expect v.Length > 0; // PRE-CHECK
     var i := mlastMaximum(v);
     expect i == 0;
   }
@@ -237,7 +227,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
   {
     var v := new int[2] [7719, 7718];
-    expect v.Length > 0; // PRE-CHECK
     var i := mlastMaximum(v);
     expect i == 0;
   }
@@ -249,7 +238,6 @@ method Passing()
   //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
   {
     var v := new int[3] [23676, 23674, 23675];
-    expect v.Length > 0; // PRE-CHECK
     var i := mlastMaximum(v);
     expect i == 0;
   }
@@ -260,7 +248,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[1] [0];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue1(v);
     expect m == 0;
   }
@@ -271,7 +258,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[2] [-1, 0];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue1(v);
     expect m == 0;
   }
@@ -282,7 +268,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[3] [28955, 28956, 28957];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue1(v);
     expect m == 28957;
   }
@@ -293,7 +278,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[1] [0];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue2(v);
     expect m == 0;
   }
@@ -304,7 +288,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[2] [-1, 0];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue2(v);
     expect m == 0;
   }
@@ -315,7 +298,6 @@ method Passing()
   //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
   {
     var v := new int[3] [28955, 28956, 28957];
-    expect v.Length > 0; // PRE-CHECK
     var m := mmaxvalue2(v);
     expect m == 28957;
   }

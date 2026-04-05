@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4__2021_VER_position.dfy
 // Method: LinearSearch2
-// Generated: 2026-04-01 13:51:28
+// Generated: 2026-04-05 22:47:10
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4.dfy
 
@@ -131,8 +131,6 @@ method Passing()
     var data := new int[1] [18];
     var Element := 0;
     var s1: seq<int> := [];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]; // PRE-CHECK
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == -1;
   }
@@ -147,11 +145,9 @@ method Passing()
     var data := new int[1] [9];
     var Element := 9;
     var s1: seq<int> := [9];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]; // PRE-CHECK
     var position := LinearSearch2<int>(data, Element, s1);
     expect position >= 1;
-    expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element;
+    expect exists i: int :: 0 <= i < |s1| && s1[i] == Element;
     expect !(position == -1);
   }
 
@@ -165,8 +161,6 @@ method Passing()
     var data := new int[2] [3, 4];
     var Element := 0;
     var s1: seq<int> := [3];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]; // PRE-CHECK
     var position := LinearSearch2<int>(data, Element, s1);
     expect position == -1;
   }
@@ -180,8 +174,6 @@ method Passing()
     var data := new int[1] [28];
     var Element := 26;
     var s1: seq<int> := [28];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]; // PRE-CHECK
     var position := LinearSearch3<int>(data, Element, s1);
     expect position == -1;
   }
@@ -195,11 +187,9 @@ method Passing()
     var data := new int[1] [9];
     var Element := 9;
     var s1: seq<int> := [9];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]; // PRE-CHECK
     var position := LinearSearch3<int>(data, Element, s1);
     expect position >= 1;
-    expect exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0;
+    expect exists i: int :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0;
   }
 
   // Test case for combination {1}/Bdata=0,Element=0,s1=0:
@@ -211,8 +201,6 @@ method Passing()
     var data := new int[0] [];
     var Element := 0;
     var s1: seq<int> := [];
-    expect |s1| <= data.Length; // PRE-CHECK
-    expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]; // PRE-CHECK
     var position := LinearSearch3<int>(data, Element, s1);
     expect position == -1;
   }
@@ -231,8 +219,6 @@ method Failing()
     var data := new int[2] [3, 4];
     var Element := 0;
     var s1: seq<int> := [3, 4];
-    // expect |s1| <= data.Length; // PRE-CHECK
-    // expect forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]; // PRE-CHECK
     var position := LinearSearch2<int>(data, Element, s1);
     // expect position == -1;
   }
@@ -247,8 +233,6 @@ method Failing()
     var data := new int[1] [10];
     var Element := 10;
     var s1: seq<int> := [10];
-    // expect |s1| <= data.Length; // PRE-CHECK
-    // expect forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]; // PRE-CHECK
     var position := LinearSearch3<int>(data, Element, s1);
     // expect position == -1;
   }

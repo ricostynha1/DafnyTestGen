@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select__497-499_AOI.dfy
 // Method: SelectionSort
-// Generated: 2026-04-01 22:27:17
+// Generated: 2026-04-05 23:38:17
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select.dfy
 
@@ -62,7 +62,7 @@ method Failing()
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [3];
+    var a := new int[1] [2];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
     // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
@@ -73,7 +73,7 @@ method Failing()
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [6, 5];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
     // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
@@ -84,7 +84,7 @@ method Failing()
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [8, 7, 9];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
     // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
