@@ -1,10 +1,12 @@
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
-  ensures result == elems(a[..]) * elems(b[..])
+  ensures forall x :: x in result ==> x in a[..] && x in b[..]
+  ensures forall x :: x in a[..] && x in b[..] ==> x in result
 {
   result := {};
   for i := 0 to a.Length // loop through the first array
-    invariant result == elems(a[..i]) * elems(b[..])
+    invariant forall x :: x in result ==> x in a[..i] && x in b[..]
+    invariant forall x :: x in a[..i] && x in b[..] ==> x in result
   {
     if a[i] !in result && a[i] in b[..] {
       result := result + {a[i]};
@@ -12,10 +14,6 @@ method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
   }
 }
 
-// Auxiliary function that returns the set of elements (without duplicates) in a sequence.
-ghost function elems<T>(s: seq<T>) : set<T> {
-  set x | x in s
-}
 
 // Test cases checked statically.
 method SharedElementsTest(){

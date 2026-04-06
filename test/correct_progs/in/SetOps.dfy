@@ -50,8 +50,8 @@ method SubsetForall(A: set<int>, B: set<int>) returns (r: bool)
 
 method AddElement(S: set<int>, x: int) returns (C: set<int>)
   ensures C == S + {x}
-  ensures x in C
-  ensures forall y :: y in S ==> y in C
+  //ensures x in C
+  //ensures forall y :: y in S ==> y in C
 {
   C := S + {x};
 }
@@ -59,8 +59,8 @@ method AddElement(S: set<int>, x: int) returns (C: set<int>)
 method RemoveElement(S: set<int>, x: int) returns (C: set<int>)
   requires x in S
   ensures C == S - {x}
-  ensures x !in C
-  ensures forall y :: y in S && y != x ==> y in C
+ // ensures x !in C
+ // ensures forall y :: y in S && y != x ==> y in C
 {
   C := S - {x};
 }

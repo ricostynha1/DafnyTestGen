@@ -18,8 +18,6 @@ method RemoveChars(s1: string, s2: string) returns (v: string)
 // Filters a sequence using a predicate.
 // Returns a new sequence with the elements of s that satisfy the predicate p.
 ghost function {:fuel 6} Filter<T>(s: seq<T>, p: T -> bool): (r : seq<T>)
-  ensures |r| <= |s|
-  ensures forall x::x in Filter(s,p) ==> x in s && p(x)
 {
     if |s| == 0 then []
     else if p(s[|s|-1] ) then Filter(s[..|s|-1] , p) + [s[|s|-1] ]

@@ -4,10 +4,14 @@ ghost predicate IsSmallestMissingNumber(s: seq<nat>, v: nat) {
     v !in s && forall k : nat :: k < v ==> k in s
 }
 
+ghost predicate IsSorted(s: seq<nat>) {
+    forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+}   
+
 // Given a sorted sequence 's' of natural numbers,
 // finds the smallest natural number 'v that is not present in the sequence. 
 method SmallestMissingNumber(s: seq<nat>) returns (v: nat)
-    requires forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+    requires IsSorted(s)
     ensures IsSmallestMissingNumber(s, v) 
 {
     v := 0; 

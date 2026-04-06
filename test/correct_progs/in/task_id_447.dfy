@@ -1,11 +1,12 @@
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
     ensures fresh(cubed)
-    ensures  IsMapSeq(a[..], cubed[..], cube)
+    ensures cubed.Length == a.Length
+    ensures forall i :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
 {
     cubed := new int[a.Length];
     for i := 0 to a.Length
-        invariant IsMapSeq(a[..i], cubed[..i], cube)
+        invariant forall j :: 0 <= j < i ==> cubed[j] == cube(a[j])
     {
         cubed[i] := cube(a[i]);
     }
@@ -15,12 +16,6 @@ function cube(x: int) : int {
      x * x * x
 }
 
-// Checks if a sequence 't' is the result of applying a function 'f'
-// to every element of a sequence 's'.
-ghost predicate IsMapSeq<T, E(==)>(s: seq<T>, t: seq<E>, f: T -> E) 
-{
-  |t| == |s| && forall i :: 0 <= i < |s| ==> t[i] == f(s[i])
-}
 
 // Test cases checked statically.
 method CubeElementsTest(){

@@ -6,10 +6,9 @@
 type T = int 
 
 // Checks if array 'a' is sorted by non-descending order.
-ghost predicate Sorted(a: array<T>)
-  reads a
+ghost predicate IsSorted(s: seq<T>)
 { 
-   forall i, j :: 0 <= i < j < a.Length ==> a[i] <= a[j] 
+   forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j] 
 }
 
 // Obtains the set of all inversions in an array 'a', i.e., 
@@ -23,7 +22,7 @@ ghost function Inversions(a: array<T>): set<(nat, nat)>
 // Sorts an array by simply swapping elements out of order, chosen randomly.
 method RawSort(a: array<T>)
    modifies a
-   ensures Sorted(a)
+   ensures IsSorted(a[..])
    ensures multiset(a[..]) == multiset(old(a[..]))
    decreases |Inversions(a)|
 {
