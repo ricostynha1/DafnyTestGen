@@ -237,6 +237,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
 | `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
 | `--timeout <n>` | | Timeout in seconds for test generation per method (0 = unlimited) |
+| `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 ### Z3 Path Resolution
