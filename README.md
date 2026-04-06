@@ -19,7 +19,7 @@ DafnyTestGen uses method contracts to derive test scenarios, combining equivalen
 
 The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
 
-**How DNF decomposition works.** Each `ensures` clause with an implication `A ==> B` is rewritten as `!A || B`, producing two literals. When multiple `ensures` clauses exist, their cross-product forms the full DNF. Disjunctive preconditions (`requires A || B`) are decomposed similarly.
+**How DNF decomposition works.** Each `ensures` clause with an implication `A ==> B` is rewritten as `!A || B`, producing two literals. Equality with if-then-else expressions (`x == if C then A else B`) is decomposed into two branches: `C && x == A` or `!C && x == B`. When multiple `ensures` clauses exist, their cross-product forms the full DNF. Disjunctive preconditions (`requires A || B`) are decomposed similarly. DNF decomposition applies even when postconditions reference non-inlinable functions (e.g., recursive functions without finite unrolling) — the decomposition guides Z3 toward different branches while the functions remain uninterpreted.
 
 **Example — disjunctive postconditions** (`Classify`):
 
@@ -90,6 +90,7 @@ BVA complements equivalence class partitioning by testing at the **edges** of ea
 
 - **Integer ranges**: for `requires -100 <= x <= 100`, generates tests at x = -100, -99, 0, 1, 99, 100
 - **Array/sequence sizes**: generates tests with different sizes (length 0, 1, 2, 3, ...), with distinct elements within each tier
+- **Output boundary tiers**: scalar return values and mutable scalar class fields are automatically constrained to explore different output regions. For `nat` outputs: `=0`, `=1`, `≥2`; for `int`: `>0`, `<0`, `=0`; for `bool`: `true`, `false`; for `real`: `>0`, `<0`, `=0`. Tuple components are decomposed and each component gets its own tiers. Non-trivial tiers (non-zero values) are prioritized first since Z3 naturally gravitates toward minimal values. This is particularly useful when postconditions don't uniquely determine the output — e.g., `MaxDistEqual` where Z3 defaults to `maxDist=0` for all input tiers, output boundary tiers force exploration of `maxDist=1`, `maxDist≥2` etc
 - **Nested sequence inner-length floor tiers**: for `seq<seq<T>>` and `seq<string>` parameters, additional tiers constrain the **minimum inner sublist length**. Without these, Z3 gravitates to empty inner sublists (length 0), producing tests where min-length results are always 0. Two floor tiers are added:
   - `inner>=1`: all active sublists have length ≥ 1 (forces min-length results like `v >= 1`)
   - `inner>=2`: all active sublists have length ≥ 2 (forces `v >= 2`)
@@ -156,11 +157,13 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
    Higher tiers are also subject to a time budget — if earlier tiers consume too much time, later tiers are skipped.
 
-2. **Phase 2 — Boundary analysis** (only when n ≤ 10): Add boundary value tiers crossed with singleton combinations. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits. This phase is skipped entirely for high-clause methods (n > 10) where singletons alone provide sufficient coverage.
+2. **Phase 2 — Input boundary analysis** (only when n ≤ 10): Add input boundary value tiers crossed with singleton combinations. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits. This phase is skipped entirely for high-clause methods (n > 10) where singletons alone provide sufficient coverage.
 
-3. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
+3. **Phase 2b — Output boundary analysis**: Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). All output tiers are explored regardless of `--min-tests`, since their purpose is output diversity. Collection outputs (arrays, sequences, sets) are skipped — their diversity is driven by input boundary tiers.
 
-This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary and repeat coverage. The `--min-tests 0` option runs only phase 1 (tiered combinations without escalation).
+4. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
+
+This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (tiered combinations without escalation).
 
 ## Prerequisites
 
@@ -272,16 +275,40 @@ method CalcFact(n: nat) returns (f: nat)
   }
 ```
 
-When postconditions involve quantifiers or predicates that cannot be directly used as `expect` assertions, Z3-computed **concrete expected values** are emitted instead:
+When postconditions involve quantifiers or predicates that cannot be directly used as `expect` assertions, Z3-computed **concrete expected values** are emitted instead. This applies to scalar return values, tuple return values, mutable array parameters (post-state), and mutable scalar class fields — whenever Z3 uniquely determines the output, the concrete value is used:
 
 ```dafny
-  // Test case for combination {1}: max at left boundary
+  // Scalar return value (FindMax)
   {
     var a := new real[2] [0.5, 0.0];
     var max := FindMax(a);
     expect max == 0.5;
   }
+
+  // Mutable array post-state (BubbleSort)
+  {
+    var a := new int[2] [-38, 7681];
+    var maxDist := BubbleSort(a);
+    expect a[..] == [-38, 7681];
+  }
+
+  // Tuple return value (ArrayTupleOps)
+  {
+    var a := new (int, int)[2] [(4, 6), (3, 5)];
+    var r := SumPairs(a);
+    expect r == (4, 6);
+  }
+
+  // Mutable scalar class field (Counter)
+  {
+    var obj := new Counter();
+    obj.count := 2;
+    obj.Increment();
+    expect obj.count == 3;
+  }
 ```
+
+A second Z3 call with a blocking clause checks **output uniqueness**: if the postcondition uniquely determines the output given the inputs (UNSAT with negated outputs), concrete values are emitted; otherwise, the original postcondition literals are used as `expect` assertions. This covers scalar outputs, tuple components, array post-states, and mutable class fields.
 
 ## Check Mode (`-c`)
 
@@ -390,7 +417,7 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
 - **Recursive functions in postconditions** (e.g., `ensures result == Fact(n)`): simple recursive functions are automatically unrolled into finite SMT `define-fun` definitions, allowing Z3 to compute concrete expected values (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below). Functions that don't match any supported recursion pattern are left as uninterpreted — inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`). Predicates that transitively call other predicates (e.g., `isSubstringPred` -> `isPrefixPred`) are also treated this way to avoid exponential SMT expansion from nested quantifier inlining
-- When postconditions constrain the results (returned values and final array or object states) implicitly (e.g., `ensures a <= r <= b`) and not explicitly (e.g., `ensures result == expression`),  an attempt is made to determine if a concrete result value provided by Z3 is unique (via a second call to Z3). If so, it is generated an `expect` statement using the concrete value from Z3 (e.g., `expect r == 5`). Otherwise, it are generated `expect` statements corresponding to the original postconditions, and the concrete value is included in comments.
+- When postconditions constrain the results implicitly (e.g., `ensures a <= r <= b`) rather than explicitly (e.g., `ensures result == expression`), a **uniqueness check** determines if Z3's concrete output is the only valid one: a second Z3 call with the same inputs but a blocking clause on all output values checks UNSAT. If unique, concrete `expect` statements are emitted (e.g., `expect r == 5;`, `expect a[..] == [-38, 7681];`, `expect obj.count == 3;`). Otherwise, the original postcondition literals are used as `expect` assertions with the concrete values in comments. The uniqueness check covers scalar returns, tuple components, mutable array post-states, and mutable scalar class fields.
 - **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
 - Not all Dafny expressions are translatable to SMT2. Preconditions that cannot be converted to SMT (e.g., those referencing recursove predicates) are emitted as runtime `expect` checks with `// PRE-CHECK` markers. In `--check` mode, test cases whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than counted as failures. This handles cases where Z3 picks input values that satisfy the translated constraints but violate untranslated preconditions.
 

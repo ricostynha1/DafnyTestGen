@@ -25,6 +25,7 @@ method MakeBuckets(a: array<nat>) returns(b: array<nat>)
     invariant forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..i])
    {
       b[a[i]] := b[a[i]] + 1; 
+      assert a[..i+1] == a[..i] + [a[i]]; // proof helper
    } 
    assert a[..] == a[..a.Length]; // proof helper
 }
@@ -39,6 +40,7 @@ ghost function MaxSeq(s: seq<nat>) : (result: nat)
 
 // Counts the number of occurrences of 'x' in a sequence 's' of natural numbers.
 ghost function count(x: nat, s: seq<nat>) : nat {
-   multiset(s)[x]
+   if |s| == 0 then 0 else if s[|s|-1] == x then 1 + count(x, s[..|s|-1]) else count(x, s[..|s|-1])
+   
 }
 

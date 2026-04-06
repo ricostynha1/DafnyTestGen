@@ -16,11 +16,12 @@ method SeqHead(s: seq<(int, int)>) returns (r: (int, int))
 
 method MaxFirst(a: array<(int, int)>) returns (r: int)
   requires a.Length > 0
-  requires a.Length <= 3
+  ensures exists i :: 0 <= i < a.Length && r == a[i].0
   ensures forall i :: 0 <= i < a.Length ==> r >= a[i].0
 {
   r := a[0].0;
   for i := 1 to a.Length
+    invariant exists j :: 0 <= j < i && r == a[j].0
     invariant forall j :: 0 <= j < i ==> r >= a[j].0
   {
     if a[i].0 > r { r := a[i].0; }
