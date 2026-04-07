@@ -21,6 +21,8 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 
 **How DNF decomposition works.** Each `ensures` clause with an implication `A ==> B` is rewritten as `!A || B`, producing two literals. Equality with if-then-else expressions (`x == if C then A else B`) is decomposed into two branches: `C && x == A` or `!C && x == B`. When multiple `ensures` clauses exist, their cross-product forms the full DNF. Disjunctive preconditions (`requires A || B`) are decomposed similarly. DNF decomposition applies even when postconditions reference non-inlinable functions (e.g., recursive functions without finite unrolling) — the decomposition guides Z3 toward different branches while the functions remain uninterpreted.
 
+**Predicate inlining and DNF.** Non-recursive predicates and functions referenced in contracts are automatically **inlined before DNF conversion**. This is critical for DNF quality: a postcondition like `ensures IsFirstOdd(a, index)` is opaque to the DNF engine (1 clause), but after inlining the predicate body — which contains `if index == -1 then ... else ...` — the if-then-else is decomposed into 2 clauses: one for `index == -1` (no odd number found) and one for `index >= 0` (odd number at position). Without this, Z3 would satisfy the single clause by always picking the easier branch. Inlining supports 2-level nesting (a predicate calling another predicate), and built-in SMT handlers like `IsSorted` are excluded from inlining to preserve their specialized translation patterns.
+
 **Example — disjunctive postconditions** (`Classify`):
 
 ```dafny
