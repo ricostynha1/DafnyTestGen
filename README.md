@@ -28,7 +28,7 @@ Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-
 | `L` (literal) | `[L, !L]` | idem |
 | `![A, A']` | `[A', A]` | idem |
 | `[A, A'] && [B, B']` | `[AB, A'+B']` | `[AB, A'B+AB'+A'B']` |
-| `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'.B+AB', A'B']` |
+| `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'B+AB', A'B']` |
 | `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
 | `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
 | `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B'+A'B']` | `[CAB+CAB'+C'BA+C'BA', CA'B+CA'B'+C'B'A+C'B'A']` |
@@ -37,10 +37,8 @@ Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-
 
 Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
 
-
-When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF.
+When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF or FDNF.
  
-**Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
 
 **Example — disjunctive postconditions**:
 
@@ -78,15 +76,10 @@ Each precondition scenario is crossed with postcondition scenarios.
 
 **FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly.
 
-FDNF expands each disjunction `A || B` into **3 full clauses** — all non-empty truth assignments:
-- `A && B` — both branches hold simultaneously
-- `A && !B` — only A holds
-- `!A && B` — only B holds
-
-The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses**.
-
 
 **Syntactic contradiction detection** prunes infeasible FDNF clauses before invoking Z3: direct complements (`L` ∧ `!L`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`). For Classify, this prunes **20 of 27** clauses, leaving only **7 Z3 calls** — the same 3 SAT results as simple mode, but with stronger coverage guarantees.
+
+**Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
 
 #### Quantifier Boundary Decomposition
 
