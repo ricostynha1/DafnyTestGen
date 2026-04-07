@@ -30,9 +30,7 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 - `!(A || B)` → `!A && !B` &ensp;(De Morgan)
 - `!(!A)` → `A` &ensp;(double negation elimination)
 
-All rules handle negation uniformly: when an expression appears under negation, De Morgan's laws push the negation inward, flipping `&&`/`||`, `==>`, `<==>`, and `if-then-else` accordingly (e.g., `!(if C then A else B)` → `(C && !A) || (!C && !B)`).
-
-When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF.
+When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF.
  
 **Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
 
