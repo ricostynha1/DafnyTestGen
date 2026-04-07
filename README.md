@@ -15,13 +15,13 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditi
 
 DafnyTestGen uses method contracts to derive test scenarios, combining equivalence class partitioning (via DNF or FDNF analysis) with boundary value analysis. Strategies can be selected explicitly or chosen automatically.
 
-#### Equivalence Class Partitioning via DNF
+#### Equivalence Class Partitioning via DNF or FDNF
 
-The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
+The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** or **Full DNF (FDNF)**, producing a set of clauses that partition the input/output space.
 
 **How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. In DNF decomposition, the expression `A || B` originates two test goals (`A` and `B`). In FDNF decomposition, it originates three test goals (`A && B`, `!A && B` and `A && !B`); each conjunction involves all literals or their negation. 
 
-Both DNF and DNF are computed bottom-up (starting from leaf literals) by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the transformation. Letters `A`, `B` and `C`denote Boolean expressions, and `Xi`and `Yj` denote conjuntive expressions.
+Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C`denote Boolean expressions, and `Xi`and `Yj` denote conjuntive expressions.
 
 | Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
 |---|---|---|
