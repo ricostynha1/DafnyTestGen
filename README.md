@@ -22,10 +22,10 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 **How DNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. Other Boolean expressions are converted to DNF following rewriting rules applied recursively until only disjunctions of conjunctions of literals (or negated literals) remain:
 
 - `A ==> B` → `!A || B` 
-- `A <==> B` → `A && B || !A && !B`
-- `if C then A else B` → `C && A || !C && B`
-- `x == (if C then A else B)` → `C && x == A || !C && x == B` &ensp;(also for `!=`)
-- `A && (B || C)` → `A && B || A && C` &ensp;(distribution)
+- `A <==> B` → `(A && B) || (!A && !B)`
+- `if C then A else B` → `(C && A) || (!C && B)`
+- `x == (if C then A else B)` → `(C && x == A) || (!C && x == B)` &ensp;(also for `!=`)
+- `A && (B || C)` → `(A && B) || (A && C)` &ensp;(distribution)
 - `!(A && B)` → `!A || !B` &ensp;(De Morgan)
 - `!(A || B)` → `!A && !B` &ensp;(De Morgan)
 - `!(!A)` → `A` &ensp;(double negation elimination)
@@ -85,9 +85,9 @@ For **if-then-else** expressions (from predicate inlining or fuel-1 expansion), 
 
 FDNF is computed bottom-up by a dual-return recursive function that produces both the FDNF of an expression and the FDNF of its negation simultaneously. The combination rules are:
 
-| Expression | FDNF (pos) | FDNF of negation (neg) |
+| Expression (E) | FDNF (E.pos) | FDNF of negation (E.neg) |
 |---|---|---|
-| Leaf `L` | `[[L]]` | `[[!L]]` |
+| `L` (literal) | `L` | `!L` |
 | `!A` | `A.neg` | `A.pos` |
 | `A && B` | `CP(A.pos, B.pos)` | `CP(A.neg, B.neg) ∪ CP(A.neg, B.pos) ∪ CP(A.pos, B.neg)` |
 | `A \|\| B` | `CP(A.pos, B.pos) ∪ CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` | `CP(A.neg, B.neg)` |
