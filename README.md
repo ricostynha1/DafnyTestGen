@@ -92,11 +92,11 @@ FDNF is computed bottom-up by a dual-return recursive function that produces bot
 | `A && B` | `CP(A.pos, B.pos)` | `CP(A.neg, B.neg) ∪ CP(A.neg, B.pos) ∪ CP(A.pos, B.neg)` |
 | `A \|\| B` | `CP(A.pos, B.pos) ∪ CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` | `CP(A.neg, B.neg)` |
 | `A ==> B` | treat as `!A \|\| B` | |
+| `A <==> B` | `CP(A.pos, B.pos) ∪ CP(A.neg, B.neg)` | `CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` |
 | `if C then A else B` | `CP(C.pos, A.pos) ∪ CP(C.neg, B.pos)` | `CP(C.pos, A.neg) ∪ CP(C.neg, B.neg)` |
 
-Note the duality between `||` (3 pos / 1 neg) and `&&` (1 pos / 3 neg). The ITE rule produces only 2 pos / 2 neg (mutually exclusive branches).
 
-Since each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction — no separate exclusion mechanism is needed. Each clause is directly solvable as an independent SMT query.
+Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
 
 **Syntactic contradiction detection** prunes infeasible FDNF clauses before invoking Z3: direct complements (`L` ∧ `!L`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`). For Classify, this prunes **20 of 27** clauses, leaving only **7 Z3 calls** — the same 3 SAT results as simple mode, but with stronger coverage guarantees.
 
