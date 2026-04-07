@@ -2,7 +2,7 @@
 
 Automatic test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions).
 
-DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditions and postconditions to Disjunctive Normal Form (DNF), and uses the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths.
+DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditions and postconditions to Disjunctive Normal Form (DNF) or Full DNF (FDNF), and uses the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths.
 
 ## How It Works
 
@@ -46,12 +46,12 @@ method Classify(x: int) returns (r: int)
   ensures x > 0 ==> r == 1
 ```
 
-Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`), and the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**. For example:
+Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **simple mode** (`-s`), the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**, of which 3 are SAT:
 - Clause 2: `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
 - Clause 3: `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
 - Clause 5: `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
 
-Many clauses are contradictory (e.g., clause 1: `!(x<0)` ∧ `!(x==0)` ∧ `!(x>0)` — impossible) and are detected as UNSAT by Z3.
+In **FDNF mode** (`-a` or progressive), each implication produces 3 full clauses, and the cross-product yields 3×3×3 = **27 FDNF clauses**. Each clause includes both positive and negated literals, so contradictory clauses (e.g., `r == -1` ∧ `r == 0`) are detected and pruned syntactically — only **7 Z3 calls** are needed, producing the same 3 SAT results.
 
 **Example — disjunctive preconditions**:
 
@@ -61,7 +61,7 @@ method Process(x: int, y: int) returns (r: int)
   ensures r == x + y
 ```
 
-The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With all-combinations, this produces 3 precondition scenarios, each with exclusions to force the intended branch:
+The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With FDNF, this produces 3 precondition scenarios (all non-empty truth assignments), each including negated literals to force the intended branch:
 - P{1}: `x > 0` ∧ `!(y > 0)` — only x is positive
 - P{2}: `!(x > 0)` ∧ `y > 0` — only y is positive
 - P{1,2}: `x > 0` ∧ `y > 0` — both positive
@@ -70,15 +70,35 @@ Each precondition scenario is crossed with postcondition scenarios.
 
 **Simple mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
 
-**All-combinations mode** (`-a`): generates tests for all **2^n − 1** non-empty subsets of DNF clauses, testing which combinations can hold simultaneously. For each combination {i, j, ...}, the selected clauses are asserted and all non-selected clauses are **negated** (exclusions). For Classify with 8 clauses, this produces 255 combinations — but two pruning optimizations eliminate most of them without calling Z3:
+**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, without the exponential blowup of enumerating all 2^n subsets.
 
-1. **Syntactic contradiction detection**: Before invoking Z3, the merged literals are checked for obvious contradictions — direct complements (`L` ∧ `!(L)`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`), including numeric range analysis. For Classify, this instantly detects 7 contradictory combinations (e.g., clause {4} has `r == 0` ∧ `r == 1`).
+The key insight is that standard DNF loses the **grouping structure** of which branches came from the same disjunction. For `x < 0 ==> r == -1`, DNF produces two branches: `x >= 0` and `r == -1`. Standard all-combinations would treat these as independent bits across all ensures clauses, producing 2^8 − 1 = 255 flat combinations for Classify. Most of these are meaningless (mixing branches from unrelated disjunctions) or infeasible.
 
-2. **UNSAT superset pruning**: When a combination's literals are contradictory, any superset is also contradictory (adding more literals to a contradiction stays contradictory). The contradictory mask is recorded, and all 2^(n-k) supersets are instantly pruned. For Classify, this prunes 241 additional combinations.
+FDNF preserves the disjunctive structure by expanding each disjunction `A || B` into **3 full clauses** — all non-empty truth assignments:
+- `A && B` — both branches hold simultaneously
+- `A && !B` — only A holds
+- `!A && B` — only B holds
 
-Together, these reduce Z3 calls from **255 to just 7** (a 97% reduction), while producing the same 3 SAT results. The pruning is fully automatic and applies to all modes (all-combinations, simple, progressive).
+The `!A && !B` case is excluded (it violates the disjunction). The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses** instead of 255.
 
-With more complex contracts, all-combinations discovers scenarios where multiple clauses hold simultaneously. For example, FindMax with `ensures exists k :: ...` and `ensures forall k :: ...` produces combinations like {1,3} (max at both first and last position — a single-element array).
+For **if-then-else** expressions (from predicate inlining or fuel-1 expansion), the branches are **mutually exclusive** by construction (C and !C cannot both be true), so FDNF produces only 2 clauses per ITE (the "both true" case is impossible).
+
+FDNF is computed bottom-up by a dual-return recursive function that produces both the FDNF of an expression and the FDNF of its negation simultaneously. The combination rules are:
+
+| Expression | FDNF (pos) | FDNF of negation (neg) |
+|---|---|---|
+| Leaf `L` | `[[L]]` | `[[!L]]` |
+| `!A` | `A.neg` | `A.pos` |
+| `A && B` | `CP(A.pos, B.pos)` | `CP(A.neg, B.neg) ∪ CP(A.neg, B.pos) ∪ CP(A.pos, B.neg)` |
+| `A \|\| B` | `CP(A.pos, B.pos) ∪ CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` | `CP(A.neg, B.neg)` |
+| `A ==> B` | treat as `!A \|\| B` | |
+| `if C then A else B` | `CP(C.pos, A.pos) ∪ CP(C.neg, B.pos)` | `CP(C.pos, A.neg) ∪ CP(C.neg, B.neg)` |
+
+Note the duality between `||` (3 pos / 1 neg) and `&&` (1 pos / 3 neg). The ITE rule produces only 2 pos / 2 neg (mutually exclusive branches).
+
+Since each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction — no separate exclusion mechanism is needed. Each clause is directly solvable as an independent SMT query.
+
+**Syntactic contradiction detection** prunes infeasible FDNF clauses before invoking Z3: direct complements (`L` ∧ `!L`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`). For Classify, this prunes **20 of 27** clauses, leaving only **7 Z3 calls** — the same 3 SAT results as simple mode, but with stronger coverage guarantees.
 
 #### Quantifier Boundary Decomposition
 
@@ -88,7 +108,7 @@ Single-variable existential quantifiers of the form `exists k :: lo <= k < hi &&
 2. **Middle**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `P(hi-1)` — property holds at last position
 
-These clauses feed into the same DNF analysis, so they combine with other postcondition clauses via simple or all-combinations mode. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly.
+These clauses feed into the same DNF/FDNF analysis, so they combine with other postcondition clauses via cross-product. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly.
 
 **Example** (`FindMax`):
 
@@ -97,7 +117,7 @@ ensures exists k :: 0 <= k < a.Length && max == a[k]
 ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). With all-combinations, this yields 7 combinations — {1}: max at left only, {2}: max in middle only, {3}: max at right only, {1,3}: max at both ends (single-element array), etc. Contradictory combinations (e.g., {1,2,3} with exclusions preventing all three) are UNSAT.
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via FDNF cross-product, producing distinct test scenarios for each structural case.
 
 #### Boundary Value Analysis (`-b`)
 
@@ -119,7 +139,7 @@ BVA complements equivalence class partitioning by testing at the **edges** of ea
 
 The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers. For example, `-t 5` generates arrays of length 0 through 4.
 
-BVA is **combined with DNF**: each equivalence class (DNF scenario) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
+BVA is **combined with DNF/FDNF**: each equivalence class (clause) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
 
 #### Repetition (`-r`)
 
@@ -164,7 +184,7 @@ This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expec
 
 When postconditions reference user-defined predicates or functions, DafnyTestGen can **inline** their bodies before DNF conversion, exposing internal branching structure that would otherwise remain opaque.
 
-**Non-recursive predicate inlining.** Predicates with concrete bodies (non-recursive, non-builtin) are substituted into postconditions before DNF analysis. For example, given:
+**Non-recursive predicate inlining.** Predicates with concrete bodies (non-recursive, non-builtin) are substituted into postconditions before DNF/FDNF analysis. For example, given:
 
 ```dafny
 predicate IsFirstOdd(a: array<int>, index: int)
@@ -206,21 +226,15 @@ The inner `filter(...)` calls cannot be translated to SMT and are silently dropp
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — Tiered combinations**: Run DNF combinations with automatic tier escalation based on clause count:
-   - **n ≤ 5 clauses**: full all-combinations (all 2^n − 1 subsets)
-   - **n ≤ 8 clauses**: up to triples (3-way combinations)
-   - **n ≤ 10 clauses**: up to pairs (2-way combinations)
-   - **n > 10 clauses**: singletons only (one clause at a time)
+1. **Phase 1 — FDNF clauses**: All FDNF clauses are solved directly. Since FDNF produces complete clauses (each already includes negated literals for non-taken branches), no tier escalation or bitmask enumeration is needed. Syntactic contradiction detection prunes infeasible clauses before Z3.
 
-   Higher tiers are also subject to a time budget — if earlier tiers consume too much time, later tiers are skipped.
-
-2. **Phase 2 — Input boundary analysis** (only when n ≤ 10): Add input boundary value tiers crossed with singleton combinations. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits. This phase is skipped entirely for high-clause methods (n > 10) where singletons alone provide sufficient coverage.
+2. **Phase 2 — Input boundary analysis** (only when n ≤ 10): Add input boundary value tiers crossed with FDNF clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
 
 3. **Phase 2b — Output boundary analysis**: Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). All output tiers are explored regardless of `--min-tests`, since their purpose is output diversity. Collection outputs (arrays, sequences, sets) are skipped — their diversity is driven by input boundary tiers.
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
 
-This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (tiered combinations without escalation).
+This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (FDNF clauses without escalation).
 
 ## Prerequisites
 
@@ -260,7 +274,7 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 # Force boundary value analysis with 5 tiers
 dotnet run -- test/correct_progs/in/Factorial.dfy -b -t 5
 
-# Thorough: all combinations + boundary + 3 tests per scenario
+# Thorough: FDNF + boundary + 3 tests per scenario
 dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ -a -b -r 3
 
 # Validate tests and split into Passing/Failing methods
@@ -285,7 +299,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--output <path>` | `-o` | Output file or directory |
 | `--method <name>` | `-m` | Target a specific method (default: all) |
 | `--verbose` | `-v` | Show debug info (contracts, DNF, SMT queries) |
-| `--all-combinations` | `-a` | Test all non-empty truth combinations of DNF clauses |
+| `--all-combinations` | `-a` | Use FDNF (Full DNF) for all meaningful truth combinations |
 | `--boundary` | `-b` | Boundary value analysis on inputs |
 | `--simple` | `-s` | One test per DNF clause (overrides auto) |
 | `--tiers <n>` | `-t` | Sequence/array size tiers for boundary analysis (default: 4) |
