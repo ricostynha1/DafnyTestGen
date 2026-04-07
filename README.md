@@ -7,25 +7,25 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditi
 ## How It Works
 
 1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses)
-2. **Analyze** preconditions and postconditions in DNF to identify distinct test scenarios
+2. **Analyze** preconditions and postconditions in DNF or FDND to identify distinct test scenarios
 3. **Solve** SMT queries via Z3 to find satisfying concrete inputs for each scenario
 4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method
 
 ### Test Strategies
 
-DafnyTestGen uses method contracts to derive test scenarios, combining equivalence class partitioning (via DNF analysis) with boundary value analysis. Strategies can be selected explicitly or chosen automatically.
+DafnyTestGen uses method contracts to derive test scenarios, combining equivalence class partitioning (via DNF or FDNF analysis) with boundary value analysis. Strategies can be selected explicitly or chosen automatically.
 
 #### Equivalence Class Partitioning via DNF
 
 The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
 
-**How DNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. Other Boolean expressions are converted to DNF following rewriting rules applied recursively until only disjunctions of conjunctions of literals remain:
+**How DNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. Other Boolean expressions are converted to DNF following rewriting rules applied recursively until only disjunctions of conjunctions of literals (or negated literals) remain:
 
-- `A ==> B` → `!A || B` &ensp;(contrapositive: `!(A ==> B)` → `A && !B`)
-- `A <==> B` → `(A && B) || (!A && !B)`
-- `if C then A else B` → `(C && A) || (!C && B)`
-- `x == (if C then A else B)` → `(C && x == A) || (!C && x == B)` &ensp;(also for `!=`)
-- `A && (B || C)` → `(A && B) || (A && C)` &ensp;(distribution)
+- `A ==> B` → `!A || B` 
+- `A <==> B` → `A && B || !A && !B`
+- `if C then A else B` → `C && A || !C && B`
+- `x == (if C then A else B)` → `C && x == A || !C && x == B` &ensp;(also for `!=`)
+- `A && (B || C)` → `A && B || A && C` &ensp;(distribution)
 - `!(A && B)` → `!A || !B` &ensp;(De Morgan)
 - `!(A || B)` → `!A && !B` &ensp;(De Morgan)
 - `!(!A)` → `A` &ensp;(double negation elimination)

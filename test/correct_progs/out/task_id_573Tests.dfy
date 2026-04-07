@@ -1,0 +1,151 @@
+// Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
+// Method: UniqueProduct
+// Generated: 2026-04-06 23:25:47
+
+// Difficult example because of the need for auxiliary lemmas.
+
+// Returns the product of the elements of an array 'a', ignoring duplicates.
+method UniqueProduct (a: array<int>) returns (product: int)
+   ensures product == SetProduct(elems(a))
+{
+    product := 1;
+    var seen : set<int> := {};
+    
+    for i := 0 to a.Length
+        invariant seen == elems(a, i)
+        invariant product == SetProduct(seen)
+    {
+        if a[i] !in seen {
+            seen := seen + {a[i]};
+            product := product * a[i];
+            SetProductLemma(seen, a[i]); // helper
+        }
+    }
+}
+
+// Auxiliary function that gets the set of distinct elements in array 
+// 'a' up to a given length.
+function elems<T>(a: array<T>, len: nat := a.Length) : set<T> 
+    reads a
+    requires len <= a.Length
+{
+    set x | x in a[..len]
+}
+
+// Auxiliary function that returns the product of elements in a set.
+function SetProduct(s : set<int>) : int  {
+    if s == {} then 1
+    else var x :| x in s;
+         x * SetProduct(s - {x})
+}
+
+// Lemma that proves by induction that the result of SetProduct is the same  
+// irrespective of the first element selected non deterministically in SetProduct.
+lemma SetProductLemma(s: set<int>, y: int)
+   requires y in s
+   ensures SetProduct(s) == y * SetProduct(s - {y}) 
+{
+    var x :| x in s && SetProduct(s) == x * SetProduct(s-{x}); // must exist by def and y in s
+    if x != y { 
+        calc == {
+            SetProduct(s);
+            //x * SetProduct(s - {x}); (filled in by Dafny)
+            { SetProductLemma(s - {x}, y); }
+            //x * (y * SetProduct(s - {x} - {y}));
+            {assert s - {x} - {y} == s - {y} - {x};}
+            //y * (x * SetProduct(s - {y} - {x}));
+            {SetProductLemma(s - {y}, x);}
+            y * SetProduct(s - {y});
+        }
+    }
+}
+
+// Test cases checked statically by Dafny
+// (several auxiliary steps are needed so that the verifier succeeds!)
+method UniqueProductTest(){
+  var a1 := new int[] [1, 2, 3, 2, 3];
+  var out1 := UniqueProduct(a1);
+  assert elems(a1) == {a1[0], a1[1], a1[2]}; // helper
+  SetProductLemma({1, 2, 3}, 3); // helper: 1 can be the first in the product
+  assert {1, 2, 3} - {3} == {1, 2}; // helper
+  SetProductLemma({1, 2}, 2); // helper: 2 can be the second in the product
+  assert out1 == 6; // the product can be calculated as 1 * 2 * 3 = 6
+
+  var a2 := new int[] [7, 8, 9, 0, 1, 1];
+  var out2 := UniqueProduct(a2);
+  assert a2[3] == 0; // helper
+  SetProductLemma(elems(a2), 0); // helper: 0 can be the first in the product
+  assert out2 == 0; // so the product can be calculated as 0 * ... = 0
+}
+
+method Passing()
+{
+  // Test case for combination {1}:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[0] [];
+    var product := UniqueProduct(a);
+    expect product == 1;
+  }
+
+  // Test case for combination {1}/Ba=1:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [2];
+    var product := UniqueProduct(a);
+    expect product == 2;
+  }
+
+  // Test case for combination {1}/Ba=2:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[2] [4, 3];
+    var product := UniqueProduct(a);
+    expect product == 12;
+  }
+
+  // Test case for combination {1}/Ba=3:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[3] [5, 4, 6];
+    var product := UniqueProduct(a);
+    expect product == 120;
+  }
+
+  // Test case for combination {1}/Oproduct>0:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[4] [7, 8, 9, 10];
+    var product := UniqueProduct(a);
+    expect product == 5040;
+  }
+
+  // Test case for combination {1}/Oproduct<0:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[5] [8, 9, 10, 11, 12];
+    var product := UniqueProduct(a);
+    expect product == 95040;
+  }
+
+  // Test case for combination {1}/Oproduct=0:
+  //   POST: product == SetProduct(elems(a))
+  {
+    var a := new int[6] [9, 10, 11, 12, 13, 14];
+    var product := UniqueProduct(a);
+    expect product == 2162160;
+  }
+
+}
+
+method Failing()
+{
+  // (no failing tests)
+}
+
+method Main()
+{
+  Passing();
+  Failing();
+}
