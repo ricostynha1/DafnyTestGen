@@ -19,16 +19,24 @@ DafnyTestGen uses method contracts to derive test scenarios, combining equivalen
 
 The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
 
-**How DNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. Other Boolean expressions are converted to DNF following rewriting rules applied recursively until only disjunctions of conjunctions of literals (or negated literals) remain:
+**How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. In DNF decomposition, the expression `A || B` originates two test goals (`A` and `B`). In FDNF decomposition, it originates three test goals (`A && B`, `!A && B` and `A && !B`); each conjunction involves all literals or their negation. 
 
-- `A ==> B` → `!A || B` 
-- `A <==> B` → `(A && B) || (!A && !B)`
-- `if C then A else B` → `(C && A) || (!C && B)`
-- `x == (if C then A else B)` → `(C && x == A) || (!C && x == B)` &ensp;(also for `!=`)
-- `A && (B || C)` → `(A && B) || (A && C)` &ensp;(distribution)
-- `!(A && B)` → `!A || !B` &ensp;(De Morgan)
-- `!(A || B)` → `!A && !B` &ensp;(De Morgan)
-- `!(!A)` → `A` &ensp;(double negation elimination)
+Both DNF and DNF are computed bottom-up (starting from leaf literals) by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the transformation. Letters `A`, `B` and `C`denote Boolean expressions, and `Xi`and `Yj` denote conjuntive expressions.
+
+| Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
+|---|---|---|
+| `L` (literal) | `[L, !L]` | idem |
+| `![A,A']` | `[A',A]` | idem |
+| `[A,A'] && [B,B']` | `[AB, A' + B']` | `[AB, A'.B + AB' + A'B']` |
+| `[A,A'] \|\| [B,B']` | `[A + B, A'B']` | `[AB+A'.B+AB', A'B']` |
+| `[A,A'] ==> [B,B']` | `[A' + B, AB']` | `[A'B+AB+A'B', AB']` |
+| `[A,A'] <==> [B,B']` | `[AB + A'B', AB' + A'B]` | idem |
+| `if [C,C'] then [A,A'] else [B,B']` | `[CA+C'B, CA'+C'B'+A'B']` | `[CAB+CAB'+C'BA+C'BA', CA'B+CA'B+C'B'A+C'B'A']` |
+| `x == (if C then A else B)` | same as `if C then x == A else x == B` | |
+| `(X1 + ... + Xn) * (Y1 + ... + Ym)` | `X1 Y1 + ... + Xn Ym` | | 
+
+Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
+
 
 When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF.
  
@@ -75,24 +83,8 @@ FDNF expands each disjunction `A || B` into **3 full clauses** — all non-empty
 - `A && !B` — only A holds
 - `!A && B` — only B holds
 
-The `!A && !B` case is excluded (it violates the disjunction). The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses**.
+The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses**.
 
-For **if-then-else** expressions (from predicate inlining or fuel-1 expansion), the branches are **mutually exclusive** by construction (C and !C cannot both be true), so FDNF produces only 2 clauses per if-then-else (the "both true" case is impossible).
-
-FDNF is computed bottom-up by a dual-return recursive function that produces both the FDNF of an expression and the FDNF of its negation simultaneously. The combination rules are:
-
-| Expression (E) | FDNF (E.pos) | FDNF of negation (E.neg) |
-|---|---|---|
-| `L` (literal) | `L` | `!L` |
-| `!A` | `A.neg` | `A.pos` |
-| `A && B` | `CP(A.pos, B.pos)` | `CP(A.neg, B.neg) ∪ CP(A.neg, B.pos) ∪ CP(A.pos, B.neg)` |
-| `A \|\| B` | `CP(A.pos, B.pos) ∪ CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` | `CP(A.neg, B.neg)` |
-| `A ==> B` | treat as `!A \|\| B` | |
-| `A <==> B` | `CP(A.pos, B.pos) ∪ CP(A.neg, B.neg)` | `CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)` |
-| `if C then A else B` | `CP(C.pos, A.pos) ∪ CP(C.neg, B.pos)` | `CP(C.pos, A.neg) ∪ CP(C.neg, B.neg)` |
-
-
-Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
 
 **Syntactic contradiction detection** prunes infeasible FDNF clauses before invoking Z3: direct complements (`L` ∧ `!L`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`). For Classify, this prunes **20 of 27** clauses, leaving only **7 Z3 calls** — the same 3 SAT results as simple mode, but with stronger coverage guarantees.
 
