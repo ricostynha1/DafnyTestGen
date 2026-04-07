@@ -1,11 +1,11 @@
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
 method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
-  ensures diff == filter(a, (x) => x !in b)
+  ensures diff == filter(a, b)
 {
   diff := [];
   for i := 0 to |a|
-    invariant diff == filter(a[..i], (x) => x !in b)
+    invariant diff == filter(a[..i], b)
   {
     if a[i] !in b {
       diff := diff + [a[i]];
@@ -15,11 +15,11 @@ method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
   assert a == a[..|a|]; // proof helper
 }
 
-// Returns the subsequence of elements of 'a' that satisfy a predicate 'p'.
-ghost function {:fuel 3} filter<T>(a: seq<T>, p: (T) -> bool) : seq<T> {
+// Returns the subsequence of elements of 'a' that do not exist in 'b'.
+ghost function {:fuel 3} filter<T(==)>(a: seq<T>, b: seq<T>) : seq<T> {
   if |a| == 0 then a
-  else if p(a[|a| - 1]) then filter(a[..|a| - 1], p) + [a[|a| - 1]]
-  else filter(a[..|a| - 1], p)
+  else if a[|a| - 1] in b then filter(a[..|a| - 1], b)
+  else filter(a[..|a| - 1], b) + [a[|a| - 1]]
 }
 
 // Teste cases checked statically.

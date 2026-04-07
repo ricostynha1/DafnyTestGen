@@ -147,6 +147,48 @@ This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expec
 
 **Call-site array→seq substitution:** When a `define-fun` takes a `(Seq Int)` parameter but the postcondition passes an array handle (Int-typed in SMT), the call site is automatically rewritten to pass the `_seq` variable instead (e.g., `(Fact a)` → `(Fact a_seq)`), ensuring sort compatibility.
 
+#### Predicate and Function Inlining for DNF
+
+When postconditions reference user-defined predicates or functions, DafnyTestGen can **inline** their bodies before DNF conversion, exposing internal branching structure that would otherwise remain opaque.
+
+**Non-recursive predicate inlining.** Predicates with concrete bodies (non-recursive, non-builtin) are substituted into postconditions before DNF analysis. For example, given:
+
+```dafny
+predicate IsFirstOdd(a: array<int>, index: int)
+  reads a
+{
+  if index == -1 then forall i :: 0 <= i < a.Length ==> !IsOdd(a[i])
+  else 0 <= index < a.Length && IsOdd(a[index])
+       && forall i :: 0 <= i < index ==> !IsOdd(a[i])
+}
+
+method FindFirstOdd(a: array<int>) returns (index: int)
+  ensures IsFirstOdd(a, index)
+```
+
+The predicate body is substituted for `IsFirstOdd(a, index)`, producing an `if C then A else B` expression. The DNF engine splits this into two clauses — `(index == -1 && ∀i. ¬IsOdd(a[i]))` and `(index ≠ -1 && IsOdd(a[index]) && ∀i < index. ¬IsOdd(a[i]))` — generating tests for both the "not found" and "found" paths. Nested predicate calls (e.g., `IsOdd` inside `IsFirstOdd`) are also inlined up to 2 levels deep.
+
+**Fuel-1 inlining for recursive functions.** Recursive functions cannot be fully inlined (infinite expansion), but DafnyTestGen performs **one level of unrolling** — analogous to Dafny's `{:fuel}` attribute. The function body is substituted once; inner recursive calls are left opaque. For example, given:
+
+```dafny
+function filter<T(==)>(a: seq<T>, b: seq<T>) : seq<T> {
+  if |a| == 0 then a
+  else if a[|a| - 1] in b then filter(a[..|a| - 1], b)
+  else filter(a[..|a| - 1], b) + [a[|a| - 1]]
+}
+
+method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
+  ensures diff == filter(a, b)
+```
+
+The postcondition `diff == filter(a, b)` is expanded to `diff == (if |a| == 0 then a else if a[|a|-1] in b then filter(...) else filter(...) + [a[|a|-1]])`. The DNF engine splits `X == (if C then A else B)` into `(C && X == A) || (!C && X == B)`, producing three clauses:
+
+1. `|a| == 0 && diff == a` — empty input
+2. `|a| > 0 && a[|a|-1] in b && diff == filter(...)` — last element **removed** (in `b`)
+3. `|a| > 0 && a[|a|-1] !in b && diff == filter(...) + [a[|a|-1]]` — last element **kept** (not in `b`)
+
+The inner `filter(...)` calls cannot be translated to SMT and are silently dropped, but the **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. Since the function is recursive and its result cannot be computed by Z3, the `expect` assertions use the full postcondition expression (e.g., `expect diff == filter(a, b)`), which Dafny evaluates at runtime.
+
 #### Progressive Auto Strategy (default)
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
@@ -369,6 +411,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
 - Uninterpreted functions (postcondition literals used as assertions)
 - **Recursive function finite unrolling**: simple recursive functions in postconditions (e.g., `Fact(n)`, `SumSeq(s)`, `SumOfNegatives(a, n)`) are automatically detected, classified by recursion pattern, and compiled into finite SMT `define-fun` definitions — allowing Z3 to compute concrete expected values instead of treating the function as opaque (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below)
+- **Predicate and function inlining for DNF**: non-recursive predicates are substituted into postconditions before DNF analysis, exposing internal if-then-else branching as separate test clauses. Recursive functions get one level of unrolling (fuel-1 inlining) — the body is substituted once to expose branch structure, while inner recursive calls remain opaque (see [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) below)
 - **Nested sequence types** (`seq<seq<T>>`, `seq<string>`): nested sequences with scalar inner element types (`int`, `nat`, `real`, `char`, `bool`) are encoded using Z3's native `(Seq (Seq T))` sort. Outer sequence length is bounded to 8, inner sequence lengths to 4. Inner length and element values are extracted from Z3 models via nested `get-value` queries (e.g., `(seq.len (seq.nth s i))`, `(seq.nth (seq.nth s i) j)`). Chained bracket access in postconditions (e.g., `l[i][|l[i]| - 1]` from inlining `Last(l[i])`) is handled by a bracket-depth-aware parser that splits on the rightmost `[...]` and recursively translates both parts. After forall unrolling substitutes concrete indices, the post-processing pass rewrites `(seq.nth l 0)` → `l_0` for the flat encoding. Test code emits Dafny nested seq literals (e.g., `var s: seq<seq<int>> := [[1, 2], [3]];`) or string seq literals (e.g., `var l: seq<string> := ["abc", "de"];`). Note: postconditions with multi-variable quantifiers over nested seqs often cause Z3 to return `unknown`, limiting test coverage for complex contracts
 
 ### Class Method Support
