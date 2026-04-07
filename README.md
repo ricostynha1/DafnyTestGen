@@ -21,7 +21,7 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 
 **How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions of literals or their negation, naturally originate multiple test goals. In DNF decomposition, the expression `A || B` originates two test goals (`A` and `B`). In FDNF decomposition, it originates three test goals (`A && B`, `!A && B` and `A && !B`), each involves all literals or their negation. 
 
-Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C`denote Boolean expressions, and `Xi`and `Yj` denote conjuntive expressions.
+Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctive expressions.
 
 | Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
 |---|---|---|
@@ -31,14 +31,14 @@ Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-
 | `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'B+AB', A'B']` |
 | `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
 | `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
-| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B'+A'B']` | `[CAB+CAB'+C'BA+C'BA', CA'B+CA'B'+C'B'A+C'B'A']` |
+| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem (mutually exclusive branches) |
 | `x == (if C then A else B)` | same as `if C then x == A else x == B` | idem |
 | `(X1+...+Xn)(Y1+...+Ym)` | `X1Y1+...+XnYm` | idem | 
 
 Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
 
-When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF or FDNF.
- 
+When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF or FDNF. The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further. For example, if ensures clauses 1 and 2 produce a contradictory partial clause, it is eliminated before crossing with clause 3 — avoiding 3× wasted work.
+
 
 **Example — disjunctive postconditions**:
 
@@ -50,12 +50,12 @@ method Classify(x: int) returns (r: int)
   ensures x > 0 ==> r == 1
 ```
 
-Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **simple mode** (`-s`), the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**, of which 3 are SAT:
-- Clause 2: `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
-- Clause 3: `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
-- Clause 5: `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
+Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **simple mode** (`-s`), the cross-product of 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses, leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
+- `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
+- `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
+- `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
 
-In **FDNF mode** (`-a` or progressive), each implication produces 3 full clauses, and the cross-product yields 3×3×3 = **27 FDNF clauses**. Each clause includes both positive and negated literals, so contradictory clauses (e.g., `r == -1` ∧ `r == 0`) are detected and pruned syntactically — only **7 Z3 calls** are needed, producing the same 3 SAT results.
+In **FDNF mode** (`-a` or progressive), each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses during cross-product, leaving only **7 clauses** to solve — the same 3 SAT results, but with stronger coverage guarantees (each clause is a complete conjunction covering all literals).
 
 **Example — disjunctive preconditions**:
 
@@ -72,12 +72,9 @@ The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With FDNF, 
 
 Each precondition scenario is crossed with postcondition scenarios.
 
-**Simple (DNF) mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
+**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition with incremental pruning.
 
-**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly.
-
-
-**Syntactic contradiction detection** prunes infeasible FDNF clauses before invoking Z3: direct complements (`L` ∧ `!L`), distinct equalities (`r == 0` ∧ `r == 1`), and incompatible relational constraints (`x < 0` ∧ `x > 0`). For Classify, this prunes **20 of 27** clauses, leaving only **7 Z3 calls** — the same 3 SAT results as simple mode, but with stronger coverage guarantees.
+**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning.
 
 **Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
 
