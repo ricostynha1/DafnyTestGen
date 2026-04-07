@@ -68,20 +68,18 @@ The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With FDNF, 
 
 Each precondition scenario is crossed with postcondition scenarios.
 
-**Simple mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
+**Simple (DNF) mode** (`-s`): generates one test per DNF clause. For the Classify example, this tries each of the 8 clauses individually, yielding 3 tests (clauses 2, 3, 5 are SAT).
 
-**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, without the exponential blowup of enumerating all 2^n subsets.
+**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly.
 
-The key insight is that standard DNF loses the **grouping structure** of which branches came from the same disjunction. For `x < 0 ==> r == -1`, DNF produces two branches: `x >= 0` and `r == -1`. Standard all-combinations would treat these as independent bits across all ensures clauses, producing 2^8 − 1 = 255 flat combinations for Classify. Most of these are meaningless (mixing branches from unrelated disjunctions) or infeasible.
-
-FDNF preserves the disjunctive structure by expanding each disjunction `A || B` into **3 full clauses** — all non-empty truth assignments:
+FDNF expands each disjunction `A || B` into **3 full clauses** — all non-empty truth assignments:
 - `A && B` — both branches hold simultaneously
 - `A && !B` — only A holds
 - `!A && B` — only B holds
 
-The `!A && !B` case is excluded (it violates the disjunction). The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses** instead of 255.
+The `!A && !B` case is excluded (it violates the disjunction). The cross-product across independent ensures clauses then produces all structurally meaningful combinations. For Classify: 3 × 3 × 3 = **27 FDNF clauses**.
 
-For **if-then-else** expressions (from predicate inlining or fuel-1 expansion), the branches are **mutually exclusive** by construction (C and !C cannot both be true), so FDNF produces only 2 clauses per ITE (the "both true" case is impossible).
+For **if-then-else** expressions (from predicate inlining or fuel-1 expansion), the branches are **mutually exclusive** by construction (C and !C cannot both be true), so FDNF produces only 2 clauses per if-then-else (the "both true" case is impossible).
 
 FDNF is computed bottom-up by a dual-return recursive function that produces both the FDNF of an expression and the FDNF of its negation simultaneously. The combination rules are:
 
