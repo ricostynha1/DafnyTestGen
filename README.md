@@ -19,11 +19,24 @@ DafnyTestGen uses method contracts to derive test scenarios, combining equivalen
 
 The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)**, producing a set of clauses that partition the input/output space.
 
-**How DNF decomposition works.** Each `ensures` clause with an implication `A ==> B` is rewritten as `!A || B`, producing two literals. Equality with if-then-else expressions (`x == if C then A else B`) is decomposed into two branches: `C && x == A` or `!C && x == B`. When multiple `ensures` clauses exist, their cross-product forms the full DNF. Disjunctive preconditions (`requires A || B`) are decomposed similarly. DNF decomposition applies even when postconditions reference non-inlinable functions (e.g., recursive functions without finite unrolling) — the decomposition guides Z3 toward different branches while the functions remain uninterpreted.
+**How DNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions or (negated) literals, naturally originate multiple test goals. Other Boolean expressions are converted to DNF following rewriting rules applied recursively until only disjunctions of conjunctions of literals remain:
 
-**Predicate inlining and DNF.** Non-recursive predicates and functions referenced in contracts are automatically **inlined before DNF conversion**. This is critical for DNF quality: a postcondition like `ensures IsFirstOdd(a, index)` is opaque to the DNF engine (1 clause), but after inlining the predicate body — which contains `if index == -1 then ... else ...` — the if-then-else is decomposed into 2 clauses: one for `index == -1` (no odd number found) and one for `index >= 0` (odd number at position). Without this, Z3 would satisfy the single clause by always picking the easier branch. Inlining supports 2-level nesting (a predicate calling another predicate), and built-in SMT handlers like `IsSorted` are excluded from inlining to preserve their specialized translation patterns.
+- `A ==> B` → `!A || B` &ensp;(contrapositive: `!(A ==> B)` → `A && !B`)
+- `A <==> B` → `(A && B) || (!A && !B)`
+- `if C then A else B` → `(C && A) || (!C && B)`
+- `x == (if C then A else B)` → `(C && x == A) || (!C && x == B)` &ensp;(also for `!=`)
+- `A && (B || C)` → `(A && B) || (A && C)` &ensp;(distribution)
+- `!(A && B)` → `!A || !B` &ensp;(De Morgan)
+- `!(A || B)` → `!A && !B` &ensp;(De Morgan)
+- `!(!A)` → `A` &ensp;(double negation elimination)
 
-**Example — disjunctive postconditions** (`Classify`):
+All rules handle negation uniformly: when an expression appears under negation, De Morgan's laws push the negation inward, flipping `&&`/`||`, `==>`, `<==>`, and `if-then-else` accordingly (e.g., `!(if C then A else B)` → `(C && !A) || (!C && !B)`).
+
+When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF.
+ 
+**Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
+
+**Example — disjunctive postconditions**:
 
 ```dafny
 method Classify(x: int) returns (r: int)
@@ -33,14 +46,14 @@ method Classify(x: int) returns (r: int)
   ensures x > 0 ==> r == 1
 ```
 
-Each implication produces 2 literals, and the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**. For example:
+Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`), and the cross-product of 3 ensures clauses yields 2×2×2 = **8 DNF clauses**. For example:
 - Clause 2: `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
 - Clause 3: `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
 - Clause 5: `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
 
 Many clauses are contradictory (e.g., clause 1: `!(x<0)` ∧ `!(x==0)` ∧ `!(x>0)` — impossible) and are detected as UNSAT by Z3.
 
-**Example — disjunctive preconditions** (`Process`):
+**Example — disjunctive preconditions**:
 
 ```dafny
 method Process(x: int, y: int) returns (r: int)
