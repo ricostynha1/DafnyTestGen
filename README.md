@@ -26,14 +26,14 @@ Both DNF and DNF are computed bottom-up, starting from leaf literals, by a dual-
 | Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
 |---|---|---|
 | `L` (literal) | `[L, !L]` | idem |
-| `![A,A']` | `[A',A]` | idem |
-| `[A,A'] && [B,B']` | `[AB, A' + B']` | `[AB, A'.B + AB' + A'B']` |
-| `[A,A'] \|\| [B,B']` | `[A + B, A'B']` | `[AB+A'.B+AB', A'B']` |
-| `[A,A'] ==> [B,B']` | `[A' + B, AB']` | `[A'B+AB+A'B', AB']` |
-| `[A,A'] <==> [B,B']` | `[AB + A'B', AB' + A'B]` | idem |
-| `if [C,C'] then [A,A'] else [B,B']` | `[CA+C'B, CA'+C'B'+A'B']` | `[CAB+CAB'+C'BA+C'BA', CA'B+CA'B+C'B'A+C'B'A']` |
-| `x == (if C then A else B)` | same as `if C then x == A else x == B` | |
-| `(X1 + ... + Xn) * (Y1 + ... + Ym)` | `X1 Y1 + ... + Xn Ym` | | 
+| `![A, A']` | `[A', A]` | idem |
+| `[A, A'] && [B, B']` | `[AB, A'+B']` | `[AB, A'B+AB'+A'B']` |
+| `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'.B+AB', A'B']` |
+| `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
+| `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
+| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B'+A'B']` | `[CAB+CAB'+C'BA+C'BA', CA'B+CA'B+C'B'A+C'B'A']` |
+| `x == (if C then A else B)` | same as `if C then x == A else x == B` | idem |
+| `(X1+...+Xn)(Y1+...+Ym)` | `X1Y1+...+XnYm` | idem | 
 
 Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
 
