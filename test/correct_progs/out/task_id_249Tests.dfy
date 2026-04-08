@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-08 09:43:49
+// Generated: 2026-04-08 10:22:35
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -62,6 +62,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[1] [25];
     var b := new int[0] [];
@@ -74,6 +78,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -86,6 +94,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[0] [];
     var b := new int[1] [2];
@@ -98,6 +110,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[0] [];
     var b := new int[2] [4, 3];
@@ -110,6 +126,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[3] [25, 26, 24];
     var b := new int[4] [43, 25, 26, 24];
@@ -122,6 +142,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[3] [18, 16, 16];
     var b := new int[3] [18, 16, 16];
@@ -134,6 +158,10 @@ method Passing()
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[1] [16];
     var b := new int[1] [16];

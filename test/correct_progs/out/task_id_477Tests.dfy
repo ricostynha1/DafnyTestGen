@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-08 09:44:59
+// Generated: 2026-04-08 10:23:37
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -51,6 +51,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := [];
     var v := ToLowercase(s);
@@ -59,6 +60,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=1:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['['];
     var v := ToLowercase(s);
@@ -67,6 +69,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=2:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['[', '\U{005C}'];
     var v := ToLowercase(s);
@@ -75,6 +78,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['[', '\U{005C}', ']'];
     var v := ToLowercase(s);
@@ -83,6 +87,7 @@ method Passing()
 
   // Test case for combination {1}/O|v|>=3:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['[', '~', 'h', 'g'];
     var v := ToLowercase(s);
@@ -91,6 +96,7 @@ method Passing()
 
   // Test case for combination {1}/O|v|>=2:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := ['[', 't', 'e', 'p', 'u'];
     var v := ToLowercase(s);

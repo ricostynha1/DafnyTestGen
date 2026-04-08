@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-04-08 09:47:24
+// Generated: 2026-04-08 10:25:52
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -57,6 +57,7 @@ method Passing()
   // Test case for combination {1}:
   //   POST: IsFirstOdd(a, index)
   //   POST: forall i :: 0 <= i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[0] [];
     var index := FindFirstOdd(a);
@@ -66,6 +67,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !(index == -1)
   //   POST: 0 <= index < a.Length && (a[index] % 2 != 0) && forall i :: 0 <= i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[1] [77];
     var index := FindFirstOdd(a);
@@ -75,6 +77,7 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: IsFirstOdd(a, index)
   //   POST: forall i :: 0 <= i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[1] [0];
     var index := FindFirstOdd(a);
@@ -84,6 +87,7 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: IsFirstOdd(a, index)
   //   POST: forall i :: 0 <= i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[2] [2, 0];
     var index := FindFirstOdd(a);
@@ -93,6 +97,7 @@ method Passing()
   // Test case for combination {2}/Oindex>0:
   //   POST: !(index == -1)
   //   POST: 0 <= index < a.Length && (a[index] % 2 != 0) && forall i :: 0 <= i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[2] [0, 42479];
     var index := FindFirstOdd(a);
@@ -102,6 +107,7 @@ method Passing()
   // Test case for combination {2}/Oindex=0:
   //   POST: !(index == -1)
   //   POST: 0 <= index < a.Length && (a[index] % 2 != 0) && forall i :: 0 <= i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
     var a := new int[1] [1];
     var index := FindFirstOdd(a);

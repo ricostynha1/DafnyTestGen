@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-08 09:46:11
+// Generated: 2026-04-08 10:24:41
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -76,6 +76,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[0] [];
     var evenList := FindEvenNumbers(arr);
@@ -84,6 +85,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[1] [2];
     var evenList := FindEvenNumbers(arr);
@@ -92,6 +94,7 @@ method Passing()
 
   // Test case for combination {2}/Barr=2:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[2] [4, 3];
     var evenList := FindEvenNumbers(arr);
@@ -100,6 +103,7 @@ method Passing()
 
   // Test case for combination {2}/Barr=3:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[3] [5, 4, 6];
     var evenList := FindEvenNumbers(arr);
@@ -108,6 +112,7 @@ method Passing()
 
   // Test case for combination {2}/O|evenList|>=3:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[1] [6];
     var evenList := FindEvenNumbers(arr);
@@ -116,6 +121,7 @@ method Passing()
 
   // Test case for combination {2}/O|evenList|>=2:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[2] [3, 4];
     var evenList := FindEvenNumbers(arr);
@@ -124,6 +130,7 @@ method Passing()
 
   // Test case for combination {2}/O|evenList|=1:
   //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[3] [5, 6, 7];
     var evenList := FindEvenNumbers(arr);

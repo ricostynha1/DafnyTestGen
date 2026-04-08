@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-08 09:42:14
+// Generated: 2026-04-08 10:21:08
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -57,6 +57,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[5 := 0];
     var k := 0;
@@ -67,6 +68,7 @@ method Passing()
   // Test case for combination {1}/Bm=1,k=0:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[1 := 0];
     var k := 0;
@@ -77,6 +79,7 @@ method Passing()
   // Test case for combination {1}/Bm=1,k=1:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[2 := 0];
     var k := 1;
@@ -87,6 +90,7 @@ method Passing()
   // Test case for combination {1}/Bm=2,k=0:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[2 := 0, 5 := 0];
     var k := 0;
@@ -97,6 +101,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[-1 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
     var k := 5;
@@ -107,6 +112,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
   {
     var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 3 := 0, 5 := 0];
     var k := 7;
@@ -117,6 +123,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[5 := 0];
     var k := 5;
@@ -127,6 +134,7 @@ method Passing()
   // Test case for combination {1}/Bm=1,k=0:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[0 := 0];
     var k := 0;
@@ -137,6 +145,7 @@ method Passing()
   // Test case for combination {1}/Bm=1,k=1:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[1 := 0];
     var k := 1;
@@ -147,6 +156,7 @@ method Passing()
   // Test case for combination {1}/Bm=2,k=0:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[0 := 0, 2 := 0];
     var k := 0;
@@ -157,6 +167,7 @@ method Passing()
   // Test case for combination {1}/Or>0:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[0 := 8, 2 := 282];
     var k := 2;
@@ -167,6 +178,7 @@ method Passing()
   // Test case for combination {1}/Or<0:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[0 := 8, 3 := -2998];
     var k := 3;
@@ -177,6 +189,7 @@ method Passing()
   // Test case for combination {1}/Or=0:
   //   PRE:  k in m
   //   POST: r == m[k]
+  //   ENSURES: r == m[k]
   {
     var m: map<int, int> := map[-1 := 0, 0 := 7];
     var k := -1;
@@ -186,6 +199,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
     var r := MapSize(m);
@@ -194,6 +208,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=0:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[];
     var r := MapSize(m);
@@ -202,6 +217,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=1:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[1 := 0];
     var r := MapSize(m);
@@ -210,6 +226,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=2:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[0 := 0, 1 := 0];
     var r := MapSize(m);
@@ -218,6 +235,7 @@ method Passing()
 
   // Test case for combination {1}/Or>=2:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[0 := 0, 2 := 0, 3 := 0, 4 := 0];
     var r := MapSize(m);
@@ -226,6 +244,7 @@ method Passing()
 
   // Test case for combination {1}/Or=1:
   //   POST: r == |m|
+  //   ENSURES: r == |m|
   {
     var m: map<int, int> := map[-1 := 0];
     var r := MapSize(m);
@@ -236,6 +255,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 5;
@@ -250,6 +272,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 0;
@@ -264,6 +289,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 0;
@@ -278,6 +306,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 1;
@@ -292,6 +323,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 4;
@@ -306,6 +340,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 2;
@@ -320,6 +357,9 @@ method Passing()
   //   POST: r == m[k := v]
   //   POST: k in r
   //   POST: r[k] == v
+  //   ENSURES: r == m[k := v]
+  //   ENSURES: k in r
+  //   ENSURES: r[k] == v
   {
     var m: map<int, int> := map[];
     var k := 5;
@@ -332,6 +372,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[];
@@ -341,6 +382,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=1:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0];
@@ -350,6 +392,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=2:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0, 4 := 0];
@@ -359,6 +402,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=3:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[];
     var b: map<int, int> := map[1 := 0, 2 := 0, 4 := 0];
@@ -368,6 +412,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=3:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0];
     var b: map<int, int> := map[];
@@ -377,6 +422,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=2:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[-2 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
     var b: map<int, int> := map[];
@@ -386,6 +432,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=1:
   //   POST: r == a + b
+  //   ENSURES: r == a + b
   {
     var a: map<int, int> := map[-1 := 0, 0 := 0];
     var b: map<int, int> := map[-1 := 0, 0 := 0, 2 := 0];
@@ -397,6 +444,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[-1 := 0];
     var k := -1;
@@ -409,6 +458,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[0 := 0];
     var k := 0;
@@ -421,6 +472,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[1 := 0];
     var k := 1;
@@ -433,6 +486,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[0 := 0, 2 := 0];
     var k := 0;
@@ -445,6 +500,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[-1 := 0, 2 := 0, 3 := 0];
     var k := 3;
@@ -457,6 +514,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[-1 := 0, 0 := 0, 5 := 0];
     var k := 0;
@@ -469,6 +528,8 @@ method Passing()
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
+  //   ENSURES: r == m - {k}
+  //   ENSURES: k !in r
   {
     var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0];
     var k := 2;
@@ -479,6 +540,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[];
     var r := MapKeys(m);
@@ -487,6 +549,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=1:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[-2 := 0];
     var r := MapKeys(m);
@@ -495,6 +558,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=2:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[4 := 0, 5 := 0];
     var r := MapKeys(m);
@@ -503,6 +567,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=3:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[3 := 0, 4 := 0, 5 := 0];
     var r := MapKeys(m);
@@ -511,6 +576,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=3:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[0 := 0, 5 := 0];
     var r := MapKeys(m);
@@ -519,6 +585,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=2:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[-2 := 0, 0 := 0, 4 := 0, 5 := 0];
     var r := MapKeys(m);
@@ -527,6 +594,7 @@ method Passing()
 
   // Test case for combination {1}/O|r|>=1:
   //   POST: r == m.Keys
+  //   ENSURES: r == m.Keys
   {
     var m: map<int, int> := map[-2 := 0, 0 := 0, 4 := 0];
     var r := MapKeys(m);

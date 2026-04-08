@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-08 09:42:19
+// Generated: 2026-04-08 10:21:13
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -38,6 +38,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[1] [11];
     var maxDist := MaxDistEqual(a);
@@ -48,6 +50,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[2] [12, 4];
     var maxDist := MaxDistEqual(a);
@@ -58,6 +62,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[3] [7, 6, 8];
     var maxDist := MaxDistEqual(a);
@@ -68,6 +74,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[4] [24, 25, 17, 25];
     var maxDist := MaxDistEqual(a);
@@ -78,6 +86,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[5] [9, 9, 11, 16, 17];
     var maxDist := MaxDistEqual(a);
@@ -88,6 +98,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
     var a := new int[6] [19, 9, 11, 13, 15, 20];
     var maxDist := MaxDistEqual(a);

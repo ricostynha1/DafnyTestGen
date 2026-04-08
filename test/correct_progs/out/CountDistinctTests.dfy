@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-04-08 09:41:22
+// Generated: 2026-04-08 10:20:23
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -48,6 +48,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[0] [];
     var count := CountDistinct(a);
@@ -57,6 +58,7 @@ method Passing()
   // Test case for combination {1}/Ba=1,a-shape=const:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[1] [2];
     var count := CountDistinct(a);
@@ -66,6 +68,7 @@ method Passing()
   // Test case for combination {1}/Ba=2,a-shape=const:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[2] [3, 3];
     var count := CountDistinct(a);
@@ -75,6 +78,7 @@ method Passing()
   // Test case for combination {1}/Ba=3,a-shape=const:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[3] [4, 4, 4];
     var count := CountDistinct(a);
@@ -84,6 +88,7 @@ method Passing()
   // Test case for combination {1}/Ocount>=2:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[4] [-38, 0, 0, 7719];
     var count := CountDistinct(a);
@@ -93,6 +98,7 @@ method Passing()
   // Test case for combination {1}/Ocount=1:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[5] [-38, 0, 0, 0, 7719];
     var count := CountDistinct(a);
@@ -102,6 +108,7 @@ method Passing()
   // Test case for combination {1}/Ocount=0:
   //   PRE:  IsSorted(a)
   //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
   {
     var a := new int[6] [-38, 0, 0, 0, 0, 7719];
     var count := CountDistinct(a);

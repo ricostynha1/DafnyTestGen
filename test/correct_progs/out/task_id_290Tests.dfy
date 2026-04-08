@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\unsupported_progs\in\task_id_290.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\nested_seqs\in\task_id_290.dfy
 // Method: MaxLengthSublist
-// Generated: 2026-04-03 21:53:35
+// Generated: 2026-04-08 10:40:01
 
 // Returns the longest list in a non-empty list of lists.
 // If there are multiple lists of the same length, any one can be returned.
@@ -41,6 +41,8 @@ method Passing()
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
   {
     var lists: seq<seq<int>> := [[4]];
     var maxSublist := MaxLengthSublist<int>(lists);
@@ -51,6 +53,8 @@ method Passing()
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
   {
     var lists: seq<seq<int>> := [[5], [8]];
     var maxSublist := MaxLengthSublist<int>(lists);
@@ -62,8 +66,47 @@ method Passing()
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
   {
     var lists: seq<seq<int>> := [[7, 6], [18, 19], [12, 13]];
+    var maxSublist := MaxLengthSublist<int>(lists);
+    expect maxSublist in lists;
+    expect forall l :: l in lists ==> |l| <= |maxSublist|;
+  }
+
+  // Test case for combination {1}/O|maxSublist|>=3:
+  //   PRE:  |lists| > 0
+  //   POST: maxSublist in lists
+  //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
+  {
+    var lists: seq<seq<int>> := [[19, 18, 20], [], [19, 18, 20], []];
+    var maxSublist := MaxLengthSublist<int>(lists);
+    expect maxSublist == [19, 18, 20];
+  }
+
+  // Test case for combination {1}/O|maxSublist|>=2:
+  //   PRE:  |lists| > 0
+  //   POST: maxSublist in lists
+  //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
+  {
+    var lists: seq<seq<int>> := [[16, 15], [], [], [], [16, 15]];
+    var maxSublist := MaxLengthSublist<int>(lists);
+    expect maxSublist == [16, 15];
+  }
+
+  // Test case for combination {1}/O|maxSublist|=1:
+  //   PRE:  |lists| > 0
+  //   POST: maxSublist in lists
+  //   POST: forall l :: l in lists ==> |l| <= |maxSublist|
+  //   ENSURES: maxSublist in lists
+  //   ENSURES: forall l :: l in lists ==> |l| <= |maxSublist|
+  {
+    var lists: seq<seq<int>> := [[13], [16], [19], [22], [25], [7]];
     var maxSublist := MaxLengthSublist<int>(lists);
     expect maxSublist in lists;
     expect forall l :: l in lists ==> |l| <= |maxSublist|;

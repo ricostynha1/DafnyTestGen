@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-04-08 09:42:53
+// Generated: 2026-04-08 10:21:43
 
 class Secret {
     var secret: int
@@ -37,6 +37,8 @@ method Passing()
   //   POST: g == old(secret)
   //   POST: result == true
   //   POST: known == true
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := 0;
@@ -58,6 +60,8 @@ method Passing()
   //   POST: !(g == old(secret))
   //   POST: result == false
   //   POST: known == false
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := 0;
@@ -79,6 +83,8 @@ method Passing()
   //   POST: g == old(secret)
   //   POST: result == true
   //   POST: known == true
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := 0;
@@ -100,6 +106,8 @@ method Passing()
   //   POST: g == old(secret)
   //   POST: result == true
   //   POST: known == true
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := 1;
@@ -121,6 +129,8 @@ method Passing()
   //   POST: g == old(secret)
   //   POST: result == true
   //   POST: known == true
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := 0;
@@ -142,6 +152,8 @@ method Passing()
   //   POST: !(g == old(secret))
   //   POST: result == false
   //   POST: known == false
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := -1;
@@ -163,6 +175,8 @@ method Passing()
   //   POST: !(g == old(secret))
   //   POST: result == false
   //   POST: known == false
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := -2;
@@ -184,6 +198,8 @@ method Passing()
   //   POST: !(g == old(secret))
   //   POST: result == false
   //   POST: known == false
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
   {
     var obj := new Secret;
     obj.secret := -3;

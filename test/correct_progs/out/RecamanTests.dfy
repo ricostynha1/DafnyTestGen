@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-08 09:42:46
+// Generated: 2026-04-08 10:21:37
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -62,6 +62,7 @@ method Passing()
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
     var x := 7719;
     var a := new nat[1] [7719];
@@ -74,6 +75,7 @@ method Passing()
   //   PRE:  len <= a.Length
   //   POST: !res
   //   POST: !(x in a[..len])
+  //   ENSURES: res <==> x in a[..len]
   {
     var x := 0;
     var a := new nat[0] [];
@@ -82,10 +84,11 @@ method Passing()
     expect res == false;
   }
 
-  // Test case for combination {1}/Bx=0,a=1,len=1:
+  // Test case for combination {1}/Bx=0,a=1,len==a_len:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
     var x := 0;
     var a := new nat[1] [0];
@@ -94,20 +97,22 @@ method Passing()
     expect res == true;
   }
 
-  // Test case for combination {1}/Bx=0,a=2,len=1:
+  // Test case for combination {1}/Bx=0,a=2,len==a_len:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
     var x := 0;
     var a := new nat[2] [0, 39];
-    var len := 1;
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
   }
 
   // Test case for combination {1}:
   //   POST: res == R(n)
+  //   ENSURES: res == R(n)
   {
     var n := 0;
     var res := Recaman(n);

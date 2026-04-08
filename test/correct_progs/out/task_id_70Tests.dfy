@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\unsupported_progs\in\task_id_70.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\nested_seqs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-03 21:53:48
+// Generated: 2026-04-08 10:40:09
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -42,6 +42,7 @@ method Passing()
   // Test case for combination {1}:
   //   POST: result
   //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [];
     var result := AllSequencesEqualLength<int>(list);
@@ -51,6 +52,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !result
   //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[], [11], [12], [13], [], [14], [], [24]];
     var result := AllSequencesEqualLength<int>(list);
@@ -60,6 +62,7 @@ method Passing()
   // Test case for combination {1}/Blist=inner>=1:
   //   POST: result
   //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[12]];
     var result := AllSequencesEqualLength<int>(list);
@@ -69,37 +72,11 @@ method Passing()
   // Test case for combination {1}/Blist=inner>=2:
   //   POST: result
   //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[11, 12], [17, 16]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == true;
-  }
-
-  // Test case for combination {2}/Blist=3:
-  //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  {
-    var list: seq<seq<int>> := [[6], [], [8, 11]];
-    var result := AllSequencesEqualLength<int>(list);
-    expect result == false;
-  }
-
-  // Test case for combination {2}/Blist=inner>=2:
-  //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  {
-    var list: seq<seq<int>> := [[16, 17], [18, 19], [20, 21, 44], [14, 22, 45], [23, 24, 55], [15, 25], [47, 48]];
-    var result := AllSequencesEqualLength<int>(list);
-    expect result == false;
-  }
-
-  // Test case for combination {2}/Blist=inner>=1:
-  //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  {
-    var list: seq<seq<int>> := [[16, 27], [17, 28], [18, 23], [19, 24], [26, 25], [15]];
-    var result := AllSequencesEqualLength<int>(list);
-    expect result == false;
   }
 
 }

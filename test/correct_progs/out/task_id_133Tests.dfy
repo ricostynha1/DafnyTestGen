@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-08 09:43:28
+// Generated: 2026-04-08 10:22:15
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -44,6 +44,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[0] [];
     var result := CalcSumOfNegatives(a);
@@ -52,6 +53,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=1:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[1] [2];
     var result := CalcSumOfNegatives(a);
@@ -60,6 +62,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[2] [4, 3];
     var result := CalcSumOfNegatives(a);
@@ -68,6 +71,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[3] [5, 4, 6];
     var result := CalcSumOfNegatives(a);
@@ -76,6 +80,7 @@ method Passing()
 
   // Test case for combination {1}/Oresult>0:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[4] [5, 6, 7, 8];
     var result := CalcSumOfNegatives(a);
@@ -84,6 +89,7 @@ method Passing()
 
   // Test case for combination {1}/Oresult<0:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[5] [6, 7, 8, 9, 10];
     var result := CalcSumOfNegatives(a);
@@ -92,6 +98,7 @@ method Passing()
 
   // Test case for combination {1}/Oresult=0:
   //   POST: result == SumOfNegatives(a)
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[6] [7, 8, 9, 10, 11, 12];
     var result := CalcSumOfNegatives(a);

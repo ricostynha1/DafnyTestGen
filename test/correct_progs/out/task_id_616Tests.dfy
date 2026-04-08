@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-04-08 09:45:54
+// Generated: 2026-04-08 10:24:27
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -43,6 +43,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -55,6 +57,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
     var a := new int[1] [0];
     var b := new int[1] [1];
@@ -67,6 +71,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
     var a := new int[2] [0, 4];
     var b := new int[2] [1, 2];
@@ -79,6 +85,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
     var a := new int[3] [0, 4, 6];
     var b := new int[3] [1, 2, 3];

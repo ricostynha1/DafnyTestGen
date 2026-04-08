@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-04-08 09:42:35
+// Generated: 2026-04-08 10:21:27
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -40,6 +40,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[0] [];
     PartitionOddEven(a);
@@ -49,6 +51,8 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[1] [2];
     PartitionOddEven(a);
@@ -58,6 +62,8 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[2] [17758, 17759];
     PartitionOddEven(a);
@@ -67,6 +73,8 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new nat[3] [0, 4894, 1];
     var old_a := a[..];

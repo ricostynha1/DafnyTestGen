@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-08 09:46:33
+// Generated: 2026-04-08 10:25:01
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -49,6 +49,8 @@ method Passing()
   //   POST: 0 <= index < arr.Length
   //   POST: arr[index] == target
   //   POST: target !in arr[..index]
+  //   ENSURES: target !in arr[..] ==> index == -1
+  //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
     var arr := new int[1] [38];
     var target := 38;
@@ -64,6 +66,8 @@ method Passing()
   //   POST: 0 <= index < arr.Length
   //   POST: arr[index] == target
   //   POST: target !in arr[..index]
+  //   ENSURES: target !in arr[..] ==> index == -1
+  //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
     var arr := new int[2] [28957, 28958];
     var target := 28958;
@@ -79,6 +83,8 @@ method Passing()
   //   POST: 0 <= index < arr.Length
   //   POST: arr[index] == target
   //   POST: target !in arr[..index]
+  //   ENSURES: target !in arr[..] ==> index == -1
+  //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
     var arr := new int[1] [-38];
     var target := -38;

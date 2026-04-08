@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-04-08 09:45:02
+// Generated: 2026-04-08 10:23:39
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -62,6 +62,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 0;
     var diff := DifferenceSumCubesAndSumNumbers(n);
@@ -70,6 +71,7 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 1;
     var diff := DifferenceSumCubesAndSumNumbers(n);
@@ -78,6 +80,7 @@ method Passing()
 
   // Test case for combination {1}/Odiff>0:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 2;
     var diff := DifferenceSumCubesAndSumNumbers(n);
@@ -86,6 +89,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 0;
     var s := SumCubes(n);
@@ -94,6 +98,7 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 1;
     var s := SumCubes(n);
@@ -102,6 +107,7 @@ method Passing()
 
   // Test case for combination {1}/Os>=2:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 2;
     var s := SumCubes(n);
@@ -110,6 +116,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
   {
     var n := 0;
     var s := SumNumbers(n);
@@ -118,6 +125,7 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
   {
     var n := 1;
     var s := SumNumbers(n);
@@ -126,6 +134,7 @@ method Passing()
 
   // Test case for combination {1}/Os>=2:
   //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
   {
     var n := 4;
     var s := SumNumbers(n);

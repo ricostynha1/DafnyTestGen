@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-08 09:47:30
+// Generated: 2026-04-08 10:25:57
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -45,6 +45,7 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -56,6 +57,7 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: !forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [7719];
     var b: seq<int> := [-38];
@@ -67,6 +69,7 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [7719];
     var b: seq<int> := [7720];
@@ -78,6 +81,7 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [11292, 11293];
     var b: seq<int> := [11293, 11294];

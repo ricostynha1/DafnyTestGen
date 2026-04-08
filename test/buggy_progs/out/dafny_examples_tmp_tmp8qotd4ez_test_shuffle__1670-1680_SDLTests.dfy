@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-01 13:44:31
+// Generated: 2026-04-08 10:37:12
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -113,17 +113,10 @@ method getRandomDataEntry<T(==)>(m_workList: array<T>, avoidSet: seq<T>) returns
 
 method Passing()
 {
-  // Test case for combination {1}:
-  //   POST: !(a <= b)
-  {
-    var a := 0;
-    var b := -2;
-    var r := random(a, b);
-    expect !(a <= b);
-  }
-
-  // Test case for combination {2}:
+  // Test case for combination {3}:
+  //   POST: a <= b
   //   POST: a <= r <= b
+  //   ENSURES: a <= b ==> a <= r <= b
   {
     var a := 0;
     var b := 0;
@@ -131,23 +124,50 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {1}/Ba=1,b=0:
-  //   POST: !(a <= b)
-  {
-    var a := 1;
-    var b := 0;
-    var r := random(a, b);
-    expect !(a <= b);
-  }
-
-  // Test case for combination {2}/Ba=0,b=1:
+  // Test case for combination {3}/Ba=0,b=1:
+  //   POST: a <= b
   //   POST: a <= r <= b
+  //   ENSURES: a <= b ==> a <= r <= b
   {
     var a := 0;
     var b := 1;
     var r := random(a, b);
-    // expect r == 0; // (actual runtime value — not uniquely determined by spec)
+    expect a <= b;
+    expect r == 0;
     expect a <= r <= b;
+  }
+
+  // Test case for combination {2}/Or=0:
+  //   POST: a <= r <= b
+  //   POST: !(a <= r <= b)
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := -2;
+    var b := -3;
+    var r := random(a, b);
+    expect r == -2;
+  }
+
+  // Test case for combination {3}/Or<0:
+  //   POST: a <= b
+  //   POST: a <= r <= b
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := -1;
+    var b := 0;
+    var r := random(a, b);
+    expect r == -1;
+  }
+
+  // Test case for combination {3}/Or=0:
+  //   POST: a <= b
+  //   POST: a <= r <= b
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := -2;
+    var b := 2;
+    var r := random(a, b);
+    expect r == -2;
   }
 
   // Test case for combination {1}:
@@ -156,21 +176,17 @@ method Passing()
   //   POST: a[j] == old(a[i])
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: a[i] == old(a[j])
+  //   ENSURES: a[j] == old(a[i])
+  //   ENSURES: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[1] [8];
     var i := 0;
     var j := 0;
-    var old_a_j := a[j];
-    var old_a_i := a[i];
-    var old_a := a[..];
     var old_multiset_a := multiset(a[..]);
-    // expect old_multiset_a == multiset{8}; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= i < a.Length && 0 <= j < a.Length; // PRE-CHECK
     swap<int>(a, i, j);
-    expect a[i] == old_a_j;
-    expect a[j] == old_a_i;
-    expect forall m: int {:trigger old_a[m]} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [8];
   }
 
   // Test case for combination {1}/Ba=2,i=0,j=0:
@@ -179,21 +195,17 @@ method Passing()
   //   POST: a[j] == old(a[i])
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: a[i] == old(a[j])
+  //   ENSURES: a[j] == old(a[i])
+  //   ENSURES: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[2] [3, 4];
     var i := 0;
     var j := 0;
-    var old_a_j := a[j];
-    var old_a_i := a[i];
-    var old_a := a[..];
     var old_multiset_a := multiset(a[..]);
-    // expect old_multiset_a == multiset{3, 4}; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= i < a.Length && 0 <= j < a.Length; // PRE-CHECK
     swap<int>(a, i, j);
-    expect a[i] == old_a_j;
-    expect a[j] == old_a_i;
-    expect forall m: int {:trigger old_a[m]} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=2,i=0,j=1:
@@ -202,21 +214,17 @@ method Passing()
   //   POST: a[j] == old(a[i])
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: a[i] == old(a[j])
+  //   ENSURES: a[j] == old(a[i])
+  //   ENSURES: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[2] [4, 3];
     var i := 0;
     var j := 1;
-    var old_a_j := a[j];
-    var old_a_i := a[i];
-    var old_a := a[..];
     var old_multiset_a := multiset(a[..]);
-    // expect old_multiset_a == multiset{3, 4}; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= i < a.Length && 0 <= j < a.Length; // PRE-CHECK
     swap<int>(a, i, j);
-    expect a[i] == old_a_j;
-    expect a[j] == old_a_i;
-    expect forall m: int {:trigger old_a[m]} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=2,i=1,j=0:
@@ -225,42 +233,77 @@ method Passing()
   //   POST: a[j] == old(a[i])
   //   POST: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: a[i] == old(a[j])
+  //   ENSURES: a[j] == old(a[i])
+  //   ENSURES: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[2] [3, 4];
     var i := 1;
     var j := 0;
-    var old_a_j := a[j];
-    var old_a_i := a[i];
-    var old_a := a[..];
     var old_multiset_a := multiset(a[..]);
-    // expect old_multiset_a == multiset{3, 4}; // (actual runtime value — not uniquely determined by spec)
-    expect 0 <= i < a.Length && 0 <= j < a.Length; // PRE-CHECK
     swap<int>(a, i, j);
-    expect a[i] == old_a_j;
-    expect a[j] == old_a_i;
-    expect forall m: int {:trigger old_a[m]} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [4, 3];
   }
 
   // Test case for combination {1}:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])
+  //   ENSURES: result.Length == m_dataEntries.Length
+  //   ENSURES: multiset(result[..]) == multiset(m_dataEntries[..])
   {
     var m_dataEntries := new int[0] [];
     var result := getAllShuffledDataEntries<int>(m_dataEntries);
-    expect result.Length == m_dataEntries.Length;
-    expect multiset(result[..]) == multiset(m_dataEntries[..]);
+    expect result[..] == [];
   }
 
 }
 
 method Failing()
 {
+  // Test case for combination {2}:
+  //   POST: a <= r <= b
+  //   POST: !(a <= r <= b)
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := 0;
+    var b := -2;
+    var r := random(a, b);
+    // expect a <= r <= b;
+    // expect !(a <= r <= b);
+  }
+
+  // Test case for combination {2}/Ba=1,b=0:
+  //   POST: a <= r <= b
+  //   POST: !(a <= r <= b)
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := 1;
+    var b := 0;
+    var r := random(a, b);
+    // expect a <= r <= b;
+    // expect !(a <= r <= b);
+  }
+
+  // Test case for combination {2}/Or>0:
+  //   POST: a <= r <= b
+  //   POST: !(a <= r <= b)
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := 2;
+    var b := 0;
+    var r := random(a, b);
+    // expect a <= r <= b;
+    // expect !(a <= r <= b);
+  }
+
   // Test case for combination {1}/Bm_dataEntries=1:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])
+  //   ENSURES: result.Length == m_dataEntries.Length
+  //   ENSURES: multiset(result[..]) == multiset(m_dataEntries[..])
   {
-    var m_dataEntries := new int[1] [2];
+    var m_dataEntries := new int[1] [3];
     var result := getAllShuffledDataEntries<int>(m_dataEntries);
     // expect result.Length == m_dataEntries.Length;
     // expect multiset(result[..]) == multiset(m_dataEntries[..]);
@@ -269,6 +312,8 @@ method Failing()
   // Test case for combination {1}/Bm_dataEntries=2:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])
+  //   ENSURES: result.Length == m_dataEntries.Length
+  //   ENSURES: multiset(result[..]) == multiset(m_dataEntries[..])
   {
     var m_dataEntries := new int[2] [4, 3];
     var result := getAllShuffledDataEntries<int>(m_dataEntries);
@@ -279,6 +324,8 @@ method Failing()
   // Test case for combination {1}/Bm_dataEntries=3:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])
+  //   ENSURES: result.Length == m_dataEntries.Length
+  //   ENSURES: multiset(result[..]) == multiset(m_dataEntries[..])
   {
     var m_dataEntries := new int[3] [5, 4, 6];
     var result := getAllShuffledDataEntries<int>(m_dataEntries);

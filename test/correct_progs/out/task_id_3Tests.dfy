@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-08 09:44:09
+// Generated: 2026-04-08 10:22:53
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -39,6 +39,7 @@ method Passing()
   //   PRE:  n > 1
   //   POST: result
   //   POST: exists k :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
   {
     var n := 4;
     var result := IsNonPrime(n);
@@ -49,6 +50,7 @@ method Passing()
   //   PRE:  n > 1
   //   POST: !result
   //   POST: !exists k :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
   {
     var n := 2;
     var result := IsNonPrime(n);
@@ -59,6 +61,7 @@ method Passing()
   //   PRE:  n > 1
   //   POST: !result
   //   POST: !exists k :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
   {
     var n := 3;
     var result := IsNonPrime(n);

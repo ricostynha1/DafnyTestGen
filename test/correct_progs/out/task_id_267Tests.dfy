@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_267.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-08 09:43:57
+// Generated: 2026-04-08 10:22:42
 
 // Calculate the sum of the squares of the first n odd numbers.
 // (Not a very good example, because the sum can be calculated directly by a formula,
@@ -36,6 +36,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 0;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
@@ -44,6 +45,7 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 1;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
@@ -52,6 +54,7 @@ method Passing()
 
   // Test case for combination {1}/Osum>0:
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 3;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);

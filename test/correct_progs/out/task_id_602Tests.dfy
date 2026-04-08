@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-04-08 09:45:46
+// Generated: 2026-04-08 10:24:20
 
 // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -55,6 +55,8 @@ method Passing()
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
+  //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
+  //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [];
     var found, c := FindFirstRepeatedChar(s);
@@ -69,6 +71,8 @@ method Passing()
   //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   POST: found
   //   POST: !forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
+  //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
+  //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [' ', ' '];
     var found, c := FindFirstRepeatedChar(s);
@@ -81,6 +85,8 @@ method Passing()
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
+  //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
+  //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [' '];
     var found, c := FindFirstRepeatedChar(s);
@@ -95,6 +101,8 @@ method Passing()
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
+  //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
+  //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [' ', '!'];
     var found, c := FindFirstRepeatedChar(s);

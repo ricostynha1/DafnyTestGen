@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-08 09:47:10
+// Generated: 2026-04-08 10:25:36
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -53,6 +53,8 @@ method Passing()
   //   POST: 0 <= pos < arr.Length
   //   POST: arr[pos] == elem
   //   POST: elem !in arr[pos + 1..]
+  //   ENSURES: elem !in arr[..] ==> pos == -1
+  //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
     var arr := new int[1] [7719];
     var elem := 7719;
@@ -68,6 +70,8 @@ method Passing()
   //   POST: 0 <= pos < arr.Length
   //   POST: arr[pos] == elem
   //   POST: elem !in arr[pos + 1..]
+  //   ENSURES: elem !in arr[..] ==> pos == -1
+  //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
     var arr := new int[2] [-38, 0];
     var elem := 0;
@@ -83,6 +87,8 @@ method Passing()
   //   POST: 0 <= pos < arr.Length
   //   POST: arr[pos] == elem
   //   POST: elem !in arr[pos + 1..]
+  //   ENSURES: elem !in arr[..] ==> pos == -1
+  //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
     var arr := new int[1] [-1];
     var elem := -1;
@@ -98,6 +104,8 @@ method Passing()
   //   POST: 0 <= pos < arr.Length
   //   POST: arr[pos] == elem
   //   POST: elem !in arr[pos + 1..]
+  //   ENSURES: elem !in arr[..] ==> pos == -1
+  //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
     var arr := new int[1] [-7719];
     var elem := -7719;

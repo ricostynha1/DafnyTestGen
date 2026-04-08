@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-08 09:42:01
+// Generated: 2026-04-08 10:20:57
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -30,6 +30,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[1] [9];
     var x := 9;
@@ -43,6 +45,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[1] [0];
     var x := 0;
@@ -56,6 +60,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[1] [1];
     var x := 1;
@@ -69,6 +75,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[2] [0, 4];
     var x := 0;
@@ -82,6 +90,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[2] [9, 9];
     var x := 9;
@@ -95,6 +105,8 @@ method Passing()
   //   POST: 0 <= index < a.Length
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[1] [16];
     var x := 16;

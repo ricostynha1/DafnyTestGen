@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-08 09:46:44
+// Generated: 2026-04-08 10:25:12
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -63,6 +63,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[2] [0, 1];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -77,6 +81,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[3] [0, 1, 40];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -91,6 +99,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[4] [7760, 7758, 7759, 7761];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -105,6 +117,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[5] [-7721, -7720, -7719, -7718, -7717];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -119,6 +135,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[8] [0, 1, 40, 41, 42, 43, 44, 45];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -133,6 +153,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[7] [7757, 7758, 7759, 7760, 7761, 7763, 7762];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -147,6 +171,10 @@ method Passing()
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
   //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[6] [-7721, -7720, -7719, -7718, -7716, -7717];
     var smallest, secondSmallest := SecondSmallest(s);

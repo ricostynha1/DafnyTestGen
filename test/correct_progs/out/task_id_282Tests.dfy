@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-08 09:44:03
+// Generated: 2026-04-08 10:22:48
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -40,6 +40,8 @@ method Passing()
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -51,6 +53,8 @@ method Passing()
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[1] [0];
     var b := new int[1] [0];
@@ -62,6 +66,8 @@ method Passing()
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[2] [0, 21239];
     var b := new int[2] [0, 7720];
@@ -73,6 +79,8 @@ method Passing()
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[3] [-23677, -2438, 0];
     var b := new int[3] [-7721, -7720, 0];

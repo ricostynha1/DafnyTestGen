@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-04-08 09:42:58
+// Generated: 2026-04-08 10:21:48
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -123,6 +123,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {-2, -1, 0, 1, 2, 3, 4};
     var x := 0;
@@ -133,6 +134,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=0:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {1};
     var x := 0;
@@ -143,6 +145,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=1:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {1};
     var x := 1;
@@ -153,6 +156,7 @@ method Passing()
   // Test case for combination {1}/BS=2,x=0:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {4, 5};
     var x := 0;
@@ -163,6 +167,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {0, 1, 5};
     var x := 5;
@@ -173,6 +178,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<int> := {-2, 1, 4, 5};
     var x := 6;
@@ -182,6 +188,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -191,6 +198,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {};
     var B: set<int> := {1};
@@ -200,6 +208,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {};
     var B: set<int> := {2, 5};
@@ -209,6 +218,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {};
     var B: set<int> := {-2, -1, 1};
@@ -218,6 +228,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {1, 2, 3, 4};
     var B: set<int> := {0, 1};
@@ -227,6 +238,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {2, 5};
     var B: set<int> := {-2, 0};
@@ -236,6 +248,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<int> := {};
     var B: set<int> := {-2, 0, 1};
@@ -245,6 +258,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -254,6 +268,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {};
     var B: set<int> := {1};
@@ -263,6 +278,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {};
     var B: set<int> := {2, 5};
@@ -272,6 +288,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {};
     var B: set<int> := {-2, -1, 1};
@@ -281,6 +298,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {1, 2, 4, 5};
     var B: set<int> := {-1, 1, 4, 5};
@@ -290,6 +308,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {0, 1, 2, 3};
     var B: set<int> := {1, 3, 4};
@@ -299,6 +318,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: set<int> := {1, 3, 4};
     var B: set<int> := {-1, 1, 4};
@@ -308,6 +328,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -317,6 +338,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {};
     var B: set<int> := {1};
@@ -326,6 +348,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {};
     var B: set<int> := {2, 5};
@@ -335,6 +358,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {};
     var B: set<int> := {-2, -1, 1};
@@ -344,6 +368,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {-1, 1, 5};
     var B: set<int> := {-2, 0, 2, 3, 4};
@@ -353,6 +378,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {3, 5};
     var B: set<int> := {-2, 0, 1, 2, 4};
@@ -362,6 +388,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: set<int> := {-1};
     var B: set<int> := {-2, 0, 1, 2, 3, 4, 5};
@@ -372,6 +399,7 @@ method Passing()
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -382,6 +410,7 @@ method Passing()
   // Test case for combination P{2}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {2};
     var B: set<int> := {-1};
@@ -392,6 +421,7 @@ method Passing()
   // Test case for combination P{1}/{1}/BA=0,B=1:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {};
     var B: set<int> := {5};
@@ -402,6 +432,7 @@ method Passing()
   // Test case for combination P{1}/{1}/BA=0,B=2:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {};
     var B: set<int> := {1, 5};
@@ -412,6 +443,7 @@ method Passing()
   // Test case for combination P{1}/{1}/Or=true:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {1, 3, 5};
     var B: set<int> := {1, 2, 3, 4, 5};
@@ -422,6 +454,7 @@ method Passing()
   // Test case for combination P{2}/{1}/Or=false:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: set<int> := {-2};
     var B: set<int> := {0, 3};
@@ -431,6 +464,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {};
     var r := AllPositive(S);
@@ -439,6 +473,7 @@ method Passing()
 
   // Test case for combination {1}/BS=1:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {1};
     var r := AllPositive(S);
@@ -447,6 +482,7 @@ method Passing()
 
   // Test case for combination {1}/BS=2:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {4, 5};
     var r := AllPositive(S);
@@ -455,6 +491,7 @@ method Passing()
 
   // Test case for combination {1}/BS=3:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {3, 4, 5};
     var r := AllPositive(S);
@@ -463,6 +500,7 @@ method Passing()
 
   // Test case for combination {1}/Or=true:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {1, 2, 3, 5};
     var r := AllPositive(S);
@@ -471,6 +509,7 @@ method Passing()
 
   // Test case for combination {1}/Or=false:
   //   POST: r == forall x :: x in S ==> x > 0
+  //   ENSURES: r == forall x :: x in S ==> x > 0
   {
     var S: set<int> := {-1};
     var r := AllPositive(S);
@@ -479,6 +518,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {};
     var r := HasZero(S);
@@ -487,6 +527,7 @@ method Passing()
 
   // Test case for combination {1}/BS=1:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {1};
     var r := HasZero(S);
@@ -495,6 +536,7 @@ method Passing()
 
   // Test case for combination {1}/BS=2:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {4, 5};
     var r := HasZero(S);
@@ -503,6 +545,7 @@ method Passing()
 
   // Test case for combination {1}/BS=3:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {3, 4, 5};
     var r := HasZero(S);
@@ -511,6 +554,7 @@ method Passing()
 
   // Test case for combination {1}/Or=true:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {0, 1, 4, 5};
     var r := HasZero(S);
@@ -519,6 +563,7 @@ method Passing()
 
   // Test case for combination {1}/Or=false:
   //   POST: r == exists x :: x in S && x == 0
+  //   ENSURES: r == exists x :: x in S && x == 0
   {
     var S: set<int> := {2, 3, 5};
     var r := HasZero(S);
@@ -527,6 +572,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -536,6 +582,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {4};
@@ -545,6 +592,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {0, 1};
@@ -554,6 +602,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {-2, -1, 2};
@@ -563,6 +612,7 @@ method Passing()
 
   // Test case for combination {1}/Or=true:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {3, 4};
     var B: set<int> := {3, 4};
@@ -572,6 +622,7 @@ method Passing()
 
   // Test case for combination {1}/Or=false:
   //   POST: r == forall x :: x in A ==> x in B
+  //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {3};
     var B: set<int> := {-2, 1};
@@ -581,6 +632,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {};
     var x := 0;
@@ -590,6 +642,7 @@ method Passing()
 
   // Test case for combination {1}/BS=0,x=1:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {};
     var x := 1;
@@ -599,6 +652,7 @@ method Passing()
 
   // Test case for combination {1}/BS=1,x=0:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {1};
     var x := 0;
@@ -608,6 +662,7 @@ method Passing()
 
   // Test case for combination {1}/BS=1,x=1:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {1};
     var x := 1;
@@ -617,6 +672,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {2, 3, 4, 5};
     var x := -2;
@@ -626,6 +682,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {0, 1, 3, 5};
     var x := 3;
@@ -635,6 +692,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == S + {x}
+  //   ENSURES: C == S + {x}
   {
     var S: set<int> := {4};
     var x := 0;
@@ -645,6 +703,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {2};
     var x := 2;
@@ -655,6 +714,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=0:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {0};
     var x := 0;
@@ -665,6 +725,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=1:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {1};
     var x := 1;
@@ -675,6 +736,7 @@ method Passing()
   // Test case for combination {1}/BS=2,x=0:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {0, 1};
     var x := 0;
@@ -685,6 +747,7 @@ method Passing()
   // Test case for combination {1}/O|C|>=3:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {-2, -1, 0, 2, 3, 4, 5};
     var x := 0;
@@ -695,6 +758,7 @@ method Passing()
   // Test case for combination {1}/O|C|>=2:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {-1, 4, 5};
     var x := 5;
@@ -705,6 +769,7 @@ method Passing()
   // Test case for combination {1}/O|C|>=1:
   //   PRE:  x in S
   //   POST: C == S - {x}
+  //   ENSURES: C == S - {x}
   {
     var S: set<int> := {3, 4};
     var x := 3;
@@ -715,6 +780,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {0, 1, 2, 3, 4, 6, 7};
     var x := 0;
@@ -725,6 +791,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=0:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {0};
     var x := 0;
@@ -735,6 +802,7 @@ method Passing()
   // Test case for combination {1}/BS=1,x=1:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {0};
     var x := 1;
@@ -745,6 +813,7 @@ method Passing()
   // Test case for combination {1}/BS=2,x=0:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {6, 7};
     var x := 0;
@@ -755,6 +824,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {0, 1, 2, 3, 4};
     var x := 0;
@@ -765,6 +835,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |S| > 0
   //   POST: r == (x in S)
+  //   ENSURES: r == (x in S)
   {
     var S: set<nat> := {3, 6};
     var x := 0;
@@ -774,6 +845,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {};
     var B: set<nat> := {};
@@ -783,6 +855,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {};
     var B: set<nat> := {2};
@@ -792,6 +865,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {};
     var B: set<nat> := {3, 5};
@@ -801,6 +875,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {};
     var B: set<nat> := {3, 4, 5};
@@ -810,6 +885,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {1, 4};
     var B: set<nat> := {7};
@@ -819,6 +895,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {2, 3, 6};
     var B: set<nat> := {2, 4};
@@ -828,6 +905,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<nat> := {};
     var B: set<nat> := {0, 5};
@@ -838,6 +916,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'b', 'c', 'd', 'e', 'f', 'g', 'h'};
     var c := ' ';
@@ -848,6 +927,7 @@ method Passing()
   // Test case for combination {1}/BS=1:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'h'};
     var c := ' ';
@@ -858,6 +938,7 @@ method Passing()
   // Test case for combination {1}/BS=2:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'e', 'h'};
     var c := ' ';
@@ -868,6 +949,7 @@ method Passing()
   // Test case for combination {1}/BS=3:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'e', 'g', 'h'};
     var c := ' ';
@@ -878,6 +960,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'a', 'f', 'g'};
     var c := 'g';
@@ -888,6 +971,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<char> := {'a', 'b', 'e', 'f', 'g'};
     var c := 'q';
@@ -897,6 +981,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {};
     var B: set<char> := {};
@@ -906,6 +991,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {};
     var B: set<char> := {'c'};
@@ -915,6 +1001,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {};
     var B: set<char> := {'d', 'f'};
@@ -924,6 +1011,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {};
     var B: set<char> := {'d', 'f', 'h'};
@@ -933,6 +1021,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {'b', 'c', 'e', 'f'};
     var B: set<char> := {'c', 'd', 'e', 'g'};
@@ -942,6 +1031,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {'d'};
     var B: set<char> := {'c', 'e', 'f'};
@@ -951,6 +1041,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<char> := {'d', 'h'};
     var B: set<char> := {'a', 'b', 'c', 'g'};
@@ -961,6 +1052,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {White, Blue};
     var c := Red;
@@ -971,6 +1063,7 @@ method Passing()
   // Test case for combination {1}/BS=1,c=Red:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {Blue};
     var c := Red;
@@ -981,6 +1074,7 @@ method Passing()
   // Test case for combination {1}/BS=1,c=White:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {Blue};
     var c := White;
@@ -991,6 +1085,7 @@ method Passing()
   // Test case for combination {1}/BS=1,c=Blue:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {Blue};
     var c := Blue;
@@ -1001,6 +1096,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {White};
     var c := White;
@@ -1011,6 +1107,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |S| > 0
   //   POST: r == (c in S)
+  //   ENSURES: r == (c in S)
   {
     var S: set<Color> := {Red, Blue};
     var c := White;
@@ -1020,6 +1117,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {};
     var B: set<Color> := {};
@@ -1029,6 +1127,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {};
     var B: set<Color> := {Blue};
@@ -1038,6 +1137,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {};
     var B: set<Color> := {Red, Blue};
@@ -1047,6 +1147,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {};
     var B: set<Color> := {Red, White, Blue};
@@ -1056,6 +1157,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {Blue};
     var B: set<Color> := {Red, White};
@@ -1065,6 +1167,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {White};
     var B: set<Color> := {Red};
@@ -1074,6 +1177,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: set<Color> := {Red};
     var B: set<Color> := {Red, Blue};

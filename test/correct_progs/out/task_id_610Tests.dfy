@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-04-08 09:45:51
+// Generated: 2026-04-08 10:24:25
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -43,6 +43,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 <= k < s.Length
   //   POST: v[..] == s[..k] + s[k + 1..]
+  //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
     var s := new int[1] [9];
     var k := 0;
@@ -53,6 +54,7 @@ method Passing()
   // Test case for combination {1}/Bs=2,k=0:
   //   PRE:  0 <= k < s.Length
   //   POST: v[..] == s[..k] + s[k + 1..]
+  //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
     var s := new int[2] [4, 3];
     var k := 0;
@@ -63,6 +65,7 @@ method Passing()
   // Test case for combination {1}/Bs=2,k=1:
   //   PRE:  0 <= k < s.Length
   //   POST: v[..] == s[..k] + s[k + 1..]
+  //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
     var s := new int[2] [4, 3];
     var k := 1;
@@ -73,6 +76,7 @@ method Passing()
   // Test case for combination {1}/Bs=3,k=0:
   //   PRE:  0 <= k < s.Length
   //   POST: v[..] == s[..k] + s[k + 1..]
+  //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
     var s := new int[3] [5, 4, 6];
     var k := 0;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_587.dfy
 // Method: ArrayToSeq
-// Generated: 2026-04-08 09:45:31
+// Generated: 2026-04-08 10:24:05
 
 // Converts an array to a sequence
 method ArrayToSeq<T>(a: array<T>) returns (s: seq<T>)
@@ -26,6 +26,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[0] [];
     var s := ArrayToSeq<int>(a);
@@ -34,6 +35,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=1:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[1] [2];
     var s := ArrayToSeq<int>(a);
@@ -42,6 +44,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[2] [4, 3];
     var s := ArrayToSeq<int>(a);
@@ -50,6 +53,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[3] [5, 4, 6];
     var s := ArrayToSeq<int>(a);
@@ -58,6 +62,7 @@ method Passing()
 
   // Test case for combination {1}/O|s|>=3:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[4] [5, 6, 7, 8];
     var s := ArrayToSeq<int>(a);
@@ -66,6 +71,7 @@ method Passing()
 
   // Test case for combination {1}/O|s|>=2:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[5] [6, 7, 8, 9, 10];
     var s := ArrayToSeq<int>(a);

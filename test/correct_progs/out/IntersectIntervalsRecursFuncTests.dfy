@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-08 09:41:50
+// Generated: 2026-04-08 10:20:47
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -62,6 +62,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[1] [0.0];
     var right := new real[1] [0.5];
@@ -76,6 +78,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[2] [2437.0, 2438.0];
     var right := new real[2] [2438.0, 2439.0];
@@ -90,6 +94,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[3] [11797.0, 11796.5, 11797.5];
     var right := new real[3] [11797.5, 11798.0, 11798.5];
@@ -104,6 +110,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[2] [0.0, 21237.5];
     var right := new real[2] [0.5, 21238.0];
@@ -118,6 +126,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[3] [0.0, 2436.5, 20652.0];
     var right := new real[3] [0.5, 2437.0, 20652.5];
@@ -132,6 +142,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[4] [0.0, 8854.5, 20162.0, 32284.5];
     var right := new real[4] [0.5, 8855.0, 20162.5, 32285.0];
@@ -146,6 +158,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[5] [0.0, 11796.5, 40650.0, 10449.5, 30611.5];
     var right := new real[5] [0.5, 11797.0, 40650.5, 10450.0, 30612.0];
@@ -160,6 +174,8 @@ method Passing()
   //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   POST: r == if Max(left) < Min(right) then Min(right) else 0.0
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
     var left := new real[6] [0.0, 8364.5, 42735.0, 30611.5, 5852.5, 28099.5];
     var right := new real[6] [0.5, 8365.0, 42735.5, 30612.0, 5853.0, 28100.0];

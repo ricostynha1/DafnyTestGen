@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-08 09:41:41
+// Generated: 2026-04-08 10:20:39
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -34,6 +34,7 @@ method Passing()
   // Test case for combination {1}:
   //   POST: n < 2
   //   POST: res == n
+  //   ENSURES: res == Fib(n)
   {
     var n := 0;
     var res := CalcFib(n);
@@ -43,6 +44,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !(n < 2)
   //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
   {
     var n := 2;
     var res := CalcFib(n);
@@ -53,6 +55,7 @@ method Passing()
   // Test case for combination {1}/Bn=1:
   //   POST: n < 2
   //   POST: res == n
+  //   ENSURES: res == Fib(n)
   {
     var n := 1;
     var res := CalcFib(n);
@@ -62,6 +65,7 @@ method Passing()
   // Test case for combination {2}/Ores=1:
   //   POST: !(n < 2)
   //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
   {
     var n := 3;
     var res := CalcFib(n);
@@ -71,6 +75,7 @@ method Passing()
   // Test case for combination {2}/Ores=0:
   //   POST: !(n < 2)
   //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
   {
     var n := 4;
     var res := CalcFib(n);

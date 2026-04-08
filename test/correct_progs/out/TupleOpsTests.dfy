@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-08 09:47:33
+// Generated: 2026-04-08 10:26:00
 
 // --- (int, int) tuples ---
 
@@ -69,6 +69,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (0, 0);
     var r := SwapTuple(t);
@@ -78,6 +80,8 @@ method Passing()
   // Test case for combination {1}/Bt.0=0,t.1=1:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (0, 1);
     var r := SwapTuple(t);
@@ -87,6 +91,8 @@ method Passing()
   // Test case for combination {1}/Bt.0=1,t.1=0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (1, 0);
     var r := SwapTuple(t);
@@ -96,6 +102,8 @@ method Passing()
   // Test case for combination {1}/Bt.0=1,t.1=1:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (1, 1);
     var r := SwapTuple(t);
@@ -105,6 +113,8 @@ method Passing()
   // Test case for combination {1}/Or.0>0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (-1, 2);
     var r := SwapTuple(t);
@@ -114,6 +124,8 @@ method Passing()
   // Test case for combination {1}/Or.0<0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (-2, -1);
     var r := SwapTuple(t);
@@ -123,6 +135,8 @@ method Passing()
   // Test case for combination {1}/Or.0=0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (-1, 0);
     var r := SwapTuple(t);
@@ -132,6 +146,8 @@ method Passing()
   // Test case for combination {1}/Or.1>0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (2, -2);
     var r := SwapTuple(t);
@@ -141,6 +157,8 @@ method Passing()
   // Test case for combination {1}/Or.1<0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (-3, -3);
     var r := SwapTuple(t);
@@ -150,6 +168,8 @@ method Passing()
   // Test case for combination {1}/Or.1=0:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
   {
     var t := (0, -1);
     var r := SwapTuple(t);
@@ -160,6 +180,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
     var k := 1;
@@ -171,6 +193,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
     var k := 2;
@@ -182,6 +206,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 1);
     var k := 1;
@@ -193,6 +219,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 1);
     var k := 2;
@@ -204,6 +232,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (2, -8);
     var k := 5;
@@ -215,6 +245,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (-1, -8);
     var k := 16;
@@ -226,6 +258,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
     var k := 22;
@@ -237,6 +271,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (-1, 1);
     var k := 64;
@@ -248,6 +284,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (-64, -1);
     var k := 83;
@@ -259,6 +297,8 @@ method Passing()
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
     var k := 174;
@@ -269,6 +309,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (0, 0);
     var b := (0, 0);
@@ -279,6 +321,8 @@ method Passing()
   // Test case for combination {1}/Ba.0=0,a.1=0,b.0=0,b.1=1:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (0, 0);
     var b := (0, 1);
@@ -289,6 +333,8 @@ method Passing()
   // Test case for combination {1}/Ba.0=0,a.1=0,b.0=1,b.1=0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (0, 0);
     var b := (1, 0);
@@ -299,6 +345,8 @@ method Passing()
   // Test case for combination {1}/Ba.0=0,a.1=0,b.0=1,b.1=1:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (0, 0);
     var b := (1, 1);
@@ -309,6 +357,8 @@ method Passing()
   // Test case for combination {1}/Or.0>0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (2, 0);
     var b := (-1, -1);
@@ -319,6 +369,8 @@ method Passing()
   // Test case for combination {1}/Or.0<0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (-3, 0);
     var b := (2, -2);
@@ -329,6 +381,8 @@ method Passing()
   // Test case for combination {1}/Or.0=0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (3, 0);
     var b := (-3, -3);
@@ -339,6 +393,8 @@ method Passing()
   // Test case for combination {1}/Or.1>0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (-4, 5);
     var b := (-4, -4);
@@ -349,6 +405,8 @@ method Passing()
   // Test case for combination {1}/Or.1<0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (-5, -1);
     var b := (-5, -5);
@@ -359,6 +417,8 @@ method Passing()
   // Test case for combination {1}/Or.1=0:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (-6, 6);
     var b := (0, -6);
@@ -371,6 +431,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (0, 0);
     var r := TupleMax(t);
@@ -382,6 +444,8 @@ method Passing()
   //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (0, -1);
     var r := TupleMax(t);
@@ -393,6 +457,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (0, 1);
     var r := TupleMax(t);
@@ -404,6 +470,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (1, 1);
     var r := TupleMax(t);
@@ -415,6 +483,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (-1, -1);
     var r := TupleMax(t);
@@ -426,6 +496,8 @@ method Passing()
   //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (1, 0);
     var r := TupleMax(t);
@@ -437,6 +509,8 @@ method Passing()
   //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (-1, -2);
     var r := TupleMax(t);
@@ -448,6 +522,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (-2, -1);
     var r := TupleMax(t);
@@ -459,6 +535,8 @@ method Passing()
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
+  //   ENSURES: r == t.0 || r == t.1
+  //   ENSURES: r >= t.0 && r >= t.1
   {
     var t := (-1, 0);
     var r := TupleMax(t);
@@ -469,6 +547,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := 0.0;
@@ -480,6 +560,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := 1.0;
@@ -491,6 +573,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := -1.0;
@@ -502,6 +586,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := 0.5;
@@ -513,6 +599,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 1;
     var y := 0.0;
@@ -524,6 +612,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := -2.0;
@@ -535,6 +625,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := 0.25;
@@ -546,6 +638,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 0;
     var y := -3.0;
@@ -557,6 +651,8 @@ method Passing()
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
   {
     var x := 2;
     var y := 0.0;
@@ -567,6 +663,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := 0;
     var r := ClassifySign(x);
@@ -576,6 +674,8 @@ method Passing()
   // Test case for combination {1}/Bx=1:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := 1;
     var r := ClassifySign(x);
@@ -585,6 +685,8 @@ method Passing()
   // Test case for combination {1}/Or.0>0:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := 2;
     var r := ClassifySign(x);
@@ -594,6 +696,8 @@ method Passing()
   // Test case for combination {1}/Or.0<0:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := -1;
     var r := ClassifySign(x);
@@ -603,6 +707,8 @@ method Passing()
   // Test case for combination {1}/Or.1=true:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := 3;
     var r := ClassifySign(x);
@@ -612,6 +718,8 @@ method Passing()
   // Test case for combination {1}/Or.1=false:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
   {
     var x := -2;
     var r := ClassifySign(x);
@@ -622,6 +730,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 0, 0);
     var r := Swap3First(t);
@@ -632,6 +743,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 0, 1);
     var r := Swap3First(t);
@@ -642,6 +756,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 1, 0);
     var r := Swap3First(t);
@@ -652,6 +769,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 1, 1);
     var r := Swap3First(t);
@@ -662,6 +782,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 2, -1);
     var r := Swap3First(t);
@@ -672,6 +795,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, -1, -2);
     var r := Swap3First(t);
@@ -682,6 +808,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, 0, 2);
     var r := Swap3First(t);
@@ -692,6 +821,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (1, -2, -3);
     var r := Swap3First(t);
@@ -702,6 +834,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (-1, -3, -4);
     var r := Swap3First(t);
@@ -712,6 +847,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, -2, 3);
     var r := Swap3First(t);
@@ -722,6 +860,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (-2, -4, 4);
     var r := Swap3First(t);
@@ -732,6 +873,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (-3, 3, -5);
     var r := Swap3First(t);
@@ -742,6 +886,9 @@ method Passing()
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  //   ENSURES: r.2 == t.2
   {
     var t := (0, -1, 0);
     var r := Swap3First(t);

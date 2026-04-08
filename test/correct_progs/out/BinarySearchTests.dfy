@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-04-08 09:41:07
+// Generated: 2026-04-08 10:20:08
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -46,6 +46,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[1] [38];
     var x := 38;
@@ -60,6 +62,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[1] [0];
     var x := 0;
@@ -74,6 +78,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[1] [1];
     var x := 1;
@@ -88,6 +94,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[2] [0, 0];
     var x := 0;
@@ -107,6 +115,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[2] [-7719, 38];
     var x := 38;
@@ -121,6 +131,8 @@ method Passing()
   //   POST: a[index] == x
   //   POST: !(index == -1)
   //   POST: !(x !in a[..])
+  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
+  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[1] [-38];
     var x := -38;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-08 09:42:08
+// Generated: 2026-04-08 10:21:03
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 
@@ -29,6 +29,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[1] [6];
     var b := new int[1] [5];
@@ -43,6 +46,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[1] [6];
     var b := new int[2] [8, 7];
@@ -57,6 +63,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[1] [7];
     var b := new int[3] [9, 8, 10];
@@ -71,6 +80,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[2] [8, 7];
     var b := new int[1] [6];
@@ -85,6 +97,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[3] [20, 21, 8];
     var b := new int[3] [20, 21, 7];
@@ -99,6 +114,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[2] [6, 5];
     var b := new int[2] [6, 4];
@@ -113,6 +131,9 @@ method Passing()
   //   POST: i < a.Length
   //   POST: i < b.Length
   //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[1] [5];
     var b := new int[1] [4];

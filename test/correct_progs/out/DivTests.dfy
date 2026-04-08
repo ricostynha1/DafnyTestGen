@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Div.dfy
 // Method: Div
-// Generated: 2026-04-08 09:41:28
+// Generated: 2026-04-08 10:20:28
 
 // Computes the quotient 'q' and remainder 'r' of  the integer division
 // of a (non-negative) dividend 'n' by a (positive) divisor 'd'.
@@ -27,6 +27,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 15;
     var d := 11;
@@ -39,6 +40,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 0;
     var d := 1;
@@ -51,6 +53,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 0;
     var d := 2;
@@ -63,6 +66,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 1;
     var d := 1;
@@ -75,6 +79,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 16;
     var d := 1;
@@ -87,6 +92,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 4;
     var d := 4;
@@ -99,6 +105,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 1;
     var d := 4;
@@ -111,6 +118,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 16;
     var d := 32;
@@ -123,6 +131,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 50;
     var d := 7;
@@ -135,6 +144,7 @@ method Passing()
   //   PRE:  d > 0
   //   POST: q * d + r == n
   //   POST: r < d
+  //   ENSURES: q * d + r == n && r < d
   {
     var n := 0;
     var d := 64;

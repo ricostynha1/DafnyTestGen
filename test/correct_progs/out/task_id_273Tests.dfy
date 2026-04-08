@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-08 09:44:00
+// Generated: 2026-04-08 10:22:45
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -41,6 +41,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -52,6 +54,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
@@ -63,6 +67,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0, 21239];
     var b: seq<int> := [0, 7720];
@@ -74,6 +80,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [-23677, -2438, 0];
     var b: seq<int> := [-7721, -7720, 0];
@@ -85,6 +93,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0, 0, 0, 0];
     var b: seq<int> := [0, 0, 0, 0];
@@ -96,6 +106,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0, 0, 0, 0, 0];
     var b: seq<int> := [0, 0, 0, 0, 0];

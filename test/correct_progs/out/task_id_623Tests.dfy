@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-08 09:46:01
+// Generated: 2026-04-08 10:24:33
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -41,6 +41,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [];
     var n := 0;
@@ -52,6 +54,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [];
     var n := 1;
@@ -63,6 +67,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [3];
     var n := 0;
@@ -76,6 +82,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [3];
     var n := 1;
@@ -89,6 +97,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [6, 7, 8];
     var n := 0;
@@ -102,6 +112,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [6, 7];
     var n := 2;
@@ -115,6 +127,8 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
+  //   ENSURES: |result| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [3];
     var n := 2;

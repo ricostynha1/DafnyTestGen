@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_594.dfy
 // Method: FirstEvenOddDifference
-// Generated: 2026-04-08 09:45:33
+// Generated: 2026-04-08 10:24:08
 
 // Returns the difference between the first even and the first odd number in the array.
 method FirstEvenOddDifference(a: array<int>) returns (diff: int)
@@ -67,6 +67,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
     var a := new int[2] [0, 42479];
     var diff := FirstEvenOddDifference(a);
@@ -78,6 +79,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
     var a := new int[3] [4, -1, 0];
     var diff := FirstEvenOddDifference(a);
@@ -89,6 +91,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
     var a := new int[5] [42479, 11, 12, 13, 0];
     var diff := FirstEvenOddDifference(a);
@@ -100,6 +103,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
     var a := new int[4] [0, -1, 11, 4875];
     var diff := FirstEvenOddDifference(a);
@@ -111,6 +115,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
     var a := new int[6] [17711, 11, 12, 13, 0, 30];
     var diff := FirstEvenOddDifference(a);

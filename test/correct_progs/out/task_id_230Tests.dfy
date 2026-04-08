@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-08 09:43:45
+// Generated: 2026-04-08 10:22:31
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -42,6 +42,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [];
     var ch := ' ';
@@ -51,6 +52,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=0:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [];
     var ch := '!';
@@ -60,6 +62,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=1:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' '];
     var ch := 'F';
@@ -69,6 +72,7 @@ method Passing()
 
   // Test case for combination {1}/Bs=2:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' ', '!'];
     var ch := 'F';
@@ -78,6 +82,7 @@ method Passing()
 
   // Test case for combination {1}/O|v|>=3:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := ['!', '/', ':'];
     var ch := ' ';
@@ -87,6 +92,7 @@ method Passing()
 
   // Test case for combination {1}/O|v|>=2:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := ['!', ':'];
     var ch := ' ';
@@ -96,6 +102,7 @@ method Passing()
 
   // Test case for combination {1}/O|v|=1:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
+  //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' '];
     var ch := '!';

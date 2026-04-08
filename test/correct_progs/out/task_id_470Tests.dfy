@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-08 09:44:46
+// Generated: 2026-04-08 10:23:26
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -41,6 +41,8 @@ method Passing()
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: result.Length == a.Length / 2
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[0] [];
     var result := PairwiseAddition(a);
@@ -51,6 +53,8 @@ method Passing()
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: result.Length == a.Length / 2
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[2] [28957, 28958];
     var result := PairwiseAddition(a);
@@ -61,6 +65,8 @@ method Passing()
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: result.Length == a.Length / 2
+  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[4] [0, 0, 0, 0];
     var result := PairwiseAddition(a);

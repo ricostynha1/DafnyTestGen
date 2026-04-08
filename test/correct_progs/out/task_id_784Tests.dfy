@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-08 09:46:58
+// Generated: 2026-04-08 10:25:25
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -86,6 +86,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [0, 42479];
     var product := ProductFirstEvenOdd(lst);
@@ -97,6 +98,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [4, 15439, 0];
     var product := ProductFirstEvenOdd(lst);
@@ -108,6 +110,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [0, 15, 16, -1];
     var product := ProductFirstEvenOdd(lst);
@@ -119,6 +122,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [16730, 23595, 11, 17713, 26];
     var product := ProductFirstEvenOdd(lst);
@@ -130,6 +134,7 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [8, -1, 19, 20, 21, 22, 0];
     var product := ProductFirstEvenOdd(lst);
@@ -141,6 +146,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [0, 16731];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -153,6 +160,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [0, 40326, 16731];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -165,6 +174,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [1, 1, 0, 56];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -177,6 +188,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [-1, 0, 16, 21, 25, 29];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -189,6 +202,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [0, 64573, 29, 31, 30];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -201,6 +216,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [0, 0, 1, 48, 20901, 64571, 0, 50];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -213,6 +230,8 @@ method Passing()
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
     var lst: seq<int> := [0, 77, 19, 20, 21, 23, 22];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-04-08 09:42:43
+// Generated: 2026-04-08 10:21:35
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -64,6 +64,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[0] [];
     RawSort(a);
@@ -73,6 +75,8 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[1] [2];
     RawSort(a);
@@ -82,6 +86,8 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[2] [7681, -38];
     RawSort(a);
@@ -91,6 +97,8 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[3] [-2, -38, 1234];
     RawSort(a);

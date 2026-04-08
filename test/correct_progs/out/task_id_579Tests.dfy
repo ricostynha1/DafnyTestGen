@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-08 09:45:27
+// Generated: 2026-04-08 10:24:02
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -69,6 +69,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -78,6 +79,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=1:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[1] [2];
@@ -87,6 +89,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=2:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[2] [4, 3];
@@ -96,6 +99,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=0,b=3:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[3] [5, 4, 6];
@@ -105,6 +109,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|>=3:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[1] [6];
     var b := new int[0] [];
@@ -114,6 +119,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|>=2:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[1] [6];
     var b := new int[1] [7];
@@ -123,6 +129,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|>=1:
   //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
   {
     var a := new int[2] [6, 7];
     var b := new int[2] [12, 11];
@@ -133,6 +140,7 @@ method Passing()
   // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
     var a := new int[1] [8];
     var x := 8;
@@ -143,6 +151,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !res
   //   POST: !(x in a[..])
+  //   ENSURES: res <==> x in a[..]
   {
     var a := new int[1] [9];
     var x := 8;
@@ -153,6 +162,7 @@ method Passing()
   // Test case for combination {1}/Ba=1,x=0:
   //   POST: res
   //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
     var a := new int[1] [0];
     var x := 0;
@@ -163,6 +173,7 @@ method Passing()
   // Test case for combination {1}/Ba=1,x=1:
   //   POST: res
   //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
     var a := new int[1] [1];
     var x := 1;

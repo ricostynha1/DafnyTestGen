@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-08 09:46:14
+// Generated: 2026-04-08 10:24:44
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -71,6 +71,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[0] [];
     var nz := MoveZeroesToEnd(a);
@@ -82,6 +85,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[1] [21];
     var old_a := a[..];
@@ -96,6 +102,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[2] [4, 3];
     var old_a := a[..];
@@ -110,6 +119,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];
@@ -124,6 +136,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[2] [21, 23];
     var old_a := a[..];
@@ -138,6 +153,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[1] [10];
     var old_a := a[..];
@@ -152,6 +170,9 @@ method Passing()
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: 0 <= nz <= a.Length
+  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
+  //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[3] [17, 18, 16];
     var nz := MoveZeroesToEnd(a);

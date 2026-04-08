@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-08 09:42:28
+// Generated: 2026-04-08 10:21:21
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -69,6 +69,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{5};
     var x := 0;
@@ -79,6 +80,7 @@ method Passing()
   // Test case for combination {1}/BM=1,x=0:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{-2};
     var x := 0;
@@ -89,6 +91,7 @@ method Passing()
   // Test case for combination {1}/BM=1,x=1:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{-2};
     var x := 1;
@@ -99,6 +102,7 @@ method Passing()
   // Test case for combination {1}/BM=2,x=0:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{-2, -2};
     var x := 0;
@@ -109,6 +113,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{-1, 4, 4, 4, 4};
     var x := -1;
@@ -119,6 +124,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<int> := multiset{0};
     var x := 5;
@@ -128,6 +134,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{1, 1, 1};
     var B: multiset<int> := multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4};
@@ -137,6 +144,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=0:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
@@ -146,6 +154,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-2};
@@ -155,6 +164,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{4, 5};
@@ -164,6 +174,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5};
     var B: multiset<int> := multiset{-1, -1, -1, -1, -1, 2, 3, 3, 3, 3, 3};
@@ -173,6 +184,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{3, 3};
     var B: multiset<int> := multiset{3};
@@ -182,6 +194,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<int> := multiset{-2, -2, -2, -1, 2, 3, 4, 5};
     var B: multiset<int> := multiset{0, 1};
@@ -191,6 +204,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{-2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4};
     var B: multiset<int> := multiset{-2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
@@ -200,6 +214,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=0:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
@@ -209,6 +224,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-1};
@@ -218,6 +234,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{0, 2};
@@ -227,6 +244,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{-2, -1, 0, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5};
     var B: multiset<int> := multiset{-2, -2, 1, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5};
@@ -236,6 +254,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{1, 4, 5};
     var B: multiset<int> := multiset{-1, -1, 3, 4, 4, 5};
@@ -245,6 +264,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A * B
+  //   ENSURES: C == A * B
   {
     var A: multiset<int> := multiset{-1, -1, 3};
     var B: multiset<int> := multiset{-2, -1, 4};
@@ -254,6 +274,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 5};
     var B: multiset<int> := multiset{4};
@@ -263,6 +284,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=0:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
@@ -272,6 +294,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{2};
@@ -281,6 +304,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{2, 3};
@@ -290,6 +314,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 3, 4, 4};
     var B: multiset<int> := multiset{5};
@@ -299,6 +324,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -1, -1, 0, 4, 5, 5, 5, 5, 5, 5, 5};
     var B: multiset<int> := multiset{1, 2, 2, 4, 4};
@@ -308,6 +334,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A - B
+  //   ENSURES: C == A - B
   {
     var A: multiset<int> := multiset{-2, -1, 2, 2, 2, 5, 5};
     var B: multiset<int> := multiset{0};
@@ -318,6 +345,7 @@ method Passing()
   // Test case for combination P{1}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{};
@@ -328,6 +356,7 @@ method Passing()
   // Test case for combination P{2}/{1}:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{5};
     var B: multiset<int> := multiset{};
@@ -338,6 +367,7 @@ method Passing()
   // Test case for combination P{1}/{1}/BA=0,B=1:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-2};
@@ -348,6 +378,7 @@ method Passing()
   // Test case for combination P{1}/{1}/BA=0,B=2:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-2, -2};
@@ -358,6 +389,7 @@ method Passing()
   // Test case for combination P{1}/{1}/Or=true:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{1};
@@ -368,6 +400,7 @@ method Passing()
   // Test case for combination P{2}/{1}/Or=false:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
+  //   ENSURES: r == (A <= B)
   {
     var A: multiset<int> := multiset{5};
     var B: multiset<int> := multiset{1};
@@ -377,6 +410,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{-2, -2, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
     var x := 5;
@@ -386,6 +420,7 @@ method Passing()
 
   // Test case for combination {1}/BM=0,x=0:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{};
     var x := 0;
@@ -395,6 +430,7 @@ method Passing()
 
   // Test case for combination {1}/BM=0,x=1:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{};
     var x := 1;
@@ -404,6 +440,7 @@ method Passing()
 
   // Test case for combination {1}/BM=1,x=0:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{-2};
     var x := 0;
@@ -413,6 +450,7 @@ method Passing()
 
   // Test case for combination {1}/Or>=2:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{-1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5};
     var x := -1;
@@ -422,6 +460,7 @@ method Passing()
 
   // Test case for combination {1}/Or=1:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{-2, -2, -2, -2, -1, -1, -1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 5, 5, 5, 5, 5, 5, 5, 5};
     var x := 3;
@@ -431,6 +470,7 @@ method Passing()
 
   // Test case for combination {1}/Or=0:
   //   POST: r == M[x]
+  //   ENSURES: r == M[x]
   {
     var M: multiset<int> := multiset{-2, -2, -2, -1, -1, 0, 0, 0, 0, 0, 4, 4, 4, 5, 5};
     var x := 2;
@@ -441,6 +481,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{-2, -2, -1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
     var x := 5;
@@ -452,6 +494,8 @@ method Passing()
   // Test case for combination {1}/BM=0,x=0:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{};
     var x := 0;
@@ -463,6 +507,8 @@ method Passing()
   // Test case for combination {1}/BM=0,x=1:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{};
     var x := 1;
@@ -474,6 +520,8 @@ method Passing()
   // Test case for combination {1}/BM=1,x=0:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{0};
     var x := 0;
@@ -485,6 +533,8 @@ method Passing()
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{4, 5};
     var x := 5;
@@ -496,6 +546,8 @@ method Passing()
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{2};
     var x := 5;
@@ -507,6 +559,8 @@ method Passing()
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == M + multiset{x}
   //   POST: x in C
+  //   ENSURES: C == M + multiset{x}
+  //   ENSURES: x in C
   {
     var M: multiset<int> := multiset{-2, 1};
     var x := 5;
@@ -518,6 +572,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{7};
     var x := 0;
@@ -528,6 +583,7 @@ method Passing()
   // Test case for combination {1}/BM=1,x=0:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{0};
     var x := 0;
@@ -538,6 +594,7 @@ method Passing()
   // Test case for combination {1}/BM=1,x=1:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{0};
     var x := 1;
@@ -548,6 +605,7 @@ method Passing()
   // Test case for combination {1}/BM=2,x=0:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{0, 0};
     var x := 0;
@@ -558,6 +616,7 @@ method Passing()
   // Test case for combination {1}/Or=true:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{0, 1};
     var x := 0;
@@ -568,6 +627,7 @@ method Passing()
   // Test case for combination {1}/Or=false:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
   {
     var M: multiset<nat> := multiset{2};
     var x := 0;
@@ -577,6 +637,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{3, 3, 3};
     var B: multiset<nat> := multiset{0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6};
@@ -586,6 +647,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=0:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{};
@@ -595,6 +657,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{0};
@@ -604,6 +667,7 @@ method Passing()
 
   // Test case for combination {1}/BA=0,B=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{1, 1};
@@ -613,6 +677,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=3:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{0, 0};
     var B: multiset<nat> := multiset{7};
@@ -622,6 +687,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=2:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{2};
     var B: multiset<nat> := multiset{2, 3, 3, 3, 3, 3};
@@ -631,6 +697,7 @@ method Passing()
 
   // Test case for combination {1}/O|C|>=1:
   //   POST: C == A + B
+  //   ENSURES: C == A + B
   {
     var A: multiset<nat> := multiset{};
     var B: multiset<nat> := multiset{6};

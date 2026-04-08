@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-08 09:42:11
+// Generated: 2026-04-08 10:21:05
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -40,8 +40,7 @@ function MaxSeq(s: seq<nat>) : (result: nat)
   requires |s| > 0
   ensures result in s && forall k :: 0 <= k < |s| ==> result >= s[k]
 {
-   if |s| == 1 then s[0] 
-   else if s[0] > MaxSeq(s[1..]) then s[0] else MaxSeq(s[1..])
+   if |s| == 1 then s[0] else if s[0] > MaxSeq(s[1..]) then s[0] else MaxSeq(s[1..])
 }
 
 // Counts the number of occurrences of 'x' in a sequence 's' of natural numbers.
@@ -60,6 +59,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[1] [2];
     var b := MakeBuckets(a);
@@ -72,6 +73,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[2] [7719, 7720];
     var b := MakeBuckets(a);
@@ -84,6 +87,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[3] [7719, 7720, 8957];
     var b := MakeBuckets(a);

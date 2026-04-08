@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-08 09:40:59
+// Generated: 2026-04-08 10:20:01
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -39,6 +39,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[1] [(4, 6)];
     var r := FirstPair(a);
@@ -48,6 +49,7 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[2] [(6, 4), (5, 3)];
     var r := FirstPair(a);
@@ -57,6 +59,7 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[3] [(7, 4), (9, 6), (8, 5)];
     var r := FirstPair(a);
@@ -66,6 +69,7 @@ method Passing()
   // Test case for combination {1}/Or.0>0:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[4] [(39, 16), (9, 17), (10, 18), (8, 19)];
     var r := FirstPair(a);
@@ -75,6 +79,7 @@ method Passing()
   // Test case for combination {1}/Or.0<0:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[5] [(-1, 13), (9, 14), (10, 15), (11, 16), (12, 17)];
     var r := FirstPair(a);
@@ -84,6 +89,7 @@ method Passing()
   // Test case for combination {1}/Or.0=0:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[6] [(0, 10), (35, 11), (36, 12), (37, 13), (38, 14), (39, 15)];
     var r := FirstPair(a);
@@ -93,6 +99,7 @@ method Passing()
   // Test case for combination {1}/Or.1>0:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[7] [(12, 39), (13, 49), (14, 52), (15, 53), (16, 54), (17, 55), (18, 56)];
     var r := FirstPair(a);
@@ -102,6 +109,7 @@ method Passing()
   // Test case for combination {1}/Or.1<0:
   //   PRE:  a.Length > 0
   //   POST: r == a[0]
+  //   ENSURES: r == a[0]
   {
     var a := new (int, int)[8] [(13, -1), (14, 57), (15, 58), (16, 59), (17, 60), (18, 61), (20, 62), (19, 63)];
     var r := FirstPair(a);
@@ -111,6 +119,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |s| > 0
   //   POST: r == s[0]
+  //   ENSURES: r == s[0]
   {
     var s: seq<(int, int)> := [(4, 6)];
     var r := SeqHead(s);
@@ -120,6 +129,7 @@ method Passing()
   // Test case for combination {1}/Bs=2:
   //   PRE:  |s| > 0
   //   POST: r == s[0]
+  //   ENSURES: r == s[0]
   {
     var s: seq<(int, int)> := [(6, 4), (5, 3)];
     var r := SeqHead(s);
@@ -129,6 +139,7 @@ method Passing()
   // Test case for combination {1}/Bs=3:
   //   PRE:  |s| > 0
   //   POST: r == s[0]
+  //   ENSURES: r == s[0]
   {
     var s: seq<(int, int)> := [(7, 4), (9, 6), (8, 5)];
     var r := SeqHead(s);
@@ -139,6 +150,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[1] [(0, 13)];
     var r := MaxFirst(a);
@@ -149,6 +162,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[2] [(0, 10), (-38, 11)];
     var r := MaxFirst(a);
@@ -159,6 +174,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[3] [(-38, 16), (0, 17), (-7719, 15)];
     var r := MaxFirst(a);
@@ -169,6 +186,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[4] [(-38, 23), (-21238, 24), (-2437, 25), (7720, 26)];
     var r := MaxFirst(a);
@@ -179,6 +198,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[5] [(-7759, 28), (-7758, 29), (-7758, 30), (-7758, 31), (-7758, 32)];
     var r := MaxFirst(a);
@@ -189,6 +210,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[6] [(-38, 28), (-7719, 29), (-21238, 30), (-2437, 31), (0, 32), (-11797, 33)];
     var r := MaxFirst(a);

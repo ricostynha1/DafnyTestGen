@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-04-08 09:44:35
+// Generated: 2026-04-08 10:23:16
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.
@@ -46,6 +46,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[0] [];
     var res := FindNegativeNumbers(a);
@@ -54,6 +55,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=1:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[1] [2];
     var res := FindNegativeNumbers(a);
@@ -62,6 +64,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[2] [4, 3];
     var res := FindNegativeNumbers(a);
@@ -70,6 +73,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[3] [5, 4, 6];
     var res := FindNegativeNumbers(a);
@@ -78,6 +82,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|>=3:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[4] [5, 6, 7, 8];
     var res := FindNegativeNumbers(a);
@@ -86,6 +91,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|>=2:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[5] [6, 7, 8, 9, 10];
     var res := FindNegativeNumbers(a);
@@ -94,6 +100,7 @@ method Passing()
 
   // Test case for combination {1}/O|res|=1:
   //   POST: res == Filter(a[..], x => x < 0)
+  //   ENSURES: res == Filter(a[..], x => x < 0)
   {
     var a := new int[6] [8, 9, 10, 11, 12, 13];
     var res := FindNegativeNumbers(a);

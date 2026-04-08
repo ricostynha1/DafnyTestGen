@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-08 09:45:43
+// Generated: 2026-04-08 10:21:18
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -60,6 +60,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[1] [38];
     var m := Mode(a);
@@ -73,6 +75,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[2] [3, 3];
     var m := Mode(a);
@@ -86,6 +90,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[3] [4, 4, 4];
     var m := Mode(a);
@@ -99,6 +105,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[4] [-38, 0, 0, 7719];
     var m := Mode(a);
@@ -112,6 +120,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[5] [-38, 0, 0, 0, 7719];
     var m := Mode(a);
@@ -125,6 +135,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[6] [-38, 0, 0, 0, 0, 7719];
     var m := Mode(a);

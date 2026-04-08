@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-08 09:43:10
+// Generated: 2026-04-08 10:21:59
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -86,6 +86,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -103,6 +104,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -120,6 +122,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -137,6 +140,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -155,6 +159,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -173,6 +178,7 @@ method Passing()
   //   PRE:  !isFull()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size]) + [x]
+  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -190,6 +196,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
+  //   ENSURES: res == elems[size - 1]
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -203,6 +210,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
+  //   ENSURES: res == elems[size - 1]
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -217,6 +225,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
+  //   ENSURES: res == elems[size - 1]
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -231,6 +240,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
+  //   ENSURES: res == elems[size - 1]
   {
     var capacity := 3;
     var obj := new StackOfInt(capacity);
@@ -246,6 +256,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
+  //   ENSURES: res == elems[size - 1]
   {
     var capacity := 4;
     var obj := new StackOfInt(capacity);
@@ -262,6 +273,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size - 1])
+  //   ENSURES: elems[..size] == old(elems[..size - 1])
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -277,6 +289,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size - 1])
+  //   ENSURES: elems[..size] == old(elems[..size - 1])
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -293,6 +306,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size - 1])
+  //   ENSURES: elems[..size] == old(elems[..size - 1])
   {
     var capacity := 3;
     var obj := new StackOfInt(capacity);
@@ -310,6 +324,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size - 1])
+  //   ENSURES: elems[..size] == old(elems[..size - 1])
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -326,6 +341,7 @@ method Passing()
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: elems[..size] == old(elems[..size - 1])
+  //   ENSURES: elems[..size] == old(elems[..size - 1])
   {
     var capacity := 4;
     var obj := new StackOfInt(capacity);

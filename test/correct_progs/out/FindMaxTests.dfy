@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-08 09:41:43
+// Generated: 2026-04-08 10:20:41
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -28,6 +28,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[1] [0.0];
     var max := FindMax(a);
@@ -38,6 +40,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[2] [-0.5, 0.0];
     var max := FindMax(a);
@@ -48,6 +52,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[3] [-0.5, -0.25, 0.0];
     var max := FindMax(a);
@@ -58,6 +64,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[4] [0.0, -38.0, -7719.0, 0.5];
     var max := FindMax(a);
@@ -68,6 +76,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[5] [-7758.0, -7757.5, -7757.5, -7757.5, -7757.5];
     var max := FindMax(a);
@@ -78,6 +88,8 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: exists k :: 0 <= k < a.Length && max == a[k]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
+  //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
+  //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[6] [-38.0, -7719.0, -21238.0, -2437.0, -8855.0, 0.0];
     var max := FindMax(a);

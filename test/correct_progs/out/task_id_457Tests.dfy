@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\unsupported_progs\in\task_id_457.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\nested_seqs\in\task_id_457.dfy
 // Method: MinLengthSublist
-// Generated: 2026-04-03 21:53:43
+// Generated: 2026-04-08 10:40:07
 
 // Find the shortest sublist in a non-empty list of sublists.
 method MinLengthSublist<T>(s: seq<seq<T>>) returns (minSublist: seq<T>)
@@ -41,6 +41,8 @@ method Passing()
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
   {
     var s: seq<seq<int>> := [[4]];
     var minSublist := MinLengthSublist<int>(s);
@@ -51,6 +53,8 @@ method Passing()
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
   {
     var s: seq<seq<int>> := [[5], [8]];
     var minSublist := MinLengthSublist<int>(s);
@@ -62,8 +66,49 @@ method Passing()
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
   {
     var s: seq<seq<int>> := [[7, 6], [18, 19], [12, 13]];
+    var minSublist := MinLengthSublist<int>(s);
+    expect minSublist in s;
+    expect forall sublist :: sublist in s ==> |minSublist| <= |sublist|;
+  }
+
+  // Test case for combination {1}/O|minSublist|>=3:
+  //   PRE:  |s| > 0
+  //   POST: minSublist in s
+  //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  {
+    var s: seq<seq<int>> := [[22, 21, 23], [8, 25, 34], [11, 12, 13], [7, 31, 39]];
+    var minSublist := MinLengthSublist<int>(s);
+    expect minSublist in s;
+    expect forall sublist :: sublist in s ==> |minSublist| <= |sublist|;
+  }
+
+  // Test case for combination {1}/O|minSublist|>=2:
+  //   PRE:  |s| > 0
+  //   POST: minSublist in s
+  //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  {
+    var s: seq<seq<int>> := [[9, 10], [11, 12], [13, 14], [15, 16], [9, 10]];
+    var minSublist := MinLengthSublist<int>(s);
+    expect minSublist in s;
+    expect forall sublist :: sublist in s ==> |minSublist| <= |sublist|;
+  }
+
+  // Test case for combination {1}/O|minSublist|=1:
+  //   PRE:  |s| > 0
+  //   POST: minSublist in s
+  //   POST: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist :: sublist in s ==> |minSublist| <= |sublist|
+  {
+    var s: seq<seq<int>> := [[7], [11], [14], [17], [20], [23]];
     var minSublist := MinLengthSublist<int>(s);
     expect minSublist in s;
     expect forall sublist :: sublist in s ==> |minSublist| <= |sublist|;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-08 09:47:21
+// Generated: 2026-04-08 10:25:49
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -42,8 +42,18 @@ method ContainsEvenNumberTest(){
 
 method Passing()
 {
+  // Test case for combination {1}:
+  //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
+  {
+    var a := new int[0] [];
+    var result := ContainsEvenNumber(a);
+    expect result == false;
+  }
+
   // Test case for combination {1}/Ba=1:
   //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
     var a := new int[1] [2];
     var result := ContainsEvenNumber(a);
@@ -52,6 +62,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
     var a := new int[2] [4, 3];
     var result := ContainsEvenNumber(a);
@@ -60,6 +71,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
     var a := new int[3] [5, 4, 6];
     var result := ContainsEvenNumber(a);
@@ -68,32 +80,27 @@ method Passing()
 
   // Test case for combination {1}/Oresult=true:
   //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
   {
     var a := new int[5] [12, 13, 14, 0, 15];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }
 
+  // Test case for combination {1}/Oresult=false:
+  //   POST: result
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length && IsEven(a[i])
+  {
+    var a := new int[4] [64573, 20901, 61227, 11707];
+    var result := ContainsEvenNumber(a);
+    expect result == false;
+  }
+
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   POST: result
-  {
-    var a := new int[0] [];
-    var result := ContainsEvenNumber(a);
-    // expect result == false;
-  }
-
-  // Test case for combination {1}/Oresult=false:
-  //   POST: result
-  {
-    var a := new int[4] [64573, 20901, 61227, 11707];
-    var result := ContainsEvenNumber(a);
-    // expect result == false;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-08 09:45:57
+// Generated: 2026-04-08 10:24:30
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -49,6 +49,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[1] [0];
     var min := FindSmallest(s);
@@ -58,6 +59,7 @@ method Passing()
   // Test case for combination {1}/Bs=2:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[2] [7718, 7719];
     var min := FindSmallest(s);
@@ -67,6 +69,7 @@ method Passing()
   // Test case for combination {1}/Bs=3:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[3] [28957, 28958, 28959];
     var min := FindSmallest(s);
@@ -76,6 +79,7 @@ method Passing()
   // Test case for combination {1}/Omin>0:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[4] [7758, 7758, 7758, 7758];
     var min := FindSmallest(s);
@@ -85,6 +89,7 @@ method Passing()
   // Test case for combination {1}/Omin<0:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[5] [38, 7719, -1, 21238, 2437];
     var min := FindSmallest(s);
@@ -94,6 +99,7 @@ method Passing()
   // Test case for combination {1}/Omin=0:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   ENSURES: isMin(s[..], min)
   {
     var s := new int[6] [38, 7719, 21238, 2437, 8855, 0];
     var min := FindSmallest(s);

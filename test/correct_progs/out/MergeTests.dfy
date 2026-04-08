@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-08 09:42:22
+// Generated: 2026-04-08 10:21:16
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -52,6 +52,8 @@ method Passing()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  //   ENSURES: IsSorted(c[..])
+  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -65,6 +67,8 @@ method Passing()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  //   ENSURES: IsSorted(c[..])
+  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[1] [17];
@@ -78,6 +82,8 @@ method Passing()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  //   ENSURES: IsSorted(c[..])
+  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[2] [17, 17];
@@ -91,6 +97,8 @@ method Passing()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  //   ENSURES: IsSorted(c[..])
+  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[3] [19, 19, 19];
