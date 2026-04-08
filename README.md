@@ -21,7 +21,7 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 
 **How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions of literals or their negation, naturally originate multiple test goals. In DNF decomposition, the expression `A || B` originates two test goals (`A` and `B`). In FDNF decomposition, it originates three test goals (`A && B`, `!A && B` and `A && !B`), each involves all literals or their negation. 
 
-Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctive expressions.
+Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
 
 | Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
 |---|---|---|
@@ -32,7 +32,7 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 | `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
 | `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
 | `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem (mutually exclusive branches) |
-| `x == (if C then A else B)` | same as `if C then x == A else x == B` | idem |
+| `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 | `(X1+...+Xn)(Y1+...+Ym)` | `X1Y1+...+XnYm` | idem | 
 
 Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
