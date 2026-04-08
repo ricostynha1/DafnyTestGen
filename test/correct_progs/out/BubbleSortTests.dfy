@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-04-08 10:02:33
+// Generated: 2026-04-08 10:19:21
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -61,6 +61,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
     BubbleSort(a);
@@ -70,6 +72,8 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[1] [2];
     BubbleSort(a);
@@ -79,6 +83,8 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[2] [7681, -38];
     BubbleSort(a);
@@ -88,6 +94,8 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[3] [-2, -38, 1234];
     BubbleSort(a);

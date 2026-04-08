@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-08 10:01:45
+// Generated: 2026-04-08 10:19:01
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -46,6 +46,8 @@ method Passing()
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[0] [];
     var k := 0;
@@ -57,6 +59,8 @@ method Passing()
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [2];
     var k := 1;
@@ -68,6 +72,8 @@ method Passing()
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [2];
     var k := 0;
@@ -75,21 +81,24 @@ method Passing()
     expect s[..] == [2];
   }
 
-}
-
-method Failing()
-{
   // Test case for combination {1}/Bs=2,k==s_pre_len:
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[2] [4, 3];
     var k := 2;
     ReverseUptoK<int>(s, k);
-    // expect s[..] == [3, 4];
+    expect s[..] == [3, 4];
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()
