@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-08 14:03:04
+// Generated: 2026-04-08 14:07:48
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -22,10 +22,11 @@ method FindMax(a: array<real>) returns (max: real)
 
 
 
-method GeneratedTests_FindMax()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -50,6 +51,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -62,6 +64,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {1}/Omax>0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -74,6 +77,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {1}/Omax<0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -86,6 +90,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {1}/Omax=0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -134,6 +139,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {3}/Omax>0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -146,6 +152,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {3}/Omax<0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -158,6 +165,7 @@ method GeneratedTests_FindMax()
 
   // Test case for combination {3}/Omax=0:
   //   PRE:  a.Length > 0
+  //   POST: 0 < a.Length
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -170,8 +178,13 @@ method GeneratedTests_FindMax()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_FindMax();
-  print "GeneratedTests_FindMax: all tests passed!\n";
+  Passing();
+  Failing();
 }
