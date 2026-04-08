@@ -19,9 +19,25 @@ DafnyTestGen uses method contracts to derive test scenarios, combining equivalen
 
 The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** or **Full DNF (FDNF)**, producing a set of clauses that partition the input/output space.
 
-**How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, such as `requires A || B` or `ensures A || B`, where `A` and `B` are conjunctions of literals or their negation, naturally originate multiple test goals. In DNF decomposition, the expression `A || B` originates two test goals (`A` and `B`). In FDNF decomposition, it originates three test goals (`A && B`, `!A && B` and `A && !B`), each involves all literals or their negation. 
+**How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, naturally originate multiple test goals, as illustrated in the following example.
 
-Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and the DNF/FDNF of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' after the decomposition. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
+```dafny
+method Process(x: int, y: int) returns (r: int)
+  requires x > 0 || y > 0
+  ensures r == x + y
+```
+
+The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches (`x > 0` and `y > 0`), which are both crossed with postcondition branches (in this example, a single branch), leading to the followign test scenarios:
+- `x > 0 ∧ r == x + y` — x is positive
+- `y > 0 ∧ r == x + y` — y is positive
+Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples. 
+
+With FDNF, the precondition `x > 0 || y > 0` is decomposed into 3 scenarios (all non-empty truth assignments), which are crossed with the single postcondition branch, leading to the followign test scenarios:
+- `x > 0 ∧ !(y > 0) ∧ r == x + y` — only x is positive
+- `!(x > 0) ∧ y > 0 ∧ r == x + y` — only y is positive
+- `x > 0 ∧ y > 0 ∧ r == x + y` — both x and y are positive
+
+Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' in the derived expressions. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
 
 | Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
 |---|---|---|
@@ -31,16 +47,21 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 | `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'B+AB', A'B']` |
 | `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
 | `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
-| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem (mutually exclusive branches) |
+| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 | `(X1+...+Xn)(Y1+...+Ym)` | `X1Y1+...+XnYm` | idem | 
 
-Notice that each FDNF clause is a **complete conjunction** — including both positive and negated literals from every disjunction.
+When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
-When multiple `requires` and `ensures` clauses exist, their cross-product (CP) forms the full DNF or FDNF. The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further. For example, if ensures clauses 1 and 2 produce a contradictory partial clause, it is eliminated before crossing with clause 3 — avoiding 3× wasted work.
+**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition with incremental pruning.
 
+**All combinations (FDNF) mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning.
 
-**Example — disjunctive postconditions**:
+#### Incremental pruning
+
+The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further. For example, if ensures clauses 1 and 2 produce a contradictory partial clause, it is eliminated before crossing with clause 3 — avoiding 3× wasted work.
+
+Consider the following example:
 
 ```dafny
 method Classify(x: int) returns (r: int)
@@ -50,49 +71,38 @@ method Classify(x: int) returns (r: int)
   ensures x > 0 ==> r == 1
 ```
 
-Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **simple mode** (`-s`), the cross-product of 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses, leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
-- `!(x < 0)` ∧ `!(x == 0)` ∧ `r == 1` — corresponds to x > 0
-- `!(x < 0)` ∧ `r == 0` ∧ `!(x > 0)` — corresponds to x == 0
-- `r == -1` ∧ `!(x == 0)` ∧ `!(x > 0)` — corresponds to x < 0
+Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
+- `!(x < 0) ∧ !(x == 0) ∧ r == 1` — SAT, corresponds to x > 0
+- `!(x < 0) ∧ r == 0 ∧ !(x > 0)` — SAT, corresponds to x == 0
+- `r == -1 ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
+- `!(x < 0) ∧ !(x == 0) ∧ !(x > 0)` — UNSAT
 
-In **FDNF mode** (`-a` or progressive), each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses during cross-product, leaving only **7 clauses** to solve — the same 3 SAT results, but with stronger coverage guarantees (each clause is a complete conjunction covering all literals).
 
-**Example — disjunctive preconditions**:
+In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve (3 SAT, 4 UNSAT).
 
-```dafny
-method Process(x: int, y: int) returns (r: int)
-  requires x > 0 || y > 0
-  ensures r == x + y
-```
 
-The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches. With FDNF, this produces 3 precondition scenarios (all non-empty truth assignments), each including negated literals to force the intended branch:
-- P{1}: `x > 0` ∧ `!(y > 0)` — only x is positive
-- P{2}: `!(x > 0)` ∧ `y > 0` — only y is positive
-- P{1,2}: `x > 0` ∧ `y > 0` — both positive
+#### Predicate and function inlining  
 
-Each precondition scenario is crossed with postcondition scenarios.
-
-**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition with incremental pruning.
-
-**FDNF mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning.
-
-**Predicate and function inlining.** Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
+Non-recursive predicates and recursive functions referenced in contracts are automatically **inlined before DNF conversion**, exposing internal if-then-else branching as separate DNF clauses. Without this, predicates like `IsFirstOdd(a, index)` would be opaque to DNF (1 clause), and Z3 would always pick the easier branch. See [Predicate and Function Inlining for DNF](#predicate-and-function-inlining-for-dnf) for details.
 
 #### Quantifier Boundary Decomposition
 
+Existencial quantifiers represent repeated disjunctions and may also be decomposed during DNF/FDNF analysis.
 Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into **3 DNF clauses** representing boundary cases:
 
 1. **Left boundary**: `P(lo)` — property holds at first position
 2. **Middle**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `P(hi-1)` — property holds at last position
 
-These clauses feed into the same DNF/FDNF analysis, so they combine with other postcondition clauses via cross-product. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly.
+These clauses feed into the same DNF/FDNF analysis, so they combine with other postcondition clauses via cross-product. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. Chain comparisons like `0 <= k < a.Length` (Dafny `ChainingExpression` nodes) are properly decomposed to extract the lower and upper bounds.
 
-**Example** (`FindMax`):
+Consider the following example:
 
 ```dafny
-ensures exists k :: 0 <= k < a.Length && max == a[k]
-ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
+method FindMax(a: array<int>) returns (max: int)
+  requires a.Length > 0
+  ensures exists k :: 0 <= k < a.Length && max == a[k]
+  ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via FDNF cross-product, producing distinct test scenarios for each structural case.

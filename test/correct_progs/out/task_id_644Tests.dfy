@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-08 10:36:01
+// Generated: 2026-04-08 14:04:00
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
