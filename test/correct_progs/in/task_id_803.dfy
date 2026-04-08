@@ -1,6 +1,6 @@
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
-  ensures result <==> exists i : nat ::  i * i == n
+  ensures result <==> exists i ::  0 <= i <= n && i * i == n
 {
     var i := 0;
     while i * i < n

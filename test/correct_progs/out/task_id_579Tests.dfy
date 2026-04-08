@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-06 23:26:02
+// Generated: 2026-04-08 00:08:01
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -168,26 +168,6 @@ method Passing()
     var x := 1;
     var res := contains<int>(a, x);
     expect res == true;
-  }
-
-  // Test case for combination {1}/Ores=true:
-  //   POST: res
-  //   POST: x in a[..]
-  {
-    var a := new int[1] [9];
-    var x := 9;
-    var res := contains<int>(a, x);
-    expect res == true;
-  }
-
-  // Test case for combination {2}/Ores=false:
-  //   POST: !res
-  //   POST: !(x in a[..])
-  {
-    var a := new int[0] [];
-    var x := 9;
-    var res := contains<int>(a, x);
-    expect res == false;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-06 23:27:08
+// Generated: 2026-04-08 09:17:50
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -40,7 +40,7 @@ method ReverseUptoKTest(){
   assert a3[..] == [];
 }
 
-method GeneratedTests_ReverseUptoK()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= s.Length
@@ -88,8 +88,13 @@ method GeneratedTests_ReverseUptoK()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_ReverseUptoK();
-  print "GeneratedTests_ReverseUptoK: all tests passed!\n";
+  Passing();
+  Failing();
 }

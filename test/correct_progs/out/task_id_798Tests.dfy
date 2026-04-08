@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-06 23:28:21
+// Generated: 2026-04-08 00:09:35
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -60,6 +60,16 @@ method Passing()
     expect sum == 0;
   }
 
+  // Test case for combination {2}:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[1] [4];
+    var n := 1;
+    var sum := CalcArraySum(a, n);
+    expect sum == 4;
+  }
+
   // Test case for combination {1}/Ba=1,n=0:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
@@ -68,16 +78,6 @@ method Passing()
     var n := 0;
     var sum := CalcArraySum(a, n);
     expect sum == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,n=1:
-  //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  {
-    var a := new int[1] [2];
-    var n := 1;
-    var sum := CalcArraySum(a, n);
-    expect sum == 2;
   }
 
   // Test case for combination {1}/Ba=2,n=0:
@@ -90,34 +90,24 @@ method Passing()
     expect sum == 0;
   }
 
-  // Test case for combination {1}/Osum>0:
+  // Test case for combination {2}/Osum<0:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
   {
-    var a := new int[2] [7, 6];
+    var a := new int[2] [5, 6];
     var n := 2;
     var sum := CalcArraySum(a, n);
-    expect sum == 13;
+    expect sum == 11;
   }
 
-  // Test case for combination {1}/Osum<0:
+  // Test case for combination {2}/Osum=0:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
   {
-    var a := new int[2] [7, 6];
+    var a := new int[2] [5, 8];
     var n := 1;
     var sum := CalcArraySum(a, n);
-    expect sum == 7;
-  }
-
-  // Test case for combination {1}/Osum=0:
-  //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  {
-    var a := new int[3] [7, 8, 9];
-    var n := 3;
-    var sum := CalcArraySum(a, n);
-    expect sum == 24;
+    expect sum == 5;
   }
 
 }

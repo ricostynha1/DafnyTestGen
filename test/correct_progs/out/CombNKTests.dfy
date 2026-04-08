@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-06 23:20:07
+// Generated: 2026-04-08 00:04:29
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -53,17 +53,27 @@ method Passing()
   //   PRE:  0 <= k <= n
   //   POST: res == Comb(n, k)
   {
-    var n := 0;
+    var n := 1;
     var k := 0;
     var res := CalcComb(n, k);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Bn=1,k=0:
+  // Test case for combination {2}:
   //   PRE:  0 <= k <= n
   //   POST: res == Comb(n, k)
   {
-    var n := 1;
+    var n := 2;
+    var k := 1;
+    var res := CalcComb(n, k);
+    expect res == 2;
+  }
+
+  // Test case for combination {1}/Bn=0,k=0:
+  //   PRE:  0 <= k <= n
+  //   POST: res == Comb(n, k)
+  {
+    var n := 0;
     var k := 0;
     var res := CalcComb(n, k);
     expect res == 1;
@@ -79,17 +89,7 @@ method Passing()
     expect res == 1;
   }
 
-  // Test case for combination {1}/Ores>=2:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  {
-    var n := 2;
-    var k := 0;
-    var res := CalcComb(n, k);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=1:
+  // Test case for combination {2}/Ores=1:
   //   PRE:  0 <= k <= n
   //   POST: res == Comb(n, k)
   {
@@ -99,7 +99,7 @@ method Passing()
     expect res == 3;
   }
 
-  // Test case for combination {1}/Ores=0:
+  // Test case for combination {2}/Ores=0:
   //   PRE:  0 <= k <= n
   //   POST: res == Comb(n, k)
   {

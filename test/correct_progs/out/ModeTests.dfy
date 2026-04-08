@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-06 23:21:36
+// Generated: 2026-04-08 09:35:35
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -63,7 +63,9 @@ method Passing()
   {
     var a := new int[1] [38];
     var m := Mode(a);
+    expect m in a[..];
     expect m == 38;
+    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
   // Test case for combination {1}/Ba=2,a-shape=const:
@@ -74,7 +76,9 @@ method Passing()
   {
     var a := new int[2] [3, 3];
     var m := Mode(a);
+    expect m in a[..];
     expect m == 3;
+    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
   // Test case for combination {1}/Ba=3,a-shape=const:
@@ -85,7 +89,9 @@ method Passing()
   {
     var a := new int[3] [4, 4, 4];
     var m := Mode(a);
+    expect m in a[..];
     expect m == 4;
+    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
   // Test case for combination {1}/Om>0:
@@ -94,10 +100,10 @@ method Passing()
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[4] [-38, 0, 1, 23676];
+    var a := new int[4] [-38, 0, 0, 7719];
     var m := Mode(a);
     expect m in a[..];
-    expect m == -38;
+    expect m == 0;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -107,10 +113,10 @@ method Passing()
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[5] [-40288, -40250, -40250, -32531, -11293];
+    var a := new int[5] [-38, 0, 0, 0, 7719];
     var m := Mode(a);
     expect m in a[..];
-    expect m == -40250;
+    expect m == 0;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -120,7 +126,7 @@ method Passing()
   //   POST: m in a[..]
   //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[6] [-38, 0, 0, 0, 0, 0];
+    var a := new int[6] [-38, 0, 0, 0, 0, 7719];
     var m := Mode(a);
     expect m == 0;
   }

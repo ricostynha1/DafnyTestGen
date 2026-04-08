@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-06 23:21:40
+// Generated: 2026-04-08 00:05:25
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -335,21 +335,21 @@ method Passing()
     expect r == false;
   }
 
-  // Test case for combination P{1}/{1}/BA=3,B=3:
+  // Test case for combination P{1}/{1}/BA=0,B=1:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: multiset<int> := multiset{-2, -2, -2};
-    var B: multiset<int> := multiset{-2, -2, -2};
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{-2};
     var r := MultisetSubset(A, B);
     expect r == true;
   }
 
-  // Test case for combination P{1}/{1}/BA=2,B=2:
+  // Test case for combination P{1}/{1}/BA=0,B=2:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: multiset<int> := multiset{-2, -2};
+    var A: multiset<int> := multiset{};
     var B: multiset<int> := multiset{-2, -2};
     var r := MultisetSubset(A, B);
     expect r == true;
@@ -360,7 +360,7 @@ method Passing()
   //   POST: r == (A <= B)
   {
     var A: multiset<int> := multiset{};
-    var B: multiset<int> := multiset{-2};
+    var B: multiset<int> := multiset{1};
     var r := MultisetSubset(A, B);
     expect r == true;
   }

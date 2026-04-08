@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-06 23:21:15
+// Generated: 2026-04-08 09:33:14
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -45,7 +45,9 @@ function MaxSeq(s: seq<nat>) : (result: nat)
 
 // Counts the number of occurrences of 'x' in a sequence 's' of natural numbers.
 function count(x: nat, s: seq<nat>) : nat {
-   if |s| == 0 then 0 else if s[|s|-1] == x then 1 + count(x, s[..|s|-1]) else count(x, s[..|s|-1])
+   if |s| == 0 then 0 
+   else if s[|s|-1] == x then 1 + count(x, s[..|s|-1]) 
+   else count(x, s[..|s|-1])
    
 }
 

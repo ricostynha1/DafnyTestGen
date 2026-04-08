@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-06 23:20:37
+// Generated: 2026-04-08 00:04:48
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -32,43 +32,49 @@ method CalcFib(n: nat) returns (res: nat)
 method Passing()
 {
   // Test case for combination {1}:
-  //   POST: res == Fib(n)
+  //   POST: n < 2
+  //   POST: res == n
   {
     var n := 0;
     var res := CalcFib(n);
     expect res == 0;
   }
 
+  // Test case for combination {2}:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
+  {
+    var n := 2;
+    var res := CalcFib(n);
+    expect !(n < 2);
+    expect res == 1;
+  }
+
   // Test case for combination {1}/Bn=1:
-  //   POST: res == Fib(n)
+  //   POST: n < 2
+  //   POST: res == n
   {
     var n := 1;
     var res := CalcFib(n);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Ores>=2:
-  //   POST: res == Fib(n)
+  // Test case for combination {2}/Ores=1:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
   {
-    var n := 6;
+    var n := 3;
     var res := CalcFib(n);
-    expect res == 8;
+    expect res == 2;
   }
 
-  // Test case for combination {1}/Ores=1:
-  //   POST: res == Fib(n)
+  // Test case for combination {2}/Ores=0:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
   {
-    var n := 2;
+    var n := 4;
     var res := CalcFib(n);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=0:
-  //   POST: res == Fib(n)
-  {
-    var n := 11;
-    var res := CalcFib(n);
-    expect res == 89;
+    expect res == 3;
   }
 
 }

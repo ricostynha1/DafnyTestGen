@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-06 23:24:48
+// Generated: 2026-04-08 00:07:16
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)

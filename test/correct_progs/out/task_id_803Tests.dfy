@@ -1,11 +1,11 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-06 23:28:29
+// Generated: 2026-04-08 09:23:27
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
-  ensures result <==> exists i : nat ::  i * i == n
+  ensures result <==> exists i ::  0 <= i <= n && i * i == n
 {
     var i := 0;
     while i * i < n
@@ -43,11 +43,11 @@ method IsPerfectSquareTest(){
     r := IsPerfectSquare(1000001); assert !r;
 }
 
-method GeneratedTests_IsPerfectSquare()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: exists i: nat :: i * i == n
+  //   POST: exists i :: 0 <= i <= n && i * i == n
   {
     var n := 0;
     var result := IsPerfectSquare(n);
@@ -56,7 +56,7 @@ method GeneratedTests_IsPerfectSquare()
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: !exists i: nat :: i * i == n
+  //   POST: !exists i :: 0 <= i <= n && i * i == n
   {
     var n := 2;
     var result := IsPerfectSquare(n);
@@ -65,35 +65,22 @@ method GeneratedTests_IsPerfectSquare()
 
   // Test case for combination {1}/Bn=1:
   //   POST: result
-  //   POST: exists i: nat :: i * i == n
+  //   POST: exists i :: 0 <= i <= n && i * i == n
   {
     var n := 1;
     var result := IsPerfectSquare(n);
     expect result == true;
   }
 
-  // Test case for combination {1}/Oresult=true:
-  //   POST: result
-  //   POST: exists i: nat :: i * i == n
-  {
-    var n := 4;
-    var result := IsPerfectSquare(n);
-    expect result == true;
-  }
+}
 
-  // Test case for combination {2}/Oresult=false:
-  //   POST: !result
-  //   POST: !exists i: nat :: i * i == n
-  {
-    var n := 3;
-    var result := IsPerfectSquare(n);
-    expect result == false;
-  }
-
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()
 {
-  GeneratedTests_IsPerfectSquare();
-  print "GeneratedTests_IsPerfectSquare: all tests passed!\n";
+  Passing();
+  Failing();
 }

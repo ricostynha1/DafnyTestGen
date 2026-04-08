@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-04-06 23:23:10
+// Generated: 2026-04-08 00:06:27
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -53,6 +53,15 @@ method Passing()
     expect v == [];
   }
 
+  // Test case for combination {2}:
+  //   POST: v == Filter(s1, c => !(c in s2))
+  {
+    var s1: seq<char> := ['U'];
+    var s2: seq<char> := ['U'];
+    var v := RemoveChars(s1, s2);
+    expect v == [];
+  }
+
   // Test case for combination {1}/Bs1=0,s2=1:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
@@ -71,40 +80,31 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}/Bs1=0,s2=3:
+  // Test case for combination {2}/O|v|>=3:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
-    var s1: seq<char> := [];
-    var s2: seq<char> := [' ', '!', '"'];
+    var s1: seq<char> := ['4', ' '];
+    var s2: seq<char> := [];
     var v := RemoveChars(s1, s2);
-    expect v == [];
+    expect v == ['4', ' '];
   }
 
-  // Test case for combination {1}/O|v|>=3:
-  //   POST: v == Filter(s1, c => !(c in s2))
-  {
-    var s1: seq<char> := [' '];
-    var s2: seq<char> := ['p', '6', '1', 'a'];
-    var v := RemoveChars(s1, s2);
-    expect v == [' '];
-  }
-
-  // Test case for combination {1}/O|v|>=2:
-  //   POST: v == Filter(s1, c => !(c in s2))
-  {
-    var s1: seq<char> := ['~', 'R'];
-    var s2: seq<char> := ['~', 'R'];
-    var v := RemoveChars(s1, s2);
-    expect v == [];
-  }
-
-  // Test case for combination {1}/O|v|=1:
+  // Test case for combination {2}/O|v|>=2:
   //   POST: v == Filter(s1, c => !(c in s2))
   {
     var s1: seq<char> := [' '];
     var s2: seq<char> := [];
     var v := RemoveChars(s1, s2);
     expect v == [' '];
+  }
+
+  // Test case for combination {2}/O|v|=1:
+  //   POST: v == Filter(s1, c => !(c in s2))
+  {
+    var s1: seq<char> := [' '];
+    var s2: seq<char> := [' '];
+    var v := RemoveChars(s1, s2);
+    expect v == [];
   }
 
 }

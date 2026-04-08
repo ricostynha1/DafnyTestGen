@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-06 23:26:55
+// Generated: 2026-04-08 00:08:38
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.

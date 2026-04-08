@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-04-06 23:19:50
+// Generated: 2026-04-08 00:04:17
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -39,67 +39,74 @@ method BinarySearch(a: array<T>, x: T) returns (index: int)
 
 method Passing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {6}:
   //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
-  {
-    var a := new T[0] [];
-    var x := 8;
-    var index := BinarySearch(a, x);
-    expect index == -1;
-  }
-
-  // Test case for combination {3}:
-  //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
   //   POST: 0 <= index < a.Length
   //   POST: a[index] == x
   //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
   {
-    var a := new T[1] [7719];
-    var x := 7719;
+    var a := new T[1] [38];
+    var x := 38;
     var index := BinarySearch(a, x);
     expect index == 0;
   }
 
-  // Test case for combination {2}/Ba=2,x=0,a-shape=strict-asc:
+  // Test case for combination {6}/Ba=1,x=0,a-shape=const:
   //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
-  {
-    var a := new T[2] [-2, -1];
-    var x := 0;
-    var index := BinarySearch(a, x);
-    expect index == -1;
-  }
-
-  // Test case for combination {2}/Ba=3,x=1,a-shape=const:
-  //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
-  {
-    var a := new T[3] [4, 4, 4];
-    var x := 1;
-    var index := BinarySearch(a, x);
-    expect index == -1;
-  }
-
-  // Test case for combination {2}/Oindex<0:
-  //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
-  {
-    var a := new T[1] [38];
-    var x := 9;
-    var index := BinarySearch(a, x);
-    expect index == -1;
-  }
-
-  // Test case for combination {3}/Oindex>0:
-  //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
   //   POST: 0 <= index < a.Length
   //   POST: a[index] == x
   //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
+  {
+    var a := new T[1] [0];
+    var x := 0;
+    var index := BinarySearch(a, x);
+    expect index == 0;
+  }
+
+  // Test case for combination {6}/Ba=1,x=1,a-shape=const:
+  //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
+  //   POST: 0 <= index < a.Length
+  //   POST: a[index] == x
+  //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
+  {
+    var a := new T[1] [1];
+    var x := 1;
+    var index := BinarySearch(a, x);
+    expect index == 0;
+  }
+
+  // Test case for combination {6}/Ba=2,x=0,a-shape=const:
+  //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
+  //   POST: 0 <= index < a.Length
+  //   POST: a[index] == x
+  //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
+  {
+    var a := new T[2] [0, 0];
+    var x := 0;
+    var index := BinarySearch(a, x);
+    expect index != -1;
+    expect index == 1;
+    expect 0 <= index < a.Length;
+    expect a[index] == x;
+    expect !(index == -1);
+    expect !(x !in a[..]);
+  }
+
+  // Test case for combination {6}/Oindex>0:
+  //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
+  //   POST: 0 <= index < a.Length
+  //   POST: a[index] == x
+  //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
   {
     var a := new T[2] [-7719, 38];
     var x := 38;
@@ -107,11 +114,13 @@ method Passing()
     expect index == 1;
   }
 
-  // Test case for combination {3}/Oindex=0:
+  // Test case for combination {6}/Oindex=0:
   //   PRE:  IsSorted(a[..])
+  //   POST: index != -1
   //   POST: 0 <= index < a.Length
   //   POST: a[index] == x
   //   POST: !(index == -1)
+  //   POST: !(x !in a[..])
   {
     var a := new T[1] [-38];
     var x := -38;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-04-06 23:22:26
+// Generated: 2026-04-08 00:05:51
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -389,21 +389,21 @@ method Passing()
     expect r == false;
   }
 
-  // Test case for combination P{1}/{1}/BA=3,B=3:
+  // Test case for combination P{1}/{1}/BA=0,B=1:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: set<int> := {-2, -1, 1};
-    var B: set<int> := {-2, -1, 1};
+    var A: set<int> := {};
+    var B: set<int> := {5};
     var r := SetSubset(A, B);
     expect r == true;
   }
 
-  // Test case for combination P{1}/{1}/BA=2,B=2:
+  // Test case for combination P{1}/{1}/BA=0,B=2:
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: set<int> := {1, 5};
+    var A: set<int> := {};
     var B: set<int> := {1, 5};
     var r := SetSubset(A, B);
     expect r == true;
@@ -413,8 +413,8 @@ method Passing()
   //   PRE:  A <= B || !(A <= B)
   //   POST: r == (A <= B)
   {
-    var A: set<int> := {};
-    var B: set<int> := {-2, 5};
+    var A: set<int> := {1, 3, 5};
+    var B: set<int> := {1, 2, 3, 4, 5};
     var r := SetSubset(A, B);
     expect r == true;
   }

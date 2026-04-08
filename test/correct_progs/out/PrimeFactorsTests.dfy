@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-06 23:22:06
+// Generated: 2026-04-08 00:05:34
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -288,20 +288,12 @@ method Passing()
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
   {
-    var n := 419;
-    var f := PrimeFactors(n);
-    expect f == [419];
-  }
-
-  // Test case for combination {1}/Bn=2:
-  //   PRE:  n > 1
-  //   POST: AllPrime(f)
-  //   POST: IsSorted(f)
-  //   POST: ProdF(f) == n
-  {
     var n := 2;
     var f := PrimeFactors(n);
     expect f == [2];
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
   }
 
   // Test case for combination {1}/Bn=3:
@@ -313,6 +305,9 @@ method Passing()
     var n := 3;
     var f := PrimeFactors(n);
     expect f == [3];
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
   }
 
   // Test case for combination {1}/O|f|>=3:
@@ -321,9 +316,12 @@ method Passing()
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
   {
-    var n := 14641;
+    var n := 4;
     var f := PrimeFactors(n);
-    expect f == [11, 11, 11, 11];
+    expect f == [2, 2];
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
   }
 
   // Test case for combination {1}/O|f|>=2:
@@ -332,9 +330,12 @@ method Passing()
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
   {
-    var n := 16129;
+    var n := 5;
     var f := PrimeFactors(n);
-    expect f == [127, 127];
+    expect f == [5];
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
   }
 
   // Test case for combination {1}/O|f|=1:
@@ -343,9 +344,12 @@ method Passing()
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
   {
-    var n := 16367;
+    var n := 6;
     var f := PrimeFactors(n);
-    expect f == [13, 1259];
+    expect f == [2, 3];
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
   }
 
 }

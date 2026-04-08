@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-06 23:28:10
+// Generated: 2026-04-08 00:09:26
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -43,63 +43,56 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
     var s: seq<int> := [];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
-  {
-    var s: seq<int> := [3];
-    var result := IsEvenAtIndexEven(s);
-    expect result == false;
-  }
-
   // Test case for combination {1}/Bs=1:
   //   POST: result
-  //   POST: forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [0];
+    var s: seq<int> := [2];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
 
   // Test case for combination {1}/Bs=2:
   //   POST: result
-  //   POST: forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [0, 6];
+    var s: seq<int> := [4, 3];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
 
   // Test case for combination {1}/Oresult=true:
   //   POST: result
-  //   POST: forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [0, 12, 0];
+    var s: seq<int> := [0, 12, 0, 20];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
-  }
-
-  // Test case for combination {2}/Oresult=false:
-  //   POST: !result
-  //   POST: !forall i :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
-  {
-    var s: seq<int> := [3, 10];
-    var result := IsEvenAtIndexEven(s);
-    expect result == false;
   }
 
 }
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {1}/Bs=3:
+  //   POST: result
+  {
+    var s: seq<int> := [5, 4, 6];
+    var result := IsEvenAtIndexEven(s);
+    // expect result == false;
+  }
+
+  // Test case for combination {1}/Oresult=false:
+  //   POST: result
+  {
+    var s: seq<int> := [10, 11, -1, 12, 4875];
+    var result := IsEvenAtIndexEven(s);
+    // expect result == false;
+  }
+
 }
 
 method Main()

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Catalan.dfy
 // Method: CatalanNumber
-// Generated: 2026-04-06 23:19:58
+// Generated: 2026-04-08 00:04:22
 
 /* Catalan numbers are a sequence of natural numbers with significant importance in combinatorial mathematics. 
    They count the number of ways to correctly match parentheses, the number of rooted binary trees with n internal nodes,
@@ -34,35 +34,40 @@ method CatalanNumber(n: nat) returns (res: nat)
 method Passing()
 {
   // Test case for combination {1}:
-  //   POST: res == C(n)
+  //   POST: n == 0
+  //   POST: res == 1
   {
     var n := 0;
     var res := CatalanNumber(n);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: res == C(n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: res == (4 * n - 2) * C(n - 1) / (n + 1)
   {
     var n := 1;
     var res := CatalanNumber(n);
+    expect !(n == 0);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Ores>=2:
-  //   POST: res == C(n)
+  // Test case for combination {2}/Ores=1:
+  //   POST: !(n == 0)
+  //   POST: res == (4 * n - 2) * C(n - 1) / (n + 1)
   {
-    var n := 9;
+    var n := 2;
     var res := CatalanNumber(n);
-    expect res == 4862;
+    expect res == 2;
   }
 
-  // Test case for combination {1}/Ores=0:
-  //   POST: res == C(n)
+  // Test case for combination {2}/Ores=0:
+  //   POST: !(n == 0)
+  //   POST: res == (4 * n - 2) * C(n - 1) / (n + 1)
   {
-    var n := 11;
+    var n := 3;
     var res := CatalanNumber(n);
-    expect res == 58786;
+    expect res == 5;
   }
 
 }

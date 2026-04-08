@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-06 23:25:42
+// Generated: 2026-04-08 00:07:48
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -63,6 +63,14 @@ method Passing()
     expect res == [];
   }
 
+  // Test case for combination {2}:
+  //   POST: res == DeDup(a[..])
+  {
+    var a := new int[2] [3, 4];
+    var res := RemoveDuplicates<int>(a);
+    expect res == [3, 4];
+  }
+
   // Test case for combination {1}/Ba=1:
   //   POST: res == DeDup(a[..])
   {
@@ -71,15 +79,7 @@ method Passing()
     expect res == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: res == DeDup(a[..])
-  {
-    var a := new int[2] [4, 3];
-    var res := RemoveDuplicates<int>(a);
-    expect res == [4, 3];
-  }
-
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {2}/Ba=3:
   //   POST: res == DeDup(a[..])
   {
     var a := new int[3] [5, 4, 6];
@@ -87,28 +87,28 @@ method Passing()
     expect res == [5, 4, 6];
   }
 
-  // Test case for combination {1}/O|res|>=3:
+  // Test case for combination {2}/O|res|>=3:
   //   POST: res == DeDup(a[..])
   {
-    var a := new int[4] [5, 6, 7, 8];
+    var a := new int[2] [4, 5];
     var res := RemoveDuplicates<int>(a);
-    expect res == [5, 6, 7, 8];
+    expect res == [4, 5];
   }
 
-  // Test case for combination {1}/O|res|>=2:
+  // Test case for combination {2}/O|res|>=2:
   //   POST: res == DeDup(a[..])
   {
-    var a := new int[5] [6, 7, 8, 9, 10];
+    var a := new int[3] [4, 5, 6];
     var res := RemoveDuplicates<int>(a);
-    expect res == [6, 7, 8, 9, 10];
+    expect res == [4, 5, 6];
   }
 
-  // Test case for combination {1}/O|res|=1:
+  // Test case for combination {2}/O|res|=1:
   //   POST: res == DeDup(a[..])
   {
-    var a := new int[6] [8, 9, 10, 11, 12, 13];
+    var a := new int[4] [6, 7, 8, 9];
     var res := RemoveDuplicates<int>(a);
-    expect res == [8, 9, 10, 11, 12, 13];
+    expect res == [6, 7, 8, 9];
   }
 
 }

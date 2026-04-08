@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-06 23:23:55
+// Generated: 2026-04-08 00:06:51
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -74,26 +74,6 @@ method Passing()
     var x := 0;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == true;
-  }
-
-  // Test case for combination {1}/Oresult=true:
-  //   POST: result
-  //   POST: forall i :: 0 <= i < a.Length ==> a[i] == x
-  {
-    var a := new int[1] [8];
-    var x := 8;
-    var result := AllElementsEqualTo<int>(a, x);
-    expect result == true;
-  }
-
-  // Test case for combination {2}/Oresult=false:
-  //   POST: !result
-  //   POST: !forall i :: 0 <= i < a.Length ==> a[i] == x
-  {
-    var a := new int[1] [10];
-    var x := 9;
-    var result := AllElementsEqualTo<int>(a, x);
-    expect result == false;
   }
 
 }

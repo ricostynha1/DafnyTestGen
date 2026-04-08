@@ -462,7 +462,7 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - **Classes with collection fields containing class element types** (e.g., `var messages: set<Message>`, `var recipients: seq<Address>`, `var cache: map<int, Entry>`): the class is auto-skipped because its field values cannot be synthesised by Z3
 - **Classes with tuple-typed collection fields** (e.g., `var pairs: map<int, (int, int)>`): same reason — tuple element types in class fields are not yet supported
 - **iset/imap input parameters** (`iset<T>`, `imap<K,V>`). Note: these types as **return types** work fine when the input parameters are of supported types — the postcondition is used as the `expect` assertion and Dafny evaluates the expressions at runtime
-- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints
+- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints. Instead of skipping the method entirely, the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect` assertions
 
 ## Supported with Limitations
 

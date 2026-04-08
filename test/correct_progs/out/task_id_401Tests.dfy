@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-06 23:24:19
+// Generated: 2026-04-08 00:07:04
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -83,21 +83,21 @@ method Passing()
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
 
-  // Test case for combination {1}/Ba=2,b=inner>=1:
+  // Test case for combination {1}/Ba=inner>=1,b=inner>=2:
   //   PRE:  |a| == |b|
   //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
   //   POST: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
   {
-    var a: seq<seq<int>> := [[8], [9, 14]];
-    var b: seq<seq<int>> := [[12], [13, 18]];
+    var a: seq<seq<int>> := [[12, 13], [18, 19]];
+    var b: seq<seq<int>> := [[23, 24], [25, 26]];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[20], [22, 32]];
+    expect result == [[35, 37], [43, 45]];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
 
-  // Test case for combination {1}/Ba=3,b=inner>=1:
+  // Test case for combination {1}/Ba=inner>=1,b=3:
   //   PRE:  |a| == |b|
   //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|

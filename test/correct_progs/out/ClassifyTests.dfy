@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-04-07 20:42:59
+// Generated: 2026-04-08 09:34:11
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -22,10 +22,13 @@ method Classify(x: int) returns (r: int)
 
 method Passing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {5}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
+  //   POST: !(r == -1)
   //   POST: !(x == 0)
+  //   POST: !(r == 0)
+  //   POST: x > 0
   //   POST: r == 1
   {
     var x := 97;
@@ -33,26 +36,46 @@ method Passing()
     expect r == 1;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {6}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
+  //   POST: !(r == -1)
+  //   POST: x == 0
   //   POST: r == 0
   //   POST: !(x > 0)
+  //   POST: !(r == 1)
   {
     var x := 0;
     var r := Classify(x);
     expect r == 0;
   }
 
-  // Test case for combination {5}:
+  // Test case for combination {7}:
   //   PRE:  -100 <= x <= 100
+  //   POST: x < 0
   //   POST: r == -1
   //   POST: !(x == 0)
+  //   POST: !(r == 0)
   //   POST: !(x > 0)
+  //   POST: !(r == 1)
   {
     var x := -4;
     var r := Classify(x);
     expect r == -1;
+  }
+
+  // Test case for combination {5}/Bx=1:
+  //   PRE:  -100 <= x <= 100
+  //   POST: !(x < 0)
+  //   POST: !(r == -1)
+  //   POST: !(x == 0)
+  //   POST: !(r == 0)
+  //   POST: x > 0
+  //   POST: r == 1
+  {
+    var x := 1;
+    var r := Classify(x);
+    expect r == 1;
   }
 
 }

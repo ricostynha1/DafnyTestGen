@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_454.dfy
 // Method: ContainsZ
-// Generated: 2026-04-06 23:24:57
+// Generated: 2026-04-08 00:07:21
 
 // Checks if a string contains the letter 'z' or 'Z'
 method ContainsZ(s: string) returns (result: bool)
@@ -38,34 +38,6 @@ method Passing()
   // Test case for combination {1}:
   //   POST: result
   //   POST: 'z' in s
-  {
-    var s: seq<char> := ['z'];
-    var result := ContainsZ(s);
-    expect result == true;
-  }
-
-  // Test case for combination {2}:
-  //   POST: result
-  //   POST: 'Z' in s
-  {
-    var s: seq<char> := ['Z'];
-    var result := ContainsZ(s);
-    expect result == true;
-  }
-
-  // Test case for combination {3}:
-  //   POST: !result
-  //   POST: !('z' in s)
-  //   POST: !('Z' in s)
-  {
-    var s: seq<char> := [];
-    var result := ContainsZ(s);
-    expect result == false;
-  }
-
-  // Test case for combination {1,2}:
-  //   POST: result
-  //   POST: 'z' in s
   //   POST: 'Z' in s
   {
     var s: seq<char> := ['Z', 'z'];
@@ -73,30 +45,32 @@ method Passing()
     expect result == true;
   }
 
-  // Test case for combination {1}/Oresult=true:
+  // Test case for combination {2}:
   //   POST: result
   //   POST: 'z' in s
+  //   POST: !('Z' in s)
   {
-    var s: seq<char> := [' ', 'z'];
+    var s: seq<char> := ['z'];
     var result := ContainsZ(s);
     expect result == true;
   }
 
-  // Test case for combination {2}/Oresult=true:
+  // Test case for combination {3}:
   //   POST: result
+  //   POST: !('z' in s)
   //   POST: 'Z' in s
   {
-    var s: seq<char> := [' ', 'Z'];
+    var s: seq<char> := ['Z'];
     var result := ContainsZ(s);
     expect result == true;
   }
 
-  // Test case for combination {3}/Oresult=false:
+  // Test case for combination {4}:
   //   POST: !result
   //   POST: !('z' in s)
   //   POST: !('Z' in s)
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := [];
     var result := ContainsZ(s);
     expect result == false;
   }

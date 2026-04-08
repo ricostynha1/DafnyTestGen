@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-07 13:45:01
+// Generated: 2026-04-08 00:09:51
 
 // --- (int, int) tuples ---
 
@@ -368,6 +368,18 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: r == t.0
+  //   POST: r == t.1
+  //   POST: r >= t.0
+  //   POST: r >= t.1
+  {
+    var t := (0, 0);
+    var r := TupleMax(t);
+    expect r == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST: r == t.0
+  //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
   {
@@ -376,29 +388,42 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {3}:
+  //   POST: !(r == t.0)
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
   {
-    var t := (-1, 0);
+    var t := (0, 1);
     var r := TupleMax(t);
-    expect r == 0;
+    expect r == 1;
   }
 
-  // Test case for combination {1,2}:
+  // Test case for combination {1}/Bt.0=1,t.1=1:
   //   POST: r == t.0
+  //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
-  //   POST: r == t.1
   {
-    var t := (0, 0);
+    var t := (1, 1);
     var r := TupleMax(t);
-    expect r == 0;
+    expect r == 1;
   }
 
-  // Test case for combination {1}/Bt.0=1,t.1=0:
+  // Test case for combination {1}/Or<0:
   //   POST: r == t.0
+  //   POST: r == t.1
+  //   POST: r >= t.0
+  //   POST: r >= t.1
+  {
+    var t := (-1, -1);
+    var r := TupleMax(t);
+    expect r == -1;
+  }
+
+  // Test case for combination {2}/Or>0:
+  //   POST: r == t.0
+  //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
   {
@@ -407,62 +432,35 @@ method Passing()
     expect r == 1;
   }
 
-  // Test case for combination {1}/Or>0:
-  //   POST: r == t.0
-  //   POST: r >= t.0
-  //   POST: r >= t.1
-  {
-    var t := (2, -2);
-    var r := TupleMax(t);
-    expect r == 2;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   POST: r == t.0
-  //   POST: r >= t.0
-  //   POST: r >= t.1
-  {
-    var t := (-1, -3);
-    var r := TupleMax(t);
-    expect r == -1;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   POST: r == t.0
-  //   POST: r >= t.0
-  //   POST: r >= t.1
-  {
-    var t := (0, -2);
-    var r := TupleMax(t);
-    expect r == 0;
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   POST: r == t.1
-  //   POST: r >= t.0
-  //   POST: r >= t.1
-  {
-    var t := (-2, 1);
-    var r := TupleMax(t);
-    expect r == 1;
-  }
-
   // Test case for combination {2}/Or<0:
-  //   POST: r == t.1
+  //   POST: r == t.0
+  //   POST: !(r == t.1)
   //   POST: r >= t.0
   //   POST: r >= t.1
   {
-    var t := (-3, -1);
+    var t := (-1, -2);
     var r := TupleMax(t);
     expect r == -1;
   }
 
-  // Test case for combination {2}/Or=0:
+  // Test case for combination {3}/Or<0:
+  //   POST: !(r == t.0)
   //   POST: r == t.1
   //   POST: r >= t.0
   //   POST: r >= t.1
   {
-    var t := (-2, 0);
+    var t := (-2, -1);
+    var r := TupleMax(t);
+    expect r == -1;
+  }
+
+  // Test case for combination {3}/Or=0:
+  //   POST: !(r == t.0)
+  //   POST: r == t.1
+  //   POST: r >= t.0
+  //   POST: r >= t.1
+  {
+    var t := (-1, 0);
     var r := TupleMax(t);
     expect r == 0;
   }
