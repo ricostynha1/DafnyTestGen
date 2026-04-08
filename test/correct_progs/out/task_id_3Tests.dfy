@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-08 00:06:54
+// Generated: 2026-04-08 09:44:09
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
