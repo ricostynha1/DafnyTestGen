@@ -56,7 +56,7 @@ When multiple `requires` and `ensures` clauses exist, their cross-product forms 
 
 **Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition with incremental pruning.
 
-**All combinations (FDNF) mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning.
+**All combinations (FDNF) mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. In progressive mode, if the FDNF clause count exceeds 200 (either within a single ensures clause or after cross-product), the strategy automatically falls back to simple DNF to avoid combinatorial explosion.
 
 #### Incremental pruning
 
@@ -224,15 +224,15 @@ This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expec
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — FDNF clauses**: All FDNF clauses are solved directly. Since FDNF produces complete clauses (each already includes negated literals for non-taken branches), no tier escalation or bitmask enumeration is needed. Syntactic contradiction detection prunes infeasible clauses before Z3.
+1. **Phase 1 — FDNF/DNF clauses**: All clauses are solved directly. FDNF is preferred (complete clauses with negated literals for non-taken branches), but if the FDNF clause count exceeds 200 (per-ensures or after cross-product), the progressive strategy falls back to simple DNF to avoid combinatorial explosion. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across ensures clauses are deduplicated during cross-product.
 
-2. **Phase 2 — Input boundary analysis** (only when n ≤ 10): Add input boundary value tiers crossed with FDNF clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
+2. **Phase 2 — Input boundary analysis** (only when phase 1 < minTests and n ≤ 10): Add input boundary value tiers crossed with clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
 
-3. **Phase 2b — Output boundary analysis**: Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). All output tiers are explored regardless of `--min-tests`, since their purpose is output diversity. Collection outputs (arrays, sequences, sets) are skipped — their diversity is driven by input boundary tiers.
+3. **Phase 2b — Output boundary analysis** (only when still < minTests): Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). Collection outputs (arrays, sequences, sets) are skipped — their diversity is driven by input boundary tiers.
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
 
-This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (FDNF clauses without escalation).
+Each phase only runs if the minimum test count has not yet been reached (except phase 1, which always runs). This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (clauses without escalation).
 
 ## Prerequisites
 

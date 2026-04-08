@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna__1060_ROR_Ge.dfy
 // Method: NinetyOne
-// Generated: 2026-04-05 23:57:03
+// Generated: 2026-04-08 16:21:48
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_variant examples_KatzManna.dfy
 
@@ -94,39 +94,110 @@ method Determinant(X: array2<int>, M: int) returns (z: int)
 
 method Passing()
 {
-  // Test case for combination {1,2}:
+  // Test case for combination {1}:
   //   POST: !proveFunctionalPostcondition
-  //   POST: z == if x > 101 then x - 10 else 91
+  //   POST: x > 101
+  //   POST: z == x - 10
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
   {
-    var x := 0;
+    var x := 102;
+    var proveFunctionalPostcondition := false;
+    var z := NinetyOne(x, proveFunctionalPostcondition);
+    expect z == 92;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !proveFunctionalPostcondition
+  //   POST: !(x > 101)
+  //   POST: z == 91
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
+  {
+    var x := 101;
     var proveFunctionalPostcondition := false;
     var z := NinetyOne(x, proveFunctionalPostcondition);
     expect z == 91;
   }
 
-  // Test case for combination {2}:
-  //   POST: z == if x > 101 then x - 10 else 91
+  // Test case for combination {5}:
+  //   POST: proveFunctionalPostcondition
+  //   POST: x > 101
+  //   POST: z == x - 10
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
   {
-    var x := 0;
+    var x := 102;
+    var proveFunctionalPostcondition := true;
+    var z := NinetyOne(x, proveFunctionalPostcondition);
+    expect z == 92;
+  }
+
+  // Test case for combination {6}:
+  //   POST: proveFunctionalPostcondition
+  //   POST: !(x > 101)
+  //   POST: z == 91
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
+  {
+    var x := 101;
     var proveFunctionalPostcondition := true;
     var z := NinetyOne(x, proveFunctionalPostcondition);
     expect z == 91;
   }
 
-  // Test case for combination {1}/Bx=1:
+  // Test case for combination {3}/Oz=0:
   //   POST: !proveFunctionalPostcondition
+  //   POST: x > 101
+  //   POST: z != x - 10
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
   {
-    var x := 1;
+    var x := 104;
     var proveFunctionalPostcondition := false;
     var z := NinetyOne(x, proveFunctionalPostcondition);
-    expect !proveFunctionalPostcondition;
+    expect z == 94;
+  }
+
+  // Test case for combination {4}/Oz=0:
+  //   POST: !proveFunctionalPostcondition
+  //   POST: !(x > 101)
+  //   POST: z != 91
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
+  {
+    var x := -1;
+    var proveFunctionalPostcondition := false;
+    var z := NinetyOne(x, proveFunctionalPostcondition);
+    expect z == 91;
   }
 
 }
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {3}/Oz<0:
+  //   POST: !proveFunctionalPostcondition
+  //   POST: x > 101
+  //   POST: z != x - 10
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
+  {
+    var x := 103;
+    var proveFunctionalPostcondition := false;
+    var z := NinetyOne(x, proveFunctionalPostcondition);
+    // expect !proveFunctionalPostcondition;
+    // expect x > 101;
+    // expect z != x - 10;
+  }
+
+  // Test case for combination {4}/Oz<0:
+  //   POST: !proveFunctionalPostcondition
+  //   POST: !(x > 101)
+  //   POST: z != 91
+  //   ENSURES: proveFunctionalPostcondition ==> z == if x > 101 then x - 10 else 91
+  {
+    var x := 0;
+    var proveFunctionalPostcondition := false;
+    var z := NinetyOne(x, proveFunctionalPostcondition);
+    // expect !proveFunctionalPostcondition;
+    // expect !(x > 101);
+    // expect z != 91;
+  }
+
 }
 
 method Main()

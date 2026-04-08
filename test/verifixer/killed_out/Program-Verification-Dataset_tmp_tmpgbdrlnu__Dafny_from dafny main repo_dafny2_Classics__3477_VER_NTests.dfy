@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics__3477_VER_N.dfy
 // Method: AdditiveFactorial
-// Generated: 2026-04-05 23:56:18
+// Generated: 2026-04-08 16:21:30
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 
@@ -108,33 +108,51 @@ method FIND(A: array<int>, N: int, f: int)
 method Passing()
 {
   // Test case for combination {1}:
-  //   POST: u == Factorial(n)
+  //   POST: n == 0
+  //   POST: u == 1
+  //   ENSURES: u == Factorial(n)
   {
     var n := 0;
     var u := AdditiveFactorial(n);
     expect u == 1;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: u == Factorial(n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: u == n * Factorial(n - 1)
+  //   ENSURES: u == Factorial(n)
   {
     var n := 1;
     var u := AdditiveFactorial(n);
+    expect !(n == 0);
     expect u == 1;
   }
 
-  // Test case for combination {1}/R3:
-  //   POST: u == Factorial(n)
+  // Test case for combination {2}/Ou=1:
+  //   POST: !(n == 0)
+  //   POST: u == n * Factorial(n - 1)
+  //   ENSURES: u == Factorial(n)
   {
     var n := 2;
     var u := AdditiveFactorial(n);
     expect u == 2;
   }
 
+  // Test case for combination {2}/Ou=0:
+  //   POST: !(n == 0)
+  //   POST: u == n * Factorial(n - 1)
+  //   ENSURES: u == Factorial(n)
+  {
+    var n := 3;
+    var u := AdditiveFactorial(n);
+    expect u == 6;
+  }
+
   // Test case for combination {1}:
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
     var A := new int[1] [24];
     var N := 1;
@@ -147,8 +165,9 @@ method Passing()
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[2] [25, 24];
+    var A := new int[2] [24, 23];
     var N := 2;
     var f := 1;
     FIND(A, N, f);
@@ -159,6 +178,7 @@ method Passing()
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
     var A := new int[2] [24, 23];
     var N := 2;
@@ -171,10 +191,11 @@ method Passing()
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
   //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[3] [26, 28, 27];
-    var N := 3;
-    var f := 2;
+    var A := new int[4] [27, 28, 30, 29];
+    var N := 4;
+    var f := 3;
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }

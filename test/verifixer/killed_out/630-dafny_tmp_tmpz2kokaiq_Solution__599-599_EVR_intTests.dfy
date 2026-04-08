@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-04-05 23:33:58
+// Generated: 2026-04-08 16:40:03
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 
@@ -43,26 +43,49 @@ method BinarySearch(a: array<int>, x: int) returns (index: int)
 
 method Passing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {12}:
   //   PRE:  sorted(a)
-  //   POST: !(0 <= index < a.Length)
+  //   POST: 0 <= index < a.Length
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  //   POST: !(index == -1)
+  //   POST: 0 < a.Length
+  //   POST: !(a[0] != x)
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   {
-    var a := new int[1] [11];
-    var x := 9;
-    expect sorted(a); // PRE-CHECK
+    var a := new int[1] [3];
+    var x := 3;
     var index := BinarySearch(a, x);
-    expect index == -1;
+    expect index == 0;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {13}:
   //   PRE:  sorted(a)
-  //   POST: a[index] == x
+  //   POST: 0 <= index < a.Length
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   //   POST: !(index == -1)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] != x)
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   {
-    var a := new int[1] [9];
+    var a := new int[3] [16, 9, 23];
     var x := 9;
-    expect sorted(a); // PRE-CHECK
+    var index := BinarySearch(a, x);
+    expect index == 1;
+  }
+
+  // Test case for combination {12}/Oindex=0:
+  //   PRE:  sorted(a)
+  //   POST: 0 <= index < a.Length
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  //   POST: !(index == -1)
+  //   POST: 0 < a.Length
+  //   POST: !(a[0] != x)
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  {
+    var a := new int[2] [15, 13];
+    var x := 15;
     var index := BinarySearch(a, x);
     expect index == 0;
   }
@@ -71,32 +94,38 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {13}/Oindex>0:
   //   PRE:  sorted(a)
-  //   POST: !(0 <= index < a.Length)
+  //   POST: 0 <= index < a.Length
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   //   POST: !(index == -1)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] != x)
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   {
-    var a := new int[1] [8];
-    var x := 8;
-    // expect sorted(a); // PRE-CHECK
+    var a := new int[4] [18, 17, 17, 15];
+    var x := 17;
     var index := BinarySearch(a, x);
-    // expect !(0 <= index < a.Length);
+    // expect 0 <= index < a.Length;
+    // expect forall i: int :: 0 <= i < a.Length ==> a[i] != x;
     // expect !(index == -1);
+    // expect exists i :: 1 <= i < (a.Length - 1) && !(a[i] != x);
   }
 
-  // Test case for combination {1,2}:
+  // Test case for combination {14}/Oindex>0:
   //   PRE:  sorted(a)
-  //   POST: !(0 <= index < a.Length)
-  //   POST: !(index == -1)
+  //   POST: 0 <= index < a.Length
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  //   POST: !(index == -1)
+  //   POST: 0 < a.Length
+  //   POST: !(a[(a.Length - 1)] != x)
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
   {
-    var a := new int[1] [10];
-    var x := 8;
-    // expect sorted(a); // PRE-CHECK
+    var a := new int[2] [17, 9];
+    var x := 9;
     var index := BinarySearch(a, x);
-    // expect !(0 <= index < a.Length);
-    // expect !(index == -1);
-    // expect forall i: int :: 0 <= i < a.Length ==> a[i] != x;
+    // expect index == 1;
   }
 
 }

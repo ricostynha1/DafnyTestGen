@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element__257_ROR_Neq.dfy
 // Method: removeElement
-// Generated: 2026-04-05 23:55:24
+// Generated: 2026-04-08 16:20:55
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element.dfy
 
@@ -44,11 +44,12 @@ method Passing()
 {
   // Test case for combination {1}/Bnums=1,val=0:
   //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
     var nums := new int[1] [16];
     var val := 0;
     var i := removeElement(nums, val);
-    // expect i == 0; // (actual runtime value — not uniquely determined by spec)
+    expect i == 0;
     expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
   }
 
@@ -58,6 +59,7 @@ method Failing()
 {
   // Test case for combination {1}:
   //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
     var nums := new int[0] [];
     var val := 9;
@@ -67,6 +69,7 @@ method Failing()
 
   // Test case for combination {1}/Bnums=0,val=0:
   //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
     var nums := new int[0] [];
     var val := 0;
@@ -76,11 +79,43 @@ method Failing()
 
   // Test case for combination {1}/Bnums=0,val=1:
   //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
     var nums := new int[0] [];
     var val := 1;
     var i := removeElement(nums, val);
     // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+  }
+
+  // Test case for combination {1}/Oi>0:
+  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  {
+    var nums := new int[0] [];
+    var val := 10;
+    var i := removeElement(nums, val);
+    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+  }
+
+  // Test case for combination {1}/Oi<0:
+  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  {
+    var nums := new int[0] [];
+    var val := 11;
+    var i := removeElement(nums, val);
+    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+  }
+
+  // Test case for combination {1}/Oi=0:
+  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  {
+    var nums := new int[0] [];
+    var val := 2;
+    var i := removeElement(nums, val);
+    // expect i == 0;
+    // expect nums[..] == [];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 8_H8__2020_AOR_Sub.dfy
 // Method: Partition
-// Generated: 2026-04-05 22:48:53
+// Generated: 2026-04-08 21:53:46
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 8_H8.dfy
 
@@ -75,6 +75,10 @@ method Passing()
   //   POST: m == pre + multiset{p} + post
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= p
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
+  //   ENSURES: p in m
+  //   ENSURES: m == pre + multiset{p} + post
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= p
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{1, 3, 5};
     var pre, p, post := Partition(m);
@@ -90,6 +94,10 @@ method Passing()
   //   POST: m == pre + multiset{p} + post
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= p
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
+  //   ENSURES: p in m
+  //   ENSURES: m == pre + multiset{p} + post
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= p
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{5};
     var pre, p, post := Partition(m);
@@ -105,6 +113,10 @@ method Passing()
   //   POST: m == pre + multiset{p} + post
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= p
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
+  //   ENSURES: p in m
+  //   ENSURES: m == pre + multiset{p} + post
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= p
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{-2, 5};
     var pre, p, post := Partition(m);
@@ -120,6 +132,10 @@ method Passing()
   //   POST: m == pre + multiset{p} + post
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= p
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= p
+  //   ENSURES: p in m
+  //   ENSURES: m == pre + multiset{p} + post
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= p
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= p
   {
     var m: multiset<int> := multiset{2, 4, 4};
     var pre, p, post := Partition(m);
@@ -136,6 +152,11 @@ method Passing()
   //   POST: |pre| == k
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= kth
+  //   ENSURES: kth in m
+  //   ENSURES: m == pre + multiset{kth} + post
+  //   ENSURES: |pre| == k
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= kth
   {
     var m: multiset<int> := multiset{1, 3, 5};
     var k := 2;
@@ -154,6 +175,11 @@ method Passing()
   //   POST: |pre| == k
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= kth
+  //   ENSURES: kth in m
+  //   ENSURES: m == pre + multiset{kth} + post
+  //   ENSURES: |pre| == k
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= kth
   {
     var m: multiset<int> := multiset{5};
     var k := 0;
@@ -172,6 +198,11 @@ method Passing()
   //   POST: |pre| == k
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= kth
+  //   ENSURES: kth in m
+  //   ENSURES: m == pre + multiset{kth} + post
+  //   ENSURES: |pre| == k
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= kth
   {
     var m: multiset<int> := multiset{-2, 5};
     var k := 0;
@@ -190,6 +221,11 @@ method Passing()
   //   POST: |pre| == k
   //   POST: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
   //   POST: forall z: int {:trigger post[z]} | z in post :: z >= kth
+  //   ENSURES: kth in m
+  //   ENSURES: m == pre + multiset{kth} + post
+  //   ENSURES: |pre| == k
+  //   ENSURES: forall z: int {:trigger pre[z]} | z in pre :: z <= kth
+  //   ENSURES: forall z: int {:trigger post[z]} | z in post :: z >= kth
   {
     var m: multiset<int> := multiset{-2, 5};
     var k := 1;

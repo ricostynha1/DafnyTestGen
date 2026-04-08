@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower__149-149_AOI.dfy
 // Method: CalcPower
-// Generated: 2026-04-05 23:37:01
+// Generated: 2026-04-08 16:45:49
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower.dfy
 
@@ -42,6 +42,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: p == 2 * n
+  //   ENSURES: p == 2 * n
   {
     var n := 0;
     var p := CalcPower(n);
@@ -49,15 +50,19 @@ method Passing()
   }
 
   // Test case for combination {1}:
-  //   POST: p == Power(n)
+  //   POST: n == 0
+  //   POST: p == 1
+  //   ENSURES: p == Power(n)
   {
     var n := 0;
     var p := ComputePower(n);
     expect p == 1;
   }
 
-  // Test case for combination {1}/R3:
-  //   POST: p == Power(n)
+  // Test case for combination {2}/Op=1:
+  //   POST: !(n == 0)
+  //   POST: p == 2 * Power(n - 1)
+  //   ENSURES: p == Power(n)
   {
     var n := 2;
     var p := ComputePower(n);
@@ -70,26 +75,41 @@ method Failing()
 {
   // Test case for combination {1}/Bn=1:
   //   POST: p == 2 * n
+  //   ENSURES: p == 2 * n
   {
     var n := 1;
     var p := CalcPower(n);
     // expect p == 2;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Op>=2:
   //   POST: p == 2 * n
+  //   ENSURES: p == 2 * n
   {
     var n := 2;
     var p := CalcPower(n);
     // expect p == 4;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: p == Power(n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: p == 2 * Power(n - 1)
+  //   ENSURES: p == Power(n)
   {
     var n := 1;
     var p := ComputePower(n);
-    // expect p == 2;
+    // expect !(n == 0);
+    // expect p == 2 * Power(n - 1);
+  }
+
+  // Test case for combination {2}/Op=0:
+  //   POST: !(n == 0)
+  //   POST: p == 2 * Power(n - 1)
+  //   ENSURES: p == Power(n)
+  {
+    var n := 3;
+    var p := ComputePower(n);
+    // expect p == 0;
   }
 
 }

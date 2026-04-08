@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci__510_ROR_Ge.dfy
 // Method: fibonacci1
-// Generated: 2026-04-05 23:38:49
+// Generated: 2026-04-08 16:49:01
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci.dfy
 
@@ -78,30 +78,43 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 0;
     var f := fibonacci1(n);
     expect f == 0;
   }
 
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {2}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 1;
     var f := fibonacci1(n);
     expect f == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=1:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 2;
     var f := fibonacci1(n);
     expect f == 1;
   }
 
+  // Test case for combination {2}/Of=0:
+  //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
+  {
+    var n := 3;
+    var f := fibonacci1(n);
+    expect f == 2;
+  }
+
   // Test case for combination {1}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 0;
     var f := fibonacci2(n);
@@ -110,46 +123,69 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 0;
     var f := fibonacci3(n);
     expect f == 0;
   }
 
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {2}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 1;
     var f := fibonacci3(n);
     expect f == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=1:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 2;
     var f := fibonacci3(n);
     expect f == 1;
+  }
+
+  // Test case for combination {2}/Of=0:
+  //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
+  {
+    var n := 3;
+    var f := fibonacci3(n);
+    expect f == 2;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {2}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 1;
     var f := fibonacci2(n);
     // expect f == fib(n);
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=1:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 2;
     var f := fibonacci2(n);
-    // expect f == fib(n);
+    // expect f == 1;
+  }
+
+  // Test case for combination {2}/Of=0:
+  //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
+  {
+    var n := 3;
+    var f := fibonacci2(n);
+    // expect f == 0;
   }
 
 }

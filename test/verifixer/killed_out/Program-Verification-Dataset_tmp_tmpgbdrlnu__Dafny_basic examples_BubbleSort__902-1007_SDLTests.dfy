@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort__902-1007_SDL.dfy
 // Method: bubbleSort
-// Generated: 2026-04-05 23:55:52
+// Generated: 2026-04-08 16:21:13
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort.dfy
 
@@ -62,13 +62,12 @@ method Passing()
   //   PRE:  a != null && a.Length > 0
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: sorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [6];
-    var old_a := a[..];
-    expect a != null && a.Length > 0; // PRE-CHECK
+    var a := new int[1] [18];
     bubbleSort(a);
-    expect sorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [18];
   }
 
 }
@@ -79,10 +78,11 @@ method Failing()
   //   PRE:  a != null && a.Length > 0
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: sorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[2] [4, 3];
     var old_a := a[..];
-    // expect a != null && a.Length > 0; // PRE-CHECK
     bubbleSort(a);
     // expect sorted(a, 0, a.Length);
     // expect multiset(a[..]) == multiset(old_a);
@@ -92,10 +92,11 @@ method Failing()
   //   PRE:  a != null && a.Length > 0
   //   POST: sorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: sorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [12, 4, 5];
     var old_a := a[..];
-    // expect a != null && a.Length > 0; // PRE-CHECK
     bubbleSort(a);
     // expect sorted(a, 0, a.Length);
     // expect multiset(a[..]) == multiset(old_a);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-programs_tmp_tmpnso9eu7u_Algorithms + sorting_bubble-sort__287-290_EVR_int.dfy
 // Method: BubbleSort
-// Generated: 2026-04-05 23:40:42
+// Generated: 2026-04-08 16:53:43
 
 // Dafny-programs_tmp_tmpnso9eu7u_Algorithms + sorting_bubble-sort.dfy
 
@@ -72,12 +72,12 @@ method Passing()
   // Test case for combination {1}:
   //   POST: sorted(A)
   //   POST: multiset(A[..]) == multiset(old(A[..]))
+  //   ENSURES: sorted(A)
+  //   ENSURES: multiset(A[..]) == multiset(old(A[..]))
   {
     var A := new int[0] [];
-    var old_A := A[..];
     BubbleSort(A);
-    expect sorted(A);
-    expect multiset(A[..]) == multiset(old_A);
+    expect A[..] == [];
   }
 
 }
@@ -87,19 +87,21 @@ method Failing()
   // Test case for combination {1}/BA=1:
   //   POST: sorted(A)
   //   POST: multiset(A[..]) == multiset(old(A[..]))
+  //   ENSURES: sorted(A)
+  //   ENSURES: multiset(A[..]) == multiset(old(A[..]))
   {
-    var A := new int[1] [3];
-    var old_A := A[..];
+    var A := new int[1] [2];
     BubbleSort(A);
-    // expect sorted(A);
-    // expect multiset(A[..]) == multiset(old_A);
+    // expect A[..] == [2];
   }
 
   // Test case for combination {1}/BA=2:
   //   POST: sorted(A)
   //   POST: multiset(A[..]) == multiset(old(A[..]))
+  //   ENSURES: sorted(A)
+  //   ENSURES: multiset(A[..]) == multiset(old(A[..]))
   {
-    var A := new int[2] [4, 3];
+    var A := new int[2] [7, 3];
     var old_A := A[..];
     BubbleSort(A);
     // expect sorted(A);
@@ -109,8 +111,10 @@ method Failing()
   // Test case for combination {1}/BA=3:
   //   POST: sorted(A)
   //   POST: multiset(A[..]) == multiset(old(A[..]))
+  //   ENSURES: sorted(A)
+  //   ENSURES: multiset(A[..]) == multiset(old(A[..]))
   {
-    var A := new int[3] [5, 4, 6];
+    var A := new int[3] [12, 4, 5];
     var old_A := A[..];
     BubbleSort(A);
     // expect sorted(A);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset__2175-2186_EVR_seq.dfy
 // Method: Search
-// Generated: 2026-04-05 23:37:10
+// Generated: 2026-04-08 16:46:03
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 3_InsertionSortMultiset.dfy
 
@@ -70,6 +70,12 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
   {
     var s: seq<int> := [7719];
     var x := 0;
@@ -85,6 +91,12 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
   {
     var s: seq<int> := [];
     var x := 0;
@@ -100,6 +112,12 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
   {
     var s: seq<int> := [];
     var x := 1;
@@ -115,6 +133,12 @@ method Passing()
   //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
   //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
   //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
   {
     var s: seq<int> := [39];
     var x := 1;
@@ -122,13 +146,57 @@ method Passing()
     expect k == 0;
   }
 
+  // Test case for combination {1}/Ok>0:
+  //   PRE:  forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]
+  //   POST: 0 <= k <= |s|
+  //   POST: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   POST: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
+  {
+    var s: seq<int> := [-1];
+    var x := -1;
+    var k := Search(s, x);
+    expect k == 0;
+  }
+
+  // Test case for combination {1}/Ok=0:
+  //   PRE:  forall p: int, q: int {:trigger s[q], s[p]} | 0 <= p < q < |s| :: s[p] <= s[q]
+  //   POST: 0 <= k <= |s|
+  //   POST: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   POST: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   POST: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   POST: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   POST: s == s[..k] + s[k..]
+  //   ENSURES: 0 <= k <= |s|
+  //   ENSURES: forall i: int {:trigger s[i]} | 0 <= i < k :: s[i] <= x
+  //   ENSURES: forall i: int {:trigger s[i]} | k <= i < |s| :: s[i] >= x
+  //   ENSURES: forall z: int {:trigger z in s[..k]} | z in s[..k] :: z <= x
+  //   ENSURES: forall z: int {:trigger z in s[k..]} | z in s[k..] :: z >= x
+  //   ENSURES: s == s[..k] + s[k..]
+  {
+    var s: seq<int> := [0];
+    var x := -2;
+    var k := Search(s, x);
+    expect k == 0;
+  }
+
   // Test case for combination {1}:
   //   POST: multiset(r) == m
   //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
   {
     var m: multiset<int> := multiset{};
     var r := Sort(m);
-    // expect r == []; // (actual runtime value — not uniquely determined by spec)
+    expect r == [];
     expect multiset(r) == m;
     expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
   }
@@ -140,6 +208,8 @@ method Failing()
   // Test case for combination {1}/Bm=1:
   //   POST: multiset(r) == m
   //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
   {
     var m: multiset<int> := multiset{-2};
     var r := Sort(m);
@@ -150,6 +220,8 @@ method Failing()
   // Test case for combination {1}/Bm=2:
   //   POST: multiset(r) == m
   //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
   {
     var m: multiset<int> := multiset{-2, -2};
     var r := Sort(m);
@@ -160,8 +232,46 @@ method Failing()
   // Test case for combination {1}/Bm=3:
   //   POST: multiset(r) == m
   //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
   {
     var m: multiset<int> := multiset{-2, -2, -2};
+    var r := Sort(m);
+    // expect multiset(r) == m;
+    // expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
+  }
+
+  // Test case for combination {1}/O|r|>=3:
+  //   POST: multiset(r) == m
+  //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  {
+    var m: multiset<int> := multiset{5};
+    var r := Sort(m);
+    // expect multiset(r) == m;
+    // expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
+  }
+
+  // Test case for combination {1}/O|r|>=2:
+  //   POST: multiset(r) == m
+  //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  {
+    var m: multiset<int> := multiset{4};
+    var r := Sort(m);
+    // expect multiset(r) == m;
+    // expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];
+  }
+
+  // Test case for combination {1}/O|r|=1:
+  //   POST: multiset(r) == m
+  //   POST: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  //   ENSURES: multiset(r) == m
+  //   ENSURES: forall p: int, q: int {:trigger r[q], r[p]} | 0 <= p < q < |r| :: r[p] <= r[q]
+  {
+    var m: multiset<int> := multiset{3};
     var r := Sort(m);
     // expect multiset(r) == m;
     // expect forall p: int, q: int | 0 <= p < q < |r| :: r[p] <= r[q];

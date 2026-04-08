@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-exercise_tmp_tmpouftptir_reverse__247_ROR_Ge.dfy
 // Method: Reverse
-// Generated: 2026-04-05 23:38:41
+// Generated: 2026-04-08 16:48:51
 
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
@@ -49,13 +49,14 @@ method Failing()
   //   POST: a == old(a)
   //   POST: b.Length == a.Length
   //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
+  //   ENSURES: a == old(a)
+  //   ENSURES: b.Length == a.Length
+  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
     var a := new char[1] [' '];
     var old_a := a;
     var b := Reverse(a);
-    // expect a == old_a;
-    // expect b.Length == a.Length;
-    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect b[..] == [' '];
   }
 
   // Test case for combination {1}/Ba=2:
@@ -63,13 +64,14 @@ method Failing()
   //   POST: a == old(a)
   //   POST: b.Length == a.Length
   //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
+  //   ENSURES: a == old(a)
+  //   ENSURES: b.Length == a.Length
+  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
     var a := new char[2] [' ', '!'];
     var old_a := a;
     var b := Reverse(a);
-    // expect a == old_a;
-    // expect b.Length == a.Length;
-    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect b[..] == ['!', ' '];
   }
 
   // Test case for combination {1}/Ba=3:
@@ -77,13 +79,14 @@ method Failing()
   //   POST: a == old(a)
   //   POST: b.Length == a.Length
   //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
+  //   ENSURES: a == old(a)
+  //   ENSURES: b.Length == a.Length
+  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
     var a := new char[3] [' ', '!', '"'];
     var old_a := a;
     var b := Reverse(a);
-    // expect a == old_a;
-    // expect b.Length == a.Length;
-    // expect forall i: int :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1];
+    // expect b[..] == ['"', '!', ' '];
   }
 
 }

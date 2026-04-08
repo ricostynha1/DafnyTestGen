@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Formal-methods-of-software-development_tmp_tmppryvbyty_Bloque 1_Lab3__2107_LVR_2.dfy
 // Method: ComputeFact
-// Generated: 2026-04-05 23:44:54
+// Generated: 2026-04-08 16:18:47
 
 // Formal-methods-of-software-development_tmp_tmppryvbyty_Bloque 1_Lab3.dfy
 
@@ -162,8 +162,19 @@ method GeneratedTests_ComputeFact()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
     var n := 0;
+    var f := ComputeFact(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  n >= 0
+  //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
+  {
+    var n := 2;
     var f := ComputeFact(n);
     expect f == factorial(n);
   }
@@ -171,19 +182,31 @@ method GeneratedTests_ComputeFact()
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
     var n := 1;
+    var f := ComputeFact(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {2}/Of<0:
+  //   PRE:  n >= 0
+  //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
+  {
+    var n := 3;
     var f := ComputeFact(n);
     expect f == factorial(n);
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=0:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
-    var n := 2;
+    var n := 4;
     var f := ComputeFact(n);
-    expect f == factorial(n);
+    expect f == 0;
   }
 
 }
@@ -193,8 +216,19 @@ method GeneratedTests_ComputeFact2()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
     var n := 0;
+    var f := ComputeFact2(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  n >= 0
+  //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
+  {
+    var n := 2;
     var f := ComputeFact2(n);
     expect f == factorial(n);
   }
@@ -202,19 +236,31 @@ method GeneratedTests_ComputeFact2()
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
     var n := 1;
+    var f := ComputeFact2(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {2}/Of<0:
+  //   PRE:  n >= 0
+  //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
+  {
+    var n := 3;
     var f := ComputeFact2(n);
     expect f == factorial(n);
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=0:
   //   PRE:  n >= 0
   //   POST: f == factorial(n)
+  //   ENSURES: f == factorial(n)
   {
-    var n := 2;
+    var n := 4;
     var f := ComputeFact2(n);
-    expect f == factorial(n);
+    expect f == 0;
   }
 
 }
@@ -224,6 +270,7 @@ method GeneratedTests_Sqare()
   // Test case for combination {1}:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
     var a := 1;
     var x := Sqare(a);
@@ -233,19 +280,21 @@ method GeneratedTests_Sqare()
   // Test case for combination {1}/Ba=2:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
     var a := 2;
     var x := Sqare(a);
     expect x == 4;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Ox>0:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
-    var a := 5;
+    var a := 3;
     var x := Sqare(a);
-    expect x == 25;
+    expect x == 9;
   }
 
 }
@@ -255,6 +304,7 @@ method GeneratedTests_Sqare2()
   // Test case for combination {1}:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
     var a := 1;
     var x := Sqare2(a);
@@ -264,19 +314,21 @@ method GeneratedTests_Sqare2()
   // Test case for combination {1}/Ba=2:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
     var a := 2;
     var x := Sqare2(a);
     expect x == 4;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Ox>0:
   //   PRE:  a >= 1
   //   POST: x == a * a
+  //   ENSURES: x == a * a
   {
-    var a := 5;
+    var a := 3;
     var x := Sqare2(a);
-    expect x == 25;
+    expect x == 9;
   }
 
 }

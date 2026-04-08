@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort__702_ROR_Ge.dfy
 // Method: threshold
-// Generated: 2026-04-05 23:43:57
+// Generated: 2026-04-08 16:17:29
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Quick_Sort.dfy
 
@@ -87,6 +87,9 @@ method Passing()
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
     var Seq: seq<int> := [];
@@ -97,6 +100,7 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
   {
     var Seq: seq<int> := [];
     var Seq' := quickSort(Seq);
@@ -105,6 +109,7 @@ method Passing()
 
   // Test case for combination {1}/BSeq=1:
   //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
   {
     var Seq: seq<int> := [2];
     var Seq' := quickSort(Seq);
@@ -113,6 +118,7 @@ method Passing()
 
   // Test case for combination {1}/BSeq=2:
   //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
   {
     var Seq: seq<int> := [4, 3];
     var Seq' := quickSort(Seq);
@@ -121,8 +127,36 @@ method Passing()
 
   // Test case for combination {1}/BSeq=3:
   //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
   {
     var Seq: seq<int> := [5, 4, 6];
+    var Seq' := quickSort(Seq);
+    expect multiset(Seq) == multiset(Seq');
+  }
+
+  // Test case for combination {1}/O|Seq'|>=3:
+  //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
+  {
+    var Seq: seq<int> := [5, 6, 7, 8];
+    var Seq' := quickSort(Seq);
+    expect multiset(Seq) == multiset(Seq');
+  }
+
+  // Test case for combination {1}/O|Seq'|>=2:
+  //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
+  {
+    var Seq: seq<int> := [6, 7, 8, 9, 10];
+    var Seq' := quickSort(Seq);
+    expect multiset(Seq) == multiset(Seq');
+  }
+
+  // Test case for combination {1}/O|Seq'|=1:
+  //   POST: multiset(Seq) == multiset(Seq')
+  //   ENSURES: multiset(Seq) == multiset(Seq')
+  {
+    var Seq: seq<int> := [7, 8, 9, 10, 11, 12];
     var Seq' := quickSort(Seq);
     expect multiset(Seq) == multiset(Seq');
   }
@@ -136,6 +170,9 @@ method Failing()
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
     var Seq: seq<int> := [26];
@@ -151,6 +188,9 @@ method Failing()
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
     var Seq: seq<int> := [17, 16];
@@ -166,9 +206,120 @@ method Failing()
   //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
   //   POST: |Seq_1| + |Seq_2| == |Seq|
   //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
   {
     var thres := 0;
     var Seq: seq<int> := [25, 24, 26];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_1|>=3:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := -11836;
+    var Seq: seq<int> := [38, 39, 40, 53];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_1|>=2:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := -39;
+    var Seq: seq<int> := [33, 34];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_1|=1:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := -40;
+    var Seq: seq<int> := [20];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_2|>=3:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := 39;
+    var Seq: seq<int> := [38, 40, 37];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_2|>=2:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := -40;
+    var Seq: seq<int> := [34, 33];
+    var Seq_1, Seq_2 := threshold(thres, Seq);
+    // expect forall x: int | x in Seq_1 :: x <= thres;
+    // expect forall x: int | x in Seq_2 :: x >= thres;
+    // expect |Seq_1| + |Seq_2| == |Seq|;
+    // expect multiset(Seq_1) + multiset(Seq_2) == multiset(Seq);
+  }
+
+  // Test case for combination {1}/O|Seq_2|=1:
+  //   POST: forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres
+  //   POST: forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   POST: |Seq_1| + |Seq_2| == |Seq|
+  //   POST: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  //   ENSURES: (forall x: int {:trigger x in Seq_1} | x in Seq_1 :: x <= thres) && forall x: int {:trigger x in Seq_2} | x in Seq_2 :: x >= thres
+  //   ENSURES: |Seq_1| + |Seq_2| == |Seq|
+  //   ENSURES: multiset(Seq_1) + multiset(Seq_2) == multiset(Seq)
+  {
+    var thres := -41;
+    var Seq: seq<int> := [20];
     var Seq_1, Seq_2 := threshold(thres, Seq);
     // expect forall x: int | x in Seq_1 :: x <= thres;
     // expect forall x: int | x in Seq_2 :: x >= thres;

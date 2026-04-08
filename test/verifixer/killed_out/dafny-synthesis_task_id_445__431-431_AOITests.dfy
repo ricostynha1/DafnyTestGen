@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_445__431-431_AOI.dfy
 // Method: MultiplyElements
-// Generated: 2026-04-05 23:42:03
+// Generated: 2026-04-08 16:55:32
 
 // dafny-synthesis_task_id_445.dfy
 
@@ -31,6 +31,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -42,6 +44,8 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
@@ -57,6 +61,8 @@ method Failing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
     var a: seq<int> := [-1, 0];
     var b: seq<int> := [0, 1];
@@ -68,11 +74,39 @@ method Failing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
     var a: seq<int> := [0, 1, 2];
     var b: seq<int> := [-1, 0, 1];
     var result := MultiplyElements(a, b);
     // expect result == [0, 0, 2];
+  }
+
+  // Test case for combination {1}/O|result|>=3:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  {
+    var a: seq<int> := [0, 0, 0, 0];
+    var b: seq<int> := [0, 0, 0, 0];
+    var result := MultiplyElements(a, b);
+    // expect result == [0, 0, 0, 0];
+  }
+
+  // Test case for combination {1}/O|result|>=2:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
+  {
+    var a: seq<int> := [0, 0, 0, 0, 0];
+    var b: seq<int> := [0, 0, 0, 0, 0];
+    var result := MultiplyElements(a, b);
+    // expect result == [0, 0, 0, 0, 0];
   }
 
 }

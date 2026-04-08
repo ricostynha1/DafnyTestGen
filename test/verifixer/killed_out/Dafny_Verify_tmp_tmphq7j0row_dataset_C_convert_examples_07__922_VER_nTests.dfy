@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_dataset_C_convert_examples_07__922_VER_n.dfy
 // Method: main
-// Generated: 2026-04-05 23:37:53
+// Generated: 2026-04-08 16:47:06
 
 // Dafny_Verify_tmp_tmphq7j0row_dataset_C_convert_examples_07.dfy
 
@@ -35,6 +35,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
   {
     var n := 0;
     var a, b := main(n);
@@ -48,19 +49,73 @@ method Failing()
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
   {
     var n := 1;
     var a, b := main(n);
     // expect a + b == 3 * n;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Oa>0:
   //   PRE:  n >= 0
   //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
   {
     var n := 2;
     var a, b := main(n);
     // expect a + b == 3 * n;
+  }
+
+  // Test case for combination {1}/Oa<0:
+  //   PRE:  n >= 0
+  //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
+  {
+    var n := 3;
+    var a, b := main(n);
+    // expect a + b == 3 * n;
+  }
+
+  // Test case for combination {1}/Oa=0:
+  //   PRE:  n >= 0
+  //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
+  {
+    var n := 4;
+    var a, b := main(n);
+    // expect a == 0;
+    // expect b == 12;
+  }
+
+  // Test case for combination {1}/Ob>0:
+  //   PRE:  n >= 0
+  //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
+  {
+    var n := 5;
+    var a, b := main(n);
+    // expect a + b == 3 * n;
+  }
+
+  // Test case for combination {1}/Ob<0:
+  //   PRE:  n >= 0
+  //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
+  {
+    var n := 6;
+    var a, b := main(n);
+    // expect a + b == 3 * n;
+  }
+
+  // Test case for combination {1}/Ob=0:
+  //   PRE:  n >= 0
+  //   POST: a + b == 3 * n
+  //   ENSURES: a + b == 3 * n
+  {
+    var n := 7;
+    var a, b := main(n);
+    // expect a == 21;
+    // expect b == 0;
   }
 
 }

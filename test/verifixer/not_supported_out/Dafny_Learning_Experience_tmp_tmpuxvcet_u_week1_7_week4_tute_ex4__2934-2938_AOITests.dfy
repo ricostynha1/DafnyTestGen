@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4__2934-2938_AOI.dfy
 // Method: LinearSearch2
-// Generated: 2026-04-05 22:47:44
+// Generated: 2026-04-08 21:51:57
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week4_tute_ex4.dfy
 
@@ -121,12 +121,16 @@ method LinearSearch3<T(==)>(data: array<T>, Element: T, s1: seq<T>)
 
 method Passing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {7}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
   //   POST: position == -1
   //   POST: !(position >= 1)
+  //   POST: !exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
   //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
   {
     var data := new int[1] [18];
     var Element := 0;
@@ -135,69 +139,128 @@ method Passing()
     expect position == -1;
   }
 
-  // Test case for combination {7}:
+  // Test case for combination {9}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
-  //   POST: position >= 1
-  //   POST: exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
   //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: 0 < |s1|
+  //   POST: s1[0] == Element
+  //   POST: !(s1[0] != Element)
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
   {
     var data := new int[1] [9];
     var Element := 9;
     var s1: seq<int> := [9];
     var position := LinearSearch2<int>(data, Element, s1);
-    expect position >= 1;
-    expect exists i: int :: 0 <= i < |s1| && s1[i] == Element;
     expect !(position == -1);
+    expect position >= 1;
+    expect 0 < |s1|;
+    expect s1[0] == Element;
+    expect !(s1[0] != Element);
   }
 
-  // Test case for combination {2}/Bdata=2,Element=0,s1=1:
+  // Test case for combination {10}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
-  //   POST: position == -1
-  //   POST: !(position >= 1)
-  //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
+  //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: 0 < |s1|
+  //   POST: s1[0] == Element
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && !(s1[i] != Element)
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
   {
-    var data := new int[2] [3, 4];
-    var Element := 0;
-    var s1: seq<int> := [3];
+    var data := new int[3] [15, 15, 17];
+    var Element := 15;
+    var s1: seq<int> := [15, 15, 17];
     var position := LinearSearch2<int>(data, Element, s1);
-    expect position == -1;
+    expect !(position == -1);
+    expect position >= 1;
+    expect 0 < |s1|;
+    expect s1[0] == Element;
+    expect exists i :: 1 <= i < (|s1| - 1) && !(s1[i] != Element);
   }
 
-  // Test case for combination {2}/Bdata=2,Element=0,s1=2:
+  // Test case for combination {11}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
-  //   POST: position == -1
-  //   POST: !(position >= 1)
-  //   POST: forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
+  //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: 0 < |s1|
+  //   POST: s1[0] == Element
+  //   POST: !(s1[(|s1| - 1)] != Element)
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
   {
-    var data := new int[2] [3, 4];
-    var Element := 0;
-    var s1: seq<int> := [3, 4];
+    var data := new int[1] [8];
+    var Element := 8;
+    var s1: seq<int> := [8];
     var position := LinearSearch2<int>(data, Element, s1);
-    expect position == -1;
+    expect !(position == -1);
+    expect position >= 1;
+    expect 0 < |s1|;
+    expect s1[0] == Element;
+    expect !(s1[(|s1| - 1)] != Element);
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {14}:
+  //   PRE:  |s1| <= data.Length
+  //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
+  //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && !(s1[i] != Element)
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
+  {
+    var data := new int[3] [18, 19, 11];
+    var Element := 19;
+    var s1: seq<int> := [18, 19, 11];
+    var position := LinearSearch2<int>(data, Element, s1);
+    expect !(position == -1);
+    expect position >= 1;
+    expect exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element;
+    expect exists i :: 1 <= i < (|s1| - 1) && !(s1[i] != Element);
+  }
+
+  // Test case for combination {15}:
+  //   PRE:  |s1| <= data.Length
+  //   PRE:  forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[i]
+  //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element
+  //   POST: 0 < |s1|
+  //   POST: !(s1[(|s1| - 1)] != Element)
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element
+  //   ENSURES: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element
+  {
+    var data := new int[3] [15, 17, 17];
+    var Element := 17;
+    var s1: seq<int> := [15, 17, 17];
+    var position := LinearSearch2<int>(data, Element, s1);
+    expect !(position == -1);
+    expect position >= 1;
+    expect exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element;
+    expect 0 < |s1|;
+    expect !(s1[(|s1| - 1)] != Element);
+  }
+
+  // Test case for combination {4}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
   //   POST: position == -1
   //   POST: !(position >= 1)
-  {
-    var data := new int[1] [28];
-    var Element := 26;
-    var s1: seq<int> := [28];
-    var position := LinearSearch3<int>(data, Element, s1);
-    expect position == -1;
-  }
-
-  // Test case for combination {1,2}:
-  //   PRE:  |s1| <= data.Length
-  //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
-  //   POST: position == -1
-  //   POST: !(position >= 1)
-  //   POST: exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
+  //   POST: 0 < |s1|
+  //   POST: s1[0] == Element && |s1| != 0
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
   {
     var data := new int[1] [10];
     var Element := 10;
@@ -206,11 +269,14 @@ method Passing()
     expect position == -1;
   }
 
-  // Test case for combination {1}/Bdata=0,Element=0,s1=0:
+  // Test case for combination {7}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
   //   POST: position == -1
   //   POST: !(position >= 1)
+  //   POST: !exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
   {
     var data := new int[0] [];
     var Element := 0;
@@ -223,18 +289,58 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {4}:
+  // Test case for combination {5}:
   //   PRE:  |s1| <= data.Length
   //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
+  //   POST: position == -1
+  //   POST: !(position >= 1)
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element && |s1| != 0
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
+  {
+    var data := new int[3] [18, 15, 18];
+    var Element := 15;
+    var s1: seq<int> := [18, 15, 18];
+    var position := LinearSearch3<int>(data, Element, s1);
+    // expect position == -1;
+  }
+
+  // Test case for combination {8}:
+  //   PRE:  |s1| <= data.Length
+  //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
+  //   POST: !(position == -1)
   //   POST: position >= 1
-  //   POST: exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
+  //   POST: 0 < |s1|
+  //   POST: s1[0] == Element && |s1| != 0
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
   {
     var data := new int[1] [9];
     var Element := 9;
     var s1: seq<int> := [9];
     var position := LinearSearch3<int>(data, Element, s1);
+    // expect !(position == -1);
     // expect position >= 1;
-    // expect exists i: int :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0;
+    // expect 0 < |s1|;
+    // expect s1[0] == Element && |s1| != 0;
+  }
+
+  // Test case for combination {9}:
+  //   PRE:  |s1| <= data.Length
+  //   PRE:  forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] == data[data.Length - 1 - i]
+  //   POST: !(position == -1)
+  //   POST: position >= 1
+  //   POST: exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element && |s1| != 0
+  //   ENSURES: position == -1 || position >= 1
+  //   ENSURES: position >= 1 ==> exists i: int {:trigger s1[i]} :: 0 <= i < |s1| && s1[i] == Element && |s1| != 0
+  {
+    var data := new int[3] [17, 14, 17];
+    var Element := 14;
+    var s1: seq<int> := [17, 14, 17];
+    var position := LinearSearch3<int>(data, Element, s1);
+    // expect !(position == -1);
+    // expect position >= 1;
+    // expect exists i :: 1 <= i < (|s1| - 1) && s1[i] == Element && |s1| != 0;
   }
 
 }

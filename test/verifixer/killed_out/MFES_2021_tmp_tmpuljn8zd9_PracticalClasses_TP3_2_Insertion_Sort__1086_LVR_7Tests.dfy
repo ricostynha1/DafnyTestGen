@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort__1086_LVR_7.dfy
 // Method: insertionSort
-// Generated: 2026-04-05 23:54:54
+// Generated: 2026-04-08 16:20:27
 
 // MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort.dfy
 
@@ -56,30 +56,32 @@ method Passing()
   // Test case for combination {1}:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: isSorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
-    var old_a := a[..];
     insertionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [];
   }
 
   // Test case for combination {1}/Ba=1:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: isSorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [3];
-    var old_a := a[..];
+    var a := new int[1] [2];
     insertionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [2];
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: isSorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [7, 3];
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);
@@ -89,8 +91,10 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: isSorted(a, 0, a.Length)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: isSorted(a, 0, a.Length)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [12, 4, 11];
     var old_a := a[..];
     insertionSort(a);
     expect isSorted(a, 0, a.Length);

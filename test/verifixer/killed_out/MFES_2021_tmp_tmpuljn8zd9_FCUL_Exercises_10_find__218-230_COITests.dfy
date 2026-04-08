@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find__218-230_COI.dfy
 // Method: find
-// Generated: 2026-04-05 23:54:49
+// Generated: 2026-04-08 16:20:22
 
 // MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 
@@ -24,53 +24,92 @@ method find(a: array<int>, key: int) returns (index: int)
 
 method Passing()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
+  // Test case for combination {3}:
   //   PRE:  a.Length > 0
   //   POST: 0 <= index <= a.Length
-  //   POST: !(index < a.Length)
-  {
-    var a := new int[1] [4];
-    var key := 0;
-    var index := find(a, key);
-    // expect index == 1;
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
+  //   POST: index < a.Length
   //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
   {
     var a := new int[1] [4];
     var key := 4;
     var index := find(a, key);
+    expect index == 1;
+  }
+
+  // Test case for combination {3}/Ba=1,key=0:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= index <= a.Length
+  //   POST: index < a.Length
+  //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
+  {
+    var a := new int[1] [0];
+    var key := 0;
+    var index := find(a, key);
+    expect index == 1;
+  }
+
+  // Test case for combination {3}/Ba=1,key=1:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= index <= a.Length
+  //   POST: index < a.Length
+  //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
+  {
+    var a := new int[1] [1];
+    var key := 1;
+    var index := find(a, key);
+    expect index == 1;
+  }
+
+  // Test case for combination {3}/Oindex=0:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= index <= a.Length
+  //   POST: index < a.Length
+  //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
+  {
+    var a := new int[1] [3];
+    var key := 3;
+    var index := find(a, key);
+    expect index == 1;
+  }
+
+}
+
+method Failing()
+{
+  // Test case for combination {3}/Ba=2,key=0:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= index <= a.Length
+  //   POST: index < a.Length
+  //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
+  {
+    var a := new int[2] [0, 5];
+    var key := 0;
+    var index := find(a, key);
     // expect index == 0;
   }
 
-  // Test case for combination {1}/Ba=1,key=1:
+  // Test case for combination {3}/Oindex>0:
   //   PRE:  a.Length > 0
   //   POST: 0 <= index <= a.Length
-  //   POST: !(index < a.Length)
+  //   POST: index < a.Length
+  //   POST: a[index] == key
+  //   ENSURES: 0 <= index <= a.Length
+  //   ENSURES: index < a.Length ==> a[index] == key
   {
-    var a := new int[1] [2];
-    var key := 1;
+    var a := new int[2] [5, 8];
+    var key := 8;
     var index := find(a, key);
     // expect index == 1;
-  }
-
-  // Test case for combination {1}/Ba=2,key=0:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: !(index < a.Length)
-  {
-    var a := new int[2] [4, 3];
-    var key := 0;
-    var index := find(a, key);
-    // expect index == 2;
   }
 
 }

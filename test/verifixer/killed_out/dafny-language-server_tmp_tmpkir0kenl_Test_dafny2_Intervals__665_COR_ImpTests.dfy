@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals__665_COR_Imp.dfy
 // Method: RoundDown
-// Generated: 2026-04-05 23:40:28
+// Generated: 2026-04-08 16:52:16
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_Intervals.dfy
 
@@ -77,128 +77,224 @@ class Rounding {
 
 method Passing()
 {
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST: -1 <= r < thresholds.Length
-  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
-  //   POST: !(0 <= r)
-  {
-    var obj := new Rounding;
-    var tmp_thresholds := new int[1] [7719];
-    obj.thresholds := tmp_thresholds;
-    var k := 7718;
-    expect obj.Valid(); // PRE-CHECK
-    var r := obj.RoundDown(k);
-    expect r == -1;
-  }
-
-  // Test case for combination {1}/Bk=0,thresholds=1:
-  //   PRE:  Valid()
-  //   POST: -1 <= r < thresholds.Length
-  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
-  //   POST: !(0 <= r)
-  {
-    var obj := new Rounding;
-    var tmp_thresholds := new int[1] [1];
-    obj.thresholds := tmp_thresholds;
-    var k := 0;
-    expect obj.Valid(); // PRE-CHECK
-    var r := obj.RoundDown(k);
-    expect r == -1;
-  }
-
-  // Test case for combination {1}:
+  // Test case for combination {3}:
   //   PRE:  Valid()
   //   POST: 0 <= r <= thresholds.Length
   //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
-  //   POST: !(r < thresholds.Length)
-  {
-    var obj := new Rounding;
-    var tmp_thresholds := new int[0] [];
-    obj.thresholds := tmp_thresholds;
-    var k := 21239;
-    expect obj.Valid(); // PRE-CHECK
-    var r := obj.RoundUp(k);
-    expect r == 0;
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST: 0 <= r <= thresholds.Length
-  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: r < thresholds.Length
   //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
   {
     var obj := new Rounding;
     var tmp_thresholds := new int[1] [38];
     obj.thresholds := tmp_thresholds;
     var k := 0;
-    expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundUp(k);
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bk=0,thresholds=0:
+  // Test case for combination {3}/Bk=0,thresholds=2:
   //   PRE:  Valid()
   //   POST: 0 <= r <= thresholds.Length
   //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
-  //   POST: !(r < thresholds.Length)
+  //   POST: r < thresholds.Length
+  //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
   {
     var obj := new Rounding;
-    var tmp_thresholds := new int[0] [];
+    var tmp_thresholds := new int[2] [-1, 30613];
     obj.thresholds := tmp_thresholds;
     var k := 0;
-    expect obj.Valid(); // PRE-CHECK
-    var r := obj.RoundUp(k);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bk=0,thresholds=1:
-  //   PRE:  Valid()
-  //   POST: 0 <= r <= thresholds.Length
-  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
-  //   POST: !(r < thresholds.Length)
-  {
-    var obj := new Rounding;
-    var tmp_thresholds := new int[1] [-1];
-    obj.thresholds := tmp_thresholds;
-    var k := 0;
-    expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundUp(k);
     expect r == 1;
+  }
+
+  // Test case for combination {3}/Bk=0,thresholds=3:
+  //   PRE:  Valid()
+  //   POST: 0 <= r <= thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: r < thresholds.Length
+  //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[3] [-2, -1, 32285];
+    obj.thresholds := tmp_thresholds;
+    var k := 0;
+    var r := obj.RoundUp(k);
+    expect r == 2;
+  }
+
+  // Test case for combination {3}/Bk=1,thresholds=1:
+  //   PRE:  Valid()
+  //   POST: 0 <= r <= thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: r < thresholds.Length
+  //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[1] [1];
+    obj.thresholds := tmp_thresholds;
+    var k := 1;
+    var r := obj.RoundUp(k);
+    expect r == 0;
+  }
+
+  // Test case for combination {3}/Or>0:
+  //   PRE:  Valid()
+  //   POST: 0 <= r <= thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: r < thresholds.Length
+  //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[2] [-1, 38];
+    obj.thresholds := tmp_thresholds;
+    var k := 0;
+    var r := obj.RoundUp(k);
+    expect r == 1;
+  }
+
+  // Test case for combination {3}/Or=0:
+  //   PRE:  Valid()
+  //   POST: 0 <= r <= thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   POST: r < thresholds.Length
+  //   POST: k <= thresholds[r]
+  //   ENSURES: 0 <= r <= thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: 0 <= m < r ==> thresholds[m] < k
+  //   ENSURES: r < thresholds.Length ==> k <= thresholds[r]
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[1] [38];
+    obj.thresholds := tmp_thresholds;
+    var k := -1;
+    var r := obj.RoundUp(k);
+    expect r == 0;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {2}:
+  // Test case for combination {3}:
   //   PRE:  Valid()
   //   POST: -1 <= r < thresholds.Length
   //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   POST: 0 <= r
   //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
   {
     var obj := new Rounding;
     var tmp_thresholds := new int[1] [-38];
     obj.thresholds := tmp_thresholds;
     var k := 0;
-    // expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundDown(k);
     // expect r == 0;
   }
 
-  // Test case for combination {1}/Bk=0,thresholds=0:
+  // Test case for combination {3}/Bk=0,thresholds=2:
   //   PRE:  Valid()
   //   POST: -1 <= r < thresholds.Length
   //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
-  //   POST: !(0 <= r)
+  //   POST: 0 <= r
+  //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
   {
     var obj := new Rounding;
-    var tmp_thresholds := new int[0] [];
+    var tmp_thresholds := new int[2] [-7719, 39];
     obj.thresholds := tmp_thresholds;
     var k := 0;
-    // expect obj.Valid(); // PRE-CHECK
     var r := obj.RoundDown(k);
-    // expect r == -1;
+    // expect r == 0;
+  }
+
+  // Test case for combination {3}/Bk=0,thresholds=3:
+  //   PRE:  Valid()
+  //   POST: -1 <= r < thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   POST: 0 <= r
+  //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[3] [-21238, 7720, 7721];
+    obj.thresholds := tmp_thresholds;
+    var k := 0;
+    var r := obj.RoundDown(k);
+    // expect r == 0;
+  }
+
+  // Test case for combination {3}/Bk=1,thresholds=1:
+  //   PRE:  Valid()
+  //   POST: -1 <= r < thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   POST: 0 <= r
+  //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[1] [-38];
+    obj.thresholds := tmp_thresholds;
+    var k := 1;
+    var r := obj.RoundDown(k);
+    // expect r == 0;
+  }
+
+  // Test case for combination {3}/Or>0:
+  //   PRE:  Valid()
+  //   POST: -1 <= r < thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   POST: 0 <= r
+  //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[2] [22, -38];
+    obj.thresholds := tmp_thresholds;
+    var k := 0;
+    var r := obj.RoundDown(k);
+    // expect r == 1;
+  }
+
+  // Test case for combination {3}/Or=0:
+  //   PRE:  Valid()
+  //   POST: -1 <= r < thresholds.Length
+  //   POST: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   POST: 0 <= r
+  //   POST: thresholds[r] <= k
+  //   ENSURES: -1 <= r < thresholds.Length
+  //   ENSURES: forall m: int {:trigger thresholds[m]} :: r < m < thresholds.Length ==> k < thresholds[m]
+  //   ENSURES: 0 <= r ==> thresholds[r] <= k
+  {
+    var obj := new Rounding;
+    var tmp_thresholds := new int[1] [-1];
+    obj.thresholds := tmp_thresholds;
+    var k := -1;
+    var r := obj.RoundDown(k);
+    // expect r == 0;
   }
 
 }
