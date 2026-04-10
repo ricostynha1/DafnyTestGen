@@ -82,7 +82,7 @@ Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `
 In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve (3 SAT, 4 UNSAT).
 
 
-### Quantifier Boundary Decomposition
+### Decomposition of existential quantifiers
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
 Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary and middle cases:
