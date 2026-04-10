@@ -159,7 +159,7 @@ The postcondition `diff == filter(a, b)` is expanded to `diff == (if |a| == 0 th
 
 The inner `filter(...)` calls cannot be translated to SMT and are silently dropped, but the **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. Since the function is recursive and its result cannot be computed by Z3, the `expect` assertions use the full postcondition expression (e.g., `expect diff == filter(a, b)`), which Dafny evaluates at runtime.
 
-#### Recursive Function Finite Unrolling (SMT define-fun)
+#### Finite unrolling of recursive functions (SMT define-fun)
 
 Independently of inlining for DNF, postconditions that reference recursive functions (e.g., `ensures f == Fact(n)`) benefit from a separate mechanism: **finite unrolling into SMT `define-fun` definitions**. By default, Z3 treats recursive functions as uninterpreted — it knows `Fact` is a function but not its definition, so it cannot compute concrete expected values. DafnyTestGen automatically detects simple recursive functions and compiles them into concrete nested `ite` (if-then-else) chains.
 
