@@ -24,21 +24,19 @@ method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length > 0 ==> result == a[0]
 ```
 
-The implication `A ==> B` is decomposed into short-circuit safe DNF branches `!A` and `A ∧ B` (not `!A` and `B` as in standard DNF). This ensures the consequent `B` is only tested when the antecedent `A` holds. For this example, the second ensures clause `a.Length > 0 ==> result == a[0]` produces:
+The implication `A ==> B` is decomposed into short-circuit safe DNF branches `!A` and `A ∧ B` (instead of `!A` and `B` as in standard DNF). Similarly, `A || B` produces branches `A` and `!A ∧ B`. For this example, the second ensures clause produces:
 - `!(a.Length > 0)` — antecedent is false, implication vacuously true
 - `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold
 
-With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard. When crossed with the first ensures clause's branch `a.Length == 0 ∧ result == 0`, the combination `a.Length == 0 ∧ result == 0 ∧ result == a[0]` is satisfiable in SMT (where `seq.nth` on empty sequences is total), but causes **index-out-of-bounds** at runtime. Short-circuit safe DNF prevents this: the branch `a.Length > 0 ∧ result == a[0]` always guards the array access.
-
-Similarly, `A || B` produces branches `A` and `!A ∧ B` (not `A` and `B`), and `A && B` negation produces `!A` and `A ∧ !B` (not `!A` and `!B`).
+With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard, possibly causing an out-of-bounds error. 
 
 The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after short-circuit safe decomposition), of which 2 are pruned as contradictory, leaving 2 to solve:
 - `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
-- `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` — SAT (empty array)
+- `a.Length == 0 ∧ !(a.Length > 0) ∧ result == 0` — SAT (empty array)
 
 Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples.
 
-With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety — for example, the clause `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` would be generated (though pruned as contradictory in this case). In general, FDNF can produce unsafe clauses like `a.Length == 0 ∧ a[0] == 0` from `a.Length == 0 || a[0] == 0`. Use `-a` only when you understand the implications.
+With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including an unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' in the derived expressions. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
 
