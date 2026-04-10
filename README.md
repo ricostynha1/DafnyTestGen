@@ -82,7 +82,7 @@ Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `
 In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve (3 SAT, 4 UNSAT).
 
 
-## Quantifier Boundary Decomposition
+### Quantifier Boundary Decomposition
 
 Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary and middle cases:
 
@@ -103,11 +103,9 @@ method FindMax(a: array<int>) returns (max: int)
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via FDNF cross-product, producing distinct test scenarios for each structural case.
 
-## Predicate and function inlining/unrolling  
+### Predicate and function inlining/unrolling  
 
 User-defined predicates and functions referenced in contracts are automatically processed before DNF/FDNF conversion and SMT generation, through two complementary mechanisms described below: **inlining** (substituting bodies into contract expressions to expose branching for DNF) and **finite unrolling** (generating concrete SMT definitions for Z3 to evaluate recursive functions).
-
-### Predicate and function inlining 
 
 Predicates and functions referenced in contracts are automatically **inlined** — their bodies are substituted into contract expressions before DNF/FDNF conversion. This exposes possible internal if-then-else branching that would otherwise remain opaque to the DNF engine. 
 
@@ -160,7 +158,7 @@ The postcondition `diff == filter(a, b)` is expanded to `diff == (if |a| == 0 th
 
 The inner `filter(...)` calls cannot be translated to SMT and are silently dropped, but the **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. Since the function is recursive and its result cannot be computed by Z3, the `expect` assertions use the full postcondition expression (e.g., `expect diff == filter(a, b)`), which Dafny evaluates at runtime.
 
-### Recursive Function Finite Unrolling (SMT define-fun)
+#### Recursive Function Finite Unrolling (SMT define-fun)
 
 Independently of inlining for DNF, postconditions that reference recursive functions (e.g., `ensures f == Fact(n)`) benefit from a separate mechanism: **finite unrolling into SMT `define-fun` definitions**. By default, Z3 treats recursive functions as uninterpreted — it knows `Fact` is a function but not its definition, so it cannot compute concrete expected values. DafnyTestGen automatically detects simple recursive functions and compiles them into concrete nested `ite` (if-then-else) chains.
 
