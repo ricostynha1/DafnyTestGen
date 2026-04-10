@@ -84,6 +84,7 @@ In **FDNF mode**, each implication produces 3 full clauses, and the cross-produc
 
 ### Quantifier Boundary Decomposition
 
+Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
 Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary and middle cases:
 
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
