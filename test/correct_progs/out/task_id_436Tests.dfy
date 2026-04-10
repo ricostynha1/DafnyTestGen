@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-04-10 22:51:31
+// Generated: 2026-04-10 23:16:44
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.

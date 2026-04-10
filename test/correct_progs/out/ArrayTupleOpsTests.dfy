@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-10 23:09:29
+// Generated: 2026-04-10 23:30:47
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 

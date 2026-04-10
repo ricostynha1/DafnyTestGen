@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-10 22:58:38
+// Generated: 2026-04-10 23:11:29
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)

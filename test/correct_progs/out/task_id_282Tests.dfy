@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-10 23:01:59
+// Generated: 2026-04-10 23:15:01
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-04-10 23:01:29
+// Generated: 2026-04-10 23:14:31
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -64,7 +64,6 @@ method Passing()
     var s2: seq<char> := ['U'];
     var v := RemoveChars(s1, s2);
     expect v == [];
-    expect !(|s1| == 0);
   }
 
   // Test case for combination {1}/Bs1=0,s2=1:
@@ -98,7 +97,6 @@ method Passing()
     var s2: seq<char> := [];
     var v := RemoveChars(s1, s2);
     expect v == [' ', '%'];
-    expect !(|s1| == 0);
   }
 
   // Test case for combination {2}/O|v|>=2:
@@ -110,7 +108,6 @@ method Passing()
     var s2: seq<char> := [];
     var v := RemoveChars(s1, s2);
     expect v == [' '];
-    expect !(|s1| == 0);
   }
 
   // Test case for combination {2}/O|v|=1:
@@ -122,7 +119,6 @@ method Passing()
     var s2: seq<char> := ['%', ' '];
     var v := RemoveChars(s1, s2);
     expect v == [];
-    expect !(|s1| == 0);
   }
 
 }

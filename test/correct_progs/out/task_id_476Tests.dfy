@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-04-10 22:52:29
+// Generated: 2026-04-10 23:18:06
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -94,7 +94,6 @@ method Passing()
     var a := new int[2] [3, 4];
     var sum := SumMinMax(a);
     expect sum == 7;
-    expect !(|a[..]| == 1);
   }
 
   // Test case for combination {2}/Ba=3:
@@ -106,7 +105,6 @@ method Passing()
     var a := new int[3] [5, 4, 6];
     var sum := SumMinMax(a);
     expect sum == 10;
-    expect !(|a[..]| == 1);
   }
 
   // Test case for combination {2}/Osum>0:
@@ -118,7 +116,6 @@ method Passing()
     var a := new int[4] [5, 6, 7, 8];
     var sum := SumMinMax(a);
     expect sum == 13;
-    expect !(|a[..]| == 1);
   }
 
   // Test case for combination {2}/Osum<0:
@@ -130,7 +127,6 @@ method Passing()
     var a := new int[5] [6, 7, 8, 9, 10];
     var sum := SumMinMax(a);
     expect sum == 16;
-    expect !(|a[..]| == 1);
   }
 
   // Test case for combination {2}/Osum=0:

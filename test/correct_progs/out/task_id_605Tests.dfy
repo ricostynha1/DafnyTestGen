@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-10 22:33:43
+// Generated: 2026-04-10 23:20:28
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -50,7 +50,7 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  n > 1
   //   POST: !result
-  //   POST: 2 < n
+  //   POST: 2 <= (n - 1)
   //   POST: !(n % 2 != 0)
   //   ENSURES: result <==> forall k :: 2 <= k < n ==> n % k != 0
   {

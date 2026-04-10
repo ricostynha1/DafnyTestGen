@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-04-10 22:32:34
+// Generated: 2026-04-10 23:19:31
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -129,7 +129,6 @@ method Passing()
     var a := new int[2] [3, 4];
     var product := UniqueProduct(a);
     expect product == 12;
-    expect !(elems(a) == {});
   }
 
 }

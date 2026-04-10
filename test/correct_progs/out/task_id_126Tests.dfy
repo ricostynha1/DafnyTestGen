@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-10 23:00:36
+// Generated: 2026-04-10 23:13:33
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -129,7 +129,6 @@ method Passing()
     var b := 2;
     var sum := SumOfCommonDivisors(a, b);
     expect sum == 3;
-    expect !(|commonDivisors(a, b)| == 0);
   }
 
   // Test case for combination {2}/Osum=1:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNKTests.dfy
 // Method: CalcComb
-// Generated: 2026-04-10 22:57:18
+// Generated: 2026-04-10 23:31:17
 
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
@@ -221,7 +221,6 @@ method Passing()
     var k := 1;
     var res := CalcComb(n, k);
     expect res == 2440;
-    expect !(k == 0 || k == n);
   }
 
   // Test case for combination {2}/Ores=1:
