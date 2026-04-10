@@ -34,9 +34,7 @@ The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after
 - `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
 - `a.Length == 0 ∧ !(a.Length > 0) ∧ result == 0` — SAT (empty array)
 
-Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples.
-
-With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including an unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
+With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' in the derived expressions. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
 
@@ -54,11 +52,13 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 
 When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
-**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition (short-circuit safe) with incremental pruning.
+## Mode selection
 
-**All combinations (FDNF) mode** (`-a`): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. FDNF can be unsafe with short-circuit logic (see above). Use only when you understand the implications.
+**Simple (DNF) mode** (`-s`)(default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
 
-#### Incremental pruning
+**All combinations (FDNF) mode** (`-a`): generated one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
+
+### Incremental pruning
 
 The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further.
 
@@ -82,17 +82,12 @@ Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `
 In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve (3 SAT, 4 UNSAT).
 
 
-#### Predicate and function inlining/unrolling  
+## Quantifier Boundary Decomposition
 
-User-defined predicates and functions referenced in contracts are automatically processed before DNF/FDNF conversion and SMT generation, through two complementary mechanisms described below: **inlining** (substituting bodies into contract expressions to expose branching for DNF) and **finite unrolling** (generating concrete SMT definitions for Z3 to evaluate recursive functions).
-
-#### Quantifier Boundary Decomposition
-
-Existencial quantifiers represent repeated disjunctions and may also be decomposed during DNF/FDNF analysis.
-Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary cases:
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary and middle cases:
 
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
-2. **Middle**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
+2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
 
 These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
@@ -108,40 +103,17 @@ method FindMax(a: array<int>) returns (max: int)
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via FDNF cross-product, producing distinct test scenarios for each structural case.
 
-#### Boundary Value Analysis (`-b`)
+## Predicate and function inlining/unrolling  
 
-BVA complements equivalence class partitioning by testing at the **edges** of each equivalence class. DafnyTestGen extracts numeric bounds from contracts and generates boundary tiers:
+User-defined predicates and functions referenced in contracts are automatically processed before DNF/FDNF conversion and SMT generation, through two complementary mechanisms described below: **inlining** (substituting bodies into contract expressions to expose branching for DNF) and **finite unrolling** (generating concrete SMT definitions for Z3 to evaluate recursive functions).
 
-- **Integer ranges**: for `requires -100 <= x <= 100`, generates tests at x = -100, -99, 0, 1, 99, 100
-- **Array/sequence sizes**: generates tests with different sizes (length 0, 1, 2, 3, ...), with distinct elements within each tier
-- **Relational bounds**: for `requires 0 <= k <= s.Length`, generates boundary tiers `k=0`, `k=1`, and `k==s.Length` (mapped to the SMT length variable). This exercises all three regions of the precondition: lower boundary, upper boundary, and interior. Relational tiers are prioritized first in the cross-product ordering
-- **Output boundary tiers**: return values and mutable scalar class fields are automatically constrained to explore different output regions. For scalar types — `nat`: `=0`, `=1`, `≥2`; `int`: `>0`, `<0`, `=0`; `bool`: `true`, `false`; `real`: `>0`, `<0`, `=0`. Tuple components are decomposed and each component gets its own tiers. Sequence return values get length tiers: `|f|≥3`, `|f|≥2`, `|f|=1`. Non-trivial tiers are prioritized first since Z3 naturally gravitates toward minimal values. This is particularly useful when postconditions don't uniquely determine the output — e.g., `MaxDistEqual` where Z3 defaults to `maxDist=0` for all input tiers, output boundary tiers force exploration of `maxDist=1`, `maxDist≥2`; or `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`)
-- **Nested sequence inner-length floor tiers**: for `seq<seq<T>>` and `seq<string>` parameters, additional tiers constrain the **minimum inner sublist length**. Without these, Z3 gravitates to empty inner sublists (length 0), producing tests where min-length results are always 0. Two floor tiers are added:
-  - `inner>=1`: all active sublists have length ≥ 1 (forces min-length results like `v >= 1`)
-  - `inner>=2`: all active sublists have length ≥ 2 (forces `v >= 2`)
+### Predicate and function inlining 
 
-  These are placed **before** the outer-length tiers in the tier list, so the progressive strategy picks them up early and produces diverse output values. They are alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the exclusion mechanism that blocks previously-seen input values. Z3 freely chooses the outer length for each floor tier.
-- **Ordering shape tiers**: when a precondition constrains an array or sequence with a non-strict ordering (`<=` or `>=`), the weak ordering is decomposed into structurally distinct cases:
-  - **constant** (`a-shape=const`): all elements are equal (e.g., `[3, 3, 3]`)
-  - **strictly ordered** (`a-shape=strict-asc` or `strict-desc`): all consecutive pairs are strictly ordered, no duplicates (e.g., `[-3, -2, -1]`)
+Predicates and functions referenced in contracts are automatically **inlined** — their bodies are substituted into contract expressions before DNF/FDNF conversion. This exposes possible internal if-then-else branching that would otherwise remain opaque to the DNF engine. 
 
-  This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, element distinctness constraints are omitted from its size tiers (since the shape tiers control element relationships more precisely).
+#### Non-recursive inlining (up to 2 levels)
 
-The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers. For example, `-t 5` generates arrays of length 0 through 4.
-
-BVA is **combined with DNF/FDNF**: each equivalence class (clause) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
-
-#### Repetition (`-r`)
-
-The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
-
-#### Predicate and Function Inlining for DNF/FDNF
-
-Predicates and functions referenced in contracts are automatically **inlined** — their bodies are substituted into contract expressions before DNF/FDNF conversion. This exposes internal if-then-else branching that would otherwise remain opaque to the DNF engine. In Dafny's AST, both `predicate` and `function` declarations are represented as `Function` nodes, so the same mechanism handles both uniformly.
-
-##### Non-recursive inlining (up to 2 levels)
-
-Non-recursive predicates and functions (whose body does not reference themselves) are inlined into both preconditions and postconditions. When a predicate calls another inlinable predicate (e.g., `IsFirstOdd` calls `IsOdd`), the callee's body is pre-substituted into the caller, up to **2 levels** of nesting (caller → callee, but callee must not call another inlinable). After pre-substitution, the inlining engine performs up to 3 textual passes to resolve any remaining calls.
+Non-recursive predicates and functions (whose body does not reference themselves) are inlined into both preconditions and postconditions. When a predicate calls another inlinable predicate, the callee's body is pre-substituted into the caller, up to **2 levels** of nesting (caller → callee, but callee must not call another inlinable).
 
 **Example:**
 
@@ -154,13 +126,16 @@ predicate IsFirstOdd(a: array<int>, index: int)
        && forall i :: 0 <= i < index ==> !IsOdd(a[i])
 }
 
+predicate IsOdd(i : int)
+{ i % 2 == 1 }
+
 method FindFirstOdd(a: array<int>) returns (index: int)
   ensures IsFirstOdd(a, index)
 ```
 
 The predicate body is substituted for `IsFirstOdd(a, index)`, producing an `if C then A else B` expression. The DNF engine splits this into two clauses — `(index == -1 && ∀i. ¬IsOdd(a[i]))` and `(index ≠ -1 && IsOdd(a[index]) && ∀i < index. ¬IsOdd(a[i]))` — generating tests for both the "not found" and "found" paths. The nested `IsOdd` calls are also inlined (2nd level).
 
-##### Fuel-1 inlining for recursive functions
+#### Fuel-1 inlining for recursive functions and predicates
 
 Recursive functions and predicates (whose body contains a self-call) cannot be fully inlined (infinite expansion), but DafnyTestGen performs **one level of unrolling** (fuel=1) — analogous to Dafny's `{:fuel}` attribute. The function body is substituted once; inner recursive calls are left opaque. This is applied to both **preconditions and postconditions**, exposing the top-level branching structure of recursive definitions for DNF decomposition.
 
@@ -185,7 +160,7 @@ The postcondition `diff == filter(a, b)` is expanded to `diff == (if |a| == 0 th
 
 The inner `filter(...)` calls cannot be translated to SMT and are silently dropped, but the **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. Since the function is recursive and its result cannot be computed by Z3, the `expect` assertions use the full postcondition expression (e.g., `expect diff == filter(a, b)`), which Dafny evaluates at runtime.
 
-#### Recursive Function Finite Unrolling (SMT define-fun)
+### Recursive Function Finite Unrolling (SMT define-fun)
 
 Independently of inlining for DNF, postconditions that reference recursive functions (e.g., `ensures f == Fact(n)`) benefit from a separate mechanism: **finite unrolling into SMT `define-fun` definitions**. By default, Z3 treats recursive functions as uninterpreted — it knows `Fact` is a function but not its definition, so it cannot compute concrete expected values. DafnyTestGen automatically detects simple recursive functions and compiles them into concrete nested `ite` (if-then-else) chains.
 
@@ -220,7 +195,36 @@ This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expec
 
 **Call-site array→seq substitution:** When a `define-fun` takes a `(Seq Int)` parameter but the postcondition passes an array handle (Int-typed in SMT), the call site is automatically rewritten to pass the `_seq` variable instead (e.g., `(Fact a)` → `(Fact a_seq)`), ensuring sort compatibility.
 
-#### Progressive Auto Strategy (default)
+
+## Boundary Value Analysis (`-b`)
+
+BVA complements equivalence class partitioning by testing at the **edges** of each equivalence class. DafnyTestGen extracts numeric bounds from contracts and generates boundary tiers:
+
+- **Integer ranges**: for `requires -100 <= x <= 100`, generates tests at x = -100, -99, 0, 1, 99, 100
+- **Array/sequence sizes**: generates tests with different sizes (length 0, 1, 2, 3, ...), with distinct elements within each tier
+- **Relational bounds**: for `requires 0 <= k <= s.Length`, generates boundary tiers `k=0`, `k=1`, and `k==s.Length` (mapped to the SMT length variable). This exercises all three regions of the precondition: lower boundary, upper boundary, and interior. Relational tiers are prioritized first in the cross-product ordering
+- **Output boundary tiers**: return values and mutable scalar class fields are automatically constrained to explore different output regions. For scalar types — `nat`: `=0`, `=1`, `≥2`; `int`: `>0`, `<0`, `=0`; `bool`: `true`, `false`; `real`: `>0`, `<0`, `=0`. Tuple components are decomposed and each component gets its own tiers. Sequence return values get length tiers: `|f|≥3`, `|f|≥2`, `|f|=1`. Non-trivial tiers are prioritized first since Z3 naturally gravitates toward minimal values. This is particularly useful when postconditions don't uniquely determine the output — e.g., `MaxDistEqual` where Z3 defaults to `maxDist=0` for all input tiers, output boundary tiers force exploration of `maxDist=1`, `maxDist≥2`; or `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`)
+- **Nested sequence inner-length floor tiers**: for `seq<seq<T>>` and `seq<string>` parameters, additional tiers constrain the **minimum inner sublist length**. Without these, Z3 gravitates to empty inner sublists (length 0), producing tests where min-length results are always 0. Two floor tiers are added:
+  - `inner>=1`: all active sublists have length ≥ 1 (forces min-length results like `v >= 1`)
+  - `inner>=2`: all active sublists have length ≥ 2 (forces `v >= 2`)
+
+  These are placed **before** the outer-length tiers in the tier list, so the progressive strategy picks them up early and produces diverse output values. They are alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the exclusion mechanism that blocks previously-seen input values. Z3 freely chooses the outer length for each floor tier.
+- **Ordering shape tiers**: when a precondition constrains an array or sequence with a non-strict ordering (`<=` or `>=`), the weak ordering is decomposed into structurally distinct cases:
+  - **constant** (`a-shape=const`): all elements are equal (e.g., `[3, 3, 3]`)
+  - **strictly ordered** (`a-shape=strict-asc` or `strict-desc`): all consecutive pairs are strictly ordered, no duplicates (e.g., `[-3, -2, -1]`)
+
+  This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, element distinctness constraints are omitted from its size tiers (since the shape tiers control element relationships more precisely).
+
+The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers. For example, `-t 5` generates arrays of length 0 through 4.
+
+BVA is **combined with DNF/FDNF**: each equivalence class (clause) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
+
+## Repetition (`-r`)
+
+The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
+
+
+### Progressive Auto Strategy (default)
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
