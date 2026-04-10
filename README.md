@@ -52,7 +52,7 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 
 When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
-## Mode selection
+### Mode selection
 
 **Simple (DNF) mode** (`-s`)(default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
 
