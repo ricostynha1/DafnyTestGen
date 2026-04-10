@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples.dfy
 // Method: ComputePower
-// Generated: 2026-04-05 23:36:42
+// Generated: 2026-04-08 19:06:14
 
 // Dafny_Verify_tmp_tmphq7j0row_AI_agent_validation_examples.dfy
 
@@ -189,61 +189,174 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  N >= 0
-  //   POST: y == Power(N)
+  //   POST: N == 0
+  //   POST: y == 1
+  //   ENSURES: y == Power(N)
   {
     var N := 0;
     var y := ComputePower(N);
     expect y == 1;
   }
 
-  // Test case for combination {1}/BN=1:
+  // Test case for combination {2}:
   //   PRE:  N >= 0
-  //   POST: y == Power(N)
+  //   POST: !(N == 0)
+  //   POST: y == 2 * Power(N - 1)
+  //   ENSURES: y == Power(N)
   {
     var N := 1;
     var y := ComputePower(N);
+    expect !(N == 0);
     expect y == 2;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Oy=1:
   //   PRE:  N >= 0
-  //   POST: y == Power(N)
+  //   POST: !(N == 0)
+  //   POST: y == 2 * Power(N - 1)
+  //   ENSURES: y == Power(N)
   {
     var N := 2;
     var y := ComputePower(N);
     expect y == 4;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}/Oy=0:
+  //   PRE:  N >= 0
+  //   POST: !(N == 0)
+  //   POST: y == 2 * Power(N - 1)
+  //   ENSURES: y == Power(N)
+  {
+    var N := 3;
+    var y := ComputePower(N);
+    expect y == 8;
+  }
+
+  // Test case for combination {2}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
   //   POST: m == 0
   //   POST: a.Length == 0
+  //   POST: !exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
   {
     var a := new nat[0] [];
     var m := Max(a);
     expect m == 0;
   }
 
-  // Test case for combination {2}/Ba=2:
+  // Test case for combination {3}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
-  //   POST: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: 0 < a.Length
+  //   POST: m == a[0]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
   {
-    var a := new nat[2] [7757, 7756];
+    var a := new nat[1] [39];
     var m := Max(a);
-    expect m == 7757;
+    expect m == 39;
   }
 
-  // Test case for combination {2}/Ba=3:
+  // Test case for combination {4}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
-  //   POST: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && m == a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
   {
-    var a := new nat[3] [7717, 7718, 7719];
+    var a := new nat[3] [0, 39, 39];
     var m := Max(a);
-    expect m == 7719;
+    expect m == 39;
+  }
+
+  // Test case for combination {5}:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: 0 < a.Length
+  //   POST: m == a[(a.Length - 1)]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[1] [7720];
+    var m := Max(a);
+    expect m == 7720;
+  }
+
+  // Test case for combination {7}:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: m == 0
+  //   POST: !(a.Length == 0)
+  //   POST: 0 < a.Length
+  //   POST: m == a[0]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[1] [0];
+    var m := Max(a);
+    expect m == 0;
+  }
+
+  // Test case for combination {8}:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: m == 0
+  //   POST: !(a.Length == 0)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && m == a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[4] [0, 0, 0, 0];
+    var m := Max(a);
+    expect m == 0;
+  }
+
+  // Test case for combination {3}/Om>0:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: 0 < a.Length
+  //   POST: m == a[0]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[2] [450, 449];
+    var m := Max(a);
+    expect m == 450;
+  }
+
+  // Test case for combination {4}/Om>0:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && m == a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[4] [0, 450, 450, 449];
+    var m := Max(a);
+    expect m == 450;
+  }
+
+  // Test case for combination {5}/Om>0:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   POST: !(m == 0)
+  //   POST: !(a.Length == 0)
+  //   POST: 0 < a.Length
+  //   POST: m == a[(a.Length - 1)]
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
+  //   ENSURES: (m == 0 && a.Length == 0) || exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
+  {
+    var a := new nat[2] [0, 1237];
+    var m := Max(a);
+    expect m == 1237;
   }
 
   // Test case for combination {1}:
   //   POST: c == n * n * n
+  //   ENSURES: c == n * n * n
   {
     var n := 0;
     var c := Cube(n);
@@ -252,14 +365,16 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   POST: c == n * n * n
+  //   ENSURES: c == n * n * n
   {
     var n := 1;
     var c := Cube(n);
     expect c == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Oc>=2:
   //   POST: c == n * n * n
+  //   ENSURES: c == n * n * n
   {
     var n := 2;
     var c := Cube(n);
@@ -269,138 +384,128 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  src.Length == dst.Length
   //   POST: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
+  //   ENSURES: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
   {
     var src := new int[0] [];
     var dst := new int[0] [];
     var old_src := src[..];
     DoubleArray(src, dst);
-    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect dst[..] == [];
   }
 
   // Test case for combination {1}/Bsrc=1,dst=1:
   //   PRE:  src.Length == dst.Length
   //   POST: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
+  //   ENSURES: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
   {
     var src := new int[1] [0];
     var dst := new int[1] [8];
     var old_src := src[..];
     DoubleArray(src, dst);
-    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect dst[..] == [0];
   }
 
   // Test case for combination {1}/Bsrc=2,dst=2:
   //   PRE:  src.Length == dst.Length
   //   POST: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
+  //   ENSURES: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
   {
     var src := new int[2] [0, 7720];
     var dst := new int[2] [9, 8];
     var old_src := src[..];
     DoubleArray(src, dst);
-    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect dst[..] == [0, 15440];
   }
 
   // Test case for combination {1}/Bsrc=3,dst=3:
   //   PRE:  src.Length == dst.Length
   //   POST: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
+  //   ENSURES: forall i: int {:trigger old(src[i])} {:trigger dst[i]} :: 0 <= i < src.Length ==> dst[i] == 2 * old(src[i])
   {
     var src := new int[3] [-21240, -21239, 0];
     var dst := new int[3] [12, 11, 13];
     var old_src := src[..];
     DoubleArray(src, dst);
-    expect forall i: int  :: 0 <= i < src.Length ==> dst[i] == 2 * old_src[i];
+    expect dst[..] == [-42480, -42478, 0];
   }
 
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
   //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[1] [16];
-    var old_a := a[..];
-    var old_a_0 := a[0];
     RotateLeft(a);
-    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
-    expect a[a.Length - 1] == old_a_0;
+    expect a[..] == [16];
   }
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
   //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[2] [4, 3];
-    var old_a := a[..];
-    var old_a_0 := a[0];
     RotateLeft(a);
-    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
-    expect a[a.Length - 1] == old_a_0;
+    expect a[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
   //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length - 1 ==> a[i] == old(a[i + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[3] [6, 4, 5];
-    var old_a := a[..];
-    var old_a_0 := a[0];
     RotateLeft(a);
-    expect forall i: int :: 0 <= i < a.Length - 1 ==> a[i] == old_a[i + 1];
-    expect a[a.Length - 1] == old_a_0;
+    expect a[..] == [4, 5, 6];
   }
 
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
   //   POST: a[0] == old(a[a.Length - 1])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
+  //   ENSURES: a[0] == old(a[a.Length - 1])
   {
     var a := new int[1] [15];
-    var old_a := a[..];
-    var old_a_a_Length_1 := a[a.Length - 1];
     RotateRight(a);
-    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
-    expect a[0] == old_a_a_Length_1;
+    expect a[..] == [15];
   }
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
   //   POST: a[0] == old(a[a.Length - 1])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
+  //   ENSURES: a[0] == old(a[a.Length - 1])
   {
     var a := new int[2] [3, 4];
-    var old_a := a[..];
-    var old_a_a_Length_1 := a[a.Length - 1];
     RotateRight(a);
-    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
-    expect a[0] == old_a_a_Length_1;
+    expect a[..] == [4, 3];
   }
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
   //   POST: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
   //   POST: a[0] == old(a[a.Length - 1])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 1 <= i < a.Length ==> a[i] == old(a[i - 1])
+  //   ENSURES: a[0] == old(a[a.Length - 1])
   {
     var a := new int[3] [4, 5, 6];
-    var old_a := a[..];
-    var old_a_a_Length_1 := a[a.Length - 1];
     RotateRight(a);
-    expect forall i: int :: 1 <= i < a.Length ==> a[i] == old_a[i - 1];
-    expect a[0] == old_a_a_Length_1;
+    expect a[..] == [6, 4, 5];
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= m
-  //   POST: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && m == a[i]
-  {
-    var a := new nat[1] [-39];
-    var m := Max(a);
-    // expect m == -39;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

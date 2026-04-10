@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_594.dfy
 // Method: FirstEvenOddDifference
-// Generated: 2026-04-08 10:24:08
+// Generated: 2026-04-08 22:08:43
 
 // Returns the difference between the first even and the first odd number in the array.
 method FirstEvenOddDifference(a: array<int>) returns (diff: int)
@@ -63,7 +63,7 @@ method FirstEvenOddDifferenceTest(){
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination P{3}/{1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
@@ -75,51 +75,256 @@ method Passing()
     expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination P{2,3}/{1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[3] [4, -1, 0];
+    var a := new int[3] [0, 15439, 77];
     var diff := FirstEvenOddDifference(a);
-    expect diff == 5;
+    expect diff == -15439;
     expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
   }
 
-  // Test case for combination {1}/Odiff>0:
+  // Test case for combination P{3,5}/{1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[5] [42479, 11, 12, 13, 0];
+    var a := new int[4] [0, 4875, 0, 42479];
     var diff := FirstEvenOddDifference(a);
-    expect diff == -42467;
+    expect diff == -4875;
     expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
   }
 
-  // Test case for combination {1}/Odiff<0:
+  // Test case for combination P{2,3,5}/{1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[4] [0, -1, 11, 4875];
+    var a := new int[4] [0, 15439, 0, 77];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -15439;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{3,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[3] [0, 0, 42479];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42479;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{2,3,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[8] [0, 23595, 24, 31, 32, 33, 0, 15439];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -23595;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[3] [42479, 0, 4875];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42479;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{2,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[8] [0, 15439, 30, 31, 32, 33, 0, 77];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -15439;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{3,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[8] [0, 26, 27, 0, 28, 29, 4875, 42479];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -27;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{2,3,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[7] [0, -1, 0, 33, 34, 35, 17711];
     var diff := FirstEvenOddDifference(a);
     expect diff == 1;
     expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
   }
 
-  // Test case for combination {1}/Odiff=0:
+  // Test case for combination P{4,5,6}/{1}:
   //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
   //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
   //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[6] [17711, 11, 12, 13, 0, 30];
+    var a := new int[4] [-1, 0, 17711, 4875];
     var diff := FirstEvenOddDifference(a);
-    expect diff == -17699;
+    expect diff == 1;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{7}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[2] [42479, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42479;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[3] [42479, 0, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42479;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{5,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[4] [42477, 0, 4877, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42477;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,5,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[4] [-1, 0, 4875, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == 1;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{2,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[3] [0, 77, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -77;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{2,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[4] [0, 77, 0, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -77;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[7] [-1, 29, 0, 23595, 27, 28, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == 1;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[3] [42479, 4875, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -42479;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[6] [-1, 4875, 28, 0, 49, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == 29;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{5,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[7] [15439, 42477, 28, 29, 30, 0, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -15411;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+  }
+
+  // Test case for combination P{4,5,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  {
+    var a := new int[6] [16733, 25, 0, 28, 64573, 0];
+    var diff := FirstEvenOddDifference(a);
+    expect diff == -16733;
+    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
   }
 
 }

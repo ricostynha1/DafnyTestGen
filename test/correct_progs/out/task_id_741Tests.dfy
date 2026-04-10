@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-04-08 10:25:04
+// Generated: 2026-04-08 22:09:44
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).

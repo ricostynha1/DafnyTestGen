@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 // Method: query
-// Generated: 2026-04-05 23:42:43
+// Generated: 2026-04-08 19:18:47
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 
@@ -97,6 +97,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 <= i <= j <= a.Length
   //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
   {
     var a := new int[0] [];
     var i := 0;
@@ -105,44 +106,154 @@ method Passing()
     expect res == 0;
   }
 
-  // Test case for combination {1}/Ba=2,i=0,j==a:
+  // Test case for combination {2}:
   //   PRE:  0 <= i <= j <= a.Length
   //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [4];
     var i := 0;
-    var j := 0;
+    var j := 1;
     var res := query(a, i, j);
-    expect res == 0;
+    expect res == 4;
   }
 
-  // Test case for combination {1}/Ba=2,i=1,j=1:
+  // Test case for combination {1}/Ba=1,i==j,j==a_len:
   //   PRE:  0 <= i <= j <= a.Length
   //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [2];
     var i := 1;
     var j := 1;
     var res := query(a, i, j);
     expect res == 0;
   }
 
-  // Test case for combination {1}/Ba=2,i=1,j==a:
+  // Test case for combination {1}/Ba=1,i==j,j=0:
   //   PRE:  0 <= i <= j <= a.Length
   //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [2];
+    var i := 0;
+    var j := 0;
+    var res := query(a, i, j);
+    expect res == 0;
+  }
+
+  // Test case for combination {2}/Ores<0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
+  {
+    var a := new int[2] [5, 8];
     var i := 1;
     var j := 2;
     var res := query(a, i, j);
-    expect res == 3;
+    expect res == 8;
+  }
+
+  // Test case for combination {2}/Ores=0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   POST: res == sum(a, i, j)
+  //   ENSURES: res == sum(a, i, j)
+  {
+    var a := new int[2] [5, 8];
+    var i := 0;
+    var j := 2;
+    var res := query(a, i, j);
+    expect res == 13;
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[0] [];
+    var c := new int[1] [4];
+    var i := 0;
+    var j := 0;
+    var r := queryFast(a, c, i, j);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bc=2,i==j,j==a_len:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[1] [9];
+    var c := new int[2] [4, 3];
+    var i := 1;
+    var j := 1;
+    var r := queryFast(a, c, i, j);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bc=2,i==j,j=0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[1] [9];
+    var c := new int[2] [4, 3];
+    var i := 0;
+    var j := 0;
+    var r := queryFast(a, c, i, j);
+    expect r == 0;
   }
 
 }
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {2}:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[1] [6];
+    var c := new int[2] [8, 12];
+    var i := 0;
+    var j := 1;
+    var r := queryFast(a, c, i, j);
+    // expect r == sum(a, i, j);
+  }
+
+  // Test case for combination {2}/Or<0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[2] [7, 13];
+    var c := new int[3] [10, 11, 18];
+    var i := 1;
+    var j := 2;
+    var r := queryFast(a, c, i, j);
+    // expect r == sum(a, i, j);
+  }
+
+  // Test case for combination {2}/Or=0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   PRE:  is_prefix_sum_for(a, c)
+  //   POST: r == sum(a, i, j)
+  //   ENSURES: r == sum(a, i, j)
+  {
+    var a := new int[2] [7, 10];
+    var c := new int[3] [11, 12, 13];
+    var i := 0;
+    var j := 2;
+    var r := queryFast(a, c, i, j);
+    // expect r == 0;
+  }
+
 }
 
 method Main()

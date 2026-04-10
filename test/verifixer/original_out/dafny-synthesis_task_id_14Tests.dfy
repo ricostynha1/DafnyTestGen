@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_14.dfy
 // Method: TriangularPrismVolume
-// Generated: 2026-04-05 23:38:30
+// Generated: 2026-04-08 19:09:40
 
 // dafny-synthesis_task_id_14.dfy
 
@@ -24,6 +24,7 @@ method Passing()
   //   PRE:  height > 0
   //   PRE:  length > 0
   //   POST: volume == base * height * length / 2
+  //   ENSURES: volume == base * height * length / 2
   {
     var base := 1;
     var height := 1;
@@ -37,6 +38,7 @@ method Passing()
   //   PRE:  height > 0
   //   PRE:  length > 0
   //   POST: volume == base * height * length / 2
+  //   ENSURES: volume == base * height * length / 2
   {
     var base := 1;
     var height := 1;
@@ -50,6 +52,7 @@ method Passing()
   //   PRE:  height > 0
   //   PRE:  length > 0
   //   POST: volume == base * height * length / 2
+  //   ENSURES: volume == base * height * length / 2
   {
     var base := 1;
     var height := 2;
@@ -63,12 +66,27 @@ method Passing()
   //   PRE:  height > 0
   //   PRE:  length > 0
   //   POST: volume == base * height * length / 2
+  //   ENSURES: volume == base * height * length / 2
   {
     var base := 1;
     var height := 2;
     var length := 2;
     var volume := TriangularPrismVolume(base, height, length);
     expect volume == 2;
+  }
+
+  // Test case for combination {1}/Ovolume>0:
+  //   PRE:  base > 0
+  //   PRE:  height > 0
+  //   PRE:  length > 0
+  //   POST: volume == base * height * length / 2
+  //   ENSURES: volume == base * height * length / 2
+  {
+    var base := 2;
+    var height := 1;
+    var length := 1;
+    var volume := TriangularPrismVolume(base, height, length);
+    expect volume == 1;
   }
 
 }

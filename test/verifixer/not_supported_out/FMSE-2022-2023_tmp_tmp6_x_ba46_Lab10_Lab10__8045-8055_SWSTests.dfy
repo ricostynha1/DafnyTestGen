@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\FMSE-2022-2023_tmp_tmp6_x_ba46_Lab10_Lab10__8045-8055_SWS.dfy
 // Method: insert
-// Generated: 2026-04-08 18:59:09
+// Generated: 2026-04-08 21:55:12
 
 // FMSE-2022-2023_tmp_tmp6_x_ba46_Lab10_Lab10.dfy
 
@@ -1136,12 +1136,12 @@ method GeneratedTests_at()
 
 method GeneratedTests_BinarySearch()
 {
-  // Test case for combination {1}:
+  // Test case for combination {3}:
   //   PRE:  forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] <= s[j]
   //   POST: index < |s|
   //   POST: s[index] == element
   //   POST: !(index == -1)
-  //   POST: !(index == -1)
+  //   POST: index == -1
   //   POST: element !in s[..]
   //   ENSURES: 0 <= index ==> index < |s| && s[index] == element
   //   ENSURES: index == -1 ==> element !in s[..]
@@ -1150,28 +1150,7 @@ method GeneratedTests_BinarySearch()
     var obj := new OddList(capacity);
     var element := 0;
     var index := obj.BinarySearch(element);
-    expect index < |s|;
-    expect s[index] == element;
-    expect !(index == -1);
-    expect !(index == -1);
-    expect element !in s[..];
-  }
-
-  // Test case for combination {13}/Oindex=0:
-  //   PRE:  forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] <= s[j]
-  //   POST: 0 <= index
-  //   POST: s[index] == element
-  //   POST: !(index == -1)
-  //   POST: !(index == -1)
-  //   POST: element !in s[..]
-  //   ENSURES: 0 <= index ==> index < |s| && s[index] == element
-  //   ENSURES: index == -1 ==> element !in s[..]
-  {
-    var capacity := 1;
-    var obj := new OddList(capacity);
-    var element := 0;
-    var index := obj.BinarySearch(element);
-    expect index == 0;
+    expect index == -1;
   }
 
 }
@@ -1185,7 +1164,6 @@ method GeneratedTests_insert()
   //   POST: l[index % |old(l)|] == element
   //   POST: old(capacity) == capacity
   //   POST: Valid()
-  //   POST: old(capacity) == capacity
   //   POST: (0 <= |s| <= this.capacity && forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> (s[i] as int % 2 == 1))
   //   ENSURES: |old(l)| == 0 ==> l == [element]
   //   ENSURES: |l| == |old(l)| + 1
@@ -1204,7 +1182,6 @@ method GeneratedTests_insert()
     expect l[index % |l|] == element;
     expect old_capacity == capacity;
     expect obj.Valid();
-    expect old_capacity == capacity;
     expect (0 <= |s| <= this.capacity && forall i: int :: 0 <= i < |s| ==> (s[i] as int % 2 == 1));
   }
 
@@ -1486,57 +1463,19 @@ method GeneratedTests_at()
     expect l[index % |l|] == x;
   }
 
-  // Test case for combination {1}/Ox>=2:
-  //   PRE:  |l| > 0
-  //   POST: l[index % |l|] == x
-  //   ENSURES: l[index % |l|] == x
-  {
-    var capacity := 0;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := -1;
-    var x := obj.at(index);
-    expect l[index % |l|] == x;
-  }
-
-  // Test case for combination {1}/Ox=1:
-  //   PRE:  |l| > 0
-  //   POST: l[index % |l|] == x
-  //   ENSURES: l[index % |l|] == x
-  {
-    var capacity := 0;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := -2;
-    var x := obj.at(index);
-    expect x == 1;
-  }
-
-  // Test case for combination {1}/Ox=0:
-  //   PRE:  |l| > 0
-  //   POST: l[index % |l|] == x
-  //   ENSURES: l[index % |l|] == x
-  {
-    var capacity := 0;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := -3;
-    var x := obj.at(index);
-    expect x == 0;
-  }
-
 }
 
 method GeneratedTests_nextAfter()
 {
-  // Test case for combination {1}:
+  // Test case for combination {35}:
   //   PRE:  |l| > 0
   //   POST: x == l[0]
-  //   POST: x == l[0]
+  //   POST: !(x == l[0])
   //   POST: x == l[index % |l| + 1]
   //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
   //   POST: !(0 <= index)
   //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
+  //   POST: !(x == l[index % |l| + 1])
   //   ENSURES: |l| == 1 ==> x == l[0]
   //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
   //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
@@ -1546,27 +1485,23 @@ method GeneratedTests_nextAfter()
     var index := -1;
     var x := obj.nextAfter(index);
     expect x == l[0];
-    expect x == l[0];
+    expect !(x == l[0]);
     expect x == l[0];
     expect !(index % |l| == |l| - 1);
-    expect x == l[0];
-    expect x == l[0];
     expect !(0 <= index);
     expect !(|l| < |l| - 1);
-    expect x == l[0];
+    expect !(x == l[index % |l| + 1]);
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {36}:
   //   PRE:  |l| > 0
   //   POST: x == l[0]
-  //   POST: x == l[0]
+  //   POST: !(x == l[0])
   //   POST: x == l[index % |l| + 1]
   //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
   //   POST: 0 <= index
   //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
+  //   POST: !(x == l[index % |l| + 1])
   //   ENSURES: |l| == 1 ==> x == l[0]
   //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
   //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
@@ -1576,119 +1511,25 @@ method GeneratedTests_nextAfter()
     var index := 0;
     var x := obj.nextAfter(index);
     expect x == l[0];
-    expect x == l[0];
+    expect !(x == l[0]);
     expect x == l[0];
     expect !(index % |l| == |l| - 1);
-    expect x == l[0];
-    expect x == l[0];
     expect 0 <= index;
     expect !(|l| < |l| - 1);
-    expect x == l[0];
-  }
-
-  // Test case for combination {1}/Ox=1:
-  //   PRE:  |l| > 0
-  //   POST: x == l[0]
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(0 <= index)
-  //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
-  //   ENSURES: |l| == 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
-  {
-    var capacity := 1;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := -2;
-    var x := obj.nextAfter(index);
-    expect x == 1;
-  }
-
-  // Test case for combination {1}/Ox=0:
-  //   PRE:  |l| > 0
-  //   POST: x == l[0]
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(0 <= index)
-  //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
-  //   ENSURES: |l| == 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
-  {
-    var capacity := 0;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := -3;
-    var x := obj.nextAfter(index);
-    expect x == 0;
-  }
-
-  // Test case for combination {2}/Ox=1:
-  //   PRE:  |l| > 0
-  //   POST: x == l[0]
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: 0 <= index
-  //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
-  //   ENSURES: |l| == 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
-  {
-    var capacity := 1;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := 1;
-    var x := obj.nextAfter(index);
-    expect x == 1;
-  }
-
-  // Test case for combination {2}/Ox=0:
-  //   PRE:  |l| > 0
-  //   POST: x == l[0]
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: !(index % |l| == |l| - 1)
-  //   POST: x == l[0]
-  //   POST: x == l[index % |l| + 1]
-  //   POST: 0 <= index
-  //   POST: !(|l| < |l| - 1)
-  //   POST: x == l[index % |l| + 1]
-  //   ENSURES: |l| == 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && index % |l| == |l| - 1 ==> x == l[0]
-  //   ENSURES: |l| > 1 && 0 <= index && |l| < |l| - 1 ==> x == l[index % |l| + 1]
-  {
-    var capacity := 2;
-    var obj := new CircularLinkedList<int>(capacity);
-    var index := 0;
-    var x := obj.nextAfter(index);
-    expect x == 0;
+    expect !(x == l[index % |l| + 1]);
   }
 
 }
 
 method GeneratedTests_isIn()
 {
-  // Test case for combination {41}:
+  // Test case for combination {42}:
   //   POST: b == false
   //   POST: 0 < |l|
   //   POST: l[(|l| - 1)] == element
   //   POST: !exists i: int {:trigger l[i]} :: 0 <= i < |l| && l[i] == element
-  //   POST: 0 < |l|
   //   POST: l[0] == element
-  //   POST: l[(|l| - 1)] == element
-  //   POST: 0 < |l|
-  //   POST: 0 < |l|
-  //   POST: l[0] == element
+  //   POST: exists i :: 1 <= i < (|l| - 1) && l[i] == element
   //   ENSURES: |l| == 0 ==> b == false
   //   ENSURES: |l| > 0 && b == true ==> exists i: int {:trigger l[i]} :: 0 <= i < |l| && l[i] == element
   //   ENSURES: |l| > 0 && b == false ==> !exists i: int {:trigger l[i]} :: 0 <= i < |l| && l[i] == element

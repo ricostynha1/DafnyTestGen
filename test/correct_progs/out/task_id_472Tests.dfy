@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-08 10:23:29
+// Generated: 2026-04-08 22:07:59
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -52,7 +52,8 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST: 0 < a.Length - 1
+  //   POST: a[0] + 1 == a[0 + 1]
   //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
     var a := new int[2] [28957, 28958];
@@ -61,31 +62,32 @@ method Passing()
   }
 
   // Test case for combination {2}:
+  //   POST: result
+  //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  {
+    var a := new int[5] [22, -1, 0, 0, 1];
+    var result := ContainsConsecutiveNumbers(a);
+    expect result == true;
+  }
+
+  // Test case for combination {3}:
+  //   POST: result
+  //   POST: 0 < a.Length - 1
+  //   POST: a[(a.Length - 1 - 1)] + 1 == a[(a.Length - 1 - 1) + 1]
+  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  {
+    var a := new int[2] [-1, 0];
+    var result := ContainsConsecutiveNumbers(a);
+    expect result == true;
+  }
+
+  // Test case for combination {4}:
   //   POST: !result
   //   POST: !exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
     var a := new int[0] [];
-    var result := ContainsConsecutiveNumbers(a);
-    expect result == false;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: result
-  //   POST: exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  {
-    var a := new int[3] [21237, 21238, 21240];
-    var result := ContainsConsecutiveNumbers(a);
-    expect result == true;
-  }
-
-  // Test case for combination {2}/Ba=1:
-  //   POST: !result
-  //   POST: !exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  {
-    var a := new int[1] [2];
     var result := ContainsConsecutiveNumbers(a);
     expect result == false;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_tests_Search1000__819_LVR_64.dfy
 // Method: Search2PowLoop
-// Generated: 2026-04-08 18:57:17
+// Generated: 2026-04-08 21:54:17
 
 // Dafny_tmp_tmp0wu8wmfr_tests_Search1000.dfy
 
@@ -182,44 +182,6 @@ method Passing()
     expect k == 0;
   }
 
-  // Test case for combination {1}/Ok>0:
-  //   PRE:  0 <= i <= i + n <= a.Length
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
-  //   PRE:  Is2Pow(n + 1)
-  //   POST: i <= k <= i + n
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  //   ENSURES: i <= k <= i + n
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  {
-    var a := new int[1] [19];
-    var i := 1;
-    var n := 0;
-    var x := -1;
-    var k := Search2PowLoop(a, i, n, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Ok=0:
-  //   PRE:  0 <= i <= i + n <= a.Length
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
-  //   PRE:  Is2Pow(n + 1)
-  //   POST: i <= k <= i + n
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  //   ENSURES: i <= k <= i + n
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  {
-    var a := new int[0] [];
-    var i := 0;
-    var n := 0;
-    var x := -1;
-    var k := Search2PowLoop(a, i, n, x);
-    expect k == 0;
-  }
-
   // Test case for combination {1}:
   //   PRE:  0 <= i <= i + n <= a.Length
   //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
@@ -292,44 +254,6 @@ method Passing()
     var i := 0;
     var n := 0;
     var x := 0;
-    var k := Search2PowRecursive(a, i, n, x);
-    expect k == 0;
-  }
-
-  // Test case for combination {1}/Ok>0:
-  //   PRE:  0 <= i <= i + n <= a.Length
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
-  //   PRE:  Is2Pow(n + 1)
-  //   POST: i <= k <= i + n
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  //   ENSURES: i <= k <= i + n
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  {
-    var a := new int[1] [19];
-    var i := 1;
-    var n := 0;
-    var x := -1;
-    var k := Search2PowRecursive(a, i, n, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Ok=0:
-  //   PRE:  0 <= i <= i + n <= a.Length
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} | i <= p < q < i + n :: a[p] <= a[q]
-  //   PRE:  Is2Pow(n + 1)
-  //   POST: i <= k <= i + n
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  //   ENSURES: i <= k <= i + n
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] < x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < i + n :: a[r] >= x
-  {
-    var a := new int[0] [];
-    var i := 0;
-    var n := 0;
-    var x := -1;
     var k := Search2PowRecursive(a, i, n, x);
     expect k == 0;
   }

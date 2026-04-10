@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\ironsync-osdi2023_tmp_tmpx80antoe_linear-dafny_Test_c++_maps.dfy
 // Method: GenericMap
-// Generated: 2026-04-05 23:40:34
+// Generated: 2026-04-08 19:12:48
 
 // ironsync-osdi2023_tmp_tmpx80antoe_linear-dafny_Test_c++_maps.dfy
 
@@ -171,7 +171,253 @@ class MyClass {
 
 method Passing()
 {
-  // (no passing tests)
+  // Test case for combination {1}:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[];
+    var a := 0;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/Bm=0,n=0,o=0:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[];
+    var a := 1;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/Bm=0,n=0,o=1:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[0 := 0];
+    var a := 0;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/Bm=0,n=0,o=2:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[0 := 0, 1 := 0];
+    var a := 0;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|p|>=3:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[3 := 0];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[1 := 0, 3 := 0];
+    var a := 2;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|p|>=2:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[1 := 0];
+    var a := 3;
+    var b := 0;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|p|>=1:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[];
+    var a := 1;
+    var b := 1;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|q|>=3:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[-1 := 0, 4 := 0];
+    var n: map<int, int> := map[-2 := 0, 2 := 0, 4 := 0];
+    var o: map<int, int> := map[];
+    var a := -1;
+    var b := -1;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|q|>=2:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[-2 := 0, 1 := 0];
+    var n: map<int, int> := map[-2 := 0, 4 := 0];
+    var o: map<int, int> := map[];
+    var a := 4;
+    var b := -2;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|q|>=1:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[-2 := 0];
+    var a := 5;
+    var b := -3;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|r|>=3:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[3 := 0];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[4 := 0];
+    var a := 6;
+    var b := 2;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|r|>=2:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[];
+    var a := -2;
+    var b := 1;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
+  // Test case for combination {1}/O|r|>=1:
+  //   PRE:  a in m.Keys && a in n.Keys
+  //   PRE:  b !in m.Keys && b !in o.Keys
+  //   POST: p == m + n
+  //   POST: q == n + o
+  //   POST: r == o + m
+  //   ENSURES: p == m + n && q == n + o && r == o + m
+  {
+    var m: map<int, int> := map[-2 := 0];
+    var n: map<int, int> := map[];
+    var o: map<int, int> := map[4 := 0];
+    var a := -3;
+    var b := 1;
+    var p, q, r := GenericMap<int, int>(m, n, o, a, b);
+    expect p == m + n;
+    expect q == n + o;
+    expect r == o + m;
+  }
+
 }
 
 method Failing()

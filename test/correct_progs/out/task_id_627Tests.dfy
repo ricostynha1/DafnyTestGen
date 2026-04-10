@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-08 10:24:38
+// Generated: 2026-04-08 22:09:11
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -99,37 +99,6 @@ method Passing()
     var v := SmallestMissingNumber(s);
     expect v == 0;
     expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Ov>=2:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [8101, 8101, 8101, 8101];
-    var v := SmallestMissingNumber(s);
-    expect v == 0;
-    expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Ov=1:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [0, 0, 0, 0, 0];
-    var v := SmallestMissingNumber(s);
-    expect v == 1;
-  }
-
-  // Test case for combination {1}/Ov=0:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [1, 1, 1, 1, 20, 469];
-    var v := SmallestMissingNumber(s);
-    expect v == 0;
   }
 
 }

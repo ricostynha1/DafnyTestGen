@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 // Method: longest_increasing_subsequence
-// Generated: 2026-04-05 23:42:47
+// Generated: 2026-04-08 19:18:54
 
 // Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 
@@ -55,10 +55,10 @@ method Passing()
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
   //   POST: max >= 1
+  //   ENSURES: max >= 1
   {
     var nums := new int[1] [-9962];
     var max := longest_increasing_subsequence(nums);
-    // expect max == 1; // (actual runtime value — not uniquely determined by spec)
     expect max >= 1;
   }
 
@@ -66,10 +66,10 @@ method Passing()
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
   //   POST: max >= 1
+  //   ENSURES: max >= 1
   {
     var nums := new int[2] [-2281, -2280];
     var max := longest_increasing_subsequence(nums);
-    // expect max == 2; // (actual runtime value — not uniquely determined by spec)
     expect max >= 1;
   }
 
@@ -77,10 +77,21 @@ method Passing()
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
   //   POST: max >= 1
+  //   ENSURES: max >= 1
   {
     var nums := new int[3] [-2281, -2280, -2279];
     var max := longest_increasing_subsequence(nums);
-    // expect max == 3; // (actual runtime value — not uniquely determined by spec)
+    expect max >= 1;
+  }
+
+  // Test case for combination {1}/Omax>0:
+  //   PRE:  1 <= nums.Length <= 2500
+  //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
+  //   POST: max >= 1
+  //   ENSURES: max >= 1
+  {
+    var nums := new int[4] [-9962, -2281, -8763, -7563];
+    var max := longest_increasing_subsequence(nums);
     expect max >= 1;
   }
 

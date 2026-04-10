@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_135.dfy
 // Method: NthHexagonalNumber
-// Generated: 2026-04-05 23:38:27
+// Generated: 2026-04-08 19:09:37
 
 // dafny-synthesis_task_id_135.dfy
 
@@ -19,6 +19,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: hexNum == n * (2 * n - 1)
+  //   ENSURES: hexNum == n * (2 * n - 1)
   {
     var n := 0;
     var hexNum := NthHexagonalNumber(n);
@@ -28,19 +29,21 @@ method Passing()
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: hexNum == n * (2 * n - 1)
+  //   ENSURES: hexNum == n * (2 * n - 1)
   {
     var n := 1;
     var hexNum := NthHexagonalNumber(n);
     expect hexNum == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/OhexNum>0:
   //   PRE:  n >= 0
   //   POST: hexNum == n * (2 * n - 1)
+  //   ENSURES: hexNum == n * (2 * n - 1)
   {
-    var n := 4;
+    var n := 3;
     var hexNum := NthHexagonalNumber(n);
-    expect hexNum == 28;
+    expect hexNum == 15;
   }
 
 }

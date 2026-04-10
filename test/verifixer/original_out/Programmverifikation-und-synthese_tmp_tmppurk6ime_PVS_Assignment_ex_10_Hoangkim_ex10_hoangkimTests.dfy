@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim.dfy
 // Method: square0
-// Generated: 2026-04-05 23:42:00
+// Generated: 2026-04-08 19:17:42
 
 // Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim.dfy
 
@@ -62,6 +62,7 @@ method GeneratedTests_square0()
 {
   // Test case for combination {1}:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
     var n := 0;
     var sqn := square0(n);
@@ -70,18 +71,20 @@ method GeneratedTests_square0()
 
   // Test case for combination {1}/Bn=1:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
     var n := 1;
     var sqn := square0(n);
     expect sqn == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Osqn>=2:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
-    var n := 3;
+    var n := 2;
     var sqn := square0(n);
-    expect sqn == 9;
+    expect sqn == 4;
   }
 
 }
@@ -90,6 +93,7 @@ method GeneratedTests_square1()
 {
   // Test case for combination {1}:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
     var n := 0;
     var sqn := square1(n);
@@ -98,18 +102,20 @@ method GeneratedTests_square1()
 
   // Test case for combination {1}/Bn=1:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
     var n := 1;
     var sqn := square1(n);
     expect sqn == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Osqn>=2:
   //   POST: sqn == n * n
+  //   ENSURES: sqn == n * n
   {
-    var n := 3;
+    var n := 2;
     var sqn := square1(n);
-    expect sqn == 9;
+    expect sqn == 4;
   }
 
 }

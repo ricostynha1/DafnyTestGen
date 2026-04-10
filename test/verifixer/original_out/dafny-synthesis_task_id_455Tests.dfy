@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_455.dfy
 // Method: MonthHas31Days
-// Generated: 2026-04-05 23:39:03
+// Generated: 2026-04-08 19:10:14
 
 // dafny-synthesis_task_id_455.dfy
 
@@ -20,36 +20,40 @@ method Passing()
   //   PRE:  1 <= month <= 12
   //   POST: result
   //   POST: month in {1, 3, 5, 7, 8, 10, 12}
+  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
   {
     var month := 1;
     var result := MonthHas31Days(month);
     expect result == true;
   }
 
-}
-
-method Failing()
-{
   // Test case for combination {1}/Bmonth=2:
   //   PRE:  1 <= month <= 12
   //   POST: result
   //   POST: month in {1, 3, 5, 7, 8, 10, 12}
+  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
   {
     var month := 2;
     var result := MonthHas31Days(month);
-    // expect result == true;
+    expect result == false;
   }
 
   // Test case for combination {1}/Bmonth=11:
   //   PRE:  1 <= month <= 12
   //   POST: result
   //   POST: month in {1, 3, 5, 7, 8, 10, 12}
+  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
   {
     var month := 11;
     var result := MonthHas31Days(month);
-    // expect result == true;
+    expect result == false;
   }
 
+}
+
+method Failing()
+{
+  // (no failing tests)
 }
 
 method Main()

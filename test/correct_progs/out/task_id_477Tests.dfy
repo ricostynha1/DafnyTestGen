@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-08 10:23:37
+// Generated: 2026-04-08 22:08:08
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -83,24 +83,6 @@ method Passing()
     var s: seq<char> := ['[', '\U{005C}', ']'];
     var v := ToLowercase(s);
     expect v == ['[', '\U{005C}', ']'];
-  }
-
-  // Test case for combination {1}/O|v|>=3:
-  //   POST: IsMapSeq(s, v, CharToLower)
-  //   ENSURES: IsMapSeq(s, v, CharToLower)
-  {
-    var s: seq<char> := ['[', '~', 'h', 'g'];
-    var v := ToLowercase(s);
-    expect v == ['[', '~', 'h', 'g'];
-  }
-
-  // Test case for combination {1}/O|v|>=2:
-  //   POST: IsMapSeq(s, v, CharToLower)
-  //   ENSURES: IsMapSeq(s, v, CharToLower)
-  {
-    var s: seq<char> := ['[', 't', 'e', 'p', 'u'];
-    var v := ToLowercase(s);
-    expect v == ['[', 't', 'e', 'p', 'u'];
   }
 
 }

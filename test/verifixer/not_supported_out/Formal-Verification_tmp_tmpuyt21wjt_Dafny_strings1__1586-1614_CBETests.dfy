@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1__1586-1614_CBE.dfy
 // Method: isPrefix
-// Generated: 2026-04-08 19:00:37
+// Generated: 2026-04-08 21:55:58
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1.dfy
 
@@ -209,26 +209,6 @@ method Passing()
     expect res == true;
   }
 
-  // Test case for combination {1}/Ores=true:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
-  {
-    var sub: seq<char> := [' '];
-    var str: seq<char> := [];
-    var res := isSubstring(sub, str);
-    expect res == false;
-  }
-
-  // Test case for combination {1}/Ores=false:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
-  {
-    var sub: seq<char> := [' '];
-    var str: seq<char> := [' '];
-    var res := isSubstring(sub, str);
-    expect res == true;
-  }
-
   // Test case for combination {3}:
   //   POST: |str1| < k || |str2| < k ==> !found
   //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
@@ -324,20 +304,6 @@ method Passing()
     expect len == 0;
   }
 
-  // Test case for combination {1}/Olen=0:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := [];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
-  }
-
 }
 
 method Failing()
@@ -353,34 +319,6 @@ method Failing()
     var str2: seq<char> := [];
     var found := haveCommonKSubstring(k, str1, str2);
     // expect found == false;
-  }
-
-  // Test case for combination {1}/Olen>=2:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := ['%', ' '];
-    var str2: seq<char> := ['%', ' '];
-    var len := maxCommonSubstringLength(str1, str2);
-    // expect len == 2;
-  }
-
-  // Test case for combination {1}/Olen=1:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := ['U'];
-    var str2: seq<char> := ['U'];
-    var len := maxCommonSubstringLength(str1, str2);
-    // expect len == 1;
   }
 
 }

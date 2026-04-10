@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-08 10:20:36
+// Generated: 2026-04-08 22:04:47
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -170,26 +170,6 @@ method Passing()
     expect p == 1;
   }
 
-  // Test case for combination {2}/Op=1:
-  //   POST: p == Power(x, n)
-  //   ENSURES: p == Power(x, n)
-  {
-    var x := 1;
-    var n := 2;
-    var p := FastExponentiation(x, n);
-    expect p == 1;
-  }
-
-  // Test case for combination {2}/Op=0:
-  //   POST: p == Power(x, n)
-  //   ENSURES: p == Power(x, n)
-  {
-    var x := 0;
-    var n := 3;
-    var p := FastExponentiation(x, n);
-    expect p == 0;
-  }
-
   // Test case for combination {1}:
   //   PRE:  m > 0
   //   POST: res == Power(x, n) % m
@@ -234,42 +214,6 @@ method Passing()
     var x := 0;
     var n := 1;
     var m := 2;
-    var res := FastModularExponentiation(x, n, m);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Ores>=2:
-  //   PRE:  m > 0
-  //   POST: res == Power(x, n) % m
-  //   ENSURES: res == Power(x, n) % m
-  {
-    var x := 1;
-    var n := 0;
-    var m := 3;
-    var res := FastModularExponentiation(x, n, m);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=1:
-  //   PRE:  m > 0
-  //   POST: res == Power(x, n) % m
-  //   ENSURES: res == Power(x, n) % m
-  {
-    var x := 0;
-    var n := 2;
-    var m := 1;
-    var res := FastModularExponentiation(x, n, m);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Ores=0:
-  //   PRE:  m > 0
-  //   POST: res == Power(x, n) % m
-  //   ENSURES: res == Power(x, n) % m
-  {
-    var x := 2;
-    var n := 0;
-    var m := 1;
     var res := FastModularExponentiation(x, n, m);
     expect res == 0;
   }

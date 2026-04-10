@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\nested_seqs\in\task_id_95.dfy
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-08 10:40:12
+// Generated: 2026-04-08 22:10:47
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -46,11 +46,25 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |s| > 0
   //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
+  //   POST: 0 < |s|
+  //   POST: v == |s[0]|
   //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[4], [], [], [], [], [], [], []];
+    var s: seq<seq<int>> := [[]];
+    var v := SmallestListLength<int>(s);
+    expect v == 0;
+  }
+
+  // Test case for combination {3}:
+  //   PRE:  |s| > 0
+  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST: 0 < |s|
+  //   POST: v == |s[(|s| - 1)]|
+  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
+  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
+  {
+    var s: seq<seq<int>> := [[4], [], [], [], [], [], [7], []];
     var v := SmallestListLength<int>(s);
     expect v == 0;
   }
@@ -58,73 +72,14 @@ method Passing()
   // Test case for combination {1}/Bs=inner>=1:
   //   PRE:  |s| > 0
   //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
+  //   POST: 0 < |s|
+  //   POST: v == |s[0]|
   //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[5]];
+    var s: seq<seq<int>> := [[11], [14]];
     var v := SmallestListLength<int>(s);
     expect v == 1;
-  }
-
-  // Test case for combination {1}/Bs=inner>=2:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[6, 7], [14, 13], [19, 20], [24, 25], [29, 30]];
-    var v := SmallestListLength<int>(s);
-    expect v == 2;
-  }
-
-  // Test case for combination {1}/Bs=2:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[], [5]];
-    var v := SmallestListLength<int>(s);
-    expect v == 0;
-  }
-
-  // Test case for combination {1}/Ov>=2:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[7, 11], [21, 12], [13, 14], [15, 16]];
-    var v := SmallestListLength<int>(s);
-    expect v == 2;
-  }
-
-  // Test case for combination {1}/Ov=1:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[6], [7], [9]];
-    var v := SmallestListLength<int>(s);
-    expect v == 1;
-  }
-
-  // Test case for combination {1}/Ov=0:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 0 <= i < |s| && v == |s[i]|
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[6], [], [], [], [], [], []];
-    var v := SmallestListLength<int>(s);
-    expect v == 0;
   }
 
 }

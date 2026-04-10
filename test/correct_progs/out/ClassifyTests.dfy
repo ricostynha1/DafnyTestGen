@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-04-08 21:47:36
+// Generated: 2026-04-08 22:04:30
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_267.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-05 23:38:45
+// Generated: 2026-04-08 19:09:55
 
 // dafny-synthesis_task_id_267.dfy
 
@@ -28,6 +28,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 0;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
@@ -37,19 +38,21 @@ method Passing()
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 1;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Osum>0:
   //   PRE:  n >= 0
   //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
-    var n := 4;
+    var n := 3;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
-    expect sum == 84;
+    expect sum == 35;
   }
 
 }

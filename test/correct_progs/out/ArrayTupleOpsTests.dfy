@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-08 10:20:01
+// Generated: 2026-04-08 22:04:14
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -148,74 +148,40 @@ method Passing()
 
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   POST: 0 < a.Length
+  //   POST: r == a[0].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[1] [(0, 13)];
+    var a := new (int, int)[1] [(38, 11)];
+    var r := MaxFirst(a);
+    expect r == 38;
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  a.Length > 0
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && r == a[i].0
+  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  {
+    var a := new (int, int)[4] [(-1, 29), (0, 30), (0, 31), (0, 32)];
     var r := MaxFirst(a);
     expect r == 0;
   }
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
+  //   POST: 0 < a.Length
+  //   POST: r == a[0].0
   //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[2] [(0, 10), (-38, 11)];
+    var a := new (int, int)[2] [(7719, 8), (-38, 9)];
     var r := MaxFirst(a);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  {
-    var a := new (int, int)[3] [(-38, 16), (0, 17), (-7719, 15)];
-    var r := MaxFirst(a);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  {
-    var a := new (int, int)[4] [(-38, 23), (-21238, 24), (-2437, 25), (7720, 26)];
-    var r := MaxFirst(a);
-    expect r == 7720;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  {
-    var a := new (int, int)[5] [(-7759, 28), (-7758, 29), (-7758, 30), (-7758, 31), (-7758, 32)];
-    var r := MaxFirst(a);
-    expect r == -7758;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   PRE:  a.Length > 0
-  //   POST: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  {
-    var a := new (int, int)[6] [(-38, 28), (-7719, 29), (-21238, 30), (-2437, 31), (0, 32), (-11797, 33)];
-    var r := MaxFirst(a);
-    expect r == 0;
+    expect r == 7719;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 // Method: copyArr
-// Generated: 2026-04-05 23:42:04
+// Generated: 2026-04-08 19:17:48
 
 // QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 
@@ -112,45 +112,49 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 <= l < r <= a.Length
   //   POST: ret[..] == a[l .. r]
+  //   ENSURES: ret[..] == a[l .. r]
   {
-    var a := new int[1] [4];
+    var a := new int[1] [12];
     var l := 0;
     var r := 1;
     var ret := copyArr(a, l, r);
-    expect ret[..] == a[l .. r];
+    expect ret[..] == [12];
   }
 
-  // Test case for combination {1}/Ba=3,l=0,r==a:
+  // Test case for combination {1}/Ba=2,l=0,r==a_len:
   //   PRE:  0 <= l < r <= a.Length
   //   POST: ret[..] == a[l .. r]
+  //   ENSURES: ret[..] == a[l .. r]
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[2] [4, 3];
+    var l := 0;
+    var r := 2;
+    var ret := copyArr(a, l, r);
+    expect ret[..] == [4, 3];
+  }
+
+  // Test case for combination {1}/Ba=2,l=0,r=1:
+  //   PRE:  0 <= l < r <= a.Length
+  //   POST: ret[..] == a[l .. r]
+  //   ENSURES: ret[..] == a[l .. r]
+  {
+    var a := new int[2] [4, 3];
     var l := 0;
     var r := 1;
     var ret := copyArr(a, l, r);
-    expect ret[..] == a[l .. r];
+    expect ret[..] == [4];
   }
 
-  // Test case for combination {1}/Ba=2,l=1,r==a:
+  // Test case for combination {1}/Ba=2,l=1,r==a_len:
   //   PRE:  0 <= l < r <= a.Length
   //   POST: ret[..] == a[l .. r]
+  //   ENSURES: ret[..] == a[l .. r]
   {
     var a := new int[2] [4, 3];
     var l := 1;
     var r := 2;
     var ret := copyArr(a, l, r);
-    expect ret[..] == a[l .. r];
-  }
-
-  // Test case for combination {1}/Ba=2,l=0,r==a:
-  //   PRE:  0 <= l < r <= a.Length
-  //   POST: ret[..] == a[l .. r]
-  {
-    var a := new int[2] [4, 3];
-    var l := 0;
-    var r := 1;
-    var ret := copyArr(a, l, r);
-    expect ret[..] == a[l .. r];
+    expect ret[..] == [3];
   }
 
   // Test case for combination {1}:
@@ -159,6 +163,9 @@ method Passing()
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
     var a := new int[2] [23, 24];
     var l := 0;
@@ -166,27 +173,28 @@ method Passing()
     var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=3,l=0,m=1,r==a:
+  // Test case for combination {1}/Ba=3,l=0,m=1,r==a_pre_len:
   //   PRE:  0 <= l < m < r <= a.Length
   //   PRE:  sorted(a[l .. m]) && sorted(a[m .. r])
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
-    var a := new int[3] [9, 8, 10];
+    var a := new int[3] [5, 4, 6];
     var l := 0;
     var m := 1;
-    var r := 2;
+    var r := 3;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
@@ -199,14 +207,16 @@ method Passing()
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
-    var a := new int[3] [30, 20, 21];
+    var a := new int[3] [22, 23, 24];
     var l := 1;
     var m := 2;
     var r := 3;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
-    expect sorted(a[l .. m]) && sorted(a[m .. r]); // PRE-CHECK
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
@@ -215,14 +225,16 @@ method Passing()
 
   // Test case for combination {1}:
   //   POST: sorted(a[..])
+  //   ENSURES: sorted(a[..])
   {
     var a := new int[0] [];
     sort(a);
-    expect sorted(a[..]);
+    expect a[..] == [];
   }
 
   // Test case for combination {1}/Ba=1:
   //   POST: sorted(a[..])
+  //   ENSURES: sorted(a[..])
   {
     var a := new int[1] [3];
     sort(a);
@@ -231,6 +243,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   POST: sorted(a[..])
+  //   ENSURES: sorted(a[..])
   {
     var a := new int[2] [4, 3];
     sort(a);
@@ -239,6 +252,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: sorted(a[..])
+  //   ENSURES: sorted(a[..])
   {
     var a := new int[3] [5, 4, 6];
     sort(a);
@@ -250,6 +264,9 @@ method Passing()
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
     var a := new int[1] [17];
     var l := 0;
@@ -262,31 +279,17 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=3,l=0,r==a:
+  // Test case for combination {1}/Ba=2,l=0,r==a_pre_len:
   //   PRE:  0 <= l < r <= a.Length
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
-  {
-    var a := new int[3] [9, 8, 10];
-    var l := 0;
-    var r := 1;
-    var old_a_l := a[..l];
-    var old_a_r := a[r..];
-    sortAux(a, l, r);
-    expect sorted(a[l .. r]);
-    expect a[..l] == old_a_l;
-    expect a[r..] == old_a_r;
-  }
-
-  // Test case for combination {1}/Ba=2,l=1,r==a:
-  //   PRE:  0 <= l < r <= a.Length
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
     var a := new int[2] [4, 3];
-    var l := 1;
+    var l := 0;
     var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
@@ -296,15 +299,38 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=2,l=0,r==a:
+  // Test case for combination {1}/Ba=2,l=0,r=1:
   //   PRE:  0 <= l < r <= a.Length
   //   POST: sorted(a[l .. r])
   //   POST: a[..l] == old(a[..l])
   //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
   {
-    var a := new int[2] [7, 17];
+    var a := new int[2] [4, 3];
     var l := 0;
     var r := 1;
+    var old_a_l := a[..l];
+    var old_a_r := a[r..];
+    sortAux(a, l, r);
+    expect sorted(a[l .. r]);
+    expect a[..l] == old_a_l;
+    expect a[r..] == old_a_r;
+  }
+
+  // Test case for combination {1}/Ba=2,l=1,r==a_pre_len:
+  //   PRE:  0 <= l < r <= a.Length
+  //   POST: sorted(a[l .. r])
+  //   POST: a[..l] == old(a[..l])
+  //   POST: a[r..] == old(a[r..])
+  //   ENSURES: sorted(a[l .. r])
+  //   ENSURES: a[..l] == old(a[..l])
+  //   ENSURES: a[r..] == old(a[r..])
+  {
+    var a := new int[2] [4, 3];
+    var l := 1;
+    var r := 2;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
     sortAux(a, l, r);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples2.dfy
 // Method: add_by_inc
-// Generated: 2026-04-05 23:36:28
+// Generated: 2026-04-08 19:05:57
 
 // Dafny_tmp_tmpmvs2dmry_examples2.dfy
 
@@ -130,6 +130,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: z == x + y
+  //   ENSURES: z == x + y
   {
     var x := 0;
     var y := 0;
@@ -139,6 +140,7 @@ method Passing()
 
   // Test case for combination {1}/Bx=0,y=1:
   //   POST: z == x + y
+  //   ENSURES: z == x + y
   {
     var x := 0;
     var y := 1;
@@ -148,6 +150,7 @@ method Passing()
 
   // Test case for combination {1}/Bx=1,y=0:
   //   POST: z == x + y
+  //   ENSURES: z == x + y
   {
     var x := 1;
     var y := 0;
@@ -157,6 +160,7 @@ method Passing()
 
   // Test case for combination {1}/Bx=1,y=1:
   //   POST: z == x + y
+  //   ENSURES: z == x + y
   {
     var x := 1;
     var y := 1;
@@ -164,8 +168,19 @@ method Passing()
     expect z == 2;
   }
 
+  // Test case for combination {1}/Oz>=2:
+  //   POST: z == x + y
+  //   ENSURES: z == x + y
+  {
+    var x := 2;
+    var y := 0;
+    var z := add_by_inc(x, y);
+    expect z == 2;
+  }
+
   // Test case for combination {1}:
   //   POST: res == m * n
+  //   ENSURES: res == m * n
   {
     var m := 11;
     var n := 0;
@@ -175,6 +190,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=0,n=0:
   //   POST: res == m * n
+  //   ENSURES: res == m * n
   {
     var m := 0;
     var n := 0;
@@ -184,6 +200,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=0,n=1:
   //   POST: res == m * n
+  //   ENSURES: res == m * n
   {
     var m := 0;
     var n := 1;
@@ -193,6 +210,7 @@ method Passing()
 
   // Test case for combination {1}/Bm=1,n=0:
   //   POST: res == m * n
+  //   ENSURES: res == m * n
   {
     var m := 1;
     var n := 0;
@@ -200,35 +218,54 @@ method Passing()
     expect res == 0;
   }
 
+  // Test case for combination {1}/Ores>=2:
+  //   POST: res == m * n
+  //   ENSURES: res == m * n
+  {
+    var m := 2;
+    var n := 16;
+    var res := Product(m, n);
+    expect res == 32;
+  }
+
+  // Test case for combination {1}/Ores=1:
+  //   POST: res == m * n
+  //   ENSURES: res == m * n
+  {
+    var m := 1;
+    var n := 1;
+    var res := Product(m, n);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/Ores=0:
+  //   POST: res == m * n
+  //   ENSURES: res == m * n
+  {
+    var m := 0;
+    var n := 5;
+    var res := Product(m, n);
+    expect res == 0;
+  }
+
   // Test case for combination {1}:
   //   PRE:  m > 0 && n > 0
   //   POST: res == gcd(m, n)
+  //   ENSURES: res == gcd(m, n)
   {
     var m := 1;
     var n := 1;
-    expect m > 0 && n > 0; // PRE-CHECK
     var res := gcdCalc(m, n);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Bm=1,n=2:
+  // Test case for combination {2}:
   //   PRE:  m > 0 && n > 0
   //   POST: res == gcd(m, n)
+  //   ENSURES: res == gcd(m, n)
   {
     var m := 1;
     var n := 2;
-    expect m > 0 && n > 0; // PRE-CHECK
-    var res := gcdCalc(m, n);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Bm=2,n=1:
-  //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  {
-    var m := 2;
-    var n := 1;
-    expect m > 0 && n > 0; // PRE-CHECK
     var res := gcdCalc(m, n);
     expect res == 1;
   }
@@ -236,17 +273,40 @@ method Passing()
   // Test case for combination {1}/Bm=2,n=2:
   //   PRE:  m > 0 && n > 0
   //   POST: res == gcd(m, n)
+  //   ENSURES: res == gcd(m, n)
   {
     var m := 2;
     var n := 2;
-    expect m > 0 && n > 0; // PRE-CHECK
     var res := gcdCalc(m, n);
     expect res == 2;
+  }
+
+  // Test case for combination {2}/Bm=2,n=1:
+  //   PRE:  m > 0 && n > 0
+  //   POST: res == gcd(m, n)
+  //   ENSURES: res == gcd(m, n)
+  {
+    var m := 2;
+    var n := 1;
+    var res := gcdCalc(m, n);
+    expect res == 1;
+  }
+
+  // Test case for combination {2}/Ores=0:
+  //   PRE:  m > 0 && n > 0
+  //   POST: res == gcd(m, n)
+  //   ENSURES: res == gcd(m, n)
+  {
+    var m := 1;
+    var n := 3;
+    var res := gcdCalc(m, n);
+    expect res == 1;
   }
 
   // Test case for combination {1}:
   //   PRE:  x0 >= 0.0
   //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
   {
     var x0 := 0.0;
     var n0 := 0;
@@ -254,9 +314,10 @@ method Passing()
     expect r == 1.0;
   }
 
-  // Test case for combination {1}/Bx0=0.0,n0=1:
+  // Test case for combination {2}:
   //   PRE:  x0 >= 0.0
   //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
   {
     var x0 := 0.0;
     var n0 := 1;
@@ -267,6 +328,7 @@ method Passing()
   // Test case for combination {1}/Bx0=1.0,n0=0:
   //   PRE:  x0 >= 0.0
   //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
   {
     var x0 := 1.0;
     var n0 := 0;
@@ -274,14 +336,37 @@ method Passing()
     expect r == 1.0;
   }
 
-  // Test case for combination {1}/Bx0=1.0,n0=1:
+  // Test case for combination {1}/Bx0=-1.0,n0=0:
   //   PRE:  x0 >= 0.0
   //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
   {
-    var x0 := 1.0;
-    var n0 := 1;
+    var x0 := -1.0;
+    var n0 := 0;
     var r := exp_by_sqr(x0, n0);
     expect r == 1.0;
+  }
+
+  // Test case for combination {2}/Or<0:
+  //   PRE:  x0 >= 0.0
+  //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
+  {
+    var x0 := 1.0;
+    var n0 := 2;
+    var r := exp_by_sqr(x0, n0);
+    expect r == 1.0;
+  }
+
+  // Test case for combination {2}/Or=0:
+  //   PRE:  x0 >= 0.0
+  //   POST: r == exp(x0, n0)
+  //   ENSURES: r == exp(x0, n0)
+  {
+    var x0 := 2.0;
+    var n0 := 1;
+    var r := exp_by_sqr(x0, n0);
+    expect r == 2.0;
   }
 
 }

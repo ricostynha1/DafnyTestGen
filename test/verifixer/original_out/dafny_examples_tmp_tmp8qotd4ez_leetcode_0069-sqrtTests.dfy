@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 // Method: mySqrt
-// Generated: 2026-04-05 23:35:52
+// Generated: 2026-04-08 19:05:09
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 
@@ -49,6 +49,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 <= x
   //   POST: sqrt(x, res)
+  //   ENSURES: sqrt(x, res)
   {
     var x := 7;
     var res := mySqrt(x);
@@ -58,6 +59,7 @@ method Passing()
   // Test case for combination {1}/Bx=0:
   //   PRE:  0 <= x
   //   POST: sqrt(x, res)
+  //   ENSURES: sqrt(x, res)
   {
     var x := 0;
     var res := mySqrt(x);
@@ -67,8 +69,19 @@ method Passing()
   // Test case for combination {1}/Bx=1:
   //   PRE:  0 <= x
   //   POST: sqrt(x, res)
+  //   ENSURES: sqrt(x, res)
   {
     var x := 1;
+    var res := mySqrt(x);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/Ores>0:
+  //   PRE:  0 <= x
+  //   POST: sqrt(x, res)
+  //   ENSURES: sqrt(x, res)
+  {
+    var x := 3;
     var res := mySqrt(x);
     expect res == 1;
   }

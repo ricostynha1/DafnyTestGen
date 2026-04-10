@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-05 23:39:19
+// Generated: 2026-04-08 19:10:44
 
 // dafny-synthesis_task_id_605.dfy
 
@@ -32,6 +32,7 @@ method Passing()
   //   PRE:  n >= 2
   //   POST: result
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
     var result := IsPrime(n);
@@ -41,9 +42,22 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  n >= 2
   //   POST: !result
-  //   POST: !forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST: 2 < n
+  //   POST: !(n % 2 != 0)
+  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
+    var result := IsPrime(n);
+    expect result == false;
+  }
+
+  // Test case for combination {3}:
+  //   PRE:  n >= 2
+  //   POST: !result
+  //   POST: exists k :: 3 <= k < (n - 1) && !(n % k != 0)
+  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  {
+    var n := 6;
     var result := IsPrime(n);
     expect result == false;
   }
@@ -52,20 +66,22 @@ method Passing()
   //   PRE:  n >= 2
   //   POST: result
   //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
     var result := IsPrime(n);
     expect result == true;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {3}/Oresult=false:
   //   PRE:  n >= 2
-  //   POST: result
-  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST: !result
+  //   POST: exists k :: 3 <= k < (n - 1) && !(n % k != 0)
+  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
-    var n := 5;
+    var n := 15;
     var result := IsPrime(n);
-    expect result == true;
+    expect result == false;
   }
 
 }

@@ -21,15 +21,17 @@ The core idea: preconditions and postconditions define **equivalence classes** o
 
 **How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, naturally originate multiple test goals, as illustrated in the following example.
 
+**Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. For example, in `a.Length == 0 || a[0] == 0`, if `a.Length == 0` is true, `a[0] == 0` is never evaluated. The DNF decomposition respects this: `A || B` produces branches `A` and `!A ∧ B` (not just `A` and `B`), ensuring that the right operand is only tested when the left operand is false. Similarly, `A && B` negation produces `!A` and `A ∧ !B`, and `A ==> B` produces `!A` and `A ∧ B`. This prevents generating test cases that would cause runtime errors (e.g., index-out-of-bounds when accessing `a[0]` on an empty array).
+
 ```dafny
 method Process(x: int, y: int) returns (r: int)
   requires x > 0 || y > 0
   ensures r == x + y
 ```
 
-The precondition `x > 0 || y > 0` is decomposed into 2 DNF branches (`x > 0` and `y > 0`), which are both crossed with postcondition branches (in this example, a single branch), leading to the followign test scenarios:
+The precondition `x > 0 || y > 0` is decomposed into 2 short-circuit safe DNF branches (`x > 0` and `!(x > 0) ∧ y > 0`), which are both crossed with postcondition branches (in this example, a single branch), leading to the followign test scenarios:
 - `x > 0 ∧ r == x + y` — x is positive
-- `y > 0 ∧ r == x + y` — y is positive
+- `!(x > 0) ∧ y > 0 ∧ r == x + y` — x is not positive but y is positive
 
 Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples. 
 
@@ -44,9 +46,9 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 |---|---|---|
 | `L` (literal) | `[L, !L]` | idem |
 | `![A, A']` | `[A', A]` | idem |
-| `[A, A'] && [B, B']` | `[AB, A'+B']` | `[AB, A'B+AB'+A'B']` |
-| `[A, A'] \|\| [B, B']` | `[A+B, A'B']` | `[AB+A'B+AB', A'B']` |
-| `[A, A'] ==> [B, B']` | `[A'+B, AB']` | `[A'B+AB+A'B', AB']` |
+| `[A, A'] && [B, B']` | `[AB, A'+AB']` | `[AB, A'B+AB'+A'B']` |
+| `[A, A'] \|\| [B, B']` | `[A+A'B, A'B']` | `[AB+A'B+AB', A'B']` |
+| `[A, A'] ==> [B, B']` | `[A'+AB, AB']` | `[A'B+AB+A'B', AB']` |
 | `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
 | `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
@@ -54,9 +56,9 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 
 When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
-**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition with incremental pruning.
+**Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition (short-circuit safe) with incremental pruning.
 
-**All combinations (FDNF) mode** (`-a`, also used by the progressive auto strategy): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. In progressive mode, if the FDNF clause count exceeds 200 (either within a single ensures clause or after cross-product), the strategy automatically falls back to simple DNF to avoid combinatorial explosion.
+**All combinations (FDNF) mode** (`-a`): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. Note: FDNF can be unsafe with short-circuit logic — for example, `a.Length == 0 || a[0] == 0` produces an FDNF clause `a.Length == 0 ∧ a[0] == 0` that is satisfiable in SMT but causes index-out-of-bounds at runtime. Use only when you understand the implications.
 
 #### Incremental pruning
 
@@ -72,7 +74,7 @@ method Classify(x: int) returns (r: int)
   ensures x > 0 ==> r == 1
 ```
 
-Each implication `A ==> B` produces 2 DNF branches (`!A` or `B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
+Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `A ∧ B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
 - `!(x < 0) ∧ !(x == 0) ∧ r == 1` — SAT, corresponds to x > 0
 - `!(x < 0) ∧ r == 0 ∧ !(x > 0)` — SAT, corresponds to x == 0
 - `r == -1 ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
@@ -224,7 +226,7 @@ This allows Z3 to constrain `f == Fact(n)` directly, producing tests like `expec
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — FDNF/DNF clauses**: All clauses are solved directly. FDNF is preferred (complete clauses with negated literals for non-taken branches), but if the FDNF clause count exceeds 200 (per-ensures or after cross-product), the progressive strategy falls back to simple DNF to avoid combinatorial explosion. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across ensures clauses are deduplicated during cross-product.
+1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across ensures clauses are deduplicated during cross-product.
 
 2. **Phase 2 — Input boundary analysis** (only when phase 1 < minTests and n ≤ 10): Add input boundary value tiers crossed with clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
 

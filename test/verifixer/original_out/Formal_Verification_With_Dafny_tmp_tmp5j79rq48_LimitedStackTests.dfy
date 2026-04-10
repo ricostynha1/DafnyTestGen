@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack.dfy
 // Method: Init
-// Generated: 2026-04-05 23:40:13
+// Generated: 2026-04-08 19:12:21
 
 // Formal_Verification_With_Dafny_tmp_tmp5j79rq48_LimitedStack.dfy
 
@@ -164,7 +164,7 @@ method Passing()
   //   PRE:  c > 0
   //   POST: Valid()
   //   POST: Empty()
-  //   POST: c == capacity
+  //   ENSURES: Valid() && Empty() && c == capacity
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -173,65 +173,115 @@ method Passing()
     obj.top := 0;
     var c := 1;
     obj.Init(c);
-    expect c == 1;
+    expect obj.Valid();
+    expect obj.Empty();
   }
 
-  // Test case for combination {1}/Bc=2,capacity=1,arr=2,top=1:
+  // Test case for combination {1}/Bc=1,capacity=0,arr=0,top=1:
   //   PRE:  c > 0
   //   POST: Valid()
   //   POST: Empty()
-  //   POST: c == capacity
+  //   ENSURES: Valid() && Empty() && c == capacity
   {
     var obj := new LimitedStack;
-    obj.capacity := 1;
-    var tmp_arr := new int[2] [4, 3];
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
     obj.arr := tmp_arr;
     obj.top := 1;
-    var c := 2;
+    var c := 1;
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();
-    expect c == 2;
   }
 
-  // Test case for combination {1}/Bc=2,capacity=1,arr=2,top=0:
+  // Test case for combination {1}/Bc=1,capacity=0,arr=1,top=0:
   //   PRE:  c > 0
   //   POST: Valid()
   //   POST: Empty()
-  //   POST: c == capacity
+  //   ENSURES: Valid() && Empty() && c == capacity
   {
     var obj := new LimitedStack;
-    obj.capacity := 1;
-    var tmp_arr := new int[2] [4, 3];
+    obj.capacity := 0;
+    var tmp_arr := new int[1] [3];
     obj.arr := tmp_arr;
     obj.top := 0;
-    var c := 2;
+    var c := 1;
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();
-    expect c == 2;
   }
 
-  // Test case for combination {1}/Bc=2,capacity=1,arr=1,top=1:
+  // Test case for combination {1}/Bc=1,capacity=0,arr=1,top=1:
   //   PRE:  c > 0
   //   POST: Valid()
   //   POST: Empty()
-  //   POST: c == capacity
+  //   ENSURES: Valid() && Empty() && c == capacity
   {
     var obj := new LimitedStack;
-    obj.capacity := 1;
+    obj.capacity := 0;
     var tmp_arr := new int[1] [3];
     obj.arr := tmp_arr;
     obj.top := 1;
+    var c := 1;
+    obj.Init(c);
+    expect obj.Valid();
+    expect obj.Empty();
+  }
+
+  // Test case for combination {1}/Ocapacity>0:
+  //   PRE:  c > 0
+  //   POST: Valid()
+  //   POST: Empty()
+  //   ENSURES: Valid() && Empty() && c == capacity
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 3;
     var c := 2;
     obj.Init(c);
     expect obj.Valid();
     expect obj.Empty();
-    expect c == 2;
+  }
+
+  // Test case for combination {1}/Ocapacity<0:
+  //   PRE:  c > 0
+  //   POST: Valid()
+  //   POST: Empty()
+  //   ENSURES: Valid() && Empty() && c == capacity
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 4;
+    var c := 1;
+    obj.Init(c);
+    expect obj.Valid();
+    expect obj.Empty();
+  }
+
+  // Test case for combination {1}/Ocapacity=0:
+  //   PRE:  c > 0
+  //   POST: Valid()
+  //   POST: Empty()
+  //   ENSURES: Valid() && Empty() && c == capacity
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 5;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 6;
+    var c := 1;
+    obj.Init(c);
+    expect obj.Valid();
+    expect obj.Empty();
   }
 
   // Test case for combination {1}:
   //   POST: res == Empty()
+  //   ENSURES: res == Empty()
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -244,6 +294,7 @@ method Passing()
 
   // Test case for combination {1}/Bcapacity=0,arr=0,top=1:
   //   POST: res == Empty()
+  //   ENSURES: res == Empty()
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -256,6 +307,7 @@ method Passing()
 
   // Test case for combination {1}/Bcapacity=0,arr=1,top=0:
   //   POST: res == Empty()
+  //   ENSURES: res == Empty()
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -268,6 +320,7 @@ method Passing()
 
   // Test case for combination {1}/Bcapacity=0,arr=1,top=1:
   //   POST: res == Empty()
+  //   ENSURES: res == Empty()
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -278,110 +331,324 @@ method Passing()
     expect res == false;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=1:
-  //   PRE:  Valid() && !Empty()
-  //   POST: elem == arr[top]
+  // Test case for combination {1}/Ores=true:
+  //   POST: res == Empty()
+  //   ENSURES: res == Empty()
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
-    var tmp_arr := new int[2] [4, 3];
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
     obj.arr := tmp_arr;
-    obj.top := 1;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
+    obj.top := -1;
+    var res := obj.isEmpty();
+    expect res == true;
+  }
+
+  // Test case for combination {1}/Ores=false:
+  //   POST: res == Empty()
+  //   ENSURES: res == Empty()
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [3];
+    obj.arr := tmp_arr;
+    obj.top := 2;
+    var res := obj.isEmpty();
+    expect res == false;
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  Valid() && !Empty()
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[1] [3];
+    obj.arr := tmp_arr;
+    obj.top := 0;
     var elem := obj.Peek();
     expect elem == 3;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=0:
+  // Test case for combination {1}/Bcapacity=1,arr=1,top=0:
   //   PRE:  Valid() && !Empty()
   //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [2];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := obj.Peek();
+    expect elem == 2;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=2,top=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
     var tmp_arr := new int[2] [4, 3];
     obj.arr := tmp_arr;
     obj.top := 0;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     var elem := obj.Peek();
     expect elem == 4;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=1:
+  // Test case for combination {1}/Bcapacity=1,arr=2,top=1:
   //   PRE:  Valid() && !Empty()
-  //   POST: Valid()
-  //   POST: top == old(top) - 1
-  //   POST: elem == arr[old(top)]
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
+    obj.capacity := 1;
     var tmp_arr := new int[2] [4, 3];
     obj.arr := tmp_arr;
     obj.top := 1;
-    var old_top := obj.top;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
-    var elem := obj.Pop();
-    expect obj.Valid();
-    expect obj.top == old_top - 1;
+    var elem := obj.Peek();
     expect elem == 3;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=0:
+  // Test case for combination {1}/Oelem>0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 4;
+    var tmp_arr := new int[1] [1];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := obj.Peek();
+    expect elem == 1;
+  }
+
+  // Test case for combination {1}/Oelem<0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 5;
+    var tmp_arr := new int[1] [-1];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := obj.Peek();
+    expect elem == -1;
+  }
+
+  // Test case for combination {1}/Oelem=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: elem == arr[top]
+  //   ENSURES: elem == arr[top]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 6;
+    var tmp_arr := new int[1] [0];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := obj.Peek();
+    expect elem == 0;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=1,top=-1:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [2];
+    obj.arr := tmp_arr;
+    obj.top := -1;
+    var elem := 0;
+    var old_top := obj.top;
+    obj.Push(elem);
+    expect obj.Valid();
+    expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=1,top=0:
   //   PRE:  Valid() && !Empty()
   //   POST: Valid()
   //   POST: top == old(top) - 1
-  //   POST: elem == arr[old(top)]
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
-    var tmp_arr := new int[2] [4, 3];
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [2];
     obj.arr := tmp_arr;
     obj.top := 0;
     var old_top := obj.top;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     var elem := obj.Pop();
     expect obj.Valid();
     expect obj.top == old_top - 1;
-    expect elem == 4;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=1:
+  // Test case for combination {1}:
   //   PRE:  Valid() && !Empty()
   //   POST: Valid()
   //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
   //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
-    var tmp_arr := new int[2] [21, 20];
-    obj.arr := tmp_arr;
-    obj.top := 1;
-    var old_arr := obj.arr[..];
-    var old_top := obj.top;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
-    obj.Shift();
-    expect obj.Valid();
-    expect forall i: int :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
-    expect obj.top == old_top - 1;
-  }
-
-  // Test case for combination {1}/Bcapacity=2,arr=2,top=0:
-  //   PRE:  Valid() && !Empty()
-  //   POST: Valid()
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
-  //   POST: top == old(top) - 1
-  {
-    var obj := new LimitedStack;
-    obj.capacity := 2;
-    var tmp_arr := new int[2] [21, 20];
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
     obj.arr := tmp_arr;
     obj.top := 0;
-    var old_arr := obj.arr[..];
-    var old_top := obj.top;
-    expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     obj.Shift();
-    expect obj.Valid();
-    expect forall i: int :: 0 <= i < obj.capacity - 1 ==> obj.arr[i] == old_arr[i + 1];
-    expect obj.top == old_top - 1;
+    expect obj.top == -1;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=0,top=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    obj.Shift();
+    expect obj.top == -1;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=0,top=1:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    obj.Shift();
+    expect obj.top == 0;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=1,top=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [2];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    obj.Shift();
+    expect obj.top == -1;
+  }
+
+  // Test case for combination {1}/Otop>0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := -1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 2;
+    obj.Shift();
+    expect obj.top == 1;
+  }
+
+  // Test case for combination {1}/Otop<0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := -1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -2;
+    obj.Shift();
+    expect obj.top == -3;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=1,top=-1:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [0];
+    obj.arr := tmp_arr;
+    obj.top := -1;
+    var elem := 0;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    expect obj.top == 0;
+  }
+
+  // Test case for combination {1}/Otop=0:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [13];
+    obj.arr := tmp_arr;
+    obj.top := -1;
+    var elem := 13;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    expect obj.top == 0;
   }
 
 }
@@ -389,10 +656,129 @@ method Passing()
 method Failing()
 {
   // Test case for combination {1}:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    var elem := 0;
+    var old_top := obj.top;
+    obj.Push(elem);
+    // expect obj.Valid();
+    // expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=0,top=-1:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -1;
+    var elem := 0;
+    var old_top := obj.top;
+    obj.Push(elem);
+    // expect obj.Valid();
+    // expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=1,top=1:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [2];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    var elem := 0;
+    var old_top := obj.top;
+    obj.Push(elem);
+    // expect obj.Valid();
+    // expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Otop>0:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := 1;
+    var old_top := obj.top;
+    obj.Push(elem);
+    // expect obj.Valid();
+    // expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Otop<0:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := -1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -3;
+    var elem := 0;
+    var old_top := obj.top;
+    obj.Push(elem);
+    // expect obj.Valid();
+    // expect obj.top == old_top + 1;
+  }
+
+  // Test case for combination {1}/Otop=0:
+  //   PRE:  Valid()
+  //   PRE:  !Full()
+  //   POST: Valid()
+  //   POST: top == old(top) + 1
+  //   ENSURES: Valid() && top == old(top) + 1 && arr[top] == elem
+  //   ENSURES: !old(Empty()) ==> forall i: int {:trigger old(arr[i])} {:trigger arr[i]} :: 0 <= i <= old(top) ==> arr[i] == old(arr[i])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := -2;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -2;
+    var elem := 0;
+    obj.Push(elem);
+    // expect obj.top == 0;
+  }
+
+  // Test case for combination {1}:
   //   PRE:  Valid() && !Empty()
   //   POST: Valid()
   //   POST: top == old(top) - 1
-  //   POST: elem == arr[old(top)]
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
   {
     var obj := new LimitedStack;
     obj.capacity := 0;
@@ -400,32 +786,304 @@ method Failing()
     obj.arr := tmp_arr;
     obj.top := 0;
     var old_top := obj.top;
-    var check_elem := obj.arr[old_top];
-    // expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     var elem := obj.Pop();
     // expect obj.Valid();
     // expect obj.top == old_top - 1;
-    // expect elem == check_elem;
   }
 
-  // Test case for combination {1}/Bcapacity=2,arr=1,top=1:
+  // Test case for combination {1}/Bcapacity=1,arr=0,top=0:
   //   PRE:  Valid() && !Empty()
   //   POST: Valid()
   //   POST: top == old(top) - 1
-  //   POST: elem == arr[old(top)]
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
   {
     var obj := new LimitedStack;
-    obj.capacity := 2;
-    var tmp_arr := new int[1] [3];
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
     obj.arr := tmp_arr;
-    obj.top := 1;
+    obj.top := 0;
     var old_top := obj.top;
-    var check_elem := obj.arr[old_top];
-    // expect obj.Valid() && !obj.Empty(); // PRE-CHECK
     var elem := obj.Pop();
     // expect obj.Valid();
     // expect obj.top == old_top - 1;
-    // expect elem == check_elem;
+  }
+
+  // Test case for combination {1}/Bcapacity=1,arr=0,top=1:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Oelem>0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -2;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Oelem<0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -3;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Oelem=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 0;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := -4;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Otop>0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 3;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 2;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Otop<0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 5;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 4;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Otop=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid() && top == old(top) - 1
+  //   ENSURES: elem == arr[old(top)]
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 7;
+    var tmp_arr := new int[0] [];
+    obj.arr := tmp_arr;
+    obj.top := 6;
+    var old_top := obj.top;
+    var elem := obj.Pop();
+    // expect obj.Valid();
+    // expect obj.top == old_top - 1;
+  }
+
+  // Test case for combination {1}/Otop=0:
+  //   PRE:  Valid() && !Empty()
+  //   POST: Valid()
+  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   POST: top == old(top) - 1
+  //   ENSURES: Valid()
+  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  //   ENSURES: top == old(top) - 1
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 2;
+    var tmp_arr := new int[1] [10];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    obj.Shift();
+    // expect obj.top == 0;
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [21];
+    obj.arr := tmp_arr;
+    obj.top := -21239;
+    var elem := 10;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    // expect obj.top == -21238;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=1,top=0:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [0];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := 0;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    // expect obj.Valid();
+    // expect !obj.Empty();
+    // expect obj.arr[obj.top] == elem;
+    // expect !old_Full;
+    // expect !old_Full2;
+  }
+
+  // Test case for combination {1}/Belem=0,capacity=1,arr=1,top=1:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [3];
+    obj.arr := tmp_arr;
+    obj.top := 1;
+    var elem := 0;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    // expect obj.top == 2;
+  }
+
+  // Test case for combination {1}/Otop>0:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [11];
+    obj.arr := tmp_arr;
+    obj.top := 0;
+    var elem := 11;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    // expect obj.Valid();
+    // expect !obj.Empty();
+    // expect obj.arr[obj.top] == elem;
+    // expect !old_Full;
+    // expect !old_Full2;
+  }
+
+  // Test case for combination {1}/Otop<0:
+  //   PRE:  Valid()
+  //   POST: Valid()
+  //   POST: !Empty()
+  //   POST: arr[top] == elem
+  //   POST: !old(!Full())
+  //   POST: !old(Full())
+  //   ENSURES: Valid() && !Empty()
+  //   ENSURES: arr[top] == elem
+  //   ENSURES: old(!Full()) ==> top == old(top) + 1 && old(Full()) ==> top == old(top)
+  //   ENSURES: (old(Full()) ==> arr[capacity - 1] == elem) && (old(!Full()) ==> top == old(top) + 1 && arr[top] == elem)
+  //   ENSURES: old(Full()) ==> forall i: int {:trigger arr[i]} :: 0 <= i < capacity - 1 ==> arr[i] == old(arr[i + 1])
+  {
+    var obj := new LimitedStack;
+    obj.capacity := 1;
+    var tmp_arr := new int[1] [23];
+    obj.arr := tmp_arr;
+    obj.top := -21240;
+    var elem := 12;
+    var old_Full := !obj.Full();
+    var old_Full2 := obj.Full();
+    obj.Push2(elem);
+    // expect obj.top == -21239;
   }
 
 }

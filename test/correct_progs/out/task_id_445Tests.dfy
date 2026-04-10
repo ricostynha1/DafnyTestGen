@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-08 10:23:19
+// Generated: 2026-04-08 22:07:45
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -79,32 +79,6 @@ method Passing()
     var b: seq<int> := [-1, 0, 1];
     var result := ElementWiseMultiplication(a, b);
     expect result == [0, 0, 2];
-  }
-
-  // Test case for combination {1}/O|result|>=3:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
-  {
-    var a: seq<int> := [0, 0, 0, 0];
-    var b: seq<int> := [0, 0, 0, 0];
-    var result := ElementWiseMultiplication(a, b);
-    expect result == [0, 0, 0, 0];
-  }
-
-  // Test case for combination {1}/O|result|>=2:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
-  {
-    var a: seq<int> := [0, 0, 0, 0, 0];
-    var b: seq<int> := [0, 0, 0, 0, 0];
-    var result := ElementWiseMultiplication(a, b);
-    expect result == [0, 0, 0, 0, 0];
   }
 
 }

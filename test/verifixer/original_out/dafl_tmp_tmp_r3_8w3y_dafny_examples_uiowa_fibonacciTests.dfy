@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 // Method: ComputeFib
-// Generated: 2026-04-05 23:35:38
+// Generated: 2026-04-08 19:04:39
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 
@@ -46,26 +46,38 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 0;
     var f := ComputeFib(n);
     expect f == 0;
   }
 
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {2}:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 1;
     var f := ComputeFib(n);
     expect f == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Of=1:
   //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
   {
     var n := 2;
     var f := ComputeFib(n);
     expect f == 1;
+  }
+
+  // Test case for combination {2}/Of=0:
+  //   POST: f == fib(n)
+  //   ENSURES: f == fib(n)
+  {
+    var n := 3;
+    var f := ComputeFib(n);
+    expect f == 2;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2104_ROR_Lt.dfy
 // Method: InsertPrime
-// Generated: 2026-04-08 18:57:38
+// Generated: 2026-04-08 21:54:34
 
 // DafnyPrograms_tmp_tmp74_f9k_c_prime-database.dfy
 
@@ -147,8 +147,7 @@ method Passing()
   //   ENSURES: database == database[n := true]
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[];
-    obj.database := tmp_database;
+    obj.database := map[];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
@@ -170,8 +169,7 @@ method Passing()
   //   ENSURES: !prime(n) <==> database == database[n := false]
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[];
-    obj.database := tmp_database;
+    obj.database := map[];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
@@ -189,7 +187,6 @@ method Passing()
   //   POST: n in database
   //   POST: prime(n)
   //   POST: answer == Yes
-  //   POST: n in database
   //   ENSURES: Valid()
   //   ENSURES: database.Keys == old(database.Keys)
   //   ENSURES: n in database && prime(n) <==> answer == Yes
@@ -197,8 +194,7 @@ method Passing()
   //   ENSURES: !(n in database) <==> answer == Unknown
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[];
-    obj.database := tmp_database;
+    obj.database := map[];
     obj.Repr := {obj};
     var n := 8;
     var old_database_Keys := obj.database.Keys;
@@ -214,7 +210,6 @@ method Passing()
   //   POST: n in database
   //   POST: prime(n)
   //   POST: answer == Yes
-  //   POST: n in database
   //   ENSURES: Valid()
   //   ENSURES: database.Keys == old(database.Keys)
   //   ENSURES: n in database && prime(n) <==> answer == Yes
@@ -222,8 +217,7 @@ method Passing()
   //   ENSURES: !(n in database) <==> answer == Unknown
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[];
-    obj.database := tmp_database;
+    obj.database := map[];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
@@ -239,7 +233,6 @@ method Passing()
   //   POST: n in database
   //   POST: prime(n)
   //   POST: answer == Yes
-  //   POST: n in database
   //   ENSURES: Valid()
   //   ENSURES: database.Keys == old(database.Keys)
   //   ENSURES: n in database && prime(n) <==> answer == Yes
@@ -247,8 +240,7 @@ method Passing()
   //   ENSURES: !(n in database) <==> answer == Unknown
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[4 := false];
-    obj.database := tmp_database;
+    obj.database := map[4 := false];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
@@ -273,8 +265,7 @@ method Failing()
   //   ENSURES: !prime(n) <==> database == database[n := false]
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[];
-    obj.database := tmp_database;
+    obj.database := map[];
     obj.Repr := {obj};
     var n := 0;
     var old_database_Keys := obj.database.Keys;
@@ -292,7 +283,6 @@ method Failing()
   //   POST: n in database
   //   POST: prime(n)
   //   POST: answer == Yes
-  //   POST: n in database
   //   ENSURES: Valid()
   //   ENSURES: database.Keys == old(database.Keys)
   //   ENSURES: n in database && prime(n) <==> answer == Yes
@@ -300,8 +290,7 @@ method Failing()
   //   ENSURES: !(n in database) <==> answer == Unknown
   {
     var obj := new PrimeMap();
-    var tmp_database: map<nat, bool> := map[2 := false];
-    obj.database := tmp_database;
+    obj.database := map[2 := false];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;

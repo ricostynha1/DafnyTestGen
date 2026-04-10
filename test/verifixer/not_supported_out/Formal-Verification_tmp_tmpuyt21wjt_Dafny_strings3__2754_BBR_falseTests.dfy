@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings3__2754_BBR_false.dfy
 // Method: isPrefix
-// Generated: 2026-04-08 19:00:57
+// Generated: 2026-04-08 21:56:12
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings3.dfy
 
@@ -215,30 +215,6 @@ method Passing()
     expect res == true;
   }
 
-  // Test case for combination {1}/Ores=true:
-  //   POST: !res
-  //   POST: isNotPrefixPred(pre, str)
-  //   ENSURES: !res <==> isNotPrefixPred(pre, str)
-  //   ENSURES: res <==> isPrefixPred(pre, str)
-  {
-    var pre: seq<char> := [' '];
-    var str: seq<char> := [' '];
-    var res := isPrefix(pre, str);
-    expect res == true;
-  }
-
-  // Test case for combination {1}/Ores=false:
-  //   POST: !res
-  //   POST: isNotPrefixPred(pre, str)
-  //   ENSURES: !res <==> isNotPrefixPred(pre, str)
-  //   ENSURES: res <==> isPrefixPred(pre, str)
-  {
-    var pre: seq<char> := ['4'];
-    var str: seq<char> := [];
-    var res := isPrefix(pre, str);
-    expect res == false;
-  }
-
   // Test case for combination {1}:
   //   POST: res
   //   ENSURES: res <==> isSubstringPred(sub, str)
@@ -277,26 +253,6 @@ method Passing()
     var str: seq<char> := [' ', '"', '!'];
     var res := isSubstring(sub, str);
     expect res;
-  }
-
-  // Test case for combination {1}/Ores=true:
-  //   POST: res
-  //   ENSURES: res <==> isSubstringPred(sub, str)
-  {
-    var sub: seq<char> := ['%'];
-    var str: seq<char> := ['%'];
-    var res := isSubstring(sub, str);
-    expect res == true;
-  }
-
-  // Test case for combination {1}/Ores=false:
-  //   POST: res
-  //   ENSURES: res <==> isSubstringPred(sub, str)
-  {
-    var sub: seq<char> := [' '];
-    var str: seq<char> := [];
-    var res := isSubstring(sub, str);
-    expect res == false;
   }
 
   // Test case for combination {1}:
@@ -390,47 +346,6 @@ method Passing()
     expect len == 0;
     expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
     expect haveCommonKSubstringPred(len, str1, str2);
-  }
-
-  // Test case for combination {1}/Olen>=2:
-  //   PRE:  |str1| <= |str2|
-  //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   POST: haveCommonKSubstringPred(len, str1, str2)
-  //   ENSURES: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   ENSURES: haveCommonKSubstringPred(len, str1, str2)
-  {
-    var str1: seq<char> := ['4'];
-    var str2: seq<char> := ['4'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 1;
-    expect forall k: int :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2);
-    expect haveCommonKSubstringPred(len, str1, str2);
-  }
-
-  // Test case for combination {1}/Olen=1:
-  //   PRE:  |str1| <= |str2|
-  //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   POST: haveCommonKSubstringPred(len, str1, str2)
-  //   ENSURES: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   ENSURES: haveCommonKSubstringPred(len, str1, str2)
-  {
-    var str1: seq<char> := ['4', 'U'];
-    var str2: seq<char> := ['4', 'U'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 2;
-  }
-
-  // Test case for combination {1}/Olen=0:
-  //   PRE:  |str1| <= |str2|
-  //   POST: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   POST: haveCommonKSubstringPred(len, str1, str2)
-  //   ENSURES: forall k: int {:trigger haveCommonKSubstringPred(k, str1, str2)} :: len < k <= |str1| ==> !haveCommonKSubstringPred(k, str1, str2)
-  //   ENSURES: haveCommonKSubstringPred(len, str1, str2)
-  {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := ['U', '4'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
   }
 
 }

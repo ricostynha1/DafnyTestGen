@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Two Sum_two_sum.dfy
 // Method: twoSum
-// Generated: 2026-04-05 23:40:31
+// Generated: 2026-04-08 19:12:44
 
 // HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Two Sum_two_sum.dfy
 
@@ -49,6 +49,10 @@ method Passing()
   //   POST: 0 <= index1 < nums.Length
   //   POST: 0 <= index2 < nums.Length
   //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
   {
     var nums := new int[2] [0, 0];
     var target := 0;
@@ -66,6 +70,10 @@ method Passing()
   //   POST: 0 <= index1 < nums.Length
   //   POST: 0 <= index2 < nums.Length
   //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
   {
     var nums := new int[2] [-8855, 8856];
     var target := 1;
@@ -83,6 +91,10 @@ method Passing()
   //   POST: 0 <= index1 < nums.Length
   //   POST: 0 <= index2 < nums.Length
   //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
   {
     var nums := new int[3] [-21239, 21239, 21240];
     var target := 0;
@@ -100,6 +112,10 @@ method Passing()
   //   POST: 0 <= index1 < nums.Length
   //   POST: 0 <= index2 < nums.Length
   //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
   {
     var nums := new int[3] [0, 1, 8367];
     var target := 1;
@@ -108,6 +124,82 @@ method Passing()
     expect 0 <= index1 < nums.Length;
     expect 0 <= index2 < nums.Length;
     expect nums[index1] + nums[index2] == target;
+  }
+
+  // Test case for combination {1}/Oindex1>0:
+  //   PRE:  2 <= nums.Length
+  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
+  //   POST: index1 != index2
+  //   POST: 0 <= index1 < nums.Length
+  //   POST: 0 <= index2 < nums.Length
+  //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
+  {
+    var nums := new int[2] [8855, -11293];
+    var target := -2438;
+    var index1, index2 := twoSum(nums, target);
+    expect index1 == 0;
+    expect index2 == 1;
+  }
+
+  // Test case for combination {1}/Oindex1=0:
+  //   PRE:  2 <= nums.Length
+  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
+  //   POST: index1 != index2
+  //   POST: 0 <= index1 < nums.Length
+  //   POST: 0 <= index2 < nums.Length
+  //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
+  {
+    var nums := new int[2] [21238, -23677];
+    var target := -2439;
+    var index1, index2 := twoSum(nums, target);
+    expect index1 == 0;
+    expect index2 == 1;
+  }
+
+  // Test case for combination {1}/Oindex2>0:
+  //   PRE:  2 <= nums.Length
+  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
+  //   POST: index1 != index2
+  //   POST: 0 <= index1 < nums.Length
+  //   POST: 0 <= index2 < nums.Length
+  //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
+  {
+    var nums := new int[2] [11292, -13732];
+    var target := -2440;
+    var index1, index2 := twoSum(nums, target);
+    expect index1 == 0;
+    expect index2 == 1;
+  }
+
+  // Test case for combination {1}/Oindex2=0:
+  //   PRE:  2 <= nums.Length
+  //   PRE:  exists i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length && nums[i] + nums[j] == target
+  //   POST: index1 != index2
+  //   POST: 0 <= index1 < nums.Length
+  //   POST: 0 <= index2 < nums.Length
+  //   POST: nums[index1] + nums[index2] == target
+  //   ENSURES: index1 != index2
+  //   ENSURES: 0 <= index1 < nums.Length
+  //   ENSURES: 0 <= index2 < nums.Length
+  //   ENSURES: nums[index1] + nums[index2] == target
+  {
+    var nums := new int[2] [7719, -10160];
+    var target := -2441;
+    var index1, index2 := twoSum(nums, target);
+    expect index1 == 0;
+    expect index2 == 1;
   }
 
 }

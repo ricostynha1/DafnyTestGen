@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-08 10:20:20
+// Generated: 2026-04-08 22:04:32
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -91,28 +91,6 @@ method Passing()
     var k := 1;
     var res := CalcComb(n, k);
     expect res == 1;
-  }
-
-  // Test case for combination {2}/Ores=1:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 3;
-    var k := 2;
-    var res := CalcComb(n, k);
-    expect res == 3;
-  }
-
-  // Test case for combination {2}/Ores=0:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 4;
-    var k := 1;
-    var res := CalcComb(n, k);
-    expect res == 4;
   }
 
 }

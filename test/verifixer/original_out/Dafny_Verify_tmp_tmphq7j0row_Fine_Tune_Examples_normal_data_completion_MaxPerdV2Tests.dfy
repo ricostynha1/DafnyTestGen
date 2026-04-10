@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2.dfy
 // Method: max
-// Generated: 2026-04-05 23:37:05
+// Generated: 2026-04-08 19:06:39
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2.dfy
 
@@ -59,45 +59,78 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 < n <= a.Length
   //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
   {
-    var a := new int[1] [4];
+    var a := new int[1] [0];
     var n := 1;
     var max := max(a, n);
-    // expect max == 4; // (actual runtime value — not uniquely determined by spec)
-    expect is_max(max, a, n);
+    expect max == 0;
+  }
+
+  // Test case for combination {1}/Ba=2,n==a_len:
+  //   PRE:  0 < n <= a.Length
+  //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
+  {
+    var a := new int[2] [-1, 0];
+    var n := 2;
+    var max := max(a, n);
+    expect max == 0;
   }
 
   // Test case for combination {1}/Ba=2,n=1:
   //   PRE:  0 < n <= a.Length
   //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
   {
     var a := new int[2] [4, 3];
     var n := 1;
     var max := max(a, n);
-    // expect max == 4; // (actual runtime value — not uniquely determined by spec)
-    expect is_max(max, a, n);
+    expect max == 4;
   }
 
-  // Test case for combination {1}/Ba=2,n=2:
+  // Test case for combination {1}/Ba=3,n==a_len:
   //   PRE:  0 < n <= a.Length
   //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[3] [28955, 28956, 28957];
+    var n := 3;
+    var max := max(a, n);
+    expect max == 28957;
+  }
+
+  // Test case for combination {1}/Omax>0:
+  //   PRE:  0 < n <= a.Length
+  //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
+  {
+    var a := new int[4] [-7719, 21239, 26, 25];
     var n := 2;
     var max := max(a, n);
-    // expect max == 4; // (actual runtime value — not uniquely determined by spec)
-    expect is_max(max, a, n);
+    expect max == 21239;
   }
 
-  // Test case for combination {1}/Ba=3,n=1:
+  // Test case for combination {1}/Omax<0:
   //   PRE:  0 < n <= a.Length
   //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
   {
-    var a := new int[3] [5, 4, 6];
-    var n := 1;
+    var a := new int[3] [-7721, -7720, 25];
+    var n := 2;
     var max := max(a, n);
-    // expect max == 5; // (actual runtime value — not uniquely determined by spec)
-    expect is_max(max, a, n);
+    expect max == -7720;
+  }
+
+  // Test case for combination {1}/Omax=0:
+  //   PRE:  0 < n <= a.Length
+  //   POST: is_max(max, a, n)
+  //   ENSURES: is_max(max, a, n)
+  {
+    var a := new int[4] [-7719, -21238, -2437, 0];
+    var n := 4;
+    var max := max(a, n);
+    expect max == 0;
   }
 
 }

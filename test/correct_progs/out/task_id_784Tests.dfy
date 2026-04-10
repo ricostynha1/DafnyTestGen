@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-08 10:25:25
+// Generated: 2026-04-08 22:10:11
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -82,7 +82,7 @@ method ProductEvenOddTest(){
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination P{3}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
@@ -94,54 +94,259 @@ method Passing()
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
-  // Test case for combination {1}/Blst=3:
+  // Test case for combination P{2,3}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [4, 15439, 0];
-    var product := ProductFirstEvenOdd(lst);
-    expect product == 61756;
-    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
-  }
-
-  // Test case for combination {1}/Oproduct>0:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [0, 15, 16, -1];
+    var lst: seq<int> := [0, 15439, 77];
     var product := ProductFirstEvenOdd(lst);
     expect product == 0;
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
-  // Test case for combination {1}/Oproduct<0:
+  // Test case for combination P{3,5}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [16730, 23595, 11, 17713, 26];
+    var lst: seq<int> := [0, 4875, 0, 42479];
     var product := ProductFirstEvenOdd(lst);
-    expect product == 394744350;
+    expect product == 0;
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
-  // Test case for combination {1}/Oproduct=0:
+  // Test case for combination P{2,3,5}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [8, -1, 19, 20, 21, 22, 0];
+    var lst: seq<int> := [0, 15439, 0, 77];
     var product := ProductFirstEvenOdd(lst);
-    expect product == -8;
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination P{3,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 0, 42479];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{2,3,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 23595, 24, 31, 32, 33, 0, 15439];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [42479, 0, 4875];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{2,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 15439, 30, 31, 32, 33, 0, 77];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{3,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 26, 27, 0, 28, 29, 4875, 42479];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{2,3,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, -1, 0, 33, 34, 35, 17711];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [-1, 0, 17711, 4875];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [42479, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [42479, 0, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{5,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [42477, 0, 4877, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,5,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [-1, 0, 4875, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{2,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 77, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{2,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [0, 77, 0, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [-1, 29, 0, 23595, 27, 28, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [42479, 4875, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [-1, 4875, 28, 0, 49, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == -28;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{5,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [15439, 42477, 28, 29, 30, 0, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 432292;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{4,5,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  {
+    var lst: seq<int> := [16733, 25, 0, 28, 64573, 0];
+    var product := ProductFirstEvenOdd(lst);
+    expect product == 0;
+    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
+  }
+
+  // Test case for combination P{3}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -149,13 +354,13 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16731];
+    var lst: seq<int> := [0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
   }
 
-  // Test case for combination {1}/Blst=3:
+  // Test case for combination P{2,3}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -163,13 +368,27 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 40326, 16731];
+    var lst: seq<int> := [0, 23595, 51813, 16733];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 1;
+  }
+
+  // Test case for combination P{3,5}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 0, 17711, 23597];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 2;
   }
 
-  // Test case for combination {1}/OevenIndex>=2:
+  // Test case for combination P{2,3,5}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -177,13 +396,13 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [1, 1, 0, 56];
+    var lst: seq<int> := [0, 20901, 0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 2;
-    expect oddIndex == 0;
+    expect evenIndex == 0;
+    expect oddIndex == 1;
   }
 
-  // Test case for combination {1}/OevenIndex=1:
+  // Test case for combination P{3,6}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -191,13 +410,41 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [-1, 0, 16, 21, 25, 29];
+    var lst: seq<int> := [0, 0, 0, 64573];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 3;
+  }
+
+  // Test case for combination P{2,3,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 16731, -1, 29, 0, 50, 20903];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 1;
+  }
+
+  // Test case for combination P{4,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, 0, 0, 16731];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 1;
     expect oddIndex == 0;
   }
 
-  // Test case for combination {1}/OevenIndex=0:
+  // Test case for combination P{2,5,6}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -205,13 +452,13 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 64573, 29, 31, 30];
+    var lst: seq<int> := [0, 16731, 30, 31, 0, 45, 46, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
   }
 
-  // Test case for combination {1}/OoddIndex>=2:
+  // Test case for combination P{3,5,6}/{1}:
   //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
   //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
@@ -219,24 +466,164 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 0, 1, 48, 20901, 64571, 0, 50];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 0;
-    expect oddIndex == 2;
-  }
-
-  // Test case for combination {1}/OoddIndex=1:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  //   ENSURES: IsFirstEven(evenIndex, lst)
-  //   ENSURES: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [0, 77, 19, 20, 21, 23, 22];
+    var lst: seq<int> := [0, 20901, 36, 37, 38, 39, 0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
+  }
+
+  // Test case for combination P{2,3,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 20901, 33, 0, 34, 16733];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 1;
+  }
+
+  // Test case for combination P{4,5,6}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [17713, 0, 20901, 23595];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 1;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 1;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{4,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [16733, 0, 0, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 1;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{5,7}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, 0, -1, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 1;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{2,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 20903, 64571, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 1;
+  }
+
+  // Test case for combination P{2,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [0, 77, 0, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 0;
+    expect oddIndex == 1;
+  }
+
+  // Test case for combination P{4,5,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, 64571, 0, 0, 34, 35, 36, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 2;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, 2649, 57763, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 3;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{4,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [23597, -1, 0, 35, 0, 36, 37, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 2;
+    expect oddIndex == 0;
+  }
+
+  // Test case for combination P{4,5,7,8}/{1}:
+  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: IsFirstEven(evenIndex, lst)
+  //   POST: IsFirstOdd(oddIndex, lst)
+  //   ENSURES: IsFirstEven(evenIndex, lst)
+  //   ENSURES: IsFirstOdd(oddIndex, lst)
+  {
+    var lst: seq<int> := [11709, -1, 563, 2285, 56201, 0, 0];
+    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
+    expect evenIndex == 5;
+    expect oddIndex == 0;
   }
 
 }

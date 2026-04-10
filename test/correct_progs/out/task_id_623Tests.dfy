@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-08 10:24:33
+// Generated: 2026-04-08 22:09:06
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -89,51 +89,6 @@ method Passing()
     var n := 1;
     var result := PowerOfListElements(l, n);
     expect result == [3];
-    expect |result| == |l|;
-    expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
-  }
-
-  // Test case for combination {1}/O|result|>=3:
-  //   PRE:  n >= 0
-  //   POST: |result| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  //   ENSURES: |result| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  {
-    var l: seq<int> := [6, 7, 8];
-    var n := 0;
-    var result := PowerOfListElements(l, n);
-    expect result == [1, 1, 1];
-    expect |result| == |l|;
-    expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
-  }
-
-  // Test case for combination {1}/O|result|>=2:
-  //   PRE:  n >= 0
-  //   POST: |result| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  //   ENSURES: |result| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  {
-    var l: seq<int> := [6, 7];
-    var n := 2;
-    var result := PowerOfListElements(l, n);
-    expect result == [36, 49];
-    expect |result| == |l|;
-    expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
-  }
-
-  // Test case for combination {1}/O|result|=1:
-  //   PRE:  n >= 0
-  //   POST: |result| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  //   ENSURES: |result| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
-  {
-    var l: seq<int> := [3];
-    var n := 2;
-    var result := PowerOfListElements(l, n);
-    expect result == [9];
     expect |result| == |l|;
     expect forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
   }

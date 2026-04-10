@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-04-08 10:21:46
+// Generated: 2026-04-08 22:06:00
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 

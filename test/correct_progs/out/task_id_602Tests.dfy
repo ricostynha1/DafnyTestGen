@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-04-08 10:24:20
+// Generated: 2026-04-08 22:08:52
 
 // Finds the first repeated character in a string. Returns a pair (found, c) where 
 // found is true if a repeated character was found, and c is the repeated character.
@@ -53,7 +53,6 @@ method Passing()
   // Test case for combination {6}:
   //   POST: !found
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
@@ -62,14 +61,12 @@ method Passing()
     var found, c := FindFirstRepeatedChar(s);
     expect !found;
     expect !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l];
-    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
   // Test case for combination {8}:
   //   POST: found
   //   POST: exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: found
   //   POST: !forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
@@ -83,7 +80,6 @@ method Passing()
   // Test case for combination {6}/Bs=1:
   //   POST: !found
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
@@ -92,14 +88,12 @@ method Passing()
     var found, c := FindFirstRepeatedChar(s);
     expect !found;
     expect !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l];
-    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 
   // Test case for combination {6}/Bs=2:
   //   POST: !found
   //   POST: !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
-  //   POST: !found
   //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
   //   ENSURES: found ==> exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l]
   //   ENSURES: !found ==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]
@@ -108,7 +102,6 @@ method Passing()
     var found, c := FindFirstRepeatedChar(s);
     expect !found;
     expect !exists i, j :: 0 <= i < j < |s| && s[i] == s[j] == c && forall k, l :: 0 <= k < i && k < l < |s| ==> s[k] != s[l];
-    expect !found;
     expect forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j];
   }
 

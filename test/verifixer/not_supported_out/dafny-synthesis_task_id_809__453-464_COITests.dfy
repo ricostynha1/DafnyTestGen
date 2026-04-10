@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\dafny-synthesis_task_id_809__453-464_COI.dfy
 // Method: IsSmaller
-// Generated: 2026-04-08 18:57:29
+// Generated: 2026-04-08 21:54:25
 
 // dafny-synthesis_task_id_809.dfy
 
@@ -27,11 +27,10 @@ method IsSmaller(a: seq<int>, b: seq<int>) returns (result: bool)
 
 method Passing()
 {
-  // Test case for combination {4}:
+  // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
-  //   POST: result
   //   POST: !exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
@@ -42,66 +41,15 @@ method Passing()
     expect result == true;
   }
 
-  // Test case for combination {5}/Oresult=false:
-  //   PRE:  |a| == |b|
-  //   POST: !result
-  //   POST: 0 < |a|
-  //   POST: !(a[0] > b[0])
-  //   POST: !result
-  //   POST: 0 < |a|
-  //   POST: a[0] <= b[0]
-  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
-  //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
-  {
-    var a: seq<int> := [-2438, 20652];
-    var b: seq<int> := [-1, 20651];
-    var result := IsSmaller(a, b);
-    expect result == false;
-  }
-
-  // Test case for combination {10}/Oresult=false:
-  //   PRE:  |a| == |b|
-  //   POST: !result
-  //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] > b[i])
-  //   POST: !result
-  //   POST: exists i :: 1 <= i < (|a| - 1) && a[i] <= b[i]
-  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
-  //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
-  {
-    var a: seq<int> := [2438, 0, 62897, 11797];
-    var b: seq<int> := [2437, 21238, 34, 11796];
-    var result := IsSmaller(a, b);
-    expect result == false;
-  }
-
-  // Test case for combination {15}/Oresult=false:
-  //   PRE:  |a| == |b|
-  //   POST: !result
-  //   POST: 0 < |a|
-  //   POST: !(a[(|a| - 1)] > b[(|a| - 1)])
-  //   POST: !result
-  //   POST: 0 < |a|
-  //   POST: a[(|a| - 1)] <= b[(|a| - 1)]
-  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
-  //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
-  {
-    var a: seq<int> := [7719, -2];
-    var b: seq<int> := [7718, -1];
-    var result := IsSmaller(a, b);
-    expect result == false;
-  }
-
 }
 
 method Failing()
 {
-  // Test case for combination {5}:
+  // Test case for combination {2}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: 0 < |a|
   //   POST: !(a[0] > b[0])
-  //   POST: !result
-  //   POST: 0 < |a|
   //   POST: a[0] <= b[0]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
@@ -112,12 +60,11 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {6}:
+  // Test case for combination {3}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: 0 < |a|
   //   POST: !(a[0] > b[0])
-  //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && a[i] <= b[i]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
@@ -128,13 +75,11 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {7}:
+  // Test case for combination {4}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: 0 < |a|
   //   POST: !(a[0] > b[0])
-  //   POST: !result
-  //   POST: 0 < |a|
   //   POST: a[(|a| - 1)] <= b[(|a| - 1)]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
@@ -145,11 +90,10 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {9}:
+  // Test case for combination {6}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] > b[i])
-  //   POST: !result
   //   POST: 0 < |a|
   //   POST: a[0] <= b[0]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
@@ -161,11 +105,10 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {10}:
+  // Test case for combination {7}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] > b[i])
-  //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && a[i] <= b[i]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]
@@ -176,11 +119,10 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {11}:
+  // Test case for combination {8}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] > b[i])
-  //   POST: !result
   //   POST: 0 < |a|
   //   POST: a[(|a| - 1)] <= b[(|a| - 1)]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
@@ -192,12 +134,11 @@ method Failing()
     // expect result == false;
   }
 
-  // Test case for combination {14}:
+  // Test case for combination {11}:
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: 0 < |a|
   //   POST: !(a[(|a| - 1)] > b[(|a| - 1)])
-  //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && a[i] <= b[i]
   //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] > b[i]
   //   ENSURES: !result <==> exists i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| && a[i] <= b[i]

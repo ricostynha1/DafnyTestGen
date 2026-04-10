@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-05 23:38:49
+// Generated: 2026-04-08 19:10:02
 
 // dafny-synthesis_task_id_399.dfy
 
@@ -31,24 +31,26 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [];
     var b: seq<bv32> := [];
     var result := BitwiseXOR(a, b);
-    // expect result == []; // (actual runtime value — not uniquely determined by spec)
-    expect |result| == |a|;
-    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [];
   }
 
   // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
-    var a: seq<bv32> := [2];
-    var b: seq<bv32> := [3];
+    var a: seq<bv32> := [3];
+    var b: seq<bv32> := [4];
     var result := BitwiseXOR(a, b);
-    // expect result == [1]; // (actual runtime value — not uniquely determined by spec)
+    expect result == [7];
     expect |result| == |a|;
     expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
@@ -57,11 +59,13 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [4, 3];
     var b: seq<bv32> := [6, 5];
     var result := BitwiseXOR(a, b);
-    // expect result == [2, 6]; // (actual runtime value — not uniquely determined by spec)
+    expect result == [2, 6];
     expect |result| == |a|;
     expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
@@ -70,11 +74,43 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [5, 4, 6];
     var b: seq<bv32> := [8, 7, 9];
     var result := BitwiseXOR(a, b);
-    // expect result == [13, 3, 15]; // (actual runtime value — not uniquely determined by spec)
+    expect result == [13, 3, 15];
+    expect |result| == |a|;
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+  }
+
+  // Test case for combination {1}/O|result|>=3:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [8, 9, 10, 11];
+    var b: seq<bv32> := [36, 37, 38, 39];
+    var result := BitwiseXOR(a, b);
+    expect result == [44, 44, 44, 44];
+    expect |result| == |a|;
+    expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+  }
+
+  // Test case for combination {1}/O|result|>=2:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [9, 10, 11, 12, 13];
+    var b: seq<bv32> := [49, 50, 51, 52, 53];
+    var result := BitwiseXOR(a, b);
+    expect result == [56, 56, 56, 56, 56];
     expect |result| == |a|;
     expect forall i: int  :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
   }
