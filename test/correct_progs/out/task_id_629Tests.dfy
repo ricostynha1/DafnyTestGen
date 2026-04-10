@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-08 22:09:14
+// Generated: 2026-04-10 22:34:07
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -83,7 +83,7 @@ method Passing()
     expect evenList == [];
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/Barr=1:
   //   POST: evenList == Filter(arr[..], IsEven)
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
@@ -92,7 +92,7 @@ method Passing()
     expect evenList == [2];
   }
 
-  // Test case for combination {2}/Barr=2:
+  // Test case for combination {1}/Barr=2:
   //   POST: evenList == Filter(arr[..], IsEven)
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
@@ -101,13 +101,40 @@ method Passing()
     expect evenList == [4];
   }
 
-  // Test case for combination {2}/Barr=3:
+  // Test case for combination {1}/Barr=3:
   //   POST: evenList == Filter(arr[..], IsEven)
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
     var arr := new int[3] [5, 4, 6];
     var evenList := FindEvenNumbers(arr);
     expect evenList == [4, 6];
+  }
+
+  // Test case for combination {1}/O|evenList|>=3:
+  //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[4] [5, 6, 7, 8];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [6, 8];
+  }
+
+  // Test case for combination {1}/O|evenList|>=2:
+  //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[5] [6, 7, 8, 9, 10];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [6, 8, 10];
+  }
+
+  // Test case for combination {1}/O|evenList|=1:
+  //   POST: evenList == Filter(arr[..], IsEven)
+  //   ENSURES: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[6] [8, 9, 10, 11, 12, 13];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [8, 10, 12];
   }
 
 }

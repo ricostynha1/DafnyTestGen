@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-08 22:10:27
+// Generated: 2026-04-10 22:37:06
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -53,6 +53,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
+  //   POST: sum == 0
   //   ENSURES: sum == ArraySum(a, 0, n)
   {
     var a := new int[0] [];
@@ -63,18 +64,21 @@ method Passing()
 
   // Test case for combination {2}:
   //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
+  //   POST: !(n <= 0)
+  //   POST: sum == (if n - 1 <= 0 then 0 else ArraySum(a, 0, n - 1 - 1) + a[n - 1 - 1]) + a[n - 1]
   //   ENSURES: sum == ArraySum(a, 0, n)
   {
     var a := new int[1] [4];
     var n := 1;
     var sum := CalcArraySum(a, n);
     expect sum == 4;
+    expect !(n <= 0);
   }
 
   // Test case for combination {1}/Ba=1,n=0:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
+  //   POST: sum == 0
   //   ENSURES: sum == ArraySum(a, 0, n)
   {
     var a := new int[1] [2];
@@ -86,12 +90,63 @@ method Passing()
   // Test case for combination {1}/Ba=2,n=0:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
+  //   POST: sum == 0
   //   ENSURES: sum == ArraySum(a, 0, n)
   {
     var a := new int[2] [4, 3];
     var n := 0;
     var sum := CalcArraySum(a, n);
     expect sum == 0;
+  }
+
+  // Test case for combination {1}/Osum=0:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: sum == ArraySum(a, 0, n)
+  //   POST: sum == 0
+  //   ENSURES: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[3] [4, 5, 6];
+    var n := 0;
+    var sum := CalcArraySum(a, n);
+    expect sum == 0;
+  }
+
+  // Test case for combination {2}/Osum>0:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: !(n <= 0)
+  //   POST: sum == (if n - 1 <= 0 then 0 else ArraySum(a, 0, n - 1 - 1) + a[n - 1 - 1]) + a[n - 1]
+  //   ENSURES: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[2] [5, 6];
+    var n := 2;
+    var sum := CalcArraySum(a, n);
+    expect sum == 11;
+    expect !(n <= 0);
+  }
+
+  // Test case for combination {2}/Osum<0:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: !(n <= 0)
+  //   POST: sum == (if n - 1 <= 0 then 0 else ArraySum(a, 0, n - 1 - 1) + a[n - 1 - 1]) + a[n - 1]
+  //   ENSURES: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[2] [5, 8];
+    var n := 1;
+    var sum := CalcArraySum(a, n);
+    expect sum == 5;
+    expect !(n <= 0);
+  }
+
+  // Test case for combination {2}/Osum=0:
+  //   PRE:  0 <= n <= a.Length
+  //   POST: !(n <= 0)
+  //   POST: sum == (if n - 1 <= 0 then 0 else ArraySum(a, 0, n - 1 - 1) + a[n - 1 - 1]) + a[n - 1]
+  //   ENSURES: sum == ArraySum(a, 0, n)
+  {
+    var a := new int[3] [6, 10, 9];
+    var n := 3;
+    var sum := CalcArraySum(a, n);
+    expect sum == 25;
   }
 
 }

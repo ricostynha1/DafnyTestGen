@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-08 22:07:07
+// Generated: 2026-04-10 23:02:02
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -49,12 +49,12 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: !(a[0] == x)
   //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
   {
-    var a := new int[1] [2];
-    var x := 3;
+    var a := new int[2] [15, 14];
+    var x := 14;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == false;
   }
@@ -64,20 +64,66 @@ method Passing()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
   //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
   {
-    var a := new int[3] [16, 8, 21];
-    var x := 10;
+    var a := new int[4] [9, 19, 18, 9];
+    var x := 9;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == false;
   }
 
   // Test case for combination {4}:
   //   POST: !result
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: !(a[(a.Length - 1)] == x)
   //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
   {
-    var a := new int[1] [13];
+    var a := new int[2] [9, 20];
     var x := 9;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {1}/Oresult=true:
+  //   POST: result
+  //   POST: forall i :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[1] [8];
+    var x := 8;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/Oresult=false:
+  //   POST: !result
+  //   POST: 0 <= (a.Length - 1)
+  //   POST: !(a[0] == x)
+  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[2] [16, 15];
+    var x := 15;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/Oresult=false:
+  //   POST: !result
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[3] [11, 8, 11];
+    var x := 11;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {4}/Oresult=false:
+  //   POST: !result
+  //   POST: 0 <= (a.Length - 1)
+  //   POST: !(a[(a.Length - 1)] == x)
+  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[2] [10, 21];
+    var x := 10;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == false;
   }

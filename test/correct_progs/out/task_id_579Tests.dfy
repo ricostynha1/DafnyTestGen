@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-08 22:08:35
+// Generated: 2026-04-10 22:32:49
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -107,6 +107,36 @@ method Passing()
     expect res == {4, 5, 6};
   }
 
+  // Test case for combination {1}/O|res|>=3:
+  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  {
+    var a := new int[1] [6];
+    var b := new int[0] [];
+    var res := DissimilarElements<int>(a, b);
+    expect res == {6};
+  }
+
+  // Test case for combination {1}/O|res|>=2:
+  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  {
+    var a := new int[1] [6];
+    var b := new int[1] [7];
+    var res := DissimilarElements<int>(a, b);
+    expect res == {6, 7};
+  }
+
+  // Test case for combination {1}/O|res|>=1:
+  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  {
+    var a := new int[2] [6, 7];
+    var b := new int[2] [12, 11];
+    var res := DissimilarElements<int>(a, b);
+    expect res == {6, 7, 11, 12};
+  }
+
   // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
@@ -149,6 +179,28 @@ method Passing()
     var x := 1;
     var res := contains<int>(a, x);
     expect res == true;
+  }
+
+  // Test case for combination {1}/Ores=true:
+  //   POST: res
+  //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
+  {
+    var a := new int[1] [9];
+    var x := 9;
+    var res := contains<int>(a, x);
+    expect res == true;
+  }
+
+  // Test case for combination {2}/Ores=false:
+  //   POST: !res
+  //   POST: !(x in a[..])
+  //   ENSURES: res <==> x in a[..]
+  {
+    var a := new int[0] [];
+    var x := 9;
+    var res := contains<int>(a, x);
+    expect res == false;
   }
 
 }

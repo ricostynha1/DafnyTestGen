@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-08 22:06:26
+// Generated: 2026-04-10 23:00:36
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -74,6 +74,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  a > 0 && b > 0
   //   POST: sum == sumSeq(commonDivisors(a, b))
+  //   POST: sum == 0
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 1;
@@ -85,6 +86,7 @@ method Passing()
   // Test case for combination {1}/Ba=1,b=2:
   //   PRE:  a > 0 && b > 0
   //   POST: sum == sumSeq(commonDivisors(a, b))
+  //   POST: sum == 0
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 1;
@@ -96,10 +98,48 @@ method Passing()
   // Test case for combination {1}/Ba=2,b=1:
   //   PRE:  a > 0 && b > 0
   //   POST: sum == sumSeq(commonDivisors(a, b))
+  //   POST: sum == 0
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 2;
     var b := 1;
+    var sum := SumOfCommonDivisors(a, b);
+    expect sum == 1;
+  }
+
+  // Test case for combination {1}/Osum=0:
+  //   PRE:  a > 0 && b > 0
+  //   POST: sum == sumSeq(commonDivisors(a, b))
+  //   POST: sum == 0
+  //   ENSURES: sum == sumSeq(commonDivisors(a, b))
+  {
+    var a := 3;
+    var b := 1;
+    var sum := SumOfCommonDivisors(a, b);
+    expect sum == 1;
+  }
+
+  // Test case for combination {2}/Osum>=2:
+  //   PRE:  a > 0 && b > 0
+  //   POST: !(|commonDivisors(a, b)| == 0)
+  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + (if |commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| == 0 then 0 else commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][..|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1]))
+  //   ENSURES: sum == sumSeq(commonDivisors(a, b))
+  {
+    var a := 2;
+    var b := 2;
+    var sum := SumOfCommonDivisors(a, b);
+    expect sum == 3;
+    expect !(|commonDivisors(a, b)| == 0);
+  }
+
+  // Test case for combination {2}/Osum=1:
+  //   PRE:  a > 0 && b > 0
+  //   POST: !(|commonDivisors(a, b)| == 0)
+  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + (if |commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| == 0 then 0 else commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][..|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1]))
+  //   ENSURES: sum == sumSeq(commonDivisors(a, b))
+  {
+    var a := 1;
+    var b := 3;
     var sum := SumOfCommonDivisors(a, b);
     expect sum == 1;
   }

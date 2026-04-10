@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_566.dfy
 // Method: CalcSumOfDigits
-// Generated: 2026-04-08 22:08:17
+// Generated: 2026-04-10 22:31:55
 
 // Recursive definition of the sum of the decimal digits of a natural number n.
 function SumOfDigits(n: nat) : (sum: nat) { 
@@ -41,13 +41,12 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: n > 0
-  //   POST: sum == SumOfDigits(n / 10) + n % 10
+  //   POST: sum == SumOfDigits(n)
+  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
     var n := 1;
     var sum := CalcSumOfDigits(n);
-    expect n > 0;
     expect sum == 1;
   }
 
@@ -62,26 +61,37 @@ method Passing()
     expect sum == 0;
   }
 
-  // Test case for combination {1}/Osum=1:
+  // Test case for combination {1}/Osum>=2:
   //   PRE:  n >= 0
-  //   POST: n > 0
-  //   POST: sum == SumOfDigits(n / 10) + n % 10
+  //   POST: sum == SumOfDigits(n)
+  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
-    var n := 2;
+    var n := 1001;
     var sum := CalcSumOfDigits(n);
     expect sum == 2;
   }
 
-  // Test case for combination {1}/Osum=0:
+  // Test case for combination {1}/Osum=1:
   //   PRE:  n >= 0
-  //   POST: n > 0
-  //   POST: sum == SumOfDigits(n / 10) + n % 10
+  //   POST: sum == SumOfDigits(n)
+  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
-    var n := 3;
+    var n := 100;
     var sum := CalcSumOfDigits(n);
-    expect sum == 3;
+    expect sum == 1;
+  }
+
+  // Test case for combination {1}/Osum=0:
+  //   PRE:  n >= 0
+  //   POST: sum == SumOfDigits(n)
+  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
+  //   ENSURES: sum == SumOfDigits(n)
+  {
+    var n := 1100;
+    var sum := CalcSumOfDigits(n);
+    expect sum == 2;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-08 22:05:26
+// Generated: 2026-04-10 22:58:38
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -36,15 +36,15 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: 0 + maxDist < a.Length && a[0] == a[0 + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[1] [10];
+    var a := new int[2] [10, 10];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
+    expect maxDist == 1;
   }
 
   // Test case for combination {2}:
@@ -54,35 +54,59 @@ method Passing()
   //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[3] [18, 11, 25];
+    var a := new int[4] [24, 25, 13, 13];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
+    expect maxDist == 1;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {1}/OmaxDist>=2:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
-  //   POST: (a.Length - 1) + maxDist < a.Length && a[(a.Length - 1)] == a[(a.Length - 1) + maxDist]
-  //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
-  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
-  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
-  {
-    var a := new int[1] [9];
-    var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: 0 + maxDist < a.Length && a[0] == a[0 + maxDist]
   //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[2] [3, 6];
+    var a := new int[4] [11, 12, 11, 19];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
+    expect maxDist == 2;
+  }
+
+  // Test case for combination {1}/OmaxDist=1:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= (a.Length - 1)
+  //   POST: 0 + maxDist < a.Length && a[0] == a[0 + maxDist]
+  //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  {
+    var a := new int[3] [8, 8, 16];
+    var maxDist := MaxDistEqual(a);
+    expect maxDist == 1;
+  }
+
+  // Test case for combination {2}/OmaxDist>=2:
+  //   PRE:  a.Length > 0
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  {
+    var a := new int[5] [24, 13, 28, 13, 17];
+    var maxDist := MaxDistEqual(a);
+    expect maxDist == 2;
+  }
+
+  // Test case for combination {2}/OmaxDist=1:
+  //   PRE:  a.Length > 0
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   POST: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  //   ENSURES: exists i :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
+  //   ENSURES: forall i, j :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
+  {
+    var a := new int[3] [14, 15, 15];
+    var maxDist := MaxDistEqual(a);
+    expect maxDist == 1;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-08 22:06:38
+// Generated: 2026-04-10 23:01:22
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -44,7 +44,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= start <= end <= a.Length
-  //   POST: |a[start .. end]| == 0
+  //   POST: sum == SumSeq(a[start .. end])
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
@@ -58,20 +58,20 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
     var a := new int[1] [13];
     var start := 0;
     var end := 1;
     var sum := CalcSumRange(a, start, end);
-    expect !(|a[start .. end]| == 0);
     expect sum == 13;
+    expect !(|a[start .. end]| == 0);
   }
 
   // Test case for combination {1}/Ba=0,start==end,end==a_len:
   //   PRE:  0 <= start <= end <= a.Length
-  //   POST: |a[start .. end]| == 0
+  //   POST: sum == SumSeq(a[start .. end])
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
@@ -84,7 +84,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=1,start==end,end==a_len:
   //   PRE:  0 <= start <= end <= a.Length
-  //   POST: |a[start .. end]| == 0
+  //   POST: sum == SumSeq(a[start .. end])
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
@@ -93,6 +93,60 @@ method Passing()
     var end := 1;
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
+  }
+
+  // Test case for combination {1}/Osum=0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: sum == SumSeq(a[start .. end])
+  //   POST: sum == 0
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [13, 15];
+    var start := 1;
+    var end := 1;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 0;
+  }
+
+  // Test case for combination {2}/Osum>0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: !(|a[start .. end]| == 0)
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [15, 8];
+    var start := 1;
+    var end := 2;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 8;
+    expect !(|a[start .. end]| == 0);
+  }
+
+  // Test case for combination {2}/Osum<0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: !(|a[start .. end]| == 0)
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [8, 15];
+    var start := 0;
+    var end := 1;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 8;
+    expect !(|a[start .. end]| == 0);
+  }
+
+  // Test case for combination {2}/Osum=0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: !(|a[start .. end]| == 0)
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [9, 15];
+    var start := 0;
+    var end := 2;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 24;
   }
 
 }

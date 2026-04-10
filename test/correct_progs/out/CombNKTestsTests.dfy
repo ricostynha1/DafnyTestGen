@@ -1,12 +1,12 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNKTests.dfy
 // Method: CalcComb
-// Generated: 2026-04-10 22:24:55
+// Generated: 2026-04-10 22:57:18
 
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-10 22:07:20
+// Generated: 2026-04-10 22:56:02
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-08 22:08:19
+// Generated: 2026-04-10 22:31:59
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -49,7 +49,7 @@ method Passing()
   //   POST: !(a[0] <= a[0 + 1])
   //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[2] [7719, 7718];
+    var a := new int[3] [-8855, -8856, 8365];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
@@ -59,7 +59,7 @@ method Passing()
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
   //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[4] [20, 21239, 0, -1];
+    var a := new int[6] [-2437, 0, -1, 32285, -8365, 11797];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
@@ -70,7 +70,49 @@ method Passing()
   //   POST: !(a[(a.Length - 1 - 1)] <= a[(a.Length - 1 - 1) + 1])
   //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[2] [1, 0];
+    var a := new int[3] [1, 1, 0];
+    var sorted := IsSortedArr(a);
+    expect sorted == false;
+  }
+
+  // Test case for combination {1}/Osorted=true:
+  //   POST: sorted
+  //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  {
+    var a := new int[1] [16];
+    var sorted := IsSortedArr(a);
+    expect sorted == true;
+  }
+
+  // Test case for combination {2}/Osorted=false:
+  //   POST: !sorted
+  //   POST: 0 < a.Length - 1
+  //   POST: !(a[0] <= a[0 + 1])
+  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  {
+    var a := new int[4] [-21238, -21239, 0, 0];
+    var sorted := IsSortedArr(a);
+    expect sorted == false;
+  }
+
+  // Test case for combination {3}/Osorted=false:
+  //   POST: !sorted
+  //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
+  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  {
+    var a := new int[5] [-32285, 8365, 0, -10451, -10451];
+    var sorted := IsSortedArr(a);
+    expect sorted == false;
+  }
+
+  // Test case for combination {4}/Osorted=false:
+  //   POST: !sorted
+  //   POST: 0 < a.Length - 1
+  //   POST: !(a[(a.Length - 1 - 1)] <= a[(a.Length - 1 - 1) + 1])
+  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  {
+    var a := new int[4] [2438, 2438, 2438, 0];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }

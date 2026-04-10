@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-10 22:25:29
+// Generated: 2026-04-10 22:57:58
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -26,7 +26,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -51,7 +51,7 @@ method Passing()
 
   // Test case for combination {3}:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -64,7 +64,7 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -77,7 +77,7 @@ method Passing()
 
   // Test case for combination {1}/Omax>0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -90,7 +90,7 @@ method Passing()
 
   // Test case for combination {1}/Omax<0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -103,7 +103,7 @@ method Passing()
 
   // Test case for combination {1}/Omax=0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[0]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
@@ -152,39 +152,39 @@ method Passing()
 
   // Test case for combination {3}/Omax>0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[3] [0.0, -38.0, 0.5];
+    var a := new real[4] [0.0, -38.0, -7719.0, 0.5];
     var max := FindMax(a);
     expect max == 0.5;
   }
 
   // Test case for combination {3}/Omax<0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[4] [-39.0, -39.0, -39.0, -38.5];
+    var a := new real[3] [-39.0, -39.0, -38.5];
     var max := FindMax(a);
     expect max == -38.5;
   }
 
   // Test case for combination {3}/Omax=0:
   //   PRE:  a.Length > 0
-  //   POST: 0 < a.Length
+  //   POST: 0 <= (a.Length - 1)
   //   POST: max == a[(a.Length - 1)]
   //   POST: forall k :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[8] [-1.0, -39.0, -7720.0, -21239.0, -2438.0, -8856.0, -11798.0, 0.0];
+    var a := new real[7] [-1.0, -39.0, -7720.0, -21239.0, -2438.0, -8856.0, 0.0];
     var max := FindMax(a);
     expect max == 0.0;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-04-08 22:10:40
+// Generated: 2026-04-10 22:37:18
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -92,6 +92,36 @@ method Passing()
     var a := new int[2] [2, 0];
     var index := FindFirstOdd(a);
     expect index == -1;
+  }
+
+  // Test case for combination {1}/Oindex<0:
+  //   POST: IsFirstOdd(a, index)
+  //   POST: forall i :: 0 <= i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
+  {
+    var a := new int[3] [0, 0, 0];
+    var index := FindFirstOdd(a);
+    expect index == -1;
+  }
+
+  // Test case for combination {2}/Oindex>0:
+  //   POST: !(index == -1)
+  //   POST: 0 <= index < a.Length && (a[index] % 2 != 0) && forall i :: 0 <= i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
+  {
+    var a := new int[2] [0, 42479];
+    var index := FindFirstOdd(a);
+    expect index == 1;
+  }
+
+  // Test case for combination {2}/Oindex=0:
+  //   POST: !(index == -1)
+  //   POST: 0 <= index < a.Length && (a[index] % 2 != 0) && forall i :: 0 <= i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
+  {
+    var a := new int[3] [77, 9, 13];
+    var index := FindFirstOdd(a);
+    expect index == 0;
   }
 
 }
