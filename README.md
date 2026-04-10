@@ -1,44 +1,44 @@
 # DafnyTestGen
 
-Automatic test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions).
+Automatic test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions). 
 
-DafnyTestGen analyzes `requires` and `ensures` clauses, converts both preconditions and postconditions to Disjunctive Normal Form (DNF) or Full DNF (FDNF), and uses the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths.
+DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF) or Full DNF (FDNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF/FDNF analysis) with boundary value analysis. 
 
 ## How It Works
 
-1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses)
-2. **Analyze** preconditions and postconditions in DNF or FDND to identify distinct test scenarios
-3. **Solve** SMT queries via Z3 to find satisfying concrete inputs for each scenario
-4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method
+1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses).
+2. **Analyze** preconditions and postconditions in DNF or FDND to identify distinct test scenarios, which are further refined based on boundary-value analysis.
+3. **Solve** SMT queries via Z3 to find satisfying concrete inputs for each scenario.
+4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method.
 
-### Test Strategies
 
-DafnyTestGen uses method contracts to derive test scenarios, combining equivalence class partitioning (via DNF or FDNF analysis) with boundary value analysis. Strategies can be selected explicitly or chosen automatically.
+## Equivalence Class Partitioning via DNF or FDNF
 
-#### Equivalence Class Partitioning via DNF or FDNF
+Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** or **Full DNF (FDNF)**, producing a set of clauses that partition the input/output space as **equivalence classes**.
 
-The core idea: preconditions and postconditions define **equivalence classes** of inputs and expected behaviors. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** or **Full DNF (FDNF)**, producing a set of clauses that partition the input/output space.
-
-**How DNF and FDNF decomposition works.** Disjunctive preconditions or postconditions, naturally originate multiple test goals, as illustrated in the following example.
-
-**Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. For example, in `a.Length == 0 || a[0] == 0`, if `a.Length == 0` is true, `a[0] == 0` is never evaluated. The DNF decomposition respects this: `A || B` produces branches `A` and `!A ∧ B` (not just `A` and `B`), ensuring that the right operand is only tested when the left operand is false. Similarly, `A && B` negation produces `!A` and `A ∧ !B`, and `A ==> B` produces `!A` and `A ∧ B`. This prevents generating test cases that would cause runtime errors (e.g., index-out-of-bounds when accessing `a[0]` on an empty array).
+**Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. The DNF decomposition respects this to avoid generating test cases that would cause runtime errors. Consider the following example:
 
 ```dafny
-method Process(x: int, y: int) returns (r: int)
-  requires x > 0 || y > 0
-  ensures r == x + y
+method GetFirstOrZero(a: array<int>) returns (result: int)
+  ensures a.Length == 0 ==> result == 0
+  ensures a.Length > 0 ==> result == a[0]
 ```
 
-The precondition `x > 0 || y > 0` is decomposed into 2 short-circuit safe DNF branches (`x > 0` and `!(x > 0) ∧ y > 0`), which are both crossed with postcondition branches (in this example, a single branch), leading to the followign test scenarios:
-- `x > 0 ∧ r == x + y` — x is positive
-- `!(x > 0) ∧ y > 0 ∧ r == x + y` — x is not positive but y is positive
+The implication `A ==> B` is decomposed into short-circuit safe DNF branches `!A` and `A ∧ B` (not `!A` and `B` as in standard DNF). This ensures the consequent `B` is only tested when the antecedent `A` holds. For this example, the second ensures clause `a.Length > 0 ==> result == a[0]` produces:
+- `!(a.Length > 0)` — antecedent is false, implication vacuously true
+- `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold
 
-Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples. 
+With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard. When crossed with the first ensures clause's branch `a.Length == 0 ∧ result == 0`, the combination `a.Length == 0 ∧ result == 0 ∧ result == a[0]` is satisfiable in SMT (where `seq.nth` on empty sequences is total), but causes **index-out-of-bounds** at runtime. Short-circuit safe DNF prevents this: the branch `a.Length > 0 ∧ result == a[0]` always guards the array access.
 
-With FDNF, the precondition `x > 0 || y > 0` is decomposed into 3 scenarios (all non-empty truth assignments), which are crossed with the single postcondition branch, leading to the followign test scenarios:
-- `x > 0 ∧ !(y > 0) ∧ r == x + y` — only x is positive
-- `!(x > 0) ∧ y > 0 ∧ r == x + y` — only y is positive
-- `x > 0 ∧ y > 0 ∧ r == x + y` — both x and y are positive
+Similarly, `A || B` produces branches `A` and `!A ∧ B` (not `A` and `B`), and `A && B` negation produces `!A` and `A ∧ !B` (not `!A` and `!B`).
+
+The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after short-circuit safe decomposition), of which 2 are pruned as contradictory, leaving 2 to solve:
+- `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
+- `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` — SAT (empty array)
+
+Each test scenario is fed negated to Z3 to obtain concrete test values as counter-examples.
+
+With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety — for example, the clause `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` would be generated (though pruned as contradictory in this case). In general, FDNF can produce unsafe clauses like `a.Length == 0 ∧ a[0] == 0` from `a.Length == 0 || a[0] == 0`. Use `-a` only when you understand the implications.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' in the derived expressions. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
 
@@ -58,11 +58,11 @@ When multiple `requires` and `ensures` clauses exist, their cross-product forms 
 
 **Simple (DNF) mode** (`-s`): generates one test per DNF clause. Uses standard DNF decomposition (short-circuit safe) with incremental pruning.
 
-**All combinations (FDNF) mode** (`-a`): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. Note: FDNF can be unsafe with short-circuit logic — for example, `a.Length == 0 || a[0] == 0` produces an FDNF clause `a.Length == 0 ∧ a[0] == 0` that is satisfiable in SMT but causes index-out-of-bounds at runtime. Use only when you understand the implications.
+**All combinations (FDNF) mode** (`-a`): uses **Full Disjunctive Normal Form** to produce all meaningful truth combinations directly, with incremental pruning. FDNF can be unsafe with short-circuit logic (see above). Use only when you understand the implications.
 
 #### Incremental pruning
 
-The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further. For example, if ensures clauses 1 and 2 produce a contradictory partial clause, it is eliminated before crossing with clause 3 — avoiding 3× wasted work.
+The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further.
 
 Consider the following example:
 
@@ -75,9 +75,9 @@ method Classify(x: int) returns (r: int)
 ```
 
 Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `A ∧ B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
-- `!(x < 0) ∧ !(x == 0) ∧ r == 1` — SAT, corresponds to x > 0
-- `!(x < 0) ∧ r == 0 ∧ !(x > 0)` — SAT, corresponds to x == 0
-- `r == -1 ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
+- `!(x < 0) ∧ !(x == 0) ∧ x > 0 ∧ r == 1` — SAT, corresponds to x > 0
+- `!(x < 0) ∧ x == 0 ∧ r == 0 ∧ !(x > 0)` — SAT, corresponds to x == 0
+- `x < 0 ∧ r == -1 ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
 - `!(x < 0) ∧ !(x == 0) ∧ !(x > 0)` — UNSAT
 
 
