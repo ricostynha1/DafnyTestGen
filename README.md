@@ -106,15 +106,15 @@ The `exists` clause decomposes into: max at position 0 (left), max in middle, ma
 
 ### Predicate and function inlining/unrolling  
 
-User-defined predicates and functions referenced in contracts are automatically processed before DNF/FDNF conversion and SMT generation, through two complementary mechanisms described below: **inlining** (substituting bodies into contract expressions to expose branching for DNF) and **finite unrolling** (generating concrete SMT definitions for Z3 to evaluate recursive functions).
+User-defined predicates and functions referenced in contracts are automatically processed before DNF/FDNF conversion and SMT generation, through two complementary mechanisms described below: **unified 2-pass inlining** (substituting bodies into contract expressions to expose branching for DNF) and **finite unrolling** (generating concrete SMT definitions for Z3 to evaluate recursive functions).
 
-Predicates and functions referenced in contracts are automatically **inlined** — their bodies are substituted into contract expressions before DNF/FDNF conversion. This exposes possible internal if-then-else branching that would otherwise remain opaque to the DNF engine. 
+#### Unified 2-pass inlining
 
-#### Non-recursive inlining (up to 2 levels)
+All predicates and functions with bodies — both recursive and non-recursive — are inlined uniformly into both preconditions and postconditions through **two textual substitution passes**. Each pass replaces every call site with the function body (with parameters substituted). This achieves up to **2 levels of nesting**: the first pass expands top-level calls, the second pass expands calls introduced by the first.
 
-Non-recursive predicates and functions (whose body does not reference themselves) are inlined into both preconditions and postconditions. When a predicate calls another inlinable predicate, the callee's body is pre-substituted into the caller, up to **2 levels** of nesting (caller → callee, but callee must not call another inlinable).
+For **recursive functions**, each pass expands one level of self-calls, but advances past the replacement so the same call is never re-expanded. After 2 passes, residual recursive calls remain in the expression. These residual calls are left as **uninterpreted functions** in SMT — Z3 can freely assign their values, which preserves branch diversity (both branches of a recursive `if-then-else` remain satisfiable) while avoiding infinite expansion.
 
-**Example:**
+**Example — non-recursive nesting:**
 
 ```dafny
 predicate IsFirstOdd(a: array<int>, index: int)
@@ -132,13 +132,9 @@ method FindFirstOdd(a: array<int>) returns (index: int)
   ensures IsFirstOdd(a, index)
 ```
 
-The predicate body is substituted for `IsFirstOdd(a, index)`, producing an `if C then A else B` expression. The DNF engine splits this into two clauses — `(index == -1 && ∀i. ¬IsOdd(a[i]))` and `(index ≠ -1 && IsOdd(a[index]) && ∀i < index. ¬IsOdd(a[i]))` — generating tests for both the "not found" and "found" paths. The nested `IsOdd` calls are also inlined (2nd level).
+Pass 1 substitutes `IsFirstOdd(a, index)` with its body, producing an `if C then A else B` expression that the DNF engine splits into two clauses. Pass 2 inlines the nested `IsOdd` calls. Result: `(index == -1 && ∀i. ¬(a[i] % 2 == 1))` and `(index ≠ -1 && a[index] % 2 == 1 && ∀i < index. ¬(a[i] % 2 == 1))`.
 
-#### Fuel-1 inlining for recursive functions and predicates
-
-Recursive functions and predicates (whose body contains a self-call) cannot be fully inlined (infinite expansion), but DafnyTestGen performs **one level of unrolling** (fuel=1) — analogous to Dafny's `{:fuel}` attribute. The function body is substituted once; inner recursive calls are left opaque. This is applied to both **preconditions and postconditions**, exposing the top-level branching structure of recursive definitions for DNF decomposition.
-
-**Example:**
+**Example — recursive function:**
 
 ```dafny
 function filter<T(==)>(a: seq<T>, b: seq<T>) : seq<T> {
@@ -151,13 +147,15 @@ method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
   ensures diff == filter(a, b)
 ```
 
-The postcondition `diff == filter(a, b)` is expanded to `diff == (if |a| == 0 then a else if a[|a|-1] in b then filter(...) else filter(...) + [a[|a|-1]])`. The DNF engine splits `X == (if C then A else B)` into `(C && X == A) || (!C && X == B)`, producing three clauses:
+Pass 1 expands `filter(a, b)` → `if |a| == 0 then a else if a[|a|-1] in b then filter(a[..|a|-1], b) else filter(a[..|a|-1], b) + [a[|a|-1]]`. Pass 2 expands the inner `filter(a[..|a|-1], b)` calls one more level. Residual `filter(...)` calls (3rd level) become uninterpreted in SMT.
+
+The DNF engine splits `X == (if C then A else B)` into `(C && X == A) || (!C && X == B)`, producing three top-level clauses:
 
 1. `|a| == 0 && diff == a` — empty input
 2. `|a| > 0 && a[|a|-1] in b && diff == filter(...)` — last element **removed** (in `b`)
 3. `|a| > 0 && a[|a|-1] !in b && diff == filter(...) + [a[|a|-1]]` — last element **kept** (not in `b`)
 
-The inner `filter(...)` calls cannot be translated to SMT and are silently dropped, but the **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. Since the function is recursive and its result cannot be computed by Z3, the `expect` assertions use the full postcondition expression (e.g., `expect diff == filter(a, b)`), which Dafny evaluates at runtime.
+The **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. For the `expect` assertions, when the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect diff == filter(a, b)`) and evaluated by Dafny at runtime.
 
 #### Finite unrolling of recursive functions (SMT define-fun)
 
@@ -438,7 +436,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 - **Tuple types** (e.g., `(int, int)`, `(real, real)`): supported as standalone parameters, return types, array element types (`array<(T, U)>`), and sequence element types (`seq<(T, U)>`). Tuple components are decomposed into separate SMT variables (e.g., `t: (int, int)` → `t_0: Int`, `t_1: Int`; `a: array<(real, real)>` → parallel component sequences `a_seq_0: (Seq Real)`, `a_seq_1: (Seq Real)` with equal-length constraints). Tuple field access (`t.0`, `a[i].1`) is translated to the corresponding component variable or sequence element. Generated test code uses Dafny tuple literals (e.g., `var t := (3, 5);`, `var a := new (real, real)[2] [(1.0, 2.0), (3.0, 4.0)];`). Supported component types: `int`, `nat`, `real`, `char`, `bool`. Nested tuples and tuples in sets/maps are not yet supported
 - **Pre/post state splitting** for `modifies` methods: mutable array parameters get separate pre-state (input) and post-state (output) SMT variables, so postconditions like `IsSorted(a[..])` don't constrain inputs
 - Uninterpreted functions (postcondition literals used as assertions)
-- **Predicate and function inlining/unrolling**: non-recursive predicates and functions are inlined into both preconditions and postconditions (up to 2 nesting levels) to expose branching for DNF. Recursive functions get fuel-1 inlining in both preconditions and postconditions (body substituted once, inner calls left opaque). Additionally, simple recursive functions are compiled into finite SMT `define-fun` definitions for Z3 to evaluate concretely. See [Predicate and Function Inlining](#predicate-and-function-inlining-for-dnffdnf) and [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling-smt-define-fun)
+- **Predicate and function inlining/unrolling**: all predicates and functions (recursive and non-recursive) are uniformly inlined into both preconditions and postconditions via 2 textual passes, exposing up to 2 levels of branching for DNF. Residual calls (3rd level and beyond) become uninterpreted in SMT. Additionally, simple recursive functions are compiled into finite SMT `define-fun` definitions for Z3 to evaluate concretely. See [Predicate and Function Inlining](#predicate-and-function-inliningunrolling) and [Finite Unrolling](#finite-unrolling-of-recursive-functions-smt-define-fun)
 - **Nested sequence types** (`seq<seq<T>>`, `seq<string>`): nested sequences with scalar inner element types (`int`, `nat`, `real`, `char`, `bool`) are encoded using Z3's native `(Seq (Seq T))` sort. Outer sequence length is bounded to 8, inner sequence lengths to 4. Inner length and element values are extracted from Z3 models via nested `get-value` queries (e.g., `(seq.len (seq.nth s i))`, `(seq.nth (seq.nth s i) j)`). Chained bracket access in postconditions (e.g., `l[i][|l[i]| - 1]` from inlining `Last(l[i])`) is handled by a bracket-depth-aware parser that splits on the rightmost `[...]` and recursively translates both parts. After forall unrolling substitutes concrete indices, the post-processing pass rewrites `(seq.nth l 0)` → `l_0` for the flat encoding. Test code emits Dafny nested seq literals (e.g., `var s: seq<seq<int>> := [[1, 2], [3]];`) or string seq literals (e.g., `var l: seq<string> := ["abc", "de"];`). Note: postconditions with multi-variable quantifiers over nested seqs often cause Z3 to return `unknown`, limiting test coverage for complex contracts
 
 ### Class Method Support
@@ -491,8 +489,8 @@ The following are auto-detected and skipped. Some may be addressed in the future
 - Generic type parameters are mapped to `Int` in SMT
 - Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
 - Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- **Recursive functions in postconditions** (e.g., `ensures result == Fact(n)`): simple recursive functions are automatically unrolled into finite SMT `define-fun` definitions, allowing Z3 to compute concrete expected values (see [Recursive Function Finite Unrolling](#recursive-function-finite-unrolling) below). Functions that don't match any supported recursion pattern are left as uninterpreted — inputs are generated from preconditions and boundary analysis only, and the full original postcondition is used as the `expect` assertion at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`). Predicates that transitively call other predicates with more than 2 levels of nesting (e.g., `isSubstringPred` -> `isPrefixPred` -> ...) are left as uninterpreted to avoid exponential SMT expansion
-- **2-level predicate inlining**: predicates that call other predicates (1-level nesting) are supported by textually substituting the callee's body into the caller. For example, `AllPrime(f)` which calls `IsPrime(f[i])` is expanded to `forall i :: 0 <= i < |f| ==> (f[i] > 1 && forall k :: 2 <= k < f[i] ==> f[i] % k != 0)`. This allows the quantifiers to be finitely unrolled in SMT, enabling Z3 to reason about the property and prove output uniqueness. Only 2 levels are supported (caller → callee); deeper nesting is left as uninterpreted
+- **Recursive functions in postconditions** (e.g., `ensures result == Fact(n)`): simple recursive functions are automatically unrolled into finite SMT `define-fun` definitions, allowing Z3 to compute concrete expected values (see [Finite Unrolling](#finite-unrolling-of-recursive-functions-smt-define-fun)). Functions that don't match any supported recursion pattern are left as uninterpreted — inputs are generated from preconditions and boundary analysis only. When the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect f == Fact(n)`), evaluated by Dafny at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`)
+- **2-pass unified inlining**: all predicates and functions (recursive and non-recursive) are inlined via 2 textual substitution passes, achieving up to 2 levels of nesting. For example, `AllPrime(f)` which calls `IsPrime(f[i])` is expanded in pass 1, then `IsPrime` calls are expanded in pass 2, yielding `forall i :: 0 <= i < |f| ==> (f[i] > 1 && forall k :: 2 <= k < f[i] ==> f[i] % k != 0)`. For recursive functions, each pass expands one level of self-calls; residual calls (3rd level) become uninterpreted in SMT. Deeper nesting is left as uninterpreted to avoid exponential SMT expansion
 - When postconditions constrain the results implicitly (e.g., `ensures a <= r <= b`) rather than explicitly (e.g., `ensures result == expression`), a **uniqueness check** determines if Z3's concrete output is the only valid one: a second Z3 call with the same inputs but a blocking clause on all output values checks UNSAT. If unique, concrete `expect` statements are emitted (e.g., `expect r == 5;`, `expect a[..] == [-38, 7681];`, `expect obj.count == 3;`). If Z3 returns `unknown` (can't decide but found no counter-example), values are trusted by default (controllable via `--trust-unknown`). If Z3 returns `sat` (found a different valid output), the original postcondition literals are used as `expect` assertions with the concrete values in comments. The uniqueness check covers scalar returns, tuple components, sequence returns, mutable array post-states, and mutable scalar class fields.
 - **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
 - Not all Dafny expressions are translatable to SMT2. Preconditions that cannot be converted to SMT (e.g., those referencing recursove predicates) are emitted as runtime `expect` checks with `// PRE-CHECK` markers. In `--check` mode, test cases whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than counted as failures. This handles cases where Z3 picks input values that satisfy the translated constraints but violate untranslated preconditions.

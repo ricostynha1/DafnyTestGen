@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-04-08 22:04:34
+// Generated: 2026-04-10 22:24:58
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -83,6 +83,36 @@ method Passing()
     var a := new int[3] [4, 4, 4];
     var count := CountDistinct(a);
     expect count == 1;
+  }
+
+  // Test case for combination {1}/Ocount>=2:
+  //   PRE:  IsSorted(a)
+  //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
+  {
+    var a := new int[4] [-38, 0, 0, 7719];
+    var count := CountDistinct(a);
+    expect count == 3;
+  }
+
+  // Test case for combination {1}/Ocount=1:
+  //   PRE:  IsSorted(a)
+  //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
+  {
+    var a := new int[5] [-38, 0, 0, 0, 7719];
+    var count := CountDistinct(a);
+    expect count == 3;
+  }
+
+  // Test case for combination {1}/Ocount=0:
+  //   PRE:  IsSorted(a)
+  //   POST: count == |AsSet(a)|
+  //   ENSURES: count == |AsSet(a)|
+  {
+    var a := new int[6] [-38, 0, 0, 0, 0, 7719];
+    var count := CountDistinct(a);
+    expect count == 3;
   }
 
 }

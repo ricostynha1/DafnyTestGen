@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-10 22:24:52
+// Generated: 2026-04-10 22:07:20
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -47,7 +47,7 @@ method CalcComb(n: nat, k: nat) returns (res: nat)
 }
 
 
-method Passing()
+method GeneratedTests_CalcComb()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= n
@@ -58,7 +58,7 @@ method Passing()
     var n := 40;
     var k := 0;
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {2}:
@@ -70,7 +70,7 @@ method Passing()
     var n := 2;
     var k := 1;
     var res := CalcComb(n, k);
-    expect res == 2;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {1}/Bn=0,k==n:
@@ -82,7 +82,7 @@ method Passing()
     var n := 0;
     var k := 0;
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {1}/Bn=1,k==n:
@@ -94,7 +94,7 @@ method Passing()
     var n := 1;
     var k := 1;
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {1}/Ores=1:
@@ -106,7 +106,7 @@ method Passing()
     var n := 2;
     var k := 2;
     var res := CalcComb(n, k);
-    expect res == 1;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {2}/Ores>=2:
@@ -118,7 +118,7 @@ method Passing()
     var n := 2440;
     var k := 1;
     var res := CalcComb(n, k);
-    expect res == 2440;
+    expect res == Comb(n, k);
     expect !(k == 0 || k == n);
   }
 
@@ -131,7 +131,7 @@ method Passing()
     var n := 1745;
     var k := 1;
     var res := CalcComb(n, k);
-    expect res == 1745;
+    expect res == Comb(n, k);
   }
 
   // Test case for combination {2}/Ores=0:
@@ -143,18 +143,13 @@ method Passing()
     var n := 337;
     var k := 1;
     var res := CalcComb(n, k);
-    expect res == 337;
+    expect res == Comb(n, k);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_CalcComb();
+  print "GeneratedTests_CalcComb: all tests passed!\n";
 }

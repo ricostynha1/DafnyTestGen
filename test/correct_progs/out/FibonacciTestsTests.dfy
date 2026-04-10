@@ -1,7 +1,12 @@
 // Auto-generated test cases by DafnyTestGen
+// Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FibonacciTests.dfy
+// Method: CalcFib
+// Generated: 2026-04-10 22:25:25
+
+// Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-10 22:25:22
+// Generated: 2026-04-10 22:19:53
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -31,6 +36,66 @@ method CalcFib(n: nat) returns (res: nat)
 
 method Passing()
 {
+  // Test case for combination {1}:
+  //   POST: res == Fib(n)
+  //   POST: res == n
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 0;
+    var res := CalcFib(n);
+    expect res == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !(n < 2)
+  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 5;
+    var res := CalcFib(n);
+    expect res == 5;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   POST: res == Fib(n)
+  //   POST: res == n
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 1;
+    var res := CalcFib(n);
+    expect res == 1;
+  }
+
+  // Test case for combination {2}/Ores>=2:
+  //   POST: !(n < 2)
+  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 4;
+    var res := CalcFib(n);
+    expect res == 3;
+  }
+
+  // Test case for combination {2}/Ores=1:
+  //   POST: !(n < 2)
+  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 2;
+    var res := CalcFib(n);
+    expect res == 1;
+  }
+
+  // Test case for combination {2}/Ores=0:
+  //   POST: !(n < 2)
+  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 15;
+    var res := CalcFib(n);
+    expect res == 610;
+  }
+
   // Test case for combination {1}:
   //   POST: res == Fib(n)
   //   POST: res == n
