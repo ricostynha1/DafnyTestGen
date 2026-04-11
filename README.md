@@ -36,19 +36,18 @@ The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
-Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E (E.pos) and of its negation simultaneously (E.neg). The combination rules are shown in the following table. To avoid confusion, we use simple concatenation to denote logical 'and' and `+` to denote logical 'or' in the derived expressions. Letters `A`, `B` and `C` denote Boolean expressions, and `Xi` and `Yj` denote conjunctions of literals (or negated literals).
-
-| Expression (E) | DNF [E.pos, E.neg] | FDNF [E.pos, E.neg] |
+The following table summarises the branching rules.
+ 
+| Expression (E) | DNF Branches | FDNF Branches |
 |---|---|---|
-| `L` (literal) | `[L, !L]` | idem |
-| `![A, A']` | `[A', A]` | idem |
-| `[A, A'] && [B, B']` | `[AB, A'+AB']` | `[AB, A'B+AB'+A'B']` |
-| `[A, A'] \|\| [B, B']` | `[A+A'B, A'B']` | `[AB+A'B+AB', A'B']` |
-| `[A, A'] ==> [B, B']` | `[A'+AB, AB']` | `[A'B+AB+A'B', AB']` |
-| `[A, A'] <==> [B, B']` | `[AB+A'B', AB'+A'B]` | idem |
-| `if [C, C'] then [A, A'] else [B, B']` | `[CA+C'B, CA'+C'B']` | idem |
+| `A \|\| B` | `A` and `!A && B` | `A && B` and `A && !B` and `!A && B` |
+| `A ==> B` | same as `!A \|\| B`  | idem |
+| `A <==> B` | `A && B` and `!A && !B` | idem |
+| `!(A && B)` | same as `!A || !B` | idem |
+| `if C then A else B` | `C && A` and `!C && B` | idem |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
-| `(X1+...+Xn)(Y1+...+Ym)` | `X1Y1+...+XnYm` | idem | 
+
+Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
 When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
@@ -56,7 +55,7 @@ When multiple `requires` and `ensures` clauses exist, their cross-product forms 
 
 **DNF mode** (`-s`, default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
 
-**FDNF mode** (`-a`, all combinations): generated one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
+**FDNF mode** (`-a`, all combinations): generates one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
 
 ### Incremental pruning
 
