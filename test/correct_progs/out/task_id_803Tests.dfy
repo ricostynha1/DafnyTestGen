@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-10 22:37:12
+// Generated: 2026-04-10 23:43:59
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -47,10 +47,21 @@ method Passing()
 {
   // Test case for combination {2}:
   //   POST: result
-  //   POST: exists i :: 1 <= i < (n - 1) && i * i == n
+  //   POST: exists i :: 1 <= i < n && i * i == n
   //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
   {
     var n := 4;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {3}:
+  //   POST: result
+  //   POST: 0 <= n
+  //   POST: n * n == n
+  //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
+  {
+    var n := 1;
     var result := IsPerfectSquare(n);
     expect result == true;
   }
@@ -67,7 +78,7 @@ method Passing()
 
   // Test case for combination {2}/Oresult=true:
   //   POST: result
-  //   POST: exists i :: 1 <= i < (n - 1) && i * i == n
+  //   POST: exists i :: 1 <= i < n && i * i == n
   //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
   {
     var n := 9;

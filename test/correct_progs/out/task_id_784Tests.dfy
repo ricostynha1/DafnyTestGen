@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-10 22:36:33
+// Generated: 2026-04-10 23:43:24
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -881,7 +881,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16731, -1, 29, 0, 50, 20903];
+    var lst: seq<int> := [0, 61225, 38, 39, 40, 0, 63, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -909,7 +909,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16731, 30, 31, 0, 45, 46, 20903];
+    var lst: seq<int> := [0, 61225, 5995, 39, 40, 0, 65, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -937,7 +937,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 20901, 33, 0, 34, 16733];
+    var lst: seq<int> := [0, 11707, 35, 36, 0, 41075, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1035,7 +1035,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [23597, 64571, 0, 0, 34, 35, 36, 0];
+    var lst: seq<int> := [23597, -1, 0, 35, 0, 36, 37, 0];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 2;
     expect oddIndex == 0;
@@ -1063,7 +1063,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [23597, -1, 0, 35, 0, 36, 37, 0];
+    var lst: seq<int> := [23597, 64571, 0, 0, 34, 35, 36, 0];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 2;
     expect oddIndex == 0;
@@ -1091,7 +1091,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16731, 23595];
+    var lst: seq<int> := [0, 20901, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1119,7 +1119,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16731, 35, 36, 37, 0, 23595];
+    var lst: seq<int> := [0, 64571, 36, 37, 38, 0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1161,7 +1161,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 17713, 20901, 0, 23595];
+    var lst: seq<int> := [0, 64571, 36, 37, 0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1175,7 +1175,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 0, 64573, 35, 36, 37, 38, 20903];
+    var lst: seq<int> := [0, 0, 64573, 35, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 2;
@@ -1189,35 +1189,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 23597, 11707, 30, 0, 64571];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 0;
-    expect oddIndex == 1;
-  }
-
-  // Test case for combination P{2,6}/{1}/OoddIndex>=2:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  //   ENSURES: IsFirstEven(evenIndex, lst)
-  //   ENSURES: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [0, 0, 64573, 35, 20903];
-    var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 0;
-    expect oddIndex == 2;
-  }
-
-  // Test case for combination P{2,6}/{1}/OoddIndex=1:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: IsFirstEven(evenIndex, lst)
-  //   POST: IsFirstOdd(oddIndex, lst)
-  //   ENSURES: IsFirstEven(evenIndex, lst)
-  //   ENSURES: IsFirstOdd(oddIndex, lst)
-  {
-    var lst: seq<int> := [0, -1, 27, 28, 29, 0, 4875];
+    var lst: seq<int> := [0, 16731, 40, 41, 0, 53, 20903];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1231,7 +1203,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 0, 23595];
+    var lst: seq<int> := [0, 0, 16733];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 2;
@@ -1427,7 +1399,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 23597, 0];
+    var lst: seq<int> := [0, 15439, 0];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1455,7 +1427,7 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [0, 16733, 35, 36, 0, 55, 56, 0];
+    var lst: seq<int> := [0, 77, 33, 34, 35, 0, 54, 0];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
     expect evenIndex == 0;
     expect oddIndex == 1;
@@ -1511,9 +1483,9 @@ method Passing()
   //   ENSURES: IsFirstEven(evenIndex, lst)
   //   ENSURES: IsFirstOdd(oddIndex, lst)
   {
-    var lst: seq<int> := [5997, 29361, 41953, 63783, 43304];
+    var lst: seq<int> := [52573, 29361, 41953, 63783, 43311, 51813, 33817, 0];
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
-    expect evenIndex == 4;
+    expect evenIndex == 7;
     expect oddIndex == 0;
   }
 

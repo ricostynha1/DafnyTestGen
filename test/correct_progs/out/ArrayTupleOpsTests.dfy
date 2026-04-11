@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-10 23:30:47
+// Generated: 2026-04-11 08:44:48
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -34,7 +34,7 @@ method MaxFirst(a: array<(int, int)>) returns (r: int)
 }
 
 
-method Passing()
+method GeneratedTests_FirstPair()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -116,6 +116,10 @@ method Passing()
     expect r == a[0];
   }
 
+}
+
+method GeneratedTests_SeqHead()
+{
   // Test case for combination {1}:
   //   PRE:  |s| > 0
   //   POST: r == s[0]
@@ -146,6 +150,10 @@ method Passing()
     expect r == s[0];
   }
 
+}
+
+method GeneratedTests_MaxFirst()
+{
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
@@ -213,13 +221,12 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_FirstPair();
+  print "GeneratedTests_FirstPair: all tests passed!\n";
+  GeneratedTests_SeqHead();
+  print "GeneratedTests_SeqHead: all tests passed!\n";
+  GeneratedTests_MaxFirst();
+  print "GeneratedTests_MaxFirst: all tests passed!\n";
 }

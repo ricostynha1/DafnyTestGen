@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-10 22:37:24
+// Generated: 2026-04-10 23:44:11
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -56,7 +56,7 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  |a| == |b|
   //   POST: !result
-  //   POST: 0 < |a|
+  //   POST: 0 <= (|a| - 1)
   //   POST: !(a[0] < b[0])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
@@ -72,8 +72,8 @@ method Passing()
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [2436, 0, 10450, -1];
-    var b: seq<int> := [2437, -21238, 34, 0];
+    var a: seq<int> := [40650, 0, 0];
+    var b: seq<int> := [40651, -11797, 1];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -81,12 +81,12 @@ method Passing()
   // Test case for combination {4}:
   //   PRE:  |a| == |b|
   //   POST: !result
-  //   POST: 0 < |a|
+  //   POST: 0 <= (|a| - 1)
   //   POST: !(a[(|a| - 1)] < b[(|a| - 1)])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [7719, 0];
-    var b: seq<int> := [7720, -1];
+    var a: seq<int> := [7718, 20654];
+    var b: seq<int> := [7719, 20653];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -106,12 +106,12 @@ method Passing()
   // Test case for combination {2}/Oresult=false:
   //   PRE:  |a| == |b|
   //   POST: !result
-  //   POST: 0 < |a|
+  //   POST: 0 <= (|a| - 1)
   //   POST: !(a[0] < b[0])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [33428, 10449, 42779];
-    var b: seq<int> := [33427, 10450, 42780];
+    var a: seq<int> := [14219, 32284, 30611];
+    var b: seq<int> := [14218, 32285, 30612];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -122,8 +122,8 @@ method Passing()
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [8854, 0, 0];
-    var b: seq<int> := [8855, -2437, 1];
+    var a: seq<int> := [6995, 8365, 20537, 30612, 0];
+    var b: seq<int> := [6996, 39, -2437, 40, 282];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -131,12 +131,12 @@ method Passing()
   // Test case for combination {4}/Oresult=false:
   //   PRE:  |a| == |b|
   //   POST: !result
-  //   POST: 0 < |a|
+  //   POST: 0 <= (|a| - 1)
   //   POST: !(a[(|a| - 1)] < b[(|a| - 1)])
   //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [11797, 2436, 8854, 0];
-    var b: seq<int> := [11798, 2437, 8855, 0];
+    var a: seq<int> := [21237, 2436, 8856];
+    var b: seq<int> := [21238, 2437, 0];
     var result := IsSmaller(a, b);
     expect result == false;
   }

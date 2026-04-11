@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-10 22:36:14
+// Generated: 2026-04-10 23:43:05
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -68,7 +68,6 @@ method Passing()
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
     expect diff == [2];
-    expect !(|a| == 0);
   }
 
   // Test case for combination {1}/Ba=0,b=1:

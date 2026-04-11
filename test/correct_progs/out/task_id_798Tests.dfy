@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-10 22:37:06
+// Generated: 2026-04-10 23:43:53
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -72,7 +72,6 @@ method Passing()
     var n := 1;
     var sum := CalcArraySum(a, n);
     expect sum == 4;
-    expect !(n <= 0);
   }
 
   // Test case for combination {1}/Ba=1,n=0:
@@ -121,7 +120,6 @@ method Passing()
     var n := 2;
     var sum := CalcArraySum(a, n);
     expect sum == 11;
-    expect !(n <= 0);
   }
 
   // Test case for combination {2}/Osum<0:
@@ -134,7 +132,6 @@ method Passing()
     var n := 1;
     var sum := CalcArraySum(a, n);
     expect sum == 5;
-    expect !(n <= 0);
   }
 
   // Test case for combination {2}/Osum=0:

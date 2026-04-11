@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-04-08 16:40:54
+// Generated: 2026-04-11 08:46:55
 
 // res.dfy
 
@@ -18,11 +18,10 @@ method abs(x: int) returns (y: int)
 }
 
 
-method Passing()
+method GeneratedTests_abs()
 {
   // Test case for combination {1}:
   //   POST: !(x > 0)
-  //   POST: y == x
   //   POST: x <= 0
   //   POST: y == -x
   //   ENSURES: x > 0 ==> y == x
@@ -33,13 +32,20 @@ method Passing()
     expect y == 0;
   }
 
-}
-
-method Failing()
-{
   // Test case for combination {2}:
+  //   POST: x > 0
+  //   POST: y == x
+  //   POST: !(x <= 0)
+  //   ENSURES: x > 0 ==> y == x
+  //   ENSURES: x <= 0 ==> y == -x
+  {
+    var x := 1;
+    var y := abs(x);
+    expect y == 1;
+  }
+
+  // Test case for combination {1}/Oy>0:
   //   POST: !(x > 0)
-  //   POST: !(y == x)
   //   POST: x <= 0
   //   POST: y == -x
   //   ENSURES: x > 0 ==> y == x
@@ -47,26 +53,25 @@ method Failing()
   {
     var x := -1;
     var y := abs(x);
-    // expect y == 1;
+    expect y == 1;
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {2}/Oy>0:
   //   POST: x > 0
   //   POST: y == x
   //   POST: !(x <= 0)
-  //   POST: !(y == -x)
   //   ENSURES: x > 0 ==> y == x
   //   ENSURES: x <= 0 ==> y == -x
   {
-    var x := 1;
+    var x := 2;
     var y := abs(x);
-    // expect y == 1;
+    expect y == 2;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_abs();
+  print "GeneratedTests_abs: all tests passed!\n";
 }

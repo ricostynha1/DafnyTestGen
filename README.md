@@ -243,6 +243,9 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 
 # Validate tests and split into Passing/Failing methods
 dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
+
+# Skip bodyless methods (old behavior) instead of generating spec-only tests
+dotnet run -- test/correct_progs/in/BodylessFactorial.dfy -o test/correct_progs/out/ -p
 ```
 
 Using the published standalone executable:
@@ -272,6 +275,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
 | `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
 | `--timeout <n>` | | Timeout in seconds for test generation per method (0 = unlimited) |
+| `--skip-bodyless` | `-p` | Skip bodyless methods instead of generating spec-only tests (default: generate spec-only tests with call/expects commented out) |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
@@ -345,6 +349,36 @@ When postconditions involve quantifiers or predicates that cannot be directly us
 ```
 
 A second Z3 call with a blocking clause checks **output uniqueness**: if the postcondition uniquely determines the output given the inputs (UNSAT with negated outputs), concrete values are emitted; otherwise, the original postcondition literals are used as `expect` assertions. This covers scalar outputs, tuple components, array post-states, and mutable class fields.
+
+### Spec-Only Tests for Bodyless Methods
+
+By default, bodyless methods (declared without an implementation body) generate **spec-only tests**: Z3 finds concrete inputs satisfying the preconditions, but the method call and expects are commented out since there is no implementation to invoke:
+
+```dafny
+method CalcFact(n: nat) returns (f: nat)
+  ensures f == Fact(n)
+```
+
+```dafny
+  // Test case for combination {1}:
+  //   POST: f == Fact(n)
+  {
+    var n := 0;
+    // var f := CalcFact(n);
+    // expect f == Fact(n);
+  }
+
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: f == n * (if n - 1 == 0 then 1 else ...)
+  {
+    var n := 1;
+    // var f := CalcFact(n);
+    // expect f == Fact(n);
+  }
+```
+
+This is useful for **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to revert to the old behavior of skipping bodyless methods entirely.
 
 ## Check Mode (`-c`)
 
@@ -430,7 +464,7 @@ Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. In the
 
 The following are detected and automatically skipped because there is nothing to test. A message is printed when a method or file is skipped.
 
-- **Bodyless methods**: abstract methods (without an implementation body) are skipped individually — there is no code to test. Other methods in the same file that do have bodies are still tested normally. Note: when a program contains bodyless methods, the `--check` (`-c`) option is not supported (since `dafny build` fails on bodyless methods); unchecked tests are written instead with a warning
+- **Bodyless methods**: by default, abstract methods (without an implementation body) generate **spec-only tests** — Z3 finds concrete inputs from the contracts, but the method call and expects are commented out (see [Spec-Only Tests for Bodyless Methods](#spec-only-tests-for-bodyless-methods)). Use `--skip-bodyless` (`-p`) to skip them entirely instead. Other methods in the same file that do have bodies are always tested normally. Note: when a program contains bodyless methods, the `--check` (`-c`) option is not supported (since `dafny build` fails on bodyless methods); unchecked tests are written instead with a warning
 - **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
 
 ## Not Currently Supported (Auto-Skipped)
