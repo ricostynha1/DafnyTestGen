@@ -2,19 +2,19 @@
 
 Automatic test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions). 
 
-DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF) or Full DNF (FDNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF/FDNF analysis) with boundary value analysis. 
+DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis. 
 
 ## How It Works
 
 1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses).
-2. **Analyze** preconditions and postconditions in DNF or FDND to identify distinct test scenarios, which are further refined based on boundary-value analysis.
+2. **Analyze** preconditions and postconditions in DNF to identify distinct test scenarios, which are further refined based on boundary-value analysis.
 3. **Solve** SMT queries via Z3 to find satisfying concrete inputs for each scenario.
 4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method.
 
 
-## Equivalence Class Partitioning via DNF or FDNF
+## Equivalence Class Partitioning via DNF
 
-Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** or **Full DNF (FDNF)**, producing a set of clauses that partition the input/output space as **equivalence classes**.
+Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF)`), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
 **Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. The DNF decomposition respects this to avoid generating test cases that would cause runtime errors. Consider the following example:
 
@@ -24,7 +24,7 @@ method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length > 0 ==> result == a[0]
 ```
 
-The implication `A ==> B` is decomposed into short-circuit safe DNF branches `!A` and `A ∧ B` (instead of `!A` and `B` as in standard DNF). Similarly, `A || B` produces branches `A` and `!A ∧ B`. For this example, the second ensures clause produces:
+The implication `A ==> B` is decomposed into mutually exclusive, short-circuit safe, DNF branches `!A` and `A ∧ B` (instead of `!A` and `B` as in standard DNF). Similarly, `A || B` produces branches `A` and `!A ∧ B`. For this example, the second ensures clause produces:
 - `!(a.Length > 0)` — antecedent is false, implication vacuously true
 - `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold
 
@@ -54,9 +54,9 @@ When multiple `requires` and `ensures` clauses exist, their cross-product forms 
 
 ### Mode selection
 
-**Simple (DNF) mode** (`-s`)(default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
+**DNF mode** (`-s`, default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
 
-**All combinations (FDNF) mode** (`-a`): generated one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
+**FDNF mode** (`-a`, all combinations): generated one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
 
 ### Incremental pruning
 
