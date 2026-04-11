@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-11 12:09:28
+// Generated: 2026-04-11 13:06:31
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -39,6 +39,16 @@ method Passing()
     var n := 0;
     var res := CalcFib(n);
     expect res == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !(n < 2)
+  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 42;
+    var res := CalcFib(n);
+    expect res == 267914296;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -85,16 +95,7 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   POST: !(n < 2)
-  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
-  //   ENSURES: res == Fib(n)
-  {
-    var n := 42;
-    var res := CalcFib(n);
-    // expect res == Fib(n);
-  }
-
+  // (no failing tests)
 }
 
 method Main()
