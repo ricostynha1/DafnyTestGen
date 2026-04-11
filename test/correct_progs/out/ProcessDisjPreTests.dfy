@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ProcessDisjPre.dfy
 // Method: Process
-// Generated: 2026-04-10 23:33:56
+// Generated: 2026-04-11 12:10:55
 
 // Method with disjunctive precondition.
 method Process(x: int, y: int) returns (r: int)

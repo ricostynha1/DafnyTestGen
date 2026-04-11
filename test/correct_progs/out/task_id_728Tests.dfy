@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-04-10 23:41:36
+// Generated: 2026-04-11 12:17:08
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)

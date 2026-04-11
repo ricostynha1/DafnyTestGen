@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_69.dfy
 // Method: InSeq
-// Generated: 2026-04-10 23:41:30
+// Generated: 2026-04-11 12:17:02
 
 // Checks if a sequence 's' of elements of any type T contains a given value 'x' of type T.
 method InSeq<T(==)>(s: seq<T>, x: T) returns (result: bool)

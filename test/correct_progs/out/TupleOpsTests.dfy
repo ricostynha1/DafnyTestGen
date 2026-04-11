@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-11 08:45:04
+// Generated: 2026-04-11 12:19:34
 
 // --- (int, int) tuples ---
 
@@ -64,7 +64,7 @@ method Swap3First(t: (int, int, int)) returns (r: (int, int, int))
 }
 
 
-method GeneratedTests_SwapTuple()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: r.0 == t.1
@@ -176,10 +176,6 @@ method GeneratedTests_SwapTuple()
     expect r == (-1, 0);
   }
 
-}
-
-method GeneratedTests_ScaleTuple()
-{
   // Test case for combination {1}:
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
@@ -310,10 +306,6 @@ method GeneratedTests_ScaleTuple()
     expect r == (0, 0);
   }
 
-}
-
-method GeneratedTests_AddTuples()
-{
   // Test case for combination {1}:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
@@ -434,10 +426,6 @@ method GeneratedTests_AddTuples()
     expect r == (-6, 0);
   }
 
-}
-
-method GeneratedTests_TupleMax()
-{
   // Test case for combination {1}:
   //   POST: r == t.0
   //   POST: r >= t.0
@@ -447,7 +435,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (0, 0);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 0;
   }
 
   // Test case for combination {2}:
@@ -460,7 +448,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (0, 1);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 1;
   }
 
   // Test case for combination {1}/Bt.0=1,t.1=0:
@@ -472,7 +460,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (1, 0);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 1;
   }
 
   // Test case for combination {1}/Bt.0=1,t.1=1:
@@ -484,7 +472,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (1, 1);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 1;
   }
 
   // Test case for combination {1}/Or>0:
@@ -496,7 +484,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (2, -1);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 2;
   }
 
   // Test case for combination {1}/Or<0:
@@ -508,7 +496,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (-1, -2);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == -1;
   }
 
   // Test case for combination {1}/Or=0:
@@ -520,7 +508,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (0, -1);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 0;
   }
 
   // Test case for combination {2}/Or>0:
@@ -533,7 +521,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (-1, 2);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 2;
   }
 
   // Test case for combination {2}/Or<0:
@@ -546,7 +534,7 @@ method GeneratedTests_TupleMax()
   {
     var t := (-2, -1);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == -1;
   }
 
   // Test case for combination {2}/Or=0:
@@ -559,13 +547,9 @@ method GeneratedTests_TupleMax()
   {
     var t := (-1, 0);
     var r := TupleMax(t);
-    expect r == t.0 || r == t.1;
+    expect r == 0;
   }
 
-}
-
-method GeneratedTests_MixedTuple()
-{
   // Test case for combination {1}:
   //   PRE:  x >= 0
   //   POST: r.0 == x
@@ -683,10 +667,6 @@ method GeneratedTests_MixedTuple()
     expect r == (2, 0.0);
   }
 
-}
-
-method GeneratedTests_ClassifySign()
-{
   // Test case for combination {1}:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
@@ -753,10 +733,6 @@ method GeneratedTests_ClassifySign()
     expect r == (-2, false);
   }
 
-}
-
-method GeneratedTests_Swap3First()
-{
   // Test case for combination {1}:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
@@ -928,20 +904,13 @@ method GeneratedTests_Swap3First()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SwapTuple();
-  print "GeneratedTests_SwapTuple: all tests passed!\n";
-  GeneratedTests_ScaleTuple();
-  print "GeneratedTests_ScaleTuple: all tests passed!\n";
-  GeneratedTests_AddTuples();
-  print "GeneratedTests_AddTuples: all tests passed!\n";
-  GeneratedTests_TupleMax();
-  print "GeneratedTests_TupleMax: all tests passed!\n";
-  GeneratedTests_MixedTuple();
-  print "GeneratedTests_MixedTuple: all tests passed!\n";
-  GeneratedTests_ClassifySign();
-  print "GeneratedTests_ClassifySign: all tests passed!\n";
-  GeneratedTests_Swap3First();
-  print "GeneratedTests_Swap3First: all tests passed!\n";
+  Passing();
+  Failing();
 }

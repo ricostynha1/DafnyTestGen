@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-10 23:33:36
+// Generated: 2026-04-11 12:10:42
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0

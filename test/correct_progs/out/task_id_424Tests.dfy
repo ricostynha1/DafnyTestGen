@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-10 23:37:53
+// Generated: 2026-04-11 12:14:06
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)

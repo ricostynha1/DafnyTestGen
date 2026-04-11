@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-10 23:34:38
+// Generated: 2026-04-11 12:11:27
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-04-10 23:31:01
+// Generated: 2026-04-11 12:08:46
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-10 23:43:24
+// Generated: 2026-04-11 12:18:48
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.

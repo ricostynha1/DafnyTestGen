@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-11 08:44:57
+// Generated: 2026-04-11 12:19:31
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -41,7 +41,7 @@ method SmallestListLengthTest(){
 }
 
 
-method GeneratedTests_SmallestListLength()
+method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |s| > 0
@@ -148,8 +148,13 @@ method GeneratedTests_SmallestListLength()
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_SmallestListLength();
-  print "GeneratedTests_SmallestListLength: all tests passed!\n";
+  Passing();
+  Failing();
 }

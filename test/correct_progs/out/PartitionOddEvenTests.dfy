@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-04-10 23:33:46
+// Generated: 2026-04-11 12:10:49
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.

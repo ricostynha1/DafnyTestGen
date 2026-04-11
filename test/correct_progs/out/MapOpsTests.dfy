@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-10 23:33:13
+// Generated: 2026-04-11 12:10:27
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
