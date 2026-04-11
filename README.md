@@ -147,7 +147,7 @@ The DNF engine splits `X == (if C then A else B)` into `(C && X == A) || (!C && 
 The **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. For the `expect` assertions, when the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect diff == filter(a, b)`) and evaluated by Dafny at runtime.
 
 
-## Boundary Value Analysis (`-b`)
+## Boundary Value Analysis
 
 BVA complements equivalence class partitioning by testing at the **edges** of each equivalence class. DafnyTestGen extracts numeric bounds from contracts and generates boundary tiers:
 
