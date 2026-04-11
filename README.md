@@ -40,11 +40,11 @@ The following table summarises the branching rules.
 
 | Expression (E) | DNF Branches | FDNF Branches |
 |---|---|---|
-| `A \|\| B` | `A` and `!A && B` | `A && B` and `A && !B` and `!A && B` |
+| `A \|\| B` | `A`, `!A && B` | `A && B`, `A && !B`, `!A && B` |
 | `A ==> B` | same as `!A \|\| B`  | idem |
-| `A <==> B` | `A && B` and `!A && !B` | idem |
+| `A <==> B` | `A && B`, `!A && !B` | idem |
 | `!(A && B)` | same as `!A \|\| !B` | idem |
-| `if C then A else B` | `C && A` and `!C && B` | idem |
+| `if C then A else B` | `C && A`, `!C && B` | idem |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
