@@ -12,7 +12,7 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunc
 4. **Emit** a Dafny test file with `expect` assertions and a `Main()` method.
 
 
-## Equivalence Class Partitioning via DNF
+## Equivalence Class Partitioning via DNF Analysis
 
 Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a`option`), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
