@@ -37,13 +37,13 @@ The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 The following table summarises the branching rules.
- 
+
 | Expression (E) | DNF Branches | FDNF Branches |
 |---|---|---|
 | `A \|\| B` | `A` and `!A && B` | `A && B` and `A && !B` and `!A && B` |
 | `A ==> B` | same as `!A \|\| B`  | idem |
 | `A <==> B` | `A && B` and `!A && !B` | idem |
-| `!(A && B)` | same as `!A || !B` | idem |
+| `!(A && B)` | same as `!A \|\| !B` | idem |
 | `if C then A else B` | `C && A` and `!C && B` | idem |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 
