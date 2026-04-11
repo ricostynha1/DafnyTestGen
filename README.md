@@ -14,7 +14,7 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunc
 
 ## Equivalence Class Partitioning via DNF
 
-Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF)`), producing a set of clauses that partition the input/output space as **equivalence classes**.
+Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a`option`), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
 **Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. The DNF decomposition respects this to avoid generating test cases that would cause runtime errors. Consider the following example:
 
@@ -50,12 +50,6 @@ The following table summarises the branching rules.
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
 When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
-
-### Mode selection
-
-**DNF mode** (`-s`, default): generates one test per DNF clause. Uses short-circuit safe DNF decomposition with incremental pruning.
-
-**FDNF mode** (`-a`, all combinations): generates one test per FDNF clause. Uses potentially unsafe FDNF decomposition with incremental pruning. 
 
 ### Incremental pruning
 
@@ -261,9 +255,9 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--output <path>` | `-o` | Output file or directory |
 | `--method <name>` | `-m` | Target a specific method (default: all) |
 | `--verbose` | `-v` | Show debug info (contracts, DNF, SMT queries) |
-| `--all-combinations` | `-a` | Use FDNF (Full DNF) for all meaningful truth combinations |
+| `--all-combinations` | `-a` | One test per FDNF clause |
 | `--boundary` | `-b` | Boundary value analysis on inputs |
-| `--simple` | `-s` | One test per DNF clause (overrides auto) |
+| `--simple` | `-s` | One test per DNF clause (default) |
 | `--tiers <n>` | `-t` | Sequence/array size tiers for boundary analysis (default: 4) |
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing (not supported for programs with bodyless methods) |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
