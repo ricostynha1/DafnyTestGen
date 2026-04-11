@@ -41,7 +41,7 @@ The following table summarises the branching rules.
 | Expression (E) | DNF Branches | FDNF Branches |
 |---|---|---|
 | `A \|\| B` | `A`, `!A && B` | `A && B`, `A && !B`, `!A && B` |
-| `A ==> B` | same as `!A \|\| B`   |
+| `A ==> B` | same as `!A \|\| B`  | idem |
 | `A <==> B` | `A && B`, `!A && !B` | idem |
 | `!(A && B)` | same as `!A \|\| !B` | idem |
 | `if C then A else B` | `C && A`, `!C && B` | idem |
