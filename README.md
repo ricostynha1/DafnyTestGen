@@ -30,7 +30,9 @@ The implication `A ==> B` is decomposed into mutually exclusive, short-circuit s
 
 With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard, possibly causing an out-of-bounds error. 
 
-The cross-product of the two ensures clauses in DNF mode yields 4 clauses (after short-circuit safe decomposition), of which 2 are pruned as contradictory, leaving 2 to solve:
+**Cross product evaluation**. When multiple `requires` and/or `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
+
+In the above example, the cross-product of the two ensures clauses in DNF mode yields 4 clauses (after short-circuit safe decomposition), of which 2 are pruned as contradictory, leaving 2 to solve:
 - `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
 - `a.Length == 0 ∧ !(a.Length > 0) ∧ result == 0` — SAT (empty array)
 
@@ -48,8 +50,6 @@ The following table summarises the branching rules.
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
-
-When multiple `requires` and `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
 
 ### Incremental pruning
 
