@@ -140,30 +140,78 @@ For the `expect` assertions, since the postcondition has the form `output == exp
 
 ## Boundary Value Analysis
 
-BVA complements equivalence class partitioning by testing at the **edges** of each equivalence class. DafnyTestGen extracts numeric bounds from contracts and generates boundary tiers:
+BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen extracts bounds from contracts and generates boundary tiers that are combined with DNF clauses to produce test entries.
 
-- **Integer ranges**: for `requires -100 <= x <= 100`, generates tests at x = -100, -99, 0, 1, 99, 100
-- **Array/sequence sizes**: generates tests with different sizes (length 0, 1, 2, 3, ...), with distinct elements within each tier
-- **Relational bounds**: for `requires 0 <= k <= s.Length`, generates boundary tiers `k=0`, `k=1`, and `k==s.Length` (mapped to the SMT length variable). This exercises all three regions of the precondition: lower boundary, upper boundary, and interior. Relational tiers are prioritized first in the cross-product ordering
+### Input boundary tiers
 
-- **Enum datatypes**: for enum datatypes, i.e., datatypes where all constructors are parameterless (e.g., `datatype Color = Red | White | Blue`), boundary analysis generates one tier per constructor (encoded as integers) for exhaustive value coverage. This applies to both input parameters and return values / mutable output fields.
+Input boundary tiers constrain one or more input parameters. Each parameter independently contributes a list of tiers, and the lists are **cross-producted** across all parameters to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the parameter with the most tiers is greedily dropped until the product fits.
 
-- **Output boundary tiers**: return values and mutable scalar class fields are automatically constrained to explore different output regions. For scalar types — `nat`: `=0`, `=1`, `≥2`; `int`: `>0`, `<0`, `=0`; `bool`: `true`, `false`; `real`: `>0`, `<0`, `=0`. Tuple components are decomposed and each component gets its own tiers. Sequence return values get length tiers: `|f|≥3`, `|f|≥2`, `|f|=1`. Set, multiset, and map return values get cardinality tiers: `|f|≥3`, `|f|≥2`, `|f|≥1`. Enum return values get one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`). Non-trivial tiers are prioritized first since Z3 naturally gravitates toward minimal values. This is particularly useful when postconditions don't uniquely determine the output — e.g., `MaxDistEqual` where Z3 defaults to `maxDist=0` for all input tiers, output boundary tiers force exploration of `maxDist=1`, `maxDist≥2`; or `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`)
+The combined tier set is then further combined with the DNF clauses: each clause is paired with each tier as a separate SMT query. Input boundary tiers are applied only in **Phase 2** of the progressive strategy (when Phase 1 alone did not reach the minimum test count).
 
-- **Nested sequence inner-length floor tiers**: for `seq<seq<T>>` and `seq<string>` parameters, additional tiers constrain the **minimum inner sublist length**. Without these, Z3 gravitates to empty inner sublists (length 0), producing tests where min-length results are always 0. Two floor tiers are added:
-  - `inner>=1`: all active sublists have length ≥ 1 (forces min-length results like `v >= 1`)
-  - `inner>=2`: all active sublists have length ≥ 2 (forces `v >= 2`)
+#### Scalar integer inputs
 
-  These are placed **before** the outer-length tiers in the tier list, so the progressive strategy picks them up early and produces diverse output values. They are alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the exclusion mechanism that blocks previously-seen input values. Z3 freely chooses the outer length for each floor tier.
-- **Ordering shape tiers**: when a precondition constrains an array or sequence with a non-strict ordering (`<=` or `>=`), the weak ordering is decomposed into structurally distinct cases:
-  - **constant** (`a-shape=const`): all elements are equal (e.g., `[3, 3, 3]`)
-  - **strictly ordered** (`a-shape=strict-asc` or `strict-desc`): all consecutive pairs are strictly ordered, no duplicates (e.g., `[-3, -2, -1]`)
+For integer (`int`, `nat`) parameters, boundary values are extracted from preconditions. For `requires -100 <= x <= 100`, tiers are generated at `x = -100, -99, 0, 1, 99, 100` — the bounds themselves, just inside each bound, zero, and one. For `nat`, negative values are excluded.
 
-  This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, element distinctness constraints are omitted from its size tiers (since the shape tiers control element relationships more precisely).
+#### Scalar real inputs
 
-The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers. For example, `-t 5` generates arrays of length 0 through 4.
+For `real` parameters, fixed tiers are generated at `0.0`, `1.0`, `-1.0`, and `0.5`.
 
-BVA is **combined with DNF/FDNF**: each equivalence class (clause) is tested at each applicable boundary tier. For example, with 3 SAT clauses and 4 boundary tiers, up to 12 tests are generated.
+#### Array and sequence sizes
+
+For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below).
+
+Note that in Phase 1, no size is imposed at all — Z3 freely picks the length and element values. The size tiers below only appear in Phase 2.
+
+#### Relational bounds
+
+When a precondition constrains a scalar variable relative to another variable (e.g., `requires 0 <= k <= s.Length`), relational boundary tiers are generated: `k=0` (lower boundary), `k=1` (just above lower), and `k==s.Length` (upper boundary, mapped to the SMT length variable). This exercises all three regions of the relational constraint. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
+
+#### Enum datatypes
+
+For simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage. This applies to both input parameters and return value / mutable output fields.
+
+#### Ordering shape tiers
+
+When a precondition constrains an array or sequence with a non-strict ordering (`<=` or `>=`), the weak ordering is decomposed into structurally distinct cases:
+- **constant** (`a-shape=const`): all elements are equal (e.g., `[3, 3, 3]`)
+- **strictly ordered** (`a-shape=strict-asc` or `strict-desc`): all consecutive pairs are strictly ordered, no duplicates (e.g., `[-3, -2, -1]`)
+
+This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, the pairwise distinctness constraint is omitted from its size tiers.
+
+#### Nested sequence inner-length tiers
+
+For `seq<seq<T>>` and `seq<string>` parameters, two additional tiers constrain the **minimum inner sublist length** to ensure Z3 produces non-trivial inner content:
+- `inner>=1`: all active sublists have length ≥ 1
+- `inner>=2`: all active sublists have length ≥ 2
+
+Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. They are kept as separate alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the input exclusion mechanism.
+
+### Output boundary tiers
+
+When postconditions don't uniquely determine the output, Z3 naturally gravitates toward minimal values (e.g., `maxDist=0`, `|result|=0`). Output boundary tiers are added in **Phase 2b** of the progressive strategy, constraining return values and mutable scalar class fields to explore different output regions:
+
+- **`nat`**: `=0`, `=1`, `≥2`
+- **`int`**: `>0`, `<0`, `=0`
+- **`bool`**: `true`, `false`
+- **`real`**: `>0`, `<0`, `=0`
+- **Tuple components**: each component gets its own tiers
+- **Sequences** (return): length tiers `|f|≥3`, `|f|≥2`, `|f|=1`
+- **Sets, multisets, maps** (return): cardinality tiers `|f|≥3`, `|f|≥2`, `|f|≥1`
+- **Enum return values**: one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`)
+
+Non-trivial tiers are tried first. Collection *input* parameters (arrays, sequences) are skipped here — their diversity is driven by Phase 2 input size tiers. Output boundary tiers are particularly useful when postconditions don't uniquely determine the output — e.g., `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
+
+### Combination with DNF clauses
+
+BVA tiers are combined with DNF clauses differently depending on the phase:
+
+- **Phase 1** (always runs): each DNF clause is solved once with no extra constraints — Z3 freely picks all values. This is sufficient for methods with rich disjunctive postconditions.
+- **Phase 2** (when Phase 1 < `--min-tests`): each DNF clause is paired with each combined input boundary tier (the cross-product across all parameters). For 3 clauses and 12 combined tiers (e.g., 4 size tiers × 3 relational tiers), this yields up to 36 additional SMT queries.
+- **Phase 2b** (when still < `--min-tests`): each clause is paired with each output boundary tier.
+- **Phase 3** (when still < `--min-tests`): additional distinct inputs per clause (up to 3 repeats) via exclusion constraints.
+
+The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers per parameter. For example, `-t 5` generates size tiers 0 through 4.
+
 
 ## Repetition (`-r`)
 
