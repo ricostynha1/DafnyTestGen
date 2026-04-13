@@ -65,7 +65,8 @@ Single-variable existential quantifiers of the form `exists k :: lo <= k < hi &&
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
 
-These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. 
+These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. The three clauses are **not mutually exclusive** — when P holds at multiple positions all three can be satisfied simultaneously. This is intentional: the goal is to exercise each structural position, not to partition the space or overcomplicate the generated expressions. If Z3 finds the same input for two overlapping clauses, the input exclusion mechanism deduplicates the result. 
+
 Equivalent range definitions are supported (using other relational operators or a conjuntion of two inequalities instead of chained inequalities), as in `exists k :: k >= lo && k < hi && P(k)`. 
 Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
 
