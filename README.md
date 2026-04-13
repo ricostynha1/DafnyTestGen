@@ -215,30 +215,6 @@ When postconditions don't uniquely determine the output, Z3 naturally gravitates
 
 E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` force outputs with `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
 
-### Combination with DNF clauses
-
-BVA tiers are combined with DNF clauses differently depending on the phase:
-
-- **Phase 1** (always runs): each DNF clause is solved once with no extra constraints — Z3 freely picks all values. This is sufficient for methods with rich disjunctive postconditions.
-- **Phase 2** (when Phase 1 < `--min-tests`): each DNF clause is paired with each combined input boundary tier (the cross-product across all parameters). For 3 clauses and 12 combined tiers (e.g., 4 size tiers × 3 relational tiers), this yields up to 36 additional SMT queries.
-- **Phase 2b** (when still < `--min-tests`): each clause is paired with each output boundary tier.
-- **Phase 3** (when still < `--min-tests`): additional distinct inputs per clause (up to 3 repeats) via exclusion constraints.
-
-
-#### Contradiction pruning
-
-Not every clause+tier combination is satisfiable, and several pruning layers avoid sending redundant or obviously contradictory queries to Z3:
-
-1. **DNF cross-product pruning** — while building the clause list, every merged clause is checked for syntactic contradictions and dropped immediately. Precondition literals are included in this check, so clauses already contradicting preconditions never enter the schedule.
-
-2. **Syntactic contradiction detection** — before each Z3 call, the clause's literals (plus precondition literals) are checked for obvious contradictions: direct complements (`L ∧ ¬L`), relational contradictions (`x < 0 ∧ x ≥ 0`), and equality contradictions (`x = v₁ ∧ x = v₂` with `v₁ ≠ v₂`). Contradictory combinations are skipped without calling Z3, and their bitmask is recorded.
-
-3. **UNSAT superset pruning** — if a clause combination is UNSAT, any superset combination (which includes all the same literals plus more) is also UNSAT and is skipped.
-
-4. **Base-UNSAT propagation** — the base entry for each clause (without any boundary constraints) is always scheduled before its boundary tiers. If Z3 returns a definitive `unsat` on the base, all boundary tiers for that clause are immediately skipped — adding extra constraints to an already-unsatisfiable set cannot make it satisfiable. This is the primary pruning for incompatible clause+tier combinations.
-
-Note that boundary tier constraints are SMT-level strings (not Dafny AST nodes), so they are not included in the syntactic checks — compatibility between a tier constraint (e.g., `len_a = 0`) and a clause literal is handled by layers 4 and Z3.
-
 
 ## Repetition (`-r`)
 
@@ -251,12 +227,12 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
-2. **Phase 2 — Input boundary analysis** (only when phase 1 < minTests and n ≤ 10): Add input boundary value tiers crossed with clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
+2. **Phase 2 — Input boundary analysis** (only when Phase 1 yields < `--min-tests`): Add input boundary value tiers crossed with DNF clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
 
-3. **Phase 2b — Output boundary analysis** (only when still < minTests): Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance).
+3. **Phase 2b — Output boundary analysis** (only when still < `--min-tests`): Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance).
 **Note:** Output boundary tiers and input boundary tiers are never combined in the same SMT query. They are applied in separate phases (Phase 2 for input tiers, Phase 2b for output tiers), so a single test case never simultaneously constrains both inputs and outputs to boundary values.
 
-4. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
+4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum is reached.
 
 Each phase only runs if the minimum test count has not yet been reached (except phase 1, which always runs). This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (clauses without escalation).
 
