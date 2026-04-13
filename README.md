@@ -108,8 +108,8 @@ method FindFirstOdd(a: array<int>) returns (index: int)
 
 Pass 1 substitutes `IsFirstOdd(a, index)` with its body, producing an `if C then A else B` expression that the DNF engine splits into two clauses. Pass 2 inlines the nested `IsOdd` calls. 
 The resulting DNF branches (abbreviated) are: 
-- `index == -1 ∧ ∀i. ¬(a[i] % 2 == 1)`  - no odd elements
-- `index ≠ -1 ∧ 0 <= index < a.Length ∧ a[index] % 2 == 1 ∧ ∀i < index. ¬(a[i] % 2 == 1)` - index of first off element
+- `index == -1 ∧ ∀i. ¬(a[i] % 2 == 1)`  — no odd elements
+- `index ≠ -1 ∧ 0 <= index < a.Length ∧ a[index] % 2 == 1 ∧ ∀i < index. ¬(a[i] % 2 == 1)`  — index of first off element
 
 **Example — recursive function:**
 
