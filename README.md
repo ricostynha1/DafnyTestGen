@@ -150,11 +150,11 @@ The combined tier set is then further combined with the DNF clauses: each clause
 
 #### Scalar integer inputs
 
-For integer (`int`, `nat`) parameters, boundary values are extracted from preconditions. For `requires -100 <= x <= 100`, tiers are generated at `x = -100, -99, 0, 1, 99, 100` — the bounds themselves, just inside each bound, zero, and one. For `nat`, negative values are excluded.
+For integer (`int`, `nat`) parameters, boundary values are extracted from preconditions. For `requires -100 <= x <= 100`, tiers are generated at `x = -100, -99, 0, 1, 99, 100` — the bounds themselves, just inside each bound, zero, and one. For `nat`, negative values are excluded. **When no numeric precondition constrains the parameter**, the fallback tiers are simply `{0, 1}` (plus any relational bounds; see below).
 
 #### Scalar real inputs
 
-For `real` parameters, fixed tiers are generated at `0.0`, `1.0`, `-1.0`, and `0.5`.
+For `real` parameters, preconditions are **not** used — fixed tiers `0.0`, `1.0`, `-1.0`, and `0.5` are always generated regardless of what preconditions say. Precondition-bound extraction for real values is not implemented.
 
 #### Array and sequence sizes
 
@@ -211,6 +211,20 @@ BVA tiers are combined with DNF clauses differently depending on the phase:
 - **Phase 3** (when still < `--min-tests`): additional distinct inputs per clause (up to 3 repeats) via exclusion constraints.
 
 The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers per parameter. For example, `-t 5` generates size tiers 0 through 4.
+
+#### Contradiction pruning
+
+Not every clause+tier combination is satisfiable, and several pruning layers avoid sending redundant or obviously contradictory queries to Z3:
+
+1. **DNF cross-product pruning** — while building the clause list, every merged clause is checked for syntactic contradictions and dropped immediately. Precondition literals are included in this check, so clauses already contradicting preconditions never enter the schedule.
+
+2. **Syntactic contradiction detection** — before each Z3 call, the clause's literals (plus precondition literals) are checked for obvious contradictions: direct complements (`L ∧ ¬L`), relational contradictions (`x < 0 ∧ x ≥ 0`), and equality contradictions (`x = v₁ ∧ x = v₂` with `v₁ ≠ v₂`). Contradictory combinations are skipped without calling Z3, and their bitmask is recorded.
+
+3. **UNSAT superset pruning** — if a clause combination is UNSAT, any superset combination (which includes all the same literals plus more) is also UNSAT and is skipped.
+
+4. **Base-UNSAT propagation** — the base entry for each clause (without any boundary constraints) is always scheduled before its boundary tiers. If Z3 returns a definitive `unsat` on the base, all boundary tiers for that clause are immediately skipped — adding extra constraints to an already-unsatisfiable set cannot make it satisfiable. This is the primary pruning for incompatible clause+tier combinations.
+
+Note that boundary tier constraints are SMT-level strings (not Dafny AST nodes), so they are not included in the syntactic checks — compatibility between a tier constraint (e.g., `len_a = 0`) and a clause literal is handled by layers 4 and Z3.
 
 
 ## Repetition (`-r`)
