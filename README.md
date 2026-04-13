@@ -55,24 +55,6 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
-As another examples, consider the following:
-
-```dafny
-method Classify(x: int) returns (r: int)
-  requires -100 <= x <= 100
-  ensures x < 0 ==> r == -1
-  ensures x == 0 ==> r == 0
-  ensures x > 0 ==> r == 1
-```
-
-Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `A ∧ B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
-- `!(x < 0) ∧ !(x == 0) ∧ x > 0 ∧ r == 1` — SAT, corresponds to x > 0
-- `!(x < 0) ∧ (x == 0 ∧ r == 0) ∧ !(x > 0)` — SAT, corresponds to x == 0
-- `(x < 0 ∧ r == -1) ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
-- `!(x < 0) ∧ !(x == 0) ∧ !(x > 0)` — UNSAT
-
-In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve with Z3 (3 SAT, 4 UNSAT).
-
 
 ### Decomposition of existential quantifiers
 
