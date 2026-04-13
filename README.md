@@ -144,31 +144,52 @@ BVA complements equivalence class partitioning by testing at the **edges** and o
 
 ### Input boundary tiers
 
-Input boundary tiers constrain one or more input parameters. Each parameter independently contributes a list of tiers, and the lists are **cross-producted** across all parameters to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the parameter with the most tiers is greedily dropped until the product fits.
+Input boundary tiers constrain one or more input parameters. The tiers are derived from the preconditions and types of input parameters. Each parameter independently contributes a list of tiers, and the lists are **cross-producted** across all parameters to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the parameter with the most tiers is greedily dropped until the product fits.
 
 The combined tier set is then further combined with the DNF clauses: each clause is paired with each tier as a separate SMT query. Input boundary tiers are applied only in **Phase 2** of the progressive strategy (when Phase 1 alone did not reach the minimum test count).
 
 #### Scalar integer inputs
 
-For integer (`int`, `nat`) parameters, boundary values are extracted from preconditions. For `requires -100 <= x <= 100`, tiers are generated at `x = -100, -99, 0, 1, 99, 100` — the bounds themselves, just inside each bound, zero, and one. For `nat`, negative values are excluded. **When no numeric precondition constrains the parameter**, the fallback tiers are simply `{0, 1}` (plus any relational bounds; see below).
-
-#### Scalar real inputs
-
-For `real` parameters, preconditions are **not** used — fixed tiers `0.0`, `1.0`, `-1.0`, and `0.5` are always generated regardless of what preconditions say. Precondition-bound extraction for real values is not implemented.
-
-#### Array and sequence sizes
-
-For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below).
-
-Note that in Phase 1, no size is imposed at all — Z3 freely picks the length and element values. The size tiers below only appear in Phase 2.
+For integer (`int`, `nat`) input parameters, literal boundary values are extracted from preconditions. If preconditions impose a minimum value `min` for parameter `x`, tiers are generated at `x = min` and `x = min + 1` (unless `max = min`) . Reciprocally, if the preconditions impose a maximum value `max` for parameter `x`, tiers are generated at `x = max` and `x = max - 1` (unless `max = min`). Additionally, fixed tiers `x = 0` and `x = 1` are always generated (unless they are excluded by the range restrictions in the preconditions).
 
 #### Relational bounds
 
-When a precondition constrains a scalar variable relative to another variable (e.g., `requires 0 <= k <= s.Length`), relational boundary tiers are generated: `k=0` (lower boundary), `k=1` (just above lower), and `k==s.Length` (upper boundary, mapped to the SMT length variable). This exercises all three regions of the relational constraint. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
+For integer (`int`, `nat`) input parameters, when a precondition constrains such a parameter relative to another variable (e.g., `requires k <= s.Length`), a relational boundary tier is generated (e.g., `k==s.Length`). The other variable can be another `int`/`nat`/`real` scalar or the length of an array/sequence. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
+
+#### Scalar real inputs
+
+For `real` input parameters, fixed tiers `0.0`, `1.0`, `-1.0`, and `0.5` are always generated regardless of what preconditions say. Precondition-bound extraction for real values is not implemented.
+
+#### Scalar boolean inputs
+
+For `bool` input parameters, fixed tiers `false` and `true` are always generated regardless of what preconditions say.
 
 #### Enum datatypes
 
-For simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage. 
+For input parameters of simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage, regardless of what preconditions say.
+
+#### Array and sequence sizes
+
+For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below). In the case nested sequences, the inner sequences are constrained to be of different lengths (instead of simply being distinct). 
+
+Note that in Phase 1, no size is imposed at all — Z3 freely picks the size and element values. The size tiers only appear in Phase 2.
+
+#### Set, multiset and map sizes
+
+Similarly, for each input parameter of type set, multiset or map, cardinality tiers fix the size if the set, multiset or map domain, respectively, to 0, 1, 2, …, `--tiers - 1`. For sets and maps, the maximum number of tiers is capped to the size of the universe (such as the number of constructures in an enum datatype).
+
+#### Nested sequence inner-length tiers
+
+For `seq<seq<T>>` and `seq<string>` input parameters, two additional tiers constrain the **minimum inner sublist length** to ensure Z3 produces non-trivial inner content:
+- `inner>=1`: all active sublists have length ≥ 1
+- `inner>=2`: all active sublists have length ≥ 2
+
+Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. They are kept as separate alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the input exclusion mechanism.
+
+#### Tuple components
+
+For tuple input parameters, each tuple component is processed separately.
+
 
 #### Ordering shape tiers
 
@@ -178,13 +199,6 @@ When a precondition constrains an array or sequence with a non-strict ordering (
 
 This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, the pairwise distinctness constraint is omitted from its size tiers.
 
-#### Nested sequence inner-length tiers
-
-For `seq<seq<T>>` and `seq<string>` parameters, two additional tiers constrain the **minimum inner sublist length** to ensure Z3 produces non-trivial inner content:
-- `inner>=1`: all active sublists have length ≥ 1
-- `inner>=2`: all active sublists have length ≥ 2
-
-Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. They are kept as separate alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the input exclusion mechanism.
 
 ### Output boundary tiers
 
