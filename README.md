@@ -16,7 +16,7 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunc
 
 Disjunctive postconditions and preconditions naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a` option), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
-**Short-circuit safety in DNF mode.** The DNF decomposition respects Dafny short-circuit evaluation of Boolean operators, to avoid generating test cases that would cause runtime errors. Consider the following example:
+The DNF decomposition respects Dafny **short-circuit evaluation** of Boolean operators, to avoid generating test cases that would cause runtime errors. Consider the following example:
 
 ```dafny
 method GetFirstOrZero(a: array<int>) returns (result: int)
@@ -29,14 +29,6 @@ The implication `A ==> B` is decomposed into mutually exclusive, short-circuit s
 - `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold.
 
 With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard, possibly causing an out-of-bounds error. 
-
-**Cross product evaluation**. When multiple `requires` and/or `ensures` clauses exist, their cross-product forms the full DNF or FDNF. 
-
-In the above example, the cross-product of the two ensures clauses in DNF mode yields 4 clauses (after short-circuit safe decomposition), of which 2 are pruned as contradictory, leaving 2 to solve:
-- `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
-- `a.Length == 0 ∧ !(a.Length > 0) ∧ result == 0` — SAT (empty array)
-
-With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 The following table summarises the branching rules.
 
@@ -51,11 +43,19 @@ The following table summarises the branching rules.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
-### Incremental pruning
+### Cross product and incremental pruning 
 
-The cross-product is **pruned incrementally**: at each step, merged clauses are checked for syntactic contradictions (complementary literals, distinct equalities, incompatible relational constraints) and discarded immediately, preventing dead branches from multiplying further.
+With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. This product **incrementally pruned** by discarding syntactically contradictory merges (complementary literals, distinct equalities, incompatible relational constraints), preventing dead branches. The remaining clauses are checked for satisfiability, and test data is generated for the satisfiable ones using Z3.
 
-Consider the following example:
+In the above example, the cross-product of the two ensures clauses in DNF mode nominally yields 4 clauses (after short-circuit safe decomposition). One is eliminated syntactically during cross-product building, and one is found UNSAT by Z3, leaving 2 SAT test cases:
+- `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
+- `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` — SAT (empty array)
+- `!(a.Length == 0) ∧ !(a.Length > 0)` — UNSAT via Z3 (a.Length is nat, so a.Length ≤ 0 ∧ a.Length ≠ 0 has no solution)
+- `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` — pruned syntactically during cross-product (a.Length == 0 contradicts a.Length > 0)
+
+With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
+
+As another examples, consider the following:
 
 ```dafny
 method Classify(x: int) returns (r: int)
@@ -70,7 +70,6 @@ Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `
 - `!(x < 0) ∧ (x == 0 ∧ r == 0) ∧ !(x > 0)` — SAT, corresponds to x == 0
 - `(x < 0 ∧ r == -1) ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
 - `!(x < 0) ∧ !(x == 0) ∧ !(x > 0)` — UNSAT
-
 
 In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve with Z3 (3 SAT, 4 UNSAT).
 
