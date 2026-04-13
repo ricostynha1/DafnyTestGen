@@ -85,7 +85,7 @@ The `exists` clause decomposes into: max at position 0 (left), max in middle, ma
 
 User-defined predicates and functions referenced in contracts are automatically inlined before DNF/FDNF conversion and SMT generation via **2-pass inlining** — substituting bodies into contract expressions to expose branching for DNF.
 
-All predicates and functions with bodies — both recursive and non-recursive — are inlined through **two textual substitution passes**. Each pass replaces every call site with the function body (with parameters substituted). This achieves up to **2 levels of nesting**: the first pass expands top-level calls, the second pass expands calls introduced by the first. Any remaining residual calls (in recursive or non-recursive functions/predicates) are left as **uninterpreted functions/predicates** in SMT — Z3 can freely assign their values, which preserves branch diversity (both branches of a recursive `if-then-else` remain satisfiable) while avoiding infinite expansion.
+All predicates and functions with bodies — both recursive and non-recursive — are inlined through **two textual substitution passes**. The first pass expands top-level call sites. The second pass expands calls introduced by the first, **except for recursive functions**: further expanding a recursive call only adds deeper uninterpreted residuals without contributing useful constraints — the structural branches from pass 1 are already sufficient. Non-recursive helper calls introduced inside a recursive function body are still expanded in pass 2. Any remaining residual calls are left as **uninterpreted functions** in SMT — Z3 can freely assign their values, which preserves branch diversity (both branches of a recursive `if-then-else` remain satisfiable) while avoiding infinite expansion.
 
 **Example — non-recursive nesting:**
 
@@ -120,15 +120,7 @@ method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
   ensures diff == filter(a, b)
 ```
 
-Pass 1 expands `filter(a, b)` → `if |a| == 0 then a else if a[|a|-1] in b then filter(a[..|a|-1], b) else filter(a[..|a|-1], b) + [a[|a|-1]]`. Pass 2 expands the inner `filter(a[..|a|-1], b)` calls one more level. Residual `filter(...)` calls (3rd level) become uninterpreted in SMT.
-
-The DNF engine splits `X == (if C then A else B)` into `(C && X == A) || (!C && X == B)`, producing three top-level clauses:
-
-1. `|a| == 0 && diff == a` — empty input
-2. `|a| > 0 && a[|a|-1] in b && diff == filter(...)` — last element **removed** (in `b`)
-3. `|a| > 0 && a[|a|-1] !in b && diff == filter(...) + [a[|a|-1]]` — last element **kept** (not in `b`)
-
-The **structural conditions** (`|a| > 0`, `a[|a|-1] in b`) guide Z3 to find inputs exercising each branch. For the `expect` assertions, when the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect diff == filter(a, b)`) and evaluated by Dafny at runtime.
+Pass 1 expands `filter(a, b)` → `if |a| == 0 then a else if a[|a|-1] in b then filter(a[..|a|-1], b) else filter(a[..|a|-1], b) + [a[|a|-1]]`. The DNF engine immediately splits the outer `X == (if C then A else B)` into three branches: empty input (`|a| == 0`), last element removed (`a[|a|-1] in b`), last element kept (`a[|a|-1] !in b`). Since `filter` is recursive, pass 2 skips it — the inner `filter(a[..|a|-1], b)` calls remain as uninterpreted functions in SMT. This is sufficient: Z3 can freely assign their values, and the structural conditions from pass 1 already guide it to find inputs exercising each branch. For the `expect` assertions, since the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect diff == filter(a, b)`) and evaluated by Dafny at runtime.
 
 
 ## Boundary Value Analysis
