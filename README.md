@@ -213,7 +213,7 @@ When postconditions don't uniquely determine the output, Z3 naturally gravitates
 - **Sets, multisets, maps** (return): cardinality tiers `|f|≥3`, `|f|≥2`, `|f|≥1`
 - **Enum return values**: one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`)
 
-Output boundary tiers are particularly useful when postconditions don't uniquely determine the output — e.g., `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
+E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` force outputs with `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
 
 ### Combination with DNF clauses
 
