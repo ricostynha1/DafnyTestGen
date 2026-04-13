@@ -50,8 +50,8 @@ With multiple `requires` and/or `ensures` clauses, their cross-product forms the
 In the above example, the cross-product of the two ensures clauses in DNF mode nominally yields 4 clauses (after short-circuit safe decomposition). One is eliminated syntactically during cross-product building, and one is found UNSAT by Z3, leaving 2 SAT test cases:
 - `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
 - `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` — SAT (empty array)
-- `!(a.Length == 0) ∧ !(a.Length > 0)` — UNSAT via Z3 (a.Length is nat, so a.Length ≤ 0 ∧ a.Length ≠ 0 has no solution)
-- `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` — pruned syntactically during cross-product (a.Length == 0 contradicts a.Length > 0)
+- `!(a.Length == 0) ∧ !(a.Length > 0)` — UNSAT via Z3 
+- `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` — pruned during cross-product
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
