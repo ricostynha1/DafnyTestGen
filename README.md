@@ -124,7 +124,18 @@ method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
   ensures diff == filter(a, b)
 ```
 
-Pass 1 expands `filter(a, b)` → `if |a| == 0 then a else if a[|a|-1] in b then filter(a[..|a|-1], b) else filter(a[..|a|-1], b) + [a[|a|-1]]`. The DNF engine immediately splits the outer `X == (if C then A else B)` into three branches: empty input (`|a| == 0`), last element removed (`a[|a|-1] in b`), last element kept (`a[|a|-1] !in b`). Since `filter` is recursive, pass 2 skips it — the inner `filter(a[..|a|-1], b)` calls remain as uninterpreted functions in SMT. This is sufficient: Z3 can freely assign their values, and the structural conditions from pass 1 already guide it to find inputs exercising each branch. For the `expect` assertions, since the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect diff == filter(a, b)`) and evaluated by Dafny at runtime.
+The DNF engine splits the inlined expression `X == (if C then A else B)` into three branches. Since `filter` is recursive, pass 2 skips it — the inner `filter(a[..|a|-1], b)` calls remain as uninterpreted functions in SMT. The three clauses sent to Z3 are:
+
+- `|a| == 0 && diff == a` — empty input
+- `!(|a| == 0) && a[|a|-1] in b && diff == filter(a[..|a|-1], b)` — last element removed
+- `!(|a| == 0) && a[|a|-1] !in b && diff == filter(a[..|a|-1], b) + [a[|a|-1]]` — last element kept
+
+Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch. 
+
+For the `expect` assertions, since the postcondition has the form `output == expr`, where `expr` involves an uninterpreted function, the generated assertion depends on the options used:
+- by default: `expect diff == filter(a, b)` — the spec expression is emitted directly to be evaluated by Dafny at runtime during test execution.
+- with `-c` (check mode): `filter(a, b)` is evaluated at runtime for the generated inputs (during the check phase), and the concrete result is injected as a literal (e.g., `expect diff == [1, 3]`).
+
 
 
 ## Boundary Value Analysis
