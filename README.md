@@ -65,7 +65,9 @@ Single-variable existential quantifiers of the form `exists k :: lo <= k < hi &&
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
 
-These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
+These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. 
+Equivalent range definitions are supported (using other relational operators or a conjuntion of two inequalities instead of chained inequalities), as in `exists k :: k >= lo && k < hi && P(k)`. 
+Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
 
 Consider the following example:
 
@@ -76,7 +78,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via FDNF cross-product, producing distinct test scenarios for each structural case.
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for each structural case.
 
 ### Predicate and function inlining  
 
