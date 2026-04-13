@@ -79,7 +79,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for each structural case.
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
 
 ### Predicate and function inlining  
 
