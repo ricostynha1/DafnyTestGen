@@ -85,7 +85,8 @@ The `exists` clause decomposes into: max at position 0 (left), max in middle, ma
 
 User-defined predicates and functions referenced in contracts are automatically inlined before DNF/FDNF conversion and SMT generation via **2-pass inlining** — substituting bodies into contract expressions to expose branching for DNF.
 
-All predicates and functions with bodies — both recursive and non-recursive — are inlined through **two textual substitution passes**. The first pass expands top-level call sites. The second pass expands calls introduced by the first, **except for recursive functions**: further expanding a recursive call only adds deeper uninterpreted residuals without contributing useful constraints — the structural branches from pass 1 are already sufficient. Non-recursive helper calls introduced inside a recursive function body are still expanded in pass 2. Any remaining residual calls are left as **uninterpreted functions** in SMT — Z3 can freely assign their values, which preserves branch diversity (both branches of a recursive `if-then-else` remain satisfiable) while avoiding infinite expansion.
+
+All predicates and functions with bodies — both recursive and non-recursive — are inlined through **two textual substitution passes**. The first pass expands top-level call sites. The second pass expands calls introduced by the first, **except for recursive calls** (to avoid adding deeper uninterpreted residuals without contributing useful constraints — the structural branches from pass 1 are already sufficient). Any remaining residual calls are left as **uninterpreted functions** in SMT — Z3 can freely assign their values, which preserves branch diversity (both branches of a recursive `if-then-else` remain satisfiable) while avoiding infinite expansion.
 
 **Example — non-recursive nesting:**
 
