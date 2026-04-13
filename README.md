@@ -144,7 +144,7 @@ BVA complements equivalence class partitioning by testing at the **edges** and o
 
 ### Input boundary tiers
 
-Input boundary tiers constrain one or more input parameters. **This includes not only method parameters, but also all class fields (including const, constructor, and ghost fields), which are treated as synthetic inputs for boundary analysis.** The tiers are derived from the preconditions and types of these inputs. Each parameter or field independently contributes a list of tiers, and the lists are **cross-producted** across all inputs to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the input with the most tiers is greedily dropped until the product fits.
+Input boundary tiers constrain one or more input parameters. **This includes not only method parameters, but also all class fields, which are treated as synthetic inputs for boundary analysis.** The tiers are derived from the preconditions and types of these inputs. Each input parameter contributes a list of tiers, and the lists are **cross-producted** across all inputs to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the input with the most tiers is greedily dropped until the product fits.
 
 The combined tier set is then further combined with the DNF clauses: each clause is paired with each tier as a separate SMT query. Input boundary tiers are applied only in **Phase 2** of the progressive strategy (when Phase 1 alone did not reach the minimum test count).
 
@@ -170,13 +170,13 @@ For input parameters of simple enum datatypes (all constructors parameterless, e
 
 #### Array and sequence sizes
 
-For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below). In the case nested sequences, the inner sequences are constrained to be of different lengths (instead of simply being distinct). 
+For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below). In the case of nested sequences, the inner sequences are constrained to be of different lengths (instead of simply being distinct). 
 
 Note that in Phase 1, no size is imposed at all — Z3 freely picks the size and element values. The size tiers only appear in Phase 2.
 
 #### Set, multiset and map sizes
 
-Similarly, for each input parameter of type set, multiset or map, cardinality tiers fix the size if the set, multiset or map domain, respectively, to 0, 1, 2, …, `--tiers - 1`. For sets and maps, the maximum number of tiers is capped to the size of the universe (such as the number of constructures in an enum datatype).
+Similarly, for each input parameter of type set, multiset or map, cardinality tiers fix the size of the set, multiset or map domain, respectively, to 0, 1, 2, …, `--tiers - 1`. For sets and maps, the maximum number of tiers is capped to the size of the universe (such as the number of constructures in an enum datatype).
 
 #### Nested sequence inner-length tiers
 
@@ -184,7 +184,7 @@ For `seq<seq<T>>` and `seq<string>` input parameters, two additional tiers const
 - `inner>=1`: all active sublists have length ≥ 1
 - `inner>=2`: all active sublists have length ≥ 2
 
-Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. They are kept as separate alternative entries (not cross-producted with outer-length tiers) to avoid conflicts with the input exclusion mechanism.
+Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. 
 
 #### Tuple components
 
