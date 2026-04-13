@@ -168,7 +168,7 @@ When a precondition constrains a scalar variable relative to another variable (e
 
 #### Enum datatypes
 
-For simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage. This applies to both input parameters and return value / mutable output fields.
+For simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage. 
 
 #### Ordering shape tiers
 
