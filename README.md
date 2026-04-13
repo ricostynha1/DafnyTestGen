@@ -14,9 +14,9 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunc
 
 ## Equivalence Class Partitioning via DNF Analysis
 
-Disjunctive postconditions and preconditions, naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a`option`), producing a set of clauses that partition the input/output space as **equivalence classes**.
+Disjunctive postconditions and preconditions naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a` option), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
-**Short-circuit safety in DNF mode.** Dafny uses short-circuit evaluation for `||`, `&&`, and `==>`. The DNF decomposition respects this to avoid generating test cases that would cause runtime errors. Consider the following example:
+**Short-circuit safety in DNF mode.** The DNF decomposition respects Dafny short-circuit evaluation of Boolean operators, to avoid generating test cases that would cause runtime errors. Consider the following example:
 
 ```dafny
 method GetFirstOrZero(a: array<int>) returns (result: int)
@@ -26,7 +26,7 @@ method GetFirstOrZero(a: array<int>) returns (result: int)
 
 The implication `A ==> B` is decomposed into mutually exclusive, short-circuit safe, DNF branches `!A` and `A ∧ B` (instead of `!A` and `B` as in standard DNF). Similarly, `A || B` produces branches `A` and `!A ∧ B`. For this example, the second ensures clause produces:
 - `!(a.Length > 0)` — antecedent is false, implication vacuously true
-- `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold
+- `a.Length > 0 ∧ result == a[0]` — antecedent holds, consequent must hold.
 
 With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.Length > 0` guard, possibly causing an out-of-bounds error. 
 
@@ -38,7 +38,7 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 
 The following table summarises the branching rules.
 
-| Expression (E) | DNF Branches | FDNF Branches |
+| Expression | DNF Branches | FDNF Branches |
 |---|---|---|
 | `A \|\| B` | `A`, `!A ∧ B` | `A ∧ B`, `A ∧ !B`, `!A ∧ B` |
 | `A ==> B` | same as `!A \|\| B`  | idem |
@@ -67,12 +67,12 @@ method Classify(x: int) returns (r: int)
 
 Each implication `A ==> B` produces 2 short-circuit safe DNF branches (`!A` or `A ∧ B`). In **DNF mode**, the cross-product of the 3 ensures clauses yields nominally 2×2×2 = 8 DNF clauses, but incremental pruning during cross-product eliminates 4 contradictory clauses (with contradictory equalities for `r`), leaving only **4 clauses** to solve (3 SAT, 1 UNSAT):
 - `!(x < 0) ∧ !(x == 0) ∧ x > 0 ∧ r == 1` — SAT, corresponds to x > 0
-- `!(x < 0) ∧ x == 0 ∧ r == 0 ∧ !(x > 0)` — SAT, corresponds to x == 0
-- `x < 0 ∧ r == -1 ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
+- `!(x < 0) ∧ (x == 0 ∧ r == 0) ∧ !(x > 0)` — SAT, corresponds to x == 0
+- `(x < 0 ∧ r == -1) ∧ !(x == 0) ∧ !(x > 0)` — SAT, corresponds to x < 0
 - `!(x < 0) ∧ !(x == 0) ∧ !(x > 0)` — UNSAT
 
 
-In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve (3 SAT, 4 UNSAT).
+In **FDNF mode**, each implication produces 3 full clauses, and the cross-product yields nominally 3×3×3 = 27 FDNF clauses. Incremental pruning eliminates 20 contradictory clauses (with contradictory equalities for `r`), leaving only **7 clauses** to solve with Z3 (3 SAT, 4 UNSAT).
 
 
 ### Decomposition of existential quantifiers
