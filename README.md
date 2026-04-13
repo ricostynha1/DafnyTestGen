@@ -45,7 +45,7 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 
 ### Cross product and incremental pruning 
 
-With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. This product **incrementally pruned** by discarding syntactically contradictory merges (complementary literals, distinct equalities, incompatible relational constraints), preventing dead branches. The remaining clauses are checked for satisfiability, and test data is generated for the satisfiable ones using Z3.
+With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. This product is **incrementally pruned** by discarding syntactically contradictory merges (complementary literals, distinct equalities, incompatible relational constraints), preventing dead branches. The remaining clauses are checked for satisfiability, and test data is generated for the satisfiable ones using Z3.
 
 In the above example, the cross-product of the two ensures clauses in DNF mode nominally yields 4 clauses (after short-circuit safe decomposition). One is eliminated syntactically during cross-product building, and one is found UNSAT by Z3, leaving 2 SAT test cases:
 - `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` — SAT (element found)
@@ -144,17 +144,17 @@ BVA complements equivalence class partitioning by testing at the **edges** and o
 
 ### Input boundary tiers
 
-Input boundary tiers constrain one or more input parameters. The tiers are derived from the preconditions and types of input parameters. Each parameter independently contributes a list of tiers, and the lists are **cross-producted** across all parameters to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the parameter with the most tiers is greedily dropped until the product fits.
+Input boundary tiers constrain one or more input parameters. **This includes not only method parameters, but also all class fields (including const, constructor, and ghost fields), which are treated as synthetic inputs for boundary analysis.** The tiers are derived from the preconditions and types of these inputs. Each parameter or field independently contributes a list of tiers, and the lists are **cross-producted** across all inputs to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the input with the most tiers is greedily dropped until the product fits.
 
 The combined tier set is then further combined with the DNF clauses: each clause is paired with each tier as a separate SMT query. Input boundary tiers are applied only in **Phase 2** of the progressive strategy (when Phase 1 alone did not reach the minimum test count).
 
 #### Scalar integer inputs
 
-For integer (`int`, `nat`) input parameters, literal boundary values are extracted from preconditions. If preconditions impose a minimum value `min` for parameter `x`, tiers are generated at `x = min` and `x = min + 1` (unless `max = min`) . Reciprocally, if the preconditions impose a maximum value `max` for parameter `x`, tiers are generated at `x = max` and `x = max - 1` (unless `max = min`). Additionally, fixed tiers `x = 0` and `x = 1` are always generated (unless they are excluded by the range restrictions in the preconditions).
+For integer (`int`, `nat`) input parameters, literal boundary values are extracted from preconditions. If preconditions impose a minimum value `lo` for parameter `x`, tiers are generated at `x = lo` and `x = lo + 1` (unless `lo = hi`). Reciprocally, if preconditions impose a maximum value `hi` for parameter `x`, tiers are generated at `x = hi` and `x = hi - 1` (unless `lo = hi` or `hi = 0`  and type is `nat`). Additionally, fixed tiers `x = 0` and `x = 1` are always generated (unless they are excluded by the range restrictions in the preconditions).
 
-#### Relational bounds
+#### Relational bounds for integer inputs
 
-For integer (`int`, `nat`) input parameters, when a precondition constrains such a parameter relative to another variable (e.g., `requires k <= s.Length`), a relational boundary tier is generated (e.g., `k==s.Length`). The other variable can be another `int`/`nat`/`real` scalar or the length of an array/sequence. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
+For integer (`int`, `nat`) input parameters, when a precondition constrains such a parameter relative to another variable (e.g., `requires k <= s.Length`), a relational boundary tier is generated (e.g., `k == s.Length`). The other variable can be another `int`/`nat`/`real` scalar or the length of an array/sequence. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
 
 #### Scalar real inputs
 
@@ -213,7 +213,7 @@ When postconditions don't uniquely determine the output, Z3 naturally gravitates
 - **Sets, multisets, maps** (return): cardinality tiers `|f|≥3`, `|f|≥2`, `|f|≥1`
 - **Enum return values**: one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`)
 
-Non-trivial tiers are tried first. Collection *input* parameters (arrays, sequences) are skipped here — their diversity is driven by Phase 2 input size tiers. Output boundary tiers are particularly useful when postconditions don't uniquely determine the output — e.g., `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
+Output boundary tiers are particularly useful when postconditions don't uniquely determine the output — e.g., `PrimeFactors` where seq-length tiers force `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
 
 ### Combination with DNF clauses
 
@@ -255,6 +255,8 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 2. **Phase 2 — Input boundary analysis** (only when phase 1 < minTests and n ≤ 10): Add input boundary value tiers crossed with clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
 
 3. **Phase 2b — Output boundary analysis** (only when still < minTests): Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). Collection outputs (arrays, sequences, sets) are skipped — their diversity is driven by input boundary tiers.
+
+**Note:** Output boundary tiers and input boundary tiers are never combined in the same SMT query. They are applied in separate phases (Phase 2 for input tiers, Phase 2b for output tiers), so a single test case never simultaneously constrains both inputs and outputs to boundary values.
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per condition (up to 3 per condition) until the minimum is reached.
 
