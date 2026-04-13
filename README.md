@@ -224,7 +224,6 @@ BVA tiers are combined with DNF clauses differently depending on the phase:
 - **Phase 2b** (when still < `--min-tests`): each clause is paired with each output boundary tier.
 - **Phase 3** (when still < `--min-tests`): additional distinct inputs per clause (up to 3 repeats) via exclusion constraints.
 
-The `--tiers <n>` option (default: 4) controls the number of array/sequence size tiers per parameter. For example, `-t 5` generates size tiers 0 through 4.
 
 #### Contradiction pruning
 
@@ -331,7 +330,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--all-combinations` | `-a` | One test per FDNF clause |
 | `--boundary` | `-b` | Boundary value analysis on inputs |
 | `--simple` | `-s` | One test per DNF clause (default) |
-| `--tiers <n>` | `-t` | Sequence/array size tiers for boundary analysis (default: 4) |
+| `--tiers <n>` | `-t` | Sequence/array/set/multiset/map size tiers for boundary analysis (default: 4) |
 | `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing (not supported for programs with bodyless methods) |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
