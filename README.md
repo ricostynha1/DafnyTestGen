@@ -237,7 +237,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 Each phase only runs if the minimum test count has not yet been reached (except phase 1, which always runs). This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (clauses without escalation).
 
 
-### Class Support
+## Class Support
 
 DafnyTestGen generates tests for methods defined inside classes with fields of supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, maps, enums). 
 
