@@ -58,7 +58,7 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 ### Decomposition of existential quantifiers
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
-Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 4 clauses representing boundary, middle, and multiple-match cases:
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to  `P(lo) || P(lo+1) || ... || P (hi-1)`, are automatically decomposed into 4 clauses representing boundary, middle, and multiple-match cases:
 
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
