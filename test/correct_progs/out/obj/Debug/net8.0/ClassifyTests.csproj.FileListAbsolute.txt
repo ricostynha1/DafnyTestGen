@@ -1,0 +1,15 @@
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.AssemblyInfoInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.AssemblyInfo.cs
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.csproj.CoreCompileInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.sourcelink.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ClassifyTests.exe
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\refint\ClassifyTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.pdb
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ClassifyTests.deps.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ClassifyTests.genruntimeconfig.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ClassifyTests.runtimeconfig.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ClassifyTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ref\ClassifyTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ClassifyTests.pdb

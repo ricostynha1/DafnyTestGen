@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-11 12:10:39
+// Generated: 2026-04-14 17:15:20
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -66,7 +66,6 @@ method Passing()
     var a := new int[1] [38];
     var m := Mode(a);
     expect m in a[..];
-    expect m == 38;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -81,7 +80,6 @@ method Passing()
     var a := new int[2] [3, 3];
     var m := Mode(a);
     expect m in a[..];
-    expect m == 3;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -96,7 +94,6 @@ method Passing()
     var a := new int[3] [4, 4, 4];
     var m := Mode(a);
     expect m in a[..];
-    expect m == 4;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -111,7 +108,6 @@ method Passing()
     var a := new int[4] [-38, 0, 0, 7719];
     var m := Mode(a);
     expect m in a[..];
-    expect m == 0;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -126,7 +122,6 @@ method Passing()
     var a := new int[5] [-38, 0, 0, 0, 7719];
     var m := Mode(a);
     expect m in a[..];
-    expect m == 0;
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
@@ -140,7 +135,8 @@ method Passing()
   {
     var a := new int[6] [-38, 0, 0, 0, 0, 7719];
     var m := Mode(a);
-    expect m == 0;
+    expect m in a[..];
+    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
   }
 
 }

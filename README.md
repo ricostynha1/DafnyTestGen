@@ -59,13 +59,14 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 ### Decomposition of existential quantifiers
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
-Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 3 clauses representing boundary and middle cases:
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` are automatically decomposed into 4 clauses representing boundary, middle, and multiple-match cases:
 
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
+4. **Multiple entries**: `exists k, k_2 :: lo <= k && k < k_2 && k_2 < hi && P(k) && P(k_2)` — property holds at two distinct positions simultaneously (forces inputs where the property is satisfied more than once)
 
-These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. The three clauses are **not mutually exclusive** — when P holds at multiple positions all three can be satisfied simultaneously. This is intentional: the goal is to exercise each structural position, not to partition the space or overcomplicate the generated expressions. If Z3 finds the same input for two overlapping clauses, the input exclusion mechanism deduplicates the result. 
+These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. The four clauses are **not mutually exclusive** — when P holds at multiple positions all of them can be satisfied simultaneously. This is intentional: the goal is to exercise each structural position, not to partition the space or overcomplicate the generated expressions. If Z3 finds the same input for two overlapping clauses, the input exclusion mechanism deduplicates the result. 
 
 Equivalent range definitions are supported (using other relational operators or a conjuntion of two inequalities instead of chained inequalities), as in `exists k :: k >= lo && k < hi && P(k)`. 
 Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
@@ -79,7 +80,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right), and max at two distinct positions (multiple entries). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
 
 ### Predicate and function inlining  
 
@@ -213,7 +214,7 @@ When postconditions don't uniquely determine the output, Z3 naturally gravitates
 - **Sets, multisets, maps** (return): cardinality tiers `|f|≥3`, `|f|≥2`, `|f|≥1`
 - **Enum return values**: one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`)
 
-E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` force outputs with `|f|≥2` (composite numbers like `n=35 → f==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
+E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` force outputs with `|f|≥2` (composite numbers like `n=35 → f(35)==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
 
 
 ## Repetition (`-r`)
@@ -241,7 +242,7 @@ Each phase only runs if the minimum test count has not yet been reached (except 
 
 DafnyTestGen generates tests for methods defined inside classes with fields of supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, maps, enums). 
 
-Fields are treated as synthetic mutable parameters with pre/post SMT variables; test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references. Classes with trait parents or unsupported field types are auto-skipped.
+Fields are treated as synthetic mutable parameters with pre/post SMT variables (with suffic `_pre` in pre-state); test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references. Classes with trait parents or unsupported field types are auto-skipped.
 
 Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via `ensures` clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions.
 
@@ -252,14 +253,15 @@ Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically st
 
 ### Ghost Field Handling
 
-Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. In the generated test file:
+Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. 
+In the generated test file:
 
+- Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions;
 - `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
 - Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals; for `{:autocontracts}` classes these fields (e.g., `ghost var Elements: seq<int>`) are also included as Z3 inputs and assigned accordingly
 - Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
 - The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields
 - `old()` wrappers are stripped from method bodies (invalid for non-ghost variables in compiled code — semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point)
-- Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions
 - Member predicates and functions (e.g., `Empty()`, `Full()`) referenced inside `old()` in postconditions are captured in a pre-call variable (e.g., `var old_Empty := obj.Empty();`) so `old(Empty())` can be tested at runtime
 
 
@@ -353,65 +355,117 @@ DafnyTestGen needs the Z3 SMT solver. The path is resolved using this priority c
 
 The resolved path is printed at startup (e.g., `[DafnyTestGen] Z3: /path/to/z3`).
 
-## Generated Output
+## Test Emission
 
-Given a Dafny method with a single non-disjunctive postcondition, the progressive auto strategy escalates through boundary analysis and repeats to reach the minimum test count. Tests emit `expect` assertions using the postcondition expression:
+For each processes source file (e.g., `FindMax.dfy`), DafnyTestGen generates a new file with the same name of the source file and suffix `Tests` (e.g., `FindMaxTests.dfy`), containing the original code plus the generated test code.
 
-```dafny
-method CalcFact(n: nat) returns (f: nat)
-  ensures f == Fact(n)
-```
+In default mode, for each method `M` with generated tests, it is created a test method `GeneratedTests_M()` containing the test cases generated for `M`. It is also created a  `Main()` method that calls the test methods. If a `Main()` method previously existed in the source program, it is renamed `OriginalMain()`.
 
-```dafny
-  // Test case for combination 1/Bn=0:
-  {
-    var n := 0;
-    var f := CalcFact(n);
-    expect f == Fact(n);
-  }
+For test cases with concrete values generated by Z3 for all input and output parameters (satisfying the defined preconditions and postconditions), the test code assigns concrete values to the input parameters, calls the method under test with those inputs, assigns returned values to output variables, and checks the actual method outputs against the expected outputs produced by Z3 with `expect` assertions (checked at runtime).      
 
-  // Test case for combination 1/Bn=1:
-  {
-    var n := 1;
-    var f := CalcFact(n);
-    expect f == Fact(n);
-  }
-```
-
-When postconditions involve quantifiers or predicates that cannot be directly used as `expect` assertions, Z3-computed **concrete expected values** are emitted instead. This applies to scalar return values, tuple return values, mutable array parameters (post-state), and mutable scalar class fields — whenever Z3 uniquely determines the output, the concrete value is used:
+Example:
 
 ```dafny
-  // Scalar return value (FindMax)
+method FindMax(a: array<real>) returns (max: real)
+  requires a.Length > 0
+  ensures exists k :: 0 <= k < a.Length && max == a[k]
+  ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
+{...}
+
+method GeneratedTests_FindMax()
+{
   {
     var a := new real[2] [0.5, 0.0];
     var max := FindMax(a);
     expect max == 0.5;
   }
+  ...
+}
 
-  // Mutable array post-state (BubbleSort)
-  {
-    var a := new int[2] [-38, 7681];
-    var maxDist := BubbleSort(a);
-    expect a[..] == [-38, 7681];
-  }
+method Main()
+{
+  GeneratedTests_FindMax();
+}
+```
 
-  // Tuple return value (ArrayTupleOps)
-  {
-    var a := new (int, int)[2] [(4, 6), (3, 5)];
-    var r := SumPairs(a);
-    expect r == (4, 6);
-  }
+### Output uniqueness check
 
-  // Mutable scalar class field (Counter)
-  {
-    var obj := new Counter();
-    obj.count := 2;
-    obj.Increment();
-    expect obj.count == 3;
+If the postconditions constrain the outputs implicitly (by some predicate on the method outputs), instead of explictly (with expressions of the form `result == expression`), there is no a priori guaranteed that the outputs produced by Z3 are unique.
+In that case, a second Z3 call is issued to check **output uniqueness**, i.e., to check if output values different from the ones obtained in the first call for the same input values exist satisfying the original contract. If the second call returns UNSAT (meaning the output is unique), the concrete output values produced by Z3 are used in the `expect` assertions; otherwise, the postcondition literals on the output parameters are used as `expect` assertions.
+
+Example:
+
+```dafny
+method LinearSearch(a: array<int>, x: int) returns (index: int)
+  ensures if exists k :: 0 <= k < a.Length && a[k] == x 
+          then 0 <= index < a.Length && a[index] == x
+          else index == -1 
+{...}
+
+// Tests
+    {
+      var a := new int[3] [17, 8, 24];
+      var x := 8;
+      var index := LinearSearch(a, x);
+      expect index == 1;
+    }
+
+    {
+    var a := new int[2] [9, 9];
+    var x := 9;
+    var index := LinearSearch(a, x);
+    expect 0 <= index < a.Length;
+    expect a[index] == x;
   }
 ```
 
-A second Z3 call with a blocking clause checks **output uniqueness**: if the postcondition uniquely determines the output given the inputs (UNSAT with negated outputs), concrete values are emitted; otherwise, the original postcondition literals are used as `expect` assertions. This covers scalar outputs, tuple components, array post-states, and mutable class fields.
+
+The same happens in case of postconditions that cannot be fully converted to Z3 (namely, when they involve recursive functions or predicates, with reamining uninterpreted calls after inlining); the concrete outputs produced by Z3 are not reliable, so the original postconditions are used as `expect` assertions. 
+
+### Output rescue in check mode
+
+However, in check mode (with `-c` option), if such (not fully-interpreted) postconditions  explictly constrain the outputs (with expressions of the form `result == expression`), the value of the expressions that compute the expected outputs are computed by Dafny during the check phase and injected in the final test code.    
+
+Example:
+
+```dafny
+method CalcCombIter(n: nat, k: nat) returns (res: nat) 
+  requires 0 <= k <= n
+  ensures res == Comb(n, k)
+{...}  
+
+function Comb(n: nat, k: nat): nat 
+  requires 0 <= k <= n
+{
+  if k == 0 || k == n then 1 else Comb(n-1, k) + Comb(n-1, k-1)  
+}
+
+  // Generated test case
+  {
+    var n := 4;
+    var k := 3;
+    var res := CalcComb(n, k);
+    expect res == Fact(4, 3); // in default mode
+    expect res == 4; // in check mode
+  }
+``` 
+
+Because the recursive definition is inlined only one level, two uninterpreted function calls remain in the generated SMT expression sent to Z3. In default mode, the `expect` assertions use the original postcondition. In check mode (`-c`), the `expect` assertions use the value of `Fact(4, 3)` computed by Dafny during the check phase.   
+
+### Test emission for mutable objects and class fields.
+
+When the `expect` assertions need to use method postconditions that reference the initial value of expressions involving mutable objects or class fields (with `old()`), such initial values are captured before the method call and used in the `expect` assertions, as illustrated in the following example. 
+
+```dafny
+  // Odd numbers moved before even numbers (with arbitrary ordering in each category)  
+  {
+    var a := new nat[3] [0, 4894, 1];
+    var old_a := a[..];
+    PartitionOddEven(a); 
+    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
+    expect multiset(a[..]) == multiset(old_a);
+  }
+```
 
 ### Spec-Only Tests for Bodyless Methods
 
@@ -423,21 +477,14 @@ method CalcFact(n: nat) returns (f: nat)
 ```
 
 ```dafny
-  // Test case for combination {1}:
-  //   POST: f == Fact(n)
-  {
-    var n := 0;
-    // var f := CalcFact(n);
-    // expect f == Fact(n);
-  }
-
   // Test case for combination {2}:
   //   POST: !(n == 0)
   //   POST: f == n * (if n - 1 == 0 then 1 else ...)
   {
     var n := 1;
     // var f := CalcFact(n);
-    // expect f == Fact(n);
+    // expect f == Fact(n); // in default mode
+    // expect f == 1; // in check mode
   }
 ```
 

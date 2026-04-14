@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-11 12:08:55
+// Generated: 2026-04-14 16:21:58
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -55,7 +55,7 @@ method Passing()
   //   POST: res == 1
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 40;
+    var n := 1;
     var k := 0;
     var res := CalcComb(n, k);
     expect res == 1;
@@ -64,13 +64,13 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  0 <= k <= n
   //   POST: !(k == 0 || k == n)
-  //   POST: res == (if k == 0 || k == n - 1 then 1 else Comb(n - 1 - 1, k) + Comb(n - 1 - 1, k - 1)) + (if k - 1 == 0 || k - 1 == n - 1 then 1 else Comb(n - 1 - 1, k - 1) + Comb(n - 1 - 1, k - 1 - 1))
+  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 2;
-    var k := 1;
+    var n := 40;
+    var k := 39;
     var res := CalcComb(n, k);
-    expect res == 2;
+    expect res == 40;
   }
 
   // Test case for combination {1}/Bn=0,k==n:
@@ -112,37 +112,37 @@ method Passing()
   // Test case for combination {2}/Ores>=2:
   //   PRE:  0 <= k <= n
   //   POST: !(k == 0 || k == n)
-  //   POST: res == (if k == 0 || k == n - 1 then 1 else Comb(n - 1 - 1, k) + Comb(n - 1 - 1, k - 1)) + (if k - 1 == 0 || k - 1 == n - 1 then 1 else Comb(n - 1 - 1, k - 1) + Comb(n - 1 - 1, k - 1 - 1))
+  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 2440;
-    var k := 1;
+    var n := 7;
+    var k := 6;
     var res := CalcComb(n, k);
-    expect res == 2440;
+    expect res == 7;
   }
 
   // Test case for combination {2}/Ores=1:
   //   PRE:  0 <= k <= n
   //   POST: !(k == 0 || k == n)
-  //   POST: res == (if k == 0 || k == n - 1 then 1 else Comb(n - 1 - 1, k) + Comb(n - 1 - 1, k - 1)) + (if k - 1 == 0 || k - 1 == n - 1 then 1 else Comb(n - 1 - 1, k - 1) + Comb(n - 1 - 1, k - 1 - 1))
+  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 1745;
-    var k := 1;
+    var n := 6;
+    var k := 5;
     var res := CalcComb(n, k);
-    expect res == 1745;
+    expect res == 6;
   }
 
   // Test case for combination {2}/Ores=0:
   //   PRE:  0 <= k <= n
   //   POST: !(k == 0 || k == n)
-  //   POST: res == (if k == 0 || k == n - 1 then 1 else Comb(n - 1 - 1, k) + Comb(n - 1 - 1, k - 1)) + (if k - 1 == 0 || k - 1 == n - 1 then 1 else Comb(n - 1 - 1, k - 1) + Comb(n - 1 - 1, k - 1 - 1))
+  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 337;
-    var k := 1;
+    var n := 4;
+    var k := 3;
     var res := CalcComb(n, k);
-    expect res == 337;
+    expect res == 4;
   }
 
 }

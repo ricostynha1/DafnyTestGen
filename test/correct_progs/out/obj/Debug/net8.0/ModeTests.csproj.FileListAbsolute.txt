@@ -1,0 +1,15 @@
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.AssemblyInfoInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.AssemblyInfo.cs
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.csproj.CoreCompileInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.sourcelink.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ModeTests.exe
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\refint\ModeTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.pdb
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ModeTests.deps.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ModeTests.genruntimeconfig.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ModeTests.runtimeconfig.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ModeTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ref\ModeTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\ModeTests.pdb
