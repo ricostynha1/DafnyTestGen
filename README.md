@@ -371,7 +371,7 @@ class {:autocontracts} StackOfInt {
 }
 ```
 
-### Spec-Only Tests for Bodyless Methods
+### Tests for Bodyless Methods
 
 By default, bodyless methods (declared without an implementation body) produce **spec-only tests**: Z3 finds concrete inputs and outputs satisfying the method contract, but the method call and expects are commented out since there is nothing to invoke:
 
