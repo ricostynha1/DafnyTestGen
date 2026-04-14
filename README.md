@@ -64,7 +64,7 @@ Single-variable existential quantifiers of the form `exists k :: lo <= k < hi &&
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
-4. **Multiple entries**: `exists k, k_2 :: lo <= k && k < k_2 && k_2 < hi && P(k) && P(k_2)` — property holds at two distinct positions simultaneously (forces inputs where the property is satisfied more than once)
+4. **Multiple entries**: `exists k, k_2 :: lo <= k < k_2 < hi && P(k) && P(k_2)` — property holds at two distinct positions simultaneously (forces inputs where the property is satisfied more than once)
 
 These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. The four clauses are **not mutually exclusive** — when P holds at multiple positions all of them can be satisfied simultaneously. This is intentional: the goal is to exercise each structural position, not to partition the space or overcomplicate the generated expressions. If Z3 finds the same input for two overlapping clauses, the input exclusion mechanism deduplicates the result. 
 
