@@ -240,38 +240,31 @@ Each phase only runs if the minimum test count has not yet been reached (except 
 
 ## Class Support
 
-DafnyTestGen generates tests for methods defined inside classes with fields of supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, maps, enums). 
+DafnyTestGen generates tests for methods defined inside classes whose fields have supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, maps, enums). Classes with trait parents or unsupported field types are auto-skipped.
 
-Fields are treated as synthetic mutable parameters with pre/post SMT variables (with suffic `_pre` in pre-state); test code constructs a fresh object, assigns Z3-derived values to fields, captures `old()` state, calls the method, and asserts postconditions with `obj.field` references. Classes with trait parents or unsupported field types are auto-skipped.
+Fields are treated as synthetic mutable parameters with separate pre- and post-state SMT variables (suffixes `_pre` and `_post`). Generated test code constructs a fresh object, assigns Z3-derived values to its fields, captures any `old()` state needed by postconditions, calls the method, and asserts postconditions using `obj.field` references.
 
 Constructor parameters are extracted and used for object construction (e.g., `new StackOfInt(capacity)`). `const` array fields (e.g., `const elems: array<int>`) are handled as mutable-content arrays linked to constructor parameters via `ensures` clauses. Parameterless member predicates like `isEmpty()` and `isFull()` are inlined in preconditions.
 
-### Support for `{:autocontracts}` 
+### Support for `{:autocontracts}`
 
-For classes with the `{:autocontracts}` attribute, the `Valid()` predicate (indicating class invariants) is automatically injected as both an implicit precondition and postcondition (its body is inlined for SMT translation, constraining both pre-state and post-state). 
-Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding.
+For classes with the `{:autocontracts}` attribute, the `Valid()` predicate (expressing class invariants) is automatically injected as both an implicit precondition and postcondition; its body is inlined for SMT translation so it constrains both pre- and post-state. Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding, and `Repr` is reconstructed in test code as `{obj}` plus all object-typed (array) fields.
 
 ### Ghost Field Handling
 
-Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. 
-In the generated test file:
+Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
-- `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
-- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals; for `{:autocontracts}` classes these fields (e.g., `ghost var Elements: seq<int>`) are also included as Z3 inputs and assigned accordingly
-- Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
-- The `Repr` field is reconstructed as `{obj}` plus all object-typed (array) fields
-- `old()` wrappers are stripped from method bodies (invalid for non-ghost variables in compiled code — semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point)
-- Member predicates and functions (e.g., `Empty()`, `Full()`) referenced inside `old()` in postconditions are captured in a pre-call variable (e.g., `var old_Empty := obj.Empty();`) so `old(Empty())` can be tested at runtime
+- The `ghost` qualifier is stripped from field and constant declarations in the generated file, making them concrete (compilable) so test code can assign and read them directly.
+- Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from the Z3 model as sequence literals. In `{:autocontracts}` classes, such fields (e.g., `Elements: seq<int>`) are also threaded through the SMT query as inputs.
+- Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left untouched.
+- `old()` wrappers are stripped from method bodies (they are invalid for non-ghost variables in compiled code; semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point).
+- Member predicates/functions referenced inside `old()` in postconditions (e.g., `old(Empty())`) are captured in a pre-call variable (`var old_Empty := obj.Empty();`) so the assertion can be checked at runtime.
 
 ## Test Emission
 
-For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen generates a new file with the same name and suffix `Tests` (e.g., `FindMaxTests.dfy`), containing the original code plus the generated test code.
+For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. For each method `M` with generated tests, a test method `GeneratedTests_M()` is emitted, and a `Main()` method is added that calls all test methods. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
 
-In default mode, for each method `M` with generated tests, it is created a test method `GeneratedTests_M()` containing the test cases generated for `M`. It is also created a  `Main()` method that calls the test methods. If a `Main()` method previously existed in the source program, it is renamed `OriginalMain()`. Ghost functions and predicates have their `ghost` qualifier removed to make them executable and callable in `expect` assertions if needed. 
-
-For test cases with concrete values generated by Z3 for all input and output parameters (satisfying the defined preconditions and postconditions), the test code assigns concrete values to the input parameters, calls the method under test with those inputs, assigns returned values to output variables, and checks the actual method outputs against the expected outputs produced by Z3 with `expect` assertions (checked at runtime).      
-
-Example:
+A typical test case assigns concrete input values produced by Z3, calls the method under test, and checks the returned outputs with `expect` assertions:
 
 ```dafny
 method FindMax(a: array<real>) returns (max: real)
@@ -298,86 +291,57 @@ method Main()
 
 ### Output Uniqueness Check
 
-If the postconditions constrain the outputs implicitly (by some predicate on the method outputs), instead of explictly (with expressions of the form `result == expression`), there is no a priori guaranteed that the outputs produced by Z3 are unique.
-In that case, a second Z3 call is issued to check **output uniqueness**, i.e., to check if output values different from the ones obtained in the first call for the same input values exist satisfying the original contract. If the second call returns UNSAT (meaning the output is unique), the concrete output values produced by Z3 are used in the `expect` assertions; otherwise, the postcondition literals on the output parameters are used as `expect` assertions.
+When postconditions constrain outputs implicitly (via predicates on outputs rather than explicit `result == expression` clauses), Z3's first model is only *one* valid assignment — other valid outputs may exist. DafnyTestGen issues a second Z3 call that pins the concrete inputs and asks whether a *different* output satisfies the original contract. If the second call returns UNSAT the output is unique and the concrete value is used in the `expect`; otherwise the assertion falls back to the postcondition literals that mention the output.
+
+The uniqueness query is built from the **original ensures conjunction only** — tier/boundary literals used during test generation (e.g., an `index == 0` boundary forcing one branch) are excluded, so the check reflects the spec's real ambiguity rather than the tier's artificial pinning.
 
 Example:
 
 ```dafny
 method LinearSearch(a: array<int>, x: int) returns (index: int)
-  ensures if exists k :: 0 <= k < a.Length && a[k] == x 
+  ensures if exists k :: 0 <= k < a.Length && a[k] == x
           then 0 <= index < a.Length && a[index] == x
-          else index == -1 
+          else index == -1
 {...}
 
-// Tests
-    {
-      var a := new int[3] [17, 8, 24];
-      var x := 8;
-      var index := LinearSearch(a, x);
-      expect index == 1;
-    }
-
-    {
-    var a := new int[2] [9, 9];
-    var x := 9;
-    var index := LinearSearch(a, x);
-    expect 0 <= index < a.Length;
-    expect a[index] == x;
-  }
-```
-
-The same happens in case of postconditions that cannot be fully converted to Z3 (namely, when they involve recursive functions or predicates, with reamining uninterpreted calls after inlining); the concrete outputs produced by Z3 are not reliable, so the original postconditions are used as `expect` assertions. 
-
-
-### Output Rescue
-
-However, in check mode (with `-c` option), if such (not fully-interpreted) postconditions  explictly constrain the outputs (with expressions of the form `result == expression`), the value of the expressions that compute the expected outputs are computed by Dafny during the check phase and injected in the final test code.    
-
-Example:
-
-```dafny
-method CalcCombIter(n: nat, k: nat) returns (res: nat) 
-  requires 0 <= k <= n
-  ensures res == Comb(n, k)
-{...}  
-
-function Comb(n: nat, k: nat): nat 
-  requires 0 <= k <= n
+// Unique output: concrete expect
 {
-  if k == 0 || k == n then 1 else Comb(n-1, k) + Comb(n-1, k-1)  
+  var a := new int[3] [17, 8, 24];
+  var x := 8;
+  var index := LinearSearch(a, x);
+  expect index == 1;
 }
 
-  // Generated test case
-  {
-    var n := 4;
-    var k := 3;
-    var res := CalcComb(n, k);
-    expect res == Fact(4, 3); // in default mode
-    expect res == 4; // in check mode
-  }
-``` 
+// Ambiguous output (both index 0 and 1 are valid): postcondition expect
+{
+  var a := new int[2] [9, 9];
+  var x := 9;
+  var index := LinearSearch(a, x);
+  expect 0 <= index < a.Length;
+  expect a[index] == x;
+}
+```
 
-Because the recursive definition is inlined only one level, two uninterpreted function calls remain in the generated SMT expression sent to Z3. In default mode, the `expect` assertions use the original postcondition. In check mode (`-c`), the `expect` assertions use the value of `Fact(4, 3)` computed by Dafny during the check phase.   
+The same fallback applies when postconditions cannot be fully translated to SMT (e.g., they contain recursive functions with uninterpreted calls remaining after inlining, higher-order ghost functions, or bitvector operators): Z3's concrete outputs cannot be trusted and the original postcondition literals are used as `expect` assertions instead.
 
 ### Test Emission for Mutable Objects and Class Fields
 
-When the `expect` assertions need to use method postconditions that reference the initial value of expressions involving mutable objects or class fields (with `old()`), such initial values are captured before the method call and used in the `expect` assertions, as illustrated in the following example. 
+When an `expect` assertion refers to the pre-call value of a mutable input or class field (via `old()`), the generator captures that value before the call and uses the captured name in the assertion:
 
 ```dafny
-  // Odd numbers moved before even numbers (with arbitrary ordering in each category)  
-  {
-    var a := new nat[3] [0, 4894, 1];
-    var old_a := a[..];
-    PartitionOddEven(a); 
-    expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a);
-  }
+// Odd numbers moved before even numbers (with arbitrary ordering in each category)
+{
+  var a := new nat[3] [0, 4894, 1];
+  var old_a := a[..];
+  PartitionOddEven(a);
+  expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
+  expect multiset(a[..]) == multiset(old_a);
+}
 ```
 
 ### Spec-Only Tests for Bodyless Methods
 
-By default, bodyless methods (declared without an implementation body) generate **spec-only tests**: Z3 finds concrete inputs satisfying the preconditions, but the method call and expects are commented out since there is no implementation to invoke:
+By default, bodyless methods (declared without an implementation body) produce **spec-only tests**: Z3 finds concrete inputs satisfying the preconditions, but the method call and expects are commented out since there is nothing to invoke:
 
 ```dafny
 method CalcFact(n: nat) returns (f: nat)
@@ -385,31 +349,53 @@ method CalcFact(n: nat) returns (f: nat)
 ```
 
 ```dafny
-  // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: f == n * (if n - 1 == 0 then 1 else ...)
-  {
-    var n := 1;
-    // var f := CalcFact(n);
-    // expect f == Fact(n); // in default mode
-    // expect f == 1; // in check mode
-  }
+// Test case for combination {2}:
+//   POST: !(n == 0)
+//   POST: f == n * (if n - 1 == 0 then 1 else ...)
+{
+  var n := 1;
+  // var f := CalcFact(n);
+  // expect f == Fact(n); // in default mode
+  // expect f == 1;       // in check mode (after -c injection)
+}
 ```
 
-This is useful for **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to revert to the old behavior of skipping bodyless methods entirely.
+This supports **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to skip bodyless methods entirely instead.
 
 ### Check Mode (`-c`)
 
-When `--check` is enabled, DafnyTestGen compiles all tests into a **single** Dafny file with `dafny build --no-verify` (one compilation), then runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `FAIL:N` / `DONE:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (e.g., infinite loop), the remaining incomplete tests are automatically **re-checked individually** using the same compiled binary with a test index argument — no recompilation needed. The output is split into two methods:
+When `--check` is enabled, DafnyTestGen compiles the generated tests into a single Dafny file with `dafny build --no-verify` and runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `DONE:N` / `FAIL:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (infinite loop), the remaining tests are automatically re-run individually against the same binary with a test-index argument — no recompilation needed. Tests are then split into two methods:
 
-- **`Passing()`** &mdash; tests that pass at runtime (expects remain active)
-- **`Failing()`** &mdash; tests that fail at runtime (expects are commented out)
+- **`Passing()`** — tests whose `expect`s held at runtime (expects remain active)
+- **`Failing()`** — tests whose `expect`s failed at runtime (expects commented out)
 
-When postconditions explicitly constrain output parameters with recursive or uninterpreted functions (e.g., `expect f == Fact(n);`), check mode captures the actual output values at runtime and injects them as concrete literals in the final test file (e.g., `expect f == 120;`). The same mechanism applies to postconditions with quantifiers over sets (e.g., `r == (forall x :: x in S ==> x > 0)`) where Z3 cannot evaluate the quantifier to a concrete boolean — the check phase runs the expression via Dafny and injects the result (e.g., `expect r == true;`).
+**Runtime value injection.** Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
 
-**Runtime value injection for untranslatable postconditions.** When Z3 cannot encode certain operations in SMT (e.g., bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`), the postconditions are used as runtime `expect` assertions. Since the check phase compiles and runs the tests, the actual output values are captured via `print` statements (`VAL:` markers) during execution. When a test passes — meaning all postcondition expects hold — the captured runtime value is injected as a concrete `expect` in the final test, replacing the postcondition literals. For example, `BitwiseXOR([3], [4])` with postcondition `forall i :: result[i] == a[i] ^ b[i]` produces `expect result == [7];` after the check phase. For string outputs (`seq<char>`), a helper prints values in parseable `['a', 'b']` format since Dafny's default `print` outputs raw text for strings. Note that the injected value is one valid output that satisfies the postconditions — there may be other valid values for specifications that don't uniquely determine the result. This is a weaker guarantee than Z3's uniqueness proof, but it produces readable concrete tests even for features beyond Z3's SMT encoding.
+1. **Explicit equalities with recursive/uninterpreted functions** — e.g. `ensures res == Comb(n, k)` where `Comb` is recursive and only partially inlined into the SMT query. In default mode the expect is `expect res == Comb(n, k);`; in check mode it becomes `expect res == 4;` (the value Dafny computed at runtime).
 
-This is useful for evaluating buggy implementations against their contracts.
+    ```dafny
+    function Comb(n: nat, k: nat): nat
+      requires 0 <= k <= n
+    { if k == 0 || k == n then 1 else Comb(n-1, k-1) + Comb(n-1, k) }
+
+    method CalcCombIter(n: nat, k: nat) returns (res: nat)
+      requires 0 <= k <= n
+      ensures res == Comb(n, k)
+    {...}
+
+    // Generated test case
+    {
+      var n := 4;
+      var k := 3;
+      var res := CalcCombIter(n, k);
+      // expect res == Comb(n, k);  // default mode
+      expect res == 4;              // check mode (Comb(4,3) evaluated by Dafny)
+    }
+    ```
+
+2. **Operations Z3 cannot encode** — e.g. bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`, or quantifiers over sets (`r == (forall x :: x in S ==> x > 0)`). Default mode leaves the postcondition literals in place; check mode captures the actual runtime value and injects it, so `BitwiseXOR([3], [4])` becomes `expect result == [7];`. For `seq<char>` outputs a helper prints values in parseable `['a', 'b']` form since Dafny's default `print` renders strings as raw text.
+
+The injected value is *one* valid output satisfying the postconditions, not a uniqueness-proven result — this is a weaker guarantee than the default-mode Z3 uniqueness check, but it produces readable concrete tests for features beyond SMT encoding. This is especially useful when evaluating buggy implementations against their contracts.
 
 ## Prerequisites
 
