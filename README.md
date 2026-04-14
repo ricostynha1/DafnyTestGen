@@ -371,9 +371,9 @@ class {:autocontracts} StackOfInt {
 }
 ```
 
-### Tests for Bodyless Methods
+### Test Emission for Bodyless Methods
 
-By default, bodyless methods (declared without an implementation body) produce **spec-only tests**: Z3 finds concrete inputs and outputs satisfying the method contract, but the method call and expects are commented out since there is nothing to invoke:
+By default, tests are also generated for bodyless methods (declared without an implementation body), but the method call and expects are commented out since there is nothing to invoke:
 
 ```dafny
 method CalcFact(n: nat) returns (f: nat)
@@ -388,7 +388,7 @@ method CalcFact(n: nat) returns (f: nat)
   var n := 1;
   // var f := CalcFact(n);
   // expect f == Fact(n); // in default mode
-  // expect f == 1;       // in check mode (after -c injection)
+  // expect f == 1;       // in specialized check mode (after -c injection)
 }
 ```
 
