@@ -256,7 +256,6 @@ Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically st
 Ghost fields (`ghost var`, `ghost const`) in classes are fully supported. 
 In the generated test file:
 
-- Ghost functions and predicates have their `ghost` keyword stripped to make them callable in `expect` assertions;
 - `ghost` is stripped from all field and constant declarations, converting them to concrete (compilable) variables, so that test code can directly assign and read ghost state
 - Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from Z3 model values as sequence literals; for `{:autocontracts}` classes these fields (e.g., `ghost var Elements: seq<int>`) are also included as Z3 inputs and assigned accordingly
 - Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left unchanged
@@ -266,7 +265,7 @@ In the generated test file:
 
 ## Test Emission
 
-For each processes source file (e.g., `FindMax.dfy`), DafnyTestGen generates a new file with the same name of the source file and suffix `Tests` (e.g., `FindMaxTests.dfy`), containing the original code plus the generated test code.
+For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen generates a new file with the same name and suffix `Tests` (e.g., `FindMaxTests.dfy`), containing the original code plus the generated test code.
 
 In default mode, for each method `M` with generated tests, it is created a test method `GeneratedTests_M()` containing the test cases generated for `M`. It is also created a  `Main()` method that calls the test methods. If a `Main()` method previously existed in the source program, it is renamed `OriginalMain()`. Ghost functions and predicates have their `ghost` qualifier removed to make them executable and callable in `expect` assertions if needed. 
 
@@ -331,7 +330,7 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 The same happens in case of postconditions that cannot be fully converted to Z3 (namely, when they involve recursive functions or predicates, with reamining uninterpreted calls after inlining); the concrete outputs produced by Z3 are not reliable, so the original postconditions are used as `expect` assertions. 
 
 
-### Output Rescue in Check Mode
+### Output Rescue
 
 However, in check mode (with `-c` option), if such (not fully-interpreted) postconditions  explictly constrain the outputs (with expressions of the form `result == expression`), the value of the expressions that compute the expected outputs are computed by Dafny during the check phase and injected in the final test code.    
 
@@ -399,14 +398,14 @@ method CalcFact(n: nat) returns (f: nat)
 
 This is useful for **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to revert to the old behavior of skipping bodyless methods entirely.
 
-## Check Mode (`-c`)
+### Check Mode (`-c`)
 
 When `--check` is enabled, DafnyTestGen compiles all tests into a **single** Dafny file with `dafny build --no-verify` (one compilation), then runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `FAIL:N` / `DONE:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (e.g., infinite loop), the remaining incomplete tests are automatically **re-checked individually** using the same compiled binary with a test index argument — no recompilation needed. The output is split into two methods:
 
 - **`Passing()`** &mdash; tests that pass at runtime (expects remain active)
 - **`Failing()`** &mdash; tests that fail at runtime (expects are commented out)
 
-When postconditions use recursive or ghost functions (e.g., `expect f == Fact(n);`), check mode captures the actual output values at runtime and injects them as concrete literals in the final test file (e.g., `expect f == 120;`). The same mechanism applies to postconditions with quantifiers over sets (e.g., `r == (forall x :: x in S ==> x > 0)`) where Z3 cannot evaluate the quantifier to a concrete boolean — the check phase runs the expression via Dafny and injects the result (e.g., `expect r == true;`).
+When postconditions explicitly constrain output parameters with recursive or uninterpreted functions (e.g., `expect f == Fact(n);`), check mode captures the actual output values at runtime and injects them as concrete literals in the final test file (e.g., `expect f == 120;`). The same mechanism applies to postconditions with quantifiers over sets (e.g., `r == (forall x :: x in S ==> x > 0)`) where Z3 cannot evaluate the quantifier to a concrete boolean — the check phase runs the expression via Dafny and injects the result (e.g., `expect r == true;`).
 
 **Runtime value injection for untranslatable postconditions.** When Z3 cannot encode certain operations in SMT (e.g., bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`), the postconditions are used as runtime `expect` assertions. Since the check phase compiles and runs the tests, the actual output values are captured via `print` statements (`VAL:` markers) during execution. When a test passes — meaning all postcondition expects hold — the captured runtime value is injected as a concrete `expect` in the final test, replacing the postcondition literals. For example, `BitwiseXOR([3], [4])` with postcondition `forall i :: result[i] == a[i] ^ b[i]` produces `expect result == [7];` after the check phase. For string outputs (`seq<char>`), a helper prints values in parseable `['a', 'b']` format since Dafny's default `print` outputs raw text for strings. Note that the injected value is one valid output that satisfies the postconditions — there may be other valid values for specifications that don't uniquely determine the result. This is a weaker guarantee than Z3's uniqueness proof, but it produces readable concrete tests even for features beyond Z3's SMT encoding.
 
