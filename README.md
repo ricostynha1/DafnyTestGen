@@ -257,8 +257,9 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 - The `ghost` qualifier is stripped from field and constant declarations in the generated file, making them concrete (compilable) so test code can assign and read them directly.
 - Ghost sequence fields (e.g., `ghost var s1: seq<T>`) are assigned from the Z3 model as sequence literals. In `{:autocontracts}` classes, such fields (e.g., `Elements: seq<int>`) are also threaded through the SMT query as inputs.
 - Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left untouched.
-- `old()` wrappers are stripped from method bodies (they are invalid for non-ghost variables in compiled code; semantics are preserved because `old(x)` in an assignment refers to `x`'s value before the method call, which is still the current value at the assignment point).
-- Member predicates/functions referenced inside `old()` in postconditions (e.g., `old(Empty())`) are captured in a pre-call variable (`var old_Empty := obj.Empty();`) so the assertion can be checked at runtime.
+- `old()` wrappers are stripped from method bodies in the emitted test file (they are invalid for non-ghost variables in compiled code). The semantics are preserved because `old(x)` at an assignment site refers to `x`'s value before the enclosing method call, which is still the current value at the assignment point itself.
+
+Handling of `old()` inside postcondition `expect`s — including member-predicate calls like `old(Empty())` — is described below in [Test Emission for Mutable Objects and Class Fields](#test-emission-for-mutable-objects-and-class-fields).
 
 ## Test Emission
 
@@ -326,7 +327,9 @@ The same fallback applies when postconditions cannot be fully translated to SMT 
 
 ### Test Emission for Mutable Objects and Class Fields
 
-When an `expect` assertion refers to the pre-call value of a mutable input or class field (via `old()`), the generator captures that value before the call and uses the captured name in the assertion:
+When an `expect` assertion refers to the pre-call value of a mutable input or class field (via `old()`), the generator captures that value into a local variable before the call and uses the captured name in the assertion. For member predicates/functions inside `old()` (e.g., `old(Empty())`), the pre-call evaluation is captured into a variable like `var old_Empty := obj.Empty();` so the assertion can be checked at runtime.
+
+For a mutable array output from a module-level method:
 
 ```dafny
 // Odd numbers moved before even numbers (with arbitrary ordering in each category)
@@ -336,6 +339,41 @@ When an `expect` assertion refers to the pre-call value of a mutable input or cl
   PartitionOddEven(a);
   expect !exists i, j :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
   expect multiset(a[..]) == multiset(old_a);
+}
+```
+
+For a method on a class, the generated test constructs the object via its constructor, assigns Z3-derived values to its fields, captures any needed `old()` state, calls the method, and asserts the postconditions against `obj.field`. For `{:autocontracts}` classes, `expect obj.Valid();` is additionally emitted to verify class invariants after the call.
+
+```dafny
+class {:autocontracts} StackOfInt {
+  const elems: array<int>
+  var size: nat
+
+  predicate Valid() { 0 <= size <= elems.Length }
+
+  constructor (capacity: nat := 100)
+    requires capacity > 0
+    ensures elems.Length == capacity && size == 0
+  {...}
+
+  method push(x: int)
+    requires !isFull()
+    ensures elems[..size] == old(elems[..size]) + [x]
+  {...}
+}
+
+// Generated test case for push
+{
+  var capacity := 1;
+  var obj := new StackOfInt(capacity);
+  obj.size := 0;
+  obj.elems[0] := 13;
+  var x := 5;
+  var old_elems_size := obj.elems[..obj.size];
+  obj.push(x);
+  expect obj.Valid();
+  expect obj.size == 1;
+  expect obj.elems[..obj.size] == old_elems_size + [x];
 }
 ```
 
