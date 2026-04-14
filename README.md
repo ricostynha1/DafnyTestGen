@@ -6,7 +6,8 @@ DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunc
 DafnyTestGen can be used in different scenarios, including:
 - Help find and locate bugs in the implementation, when the verifier cannot prove or disprove its correctness, or cannot provide adequate diagnosis information or counter-examples.
 - Generate tests to be translated to a target implementation language.
-- Generate tests before an implementation exists, to help clarify the requirements (test-driven development).
+- Generate tests before an implementation exists, to help clarify the requirements (test-driven development, not supported by white-box test generators).
+
 
 ## How It Works
 
