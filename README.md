@@ -587,7 +587,6 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 ## Supported with Limitations
 
 - **Complex quantifier nesting** may cause Z3 timeouts (5-second limit per query); a per-method timeout (default 60s, `--timeout`) prevents indefinite hangs.
-- **Multi-variable quantifiers** (`exists i, j :: ...`) are treated as atomic literals — not decomposed into boundary cases.
 - **Postconditions with multi-variable quantifiers over nested seqs** often cause Z3 to return `unknown`, limiting coverage.
 - **Ghost predicates with unbounded quantifiers** — when `ghost` is stripped to make the predicate callable from `expect`, a predicate body like `forall r': int | r' > r :: ...` causes Dafny compilation errors (infinite domain cannot be enumerated at runtime).
 - **Untranslatable preconditions** (e.g., referencing recursive predicates) are emitted as runtime `expect` checks marked `// PRE-CHECK`. In `--check` mode, tests whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than failing — this catches cases where Z3 picks inputs satisfying the translated constraints but violating untranslated ones.
