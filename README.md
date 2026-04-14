@@ -407,6 +407,8 @@ When `--check` is enabled, DafnyTestGen compiles the generated tests into a sing
 - **`Passing()`** — tests whose `expect`s held at runtime (expects remain active)
 - **`Failing()`** — tests whose `expect`s failed at runtime (expects commented out)
 
+When any bodyless method is present, the check is disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
+
 ### Runtime Value Injection in Check Mode
 
 Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
@@ -568,14 +570,10 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 
 Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elements/keys). Collection literals in generated tests use Dafny display expressions (`{-1, 0, 3}`, `multiset{0, 2, 2}`, `map[-1 := 5]`). Generic type parameters are mapped to `Int` in SMT.
 
-## Not Testable (Auto-Skipped)
-
-- **Bodyless methods** — abstract methods (no implementation) produce spec-only tests by default; see [Spec-Only Tests for Bodyless Methods](#spec-only-tests-for-bodyless-methods). Use `--skip-bodyless` (`-p`) to skip them entirely. When any bodyless method is present, `--check` is disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
-- **Bodyless functions/predicates referenced in contracts** — the function's semantics are unknown, so the method is skipped.
-
 ## Not Currently Supported (Auto-Skipped)
 
 - **Traits** — methods in traits, and classes with trait parents (require dynamic dispatch).
+- **Bodyless functions/predicates referenced in contracts** — the semantics are unknown, so the method is skipped.
 - **Twostate predicates/functions** — reference two heap states and cannot be translated to SMT.
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`) — cannot be represented in SMT.
 - **Non-enum algebraic datatypes** (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`), including when nested in generics.
