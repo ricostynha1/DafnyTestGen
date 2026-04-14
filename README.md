@@ -255,8 +255,6 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 - Ghost constants already set by the constructor (e.g., `ghost const N: nat`) are left untouched.
 - `old()` wrappers are stripped from method bodies in the emitted test file (they are invalid for non-ghost variables in compiled code). The semantics are preserved because `old(x)` at an assignment site refers to `x`'s value before the enclosing method call, which is still the current value at the assignment point itself.
 
-Handling of `old()` inside postcondition `expect`s — including member-predicate calls like `old(Empty())` — is described below in [Test Emission for Mutable Objects and Class Fields](#test-emission-for-mutable-objects-and-class-fields).
-
 ## Test Emission
 
 For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. For each method `M` with generated tests, a test method `GeneratedTests_M()` is emitted, and a `Main()` method is added that calls all test methods. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
