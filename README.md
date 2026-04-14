@@ -236,7 +236,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 ## Class Support
 
-DafnyTestGen generates tests for methods defined inside classes whose fields have supported types (int, nat, bool, real, char, arrays, sequences, sets, multisets, maps, enums). Classes with trait parents or unsupported field types are auto-skipped.
+DafnyTestGen generates tests for methods defined inside classes with fields of supported types. Classes with trait parents or unsupported field types are auto-skipped.
 
 Fields are treated as synthetic mutable parameters with separate pre- and post-state SMT variables (suffixes `_pre` and `_post`). Generated test code constructs a fresh object, assigns Z3-derived values to its fields, captures any `old()` state needed by postconditions, calls the method, and asserts postconditions using `obj.field` references.
 
