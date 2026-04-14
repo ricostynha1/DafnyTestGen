@@ -556,17 +556,6 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
-### Z3 Path Resolution
-
-DafnyTestGen needs the Z3 SMT solver. The path is resolved using this priority chain:
-
-1. **`--z3-path <path>`** CLI option (highest priority)
-2. **`Z3_PATH`** environment variable
-3. **Auto-discovery**: searches the Dafny VS Code extension directory (`~/.vscode/extensions/dafny-lang.ide-vscode-*/`), then `DAFNY_HOME`, then common system install locations
-4. **PATH fallback**: assumes `z3` is on the system PATH
-
-The resolved path is printed at startup (e.g., `[DafnyTestGen] Z3: /path/to/z3`).
-
 
 ## Project Structure
 
