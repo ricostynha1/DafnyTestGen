@@ -227,14 +227,12 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
-2. **Phase 2 — Input boundary analysis** (only when Phase 1 yields < `--min-tests`): Add input boundary value tiers crossed with DNF clauses. The boundary cross-product is capped at 64 tiers; when the full cross-product exceeds this limit, parameters with the most tiers are greedily dropped until it fits.
+2. **Phase 2 — Input boundary analysis** (only when Phase 1 yields < `--min-tests`): Add input boundary value tiers crossed with DNF clauses. 
 
-3. **Phase 2b — Output boundary analysis** (only when still < `--min-tests`): Add output boundary tiers for scalar return values and mutable scalar class fields. Each tier constrains an output variable to a specific range (e.g., `maxDist ≥ 2`), forcing Z3 to find inputs that produce diverse output values. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance).
+3. **Phase 2b — Output boundary analysis** (only when still < `--min-tests`): Add output boundary tiers crossed with DNF clauses. Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance).
 **Note:** Output boundary tiers and input boundary tiers are never combined in the same SMT query. They are applied in separate phases (Phase 2 for input tiers, Phase 2b for output tiers), so a single test case never simultaneously constrains both inputs and outputs to boundary values.
 
-4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum is reached.
-
-Each phase only runs if the minimum test count has not yet been reached (except phase 1, which always runs). This ensures methods with rich disjunctive postconditions get good coverage from phase 1 alone, while methods with a single postcondition clause automatically get boundary, output diversity, and repeat coverage. The `--min-tests 0` option runs only phase 1 (clauses without escalation).
+4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached for a method.
 
 
 ## Class Support
