@@ -369,7 +369,9 @@ When `--check` is enabled, DafnyTestGen compiles the generated tests into a sing
 - **`Passing()`** — tests whose `expect`s held at runtime (expects remain active)
 - **`Failing()`** — tests whose `expect`s failed at runtime (expects commented out)
 
-**Runtime value injection.** Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
+### Runtime Value Injection in Check Mode
+
+Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
 
 1. **Explicit equalities with recursive/uninterpreted functions** — e.g. `ensures res == Comb(n, k)` where `Comb` is recursive and only partially inlined into the SMT query. In default mode the expect is `expect res == Comb(n, k);`; in check mode it becomes `expect res == 4;` (the value Dafny computed at runtime).
 
