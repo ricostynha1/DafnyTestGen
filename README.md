@@ -223,7 +223,7 @@ The `--repeat <n>` option generates **N distinct test cases** per scenario. Afte
 
 ## Progressive Auto Strategy (default)
 
-When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated (controlled by `--min-tests`, default 4):
+When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated per method (controlled by `--min-tests`, default 4):
 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
