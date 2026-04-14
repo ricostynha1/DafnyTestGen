@@ -1,26 +1,0 @@
-[DafnyTestGen] Z3: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\z3\bin\z3-4.12.1.exe
-[DafnyTestGen] Auto-discovered 1 method(s): BinarySearch
-[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
-[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\BinarySearchTests.dfy
-
-
-[DafnyTestGen] Processing method: BinarySearch
-  Auto strategy: progressive (minTests=4)
-  Generating tests via Boogie/Z3...
-  Phase 1: 2 DNF clauses
-  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 2: adding boundary analysis (32 new entries)
-  Solving 3/34...     Solving 4/34...     Solving 5/34...                               Phase 2 complete: 4 test(s)
-  Phase 2b: adding output boundary (6 new entries)
-  Solving 35/40...     Solving 36/40...     Solving 37/40...     Solving 38/40...     Solving 39/40...     Solving 40/40...                               Phase 2b complete: 7 test(s)
-[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 7 test case(s)...
-  Test 1/7: PASS
-  Test 2/7: PASS
-  Test 3/7: PASS
-  Test 4/7: PASS
-  Test 5/7: PASS
-  Test 6/7: PASS
-  Test 7/7: PASS
-[DafnyTestGen] Results: 7 passing, 0 failing
-[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\BinarySearchTests.dfy
