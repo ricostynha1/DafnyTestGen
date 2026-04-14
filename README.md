@@ -550,55 +550,51 @@ test/
   buggy_progs/           # Buggy programs for --check mode
     in/                  #   Source files with known bugs
     out/                 #   Check mode output (Passing/Failing split)
-  unsupported_progs/     # Programs with features not fully supported (nested seqs with complex quantifiers, etc.)
 ```
 
 The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis** + **SmtTranslator** → **Z3Runner** → **TypeUtils** (model parsing) → **TestEmitter** → **TestValidator** (optional).
 
-## Supported Data Types and SMT Encoding
+## Supported Data Types
 
-- Integer, natural, real, char, bool types
-- Arrays and sequences (including `array<T>`, `seq<T>`, `string`)
-- **Simple enum datatypes**: datatypes where all constructors are parameterless (e.g., `datatype Color = Red | White | Blue`) are supported. Constructors are mapped to bounded integers in SMT (Red→0, White→1, Blue→2) with range constraints, and mapped back to constructor names in generated test code. Boundary analysis generates one tier per constructor for exhaustive value coverage. This works for direct parameters (`c: Color`), arrays (`array<Color>`), and sequences (`seq<Color>`)
-- **`set<T>` parameters**: sets are encoded as `(Array Int Bool)` characteristic functions in SMT with a bounded element universe (8 values). The universe is element-type-dependent: `int` uses `{-2, -1, 0, 1, 2, 3, 4, 5}`, `nat` uses `{0..7}`, `char` uses `{'a'..'h'}` (codes 97–104), and enum datatypes use ordinals `{0..min(N,8)-1}`. Membership (`x in S`), cardinality (`|S|`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements), capped at the number of constructors + 1 for enum element types. Set literals are emitted as Dafny set display expressions with proper formatting (e.g., `{-1, 0, 3}` for int, `{'a', 'c'}` for char, `{Red, Blue}` for enums, `{"a", "c"}` for string). Supported element types: `int`, `nat`, `char`, `string`, enum datatypes, and generic `T` (treated as int). For `set<string>`, the SMT encoding uses `(Array (Seq Int) Bool)` with a bounded universe of 8 short string constants (`""`, `"a"`, ..., `"g"`); string parameters that interact with string sets are constrained to this universe
-- **`multiset<T>` parameters**: multisets are encoded as `(Array Int Int)` count functions in SMT with the same element-type-dependent bounded universe as sets, where each element maps to its multiplicity. Multiset variables are constructed from a zero-default base array with per-element variables, ensuring out-of-universe indices are always 0 without quantifier constraints. Membership (`x in M`), cardinality (`|M|`), element count (`M[x]`), union (`+`), intersection (`*`), difference (`-`), and subset (`<=`) are all supported. Operations are expanded pointwise over the bounded universe. Boundary analysis generates cardinality tiers (0, 1, 2, 3 elements). Multiset literals are emitted as Dafny multiset display expressions with proper formatting (e.g., `multiset{0, 2, 2, 5}` for int, `multiset{0, 3, 3}` for nat). Supported element types: `int`, `nat`, `char`, enum datatypes, and generic `T` (treated as int)
-- **`map<K,V>` parameters**: maps are encoded as two parallel SMT arrays — a domain `(Array K Bool)` for key presence and a values `(Array K V)` for values at each key — over the same bounded key universe as sets. Membership (`k in m`), cardinality (`|m|`), key lookup (`m[k]`), and map merge (`a + b`) are translated to SMT constraints on the domain/values arrays. Map update (`m[k := v]`), key removal (`m - {k}`), and `m.Keys` are handled via runtime evaluation: postconditions of the form `r == <expr>` capture the RHS before the method call and use Dafny's own evaluation for the `expect` assertion. Boundary analysis generates cardinality tiers (0, 1, 2, 3 keys), capped at the number of constructors + 1 for enum key types. Map literals are emitted as Dafny map display expressions (e.g., `map[-1 := 5, 0 := 3]`). Supported key types: `int`, `nat`, `char`, enum datatypes, and generic `T`. Supported value types: `int`, `nat`, `bool`, `real`, `char`, enum datatypes
-- **Tuple types** (e.g., `(int, int)`, `(real, real)`): supported as standalone parameters, return types, array element types (`array<(T, U)>`), and sequence element types (`seq<(T, U)>`). Tuple components are decomposed into separate SMT variables (e.g., `t: (int, int)` → `t_0: Int`, `t_1: Int`; `a: array<(real, real)>` → parallel component sequences `a_seq_0: (Seq Real)`, `a_seq_1: (Seq Real)` with equal-length constraints). Tuple field access (`t.0`, `a[i].1`) is translated to the corresponding component variable or sequence element. Generated test code uses Dafny tuple literals (e.g., `var t := (3, 5);`, `var a := new (real, real)[2] [(1.0, 2.0), (3.0, 4.0)];`). Supported component types: `int`, `nat`, `real`, `char`, `bool`. Nested tuples and tuples in sets/maps are not yet supported
-- **Nested sequence types** (`seq<seq<T>>`, `seq<string>`): nested sequences with scalar inner element types (`int`, `nat`, `real`, `char`, `bool`) are encoded using Z3's native `(Seq (Seq T))` sort. Outer sequence length is bounded to 8, inner sequence lengths to 4. Inner length and element values are extracted from Z3 models via nested `get-value` queries (e.g., `(seq.len (seq.nth s i))`, `(seq.nth (seq.nth s i) j)`). Chained bracket access in postconditions (e.g., `l[i][|l[i]| - 1]` from inlining `Last(l[i])`) is handled by a bracket-depth-aware parser that splits on the rightmost `[...]` and recursively translates both parts. After forall unrolling substitutes concrete indices, the post-processing pass rewrites `(seq.nth l 0)` → `l_0` for the flat encoding. Test code emits Dafny nested seq literals (e.g., `var s: seq<seq<int>> := [[1, 2], [3]];`) or string seq literals (e.g., `var l: seq<string> := ["abc", "de"];`). Note: postconditions with multi-variable quantifiers over nested seqs often cause Z3 to return `unknown`, limiting test coverage for complex contracts
+| Type | Notes |
+|------|-------|
+| `int`, `nat`, `real`, `char`, `bool` | native SMT sorts |
+| `array<T>`, `seq<T>`, `string` | bounded length (default up to 8); boundary analysis uses size tiers |
+| Simple enum datatypes (e.g., `datatype Color = Red \| White \| Blue`) | constructors with no parameters; mapped to bounded integers, one boundary tier per constructor |
+| `set<T>`, `multiset<T>` | `(Array Int Bool)` / `(Array Int Int)` over a bounded element universe (8 values); supports `in`, `\|·\|`, `+`, `*`, `-`, `<=`. Element types: `int`, `nat`, `char`, enums, `T`. `set<string>` also supported via an `(Array (Seq Int) Bool)` encoding with 8 short string constants |
+| `map<K,V>` | parallel domain/values arrays over the same bounded key universe; supports `in`, `\|·\|`, lookup, merge. Key types: `int`, `nat`, `char`, enums, `T`. Value types: `int`, `nat`, `bool`, `real`, `char`, enums |
+| Tuples (e.g., `(int, int)`, `(real, real)`) | decomposed into per-component SMT variables; usable as parameters, returns, and inside `array<·>` / `seq<·>`. Component types: `int`, `nat`, `real`, `char`, `bool` |
+| `seq<seq<T>>`, `seq<string>` | native `(Seq (Seq T))` sort; outer length bounded to 8, inner to 4 |
 
+Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elements/keys). Collection literals in generated tests use Dafny display expressions (`{-1, 0, 3}`, `multiset{0, 2, 2}`, `map[-1 := 5]`). Generic type parameters are mapped to `Int` in SMT.
 
 ## Not Testable (Auto-Skipped)
 
-The following are detected and automatically skipped because there is nothing to test. A message is printed when a method or file is skipped.
-
-- **Bodyless methods**: by default, abstract methods (without an implementation body) generate **spec-only tests** — Z3 finds concrete inputs from the contracts, but the method call and expects are commented out (see [Spec-Only Tests for Bodyless Methods](#spec-only-tests-for-bodyless-methods)). Use `--skip-bodyless` (`-p`) to skip them entirely instead. Other methods in the same file that do have bodies are always tested normally. Note: when a program contains bodyless methods, the `--check` (`-c`) option is not supported (since `dafny build` fails on bodyless methods); unchecked tests are written instead with a warning
-- **Bodyless functions/predicates in contracts**: methods whose `requires` or `ensures` clauses reference a function or predicate without a body (abstract/opaque) are skipped — the function's semantics are unknown
+- **Bodyless methods** — abstract methods (no implementation) produce spec-only tests by default; see [Spec-Only Tests for Bodyless Methods](#spec-only-tests-for-bodyless-methods). Use `--skip-bodyless` (`-p`) to skip them entirely. When any bodyless method is present, `--check` is disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
+- **Bodyless functions/predicates referenced in contracts** — the function's semantics are unknown, so the method is skipped.
 
 ## Not Currently Supported (Auto-Skipped)
 
-The following are auto-detected and skipped. Some may be addressed in the future.
-
-- **Trait methods and classes with traits**: require dynamic dispatch and inheritance handling (classes with trait parents are auto-skipped)
-- **Twostate predicates/functions in contracts**: reference two heap states (old and new) that cannot be translated to SMT or used as `expect` assertions
-- **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`): cannot be represented in SMT
-- **Complex datatype parameters**: non-enum datatypes (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`) — including when nested in generics
-- **Class/reference-typed method parameters** (e.g., `method foo(m: Message, addr: Address)`): methods whose parameters include user-defined class or reference types are auto-skipped — such values cannot be synthesised by Z3
-- **Nested collection types** other than `seq<seq<T>>`, `seq<string>`, and `set<string>` (e.g., `array<seq<T>>`, `set<seq<int>>`, `seq<set<int>>`)
-- **Multi-dimensional arrays** (e.g., `array2<int>`, `array3<real>`)
-- **Classes with collection fields containing class element types** (e.g., `var messages: set<Message>`, `var recipients: seq<Address>`, `var cache: map<int, Entry>`): the class is auto-skipped because its field values cannot be synthesised by Z3
-- **Classes with tuple-typed collection fields** (e.g., `var pairs: map<int, (int, int)>`): same reason — tuple element types in class fields are not yet supported
-- **iset/imap input parameters** (`iset<T>`, `imap<K,V>`). Note: these types as **return types** work fine when the input parameters are of supported types — the postcondition is used as the `expect` assertion and Dafny evaluates the expressions at runtime
-- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`, `forall k :: b[..i+j][k] <= ...`) — produce unsolvable SMT constraints. Instead of skipping the method entirely, the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect` assertions
+- **Traits** — methods in traits, and classes with trait parents (require dynamic dispatch).
+- **Twostate predicates/functions** — reference two heap states and cannot be translated to SMT.
+- **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`) — cannot be represented in SMT.
+- **Non-enum algebraic datatypes** (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`), including when nested in generics.
+- **Class/reference-typed method parameters** — Z3 cannot synthesise object values.
+- **Multi-dimensional arrays** (`array2<int>`, `array3<real>`).
+- **Nested collection types** other than `seq<seq<T>>`, `seq<string>`, and `set<string>` (e.g., `array<seq<T>>`, `set<seq<int>>`).
+- **Class fields with collections of reference/tuple element types** (e.g., `set<Message>`, `map<int, (int, int)>`) — the class is auto-skipped.
+- **`iset<T>`, `imap<K,V>` as input parameters**. These types work fine as *return* types when inputs are supported — the postcondition is used as a runtime `expect`.
+- **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`) — the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect`.
 
 ## Supported with Limitations
 
-- Generic type parameters are mapped to `Int` in SMT
-- Complex quantifier nesting may cause Z3 timeouts (5-second limit per query). A per-method timeout (default 60s, configurable via `--timeout`) prevents indefinite hangs
-- Multi-variable quantifiers (`exists i, j :: ...`) are not decomposed into boundary cases (treated as atomic literals)
-- **Recursive functions in postconditions** (e.g., `ensures result == Fact(n)`): recursive functions that are not fully inlined after 2 passes become uninterpreted in SMT — Z3 can freely assign their values, so concrete output values may be incorrect. When the postcondition has the form `output == expr`, the spec expression is emitted directly (e.g., `expect f == Fact(n)`), evaluated by Dafny at runtime (ghost functions are made callable by stripping the `ghost` keyword). With `--check` mode, expects of the form `var == func(...)` have their actual values captured at runtime and injected as concrete literals in the final test (e.g., `expect f == 120;`)
-- When postconditions constrain the results implicitly (e.g., `ensures a <= r <= b`) rather than explicitly (e.g., `ensures result == expression`), a **uniqueness check** determines if Z3's concrete output is the only valid one: a second Z3 call with the same inputs but a blocking clause on all output values checks UNSAT. If unique, concrete `expect` statements are emitted (e.g., `expect r == 5;`, `expect a[..] == [-38, 7681];`, `expect obj.count == 3;`). If Z3 returns `unknown` (can't decide but found no counter-example), values are trusted by default (controllable via `--trust-unknown`). If Z3 returns `sat` (found a different valid output), the original postcondition literals are used as `expect` assertions with the concrete values in comments. The uniqueness check covers scalar returns, tuple components, sequence returns, mutable array post-states, and mutable scalar class fields.
-- **Ghost predicates with unbounded quantifiers**: when DafnyTestGen strips the `ghost` keyword from predicates to make them callable in `expect` assertions, predicates containing unbounded quantifiers (e.g., `forall r': int | r' > r :: ...`) will cause Dafny compilation errors — the compiler cannot enumerate infinite domains at runtime
-- Not all Dafny expressions are translatable to SMT2. Preconditions that cannot be converted to SMT (e.g., those referencing recursove predicates) are emitted as runtime `expect` checks with `// PRE-CHECK` markers. In `--check` mode, test cases whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than counted as failures. This handles cases where Z3 picks input values that satisfy the translated constraints but violate untranslated preconditions.
+- **Complex quantifier nesting** may cause Z3 timeouts (5-second limit per query); a per-method timeout (default 60s, `--timeout`) prevents indefinite hangs.
+- **Multi-variable quantifiers** (`exists i, j :: ...`) are treated as atomic literals — not decomposed into boundary cases.
+- **Postconditions with multi-variable quantifiers over nested seqs** often cause Z3 to return `unknown`, limiting coverage.
+- **Ghost predicates with unbounded quantifiers** — when `ghost` is stripped to make the predicate callable from `expect`, a predicate body like `forall r': int | r' > r :: ...` causes Dafny compilation errors (infinite domain cannot be enumerated at runtime).
+- **Untranslatable preconditions** (e.g., referencing recursive predicates) are emitted as runtime `expect` checks marked `// PRE-CHECK`. In `--check` mode, tests whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than failing — this catches cases where Z3 picks inputs satisfying the translated constraints but violating untranslated ones.
+
+(Handling of non-unique outputs, recursive functions in postconditions, and Z3-unencodable operations is described earlier under [Output Uniqueness Check](#output-uniqueness-check) and [Check Mode](#check-mode--c).)
 
 ## License
 
