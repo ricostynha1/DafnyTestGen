@@ -570,7 +570,7 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 
 Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elements/keys). Collection literals in generated tests use Dafny display expressions (`{-1, 0, 3}`, `multiset{0, 2, 2}`, `map[-1 := 5]`). Generic type parameters are mapped to `Int` in SMT.
 
-## Not Currently Supported (Auto-Skipped)
+## Not Currently Supported
 
 - **Traits** — methods in traits, and classes with trait parents (require dynamic dispatch).
 - **Bodyless functions/predicates referenced in contracts** — the semantics are unknown, so the method is skipped.
