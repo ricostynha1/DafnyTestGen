@@ -592,8 +592,6 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 - **Ghost predicates with unbounded quantifiers** — when `ghost` is stripped to make the predicate callable from `expect`, a predicate body like `forall r': int | r' > r :: ...` causes Dafny compilation errors (infinite domain cannot be enumerated at runtime).
 - **Untranslatable preconditions** (e.g., referencing recursive predicates) are emitted as runtime `expect` checks marked `// PRE-CHECK`. In `--check` mode, tests whose preconditions are violated at runtime are automatically discarded (reported as `SKIP`) rather than failing — this catches cases where Z3 picks inputs satisfying the translated constraints but violating untranslated ones.
 
-(Handling of non-unique outputs, recursive functions in postconditions, and Z3-unencodable operations is described earlier under [Output Uniqueness Check](#output-uniqueness-check) and [Check Mode](#check-mode--c).)
-
 ## License
 
 MIT
