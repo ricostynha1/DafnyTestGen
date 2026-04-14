@@ -570,7 +570,9 @@ The pipeline flows as: **DafnyParser** → **DnfEngine** → **BoundaryAnalysis*
 
 Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elements/keys). Collection literals in generated tests use Dafny display expressions (`{-1, 0, 3}`, `multiset{0, 2, 2}`, `map[-1 := 5]`). Generic type parameters are mapped to `Int` in SMT.
 
-## Not Currently Supported
+## Limitations
+
+### Not Currently Supported
 
 - **Traits** — methods in traits, and classes with trait parents (require dynamic dispatch).
 - **Bodyless functions/predicates referenced in contracts** — the semantics are unknown, so the method is skipped.
@@ -584,7 +586,7 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 - **`iset<T>`, `imap<K,V>` as input parameters**. These types work fine as *return* types when inputs are supported — the postcondition is used as a runtime `expect`.
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`) — the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect`.
 
-## Supported with Limitations
+### Supported with Limitations
 
 - **Complex quantifier nesting** may cause Z3 timeouts (5-second limit per query); a per-method timeout (default 60s, `--timeout`) prevents indefinite hangs.
 - **Postconditions with multi-variable quantifiers over nested seqs** often cause Z3 to return `unknown`, limiting coverage.
