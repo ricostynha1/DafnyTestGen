@@ -456,8 +456,6 @@ Two flavors of "unresolved RHS" benefit from this, both handled by the same mech
 
 Because the injector only captures **output variables**, not arbitrary subexpressions, postconditions that are not equality-shaped on an output (e.g., `ensures result > Filter(s, p)`) cannot be rescued this way — they remain as the original literal in the generated expect.
 
-The injected value is *one* valid output satisfying the postconditions, not a uniqueness-proven result — this is a weaker guarantee than the default-mode Z3 uniqueness check, but it produces readable concrete tests for features beyond SMT encoding. This is especially useful when evaluating buggy implementations against their contracts.
-
 
 ## Supported Data Types
 
