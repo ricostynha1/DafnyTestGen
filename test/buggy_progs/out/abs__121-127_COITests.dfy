@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-04-15 18:47:16
+// Generated: 2026-04-15 22:32:22
 
 // res.dfy
 
@@ -45,7 +45,7 @@ method Failing()
   {
     var x := 1;
     var y := abs(x);
-    // expect y == 1;
+    // expect y == 1; // got -1
   }
 
   // Test case for combination {1}/Oy>0:
@@ -57,7 +57,7 @@ method Failing()
   {
     var x := -1;
     var y := abs(x);
-    // expect y == 1;
+    // expect y == 1; // got -1
   }
 
   // Test case for combination {1}/R3:
@@ -69,7 +69,7 @@ method Failing()
   {
     var x := -2;
     var y := abs(x);
-    // expect y == 2;
+    // expect y == 2; // got -2
   }
 
 }

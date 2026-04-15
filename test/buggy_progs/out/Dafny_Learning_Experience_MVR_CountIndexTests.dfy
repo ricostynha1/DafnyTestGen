@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-04-15 18:54:01
+// Generated: 2026-04-15 21:18:34
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 

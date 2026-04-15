@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-15 18:52:25
+// Generated: 2026-04-15 21:16:56
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 

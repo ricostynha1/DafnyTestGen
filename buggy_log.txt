@@ -1,0 +1,59 @@
+[DafnyTestGen] Z3: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\z3\bin\z3-4.12.1.exe
+= Processing: abs__121-127_COI.dfy                                        =
+[DafnyTestGen] Auto-discovered 1 method(s): abs
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\abs__121-127_COITests.dfy
+
+
+[DafnyTestGen] Processing method: abs
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 2 DNF clauses
+  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 4/6...     Solving 5/6...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 2 test(s)
+  Phase 2b: adding output boundary (6 new entries)
+  Solving 7/12...     Solving 8/12...     Solving 11/12...     Solving 12/12...     Subsumption pruning: 2 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: FAIL
+  Test 3/4: FAIL
+  Test 4/4: FAIL
+[DafnyTestGen] Results: 1 passing, 3 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\abs__121-127_COITests.dfy
+
+= Processing: AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy                                        =
+[DafnyTestGen] Auto-discovered 3 method(s): MergeSort, Merge, MergeLoop
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_intTests.dfy
+
+
+[DafnyTestGen] Processing method: MergeSort
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Solving 2/4...     Solving 3/4...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 8/8...     Subsumption pruning: 3 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: Merge
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/10...     Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 6 skipped
+                            Phase 1 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: MergeLoop
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Note: postconditions contain unsolvable SMT patterns (multiset/variable-indexed slices)
+  Falling back to precondition-only test generation with postcondition runtime checks
+  Phase 1: 1 DNF clauses
+  Solving 1/10...   

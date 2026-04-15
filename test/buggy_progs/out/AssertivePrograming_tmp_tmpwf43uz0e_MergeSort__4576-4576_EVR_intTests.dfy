@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-15 18:47:20
+// Generated: 2026-04-15 21:10:57
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
