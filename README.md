@@ -426,7 +426,7 @@ When any bodyless method is present, the check is disabled (since `dafny build` 
 
 ### Runtime value injection in check mode
 
-Check mode also rescues tests whose `expect` assertions would otherwise reference an untranslatable right-hand side. This applies specifically to postconditions of the form **`result == expression`** where Z3 was unable to produce a concrete value for `expression` during solving. During execution, the output variable's runtime value is printed via a `VAL:` marker placed right after the method call; as long as the code reaches that point (no timeout or exception beforehand), the captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Injection happens both when the test passes outright and when it is *rescued* — the Z3-proposed literal was wrong but the remaining postconditions held, so the runtime value is a valid substitute.
+Check mode also rescues tests whose `expect` assertions would otherwise reference an untranslatable right-hand side. This applies specifically to postconditions of the form **`result == expression`** where Z3 was unable to produce a concrete value for `expression` during solving. During execution in the check phase, the value of the expression is captured (via a `RHSVAL:` print for the spec expression, evaluable at runtime because ghost modifiers are stripped from the test binary), and the captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect.
 
 Two flavors of "unresolved RHS" benefit from this, both handled by the same mechanism:
 
@@ -458,17 +458,17 @@ Because the injector only captures **output variables and the RHS of equality-sh
 
 ### Failing-test diagnostics (expected vs. got)
 
-When a test fails at runtime, its `expect` line is commented out in the `Failing()` method. Previously this left the reader staring at a symbolic expression (`// expect res == C(n);`) with no indication of what the spec actually computed or what the buggy method returned. Check mode now captures both values at runtime via `VAL:` and `RHSVAL:` markers and rewrites the commented-out expect so the RHS is the concrete expected value and the buggy runtime value is shown as a trailing comment:
+When a test fails at runtime, the `expect` assertions are commented out in the emmited test code. 
+
+In the case of equality-shaped postconditions, besides the `expect` assertion with the expected output value (produced by Z3 or by the runtime value injection mechanism previously described), the buggy actual value is also shown as a trailing comment, as in ():
 
 ```dafny
 // expect res == 1; // got 0
-// expect res == 429; // got 0
-// expect res == 2; // got 0
 ```
 
-This form is *ready to uncomment* once the bug is fixed — no further editing needed, because `1`, `429`, `2` are the actual spec-computed values. The mechanism reuses the equality-shaped postcondition path: for each `expect out == rhs;` line, two prints are emitted after the method call — `VAL:` for the output variable (the method's actual return) and `RHSVAL:` for the spec expression (evaluable at runtime because ghost modifiers are stripped from the test binary). On failure, the RHS is replaced with the RHSVAL literal and the VAL literal is appended as a `// got N` comment. See [test/buggy_progs/in/CatalanBuggy.dfy](test/buggy_progs/in/CatalanBuggy.dfy) for a worked example (a `CatalanNumber` variant with `(i+2)` instead of `(i+1)` in the update step).
+See [test/buggy_progs/in/CatalanBuggy.dfy](test/buggy_progs/in/CatalanBuggy.dfy) for a worked example (a `CatalanNumber` variant with `(i+2)` instead of `(i+1)` in the update step).
 
-This only applies to equality-shaped postconditions; non-equality failures are still commented out without annotation.
+
 
 
 ## Supported Data Types
