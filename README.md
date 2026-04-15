@@ -281,7 +281,7 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
 For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. For each method `M` with generated tests, a test method `GeneratedTests_M()` is emitted, and a `Main()` method is added that calls all test methods. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
 
-A typical test case assigns concrete input values produced by Z3, calls the method under test, and checks the returned outputs with `expect` assertions:
+A typical test case assigns concrete input values produced by Z3, calls the method under test, and checks the returned outputs with `expect` assertions (using the output values produced by Z3):
 
 ```dafny
 method FindMax(a: array<real>) returns (max: real)
