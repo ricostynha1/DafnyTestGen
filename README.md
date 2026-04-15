@@ -426,7 +426,7 @@ When any bodyless method is present, the check is disabled (since `dafny build` 
 
 ### Runtime value injection in check mode
 
-Check mode also rescues tests whose `expect` assertions would otherwise reference an untranslatable right-hand side. This applies specifically to postconditions of the form **`result == expression`** where Z3 was unable to produce a concrete value for `expression` during solving. During execution, the output variable's runtime value is printed via a `VAL:` marker; if the test passes, that value is injected back into the final test file as a concrete literal, replacing the original postcondition expect.
+Check mode also rescues tests whose `expect` assertions would otherwise reference an untranslatable right-hand side. This applies specifically to postconditions of the form **`result == expression`** where Z3 was unable to produce a concrete value for `expression` during solving. During execution, the output variable's runtime value is printed via a `VAL:` marker placed right after the method call; as long as the code reaches that point (no timeout or exception beforehand), the captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Injection happens both when the test passes outright and when it is *rescued* — the Z3-proposed literal was wrong but the remaining postconditions held, so the runtime value is a valid substitute.
 
 Two flavors of "unresolved RHS" benefit from this, both handled by the same mechanism:
 
