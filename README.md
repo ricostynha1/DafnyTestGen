@@ -237,9 +237,9 @@ E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` fo
 
 #### Mutation boundary tiers (final vs initial value)
 
-For mutable variables — mutable array/seq parameters, mutable scalar class fields, and mutable array/seq class fields — Phase 2b also adds a pair of tiers comparing the post-state against the pre-state: `{x}=old` (final equals initial, i.e. no-op path) and `{x}≠old` (actually mutated path). These exercise the two branches of postconditions that depend on whether mutation actually occurred.
+For mutable variables — mutable array parameters, mutable scalar class fields, and mutable array/seq class fields — Phase 2b also adds a pair of tiers comparing the post-state against the pre-state: `{x}=old` (final equals initial, i.e. no-op path) and `{x}≠old` (actually mutated path). These exercise the two branches of postconditions that depend on whether mutation actually occurred.
 
-To avoid noise, these tiers are emitted **only when the variable is mentioned in `ensures` both as post-state and inside `old(...)`** — if the spec doesn't care about the old or new content, the tier would be worthless. For arrays/seqs, equality is a full element-wise comparison (`(= x_pre_seq x_post_seq)`). For tuple-element arrays, the comparison is conjuncted across per-component sequences.
+To avoid noise, these tiers are emitted **only when the variable is mentioned in `ensures` both as post-state and inside `old(...)`** — if the spec doesn't care about the old or new content, the tier would be worthless.
 
 
 ## Repetition (`-r`)
