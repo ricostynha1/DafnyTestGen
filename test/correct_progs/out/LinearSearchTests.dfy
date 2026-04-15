@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-14 17:02:28
+// Generated: 2026-04-15 09:02:12
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -49,7 +49,7 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {2}/R2:
+  // Test case for combination {2}/Ba=0,x=0:
   //   POST: !(0 <= index < a.Length)
   //   POST: index == -1
   //   POST: x !in a[..]
@@ -57,44 +57,57 @@ method Passing()
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
     var a := new int[0] [];
-    var x := 9;
+    var x := 0;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
 
-  // Test case for combination {2}/R3:
+  // Test case for combination {2}/Ba=0,x=1:
   //   POST: !(0 <= index < a.Length)
   //   POST: index == -1
   //   POST: x !in a[..]
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [11];
-    var x := 10;
+    var a := new int[0] [];
+    var x := 1;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
 
-  // Test case for combination {3}/R2:
-  //   POST: 0 <= index < a.Length
-  //   POST: a[index] == x
+  // Test case for combination {2}/Oindex<0:
+  //   POST: !(0 <= index < a.Length)
+  //   POST: index == -1
+  //   POST: x !in a[..]
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [6];
-    var x := 6;
+    var a := new int[1] [10];
+    var x := 9;
     var index := LinearSearch(a, x);
-    expect index == 0;
+    expect index == -1;
   }
 
-  // Test case for combination {3}/R3:
+  // Test case for combination {3}/Oindex>0:
   //   POST: 0 <= index < a.Length
   //   POST: a[index] == x
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [7];
+    var a := new int[2] [6, 7];
     var x := 7;
+    var index := LinearSearch(a, x);
+    expect index == 1;
+  }
+
+  // Test case for combination {3}/Oindex=0:
+  //   POST: 0 <= index < a.Length
+  //   POST: a[index] == x
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  {
+    var a := new int[1] [3];
+    var x := 3;
     var index := LinearSearch(a, x);
     expect index == 0;
   }

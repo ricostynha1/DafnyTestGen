@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-11 12:16:46
+// Generated: 2026-04-15 09:07:13
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -83,10 +83,10 @@ method Passing()
   //   ENSURES: |result| == |l|
   //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
-    var l: seq<int> := [2];
+    var l: seq<int> := [0];
     var n := 1;
     var result := PowerOfListElements(l, n);
-    expect result == [2];
+    expect result == [0];
   }
 
   // Test case for combination {1}/O|result|>=3:
@@ -96,10 +96,10 @@ method Passing()
   //   ENSURES: |result| == |l|
   //   ENSURES: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
-    var l: seq<int> := [0, 0, 0, 0];
+    var l: seq<int> := [0, 0, 0];
     var n := 0;
     var result := PowerOfListElements(l, n);
-    expect result == [1, 1, 1, 1];
+    expect result == [1, 1, 1];
   }
 
   // Test case for combination {1}/O|result|>=2:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-11 12:12:26
+// Generated: 2026-04-15 09:03:52
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -58,7 +58,7 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
     var a := new int[1] [13];
@@ -110,7 +110,7 @@ method Passing()
   // Test case for combination {2}/Osum>0:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
     var a := new int[2] [15, 8];
@@ -123,7 +123,7 @@ method Passing()
   // Test case for combination {2}/Osum<0:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
     var a := new int[2] [8, 15];
@@ -136,7 +136,7 @@ method Passing()
   // Test case for combination {2}/Osum=0:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + (if |a[start .. end][..|a[start .. end]| - 1]| == 0 then 0 else a[start .. end][..|a[start .. end]| - 1][|a[start .. end][..|a[start .. end]| - 1]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1][..|a[start .. end][..|a[start .. end]| - 1]| - 1]))
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
     var a := new int[2] [9, 15];

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-11 12:16:51
+// Generated: 2026-04-15 09:07:19
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -64,7 +64,6 @@ method Passing()
   {
     var s: seq<nat> := [];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
     expect IsSmallestMissingNumber(s, v);
   }
 
@@ -75,7 +74,6 @@ method Passing()
   {
     var s: seq<nat> := [1];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
     expect IsSmallestMissingNumber(s, v);
   }
 
@@ -86,7 +84,6 @@ method Passing()
   {
     var s: seq<nat> := [7720, 7720];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
     expect IsSmallestMissingNumber(s, v);
   }
 
@@ -97,7 +94,6 @@ method Passing()
   {
     var s: seq<nat> := [1237, 1237, 1237];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
     expect IsSmallestMissingNumber(s, v);
   }
 
@@ -108,7 +104,6 @@ method Passing()
   {
     var s: seq<nat> := [8101, 8101, 8101, 8101];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
     expect IsSmallestMissingNumber(s, v);
   }
 
@@ -119,7 +114,7 @@ method Passing()
   {
     var s: seq<nat> := [0, 0, 0, 0, 0];
     var v := SmallestMissingNumber(s);
-    expect v == 1;
+    expect IsSmallestMissingNumber(s, v);
   }
 
   // Test case for combination {1}/Ov=0:
@@ -129,7 +124,7 @@ method Passing()
   {
     var s: seq<nat> := [1, 1, 1, 1, 20, 469];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
+    expect IsSmallestMissingNumber(s, v);
   }
 
 }

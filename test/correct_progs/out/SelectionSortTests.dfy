@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-04-11 12:11:10
+// Generated: 2026-04-15 09:03:09
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -86,7 +86,7 @@ method Passing()
   //   ENSURES: IsSorted(a)
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [-2, -38, 1234];
+    var a := new int[3] [-38, -2, 1234];
     SelectionSort(a);
     expect a[..] == [-38, -2, 1234];
   }

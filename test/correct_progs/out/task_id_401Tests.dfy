@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-11 12:13:58
+// Generated: 2026-04-15 09:04:36
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -82,7 +82,6 @@ method Passing()
     var a: seq<seq<int>> := [[12]];
     var b: seq<seq<int>> := [[11]];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[23]];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
@@ -98,7 +97,6 @@ method Passing()
     var a: seq<seq<int>> := [[12, 13], [18, 19]];
     var b: seq<seq<int>> := [[23, 24], [25, 26]];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[35, 37], [43, 45]];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
@@ -114,7 +112,6 @@ method Passing()
     var a: seq<seq<int>> := [[11], [12, 20], [14, 26, 34]];
     var b: seq<seq<int>> := [[18], [19, 25], [21, 31, 37]];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[29], [31, 45], [35, 57, 71]];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
@@ -130,7 +127,6 @@ method Passing()
     var a: seq<seq<int>> := [[], [], [], []];
     var b: seq<seq<int>> := [[], [], [], []];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[], [], [], []];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
@@ -146,7 +142,6 @@ method Passing()
     var a: seq<seq<int>> := [[], [], [], [], []];
     var b: seq<seq<int>> := [[], [], [], [], []];
     var result := DeepElementWiseAddition(a, b);
-    expect result == [[], [], [], [], []];
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
@@ -159,7 +154,6 @@ method Passing()
     var a: seq<int> := [];
     var b: seq<int> := [];
     var result := ElementWiseAddition(a, b);
-    expect result == [];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -171,7 +165,6 @@ method Passing()
     var a: seq<int> := [2];
     var b: seq<int> := [3];
     var result := ElementWiseAddition(a, b);
-    expect result == [5];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -183,7 +176,6 @@ method Passing()
     var a: seq<int> := [4, 3];
     var b: seq<int> := [6, 5];
     var result := ElementWiseAddition(a, b);
-    expect result == [10, 8];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -195,7 +187,6 @@ method Passing()
     var a: seq<int> := [5, 4, 6];
     var b: seq<int> := [8, 7, 9];
     var result := ElementWiseAddition(a, b);
-    expect result == [13, 11, 15];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -207,7 +198,6 @@ method Passing()
     var a: seq<int> := [7, 8, 9, 10];
     var b: seq<int> := [31, 32, 33, 34];
     var result := ElementWiseAddition(a, b);
-    expect result == [38, 40, 42, 44];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -219,7 +209,6 @@ method Passing()
     var a: seq<int> := [8, 9, 10, 11, 12];
     var b: seq<int> := [34, 35, 36, 37, 38];
     var result := ElementWiseAddition(a, b);
-    expect result == [42, 44, 46, 48, 50];
     expect IsElementWiseAddition(a, b, result);
   }
 
@@ -231,7 +220,6 @@ method Passing()
     var a: seq<int> := [10, 11, 12, 13, 14, 15];
     var b: seq<int> := [39, 40, 41, 42, 43, 44];
     var result := ElementWiseAddition(a, b);
-    expect result == [49, 51, 53, 55, 57, 59];
     expect IsElementWiseAddition(a, b, result);
   }
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-04-11 12:10:58
+// Generated: 2026-04-15 09:02:58
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -100,7 +100,7 @@ method Passing()
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [-2, -38, 1234];
+    var a := new T[3] [-38, -2, 1234];
     RawSort(a);
     expect a[..] == [-38, -2, 1234];
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-04-11 12:10:00
+// Generated: 2026-04-15 09:01:59
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -83,7 +83,7 @@ method Passing()
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[3] [-2, -38, 1234];
+    var a := new T[3] [-38, -2, 1234];
     InsertionSort(a);
     expect a[..] == [-38, -2, 1234];
   }

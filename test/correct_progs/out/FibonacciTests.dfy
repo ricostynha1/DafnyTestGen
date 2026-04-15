@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-11 22:03:24
+// Generated: 2026-04-15 09:01:50
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -41,6 +41,16 @@ method Passing()
     expect res == 0;
   }
 
+  // Test case for combination {2}:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 2;
+    var res := CalcFib(n);
+    expect res == 1;
+  }
+
   // Test case for combination {1}/Bn=1:
   //   POST: res == Fib(n)
   //   POST: res == n
@@ -53,27 +63,7 @@ method Passing()
 
   // Test case for combination {2}/Ores>=2:
   //   POST: !(n < 2)
-  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
-  //   ENSURES: res == Fib(n)
-  {
-    var n := 4;
-    var res := CalcFib(n);
-    expect res == 3;
-  }
-
-  // Test case for combination {2}/Ores=1:
-  //   POST: !(n < 2)
-  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
-  //   ENSURES: res == Fib(n)
-  {
-    var n := 5;
-    var res := CalcFib(n);
-    expect res == 5;
-  }
-
-  // Test case for combination {2}/Ores=0:
-  //   POST: !(n < 2)
-  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
   //   ENSURES: res == Fib(n)
   {
     var n := 3;
@@ -81,20 +71,31 @@ method Passing()
     expect res == 2;
   }
 
+  // Test case for combination {2}/Ores=1:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 4;
+    var res := CalcFib(n);
+    expect res == 3;
+  }
+
+  // Test case for combination {2}/Ores=0:
+  //   POST: !(n < 2)
+  //   POST: res == Fib(n - 2) + Fib(n - 1)
+  //   ENSURES: res == Fib(n)
+  {
+    var n := 5;
+    var res := CalcFib(n);
+    expect res == 5;
+  }
+
 }
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   POST: !(n < 2)
-  //   POST: res == (if n - 2 < 2 then n - 2 else Fib(n - 2 - 2) + Fib(n - 2 - 1)) + (if n - 1 < 2 then n - 1 else Fib(n - 1 - 2) + Fib(n - 1 - 1))
-  //   ENSURES: res == Fib(n)
-  {
-    var n := 42;
-    var res := CalcFib(n);
-    // expect res == Fib(n);
-  }
-
+  // (no failing tests)
 }
 
 method Main()

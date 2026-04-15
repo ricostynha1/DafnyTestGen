@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-11 12:17:15
+// Generated: 2026-04-15 09:07:42
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -51,8 +51,8 @@ method Passing()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [7719];
-    var target := 7719;
+    var arr := new int[1] [38];
+    var target := 38;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-04-11 12:14:24
+// Generated: 2026-04-15 09:04:59
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -55,7 +55,6 @@ method Passing()
     var a := new int[1] [3];
     var cubed := CubeElements(a);
     expect cubed.Length == a.Length;
-    expect cubed[..] == [27];
     expect forall i :: 0 <= i < a.Length ==> cubed[i] == cube(a[i]);
   }
 
@@ -68,7 +67,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var cubed := CubeElements(a);
     expect cubed.Length == a.Length;
-    expect cubed[..] == [64, 27];
     expect forall i :: 0 <= i < a.Length ==> cubed[i] == cube(a[i]);
   }
 
@@ -81,7 +79,6 @@ method Passing()
     var a := new int[3] [5, 4, 6];
     var cubed := CubeElements(a);
     expect cubed.Length == a.Length;
-    expect cubed[..] == [125, 64, 216];
     expect forall i :: 0 <= i < a.Length ==> cubed[i] == cube(a[i]);
   }
 

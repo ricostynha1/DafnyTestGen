@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-11 12:11:27
+// Generated: 2026-04-15 09:03:26
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -96,7 +96,6 @@ method Passing()
     var old_elems_size := obj.elems[..obj.size];
     obj.push(x);
     expect obj.Valid();
-    expect obj.size == 1;
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
@@ -114,7 +113,6 @@ method Passing()
     var old_elems_size := obj.elems[..obj.size];
     obj.push(x);
     expect obj.Valid();
-    expect obj.size == 1;
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
@@ -151,7 +149,6 @@ method Passing()
     var old_elems_size := obj.elems[..obj.size];
     obj.push(x);
     expect obj.Valid();
-    expect obj.size == 2;
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
@@ -170,7 +167,6 @@ method Passing()
     var old_elems_size := obj.elems[..obj.size];
     obj.push(x);
     expect obj.Valid();
-    expect obj.size == 2;
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
@@ -188,7 +184,6 @@ method Passing()
     var old_elems_size := obj.elems[..obj.size];
     obj.push(x);
     expect obj.Valid();
-    expect obj.size == 1;
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 

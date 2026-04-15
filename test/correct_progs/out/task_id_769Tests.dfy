@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-11 12:18:32
+// Generated: 2026-04-15 09:08:00
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -61,7 +61,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !(|a| == 0)
-  //   POST: diff == if a[|a| - 1] in b then (if |a[..|a| - 1]| == 0 then a[..|a| - 1] else if a[..|a| - 1][|a[..|a| - 1]| - 1] in b then filter(a[..|a| - 1][..|a[..|a| - 1]| - 1], b) else filter(a[..|a| - 1][..|a[..|a| - 1]| - 1], b) + [a[..|a| - 1][|a[..|a| - 1]| - 1]]) else (if |a[..|a| - 1]| == 0 then a[..|a| - 1] else if a[..|a| - 1][|a[..|a| - 1]| - 1] in b then filter(a[..|a| - 1][..|a[..|a| - 1]| - 1], b) else filter(a[..|a| - 1][..|a[..|a| - 1]| - 1], b) + [a[..|a| - 1][|a[..|a| - 1]| - 1]]) + [a[|a| - 1]]
+  //   POST: diff == if a[|a| - 1] in b then filter(a[..|a| - 1], b) else filter(a[..|a| - 1], b) + [a[|a| - 1]]
   //   ENSURES: diff == filter(a, b)
   {
     var a: seq<int> := [2];
@@ -90,6 +90,39 @@ method Passing()
     var b: seq<int> := [4, 3];
     var diff := Difference<int>(a, b);
     expect diff == [];
+  }
+
+  // Test case for combination {2}/O|diff|>=3:
+  //   POST: !(|a| == 0)
+  //   POST: diff == if a[|a| - 1] in b then filter(a[..|a| - 1], b) else filter(a[..|a| - 1], b) + [a[|a| - 1]]
+  //   ENSURES: diff == filter(a, b)
+  {
+    var a: seq<int> := [6, 19];
+    var b: seq<int> := [];
+    var diff := Difference<int>(a, b);
+    expect diff == [6, 19];
+  }
+
+  // Test case for combination {2}/O|diff|>=2:
+  //   POST: !(|a| == 0)
+  //   POST: diff == if a[|a| - 1] in b then filter(a[..|a| - 1], b) else filter(a[..|a| - 1], b) + [a[|a| - 1]]
+  //   ENSURES: diff == filter(a, b)
+  {
+    var a: seq<int> := [9, 12];
+    var b: seq<int> := [14];
+    var diff := Difference<int>(a, b);
+    expect diff == [9, 12];
+  }
+
+  // Test case for combination {2}/O|diff|=1:
+  //   POST: !(|a| == 0)
+  //   POST: diff == if a[|a| - 1] in b then filter(a[..|a| - 1], b) else filter(a[..|a| - 1], b) + [a[|a| - 1]]
+  //   ENSURES: diff == filter(a, b)
+  {
+    var a: seq<int> := [3];
+    var b: seq<int> := [8];
+    var diff := Difference<int>(a, b);
+    expect diff == [3];
   }
 
 }

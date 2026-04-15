@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-04-11 12:11:04
+// Generated: 2026-04-15 09:03:03
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 

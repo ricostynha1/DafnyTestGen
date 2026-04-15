@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-11 12:16:57
+// Generated: 2026-04-15 09:07:25
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -76,12 +76,9 @@ method Passing()
   //   ENSURES: forall k :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[0] [];
-    var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect nz == 0;
-    expect 0 <= nz <= a.Length;
-    expect a[..nz] == FilterNZ(old_a);
-    expect forall k :: nz <= k < a.Length ==> a[k] == 0;
+    expect a[..] == [];
   }
 
   // Test case for combination {1}/Ba=1:
@@ -95,7 +92,6 @@ method Passing()
     var a := new int[1] [3];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 1;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -112,7 +108,6 @@ method Passing()
     var a := new int[2] [4, 3];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 2;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -129,7 +124,6 @@ method Passing()
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 3;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -146,7 +140,6 @@ method Passing()
     var a := new int[4] [20, 21, 22, 23];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 4;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -163,7 +156,6 @@ method Passing()
     var a := new int[5] [26, 27, 28, 29, 30];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 5;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;
@@ -180,7 +172,6 @@ method Passing()
     var a := new int[6] [34, 35, 36, 37, 38, 39];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 6;
     expect 0 <= nz <= a.Length;
     expect a[..nz] == FilterNZ(old_a);
     expect forall k :: nz <= k < a.Length ==> a[k] == 0;

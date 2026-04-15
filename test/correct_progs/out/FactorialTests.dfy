@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Factorial.dfy
 // Method: CalcFact
-// Generated: 2026-04-11 12:09:19
+// Generated: 2026-04-15 09:01:40
 
 // Recursive definition of the factorial of a number 'n'. 
 function Fact(n: nat) : nat 
@@ -37,7 +37,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !(n == 0)
-  //   POST: f == n * (if n - 1 == 0 then 1 else n - 1 * Fact(n - 1 - 1))
+  //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
   {
     var n := 1;
@@ -47,7 +47,7 @@ method Passing()
 
   // Test case for combination {2}/Of>=2:
   //   POST: !(n == 0)
-  //   POST: f == n * (if n - 1 == 0 then 1 else n - 1 * Fact(n - 1 - 1))
+  //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
   {
     var n := 2;
@@ -57,7 +57,7 @@ method Passing()
 
   // Test case for combination {2}/Of=0:
   //   POST: !(n == 0)
-  //   POST: f == n * (if n - 1 == 0 then 1 else n - 1 * Fact(n - 1 - 1))
+  //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
   {
     var n := 3;

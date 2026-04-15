@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-04-11 12:18:37
+// Generated: 2026-04-15 09:08:05
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)

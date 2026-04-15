@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-11 12:11:56
+// Generated: 2026-04-15 09:03:41
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -122,7 +122,7 @@ method Passing()
   // Test case for combination {2}/Osum>=2:
   //   PRE:  a > 0 && b > 0
   //   POST: !(|commonDivisors(a, b)| == 0)
-  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + (if |commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| == 0 then 0 else commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][..|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1]))
+  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1])
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 2;
@@ -134,7 +134,7 @@ method Passing()
   // Test case for combination {2}/Osum=1:
   //   PRE:  a > 0 && b > 0
   //   POST: !(|commonDivisors(a, b)| == 0)
-  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + (if |commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| == 0 then 0 else commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1][..|commonDivisors(a, b)[..|commonDivisors(a, b)| - 1]| - 1]))
+  //   POST: sum == commonDivisors(a, b)[|commonDivisors(a, b)| - 1] + sumSeq(commonDivisors(a, b)[..|commonDivisors(a, b)| - 1])
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 1;

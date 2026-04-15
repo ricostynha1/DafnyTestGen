@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_566.dfy
 // Method: CalcSumOfDigits
-// Generated: 2026-04-11 12:15:03
+// Generated: 2026-04-15 09:05:28
 
 // Recursive definition of the sum of the decimal digits of a natural number n.
 function SumOfDigits(n: nat) : (sum: nat) { 
@@ -42,10 +42,10 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: sum == SumOfDigits(n)
-  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
+  //   POST: sum == SumOfDigits(n / 10) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
-    var n := 1;
+    var n := 10;
     var sum := CalcSumOfDigits(n);
     expect sum == 1;
   }
@@ -61,10 +61,21 @@ method Passing()
     expect sum == 0;
   }
 
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  n >= 0
+  //   POST: sum == SumOfDigits(n)
+  //   POST: sum == SumOfDigits(n / 10) + n % 10
+  //   ENSURES: sum == SumOfDigits(n)
+  {
+    var n := 1;
+    var sum := CalcSumOfDigits(n);
+    expect sum == 1;
+  }
+
   // Test case for combination {1}/Osum>=2:
   //   PRE:  n >= 0
   //   POST: sum == SumOfDigits(n)
-  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
+  //   POST: sum == SumOfDigits(n / 10) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
     var n := 2;
@@ -75,23 +86,23 @@ method Passing()
   // Test case for combination {1}/Osum=1:
   //   PRE:  n >= 0
   //   POST: sum == SumOfDigits(n)
-  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
+  //   POST: sum == SumOfDigits(n / 10) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
-    var n := 10;
+    var n := 3;
     var sum := CalcSumOfDigits(n);
-    expect sum == 1;
+    expect sum == 3;
   }
 
   // Test case for combination {1}/Osum=0:
   //   PRE:  n >= 0
   //   POST: sum == SumOfDigits(n)
-  //   POST: sum == (if n / 10 > 0 then SumOfDigits(n / 10 / 10) + n / 10 % 10 else 0) + n % 10
+  //   POST: sum == SumOfDigits(n / 10) + n % 10
   //   ENSURES: sum == SumOfDigits(n)
   {
-    var n := 11;
+    var n := 4;
     var sum := CalcSumOfDigits(n);
-    expect sum == 2;
+    expect sum == 4;
   }
 
 }

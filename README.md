@@ -49,7 +49,7 @@ The following table summarises the branching rules.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
-### Cross product and incremental pruning 
+### Cross-product and incremental pruning 
 
 With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. This product is **incrementally pruned** by discarding syntactically contradictory merges (complementary literals, distinct equalities, incompatible relational constraints), preventing dead branches. The remaining clauses are checked for satisfiability, and test data is generated for the satisfiable ones using Z3.
 
@@ -253,7 +253,7 @@ Constructor parameters are extracted and used for object construction (e.g., `ne
 
 For classes with the `{:autocontracts}` attribute, the `Valid()` predicate (expressing class invariants) is automatically injected as both an implicit precondition and postcondition; its body is inlined for SMT translation so it constrains both pre- and post-state. Heap ownership constraints (`this in Repr`, `data in Repr`) are automatically stripped during SMT encoding, and `Repr` is reconstructed in test code as `{obj}` plus all object-typed (array) fields.
 
-### Ghost Field Handling
+### Ghost field handling
 
 Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
@@ -291,7 +291,7 @@ method Main()
 }
 ```
 
-### Output Uniqueness Check
+### Output uniqueness check
 
 When postconditions constrain outputs implicitly (via predicates on outputs rather than explicit `result == expression` clauses), Z3's first model is only *one* valid assignment — other valid outputs may exist. DafnyTestGen issues a second Z3 call that pins the concrete inputs and asks whether a *different* output satisfies the original contract. If the second call returns UNSAT the output is unique and the concrete value is used in the `expect`; otherwise the assertion falls back to the postcondition literals that mention the output.
 
@@ -326,7 +326,7 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 
 The same fallback applies when postconditions cannot be fully translated to SMT (e.g., they contain recursive functions with uninterpreted calls remaining after inlining, higher-order ghost functions, or bitvector operators): Z3's concrete outputs cannot be trusted and the original postcondition literals are used as `expect` assertions instead.
 
-### Test Emission for Mutable Objects and Class Fields
+### Test emission for mutable objects and class fields
 
 When an `expect` assertion refers to the pre-call value of a mutable input or class field (via `old()`), the generator captures that value into a local variable before the call and uses the captured name in the assertion. For member predicates/functions inside `old()` (e.g., `old(Empty())`), the pre-call evaluation is captured into a variable like `var old_Empty := obj.Empty();` so the assertion can be checked at runtime.
 
@@ -378,7 +378,7 @@ class {:autocontracts} StackOfInt {
 }
 ```
 
-### Test Emission for Bodyless Methods
+### Test emission for bodyless methods
 
 By default, tests are also generated for bodyless methods (declared without an implementation body), but the method call and expects are commented out since there is nothing to invoke:
 
@@ -409,7 +409,7 @@ When `--check` is enabled, DafnyTestGen compiles the generated tests into a sing
 
 When any bodyless method is present, the check is disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
 
-### Runtime Value Injection in Check Mode
+### Runtime value injection in check mode
 
 Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
 
@@ -456,7 +456,7 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 
 ## Limitations
 
-### Not Currently Supported
+### Not currently supported
 
 - **Traits** — methods in traits, and classes with trait parents (require dynamic dispatch).
 - **Bodyless functions/predicates referenced in contracts** — the semantics are unknown, so the method is skipped.
@@ -470,7 +470,7 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 - **`iset<T>`, `imap<K,V>` as input parameters**. These types work fine as *return* types when inputs are supported — the postcondition is used as a runtime `expect`.
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`) — the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect`.
 
-### Supported with Limitations
+### Supported with limitations
 
 - **Complex quantifier nesting** may cause Z3 timeouts (5-second limit per query); a per-method timeout (default 60s, `--timeout`) prevents indefinite hangs.
 - **Postconditions with multi-variable quantifiers over nested seqs** often cause Z3 to return `unknown`, limiting coverage.
@@ -536,7 +536,7 @@ publish\DafnyTestGen.exe test/correct_progs/in/ -o test/correct_progs/out/
 publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 ```
 
-### Command-Line Options
+### Command-line options
 
 | Option | Alias | Description |
 |--------|-------|-------------|
