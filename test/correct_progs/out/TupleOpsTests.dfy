@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-15 16:46:26
+// Generated: 2026-04-15 22:14:39
 
 // --- (int, int) tuples ---
 

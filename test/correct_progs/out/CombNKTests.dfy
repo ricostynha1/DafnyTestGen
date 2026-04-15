@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-15 16:32:51
+// Generated: 2026-04-15 22:24:10
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating

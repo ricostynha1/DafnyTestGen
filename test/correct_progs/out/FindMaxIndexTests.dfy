@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-15 16:33:40
+// Generated: 2026-04-15 22:24:43
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)

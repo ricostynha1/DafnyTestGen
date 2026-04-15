@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-15 16:32:12
+// Generated: 2026-04-15 22:23:38
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -43,7 +43,7 @@ method Passing()
   {
     var a := new (int, int)[1] [(4, 6)];
     var r := FirstPair(a);
-    expect r == a[0];
+    expect r == (4, 6);
   }
 
   // Test case for combination {1}/Ba=2:
@@ -53,7 +53,7 @@ method Passing()
   {
     var a := new (int, int)[2] [(6, 4), (5, 3)];
     var r := FirstPair(a);
-    expect r == a[0];
+    expect r == (6, 4);
   }
 
   // Test case for combination {1}/Ba=3:
@@ -63,7 +63,7 @@ method Passing()
   {
     var a := new (int, int)[3] [(7, 4), (9, 6), (8, 5)];
     var r := FirstPair(a);
-    expect r == a[0];
+    expect r == (7, 4);
   }
 
   // Test case for combination {1}/Or.0<0:
@@ -73,7 +73,7 @@ method Passing()
   {
     var a := new (int, int)[4] [(-1, 16), (9, 17), (10, 18), (8, 19)];
     var r := FirstPair(a);
-    expect r == a[0];
+    expect r == (-1, 16);
   }
 
   // Test case for combination {1}:
@@ -83,7 +83,7 @@ method Passing()
   {
     var s: seq<(int, int)> := [(4, 6)];
     var r := SeqHead(s);
-    expect r == s[0];
+    expect r == (4, 6);
   }
 
   // Test case for combination {1}:

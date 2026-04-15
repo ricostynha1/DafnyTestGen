@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-15 16:37:19
+// Generated: 2026-04-15 22:28:50
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)

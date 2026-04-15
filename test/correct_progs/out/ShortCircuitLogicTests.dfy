@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-15 16:36:00
+// Generated: 2026-04-15 22:27:25
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-15 16:36:27
+// Generated: 2026-04-15 22:27:54
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-15 16:44:35
+// Generated: 2026-04-15 22:13:02
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -111,17 +111,6 @@ method Passing()
   //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [42479, 0, 1];
-    var product := ProductFirstEvenOdd(lst);
-    expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
-  }
-
-  // Test case for combination P{6,7,8,13}/{1}:
-  //   PRE:  exists i :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  //   ENSURES: exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  {
-    var lst: seq<int> := [64571, 20903, 25, 26, 0, 32, 0, 16733];
     var product := ProductFirstEvenOdd(lst);
     expect exists i, j :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j];
   }
