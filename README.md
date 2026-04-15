@@ -454,7 +454,21 @@ Two flavors of "unresolved RHS" benefit from this, both handled by the same mech
 
 2. **Z3 couldn't encode the RHS at all** — operations beyond SMT's reach, such as bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`, or quantifiers over sets (`r == (forall x :: x in S ==> x > 0)`). Default mode leaves the postcondition literal in place; check mode captures the runtime value of the output and injects it, so `BitwiseXOR([3], [4])` becomes `expect result == [7];`. For `seq<char>` outputs a helper prints values in parseable `['a', 'b']` form since Dafny's default `print` renders strings as raw text.
 
-Because the injector only captures **output variables**, not arbitrary subexpressions, postconditions that are not equality-shaped on an output (e.g., `ensures result > Filter(s, p)`) cannot be rescued this way — they remain as the original literal in the generated expect.
+Because the injector only captures **output variables and the RHS of equality-shaped postconditions**, not arbitrary subexpressions, postconditions that are not equality-shaped on an output (e.g., `ensures result > Filter(s, p)`) cannot be rescued this way — they remain as the original literal in the generated expect.
+
+### Failing-test diagnostics (expected vs. got)
+
+When a test fails at runtime, its `expect` line is commented out in the `Failing()` method. Previously this left the reader staring at a symbolic expression (`// expect res == C(n);`) with no indication of what the spec actually computed or what the buggy method returned. Check mode now captures both values at runtime via `VAL:` and `RHSVAL:` markers and rewrites the commented-out expect so the RHS is the concrete expected value and the buggy runtime value is shown as a trailing comment:
+
+```dafny
+// expect res == 1; // got 0
+// expect res == 429; // got 0
+// expect res == 2; // got 0
+```
+
+This form is *ready to uncomment* once the bug is fixed — no further editing needed, because `1`, `429`, `2` are the actual spec-computed values. The mechanism reuses the equality-shaped postcondition path: for each `expect out == rhs;` line, two prints are emitted after the method call — `VAL:` for the output variable (the method's actual return) and `RHSVAL:` for the spec expression (evaluable at runtime because ghost modifiers are stripped from the test binary). On failure, the RHS is replaced with the RHSVAL literal and the VAL literal is appended as a `// got N` comment. See [test/buggy_progs/in/CatalanBuggy.dfy](test/buggy_progs/in/CatalanBuggy.dfy) for a worked example (a `CatalanNumber` variant with `(i+2)` instead of `(i+1)` in the update step).
+
+This only applies to equality-shaped postconditions; non-equality failures are still commented out without annotation.
 
 
 ## Supported Data Types
