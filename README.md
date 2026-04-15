@@ -44,7 +44,7 @@ The following table summarises the branching rules.
 | `A ==> B` | same as `!A \|\| B`  | idem |
 | `A <==> B` | `A ∧ B`, `!A ∧ !B` | idem |
 | `!(A && B)` | same as `!A \|\| !B` | idem |
-| `if C then A else B` | `C ∧ A`, `!C ∧ B` | idem |
+| `if C then A else B` | `C ∧ A`, `!C ∧ B` | idem (a) |
 | `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
@@ -72,7 +72,7 @@ Single-variable existential quantifiers of the form `exists k :: lo <= k < hi &&
 3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
 4. **Multiple entries**: `exists k, k_2 :: lo <= k < k_2 < hi && P(k) && P(k_2)` — property holds at two distinct positions simultaneously (forces inputs where the property is satisfied more than once)
 
-These clauses feed into the same DNF/FDNF analysis, so they combine with other pre- and postcondition clauses via cross-product. The four clauses are **not mutually exclusive** — when P holds at multiple positions all of them can be satisfied simultaneously. This is intentional: the goal is to exercise each structural position, not to partition the space or overcomplicate the generated expressions. If Z3 finds the same input for two overlapping clauses, the input exclusion mechanism deduplicates the result. 
+These clauses feed into the same DNF/FDNF analysis, combining with other pre- and postcondition clauses via cross-product. The four clauses are **not mutually exclusive** — when 𝑃 holds at multiple positions, all of them may be satisfied simultaneously. This is intentional: unlike equivalence class partitioning, which requires disjoint input regions, our approach deliberately allows overlap to preserve solver tractability while exercising distinct structural patterns of quantified predicates, without overcomplicating the generated expressions. If Z3 produces the same input for overlapping clauses, the input exclusion mechanism deduplicates the result.
 
 Equivalent range definitions are supported (using other relational operators or a conjuntion of two inequalities instead of chained inequalities), as in `exists k :: k >= lo && k < hi && P(k)`. 
 Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 

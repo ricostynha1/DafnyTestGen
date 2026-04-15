@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-11 12:19:20
+// Generated: 2026-04-15 09:10:28
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
