@@ -466,7 +466,7 @@ In the case of equality-shaped postconditions, besides the `expect` assertion wi
 // expect res == 1; // got 0
 ```
 
-See [test/buggy_progs/in/CatalanBuggy.dfy](test/buggy_progs/in/CatalanBuggy.dfy) for a worked example (a `CatalanNumber` variant with `(i+2)` instead of `(i+1)` in the update step).
+See [test/buggy_progs/out/CatalanBuggyTests.dfy](test/buggy_progs/out/CatalanBuggyTests.dfy) for a worked example (a `CatalanNumber` variant with `(i+2)` instead of `(i+1)` in the update step).
 
 
 
