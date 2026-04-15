@@ -5,10 +5,9 @@ Automatic specification-based test generation for [Dafny](https://dafny.org/) pr
 DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs and expected outputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis. 
 
 DafnyTestGen can be used in different scenarios, including:
-- **Complement the verifier** — find and localize bugs in the implementation (or the specification) when Dafny cannot prove correctness or its counter-examples are not informative enough.
+- **Complement the verifier** — find and localize bugs in the implementation (or the specification) when Dafny cannot prove (or disprove) correctness or cannot provide adequate diagnosis information or counter-examples.
 - **Specification-based (black-box) testing** — generate tests purely from contracts, reusable in Dafny or translatable to a target implementation language.
 - **Test-driven development** — generate test scaffolding from contracts before any implementation exists, to clarify requirements (not possible with white-box test generators).
-- **Evaluate candidate implementations** — run generated tests against alternative or student implementations to check conformance to the spec (see `--check` mode).
 
 
 ## How It Works
