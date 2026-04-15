@@ -394,8 +394,7 @@ method CalcFact(n: nat) returns (f: nat)
 {
   var n := 1;
   // var f := CalcFact(n);
-  // expect f == Fact(n); // in default mode
-  // expect f == 1;       // in specialized check mode (after -c injection)
+  // expect f == Fact(n);
 }
 ```
 
