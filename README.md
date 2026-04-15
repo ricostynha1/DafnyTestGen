@@ -90,7 +90,7 @@ The `exists` clause decomposes into: max at position 0 (left), max in middle, ma
 
 ### Decomposition of universal quantifiers
 
-A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers; negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above. Currently only arrays and sequences are supported; extending this to sets, multisets, and maps is straightforward and planned as future work.
+A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers, and to any array, sequence, set, multiset, or map input referenced by the quantifier. Negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above.
 
 Consider the sortedness postcondition:
 
