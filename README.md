@@ -88,6 +88,19 @@ method FindMax(a: array<int>) returns (max: int)
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right), and max at two distinct positions (multiple entries). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
 
+### Decomposition of universal quantifiers
+
+A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers; negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above.
+
+Consider the sortedness postcondition:
+
+```dafny
+method IsSortedArr(a: array<int>) returns (sorted: bool)
+  ensures sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i+1]
+```
+
+Without size decomposition, Z3 tends to pick the smallest witness for the positive branch — a length-0 or length-1 array — and the non-trivial sorted case (length ≥ 2) is never exercised in Phase 1. With size decomposition, the positive clause (`sorted`) is split into three goals forcing `|a|=0`, `|a|=1`, and `|a|>=2`, yielding e.g. `[]`, `[2]`, and `[-7719, 38]` as separate passing tests.
+
 ### Predicate and function inlining  
 
 User-defined predicates and functions referenced in contracts are automatically inlined before DNF/FDNF conversion and SMT generation via **2-pass inlining** — substituting bodies into contract expressions to expose branching for DNF.
@@ -232,7 +245,7 @@ The `--repeat <n>` option generates **N distinct test cases** per scenario. Afte
 
 When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated per method (controlled by `--min-tests`, default 4):
 
-1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition. Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
+1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition (including the existential and universal quantifier decompositions described above). Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
 2. **Phase 2 — Input boundary analysis** (only when Phase 1 yields < `--min-tests`): Add input boundary value tiers crossed with DNF clauses from phase 1. 
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-15 09:02:40
+// Generated: 2026-04-15 10:34:04
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -106,34 +106,6 @@ method Passing()
   //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
     var a := new int[4] [-38, 0, 0, 7719];
-    var m := Mode(a);
-    expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-  }
-
-  // Test case for combination {1}/Om<0:
-  //   PRE:  IsSorted(a)
-  //   PRE:  a.Length > 0
-  //   POST: m in a[..]
-  //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  //   ENSURES: m in a[..]
-  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  {
-    var a := new int[5] [-38, 0, 0, 0, 7719];
-    var m := Mode(a);
-    expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-  }
-
-  // Test case for combination {1}/Om=0:
-  //   PRE:  IsSorted(a)
-  //   PRE:  a.Length > 0
-  //   POST: m in a[..]
-  //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  //   ENSURES: m in a[..]
-  //   ENSURES: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  {
-    var a := new int[6] [-38, 0, 0, 0, 0, 7719];
     var m := Mode(a);
     expect m in a[..];
     expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
