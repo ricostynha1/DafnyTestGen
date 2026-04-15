@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearchIndex.dfy
 // Method: BinarySearch
-// Generated: 2026-04-15 11:02:50
+// Generated: 2026-04-15 16:32:27
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-15 11:08:04
+// Generated: 2026-04-15 16:42:13
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -76,7 +76,7 @@ method Passing()
     expect result == [1];
   }
 
-  // Test case for combination {1}/Q|l|=0:
+  // Test case for combination {1}/Bl=0,n=1:
   //   PRE:  n >= 0
   //   POST: |result| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> result[i] == Power(l[i], n)

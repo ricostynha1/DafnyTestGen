@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-15 11:06:23
+// Generated: 2026-04-15 16:39:53
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-15 11:06:30
+// Generated: 2026-04-15 16:40:07
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).

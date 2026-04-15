@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-15 11:05:44
+// Generated: 2026-04-15 16:38:40
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)
@@ -78,16 +78,16 @@ method Passing()
     expect r == [' '];
   }
 
-  // Test case for combination {1}/Bl=inner>=1:
+  // Test case for combination {1}/Bl=3:
   //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
   //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
-    var l: seq<string> := ["6", "6", "6"];
+    var l: seq<string> := [" 8%", "p", "41"];
     var r := ExtractRearChars(l);
-    expect r == ['6', '6', '6'];
+    expect r == ['%', 'p', '1'];
   }
 
 }

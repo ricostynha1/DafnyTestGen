@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-15 11:03:35
+// Generated: 2026-04-15 16:34:03
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).

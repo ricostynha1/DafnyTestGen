@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-15 11:03:29
+// Generated: 2026-04-15 16:33:53
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -71,22 +71,6 @@ method Passing()
     expect l == -0.5;
   }
 
-  // Test case for combination {2}:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: Max(left) < Min(right)
-  //   POST: l == Max(left)
-  //   POST: !(Max(left) < Min(right))
-  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
-  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
-  {
-    var left := new real[1] [0.0];
-    var right := new real[1] [0.5];
-    var l, r := IntersectIntervals(left, right);
-    expect l == 0.0;
-  }
-
   // Test case for combination {1}/Bleft=2,right=2:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
@@ -113,6 +97,21 @@ method Passing()
   {
     var left := new real[3] [-8366.0, -8365.5, -8365.75];
     var right := new real[3] [-8365.5, -8365.25, 0.0];
+    var l, r := IntersectIntervals(left, right);
+    expect l == 0.0;
+  }
+
+  // Test case for combination {1}/Ol>0:
+  //   PRE:  left.Length == right.Length
+  //   PRE:  left.Length > 0
+  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   POST: Max(left) < Min(right)
+  //   POST: l == Max(left)
+  //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
+  //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
+  {
+    var left := new real[4] [0.0, 8854.0, 11796.0, 8364.0];
+    var right := new real[4] [1.0, 8855.0, 11797.0, 8365.0];
     var l, r := IntersectIntervals(left, right);
     expect l == 0.0;
   }

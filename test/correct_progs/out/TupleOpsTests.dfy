@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-15 11:11:28
+// Generated: 2026-04-15 16:46:26
 
 // --- (int, int) tuples ---
 
@@ -331,17 +331,6 @@ method Passing()
     var x := 1;
     var r := ClassifySign(x);
     expect r == (1, true);
-  }
-
-  // Test case for combination {1}/Or.0>0:
-  //   POST: r.0 == x
-  //   POST: r.1 == (x >= 0)
-  //   ENSURES: r.0 == x
-  //   ENSURES: r.1 == (x >= 0)
-  {
-    var x := 2;
-    var r := ClassifySign(x);
-    expect r == (2, true);
   }
 
   // Test case for combination {1}/Or.0<0:

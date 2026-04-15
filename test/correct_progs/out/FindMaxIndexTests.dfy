@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-15 11:03:24
+// Generated: 2026-04-15 16:33:40
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -61,16 +61,16 @@ method Passing()
     expect maxIndex == 2;
   }
 
-  // Test case for combination {1}/OmaxIndex>=2:
+  // Test case for combination {1}/OmaxIndex=1:
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex < a.Length
   //   POST: forall k :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   //   ENSURES: 0 <= maxIndex < a.Length
   //   ENSURES: forall k :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[4] [0.0, -2437.0, -11797.0, 21238.0];
+    var a := new real[4] [-38.0, 0.0, -7719.0, -21238.0];
     var maxIndex := FindMaxIndex(a);
-    expect maxIndex == 3;
+    expect maxIndex == 1;
   }
 
 }

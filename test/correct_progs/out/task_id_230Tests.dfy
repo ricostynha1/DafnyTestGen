@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-15 11:05:09
+// Generated: 2026-04-15 16:37:03
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -70,14 +70,14 @@ method Passing()
     expect v == ['F'];
   }
 
-  // Test case for combination {1}/Q|s|=0:
+  // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   //   ENSURES: IsMapSeq(s, v, c => if c == ' ' then ch else c)
   {
-    var s: seq<char> := [];
-    var ch := '!';
+    var s: seq<char> := ['!', '"', '#'];
+    var ch := ' ';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == [];
+    expect v == ['!', '"', '#'];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-15 15:59:40
+// Generated: 2026-04-15 16:40:02
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)

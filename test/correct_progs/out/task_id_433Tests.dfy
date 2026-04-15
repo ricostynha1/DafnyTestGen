@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-04-15 11:05:52
+// Generated: 2026-04-15 16:38:53
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -64,17 +64,6 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {5}:
-  //   POST: !result
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (a.Length - 1) :: (!(n > a[i])) && (!(n > a[i_2]))
-  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> n > a[i]
-  {
-    var n := 0;
-    var a := new int[2] [38, 7719];
-    var result := IsGreater(n, a);
-    expect result == false;
-  }
-
   // Test case for combination {1}/Q|a|>=2:
   //   POST: result
   //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
@@ -82,17 +71,6 @@ method Passing()
   {
     var n := 38;
     var a := new int[2] [37, 37];
-    var result := IsGreater(n, a);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Q|a|=1:
-  //   POST: result
-  //   POST: forall i :: 0 <= i < a.Length ==> n > a[i]
-  //   ENSURES: result <==> forall i :: 0 <= i < a.Length ==> n > a[i]
-  {
-    var n := 0;
-    var a := new int[1] [-1];
     var result := IsGreater(n, a);
     expect result == true;
   }

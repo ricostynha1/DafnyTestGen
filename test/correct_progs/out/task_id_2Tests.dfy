@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-15 11:05:06
+// Generated: 2026-04-15 16:36:58
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -83,18 +83,6 @@ method Passing()
     expect result == {};
   }
 
-  // Test case for combination {1}/Q|a|=0:
-  //   POST: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in result
-  {
-    var a := new int[0] [];
-    var b := new int[1] [2];
-    var result := SharedElements<int>(a, b);
-    expect result == {};
-  }
-
   // Test case for combination {1}/Q|b|>=2:
   //   POST: forall x :: x in result ==> x in a[..] && x in b[..]
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in result
@@ -103,30 +91,6 @@ method Passing()
   {
     var a := new int[0] [];
     var b := new int[2] [3, 4];
-    var result := SharedElements<int>(a, b);
-    expect result == {};
-  }
-
-  // Test case for combination {1}/Q|b|=1:
-  //   POST: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in result
-  {
-    var a := new int[1] [3];
-    var b := new int[1] [4];
-    var result := SharedElements<int>(a, b);
-    expect result == {};
-  }
-
-  // Test case for combination {1}/Q|b|=0:
-  //   POST: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in result
-  {
-    var a := new int[2] [3, 4];
-    var b := new int[0] [];
     var result := SharedElements<int>(a, b);
     expect result == {};
   }

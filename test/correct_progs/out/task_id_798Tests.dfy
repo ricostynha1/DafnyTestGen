@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-15 11:11:04
+// Generated: 2026-04-15 16:45:51
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).

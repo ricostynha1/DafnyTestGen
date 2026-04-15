@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-15 11:04:38
+// Generated: 2026-04-15 16:36:07
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -181,7 +181,7 @@ method Passing()
     expect res == 4;
   }
 
-  // Test case for combination {1}/Ores>0:
+  // Test case for combination {1}/Ores<0:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
@@ -191,12 +191,12 @@ method Passing()
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := 8;
-    obj.elems[1] := 21239;
+    obj.elems[1] := -1;
     var res := obj.top();
-    expect res == 21239;
+    expect res == -1;
   }
 
-  // Test case for combination {1}/Ores<0:
+  // Test case for combination {1}/Ores=0:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
   //   POST: res == elems[size - 1]
@@ -207,9 +207,9 @@ method Passing()
     obj.size := 3;
     obj.elems[0] := 9;
     obj.elems[1] := 11;
-    obj.elems[2] := -1;
+    obj.elems[2] := 0;
     var res := obj.top();
-    expect res == -1;
+    expect res == 0;
   }
 
   // Test case for combination {1}:

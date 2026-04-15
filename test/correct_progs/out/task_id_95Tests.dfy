@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-15 11:11:25
+// Generated: 2026-04-15 16:46:22
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -68,7 +68,7 @@ method Passing()
     expect v == 0;
   }
 
-  // Test case for combination {1}/Q|s|>=2:
+  // Test case for combination {1}/Bs=inner>=1:
   //   PRE:  |s| > 0
   //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: 0 <= (|s| - 1)
@@ -76,33 +76,22 @@ method Passing()
   //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[], []];
+    var s: seq<seq<int>> := [[11], [14]];
     var v := SmallestListLength<int>(s);
-    expect v == 0;
+    expect v == 1;
   }
 
-  // Test case for combination {2}/Q|s|>=2:
+  // Test case for combination {1}/Bs=inner>=2:
   //   PRE:  |s| > 0
   //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
+  //   POST: 0 <= (|s| - 1)
+  //   POST: v == |s[0]|
   //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[], [], [9], [], [], [], [4]];
+    var s: seq<seq<int>> := [[12, 13], [18, 19], [24, 25]];
     var v := SmallestListLength<int>(s);
-    expect v == 0;
-  }
-
-  // Test case for combination {4}/Q|s|>=2:
-  //   PRE:  |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (|s| - 1) :: (v == |s[i]|) && (v == |s[i_2]|)
-  //   ENSURES: forall i :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i :: 0 <= i < |s| && v == |s[i]|
-  {
-    var s: seq<seq<int>> := [[], [], [], [], []];
-    var v := SmallestListLength<int>(s);
-    expect v == 0;
+    expect v == 2;
   }
 
 }

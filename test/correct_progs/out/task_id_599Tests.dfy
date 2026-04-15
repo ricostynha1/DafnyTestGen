@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-15 11:07:51
+// Generated: 2026-04-15 16:41:47
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -62,7 +62,7 @@ method Passing()
     expect average == 1.0;
   }
 
-  // Test case for combination {1}/Osum>=2:
+  // Test case for combination {1}/Oaverage>0:
   //   PRE:  n > 0
   //   POST: sum == n * (n + 1) / 2
   //   POST: average == sum as real / n as real
@@ -75,7 +75,7 @@ method Passing()
     expect average == 2.50;
   }
 
-  // Test case for combination {1}/Oaverage>0:
+  // Test case for combination {1}/Oaverage<0:
   //   PRE:  n > 0
   //   POST: sum == n * (n + 1) / 2
   //   POST: average == sum as real / n as real

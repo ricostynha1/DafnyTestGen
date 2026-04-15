@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-04-15 11:04:28
+// Generated: 2026-04-15 16:35:44
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -355,11 +355,11 @@ method Passing()
     expect r == true;
   }
 
-  // Test case for combination {1}/BS=1:
+  // Test case for combination {1}/BS=2:
   //   POST: r == forall x :: x in S ==> x > 0
   //   ENSURES: r == forall x :: x in S ==> x > 0
   {
-    var S: set<int> := {2};
+    var S: set<int> := {4, 5};
     var r := AllPositive(S);
     expect r == true;
   }
@@ -430,44 +430,14 @@ method Passing()
     expect r == true;
   }
 
-  // Test case for combination {1}/Q|A|=0:
+  // Test case for combination {1}/BA=0,B=1:
   //   POST: r == forall x :: x in A ==> x in B
   //   ENSURES: r == forall x :: x in A ==> x in B
   {
     var A: set<int> := {};
-    var B: set<int> := {0, 2};
+    var B: set<int> := {4};
     var r := SubsetForall(A, B);
     expect r == true;
-  }
-
-  // Test case for combination {1}/Q|B|>=2:
-  //   POST: r == forall x :: x in A ==> x in B
-  //   ENSURES: r == forall x :: x in A ==> x in B
-  {
-    var A: set<int> := {1, 4, 5};
-    var B: set<int> := {1, 4, 5};
-    var r := SubsetForall(A, B);
-    expect r == true;
-  }
-
-  // Test case for combination {1}/Q|B|=1:
-  //   POST: r == forall x :: x in A ==> x in B
-  //   ENSURES: r == forall x :: x in A ==> x in B
-  {
-    var A: set<int> := {2};
-    var B: set<int> := {2};
-    var r := SubsetForall(A, B);
-    expect r == true;
-  }
-
-  // Test case for combination {1}/Q|B|=0:
-  //   POST: r == forall x :: x in A ==> x in B
-  //   ENSURES: r == forall x :: x in A ==> x in B
-  {
-    var A: set<int> := {0, 2};
-    var B: set<int> := {};
-    var r := SubsetForall(A, B);
-    expect r == false;
   }
 
   // Test case for combination {1}:

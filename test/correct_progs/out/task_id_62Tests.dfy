@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-15 11:08:02
+// Generated: 2026-04-15 16:42:09
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -76,14 +76,14 @@ method Passing()
     expect min == 28957;
   }
 
-  // Test case for combination {1}/Omin>0:
+  // Test case for combination {1}/Omin<0:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
   //   ENSURES: isMin(s[..], min)
   {
-    var s := new int[4] [7758, 7758, 7758, 7758];
+    var s := new int[4] [38, 7719, 21238, -1];
     var min := FindSmallest(s);
-    expect min == 7758;
+    expect min == -1;
   }
 
 }
