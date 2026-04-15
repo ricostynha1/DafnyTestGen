@@ -426,9 +426,11 @@ When any bodyless method is present, the check is disabled (since `dafny build` 
 
 ### Runtime value injection in check mode
 
-Check mode also rescues tests whose `expect` assertions would otherwise reference untranslatable expressions. During execution, captured output values are printed via `VAL:` markers. When a test passes, each captured value is injected back into the final test file as a concrete literal, replacing the original postcondition expect. Two cases benefit:
+Check mode also rescues tests whose `expect` assertions would otherwise reference an untranslatable right-hand side. This applies specifically to postconditions of the form **`result == expression`** where Z3 was unable to produce a concrete value for `expression` during solving. During execution, the output variable's runtime value is printed via a `VAL:` marker; if the test passes, that value is injected back into the final test file as a concrete literal, replacing the original postcondition expect.
 
-1. **Explicit equalities with recursive/uninterpreted functions** — e.g. `ensures res == Comb(n, k)` where `Comb` is recursive and only partially inlined into the SMT query. In default mode the expect is `expect res == Comb(n, k);`; in check mode it becomes `expect res == 4;` (the value Dafny computed at runtime).
+Two flavors of "unresolved RHS" benefit from this, both handled by the same mechanism:
+
+1. **Z3 could encode the RHS but didn't fully unfold it** — typically a recursive or uninterpreted function that was only partially inlined into the SMT query, e.g. `ensures res == Comb(n, k)` where `Comb` is recursive. In default mode the expect is `expect res == Comb(n, k);`; in check mode it becomes `expect res == 4;` (the value Dafny computed at runtime).
 
     ```dafny
     function Comb(n: nat, k: nat): nat
@@ -450,7 +452,9 @@ Check mode also rescues tests whose `expect` assertions would otherwise referenc
     }
     ```
 
-2. **Operations Z3 cannot encode** — e.g. bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`, or quantifiers over sets (`r == (forall x :: x in S ==> x > 0)`). Default mode leaves the postcondition literals in place; check mode captures the actual runtime value and injects it, so `BitwiseXOR([3], [4])` becomes `expect result == [7];`. For `seq<char>` outputs a helper prints values in parseable `['a', 'b']` form since Dafny's default `print` renders strings as raw text.
+2. **Z3 couldn't encode the RHS at all** — operations beyond SMT's reach, such as bitvector XOR `^`, higher-order ghost functions like `Filter(s, p)`, or quantifiers over sets (`r == (forall x :: x in S ==> x > 0)`). Default mode leaves the postcondition literal in place; check mode captures the runtime value of the output and injects it, so `BitwiseXOR([3], [4])` becomes `expect result == [7];`. For `seq<char>` outputs a helper prints values in parseable `['a', 'b']` form since Dafny's default `print` renders strings as raw text.
+
+Because the injector only captures **output variables**, not arbitrary subexpressions, postconditions that are not equality-shaped on an output (e.g., `ensures result > Filter(s, p)`) cannot be rescued this way — they remain as the original literal in the generated expect.
 
 The injected value is *one* valid output satisfying the postconditions, not a uniqueness-proven result — this is a weaker guarantee than the default-mode Z3 uniqueness check, but it produces readable concrete tests for features beyond SMT encoding. This is especially useful when evaluating buggy implementations against their contracts.
 
