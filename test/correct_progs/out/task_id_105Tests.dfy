@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-04-15 09:03:33
+// Generated: 2026-04-15 11:04:45
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -78,24 +78,6 @@ method Passing()
   //   ENSURES: count == countTrue(a[..])
   {
     var a := new bool[3] [false, false, false];
-    var count := CalcCountTrue(a);
-    expect count == 0;
-  }
-
-  // Test case for combination {1}/Ocount=1:
-  //   POST: count == countTrue(a[..])
-  //   ENSURES: count == countTrue(a[..])
-  {
-    var a := new bool[4] [false, false, false, false];
-    var count := CalcCountTrue(a);
-    expect count == 0;
-  }
-
-  // Test case for combination {1}/Ocount=0:
-  //   POST: count == countTrue(a[..])
-  //   ENSURES: count == countTrue(a[..])
-  {
-    var a := new bool[5] [false, false, false, false, false];
     var count := CalcCountTrue(a);
     expect count == 0;
   }

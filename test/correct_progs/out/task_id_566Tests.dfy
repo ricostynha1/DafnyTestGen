@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_566.dfy
 // Method: CalcSumOfDigits
-// Generated: 2026-04-15 09:05:28
+// Generated: 2026-04-15 11:06:25
 
 // Recursive definition of the sum of the decimal digits of a natural number n.
 function SumOfDigits(n: nat) : (sum: nat) { 
@@ -81,28 +81,6 @@ method Passing()
     var n := 2;
     var sum := CalcSumOfDigits(n);
     expect sum == 2;
-  }
-
-  // Test case for combination {1}/Osum=1:
-  //   PRE:  n >= 0
-  //   POST: sum == SumOfDigits(n)
-  //   POST: sum == SumOfDigits(n / 10) + n % 10
-  //   ENSURES: sum == SumOfDigits(n)
-  {
-    var n := 3;
-    var sum := CalcSumOfDigits(n);
-    expect sum == 3;
-  }
-
-  // Test case for combination {1}/Osum=0:
-  //   PRE:  n >= 0
-  //   POST: sum == SumOfDigits(n)
-  //   POST: sum == SumOfDigits(n / 10) + n % 10
-  //   ENSURES: sum == SumOfDigits(n)
-  {
-    var n := 4;
-    var sum := CalcSumOfDigits(n);
-    expect sum == 4;
   }
 
 }

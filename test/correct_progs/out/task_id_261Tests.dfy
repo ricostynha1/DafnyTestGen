@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-15 09:04:08
+// Generated: 2026-04-15 11:05:17
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -54,7 +54,21 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}/Q|a|>=2:
+  //   PRE:  |a| == |b|
+  //   PRE:  0 !in b
+  //   POST: |result| == |a|
+  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  {
+    var a: seq<int> := [1, 1];
+    var b: seq<int> := [1, 1];
+    var result := ElementWiseDivision(a, b);
+    expect result == [1, 1];
+  }
+
+  // Test case for combination {1}/Q|a|=1:
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
@@ -68,7 +82,7 @@ method Passing()
     expect result == [0];
   }
 
-  // Test case for combination {1}/Ba=2,b=2:
+  // Test case for combination {1}/Q|b|>=2:
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
@@ -76,52 +90,10 @@ method Passing()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [0, 1];
-    var b: seq<int> := [1, 2];
+    var a: seq<int> := [0, 0, 2];
+    var b: seq<int> := [1, 1, 1];
     var result := ElementWiseDivision(a, b);
-    expect result == [0, 0];
-  }
-
-  // Test case for combination {1}/Ba=3,b=3:
-  //   PRE:  |a| == |b|
-  //   PRE:  0 !in b
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  {
-    var a: seq<int> := [0, 4, 6];
-    var b: seq<int> := [1, 2, 3];
-    var result := ElementWiseDivision(a, b);
-    expect result == [0, 2, 2];
-  }
-
-  // Test case for combination {1}/O|result|>=3:
-  //   PRE:  |a| == |b|
-  //   PRE:  0 !in b
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  {
-    var a: seq<int> := [0, 2, -3, -1];
-    var b: seq<int> := [1, 1, 3, 1];
-    var result := ElementWiseDivision(a, b);
-    expect result == [0, 2, -1, -1];
-  }
-
-  // Test case for combination {1}/O|result|>=2:
-  //   PRE:  |a| == |b|
-  //   PRE:  0 !in b
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
-  {
-    var a: seq<int> := [0, 2, 0, 0, 0];
-    var b: seq<int> := [1, 1, 1, 2, 1];
-    var result := ElementWiseDivision(a, b);
-    expect result == [0, 2, 0, 0, 0];
+    expect result == [0, 0, 2];
   }
 
 }

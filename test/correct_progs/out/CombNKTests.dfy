@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-15 09:01:30
+// Generated: 2026-04-15 11:03:01
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -95,54 +95,6 @@ method Passing()
     var k := 1;
     var res := CalcComb(n, k);
     expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=1:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  //   POST: res == 1
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 2;
-    var k := 2;
-    var res := CalcComb(n, k);
-    expect res == 1;
-  }
-
-  // Test case for combination {2}/Ores>=2:
-  //   PRE:  0 <= k <= n
-  //   POST: !(k == 0 || k == n)
-  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 7;
-    var k := 6;
-    var res := CalcComb(n, k);
-    expect res == 7;
-  }
-
-  // Test case for combination {2}/Ores=1:
-  //   PRE:  0 <= k <= n
-  //   POST: !(k == 0 || k == n)
-  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 6;
-    var k := 5;
-    var res := CalcComb(n, k);
-    expect res == 6;
-  }
-
-  // Test case for combination {2}/Ores=0:
-  //   PRE:  0 <= k <= n
-  //   POST: !(k == 0 || k == n)
-  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
-  //   ENSURES: res == Comb(n, k)
-  {
-    var n := 4;
-    var k := 3;
-    var res := CalcComb(n, k);
-    expect res == 4;
   }
 
 }

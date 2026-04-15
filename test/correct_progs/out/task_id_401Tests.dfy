@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-15 09:04:36
+// Generated: 2026-04-15 11:05:39
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -71,7 +71,7 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}/Ba=inner>=1,b=inner>=1:
+  // Test case for combination {1}/Q|a|>=2:
   //   PRE:  |a| == |b|
   //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
@@ -79,14 +79,14 @@ method Passing()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
   {
-    var a: seq<seq<int>> := [[12]];
-    var b: seq<seq<int>> := [[11]];
+    var a: seq<seq<int>> := [[], []];
+    var b: seq<seq<int>> := [[], []];
     var result := DeepElementWiseAddition(a, b);
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
 
-  // Test case for combination {1}/Ba=inner>=1,b=inner>=2:
+  // Test case for combination {1}/Q|a|=1:
   //   PRE:  |a| == |b|
   //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
@@ -94,14 +94,14 @@ method Passing()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
   {
-    var a: seq<seq<int>> := [[12, 13], [18, 19]];
-    var b: seq<seq<int>> := [[23, 24], [25, 26]];
+    var a: seq<seq<int>> := [[]];
+    var b: seq<seq<int>> := [[]];
     var result := DeepElementWiseAddition(a, b);
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
   }
 
-  // Test case for combination {1}/Ba=inner>=1,b=3:
+  // Test case for combination {1}/Q|b|>=2:
   //   PRE:  |a| == |b|
   //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
@@ -109,38 +109,8 @@ method Passing()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
   {
-    var a: seq<seq<int>> := [[11], [12, 20], [14, 26, 34]];
-    var b: seq<seq<int>> := [[18], [19, 25], [21, 31, 37]];
-    var result := DeepElementWiseAddition(a, b);
-    expect |result| == |a|;
-    expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
-  }
-
-  // Test case for combination {1}/O|result|>=3:
-  //   PRE:  |a| == |b|
-  //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  {
-    var a: seq<seq<int>> := [[], [], [], []];
-    var b: seq<seq<int>> := [[], [], [], []];
-    var result := DeepElementWiseAddition(a, b);
-    expect |result| == |a|;
-    expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
-  }
-
-  // Test case for combination {1}/O|result|>=2:
-  //   PRE:  |a| == |b|
-  //   PRE:  forall i :: 0 <= i < |a| ==> |a[i]| == |b[i]|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  {
-    var a: seq<seq<int>> := [[], [], [], [], []];
-    var b: seq<seq<int>> := [[], [], [], [], []];
+    var a: seq<seq<int>> := [[], [], []];
+    var b: seq<seq<int>> := [[], [], []];
     var result := DeepElementWiseAddition(a, b);
     expect |result| == |a|;
     expect forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
@@ -157,68 +127,35 @@ method Passing()
     expect IsElementWiseAddition(a, b, result);
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}/Q|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [2];
-    var b: seq<int> := [3];
+    var a: seq<int> := [5, 6];
+    var b: seq<int> := [10, 11];
     var result := ElementWiseAddition(a, b);
     expect IsElementWiseAddition(a, b, result);
   }
 
-  // Test case for combination {1}/Ba=2,b=2:
+  // Test case for combination {1}/Q|a|=1:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [4, 3];
-    var b: seq<int> := [6, 5];
+    var a: seq<int> := [3];
+    var b: seq<int> := [2];
     var result := ElementWiseAddition(a, b);
     expect IsElementWiseAddition(a, b, result);
   }
 
-  // Test case for combination {1}/Ba=3,b=3:
+  // Test case for combination {1}/Q|b|>=2:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [5, 4, 6];
-    var b: seq<int> := [8, 7, 9];
-    var result := ElementWiseAddition(a, b);
-    expect IsElementWiseAddition(a, b, result);
-  }
-
-  // Test case for combination {1}/O|result|>=3:
-  //   PRE:  |a| == |b|
-  //   POST: IsElementWiseAddition(a, b, result)
-  //   ENSURES: IsElementWiseAddition(a, b, result)
-  {
-    var a: seq<int> := [7, 8, 9, 10];
-    var b: seq<int> := [31, 32, 33, 34];
-    var result := ElementWiseAddition(a, b);
-    expect IsElementWiseAddition(a, b, result);
-  }
-
-  // Test case for combination {1}/O|result|>=2:
-  //   PRE:  |a| == |b|
-  //   POST: IsElementWiseAddition(a, b, result)
-  //   ENSURES: IsElementWiseAddition(a, b, result)
-  {
-    var a: seq<int> := [8, 9, 10, 11, 12];
-    var b: seq<int> := [34, 35, 36, 37, 38];
-    var result := ElementWiseAddition(a, b);
-    expect IsElementWiseAddition(a, b, result);
-  }
-
-  // Test case for combination {1}/O|result|=1:
-  //   PRE:  |a| == |b|
-  //   POST: IsElementWiseAddition(a, b, result)
-  //   ENSURES: IsElementWiseAddition(a, b, result)
-  {
-    var a: seq<int> := [10, 11, 12, 13, 14, 15];
-    var b: seq<int> := [39, 40, 41, 42, 43, 44];
+    var a: seq<int> := [6, 7, 8];
+    var b: seq<int> := [16, 17, 18];
     var result := ElementWiseAddition(a, b);
     expect IsElementWiseAddition(a, b, result);
   }

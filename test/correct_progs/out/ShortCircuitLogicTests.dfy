@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-15 09:03:23
+// Generated: 2026-04-15 11:04:35
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0
@@ -73,42 +73,6 @@ method Passing()
     expect result == 5;
   }
 
-  // Test case for combination {2}/Oresult>0:
-  //   POST: !(a.Length == 0)
-  //   POST: a.Length > 0
-  //   POST: result == a[0]
-  //   ENSURES: a.Length == 0 ==> result == 0
-  //   ENSURES: a.Length > 0 ==> result == a[0]
-  {
-    var a := new int[4] [39, 9, 10, 8];
-    var result := GetFirstOrZero(a);
-    expect result == 39;
-  }
-
-  // Test case for combination {2}/Oresult<0:
-  //   POST: !(a.Length == 0)
-  //   POST: a.Length > 0
-  //   POST: result == a[0]
-  //   ENSURES: a.Length == 0 ==> result == 0
-  //   ENSURES: a.Length > 0 ==> result == a[0]
-  {
-    var a := new int[6] [-1, 10, 14, 18, 22, 26];
-    var result := GetFirstOrZero(a);
-    expect result == -1;
-  }
-
-  // Test case for combination {2}/Oresult=0:
-  //   POST: !(a.Length == 0)
-  //   POST: a.Length > 0
-  //   POST: result == a[0]
-  //   ENSURES: a.Length == 0 ==> result == 0
-  //   ENSURES: a.Length > 0 ==> result == a[0]
-  {
-    var a := new int[5] [0, 11, 10, 13, 12];
-    var result := GetFirstOrZero(a);
-    expect result == 0;
-  }
-
   // Test case for combination {1}:
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
@@ -143,15 +107,6 @@ method Passing()
     var a := new int[4] [0, 9, 10, 8];
     var result := ZeroLengthOrValue(a);
     expect result == true;
-  }
-
-  // Test case for combination {1}/Oresult=false:
-  //   POST: result == (a.Length == 0 || a[0] == 0)
-  //   ENSURES: result == (a.Length == 0 || a[0] == 0)
-  {
-    var a := new int[6] [7, 11, 15, 19, 23, 27];
-    var result := ZeroLengthOrValue(a);
-    expect result == false;
   }
 
 }

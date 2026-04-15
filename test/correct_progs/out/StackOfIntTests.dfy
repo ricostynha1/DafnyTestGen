@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-15 09:03:26
+// Generated: 2026-04-15 11:04:38
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -152,41 +152,6 @@ method Passing()
     expect obj.elems[..obj.size] == old_elems_size + [x];
   }
 
-  // Test case for combination {1}/Osize>=2:
-  //   PRE:  !isFull()
-  //   PRE:  capacity > 0
-  //   POST: elems[..size] == old(elems[..size]) + [x]
-  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
-  {
-    var capacity := 2;
-    var obj := new StackOfInt(capacity);
-    obj.size := 1;
-    obj.elems[0] := 16;
-    obj.elems[1] := 15;
-    var x := 7;
-    var old_elems_size := obj.elems[..obj.size];
-    obj.push(x);
-    expect obj.Valid();
-    expect obj.elems[..obj.size] == old_elems_size + [x];
-  }
-
-  // Test case for combination {1}/Osize=1:
-  //   PRE:  !isFull()
-  //   PRE:  capacity > 0
-  //   POST: elems[..size] == old(elems[..size]) + [x]
-  //   ENSURES: elems[..size] == old(elems[..size]) + [x]
-  {
-    var capacity := 1;
-    var obj := new StackOfInt(capacity);
-    obj.size := 0;
-    obj.elems[0] := 15;
-    var x := 6;
-    var old_elems_size := obj.elems[..obj.size];
-    obj.push(x);
-    expect obj.Valid();
-    expect obj.elems[..obj.size] == old_elems_size + [x];
-  }
-
   // Test case for combination {1}:
   //   PRE:  !isEmpty()
   //   PRE:  capacity > 0
@@ -245,23 +210,6 @@ method Passing()
     obj.elems[2] := -1;
     var res := obj.top();
     expect res == -1;
-  }
-
-  // Test case for combination {1}/Ores=0:
-  //   PRE:  !isEmpty()
-  //   PRE:  capacity > 0
-  //   POST: res == elems[size - 1]
-  //   ENSURES: res == elems[size - 1]
-  {
-    var capacity := 4;
-    var obj := new StackOfInt(capacity);
-    obj.size := 4;
-    obj.elems[0] := 11;
-    obj.elems[1] := 10;
-    obj.elems[2] := 12;
-    obj.elems[3] := 0;
-    var res := obj.top();
-    expect res == 0;
   }
 
   // Test case for combination {1}:
@@ -326,25 +274,6 @@ method Passing()
     obj.size := 2;
     obj.elems[0] := 6;
     obj.elems[1] := 15;
-    var old_elems_size_1 := obj.elems[..obj.size - 1];
-    obj.pop();
-    expect obj.Valid();
-    expect obj.elems[..obj.size] == old_elems_size_1;
-  }
-
-  // Test case for combination {1}/Osize=0:
-  //   PRE:  !isEmpty()
-  //   PRE:  capacity > 0
-  //   POST: elems[..size] == old(elems[..size - 1])
-  //   ENSURES: elems[..size] == old(elems[..size - 1])
-  {
-    var capacity := 4;
-    var obj := new StackOfInt(capacity);
-    obj.size := 1;
-    obj.elems[0] := 10;
-    obj.elems[1] := 11;
-    obj.elems[2] := 12;
-    obj.elems[3] := 13;
     var old_elems_size_1 := obj.elems[..obj.size - 1];
     obj.pop();
     expect obj.Valid();

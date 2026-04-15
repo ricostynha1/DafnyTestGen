@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-15 09:07:39
+// Generated: 2026-04-15 11:08:27
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -50,20 +50,20 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['%', ' '];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/Q|s|=1:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := [' '];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
   }
@@ -73,24 +73,6 @@ method Passing()
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
     var s: seq<char> := ['!', '"', ' '];
-    var v := ReplaceWithColon(s);
-    expect IsMapSeq(s, v, ReplaceCharWithColon);
-  }
-
-  // Test case for combination {1}/O|v|>=3:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
-  {
-    var s: seq<char> := [' ', 'X', 'a', ' '];
-    var v := ReplaceWithColon(s);
-    expect IsMapSeq(s, v, ReplaceCharWithColon);
-  }
-
-  // Test case for combination {1}/O|v|>=2:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
-  {
-    var s: seq<char> := ['%', 'R', 'b', 'b', ' '];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
   }

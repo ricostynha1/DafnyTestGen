@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-15 09:04:03
+// Generated: 2026-04-15 11:05:12
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -73,7 +73,39 @@ method Passing()
     expect res == [];
   }
 
-  // Test case for combination {1}/Ba=0,b=0:
+  // Test case for combination {1}/Q|a|>=2:
+  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  {
+    var a := new int[2] [24, 23];
+    var b := new int[1] [24];
+    var res := Intersection<int>(a, b);
+    expect res == [24];
+  }
+
+  // Test case for combination {1}/Q|a|=1:
+  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  {
+    var a := new int[1] [25];
+    var b := new int[1] [8];
+    var res := Intersection<int>(a, b);
+    expect res == [];
+  }
+
+  // Test case for combination {1}/Q|a|=0:
   //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
@@ -89,7 +121,7 @@ method Passing()
     expect res == [];
   }
 
-  // Test case for combination {1}/Ba=0,b=1:
+  // Test case for combination {1}/Q|b|>=2:
   //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
@@ -100,12 +132,12 @@ method Passing()
   //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[0] [];
-    var b := new int[1] [2];
+    var b := new int[2] [24, 25];
     var res := Intersection<int>(a, b);
     expect res == [];
   }
 
-  // Test case for combination {1}/Ba=0,b=2:
+  // Test case for combination {1}/Q|b|=1:
   //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
   //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
   //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
@@ -116,57 +148,25 @@ method Passing()
   //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
     var a := new int[0] [];
-    var b := new int[2] [4, 3];
-    var res := Intersection<int>(a, b);
-    expect res == [];
-  }
-
-  // Test case for combination {1}/O|res|>=3:
-  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  {
-    var a := new int[3] [25, 26, 24];
-    var b := new int[4] [43, 25, 26, 24];
-    var res := Intersection<int>(a, b);
-    expect res == [25, 26, 24];
-  }
-
-  // Test case for combination {1}/O|res|>=2:
-  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  {
-    var a := new int[3] [18, 16, 16];
-    var b := new int[3] [18, 16, 16];
-    var res := Intersection<int>(a, b);
-    expect res == [18, 16];
-  }
-
-  // Test case for combination {1}/O|res|=1:
-  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  {
-    var a := new int[1] [16];
     var b := new int[1] [16];
     var res := Intersection<int>(a, b);
-    expect res == [16];
+    expect res == [];
+  }
+
+  // Test case for combination {1}/Q|b|=0:
+  //   POST: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   POST: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   POST: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  //   ENSURES: forall k :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
+  //   ENSURES: forall x :: x in a[..] && x in b[..] ==> x in res
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> res[p] != res[q]
+  //   ENSURES: forall p, q :: 0 <= p < q < |res| ==> exists i, j :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
+  {
+    var a := new int[2] [3, 4];
+    var b := new int[0] [];
+    var res := Intersection<int>(a, b);
+    expect res == [];
   }
 
 }

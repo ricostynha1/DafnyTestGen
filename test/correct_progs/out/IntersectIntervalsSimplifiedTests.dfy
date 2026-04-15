@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-15 09:02:06
+// Generated: 2026-04-15 11:03:32
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -108,66 +108,6 @@ method Passing()
   {
     var left := new real[4] [0.0, 8854.5, 20162.0, 32284.5];
     var right := new real[4] [0.5, 8855.0, 20162.5, 32285.0];
-    var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
-  }
-
-  // Test case for combination {1}/Ol<0:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: IsMax(left, l)
-  //   POST: IsMin(right, r)
-  //   ENSURES: IsMax(left, l) && IsMin(right, r)
-  {
-    var left := new real[5] [0.0, 11796.5, 40650.0, 10449.5, 30611.5];
-    var right := new real[5] [0.5, 11797.0, 40650.5, 10450.0, 30612.0];
-    var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
-  }
-
-  // Test case for combination {1}/Ol=0:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: IsMax(left, l)
-  //   POST: IsMin(right, r)
-  //   ENSURES: IsMax(left, l) && IsMin(right, r)
-  {
-    var left := new real[6] [0.0, 8364.5, 42735.0, 30611.5, 5852.5, 28099.5];
-    var right := new real[6] [0.5, 8365.0, 42735.5, 30612.0, 5853.0, 28100.0];
-    var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: IsMax(left, l)
-  //   POST: IsMin(right, r)
-  //   ENSURES: IsMax(left, l) && IsMin(right, r)
-  {
-    var left := new real[7] [0.0, 32284.5, 41062.0, 5852.5, 28099.5, 1141.5, 280.5];
-    var right := new real[7] [0.5, 32285.0, 41062.5, 5853.0, 28100.0, 1142.0, 281.0];
-    var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: IsMax(left, l)
-  //   POST: IsMin(right, r)
-  //   ENSURES: IsMax(left, l) && IsMin(right, r)
-  {
-    var left := new real[8] [0.0, 10449.5, 36465.0, 28099.5, 1141.5, 280.5, 20536.5, 15920.5];
-    var right := new real[8] [0.5, 10450.0, 36465.5, 28100.0, 1142.0, 281.0, 20537.0, 15921.0];
     var l, r := IntersectIntervals(left, right);
     expect IsMax(left, l);
     expect IsMin(right, r);

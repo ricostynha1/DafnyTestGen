@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-15 09:03:38
+// Generated: 2026-04-15 11:04:49
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -53,20 +53,20 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}/Q|s|>=2:
   //   POST: result
   //   ENSURES: result <==> |s| > 0 && forall i :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := [' ', 'U'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/Q|s|=1:
   //   POST: result
   //   ENSURES: result <==> |s| > 0 && forall i :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := [' '];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -76,24 +76,6 @@ method Passing()
   //   ENSURES: result <==> |s| > 0 && forall i :: 0 <= i < |s| ==> IsDigit(s[i])
   {
     var s: seq<char> := [' ', '!', '"'];
-    var result := IsInteger(s);
-    expect result == false;
-  }
-
-  // Test case for combination {1}/Oresult=true:
-  //   POST: result
-  //   ENSURES: result <==> |s| > 0 && forall i :: 0 <= i < |s| ==> IsDigit(s[i])
-  {
-    var s: seq<char> := ['0', '8', '9', '8'];
-    var result := IsInteger(s);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Oresult=false:
-  //   POST: result
-  //   ENSURES: result <==> |s| > 0 && forall i :: 0 <= i < |s| ==> IsDigit(s[i])
-  {
-    var s: seq<char> := [' ', 'F', '8', 'U', '/'];
     var result := IsInteger(s);
     expect result == false;
   }

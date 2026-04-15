@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-15 09:07:54
+// Generated: 2026-04-15 11:08:40
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -74,6 +74,24 @@ method Passing()
     expect secondSmallest == 1;
   }
 
+  // Test case for combination {1}/Q|s|>=2:
+  //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
+  //   POST: smallest in s[..]
+  //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   POST: secondSmallest in s[..]
+  //   POST: secondSmallest > smallest
+  //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: smallest in s[..]
+  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
+  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  {
+    var s := new int[4] [0, 1, 7721, 7722];
+    var smallest, secondSmallest := SecondSmallest(s);
+    expect smallest == 0;
+    expect secondSmallest == 1;
+  }
+
   // Test case for combination {1}/Bs=3:
   //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
@@ -104,82 +122,10 @@ method Passing()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[4] [7760, 7758, 7759, 7761];
+    var s := new int[5] [7758, 7759, 7760, 7761, 7762];
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 7758;
     expect secondSmallest == 7759;
-  }
-
-  // Test case for combination {1}/Osmallest<0:
-  //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
-  //   POST: smallest in s[..]
-  //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   POST: secondSmallest in s[..]
-  //   POST: secondSmallest > smallest
-  //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  {
-    var s := new int[5] [-7721, -7720, -7719, -7718, -7717];
-    var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == -7721;
-    expect secondSmallest == -7720;
-  }
-
-  // Test case for combination {1}/Osmallest=0:
-  //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
-  //   POST: smallest in s[..]
-  //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   POST: secondSmallest in s[..]
-  //   POST: secondSmallest > smallest
-  //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  {
-    var s := new int[8] [0, 1, 40, 41, 42, 43, 44, 45];
-    var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == 0;
-    expect secondSmallest == 1;
-  }
-
-  // Test case for combination {1}/OsecondSmallest>0:
-  //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
-  //   POST: smallest in s[..]
-  //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   POST: secondSmallest in s[..]
-  //   POST: secondSmallest > smallest
-  //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  {
-    var s := new int[7] [7757, 7758, 7759, 7760, 7761, 7763, 7762];
-    var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == 7757;
-    expect secondSmallest == 7758;
-  }
-
-  // Test case for combination {1}/OsecondSmallest<0:
-  //   PRE:  exists i, j :: 0 <= i < j < s.Length && s[i] != s[j]
-  //   POST: smallest in s[..]
-  //   POST: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   POST: secondSmallest in s[..]
-  //   POST: secondSmallest > smallest
-  //   POST: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k :: 0 <= k < s.Length ==> s[k] >= smallest
-  //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
-  {
-    var s := new int[6] [-7721, -7720, -7719, -7718, -7716, -7717];
-    var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == -7721;
-    expect secondSmallest == -7720;
   }
 
 }

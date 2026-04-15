@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-15 09:04:43
+// Generated: 2026-04-15 11:05:44
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)
@@ -54,6 +54,30 @@ method Passing()
     expect r == [];
   }
 
+  // Test case for combination {1}/Q|l|>=2:
+  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   POST: |r| == |l|
+  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: |r| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  {
+    var l: seq<string> := ["6", "6"];
+    var r := ExtractRearChars(l);
+    expect r == ['6', '6'];
+  }
+
+  // Test case for combination {1}/Q|l|=1:
+  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   POST: |r| == |l|
+  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: |r| == |l|
+  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  {
+    var l: seq<string> := [" "];
+    var r := ExtractRearChars(l);
+    expect r == [' '];
+  }
+
   // Test case for combination {1}/Bl=inner>=1:
   //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
@@ -61,57 +85,9 @@ method Passing()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
-    var l: seq<string> := ["8"];
+    var l: seq<string> := ["6", "6", "6"];
     var r := ExtractRearChars(l);
-    expect r == ['8'];
-  }
-
-  // Test case for combination {1}/Bl=inner>=2:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
-  //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  {
-    var l: seq<string> := ["ZZ", "ZZ"];
-    var r := ExtractRearChars(l);
-    expect r == ['Z', 'Z'];
-  }
-
-  // Test case for combination {1}/Bl=3:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
-  //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  {
-    var l: seq<string> := [" 8%", "p", "41"];
-    var r := ExtractRearChars(l);
-    expect r == ['%', 'p', '1'];
-  }
-
-  // Test case for combination {1}/O|r|>=3:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
-  //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  {
-    var l: seq<string> := [" ", " ", " ", " "];
-    var r := ExtractRearChars(l);
-    expect r == [' ', ' ', ' ', ' '];
-  }
-
-  // Test case for combination {1}/O|r|>=2:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
-  //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  {
-    var l: seq<string> := [" ", " ", " ", " ", " "];
-    var r := ExtractRearChars(l);
-    expect r == [' ', ' ', ' ', ' ', ' '];
+    expect r == ['6', '6', '6'];
   }
 
 }

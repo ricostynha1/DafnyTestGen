@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-15 09:05:25
+// Generated: 2026-04-15 11:06:23
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -48,22 +48,22 @@ method Passing()
     expect v == [];
   }
 
-  // Test case for combination {1}/Bs=1:
-  //   POST: IsMapSeq(s, v, Toggle)
-  //   ENSURES: IsMapSeq(s, v, Toggle)
-  {
-    var s: seq<char> := ['['];
-    var v := ToggleCase(s);
-    expect v == ['['];
-  }
-
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, Toggle)
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
     var s: seq<char> := ['{', '|'];
     var v := ToggleCase(s);
     expect v == ['{', '|'];
+  }
+
+  // Test case for combination {1}/Q|s|=1:
+  //   POST: IsMapSeq(s, v, Toggle)
+  //   ENSURES: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['['];
+    var v := ToggleCase(s);
+    expect v == ['['];
   }
 
   // Test case for combination {1}/Bs=3:
@@ -73,24 +73,6 @@ method Passing()
     var s: seq<char> := ['[', 'a', '{'];
     var v := ToggleCase(s);
     expect v == ['[', 'A', '{'];
-  }
-
-  // Test case for combination {1}/O|v|>=3:
-  //   POST: IsMapSeq(s, v, Toggle)
-  //   ENSURES: IsMapSeq(s, v, Toggle)
-  {
-    var s: seq<char> := ['@', '1', 'a', '|'];
-    var v := ToggleCase(s);
-    expect v == ['@', '1', 'A', '|'];
-  }
-
-  // Test case for combination {1}/O|v|>=2:
-  //   POST: IsMapSeq(s, v, Toggle)
-  //   ENSURES: IsMapSeq(s, v, Toggle)
-  {
-    var s: seq<char> := ['{', '|', '}', '|', '}'];
-    var v := ToggleCase(s);
-    expect v == ['{', '|', '}', '|', '}'];
   }
 
 }

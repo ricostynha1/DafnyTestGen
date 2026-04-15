@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-15 09:07:28
+// Generated: 2026-04-15 11:08:17
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -55,43 +55,43 @@ method Passing()
     expect s[..] == [];
   }
 
-  // Test case for combination {1}/Bs=1,k==s_pre_len:
+  // Test case for combination {1}/Q|s|>=2:
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
-    var s := new int[1] [2];
+    var s := new int[1] [8];
     var k := 1;
     ReverseUptoK<int>(s, k);
-    expect s[..] == [2];
+    expect s[..] == [8];
   }
 
-  // Test case for combination {1}/Bs=1,k=0:
+  // Test case for combination {1}/Q|s|=1:
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
-    var s := new int[1] [2];
+    var s := new int[1] [33];
     var k := 0;
     ReverseUptoK<int>(s, k);
-    expect s[..] == [2];
+    expect s[..] == [33];
   }
 
-  // Test case for combination {1}/Bs=2,k==s_pre_len:
+  // Test case for combination {1}/Q|s|=0:
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
   {
-    var s := new int[2] [4, 3];
+    var s := new int[2] [13, 9];
     var k := 2;
     ReverseUptoK<int>(s, k);
-    expect s[..] == [3, 4];
+    expect s[..] == [9, 13];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-15 10:46:01
+// Generated: 2026-04-15 13:18:43
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -65,17 +65,6 @@ method Passing()
     expect r == false;
   }
 
-  // Test case for combination {1}/Bm=1,k=0:
-  //   PRE:  |m| > 0
-  //   POST: r == (k in m)
-  //   ENSURES: r == (k in m)
-  {
-    var m: map<int, int> := map[1 := 0];
-    var k := 0;
-    var r := MapContains(m, k);
-    expect r == false;
-  }
-
   // Test case for combination {1}/Bm=1,k=1:
   //   PRE:  |m| > 0
   //   POST: r == (k in m)
@@ -94,6 +83,17 @@ method Passing()
   {
     var m: map<int, int> := map[2 := 0, 5 := 0];
     var k := 0;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/Bm=2,k=1:
+  //   PRE:  |m| > 0
+  //   POST: r == (k in m)
+  //   ENSURES: r == (k in m)
+  {
+    var m: map<int, int> := map[2 := 0, 5 := 0];
+    var k := 1;
     var r := MapContains(m, k);
     expect r == false;
   }

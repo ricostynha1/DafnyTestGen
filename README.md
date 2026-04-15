@@ -253,6 +253,8 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached for a method.
 
+**Subsumption pruning.** Across all phases, each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched. This eliminates redundant tests from overlapping `exists` decompositions in Phase 1 (the four structural cases — left/middle/right/multi-entry — are intentionally non-disjoint), and from output/input boundary tiers in Phases 2/2b that are already witnessed by an earlier model. The check is bounded to the most recent 20 prior cases and is conservative on translator failures (no pruning when the pin can't be built).
+
 
 ## Class Support
 

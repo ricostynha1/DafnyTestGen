@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-15 09:07:33
+// Generated: 2026-04-15 11:08:22
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -59,44 +59,24 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Blist=inner>=1:
+  // Test case for combination {1}/Q|list|>=2:
   //   POST: result
   //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
-    var list: seq<seq<int>> := [[12]];
+    var list: seq<seq<int>> := [[12], [13]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == true;
   }
 
-  // Test case for combination {1}/Blist=inner>=2:
+  // Test case for combination {1}/Q|list|=1:
   //   POST: result
   //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
-    var list: seq<seq<int>> := [[11, 12], [17, 16]];
+    var list: seq<seq<int>> := [[]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == true;
-  }
-
-  // Test case for combination {1}/Oresult=true:
-  //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  {
-    var list: seq<seq<int>> := [[], [], []];
-    var result := AllSequencesEqualLength<int>(list);
-    expect result == true;
-  }
-
-  // Test case for combination {2}/Oresult=false:
-  //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  {
-    var list: seq<seq<int>> := [[14], [], [], [], [], [13]];
-    var result := AllSequencesEqualLength<int>(list);
-    expect result == false;
   }
 
 }

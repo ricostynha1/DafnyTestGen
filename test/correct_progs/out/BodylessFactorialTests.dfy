@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BodylessFactorial.dfy
 // Method: CalcFact
-// Generated: 2026-04-15 09:01:20
+// Generated: 2026-04-15 11:02:53
 
 function Fact(n: nat): nat
 {

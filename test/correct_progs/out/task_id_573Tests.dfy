@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-04-15 09:05:37
+// Generated: 2026-04-15 11:06:32
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -107,26 +107,6 @@ method Passing()
   //   ENSURES: product == SetProduct(elems(a))
   {
     var a := new int[2] [4, 3];
-    var product := UniqueProduct(a);
-    expect product == 12;
-  }
-
-  // Test case for combination {1}/Oproduct>0:
-  //   POST: product == SetProduct(elems(a))
-  //   POST: product == 1
-  //   ENSURES: product == SetProduct(elems(a))
-  {
-    var a := new int[3] [4, 5, 6];
-    var product := UniqueProduct(a);
-    expect product == 120;
-  }
-
-  // Test case for combination {2}/Oproduct<0:
-  //   POST: !(elems(a) == {})
-  //   POST: product == var x :| x in elems(a); x * SetProduct(elems(a) - {x})
-  //   ENSURES: product == SetProduct(elems(a))
-  {
-    var a := new int[2] [3, 4];
     var product := UniqueProduct(a);
     expect product == 12;
   }

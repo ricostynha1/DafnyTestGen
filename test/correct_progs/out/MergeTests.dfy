@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-15 09:02:34
+// Generated: 2026-04-15 11:03:57
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {

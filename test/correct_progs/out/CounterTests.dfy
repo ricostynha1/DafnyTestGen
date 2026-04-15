@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-04-15 09:01:35
+// Generated: 2026-04-15 11:03:06
 
 class Counter {
     var count: int
@@ -78,7 +78,7 @@ method Passing()
     expect obj.count == 0;
   }
 
-  // Test case for combination {1}/Ocount=0:
+  // Test case for combination {1}/R3:
   //   POST: count == 0
   //   ENSURES: count == 0
   {

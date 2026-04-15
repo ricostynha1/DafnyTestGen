@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-15 09:07:19
+// Generated: 2026-04-15 11:08:09
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -67,22 +67,22 @@ method Passing()
     expect IsSmallestMissingNumber(s, v);
   }
 
-  // Test case for combination {1}/Bs=1,s-shape=const:
+  // Test case for combination {1}/Q|s|>=2:
+  //   PRE:  IsSorted(s)
+  //   POST: IsSmallestMissingNumber(s, v)
+  //   ENSURES: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [2438, 4234];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+  }
+
+  // Test case for combination {1}/Q|s|=1:
   //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [1];
-    var v := SmallestMissingNumber(s);
-    expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Bs=2,s-shape=const:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [7720, 7720];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
   }
@@ -93,36 +93,6 @@ method Passing()
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [1237, 1237, 1237];
-    var v := SmallestMissingNumber(s);
-    expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Ov>=2:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [8101, 8101, 8101, 8101];
-    var v := SmallestMissingNumber(s);
-    expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Ov=1:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [0, 0, 0, 0, 0];
-    var v := SmallestMissingNumber(s);
-    expect IsSmallestMissingNumber(s, v);
-  }
-
-  // Test case for combination {1}/Ov=0:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [1, 1, 1, 1, 20, 469];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
   }

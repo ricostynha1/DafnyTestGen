@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-15 10:46:27
+// Generated: 2026-04-15 15:59:40
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -60,27 +60,6 @@ method Passing()
   //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
     var a := new int[4] [18, 8367, 8366, 26];
-    var sorted := IsSortedArr(a);
-    expect sorted == false;
-  }
-
-  // Test case for combination {4}:
-  //   POST: !sorted
-  //   POST: 0 <= (a.Length - 1 - 1)
-  //   POST: !(a[(a.Length - 1 - 1)] <= a[(a.Length - 1 - 1) + 1])
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  {
-    var a := new int[2] [7720, 7719];
-    var sorted := IsSortedArr(a);
-    expect sorted == false;
-  }
-
-  // Test case for combination {5}:
-  //   POST: !sorted
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (a.Length - 1 - 1) :: (!(a[i] <= a[i + 1])) && (!(a[i_2] <= a[i_2 + 1]))
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  {
-    var a := new int[3] [21239, 21238, 21237];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }

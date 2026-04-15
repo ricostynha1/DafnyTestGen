@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_310.dfy
 // Method: ToCharArray
-// Generated: 2026-04-15 09:04:27
+// Generated: 2026-04-15 11:05:33
 
 // Converts a string (sequence of characters) to an array of characters.
 method ToCharArray(s: string) returns (a: array<char>)

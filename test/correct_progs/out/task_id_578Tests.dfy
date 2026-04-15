@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-04-15 09:05:44
+// Generated: 2026-04-15 11:06:39
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -46,7 +46,21 @@ method Passing()
     expect r == [];
   }
 
-  // Test case for combination {1}/Bs1=1,s2=1,s3=1:
+  // Test case for combination {1}/Q|s1|>=2:
+  //   PRE:  |s1| == |s2| == |s3|
+  //   POST: |r| == 3 * |s1|
+  //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   ENSURES: |r| == 3 * |s1|
+  //   ENSURES: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  {
+    var s1: seq<int> := [28, 34];
+    var s2: seq<int> := [30, 36];
+    var s3: seq<int> := [30, 36];
+    var r := Interleave<int>(s1, s2, s3);
+    expect r == [28, 30, 30, 34, 36, 36];
+  }
+
+  // Test case for combination {1}/Q|s1|=1:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
   //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
@@ -58,20 +72,6 @@ method Passing()
     var s3: seq<int> := [6];
     var r := Interleave<int>(s1, s2, s3);
     expect r == [4, 5, 6];
-  }
-
-  // Test case for combination {1}/Bs1=2,s2=2,s3=2:
-  //   PRE:  |s1| == |s2| == |s3|
-  //   POST: |r| == 3 * |s1|
-  //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
-  //   ENSURES: |r| == 3 * |s1|
-  //   ENSURES: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
-  {
-    var s1: seq<int> := [7, 8];
-    var s2: seq<int> := [9, 10];
-    var s3: seq<int> := [11, 12];
-    var r := Interleave<int>(s1, s2, s3);
-    expect r == [7, 9, 11, 8, 10, 12];
   }
 
 }

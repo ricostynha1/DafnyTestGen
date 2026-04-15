@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-15 10:46:18
+// Generated: 2026-04-15 13:18:52
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -77,17 +77,6 @@ method Passing()
     expect r == false;
   }
 
-  // Test case for combination {1}/BM=1,x=0:
-  //   PRE:  |M| > 0
-  //   POST: r == (x in M)
-  //   ENSURES: r == (x in M)
-  {
-    var M: multiset<int> := multiset{-2};
-    var x := 0;
-    var r := MultisetContains(M, x);
-    expect r == false;
-  }
-
   // Test case for combination {1}/BM=1,x=1:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
@@ -106,6 +95,17 @@ method Passing()
   {
     var M: multiset<int> := multiset{-2, -2};
     var x := 0;
+    var r := MultisetContains(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/BM=2,x=1:
+  //   PRE:  |M| > 0
+  //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
+  {
+    var M: multiset<int> := multiset{-2, -2};
+    var x := 1;
     var r := MultisetContains(M, x);
     expect r == false;
   }
@@ -373,17 +373,6 @@ method Passing()
     expect r == false;
   }
 
-  // Test case for combination {1}/BM=1,x=0:
-  //   PRE:  |M| > 0
-  //   POST: r == (x in M)
-  //   ENSURES: r == (x in M)
-  {
-    var M: multiset<nat> := multiset{0};
-    var x := 0;
-    var r := MultisetContainsNat(M, x);
-    expect r == true;
-  }
-
   // Test case for combination {1}/BM=1,x=1:
   //   PRE:  |M| > 0
   //   POST: r == (x in M)
@@ -404,6 +393,17 @@ method Passing()
     var x := 0;
     var r := MultisetContainsNat(M, x);
     expect r == true;
+  }
+
+  // Test case for combination {1}/BM=2,x=1:
+  //   PRE:  |M| > 0
+  //   POST: r == (x in M)
+  //   ENSURES: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{0, 0};
+    var x := 1;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
   }
 
   // Test case for combination {1}:
