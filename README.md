@@ -530,9 +530,6 @@ dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ 
 # Force boundary value analysis with 5 tiers
 dotnet run -- test/correct_progs/in/Factorial.dfy -b -t 5
 
-# Thorough: FDNF + boundary + 3 tests per scenario
-dotnet run -- test/correct_progs/in/BinarySearch.dfy -o test/correct_progs/out/ -a -b -r 3
-
 # Validate tests and split into Passing/Failing methods
 dotnet run -- test/buggy_progs/in/abs__121-127_COI.dfy -o test/buggy_progs/out/ -c
 
