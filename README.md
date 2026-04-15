@@ -237,9 +237,9 @@ E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` fo
 
 #### Mutation boundary tiers (final vs initial value)
 
-For mutable variables — mutable array parameters, mutable scalar class fields, and mutable array/seq class fields — Phase 2b also adds a pair of tiers comparing the post-state against the pre-state: `{x}=old` (final equals initial, i.e. no-op path) and `{x}≠old` (actually mutated path). These exercise the two branches of postconditions that depend on whether mutation actually occurred.
+For mutable variables — mutable array parameters, mutable scalar class fields, and mutable array/seq class fields — Phase 2b also adds a pair of tiers comparing the post-state against the pre-state: `x=old` (final equals initial, i.e. no-op path) and `x≠old` (actually mutated path). These exercise the two branches of postconditions that depend on whether mutation actually occurred.
 
-To avoid noise, these tiers are emitted **only when the variable is mentioned in `ensures` both as post-state and inside `old(...)`** — if the spec doesn't care about the old or new content, the tier would be worthless.
+To avoid noise, these tiers are emitted **only when the variable is mentioned in `ensures` both as post-state and inside `old(...)`** — if the spec doesn't care about the old or new content, the tier would be worthless. 
 
 
 ## Repetition (`-r`)
@@ -259,7 +259,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached for a method.
 
-**Subsumption pruning.** Across all phases, each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched. This eliminates redundant tests from overlapping `exists` decompositions in Phase 1 (the four structural cases — left/middle/right/multi-entry — are intentionally non-disjoint), and from output/input boundary tiers in Phases 2/2b that are already witnessed by an earlier model. The check is bounded to the most recent 20 prior cases and is conservative on translator failures (no pruning when the pin can't be built).
+**Subsumption pruning.** To maximize diversity with a limited number of test cases, across all phases, each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched. This eliminates redundant tests from overlapping `exists` decompositions in Phase 1, and from output/input boundary tiers in Phases 2/2b that are already witnessed by an earlier model. The check is bounded to the most recent 20 prior cases and is conservative on translator failures (no pruning when the pin can't be built).
 
 
 ## Class Support
