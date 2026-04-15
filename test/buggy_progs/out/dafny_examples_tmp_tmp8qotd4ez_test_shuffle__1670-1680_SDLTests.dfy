@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-08 10:37:12
+// Generated: 2026-04-15 18:52:25
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -113,7 +113,16 @@ method getRandomDataEntry<T(==)>(m_workList: array<T>, avoidSet: seq<T>) returns
 
 method Passing()
 {
-  // Test case for combination {3}:
+  // Test case for combination {1}:
+  //   POST: !(a <= b)
+  //   ENSURES: a <= b ==> a <= r <= b
+  {
+    var a := 1;
+    var b := 0;
+    var r := random(a, b);
+  }
+
+  // Test case for combination {2}:
   //   POST: a <= b
   //   POST: a <= r <= b
   //   ENSURES: a <= b ==> a <= r <= b
@@ -124,7 +133,7 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {3}/Ba=0,b=1:
+  // Test case for combination {2}/Ba=0,b=1:
   //   POST: a <= b
   //   POST: a <= r <= b
   //   ENSURES: a <= b ==> a <= r <= b
@@ -132,42 +141,18 @@ method Passing()
     var a := 0;
     var b := 1;
     var r := random(a, b);
-    expect a <= b;
-    expect r == 0;
     expect a <= r <= b;
   }
 
-  // Test case for combination {2}/Or=0:
-  //   POST: a <= r <= b
-  //   POST: !(a <= r <= b)
-  //   ENSURES: a <= b ==> a <= r <= b
-  {
-    var a := -2;
-    var b := -3;
-    var r := random(a, b);
-    expect r == -2;
-  }
-
-  // Test case for combination {3}/Or<0:
+  // Test case for combination {2}/Ba=1,b=1:
   //   POST: a <= b
   //   POST: a <= r <= b
   //   ENSURES: a <= b ==> a <= r <= b
   {
-    var a := -1;
-    var b := 0;
+    var a := 1;
+    var b := 1;
     var r := random(a, b);
-    expect r == -1;
-  }
-
-  // Test case for combination {3}/Or=0:
-  //   POST: a <= b
-  //   POST: a <= r <= b
-  //   ENSURES: a <= b ==> a <= r <= b
-  {
-    var a := -2;
-    var b := 2;
-    var r := random(a, b);
-    expect r == -2;
+    expect r == 1;
   }
 
   // Test case for combination {1}:
@@ -261,42 +246,6 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {2}:
-  //   POST: a <= r <= b
-  //   POST: !(a <= r <= b)
-  //   ENSURES: a <= b ==> a <= r <= b
-  {
-    var a := 0;
-    var b := -2;
-    var r := random(a, b);
-    // expect a <= r <= b;
-    // expect !(a <= r <= b);
-  }
-
-  // Test case for combination {2}/Ba=1,b=0:
-  //   POST: a <= r <= b
-  //   POST: !(a <= r <= b)
-  //   ENSURES: a <= b ==> a <= r <= b
-  {
-    var a := 1;
-    var b := 0;
-    var r := random(a, b);
-    // expect a <= r <= b;
-    // expect !(a <= r <= b);
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   POST: a <= r <= b
-  //   POST: !(a <= r <= b)
-  //   ENSURES: a <= b ==> a <= r <= b
-  {
-    var a := 2;
-    var b := 0;
-    var r := random(a, b);
-    // expect a <= r <= b;
-    // expect !(a <= r <= b);
-  }
-
   // Test case for combination {1}/Bm_dataEntries=1:
   //   POST: result.Length == m_dataEntries.Length
   //   POST: multiset(result[..]) == multiset(m_dataEntries[..])

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-08 10:36:35
+// Generated: 2026-04-15 18:47:20
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
@@ -232,20 +232,11 @@ method Passing()
     expect b.Length == a.Length;
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}/Q|a|=1:
   //   POST: b.Length == a.Length
   //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[1] [2];
-    var b := MergeSort(a);
-    expect b.Length == a.Length;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   POST: b.Length == a.Length
-  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
-  {
-    var a := new int[2] [4, 3];
     var b := MergeSort(a);
     expect b.Length == a.Length;
   }
@@ -263,28 +254,41 @@ method Passing()
     expect b[..] == [];
   }
 
-  // Test case for combination {1}/Bb=1,c=0,d=1:
+  // Test case for combination {1}/Q|c|>=2:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[1] [3];
-    var c := new int[0] [];
-    var d := new int[1] [4];
+    var b := new int[3] [43, 44, 45];
+    var c := new int[2] [-7719, 38];
+    var d := new int[1] [31];
     Merge(b, c, d);
     expect Sorted(b[..]);
   }
 
-  // Test case for combination {1}/Bb=1,c=1,d=0:
+  // Test case for combination {1}/Q|c|=1:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[1] [3];
-    var c := new int[1] [4];
+    var b := new int[1] [22];
+    var c := new int[1] [18];
     var d := new int[0] [];
+    Merge(b, c, d);
+    expect Sorted(b[..]);
+  }
+
+  // Test case for combination {1}/Q|d|>=2:
+  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
+  //   PRE:  Sorted(c[..]) && Sorted(d[..])
+  //   POST: Sorted(b[..])
+  //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
+  {
+    var b := new int[2] [31, 32];
+    var c := new int[0] [];
+    var d := new int[2] [-7719, 38];
     Merge(b, c, d);
     expect Sorted(b[..]);
   }
@@ -293,6 +297,15 @@ method Passing()
 
 method Failing()
 {
+  // Test case for combination {1}/Q|a|>=2:
+  //   POST: b.Length == a.Length
+  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
+  {
+    var a := new int[2] [3, 4];
+    var b := MergeSort(a);
+    // expect b.Length == a.Length;
+  }
+
   // Test case for combination {1}/Ba=3:
   //   POST: b.Length == a.Length
   //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
@@ -300,19 +313,6 @@ method Failing()
     var a := new int[3] [5, 4, 6];
     var b := MergeSort(a);
     // expect b.Length == a.Length;
-  }
-
-  // Test case for combination {1}/Bb=2,c=0,d=2:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   POST: Sorted(b[..])
-  //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
-  {
-    var b := new int[2] [4, 3];
-    var c := new int[0] [];
-    var d := new int[2] [6, 5];
-    Merge(b, c, d);
-    // expect Sorted(b[..]);
   }
 
   // Test case for combination {1}:
@@ -331,261 +331,9 @@ method Failing()
   //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
   //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
   {
-    var b := new int[3] [-21238, 37, 41];
-    var c := new int[2] [19, 7719];
-    var d := new int[1] [2437];
-    var i0 := 1;
-    var j0 := 0;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Bd=2,i0==j0,j0=1:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [10, -38, 23, 39];
-    var c := new int[2] [9, 7719];
-    var d := new int[2] [8, 21238];
-    var i0 := 1;
-    var j0 := 1;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Bd=2,i0=0,j0=1:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[3] [-38, 15, 16];
-    var c := new int[1] [7719];
-    var d := new int[2] [7, 21238];
-    var i0 := 0;
-    var j0 := 1;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Bd=2,i0=1,j0=1:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[5] [11, -38, 45, 47, 46];
-    var c := new int[3] [10, 7719, 25];
-    var d := new int[2] [9, 21238];
-    var i0 := 1;
-    var j0 := 1;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oi>=2:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [-21238, 21, 23, 22];
-    var c := new int[2] [7719, 24];
-    var d := new int[2] [25, 2437];
-    var i0 := 0;
-    var j0 := 1;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oi=1:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [-21238, 21, 23, 22];
-    var c := new int[2] [24, 7719];
-    var d := new int[2] [2437, 25];
-    var i0 := 1;
-    var j0 := 0;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [21, -21238, 23, 22];
-    var c := new int[1] [7719];
-    var d := new int[3] [47, 48, 2437];
-    var i0 := 0;
-    var j0 := 2;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oj>=2:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [-2437, 21, 23, 22];
-    var c := new int[1] [21238];
-    var d := new int[3] [24, 8855, 25];
-    var i0 := 0;
-    var j0 := 1;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oj=1:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [21, -2437, 23, 22];
-    var c := new int[3] [24, 25, 21238];
-    var d := new int[1] [8855];
-    var i0 := 2;
-    var j0 := 0;
-    var i, j := MergeLoop(b, c, d, i0, j0);
-    // expect i <= c.Length && j <= d.Length && i + j <= b.Length;
-    // expect InvSubSet(b[..], c[..], d[..], i, j);
-    // expect InvSorted(b[..], c[..], d[..], i, j);
-    // expect 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0);
-  }
-
-  // Test case for combination {1}/Oj=0:
-  //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
-  //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   PRE:  i0 <= c.Length && j0 <= d.Length && i0 + j0 <= b.Length
-  //   PRE:  InvSubSet(b[..], c[..], d[..], i0, j0)
-  //   PRE:  InvSorted(b[..], c[..], d[..], i0, j0)
-  //   PRE:  i0 + j0 < b.Length
-  //   POST: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   POST: InvSubSet(b[..], c[..], d[..], i, j)
-  //   POST: InvSorted(b[..], c[..], d[..], i, j)
-  //   POST: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  //   ENSURES: i <= c.Length && j <= d.Length && i + j <= b.Length
-  //   ENSURES: InvSubSet(b[..], c[..], d[..], i, j)
-  //   ENSURES: InvSorted(b[..], c[..], d[..], i, j)
-  //   ENSURES: 0 <= c.Length - i < c.Length - i0 || (c.Length - i == c.Length - i0 && 0 <= d.Length - j < d.Length - j0)
-  {
-    var b := new int[4] [-2437, 21, 23, 22];
-    var c := new int[3] [24, 21238, 25];
-    var d := new int[1] [8855];
+    var b := new int[3] [-8855, 44, 59];
+    var c := new int[2] [-21238, 2437];
+    var d := new int[1] [11797];
     var i0 := 1;
     var j0 := 0;
     var i, j := MergeLoop(b, c, d, i0, j0);

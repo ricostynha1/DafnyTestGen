@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
 // Method: InitArray
-// Generated: 2026-04-08 10:37:07
+// Generated: 2026-04-15 18:52:18
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -159,7 +159,19 @@ method Passing()
     expect b[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1,b=1:
+  // Test case for combination {1}/Q|a|>=2:
+  //   PRE:  a.Length == b.Length
+  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  {
+    var a := new int[2] [9, 11];
+    var b := new int[2] [26, 27];
+    var old_a := a[..];
+    CopyArray<int>(a, b);
+    expect b[..] == [9, 11];
+  }
+
+  // Test case for combination {1}/Q|a|=1:
   //   PRE:  a.Length == b.Length
   //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
@@ -169,18 +181,6 @@ method Passing()
     var old_a := a[..];
     CopyArray<int>(a, b);
     expect b[..] == [2];
-  }
-
-  // Test case for combination {1}/Ba=2,b=2:
-  //   PRE:  a.Length == b.Length
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  {
-    var a := new int[2] [3, 4];
-    var b := new int[2] [6, 5];
-    var old_a := a[..];
-    CopyArray<int>(a, b);
-    expect b[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
