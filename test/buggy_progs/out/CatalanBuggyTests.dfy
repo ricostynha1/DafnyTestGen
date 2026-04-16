@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CatalanBuggy.dfy
 // Method: CatalanNumber
-// Generated: 2026-04-15 21:16:31
+// Generated: 2026-04-15 22:40:26
 
 function C(n: nat): nat  
 {

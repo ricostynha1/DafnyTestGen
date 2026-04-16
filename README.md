@@ -10,6 +10,21 @@ DafnyTestGen can be used in different scenarios, including:
 - **Test-driven development** — generate test scaffolding from contracts before any implementation exists, to clarify requirements (not possible with white-box test generators).
 
 
+## Key Differentiators
+
+Most automated test generators for contract-equipped languages — such as Pex/IntelliTest (C#), AutoTest (Eiffel), and DART/CUTE — derive test diversity from *implementation paths* via dynamic symbolic execution (DSE) or random testing, using contracts only as runtime oracles. DafnyTestGen takes a fundamentally different approach:
+
+1. **Specification-driven partitioning, not code coverage.** Test scenarios are derived by decomposing *postconditions* into Disjunctive Normal Form (DNF), treating each clause as a distinct equivalence class. A method with `ensures (if C then A else B)` produces two test scenarios regardless of implementation complexity. This is closer in spirit to the category-partition method (Ostrand & Balcer, 1988), but fully automated via logical decomposition of formal contracts.
+
+2. **Hybrid SMT-inputs / runtime-outputs architecture.** SMT solving generates *inputs* satisfying preconditions and postcondition structure, but output correctness is verified at Dafny *runtime* via postcondition expressions or full postcondition assertions. This sidesteps a fundamental SMT limitation — recursive and uninterpreted functions that Z3 cannot fully evaluate are instead evaluated by the Dafny runtime, while the solver still provides structurally diverse inputs.
+
+3. **Output uniqueness analysis.** A second Z3 query pins the concrete inputs and asks whether a *different* output satisfies the spec. If UNSAT, the output is uniquely determined and a concrete `expect res == 5;` is emitted; otherwise, the full postcondition is used (`expect a[index] == x;`). This lightweight determinism check handles under-constrained specifications without requiring user annotations.
+
+4. **Quantifier decomposition for boundary analysis.** Existential quantifiers `exists k :: lo <= k < hi && P(k)` are decomposed into boundary (k=lo, k=hi−1), middle, and multiple-match cases, with strict/non-strict inequality awareness. Universal quantifiers over collections trigger size-based decomposition (|a|=0, |a|=1, |a|≥2) to exercise both vacuously-true and non-trivial cases. These are combined with other contract clauses via cross-product.
+
+5. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
+
+
 ## How It Works
 
 1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses).

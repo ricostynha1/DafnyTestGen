@@ -56,4 +56,421 @@
   Note: postconditions contain unsolvable SMT patterns (multiset/variable-indexed slices)
   Falling back to precondition-only test generation with postcondition runtime checks
   Phase 1: 1 DNF clauses
-  Solving 1/10...   
+  Solving 1/10...     Timeout reached, stopping.
+                            Phase 1 complete: 1 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 9 test case(s)...
+  Batch: 1/9 completed, 8 incomplete (crash) - re-checking individually...
+  Test 1/9: PASS
+  Test 2/9: FAIL
+  Test 3/9: PASS
+  Test 4/9: FAIL
+  Test 5/9: PASS
+  Test 6/9: PASS
+  Test 7/9: PASS
+  Test 8/9: PASS
+  Test 9/9: FAIL
+[DafnyTestGen] Results: 6 passing, 3 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_intTests.dfy
+
+= Processing: BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy                                        =
+[DafnyTestGen] Auto-discovered 2 method(s): GetInsertIndex, InsertIntoSorted
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limitTests.dfy
+
+
+[DafnyTestGen] Processing method: GetInsertIndex
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 4 DNF clauses
+  Solving 1/16...     Solving 2/16...     Solving 3/16...     Solving 4/16...     Solving 5/16...     Solving 7/16...     Solving 8/16...     Solving 10/16...     Solving 11/16...     Solving 13/16...     Solving 15/16...     Solving 16/16...     Subsumption pruning: 4 skipped
+                            Phase 1 complete: 8 test(s)
+
+[DafnyTestGen] Processing method: InsertIntoSorted
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (24 new entries)
+  Solving 5/28...     Solving 6/28...     Solving 7/28...     Solving 8/28...     Solving 9/28...     Solving 10/28...     Solving 11/28...     Solving 12/28...     Solving 14/28...     Solving 15/28...     Solving 16/28...     Solving 17/28...     Solving 18/28...     Solving 19/28...     Solving 20/28...     Solving 21/28...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 12 test case(s)...
+  Test 1/12: PASS
+  Test 2/12: PASS
+  Test 3/12: PASS
+  Test 4/12: PASS
+  Test 5/12: PASS
+  Test 6/12: PASS
+  Test 7/12: PASS
+  Test 8/12: PASS
+  Test 9/12: PASS
+  Test 10/12: PASS
+  Test 11/12: PASS
+  Test 12/12: FAIL
+[DafnyTestGen] Results: 11 passing, 1 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limitTests.dfy
+
+= Processing: CatalanBuggy.dfy                                        =
+[DafnyTestGen] Auto-discovered 1 method(s): CatalanNumber
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CatalanBuggy.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\CatalanBuggyTests.dfy
+
+
+[DafnyTestGen] Processing method: CatalanNumber
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 2 DNF clauses
+  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 4/6...     Solving 5/6...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 2 test(s)
+  Phase 2b: adding output boundary (5 new entries, 1 pruned)
+  Solving 7/11...     Solving 8/11...     Solving 9/11...     Solving 10/11...     Subsumption pruning: 1 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 11/11...     Solving 11/11...                               Phase 3 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: FAIL
+  Test 3/4: FAIL
+  Test 4/4: FAIL
+[DafnyTestGen] Results: 1 passing, 3 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\CatalanBuggyTests.dfy
+
+= Processing: Clover_longest_prefix_325_VER_prefix.dfy                                        =
+[DafnyTestGen] Auto-discovered 1 method(s): LongestCommonPrefix
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Clover_longest_prefix_325_VER_prefixTests.dfy
+
+
+[DafnyTestGen] Processing method: LongestCommonPrefix
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 3 DNF clauses
+  Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
+  Phase 2: adding boundary analysis (48 new entries)
+  Solving 4/51...                               Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Clover_longest_prefix_325_VER_prefixTests.dfy
+
+= Processing: Clover_reverse__407_MVR_i.dfy                                        =
+[DafnyTestGen] Auto-discovered 1 method(s): reverse
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_reverse__407_MVR_i.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Clover_reverse__407_MVR_iTests.dfy
+
+
+[DafnyTestGen] Processing method: reverse
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 6/8...     Solving 7/8...     Solving 8/8...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 4 test case(s)...
+  Batch: 2/4 completed, 2 incomplete (crash) - re-checking individually...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: FAIL
+  Test 4/4: FAIL
+[DafnyTestGen] Results: 2 passing, 2 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Clover_reverse__407_MVR_iTests.dfy
+
+= Processing: CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy                                        =
+[DafnyTestGen] Auto-discovered 1 method(s): BubbleSort
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_EqTests.dfy
+
+
+[DafnyTestGen] Processing method: BubbleSort
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 5/8...     Solving 7/8...     Solving 8/8...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 3 test(s)
+  Phase 2b: adding output boundary (2 new entries)
+  Subsumption pruning: 2 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+                            Phase 3 complete: 3 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 3 test case(s)...
+  Test 1/3: PASS
+  Test 2/3: PASS
+  Test 3/3: FAIL
+[DafnyTestGen] Results: 2 passing, 1 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_EqTests.dfy
+
+= Processing: dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy                                        =
+[DafnyTestGen] Auto-discovered 5 method(s): NewArray, InitArray, UpdateElements, IncrementArray, CopyArray
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1Tests.dfy
+
+
+[DafnyTestGen] Processing method: NewArray
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/1...                               Phase 1 complete: 0 test(s)
+  Phase 2: adding boundary analysis (0 new entries)
+                            Phase 2 complete: 0 test(s)
+  Phase 3: repeats (up to 4 per condition)
+  Solving 1/1...                               Phase 3 complete: 0 test(s)
+  No tests generated for NewArray.
+
+[DafnyTestGen] Processing method: InitArray
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (8 new entries)
+  Solving 6/12...     Solving 7/12...     Solving 8/12...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: UpdateElements
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/1...                               Phase 1 complete: 0 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 2/5...     Solving 3/5...     Solving 4/5...     Solving 5/5...                               Phase 2 complete: 0 test(s)
+  Phase 2b: adding output boundary (2 new entries)
+  Solving 6/7...     Solving 7/7...                               Phase 2b complete: 0 test(s)
+  Phase 3: repeats (up to 4 per condition)
+  Solving 7/7...                               Phase 3 complete: 0 test(s)
+  No tests generated for UpdateElements.
+
+[DafnyTestGen] Processing method: IncrementArray
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 6/8...     Solving 7/8...     Solving 8/8...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: CopyArray
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
+                            Phase 1 complete: 3 test(s)
+  Phase 2: adding boundary analysis (16 new entries)
+  Solving 9/23...     Solving 10/23...     Solving 11/23...     Solving 12/23...     Solving 14/23...     Solving 15/23...     Solving 16/23...     Solving 17/23...     Solving 19/23...     Solving 20/23...     Solving 21/23...     Solving 22/23...     Solving 23/23...     Subsumption pruning: 3 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 12 test case(s)...
+  Batch: 0/12 completed, 12 incomplete (crash) - re-checking individually...
+  Test 1/12: FAIL
+  Test 2/12: FAIL
+  Test 3/12: FAIL
+  Test 4/12: FAIL
+  Test 5/12: PASS
+  Test 6/12: PASS
+  Test 7/12: PASS
+  Test 8/12: PASS
+  Test 9/12: PASS
+  Test 10/12: PASS
+  Test 11/12: PASS
+  Test 12/12: PASS
+[DafnyTestGen] Results: 8 passing, 4 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1Tests.dfy
+
+= Processing: dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy                                        =
+[DafnyTestGen] Auto-discovered 3 method(s): random, swap, getAllShuffledDataEntries
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDLTests.dfy
+
+
+[DafnyTestGen] Processing method: random
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 2 DNF clauses
+  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (8 new entries)
+  Solving 3/10...     Solving 4/10...     Solving 6/10...     Solving 8/10...     Solving 9/10...     Solving 10/10...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: swap
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/4...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (36 new entries)
+  Solving 5/40...     Solving 6/40...     Solving 7/40...     Solving 8/40...     Solving 9/40...     Solving 10/40...     Solving 11/40...     Solving 12/40...     Solving 13/40...     Solving 14/40...     Solving 15/40...     Solving 16/40...     Solving 17/40...     Solving 19/40...     Solving 20/40...     Solving 21/40...     Solving 22/40...     Solving 23/40...     Solving 24/40...     Solving 25/40...     Solving 26/40...     Solving 27/40...     Solving 28/40...     Solving 29/40...     Solving 30/40...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: getAllShuffledDataEntries
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/1...                               Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 3/5...     Solving 4/5...     Solving 5/5...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 12 test case(s)...
+  Batch: 9/12 completed, 3 incomplete (timeout) - re-checking individually...
+  Test 1/12: PASS
+  Test 2/12: PASS
+  Test 3/12: PASS
+  Test 4/12: PASS
+  Test 5/12: PASS
+  Test 6/12: PASS
+  Test 7/12: PASS
+  Test 8/12: PASS
+  Test 9/12: PASS
+  Test 10/12: FAIL
+  Test 11/12: FAIL
+  Test 12/12: FAIL
+[DafnyTestGen] Results: 9 passing, 3 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDLTests.dfy
+
+= Processing: Dafny_Learning_Experience_MVR_CountIndex.dfy                                        =
+[DafnyTestGen] Auto-discovered 4 method(s): FooCount, ComputeCount, PreCompute, Mult
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_MVR_CountIndex.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_MVR_CountIndexTests.dfy
+
+
+[DafnyTestGen] Processing method: FooCount
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Disjunctive precondition: 2 branches
+  Disjunctive precondition: 2 branches -> 3 combinations
+  Phase 1: 2 DNF clauses
+  Solving 1/6...     Solving 4/6...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (256 new entries)
+  Solving 8/262...     Solving 9/262...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: ComputeCount
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Disjunctive precondition: 2 branches
+  Disjunctive precondition: 2 branches -> 3 combinations
+  Phase 1: 2 DNF clauses
+  Solving 1/6...     Solving 4/6...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (256 new entries)
+  Solving 8/262...     Solving 9/262...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: PreCompute
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 2 DNF clauses
+  Solving 1/14...     Solving 2/14...     Solving 6/14...     Solving 8/14...     Subsumption pruning: 4 skipped
+                            Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (32 new entries)
+  Solving 15/46...     Solving 16/46...     Solving 17/46...     Solving 18/46...     Solving 19/46...     Solving 20/46...     Solving 21/46...     Solving 22/46...     Solving 23/46...     Solving 24/46...     Solving 25/46...     Solving 26/46...     Solving 27/46...     Solving 28/46...     Solving 29/46...     Solving 30/46...     Solving 31/46...     Solving 32/46...     Solving 33/46...     Solving 34/46...     Timeout reached, stopping.
+                            Phase 2 complete: 2 test(s)
+
+[DafnyTestGen] Processing method: Mult
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/1...                               Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 3/5...     Solving 4/5...     Solving 5/5...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 14 test case(s)...
+  Test 1/14: PASS
+  Test 2/14: PASS
+  Test 3/14: PASS
+  Test 4/14: PASS
+  Test 5/14: PASS
+  Test 6/14: PASS
+  Test 7/14: PASS
+  Test 8/14: PASS
+  Test 9/14: PASS
+  Test 10/14: PASS
+  Test 11/14: PASS
+  Test 12/14: PASS
+  Test 13/14: PASS
+  Test 14/14: PASS
+[DafnyTestGen] Results: 14 passing, 0 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_MVR_CountIndexTests.dfy
+
+= Processing: Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndex.dfy                                        =
+[DafnyTestGen] Auto-discovered 4 method(s): FooCount, ComputeCount, PreCompute, Mult
+[DafnyTestGen] Input:  C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndex.dfy
+[DafnyTestGen] Output: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndexTests.dfy
+
+
+[DafnyTestGen] Processing method: FooCount
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Disjunctive precondition: 2 branches
+  Disjunctive precondition: 2 branches -> 3 combinations
+  Phase 1: 2 DNF clauses
+  Solving 1/6...     Solving 4/6...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (256 new entries)
+  Solving 8/262...     Solving 9/262...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: ComputeCount
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Disjunctive precondition: 2 branches
+  Disjunctive precondition: 2 branches -> 3 combinations
+  Phase 1: 2 DNF clauses
+  Solving 1/6...     Solving 4/6...                               Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (256 new entries)
+  Solving 8/262...     Solving 9/262...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+
+[DafnyTestGen] Processing method: PreCompute
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 2 DNF clauses
+  Solving 1/14...     Solving 2/14...     Solving 6/14...     Solving 8/14...     Subsumption pruning: 4 skipped
+                            Phase 1 complete: 2 test(s)
+  Phase 2: adding boundary analysis (32 new entries)
+  Solving 15/46...     Solving 16/46...     Solving 17/46...     Solving 18/46...     Solving 19/46...     Solving 20/46...     Solving 21/46...     Solving 22/46...     Solving 23/46...     Solving 24/46...     Solving 25/46...     Solving 26/46...     Solving 27/46...     Solving 28/46...     Solving 29/46...     Solving 30/46...     Solving 31/46...     Solving 32/46...     Solving 33/46...     Solving 34/46...     Timeout reached, stopping.
+                            Phase 2 complete: 2 test(s)
+
+[DafnyTestGen] Processing method: Mult
+  Auto strategy: progressive (minTests=4)
+  Generating tests via Boogie/Z3...
+  Phase 1: 1 DNF clauses
+  Solving 1/1...                               Phase 1 complete: 1 test(s)
+  Phase 2: adding boundary analysis (4 new entries)
+  Solving 3/5...     Solving 4/5...     Solving 5/5...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
+[DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
+[DafnyTestGen] Checking 14 test case(s)...
+  Test 1/14: PASS
+  Test 2/14: PASS
+  Test 3/14: PASS
+  Test 4/14: PASS
+  Test 5/14: PASS
+  Test 6/14: PASS
+  Test 7/14: PASS
+  Test 8/14: PASS
+  Test 9/14: PASS
+  Test 10/14: PASS
+  Test 11/14: PASS
+  Test 12/14: PASS
+  Test 13/14: PASS
+  Test 14/14: PASS
+[DafnyTestGen] Results: 14 passing, 0 failing
+[DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndexTests.dfy
+
+[DafnyTestGen] Processed 11 files.
