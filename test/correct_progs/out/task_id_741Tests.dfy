@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-04-15 22:35:23
+// Generated: 2026-04-16 21:57:16
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).
@@ -37,8 +37,8 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   ENSURES: result <==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := [];
     var result := AllCharactersSame(s);
@@ -47,8 +47,8 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   POST: !forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   ENSURES: result <==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := ['!', ' '];
     var result := AllCharactersSame(s);
@@ -57,8 +57,8 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   ENSURES: result <==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := [' ', ' '];
     var result := AllCharactersSame(s);
@@ -67,8 +67,8 @@ method Passing()
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   ENSURES: result <==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := [' '];
     var result := AllCharactersSame(s);

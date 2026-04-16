@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SwapTuple.dfy
 // Method: SwapTuple
-// Generated: 2026-04-15 22:27:42
+// Generated: 2026-04-16 21:50:40
 
 method SwapTuple(t: (int, int)) returns (r: (int, int))
   ensures r.0 == t.1

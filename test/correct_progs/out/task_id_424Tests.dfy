@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-15 22:30:29
+// Generated: 2026-04-16 21:52:28
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)
@@ -43,11 +43,11 @@ method ExtractRearCharsTest(){
 method Passing()
 {
   // Test case for combination {1}:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   PRE:  forall i: int {:trigger l[i]} :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   POST: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
     var l: seq<string> := [];
     var r := ExtractRearChars(l);
@@ -55,11 +55,11 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|l|>=2:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   PRE:  forall i: int {:trigger l[i]} :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   POST: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
     var l: seq<string> := ["6", "6"];
     var r := ExtractRearChars(l);
@@ -67,11 +67,11 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|l|=1:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   PRE:  forall i: int {:trigger l[i]} :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   POST: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
     var l: seq<string> := [" "];
     var r := ExtractRearChars(l);
@@ -79,11 +79,11 @@ method Passing()
   }
 
   // Test case for combination {1}/Bl=3:
-  //   PRE:  forall i :: 0 <= i < |l| ==> |l[i]| > 0
+  //   PRE:  forall i: int {:trigger l[i]} :: 0 <= i < |l| ==> |l[i]| > 0
   //   POST: |r| == |l|
-  //   POST: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   POST: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   //   ENSURES: |r| == |l|
-  //   ENSURES: forall i :: 0 <= i < |l| ==> r[i] == Last(l[i])
+  //   ENSURES: forall i: int {:trigger l[i]} {:trigger r[i]} :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
     var l: seq<string> := [" 8%", "p", "41"];
     var r := ExtractRearChars(l);

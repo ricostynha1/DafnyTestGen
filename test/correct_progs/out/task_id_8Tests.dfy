@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
 // Method: SquareElements
-// Generated: 2026-04-15 22:38:17
+// Generated: 2026-04-16 22:00:02
 
 // Returns an array of the same length as the input array, 
 // with each element of the input array squared.
@@ -39,9 +39,9 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   //   ENSURES: squared.Length == a.Length
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
     var a := new int[0] [];
     var squared := SquareElements(a);
@@ -50,9 +50,9 @@ method Passing()
 
   // Test case for combination {1}/Q|a|>=2:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   //   ENSURES: squared.Length == a.Length
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
     var a := new int[2] [0, 0];
     var squared := SquareElements(a);
@@ -61,9 +61,9 @@ method Passing()
 
   // Test case for combination {1}/Q|a|=1:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   //   ENSURES: squared.Length == a.Length
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
     var a := new int[1] [0];
     var squared := SquareElements(a);
@@ -72,9 +72,9 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   //   ENSURES: squared.Length == a.Length
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: forall i: int {:trigger a[i]} {:trigger squared[i]} :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
     var a := new int[3] [-2, -1, 0];
     var squared := SquareElements(a);

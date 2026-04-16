@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-15 22:38:23
+// Generated: 2026-04-16 22:00:07
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -49,7 +49,7 @@ method Passing()
   //   POST: result
   //   POST: 0 <= n
   //   POST: 0 * 0 == n
-  //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
+  //   ENSURES: result <==> exists i: int {:trigger i * i} :: 0 <= i <= n && i * i == n
   {
     var n := 0;
     var result := IsPerfectSquare(n);
@@ -59,7 +59,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: result
   //   POST: exists i :: 1 <= i < n && i * i == n
-  //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
+  //   ENSURES: result <==> exists i: int {:trigger i * i} :: 0 <= i <= n && i * i == n
   {
     var n := 4;
     var result := IsPerfectSquare(n);
@@ -68,8 +68,8 @@ method Passing()
 
   // Test case for combination {5}:
   //   POST: !result
-  //   POST: !exists i :: 0 <= i <= n && i * i == n
-  //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
+  //   POST: !exists i: int {:trigger i * i} :: 0 <= i <= n && i * i == n
+  //   ENSURES: result <==> exists i: int {:trigger i * i} :: 0 <= i <= n && i * i == n
   {
     var n := 2;
     var result := IsPerfectSquare(n);
@@ -80,7 +80,7 @@ method Passing()
   //   POST: result
   //   POST: 0 <= n
   //   POST: n * n == n
-  //   ENSURES: result <==> exists i :: 0 <= i <= n && i * i == n
+  //   ENSURES: result <==> exists i: int {:trigger i * i} :: 0 <= i <= n && i * i == n
   {
     var n := 1;
     var result := IsPerfectSquare(n);

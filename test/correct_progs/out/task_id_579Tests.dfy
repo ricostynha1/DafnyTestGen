@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-15 22:32:45
+// Generated: 2026-04-16 21:54:35
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -65,48 +65,52 @@ method DissimilarElementsTest(){
     assert  res3 == {3, 4, 5, 6};
 }
 
-method Passing()
+method GeneratedTests_DissimilarElements()
 {
   // Test case for combination {1}:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   POST: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
-    expect res == {};
+    expect res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/Ba=0,b=1:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   POST: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[1] [2];
     var res := DissimilarElements<int>(a, b);
-    expect res == {2};
+    expect res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/Ba=0,b=2:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   POST: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[2] [4, 3];
     var res := DissimilarElements<int>(a, b);
-    expect res == {3, 4};
+    expect res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/Ba=0,b=3:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  //   ENSURES: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   POST: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[3] [5, 4, 6];
     var res := DissimilarElements<int>(a, b);
-    expect res == {4, 5, 6};
+    expect res == (set x: T {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: T {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
+}
+
+method GeneratedTests_contains()
+{
   // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
@@ -153,13 +157,10 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_DissimilarElements();
+  print "GeneratedTests_DissimilarElements: all tests passed!\n";
+  GeneratedTests_contains();
+  print "GeneratedTests_contains: all tests passed!\n";
 }

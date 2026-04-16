@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-15 22:34:53
+// Generated: 2026-04-16 21:56:43
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -44,10 +44,10 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[0] [];
     var k := 0;
@@ -57,10 +57,10 @@ method Passing()
 
   // Test case for combination {1}/Bs=1,k==s_pre_len:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [2];
     var k := 1;
@@ -70,10 +70,10 @@ method Passing()
 
   // Test case for combination {1}/Bs=1,k=0:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [2];
     var k := 0;
@@ -83,10 +83,10 @@ method Passing()
 
   // Test case for combination {1}/Bs=2,k==s_pre_len:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[2] [4, 3];
     var k := 2;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-16 20:42:18
+// Generated: 2026-04-16 22:03:13
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -29,7 +29,7 @@ method CalcFib(n: nat) returns (res: nat)
 
 
 
-method GeneratedTests_CalcFib()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: res == Fib(n)
@@ -38,7 +38,7 @@ method GeneratedTests_CalcFib()
   {
     var n := 0;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 0;
   }
 
   // Test case for combination {2}:
@@ -48,7 +48,7 @@ method GeneratedTests_CalcFib()
   {
     var n := 2;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 1;
   }
 
   // Test case for combination {1}/Bn=1:
@@ -58,7 +58,7 @@ method GeneratedTests_CalcFib()
   {
     var n := 1;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 1;
   }
 
   // Test case for combination {2}/Ores>=2:
@@ -68,13 +68,18 @@ method GeneratedTests_CalcFib()
   {
     var n := 3;
     var res := CalcFib(n);
-    expect res == Fib(n);
+    expect res == 2;
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_CalcFib();
-  print "GeneratedTests_CalcFib: all tests passed!\n";
+  Passing();
+  Failing();
 }

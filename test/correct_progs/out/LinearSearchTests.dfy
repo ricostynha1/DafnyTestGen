@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-15 22:25:14
+// Generated: 2026-04-16 22:03:56
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -24,8 +24,8 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 
 method Passing()
 {
-  // Test case for combination {2}:
-  //   POST: !(0 <= index < a.Length)
+  // Test case for combination {1}:
+  //   POST: !(0 <= index)
   //   POST: index == -1
   //   POST: x !in a[..]
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
@@ -37,8 +37,9 @@ method Passing()
     expect index == -1;
   }
 
-  // Test case for combination {3}:
-  //   POST: 0 <= index < a.Length
+  // Test case for combination {2}:
+  //   POST: 0 <= index
+  //   POST: index < a.Length
   //   POST: a[index] == x
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
@@ -49,8 +50,8 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {2}/Ba=0,x=0:
-  //   POST: !(0 <= index < a.Length)
+  // Test case for combination {1}/Ba=0,x=0:
+  //   POST: !(0 <= index)
   //   POST: index == -1
   //   POST: x !in a[..]
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
@@ -62,8 +63,8 @@ method Passing()
     expect index == -1;
   }
 
-  // Test case for combination {2}/Ba=0,x=1:
-  //   POST: !(0 <= index < a.Length)
+  // Test case for combination {1}/Ba=0,x=1:
+  //   POST: !(0 <= index)
   //   POST: index == -1
   //   POST: x !in a[..]
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-15 22:32:05
+// Generated: 2026-04-16 21:53:39
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -31,12 +31,12 @@ method IsSortedTest(){
   assert ! out2;
 }
 
-method Passing()
+method GeneratedTests_IsSortedArr()
 {
   // Test case for combination {1}:
   //   POST: sorted
-  //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST: forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
+  //   ENSURES: sorted <==> forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
   {
     var a := new int[0] [];
     var sorted := IsSortedArr(a);
@@ -47,7 +47,7 @@ method Passing()
   //   POST: !sorted
   //   POST: 0 <= (a.Length - 1 - 1)
   //   POST: !(a[0] <= a[0 + 1])
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   ENSURES: sorted <==> forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
   {
     var a := new int[2] [7719, 7718];
     var sorted := IsSortedArr(a);
@@ -57,7 +57,7 @@ method Passing()
   // Test case for combination {3}:
   //   POST: !sorted
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   ENSURES: sorted <==> forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
   {
     var a := new int[4] [18, 8367, 8366, 26];
     var sorted := IsSortedArr(a);
@@ -66,8 +66,8 @@ method Passing()
 
   // Test case for combination {1}/Q|a|>=2:
   //   POST: sorted
-  //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST: forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
+  //   ENSURES: sorted <==> forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
   {
     var a := new int[2] [-7719, 38];
     var sorted := IsSortedArr(a);
@@ -76,8 +76,8 @@ method Passing()
 
   // Test case for combination {1}/Q|a|=1:
   //   POST: sorted
-  //   POST: forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  //   ENSURES: sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST: forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
+  //   ENSURES: sorted <==> forall i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 ==> a[i] <= a[_t#0]
   {
     var a := new int[1] [2];
     var sorted := IsSortedArr(a);
@@ -86,13 +86,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_IsSortedArr();
+  print "GeneratedTests_IsSortedArr: all tests passed!\n";
 }

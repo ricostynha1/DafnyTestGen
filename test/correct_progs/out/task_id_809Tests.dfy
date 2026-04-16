@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-15 22:38:39
+// Generated: 2026-04-16 22:00:25
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -44,8 +44,8 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: result
-  //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
-  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -58,7 +58,7 @@ method Passing()
   //   POST: !result
   //   POST: 0 <= (|a| - 1)
   //   POST: !(a[0] < b[0])
-  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [7719];
     var b: seq<int> := [-38];
@@ -70,7 +70,7 @@ method Passing()
   //   PRE:  |a| == |b|
   //   POST: !result
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
-  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [16, 7719, 24];
     var b: seq<int> := [16, 7719, 24];
@@ -81,8 +81,8 @@ method Passing()
   // Test case for combination {1}/Q|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: result
-  //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
-  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [23675, 8854];
     var b: seq<int> := [23676, 8855];
@@ -93,8 +93,8 @@ method Passing()
   // Test case for combination {1}/Q|a|=1:
   //   PRE:  |a| == |b|
   //   POST: result
-  //   POST: forall i :: 0 <= i < |a| ==> a[i] < b[i]
-  //   ENSURES: result <==> forall i :: 0 <= i < |a| ==> a[i] < b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
+  //   ENSURES: result <==> forall i: int {:trigger b[i]} {:trigger a[i]} :: 0 <= i < |a| ==> a[i] < b[i]
   {
     var a: seq<int> := [7719];
     var b: seq<int> := [7720];

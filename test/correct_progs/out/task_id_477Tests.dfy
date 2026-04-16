@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-15 22:31:44
+// Generated: 2026-04-16 21:53:18
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -51,6 +51,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
     var s: seq<char> := [];
@@ -60,29 +61,35 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['[', 't'];
+    var s: seq<char> := ['Z', '"'];
     var v := ToLowercase(s);
-    expect v == ['[', 't'];
+    expect IsMapSeq(s, v, CharToLower);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
   }
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['['];
+    var s: seq<char> := ['F'];
     var v := ToLowercase(s);
-    expect v == ['['];
+    expect IsMapSeq(s, v, CharToLower);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, CharToLower)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['[', '\U{005C}', ']'];
+    var s: seq<char> := ['F', 'G', 'H'];
     var v := ToLowercase(s);
-    expect v == ['[', '\U{005C}', ']'];
+    expect IsMapSeq(s, v, CharToLower);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
   }
 
 }

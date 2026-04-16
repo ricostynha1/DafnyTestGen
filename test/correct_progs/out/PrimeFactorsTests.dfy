@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-15 22:26:28
+// Generated: 2026-04-16 21:49:28
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -287,6 +287,7 @@ method Passing()
   //   POST: AllPrime(f)
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
+  //   POST: n == f[0] * ProdF(f[1..])
   //   ENSURES: AllPrime(f)
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
@@ -296,6 +297,7 @@ method Passing()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
+    expect n == 2;
   }
 
   // Test case for combination {1}/Bn=3:
@@ -303,6 +305,7 @@ method Passing()
   //   POST: AllPrime(f)
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
+  //   POST: n == f[0] * ProdF(f[1..])
   //   ENSURES: AllPrime(f)
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
@@ -312,6 +315,7 @@ method Passing()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
+    expect n == 3;
   }
 
   // Test case for combination {1}/O|f|>=3:
@@ -319,6 +323,7 @@ method Passing()
   //   POST: AllPrime(f)
   //   POST: IsSorted(f)
   //   POST: ProdF(f) == n
+  //   POST: n == f[0] * ProdF(f[1..])
   //   ENSURES: AllPrime(f)
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
@@ -328,6 +333,7 @@ method Passing()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
+    expect n == 4;
   }
 
 }

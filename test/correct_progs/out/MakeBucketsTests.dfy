@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-15 22:25:33
+// Generated: 2026-04-16 22:04:07
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -58,40 +58,40 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   POST: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[1] [2];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
-    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+    expect forall k: int  :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   POST: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[2] [7719, 7720];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
-    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+    expect forall k: int  :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   POST: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   POST: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   ENSURES: forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: forall k: int {:trigger count(k, a[..])} {:trigger b[k]} :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
     var a := new nat[3] [7719, 7720, 8957];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
-    expect forall k :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+    expect forall k: int  :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
 }

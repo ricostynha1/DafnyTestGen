@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_624.dfy
 // Method: ToUppercase
-// Generated: 2026-04-15 22:34:35
+// Generated: 2026-04-16 21:56:23
 
 // Converts a string to uppercase (only 'a' to 'z' characters are converted).
 method ToUppercase(s: string) returns (v: string)
@@ -39,6 +39,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToUpper)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToUpper)
   {
     var s: seq<char> := [];
@@ -48,29 +49,35 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, CharToUpper)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['{', '|'];
+    var s: seq<char> := ['Z', '"'];
     var v := ToUppercase(s);
-    expect v == ['{', '|'];
+    expect IsMapSeq(s, v, CharToUpper);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i]);
   }
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: IsMapSeq(s, v, CharToUpper)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['{'];
+    var s: seq<char> := ['F'];
     var v := ToUppercase(s);
-    expect v == ['{'];
+    expect IsMapSeq(s, v, CharToUpper);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i]);
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, CharToUpper)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['{', '|', '}'];
+    var s: seq<char> := ['F', 'G', 'H'];
     var v := ToUppercase(s);
-    expect v == ['{', '|', '}'];
+    expect IsMapSeq(s, v, CharToUpper);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToUpper(s[i]);
   }
 
 }

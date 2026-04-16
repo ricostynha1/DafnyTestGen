@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-15 22:28:00
+// Generated: 2026-04-16 21:50:57
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -44,6 +44,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result == SumOfNegatives(a)
+  //   POST: result == 0
   //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[0] [];
@@ -51,8 +52,9 @@ method Passing()
     expect result == 0;
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {2}:
+  //   POST: !(a.Length == 0)
+  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
   //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[1] [2];
@@ -60,8 +62,9 @@ method Passing()
     expect result == 0;
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {2}/Ba=2:
+  //   POST: !(a.Length == 0)
+  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
   //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[2] [4, 3];
@@ -69,8 +72,9 @@ method Passing()
     expect result == 0;
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {2}/Ba=3:
+  //   POST: !(a.Length == 0)
+  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
   //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[3] [5, 4, 6];

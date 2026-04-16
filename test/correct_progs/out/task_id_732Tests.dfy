@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-15 22:35:14
+// Generated: 2026-04-16 21:57:06
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -43,6 +43,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
     var s: seq<char> := [];
@@ -52,29 +53,35 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['%', ' '];
+    var s: seq<char> := ['Z', '"'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
   }
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['F'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['!', '"', ' '];
+    var s: seq<char> := ['F', 'G', 'H'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-04-15 22:31:39
+// Generated: 2026-04-16 21:53:14
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -77,7 +77,6 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
   //   POST: sum == Max(a[..]) + Min(a[..])
-  //   POST: sum == a[..][0]
   //   ENSURES: sum == Max(a[..]) + Min(a[..])
   {
     var a := new int[1] [2];
@@ -85,21 +84,19 @@ method Passing()
     expect sum == 4;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
-  //   POST: !(|a[..]| == 1)
-  //   POST: sum == if (a[..][|a[..]| - 1]) >= Max((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Max((a[..][0 .. |a[..]| - 1]))) + (if |a[..]| == 1 then a[..][0] else if (a[..][|a[..]| - 1]) <= Min((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Min((a[..][0 .. |a[..]| - 1]))
+  //   POST: sum == Max(a[..]) + Min(a[..])
   //   ENSURES: sum == Max(a[..]) + Min(a[..])
   {
-    var a := new int[2] [3, 4];
+    var a := new int[2] [4, 3];
     var sum := SumMinMax(a);
     expect sum == 7;
   }
 
-  // Test case for combination {2}/Ba=3:
+  // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
-  //   POST: !(|a[..]| == 1)
-  //   POST: sum == if (a[..][|a[..]| - 1]) >= Max((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Max((a[..][0 .. |a[..]| - 1]))) + (if |a[..]| == 1 then a[..][0] else if (a[..][|a[..]| - 1]) <= Min((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Min((a[..][0 .. |a[..]| - 1]))
+  //   POST: sum == Max(a[..]) + Min(a[..])
   //   ENSURES: sum == Max(a[..]) + Min(a[..])
   {
     var a := new int[3] [5, 4, 6];
@@ -107,10 +104,9 @@ method Passing()
     expect sum == 10;
   }
 
-  // Test case for combination {2}/Osum>0:
+  // Test case for combination {1}/Osum>0:
   //   PRE:  a.Length > 0
-  //   POST: !(|a[..]| == 1)
-  //   POST: sum == if (a[..][|a[..]| - 1]) >= Max((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Max((a[..][0 .. |a[..]| - 1]))) + (if |a[..]| == 1 then a[..][0] else if (a[..][|a[..]| - 1]) <= Min((a[..][0 .. |a[..]| - 1])) then (a[..][|a[..]| - 1]) else Min((a[..][0 .. |a[..]| - 1]))
+  //   POST: sum == Max(a[..]) + Min(a[..])
   //   ENSURES: sum == Max(a[..]) + Min(a[..])
   {
     var a := new int[4] [5, 6, 7, 8];

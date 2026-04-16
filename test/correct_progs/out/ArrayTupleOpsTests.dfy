@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-15 22:23:38
+// Generated: 2026-04-16 22:02:23
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -90,9 +90,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
   //   POST: r == a[0].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[1] [(38, 11)];
     var r := MaxFirst(a);
@@ -103,9 +103,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
   //   POST: r == a[0].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[3] [(-39, 18), (-39, 19), (-39, 20)];
     var r := MaxFirst(a);
@@ -116,9 +116,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
   //   POST: r == a[0].0
-  //   POST: forall i :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i :: 0 <= i < a.Length ==> r >= a[i].0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
+  //   ENSURES: exists i: int {:trigger a[i]} :: 0 <= i < a.Length && r == a[i].0
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> r >= a[i].0
   {
     var a := new (int, int)[2] [(7719, 8), (-38, 9)];
     var r := MaxFirst(a);

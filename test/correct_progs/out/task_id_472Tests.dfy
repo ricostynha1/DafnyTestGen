@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-15 22:31:23
+// Generated: 2026-04-16 21:53:12
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -48,13 +48,13 @@ method ContainsConsecutiveNumbersTest(){
     assert !out5;
 }
 
-method Passing()
+method GeneratedTests_ContainsConsecutiveNumbers()
 {
   // Test case for combination {1}:
   //   POST: result
   //   POST: 0 <= (a.Length - 1 - 1)
   //   POST: a[0] + 1 == a[0 + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   ENSURES: result <==> exists i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 && a[i] + 1 == a[_t#0]
   {
     var a := new int[2] [28957, 28958];
     var result := ContainsConsecutiveNumbers(a);
@@ -64,7 +64,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: result
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   ENSURES: result <==> exists i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 && a[i] + 1 == a[_t#0]
   {
     var a := new int[4] [17, 28957, 28958, 25];
     var result := ContainsConsecutiveNumbers(a);
@@ -73,8 +73,8 @@ method Passing()
 
   // Test case for combination {5}:
   //   POST: !result
-  //   POST: !exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST: !exists i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 && a[i] + 1 == a[_t#0]
+  //   ENSURES: result <==> exists i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 && a[i] + 1 == a[_t#0]
   {
     var a := new int[0] [];
     var result := ContainsConsecutiveNumbers(a);
@@ -85,7 +85,7 @@ method Passing()
   //   POST: result
   //   POST: 0 <= (a.Length - 1 - 1)
   //   POST: a[0] + 1 == a[0 + 1]
-  //   ENSURES: result <==> exists i :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   ENSURES: result <==> exists i: int, _t#0: int {:trigger a[_t#0], a[i]} | _t#0 == i + 1 :: 0 <= i && i < a.Length - 1 && a[i] + 1 == a[_t#0]
   {
     var a := new int[3] [28957, 28958, 5];
     var result := ContainsConsecutiveNumbers(a);
@@ -94,13 +94,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ContainsConsecutiveNumbers();
+  print "GeneratedTests_ContainsConsecutiveNumbers: all tests passed!\n";
 }

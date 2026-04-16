@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-15 22:35:02
+// Generated: 2026-04-16 21:56:53
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -41,8 +41,8 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   POST: forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [];
     var result := AllSequencesEqualLength<int>(list);
@@ -51,8 +51,8 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   POST: !forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[], [11], [12], [13], [], [14], [], [24]];
     var result := AllSequencesEqualLength<int>(list);
@@ -61,8 +61,8 @@ method Passing()
 
   // Test case for combination {1}/Q|list|>=2:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   POST: forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[12], [13]];
     var result := AllSequencesEqualLength<int>(list);
@@ -71,8 +71,8 @@ method Passing()
 
   // Test case for combination {1}/Q|list|=1:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
-  //   ENSURES: result <==> forall i, j :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   POST: forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  //   ENSURES: result <==> forall i: int, j: int {:trigger list[j], list[i]} :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[]];
     var result := AllSequencesEqualLength<int>(list);

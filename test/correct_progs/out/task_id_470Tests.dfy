@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-15 22:31:18
+// Generated: 2026-04-16 21:53:07
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -40,9 +40,9 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
-  //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[0] [];
     var result := PairwiseAddition(a);
@@ -52,9 +52,9 @@ method Passing()
   // Test case for combination {1}/Q|a|>=2:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
-  //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[2] [0, 0];
     var result := PairwiseAddition(a);
@@ -64,9 +64,9 @@ method Passing()
   // Test case for combination {1}/R3:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
-  //   POST: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: forall i: int {:trigger a[2 * i]} {:trigger result[i]} :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[4] [0, 0, 0, 0];
     var result := PairwiseAddition(a);

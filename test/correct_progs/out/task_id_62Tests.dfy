@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-15 22:34:25
+// Generated: 2026-04-16 21:56:12
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -49,6 +49,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
     var s := new int[1] [0];
@@ -59,6 +60,7 @@ method Passing()
   // Test case for combination {1}/Q|s|>=2:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
     var s := new int[2] [0, 38];
@@ -69,6 +71,7 @@ method Passing()
   // Test case for combination {1}/Bs=3:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
     var s := new int[3] [28957, 28958, 28959];
@@ -79,6 +82,7 @@ method Passing()
   // Test case for combination {1}/Omin<0:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
     var s := new int[4] [38, 7719, 21238, -1];

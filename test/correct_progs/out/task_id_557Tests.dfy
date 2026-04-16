@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-15 22:31:55
+// Generated: 2026-04-16 21:53:29
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -41,6 +41,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, Toggle)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
     var s: seq<char> := [];
@@ -50,29 +51,35 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: IsMapSeq(s, v, Toggle)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['{', '|'];
+    var s: seq<char> := ['Z', '"'];
     var v := ToggleCase(s);
-    expect v == ['{', '|'];
+    expect IsMapSeq(s, v, Toggle);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
   }
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: IsMapSeq(s, v, Toggle)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['['];
+    var s: seq<char> := ['F'];
     var v := ToggleCase(s);
-    expect v == ['['];
+    expect IsMapSeq(s, v, Toggle);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: IsMapSeq(s, v, Toggle)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['[', 'a', '{'];
+    var s: seq<char> := ['F', 'G', 'H'];
     var v := ToggleCase(s);
-    expect v == ['[', 'A', '{'];
+    expect IsMapSeq(s, v, Toggle);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
   }
 
 }

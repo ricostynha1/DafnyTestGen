@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-15 22:25:23
+// Generated: 2026-04-16 22:04:04
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 

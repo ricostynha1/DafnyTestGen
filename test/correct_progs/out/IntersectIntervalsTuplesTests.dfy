@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-15 22:25:08
+// Generated: 2026-04-16 22:03:53
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -62,46 +62,46 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   PRE:  forall i :: 0 <= i < a.Length ==> a[i].0 < a[i].1
-  //   POST: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
-  //   ENSURES: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
     var a := new (real, real)[1] [(0.0, 0.5)];
     var r := IntersectIntervals(a);
-    expect var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
-  //   PRE:  forall i :: 0 <= i < a.Length ==> a[i].0 < a[i].1
-  //   POST: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
-  //   ENSURES: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
     var a := new (real, real)[2] [(0.0, 0.5), (21237.5, 21238.0)];
     var r := IntersectIntervals(a);
-    expect var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
-  //   PRE:  forall i :: 0 <= i < a.Length ==> a[i].0 < a[i].1
-  //   POST: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
-  //   ENSURES: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
     var a := new (real, real)[3] [(0.0, 0.5), (2436.5, 2437.0), (20652.0, 20652.5)];
     var r := IntersectIntervals(a);
-    expect var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
   // Test case for combination {1}/Or.0>0:
   //   PRE:  a.Length > 0
-  //   PRE:  forall i :: 0 <= i < a.Length ==> a[i].0 < a[i].1
-  //   POST: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
-  //   ENSURES: var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
     var a := new (real, real)[4] [(0.0, 0.5), (8854.5, 8855.0), (20162.0, 20162.5), (32284.5, 32285.0)];
     var r := IntersectIntervals(a);
-    expect var r' := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
 }

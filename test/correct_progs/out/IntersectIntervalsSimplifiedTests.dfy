@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-15 22:25:02
+// Generated: 2026-04-16 22:03:49
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -56,61 +56,76 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
+  //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
+  //   POST: 0 <= (right.Length - 1)
+  //   POST: r == right[0]
+  //   POST: forall i: int {:trigger right[i]} :: 0 <= i && i < right.Length ==> r <= right[i]
   //   ENSURES: IsMax(left, l) && IsMin(right, r)
   {
     var left := new real[1] [0.0];
     var right := new real[1] [0.5];
     var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
+    expect l == 0.0;
+    expect r == 0.5;
   }
 
-  // Test case for combination {1}/Q|left|>=2:
+  // Test case for combination {2}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
+  //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
+  //   POST: exists i :: 1 <= i < (right.Length - 1) && r == right[i]
+  //   POST: forall i: int {:trigger right[i]} :: 0 <= i && i < right.Length ==> r <= right[i]
   //   ENSURES: IsMax(left, l) && IsMin(right, r)
   {
-    var left := new real[2] [0.0, 21237.5];
-    var right := new real[2] [0.5, 21238.0];
+    var left := new real[3] [-0.5, -0.5, -0.5];
+    var right := new real[3] [0.0, 0.0, 0.5];
     var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
-  }
-
-  // Test case for combination {1}/Bleft=3,right=3:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST: IsMax(left, l)
-  //   POST: IsMin(right, r)
-  //   ENSURES: IsMax(left, l) && IsMin(right, r)
-  {
-    var left := new real[3] [11797.0, 11796.5, 11797.5];
-    var right := new real[3] [11797.5, 11798.0, 11798.5];
-    var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
+    expect l == -0.5;
+    expect r == 0.0;
   }
 
   // Test case for combination {1}/Ol>0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
+  //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
+  //   POST: 0 <= (right.Length - 1)
+  //   POST: r == right[0]
+  //   POST: forall i: int {:trigger right[i]} :: 0 <= i && i < right.Length ==> r <= right[i]
   //   ENSURES: IsMax(left, l) && IsMin(right, r)
   {
-    var left := new real[4] [0.0, 8854.5, 20162.0, 32284.5];
-    var right := new real[4] [0.5, 8855.0, 20162.5, 32285.0];
+    var left := new real[2] [39.0, 0.0];
+    var right := new real[2] [40.0, 40.0];
     var l, r := IntersectIntervals(left, right);
-    expect IsMax(left, l);
-    expect IsMin(right, r);
+    expect l == 39.0;
+    expect r == 40.0;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   PRE:  left.Length == right.Length
+  //   PRE:  left.Length > 0
+  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   POST: IsMax(left, l)
+  //   POST: IsMin(right, r)
+  //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
+  //   POST: 0 <= (right.Length - 1)
+  //   POST: r == right[0]
+  //   POST: forall i: int {:trigger right[i]} :: 0 <= i && i < right.Length ==> r <= right[i]
+  //   ENSURES: IsMax(left, l) && IsMin(right, r)
+  {
+    var left := new real[3] [-40.0, -40.0, -40.0];
+    var right := new real[3] [-39.0, 0.0, 0.0];
+    var l, r := IntersectIntervals(left, right);
+    expect l == -40.0;
+    expect r == -39.0;
   }
 
 }

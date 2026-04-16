@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-15 22:29:29
+// Generated: 2026-04-16 21:51:51
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -40,7 +40,7 @@ method Passing()
   //   POST: result
   //   POST: 2 <= (n - 1)
   //   POST: n % 2 == 0
-  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
   {
     var n := 4;
     var result := IsNonPrime(n);
@@ -51,7 +51,7 @@ method Passing()
   //   PRE:  n > 1
   //   POST: result
   //   POST: exists k :: 3 <= k < (n - 1) && n % k == 0
-  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
   {
     var n := 6;
     var result := IsNonPrime(n);
@@ -61,8 +61,8 @@ method Passing()
   // Test case for combination {5}:
   //   PRE:  n > 1
   //   POST: !result
-  //   POST: !exists k :: 1 < k < n && n % k == 0
-  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
+  //   POST: !exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
   {
     var n := 2;
     var result := IsNonPrime(n);
@@ -72,8 +72,8 @@ method Passing()
   // Test case for combination {5}/Bn=3:
   //   PRE:  n > 1
   //   POST: !result
-  //   POST: !exists k :: 1 < k < n && n % k == 0
-  //   ENSURES: result <==> exists k :: 1 < k < n && n % k == 0
+  //   POST: !exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int {:trigger n % k} :: 1 < k < n && n % k == 0
   {
     var n := 3;
     var result := IsNonPrime(n);

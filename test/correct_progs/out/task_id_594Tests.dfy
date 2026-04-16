@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_594.dfy
 // Method: FirstEvenOddDifference
-// Generated: 2026-04-15 22:33:54
+// Generated: 2026-04-16 21:55:41
 
 // Returns the difference between the first even and the first odd number in the array.
 method FirstEvenOddDifference(a: array<int>) returns (diff: int)
@@ -64,36 +64,36 @@ method FirstEvenOddDifferenceTest(){
 method Passing()
 {
   // Test case for combination P{3}/{1}:
-  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
-  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
-  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[2] [0, 4875];
+    var a := new int[2] [0, -1];
     var diff := FirstEvenOddDifference(a);
-    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+    expect diff == 1;
   }
 
   // Test case for combination P{2,3,4}/{1}:
-  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
-  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
-  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[4] [0, 20903, 61225, 64573];
+    var a := new int[4] [0, 31845, -1, 41077];
     var diff := FirstEvenOddDifference(a);
-    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+    expect diff == -31845;
   }
 
   // Test case for combination P{5,7,8}/{1}:
-  //   PRE:  exists i :: 0 <= i < a.Length && IsEven(a[i])
-  //   PRE:  exists i :: 0 <= i < a.Length && IsOdd(a[i])
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
-  //   ENSURES: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsEven(a[i])
+  //   PRE:  exists i: int {:trigger a[i]} :: 0 <= i < a.Length && IsOdd(a[i])
+  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
+  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k: int {:trigger a[k]} :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k: int {:trigger a[k]} :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j]
   {
-    var a := new int[3] [42479, 0, 1];
+    var a := new int[3] [4875, 0, 1];
     var diff := FirstEvenOddDifference(a);
-    expect exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && IsEven(a[i]) && (forall k :: 0 <= k < i ==> !IsEven(a[k])) && IsOdd(a[j]) && (forall k :: 0 <= k < j ==> !IsOdd(a[k])) && diff == a[i] - a[j];
+    expect diff == -4875;
   }
 
 }

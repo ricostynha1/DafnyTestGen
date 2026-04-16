@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-15 22:28:50
+// Generated: 2026-04-16 21:51:28
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -44,9 +44,9 @@ method Passing()
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -58,9 +58,9 @@ method Passing()
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
     var a: seq<int> := [1, 1];
     var b: seq<int> := [1, 1];
@@ -72,9 +72,9 @@ method Passing()
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
     var a: seq<int> := [0];
     var b: seq<int> := [1];
@@ -86,9 +86,9 @@ method Passing()
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
+  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
     var a: seq<int> := [0, 4, 6];
     var b: seq<int> := [1, 2, 3];
