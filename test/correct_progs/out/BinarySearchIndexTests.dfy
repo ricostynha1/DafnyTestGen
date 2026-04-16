@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearchIndex.dfy
 // Method: BinarySearch
-// Generated: 2026-04-15 22:23:53
+// Generated: 2026-04-16 20:42:31
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -37,7 +37,7 @@ method BinarySearch(a: array<T>, x: T) returns (index: int)
 }
 
 
-method Passing()
+method GeneratedTests_BinarySearch()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a[..])
@@ -113,13 +113,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_BinarySearch();
+  print "GeneratedTests_BinarySearch: all tests passed!\n";
 }

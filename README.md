@@ -18,11 +18,13 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 
 2. **Hybrid SMT / runtime architecture.** SMT solving generates both concrete *inputs* and expected *outputs*. When postconditions are not fully translatable to SMT (e.g., they involve recursive or uninterpreted functions) but have the explicit form `result == expression`, the expression can be evaluated by the Dafny runtime in check mode to obtain concrete output values that are injected back into the test code. As a last resort, the postcondition literals themselves are emitted as `expect` assertions. This layered approach sidesteps fundamental SMT limitations while still producing concrete, readable tests whenever possible.
 
-3. **Output uniqueness analysis.** When postconditions are fully translated to SMT but only constrain outputs implicitly (not via explicit `result == expression` clauses), Z3 produces concrete output values that may not be the only valid ones. A second Z3 query pins the concrete inputs and asks whether a *different* output satisfies the spec. If UNSAT, the output is uniquely determined and a concrete `expect res == 5;` is emitted; otherwise, the postcondition literals are used instead (`expect a[index] == x;`). This lightweight determinism check handles under-constrained specifications without requiring user annotations.
+3. **Output uniqueness analysis.** When postconditions are fully translated to SMT but only constrain outputs implicitly (not via explicit `result == expression` clauses), Z3 produces concrete output values that may not be the only valid ones. A second Z3 query pins the concrete inputs and asks whether a *different* output satisfies the spec. If UNSAT, the output is uniquely determined and a concrete `expect res == 5;` is emitted; otherwise, the postcondition literals are used instead (`expect a[index] == x;`). With `--uniqueness-rounds N`, the tool iteratively enumerates up to N alternative valid outputs; if exhausted, a disjunctive `expect index == 0 || index == 1;` is emitted — more precise than postcondition literals while still covering all valid outputs. This lightweight determinism analysis handles under-constrained specifications without requiring user annotations.
 
 4. **Quantifier decomposition for boundary analysis.** Existential quantifiers `exists k :: lo <= k < hi && P(k)` are decomposed into boundary (k=lo, k=hi−1), middle, and multiple-match cases, with strict/non-strict inequality awareness. Universal quantifiers over collections trigger size-based decomposition (|a|=0, |a|=1, |a|≥2) to exercise both vacuously-true and non-trivial cases. These are combined with other contract clauses via cross-product.
 
-5. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
+5. **Active diversity promotion.** Left unconstrained, SMT solvers gravitate toward minimal or degenerate inputs (empty arrays, zero values, repeated elements). DafnyTestGen counteracts this with several mechanisms: pairwise-distinct element constraints on arrays/sequences in boundary tiers (preventing `[0,0,0]`-style inputs), ordering shape tiers that decompose sorted arrays into constant vs. strictly-ordered cases, subsumption pruning that skips test candidates already witnessed by prior inputs, input exclusion constraints for repeat generation, and a progressive multi-phase strategy that escalates from DNF clauses to input boundary tiers to output boundary tiers to repeats — each phase adding diversity only when the previous one falls short.
+
+6. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
 
 
 ## How It Works
@@ -354,6 +356,20 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 }
 ```
 
+With `--uniqueness-rounds N` (`-u N`), the tool iteratively enumerates up to N alternative valid outputs. If all valid outputs are exhaustively found (the final uniqueness check returns UNSAT), a disjunctive `expect` is emitted instead of falling back to postcondition literals:
+
+```dafny
+// Ambiguous output with --uniqueness-rounds 3: exhaustively enumerated
+{
+  var a := new int[2] [9, 9];
+  var x := 9;
+  var index := LinearSearch(a, x);
+  expect index == 1 || index == 0;
+}
+```
+
+This is more precise than postcondition literals (it pins the exact set of valid outputs) while still being correct for any conforming implementation. Each round is a lightweight Z3 call (~100ms) with pinned inputs. When the number of valid outputs exceeds the round cap, the tool falls back to postcondition literals as before.
+
 The same fallback applies when postconditions cannot be fully translated to SMT (e.g., they contain recursive functions with uninterpreted calls remaining after inlining, higher-order ghost functions, or bitvector operators): Z3's concrete outputs cannot be trusted and the original postcondition literals are used as `expect` assertions instead.
 
 ### Test emission for mutable objects and class fields
@@ -596,6 +612,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
 | `--timeout <n>` | | Timeout in seconds for test generation per method (0 = unlimited) |
 | `--skip-bodyless` | `-p` | Skip bodyless methods instead of generating spec-only tests (default: generate spec-only tests with call/expects commented out) |
+| `--uniqueness-rounds <n>` | `-u` | Max rounds of uniqueness checking to enumerate all valid outputs (default: 1). When all valid outputs are exhaustively enumerated, emit `expect out == v1 \|\| out == v2;` instead of postcondition literals |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 

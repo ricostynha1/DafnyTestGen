@@ -1,0 +1,15 @@
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.AssemblyInfoInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.AssemblyInfo.cs
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.csproj.CoreCompileInputs.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.sourcelink.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FibonacciTests.exe
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\refint\FibonacciTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.pdb
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FibonacciTests.deps.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\FibonacciTests.genruntimeconfig.cache
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FibonacciTests.runtimeconfig.json
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FibonacciTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\obj\Debug\net8.0\ref\FibonacciTests.dll
+C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FibonacciTests.pdb
