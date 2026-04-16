@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-16 21:51:36
+// Generated: 2026-04-16 22:33:50
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -40,9 +40,9 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -53,9 +53,9 @@ method Passing()
   // Test case for combination {1}/Q|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0, 0];
     var b: seq<int> := [0, 0];
@@ -66,9 +66,9 @@ method Passing()
   // Test case for combination {1}/Q|a|=1:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [0];
     var b: seq<int> := [0];
@@ -79,9 +79,9 @@ method Passing()
   // Test case for combination {1}/Ba=3,b=3:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [-23677, -2438, 0];
     var b: seq<int> := [-7721, -7720, 0];

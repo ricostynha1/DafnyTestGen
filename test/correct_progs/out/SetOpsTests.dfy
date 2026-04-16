@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SetOps.dfy
 // Method: SetContains
-// Generated: 2026-04-16 21:50:05
+// Generated: 2026-04-16 22:31:50
 
 method SetContains(S: set<int>, x: int) returns (r: bool)
   requires |S| > 0
@@ -329,8 +329,8 @@ method Passing()
   }
 
   // Test case for combination {1}:
-  //   POST: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
-  //   ENSURES: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
+  //   POST: r == forall x: int :: x in S ==> x > 0
+  //   ENSURES: r == forall x: int :: x in S ==> x > 0
   {
     var S: set<int> := {};
     var r := AllPositive(S);
@@ -338,8 +338,8 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|S|>=2:
-  //   POST: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
-  //   ENSURES: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
+  //   POST: r == forall x: int :: x in S ==> x > 0
+  //   ENSURES: r == forall x: int :: x in S ==> x > 0
   {
     var S: set<int> := {-2, -1, 1, 2, 3, 4, 5};
     var r := AllPositive(S);
@@ -347,8 +347,8 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|S|=1:
-  //   POST: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
-  //   ENSURES: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
+  //   POST: r == forall x: int :: x in S ==> x > 0
+  //   ENSURES: r == forall x: int :: x in S ==> x > 0
   {
     var S: set<int> := {1};
     var r := AllPositive(S);
@@ -356,8 +356,8 @@ method Passing()
   }
 
   // Test case for combination {1}/BS=2:
-  //   POST: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
-  //   ENSURES: r == forall x: int {:trigger x in S} :: x in S ==> x > 0
+  //   POST: r == forall x: int :: x in S ==> x > 0
+  //   ENSURES: r == forall x: int :: x in S ==> x > 0
   {
     var S: set<int> := {4, 5};
     var r := AllPositive(S);
@@ -365,8 +365,8 @@ method Passing()
   }
 
   // Test case for combination {1}:
-  //   POST: r == exists x: int {:trigger x in S} :: x in S && x == 0
-  //   ENSURES: r == exists x: int {:trigger x in S} :: x in S && x == 0
+  //   POST: r == exists x: int :: x in S && x == 0
+  //   ENSURES: r == exists x: int :: x in S && x == 0
   {
     var S: set<int> := {};
     var r := HasZero(S);
@@ -374,8 +374,8 @@ method Passing()
   }
 
   // Test case for combination {1}/BS=1:
-  //   POST: r == exists x: int {:trigger x in S} :: x in S && x == 0
-  //   ENSURES: r == exists x: int {:trigger x in S} :: x in S && x == 0
+  //   POST: r == exists x: int :: x in S && x == 0
+  //   ENSURES: r == exists x: int :: x in S && x == 0
   {
     var S: set<int> := {1};
     var r := HasZero(S);
@@ -383,8 +383,8 @@ method Passing()
   }
 
   // Test case for combination {1}/BS=2:
-  //   POST: r == exists x: int {:trigger x in S} :: x in S && x == 0
-  //   ENSURES: r == exists x: int {:trigger x in S} :: x in S && x == 0
+  //   POST: r == exists x: int :: x in S && x == 0
+  //   ENSURES: r == exists x: int :: x in S && x == 0
   {
     var S: set<int> := {4, 5};
     var r := HasZero(S);
@@ -392,8 +392,8 @@ method Passing()
   }
 
   // Test case for combination {1}/BS=3:
-  //   POST: r == exists x: int {:trigger x in S} :: x in S && x == 0
-  //   ENSURES: r == exists x: int {:trigger x in S} :: x in S && x == 0
+  //   POST: r == exists x: int :: x in S && x == 0
+  //   ENSURES: r == exists x: int :: x in S && x == 0
   {
     var S: set<int> := {3, 4, 5};
     var r := HasZero(S);
@@ -401,8 +401,8 @@ method Passing()
   }
 
   // Test case for combination {1}:
-  //   POST: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
-  //   ENSURES: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
+  //   POST: r == forall x: int :: x in A ==> x in B
+  //   ENSURES: r == forall x: int :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {};
@@ -411,8 +411,8 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|A|>=2:
-  //   POST: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
-  //   ENSURES: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
+  //   POST: r == forall x: int :: x in A ==> x in B
+  //   ENSURES: r == forall x: int :: x in A ==> x in B
   {
     var A: set<int> := {-2, -1, 0, 1, 2, 3, 4, 5};
     var B: set<int> := {-2, -1, 0, 1, 2, 3, 4, 5};
@@ -421,8 +421,8 @@ method Passing()
   }
 
   // Test case for combination {1}/Q|A|=1:
-  //   POST: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
-  //   ENSURES: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
+  //   POST: r == forall x: int :: x in A ==> x in B
+  //   ENSURES: r == forall x: int :: x in A ==> x in B
   {
     var A: set<int> := {1};
     var B: set<int> := {1};
@@ -431,8 +431,8 @@ method Passing()
   }
 
   // Test case for combination {1}/BA=0,B=1:
-  //   POST: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
-  //   ENSURES: r == forall x: int {:trigger x in B} {:trigger x in A} :: x in A ==> x in B
+  //   POST: r == forall x: int :: x in A ==> x in B
+  //   ENSURES: r == forall x: int :: x in A ==> x in B
   {
     var A: set<int> := {};
     var B: set<int> := {4};

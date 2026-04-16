@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-16 21:51:45
+// Generated: 2026-04-16 22:34:01
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -38,8 +38,8 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
-  //   ENSURES: result <==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
+  //   POST: forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[0] [];
     var x := 0;
@@ -51,7 +51,7 @@ method Passing()
   //   POST: !result
   //   POST: 0 <= (a.Length - 1)
   //   POST: !(a[0] == x)
-  //   ENSURES: result <==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[1] [2];
     var x := 3;
@@ -62,7 +62,7 @@ method Passing()
   // Test case for combination {3}:
   //   POST: !result
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
-  //   ENSURES: result <==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[3] [15, 7, 20];
     var x := 9;
@@ -72,8 +72,8 @@ method Passing()
 
   // Test case for combination {1}/Q|a|>=2:
   //   POST: result
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
-  //   ENSURES: result <==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
+  //   POST: forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[2] [8, 8];
     var x := 8;
@@ -83,8 +83,8 @@ method Passing()
 
   // Test case for combination {1}/Q|a|=1:
   //   POST: result
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
-  //   ENSURES: result <==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == x
+  //   POST: forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[1] [2];
     var x := 2;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-16 21:58:45
+// Generated: 2026-04-16 22:40:07
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -83,10 +83,10 @@ method ProductEvenOddTest(){
 method Passing()
 {
   // Test case for combination P{3}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  //   ENSURES: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [0, -1];
     var product := ProductFirstEvenOdd(lst);
@@ -94,10 +94,10 @@ method Passing()
   }
 
   // Test case for combination P{2,3,4}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  //   ENSURES: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [0, 3, -1, 1];
     var product := ProductFirstEvenOdd(lst);
@@ -105,10 +105,10 @@ method Passing()
   }
 
   // Test case for combination P{5,7,8}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
-  //   POST: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
-  //   ENSURES: exists i: int, j: int {:trigger lst[j], lst[i]} {:trigger lst[j], IsFirstEven(i, lst)} {:trigger lst[i], IsFirstOdd(j, lst)} {:trigger IsFirstOdd(j, lst), IsFirstEven(i, lst)} :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   POST: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
+  //   ENSURES: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
     var lst: seq<int> := [1, 0, 3];
     var product := ProductFirstEvenOdd(lst);
@@ -116,8 +116,8 @@ method Passing()
   }
 
   // Test case for combination P{3}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
   //   POST: lst[evenIndex] % 2 == 0
@@ -136,8 +136,8 @@ method Passing()
   }
 
   // Test case for combination P{2,3,4}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
   //   POST: lst[evenIndex] % 2 == 0
@@ -156,8 +156,8 @@ method Passing()
   }
 
   // Test case for combination P{5,7,8}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
   //   POST: lst[evenIndex] % 2 == 0
@@ -176,8 +176,8 @@ method Passing()
   }
 
   // Test case for combination P{5,6,7,8}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
   //   POST: lst[evenIndex] % 2 == 0
@@ -196,8 +196,8 @@ method Passing()
   }
 
   // Test case for combination P{9}/{1}:
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsEven(lst[i])
-  //   PRE:  exists i: int {:trigger lst[i]} :: 0 <= i < |lst| && IsOdd(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsEven(lst[i])
+  //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST: IsFirstEven(evenIndex, lst)
   //   POST: IsFirstOdd(oddIndex, lst)
   //   POST: lst[evenIndex] % 2 == 0

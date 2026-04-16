@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-16 21:54:06
+// Generated: 2026-04-16 22:36:13
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -67,7 +67,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !(|a[..]| <= 1)
-  //   POST: res == if a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1] then DeDup<T>(a[..][0 .. |a[..]| - 1]) else DeDup<T>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
+  //   POST: res == if a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1] then DeDup<int>(a[..][0 .. |a[..]| - 1]) else DeDup<int>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
   //   ENSURES: res == DeDup(a[..])
   {
     var a := new int[2] [3, 4];
@@ -87,7 +87,7 @@ method Passing()
 
   // Test case for combination {2}/Ba=3:
   //   POST: !(|a[..]| <= 1)
-  //   POST: res == if a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1] then DeDup<T>(a[..][0 .. |a[..]| - 1]) else DeDup<T>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
+  //   POST: res == if a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1] then DeDup<int>(a[..][0 .. |a[..]| - 1]) else DeDup<int>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
   //   ENSURES: res == DeDup(a[..])
   {
     var a := new int[3] [5, 4, 6];

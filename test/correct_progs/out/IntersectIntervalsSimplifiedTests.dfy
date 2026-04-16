@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsSimplified.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-16 22:03:49
+// Generated: 2026-04-16 22:30:06
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 method IntersectIntervals(left: array<real>, right: array<real>) returns (l : real, r: real)
@@ -56,7 +56,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
   //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
@@ -75,7 +75,7 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
   //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
@@ -93,7 +93,7 @@ method Passing()
   // Test case for combination {1}/Ol>0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
   //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]
@@ -112,7 +112,7 @@ method Passing()
   // Test case for combination {1}/Or<0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: IsMax(left, l)
   //   POST: IsMin(right, r)
   //   POST: forall i: int {:trigger left[i]} :: 0 <= i && i < left.Length ==> l >= left[i]

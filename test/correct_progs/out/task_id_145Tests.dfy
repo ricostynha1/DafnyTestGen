@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-04-16 21:51:00
+// Generated: 2026-04-16 22:32:58
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
@@ -50,10 +50,10 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
-  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   POST: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
     var a := new int[1] [38];
     var diff := MaxDifference(a);
@@ -62,10 +62,10 @@ method Passing()
 
   // Test case for combination {1}/Q|a|>=2:
   //   PRE:  a.Length > 0
-  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
-  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   POST: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
     var a := new int[2] [0, 0];
     var diff := MaxDifference(a);
@@ -74,10 +74,10 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
-  //   POST: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
-  //   ENSURES: exists i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   POST: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
     var a := new int[3] [23674, 23675, 23676];
     var diff := MaxDifference(a);

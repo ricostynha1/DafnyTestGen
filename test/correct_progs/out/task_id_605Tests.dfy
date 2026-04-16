@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-16 21:55:55
+// Generated: 2026-04-16 22:37:49
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -39,8 +39,8 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n > 1
   //   POST: result
-  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST: forall k: int :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
     var result := IsPrime(n);
@@ -52,7 +52,7 @@ method Passing()
   //   POST: !result
   //   POST: 2 <= (n - 1)
   //   POST: !(n % 2 != 0)
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
   {
     var n := 4;
     var result := IsPrime(n);
@@ -63,7 +63,7 @@ method Passing()
   //   PRE:  n > 1
   //   POST: !result
   //   POST: exists k :: 3 <= k < (n - 1) && !(n % k != 0)
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
   {
     var n := 6;
     var result := IsPrime(n);
@@ -73,8 +73,8 @@ method Passing()
   // Test case for combination {1}/Bn=3:
   //   PRE:  n > 1
   //   POST: result
-  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST: forall k: int :: 2 <= k < n ==> n % k != 0
+  //   ENSURES: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
     var result := IsPrime(n);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-04-16 21:52:56
+// Generated: 2026-04-16 22:35:15
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -37,9 +37,9 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: cubed.Length == a.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[0] [];
     var cubed := CubeElements(a);
@@ -48,9 +48,9 @@ method Passing()
 
   // Test case for combination {1}/Q|a|>=2:
   //   POST: cubed.Length == a.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[2] [0, 0];
     var cubed := CubeElements(a);
@@ -59,9 +59,9 @@ method Passing()
 
   // Test case for combination {1}/Q|a|=1:
   //   POST: cubed.Length == a.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[1] [0];
     var cubed := CubeElements(a);
@@ -70,9 +70,9 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   POST: cubed.Length == a.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger cubed[i]} :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[3] [-2, -1, 0];
     var cubed := CubeElements(a);

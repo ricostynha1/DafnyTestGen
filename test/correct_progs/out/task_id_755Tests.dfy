@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-16 21:57:30
+// Generated: 2026-04-16 22:38:51
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -57,16 +57,16 @@ method SecondSmallestTest(){
 method Passing()
 {
   // Test case for combination {1}:
-  //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < s.Length && s[i] != s[j]
+  //   PRE:  exists i: int, j: int :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   POST: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   POST: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[2] [0, 1];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -75,16 +75,16 @@ method Passing()
   }
 
   // Test case for combination {1}/Bs=3:
-  //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < s.Length && s[i] != s[j]
+  //   PRE:  exists i: int, j: int :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   POST: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   POST: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[3] [0, 1, 40];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -93,16 +93,16 @@ method Passing()
   }
 
   // Test case for combination {1}/Osmallest>0:
-  //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < s.Length && s[i] != s[j]
+  //   PRE:  exists i: int, j: int :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   POST: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   POST: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[4] [7760, 7758, 7759, 7761];
     var smallest, secondSmallest := SecondSmallest(s);
@@ -111,16 +111,16 @@ method Passing()
   }
 
   // Test case for combination {1}/Osmallest<0:
-  //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < s.Length && s[i] != s[j]
+  //   PRE:  exists i: int, j: int :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   POST: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   POST: secondSmallest in s[..]
   //   POST: secondSmallest > smallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   POST: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   //   ENSURES: smallest in s[..]
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length ==> s[k] >= smallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
+  //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
     var s := new int[5] [-7721, -7720, -7719, -7718, -7717];
     var smallest, secondSmallest := SecondSmallest(s);

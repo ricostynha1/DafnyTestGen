@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-04-16 21:49:50
+// Generated: 2026-04-16 22:31:36
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -26,9 +26,9 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[1] [16];
@@ -38,9 +38,9 @@ method Passing()
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[2] [4, 3];
@@ -50,9 +50,9 @@ method Passing()
 
   // Test case for combination {1}/Ba=3:
   //   PRE:  a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
     var a := new int[3] [6, 4, 5];

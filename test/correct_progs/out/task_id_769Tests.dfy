@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-16 21:57:37
+// Generated: 2026-04-16 22:38:58
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -61,7 +61,7 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !(|a| == 0)
-  //   POST: diff == if a[|a| - 1] in b then filter<T>(a[..|a| - 1], b) else filter<T>(a[..|a| - 1], b) + [a[|a| - 1]]
+  //   POST: diff == if a[|a| - 1] in b then filter<int>(a[..|a| - 1], b) else filter<int>(a[..|a| - 1], b) + [a[|a| - 1]]
   //   ENSURES: diff == filter(a, b)
   {
     var a: seq<int> := [2];

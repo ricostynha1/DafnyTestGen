@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-16 22:03:35
+// Generated: 2026-04-16 22:29:48
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -59,7 +59,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: Max(left) < Min(right)
   //   POST: l == Max(left)
   //   POST: r == Min(right)
@@ -76,7 +76,7 @@ method Passing()
   // Test case for combination {2}:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: !(Max(left) < Min(right))
   //   POST: l == 0.0
   //   POST: r == 0.0
@@ -93,7 +93,7 @@ method Passing()
   // Test case for combination {1}/Q|left|>=2:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: Max(left) < Min(right)
   //   POST: l == Max(left)
   //   POST: r == Min(right)
@@ -110,7 +110,7 @@ method Passing()
   // Test case for combination {1}/Bleft=3,right=3:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
-  //   PRE:  forall i: int {:trigger right[i]} {:trigger left[i]} :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
   //   POST: Max(left) < Min(right)
   //   POST: l == Max(left)
   //   POST: r == Min(right)

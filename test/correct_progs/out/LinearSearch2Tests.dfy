@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch2.dfy
 // Method: LinearSearch
-// Generated: 2026-04-16 22:04:00
+// Generated: 2026-04-16 22:30:21
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -31,7 +31,7 @@ method Passing()
   //   POST: 0 <= index
   //   POST: index < a.Length
   //   POST: a[index] == x
-  //   ENSURES: if exists k: int {:trigger a[k]} :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
+  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
     var a := new int[1] [4];
     var x := 4;
@@ -44,7 +44,7 @@ method Passing()
   //   POST: 0 <= index
   //   POST: index < a.Length
   //   POST: a[index] == x
-  //   ENSURES: if exists k: int {:trigger a[k]} :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
+  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
     var a := new int[3] [17, 8, 24];
     var x := 8;
@@ -53,9 +53,9 @@ method Passing()
   }
 
   // Test case for combination {5}:
-  //   POST: !exists k: int {:trigger a[k]} :: 0 <= k < a.Length && a[k] == x
+  //   POST: !exists k: int :: 0 <= k < a.Length && a[k] == x
   //   POST: index == -1
-  //   ENSURES: if exists k: int {:trigger a[k]} :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
+  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
     var a := new int[1] [11];
     var x := 9;
@@ -69,7 +69,7 @@ method Passing()
   //   POST: 0 <= index
   //   POST: index < a.Length
   //   POST: a[index] == x
-  //   ENSURES: if exists k: int {:trigger a[k]} :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
+  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
     var a := new int[1] [0];
     var x := 0;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-16 22:03:23
+// Generated: 2026-04-16 22:29:34
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -29,9 +29,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
     var a := new real[1] [38.0];
     var maxIndex := FindMaxIndex(a);
@@ -42,9 +42,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
     var a := new real[2] [38.0, -7719.0];
     var maxIndex := FindMaxIndex(a);
@@ -55,9 +55,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
     var a := new real[3] [-5282.5, -5282.25, -5282.0];
     var maxIndex := FindMaxIndex(a);
@@ -68,9 +68,9 @@ method Passing()
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
     var a := new real[4] [-38.0, 0.0, -7719.0, -21238.0];
     var maxIndex := FindMaxIndex(a);

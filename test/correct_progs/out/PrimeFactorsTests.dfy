@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-16 21:49:28
+// Generated: 2026-04-16 22:31:16
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).

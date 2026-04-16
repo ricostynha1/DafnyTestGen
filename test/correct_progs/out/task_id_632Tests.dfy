@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-16 21:56:38
+// Generated: 2026-04-16 22:38:18
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -70,10 +70,10 @@ method Passing()
   // Test case for combination {1}:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   //   ENSURES: 0 <= nz <= a.Length
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[0] [];
     var nz := MoveZeroesToEnd(a);
@@ -84,10 +84,10 @@ method Passing()
   // Test case for combination {1}/Ba=1:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   //   ENSURES: 0 <= nz <= a.Length
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[1] [3];
     var old_a := a[..];
@@ -100,10 +100,10 @@ method Passing()
   // Test case for combination {1}/Ba=2:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   //   ENSURES: 0 <= nz <= a.Length
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[2] [4, 3];
     var old_a := a[..];
@@ -116,10 +116,10 @@ method Passing()
   // Test case for combination {1}/Ba=3:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   //   ENSURES: 0 <= nz <= a.Length
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int {:trigger a[k]} :: nz <= k < a.Length ==> a[k] == 0
+  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
     var a := new int[3] [5, 4, 6];
     var old_a := a[..];

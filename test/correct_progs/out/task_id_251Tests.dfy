@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_251.dfy
 // Method: InsertBeforeEach
-// Generated: 2026-04-16 21:51:23
+// Generated: 2026-04-16 22:33:31
 
 // Given a list s = [e1, e2, ...] and an element x, 
 // returns a new list [x, e1, x, e2, ...].
@@ -34,9 +34,9 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: |v| == 2 * |s|
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [];
     var x := 0;
@@ -46,9 +46,9 @@ method Passing()
 
   // Test case for combination {1}/Q|s|>=2:
   //   POST: |v| == 2 * |s|
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [22, 25];
     var x := 20;
@@ -58,9 +58,9 @@ method Passing()
 
   // Test case for combination {1}/Q|s|=1:
   //   POST: |v| == 2 * |s|
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [3];
     var x := 4;
@@ -70,9 +70,9 @@ method Passing()
 
   // Test case for combination {1}/Bs=0,x=1:
   //   POST: |v| == 2 * |s|
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger v[2 * i]} :: (0 <= i < |s| ==> v[2 * i] == x) && (0 <= i < |s| ==> v[2 * i + 1] == s[i])
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [];
     var x := 1;

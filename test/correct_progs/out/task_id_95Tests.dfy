@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-16 22:00:30
+// Generated: 2026-04-16 22:41:46
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -45,11 +45,11 @@ method Passing()
 {
   // Test case for combination {1}:
   //   PRE:  |s| > 0
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: 0 <= (|s| - 1)
   //   POST: v == |s[0]|
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int {:trigger s[i]} :: 0 <= i < |s| && v == |s[i]|
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
     var s: seq<seq<int>> := [[]];
     var v := SmallestListLength<int>(s);
@@ -58,10 +58,10 @@ method Passing()
 
   // Test case for combination {2}:
   //   PRE:  |s| > 0
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int {:trigger s[i]} :: 0 <= i < |s| && v == |s[i]|
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
     var s: seq<seq<int>> := [[], [], [], [], [], [], [], []];
     var v := SmallestListLength<int>(s);
@@ -70,11 +70,11 @@ method Passing()
 
   // Test case for combination {1}/Bs=inner>=1:
   //   PRE:  |s| > 0
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: 0 <= (|s| - 1)
   //   POST: v == |s[0]|
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int {:trigger s[i]} :: 0 <= i < |s| && v == |s[i]|
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
     var s: seq<seq<int>> := [[11], [14]];
     var v := SmallestListLength<int>(s);
@@ -83,11 +83,11 @@ method Passing()
 
   // Test case for combination {1}/Bs=inner>=2:
   //   PRE:  |s| > 0
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: 0 <= (|s| - 1)
   //   POST: v == |s[0]|
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int {:trigger s[i]} :: 0 <= i < |s| && v == |s[i]|
+  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
     var s: seq<seq<int>> := [[12, 13], [18, 19], [24, 25]];
     var v := SmallestListLength<int>(s);
