@@ -22,9 +22,7 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 
 4. **Quantifier decomposition for boundary analysis.** Existential quantifiers `exists k :: lo <= k < hi && P(k)` are decomposed into boundary (k=lo, k=hi−1), middle, and multiple-match cases, with strict/non-strict inequality awareness. Universal quantifiers over collections trigger size-based decomposition (|a|=0, |a|=1, |a|≥2) to exercise both vacuously-true and non-trivial cases. These are combined with other contract clauses via cross-product.
 
-5. **Active diversity promotion.** Left unconstrained, SMT solvers gravitate toward minimal or degenerate inputs (empty arrays, zero values, repeated elements). DafnyTestGen counteracts this with several mechanisms: pairwise-distinct element constraints on arrays/sequences in boundary tiers (preventing `[0,0,0]`-style inputs), ordering shape tiers that decompose sorted arrays into constant vs. strictly-ordered cases, subsumption pruning that skips test candidates already witnessed by prior inputs, input exclusion constraints for repeat generation, and a progressive multi-phase strategy that escalates from DNF clauses to input boundary tiers to output boundary tiers to repeats — each phase adding diversity only when the previous one falls short.
-
-6. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
+5. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
 
 
 ## How It Works
