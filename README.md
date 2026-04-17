@@ -489,7 +489,7 @@ Because the injector only captures **output variables and the RHS of equality-sh
       expect f == [3]; // observed from implementation
     }
     ```
-    The postcondition literals remain as primary oracles (they fail for any non-conforming output); the observed-value line is a supplemental pin users can review and loosen when the spec admits alternative valid outputs. Tautological literals of the form `{input} == expr` are skipped at emission (the input is already pinned at its `var x := ...;` declaration).
+    The postcondition literals remain as primary oracles (they fail for any non-conforming output); the observed-value line is a supplemental pin users can review and loosen when the spec admits alternative valid outputs.
 
 ### Failing-test diagnostics (expected vs. got)
 
