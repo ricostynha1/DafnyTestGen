@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-04-17 13:37:23
+// Generated: 2026-04-17 19:31:52
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)

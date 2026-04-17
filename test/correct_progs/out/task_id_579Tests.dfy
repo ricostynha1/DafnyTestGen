@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-17 13:39:08
+// Generated: 2026-04-17 19:33:36
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -74,7 +74,7 @@ method TestsForDissimilarElements()
     var a := new int[0] [];
     var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
-    expect res == {};
+    expect res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/O|a|=1:
@@ -84,7 +84,7 @@ method TestsForDissimilarElements()
     var a := new int[1] [2];
     var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
-    expect res == {2};
+    expect res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/O|a|>=2:
@@ -94,7 +94,7 @@ method TestsForDissimilarElements()
     var a := new int[2] [3, 4];
     var b := new int[1] [9];
     var res := DissimilarElements<int>(a, b);
-    expect res == {3, 4, 9};
+    expect res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
   // Test case for combination {1}/O|b|>=2:
@@ -104,7 +104,7 @@ method TestsForDissimilarElements()
     var a := new int[0] [];
     var b := new int[2] [5, 6];
     var res := DissimilarElements<int>(a, b);
-    expect res == {5, 6};
+    expect res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..];
   }
 
 }

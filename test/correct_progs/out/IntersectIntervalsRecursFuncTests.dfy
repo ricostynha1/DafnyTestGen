@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-17 13:32:59
+// Generated: 2026-04-17 19:27:48
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -90,7 +90,7 @@ method TestsForIntersectIntervals()
     expect r == 0.0;
   }
 
-  // Test case for combination {1}/Q|left|>=2:
+  // Test case for combination {1}/Ol=0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
@@ -100,11 +100,11 @@ method TestsForIntersectIntervals()
   //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
-    var left := new real[2] [-0.25, 0.0];
-    var right := new real[2] [-0.125, 0.125];
+    var left := new real[1] [0.0];
+    var right := new real[1] [0.25];
     var l, r := IntersectIntervals(left, right);
     expect l == 0.0;
-    expect r == 0.0;
+    expect r == 0.25;
   }
 
   // Test case for combination {1}/Ol>0:
@@ -117,11 +117,11 @@ method TestsForIntersectIntervals()
   //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
-    var left := new real[1] [0.03125];
-    var right := new real[1] [0.0625];
+    var left := new real[1] [0.0625];
+    var right := new real[1] [0.125];
     var l, r := IntersectIntervals(left, right);
-    expect l == 0.03125;
-    expect r == 0.0625;
+    expect l == 0.0625;
+    expect r == 0.125;
   }
 
 }

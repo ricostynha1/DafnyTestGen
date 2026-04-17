@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch2.dfy
 // Method: LinearSearch
-// Generated: 2026-04-17 13:33:33
+// Generated: 2026-04-17 19:28:17
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 

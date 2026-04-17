@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-17 13:34:08
+// Generated: 2026-04-17 19:28:48
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -81,7 +81,7 @@ method TestsForMode()
     expect m == 0 || m == -7719 || m == 38;
   }
 
-  // Test case for combination {1}/Om>0:
+  // Test case for combination {1}/R3:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
@@ -91,20 +91,7 @@ method TestsForMode()
   {
     var a := new int[1] [-38];
     var m := Mode(a);
-    expect m == 1 || m == -38;
-  }
-
-  // Test case for combination {1}/Om<0:
-  //   PRE:  IsSorted(a)
-  //   PRE:  a.Length > 0
-  //   POST: m in a[..]
-  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  //   ENSURES: m in a[..]
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  {
-    var a := new int[1] [1];
-    var m := Mode(a);
-    expect m == -1 || m == 1;
+    expect m == 0 || m == -38;
   }
 
 }

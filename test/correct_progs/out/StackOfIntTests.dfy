@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-17 13:35:20
+// Generated: 2026-04-17 19:29:53
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -175,7 +175,7 @@ method TestsFortop()
     obj.size := 1;
     obj.elems[0] := 4;
     var res := obj.top();
-    expect res == 4;
+    expect res == obj.elems[obj.size - 1];
   }
 
   // Test case for combination {1}/Bsize=2:
@@ -191,7 +191,7 @@ method TestsFortop()
     obj.elems[0] := 3;
     obj.elems[1] := 4;
     var res := obj.top();
-    expect res == 4;
+    expect res == obj.elems[obj.size - 1];
   }
 
   // Test case for combination {1}/Bsize=elems_len-1:
@@ -207,7 +207,7 @@ method TestsFortop()
     obj.elems[0] := 5;
     obj.elems[1] := 8;
     var res := obj.top();
-    expect res == 5;
+    expect res == obj.elems[obj.size - 1];
   }
 
   // Test case for combination {1}/Ores>0:
@@ -222,7 +222,7 @@ method TestsFortop()
     obj.size := 1;
     obj.elems[0] := 9;
     var res := obj.top();
-    expect res == 9;
+    expect res == obj.elems[obj.size - 1];
   }
 
 }

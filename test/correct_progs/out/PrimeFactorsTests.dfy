@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-17 13:34:31
+// Generated: 2026-04-17 19:29:07
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -297,10 +297,10 @@ method TestsForPrimeFactors()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
-    expect n == 2;
+    expect f == [2]; // observed from implementation
   }
 
-  // Test case for combination {1}/O|f|>=2:
+  // Test case for combination {1}/R2:
   //   PRE:  n > 1
   //   POST: AllPrime(f)
   //   POST: IsSorted(f)
@@ -315,7 +315,7 @@ method TestsForPrimeFactors()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
-    expect n == 3;
+    expect f == [3]; // observed from implementation
   }
 
   // Test case for combination {1}/R3:
@@ -333,7 +333,25 @@ method TestsForPrimeFactors()
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
-    expect n == 4;
+    expect f == [2, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  n > 1
+  //   POST: AllPrime(f)
+  //   POST: IsSorted(f)
+  //   POST: ProdF(f) == n
+  //   POST: n == f[0] * ProdF(f[1..])
+  //   ENSURES: AllPrime(f)
+  //   ENSURES: IsSorted(f)
+  //   ENSURES: ProdF(f) == n
+  {
+    var n := 5;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [5]; // observed from implementation
   }
 
 }

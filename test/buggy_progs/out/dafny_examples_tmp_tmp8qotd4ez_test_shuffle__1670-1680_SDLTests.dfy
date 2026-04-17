@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-17 13:53:13
+// Generated: 2026-04-17 19:30:59
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -179,6 +179,7 @@ method TestsForswap()
     var old_multiset_a := multiset(a[..]);
     swap<int>(a, i, j);
     expect a[..] == [8];
+    expect old_multiset_a == multiset{8}; // observed from implementation
   }
 
   // Test case for combination {1}/Bi=1:
@@ -198,6 +199,7 @@ method TestsForswap()
     var old_multiset_a := multiset(a[..]);
     swap<int>(a, i, j);
     expect a[..] == [8, 8];
+    expect old_multiset_a == multiset{8, 8}; // observed from implementation
   }
 
   // Test case for combination {1}/Bj=1:
@@ -217,6 +219,7 @@ method TestsForswap()
     var old_multiset_a := multiset(a[..]);
     swap<int>(a, i, j);
     expect a[..] == [8, 8];
+    expect old_multiset_a == multiset{8, 8}; // observed from implementation
   }
 
   // Test case for combination {1}/Oa≠old:
@@ -236,6 +239,7 @@ method TestsForswap()
     var old_multiset_a := multiset(a[..]);
     swap<int>(a, i, j);
     expect a[..] == [9, 10];
+    expect old_multiset_a == multiset{9, 10}; // observed from implementation
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-17 13:38:29
+// Generated: 2026-04-17 19:32:55
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -58,6 +58,7 @@ method TestsForToggleCase()
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
+    expect v == ['z', '"']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -69,6 +70,7 @@ method TestsForToggleCase()
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
+    expect v == ['f']; // observed from implementation
   }
 
 }

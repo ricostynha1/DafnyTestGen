@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_760.dfy
 // Method: HasOnlyOneDistinctElement
-// Generated: 2026-04-17 13:41:41
+// Generated: 2026-04-17 19:35:53
 
 // Checks if the given array has only one distinct element (or is empty).
 method HasOnlyOneDistinctElement<T(==)>(a: array<T>) returns (result: bool)

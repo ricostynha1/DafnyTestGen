@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-04-17 13:32:53
+// Generated: 2026-04-17 19:27:43
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 

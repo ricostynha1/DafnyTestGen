@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_457.dfy
 // Method: MinLengthSublist
-// Generated: 2026-04-17 13:38:00
+// Generated: 2026-04-17 19:32:30
 
 // Find the shortest sublist in a non-empty list of sublists.
 method MinLengthSublist<T>(s: seq<seq<T>>) returns (minSublist: seq<T>)
@@ -62,29 +62,29 @@ method TestsForMinLengthSublist()
     expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
   }
 
-  // Test case for combination {1}/O|minSublist|=0:
+  // Test case for combination {1}/Q|minSublist|>=2:
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   //   ENSURES: minSublist in s
   //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[], [], [], [], []];
-    var minSublist := MinLengthSublist<int>(s);
-    expect minSublist == [];
-  }
-
-  // Test case for combination {1}/O|minSublist|>=2:
-  //   PRE:  |s| > 0
-  //   POST: minSublist in s
-  //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
-  //   ENSURES: minSublist in s
-  //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
-  {
-    var s: seq<seq<int>> := [[21, 22], [7, 8], [10, 11], [17, 31], [23, 24], [21, 22]];
+    var s: seq<seq<int>> := [[7, 8], [9, 10], [7, 8]];
     var minSublist := MinLengthSublist<int>(s);
     expect minSublist in s;
     expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
+  }
+
+  // Test case for combination {1}/Q|minSublist|=0:
+  //   PRE:  |s| > 0
+  //   POST: minSublist in s
+  //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
+  //   ENSURES: minSublist in s
+  //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
+  {
+    var s: seq<seq<int>> := [[], [], [], [], [], [], [], []];
+    var minSublist := MinLengthSublist<int>(s);
+    expect minSublist == [];
   }
 
 }

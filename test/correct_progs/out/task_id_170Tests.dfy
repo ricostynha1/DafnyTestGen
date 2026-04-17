@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-17 13:36:06
+// Generated: 2026-04-17 19:30:33
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).

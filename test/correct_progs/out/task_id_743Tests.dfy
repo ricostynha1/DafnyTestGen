@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-17 13:41:29
+// Generated: 2026-04-17 19:35:44
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-17 13:40:56
+// Generated: 2026-04-17 19:35:16
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -99,15 +99,6 @@ method TestsForFindEvenNumbers()
     var arr := new int[2] [3, 4];
     var evenList := FindEvenNumbers(arr);
     expect evenList == [4];
-  }
-
-  // Test case for combination {1}/O|evenList|=1:
-  //   POST: evenList == Filter(arr[..], IsEven)
-  //   ENSURES: evenList == Filter(arr[..], IsEven)
-  {
-    var arr := new int[1] [6];
-    var evenList := FindEvenNumbers(arr);
-    expect evenList == [6];
   }
 
 }

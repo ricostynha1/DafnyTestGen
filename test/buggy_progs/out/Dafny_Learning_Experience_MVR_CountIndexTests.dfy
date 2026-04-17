@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-04-17 13:52:47
+// Generated: 2026-04-17 19:32:16
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -296,6 +296,7 @@ method TestsForPreCompute()
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 0; // observed from implementation
   }
 
   // Test case for combination {2}/Q|a|>=2:
@@ -315,9 +316,10 @@ method TestsForPreCompute()
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 1; // observed from implementation
   }
 
-  // Test case for combination {2}/Bp=1:
+  // Test case for combination {2}/R3:
   //   PRE:  a.Length == b.Length
   //   POST: !(b.Length == 0)
   //   POST: a.Length == b.Length
@@ -334,25 +336,7 @@ method TestsForPreCompute()
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {2}/Op>=2:
-  //   PRE:  a.Length == b.Length
-  //   POST: !(b.Length == 0)
-  //   POST: a.Length == b.Length
-  //   POST: 1 <= b.Length
-  //   POST: b.Length <= a.Length
-  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  //   ENSURES: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[1] [12];
-    var b := new int[1] [6];
-    var p := PreCompute(a, b);
-    expect !(b.Length == 0);
-    expect a.Length == b.Length;
-    expect 1 <= b.Length;
-    expect b.Length <= a.Length;
-    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 0; // observed from implementation
   }
 
 }

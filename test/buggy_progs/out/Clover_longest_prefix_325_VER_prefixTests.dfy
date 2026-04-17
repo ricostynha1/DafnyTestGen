@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-04-17 13:52:39
+// Generated: 2026-04-17 19:30:41
 
 // Clover_longest_prefix.dfy
 

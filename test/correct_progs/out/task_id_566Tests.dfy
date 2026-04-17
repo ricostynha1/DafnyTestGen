@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_566.dfy
 // Method: CalcSumOfDigits
-// Generated: 2026-04-17 13:38:33
+// Generated: 2026-04-17 19:32:58
 
 // Recursive definition of the sum of the decimal digits of a natural number n.
 function SumOfDigits(n: nat) : (sum: nat) { 

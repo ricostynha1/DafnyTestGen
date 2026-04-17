@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-04-17 13:32:16
+// Generated: 2026-04-17 19:27:15
 
 class Counter {
     var count: int

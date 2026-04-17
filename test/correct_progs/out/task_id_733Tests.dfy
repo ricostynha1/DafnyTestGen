@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-17 13:41:22
+// Generated: 2026-04-17 19:35:38
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.

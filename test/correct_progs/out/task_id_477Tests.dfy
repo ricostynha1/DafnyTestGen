@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-17 13:38:20
+// Generated: 2026-04-17 19:32:47
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -68,6 +68,7 @@ method TestsForToLowercase()
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
+    expect v == ['z', '"']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -79,6 +80,7 @@ method TestsForToLowercase()
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
+    expect v == ['f']; // observed from implementation
   }
 
 }

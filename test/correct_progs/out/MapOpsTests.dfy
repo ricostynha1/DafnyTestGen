@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-17 13:33:50
+// Generated: 2026-04-17 19:28:32
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -359,15 +359,6 @@ method TestsForMapKeys()
     var m: map<int, int> := map[-2 := 0, 3 := 0];
     var r := MapKeys(m);
     expect r == {-2, 3};
-  }
-
-  // Test case for combination {1}/O|r|=1:
-  //   POST: r == m.Keys
-  //   ENSURES: r == m.Keys
-  {
-    var m: map<int, int> := map[-2 := 0, 1 := 0, 2 := 0];
-    var r := MapKeys(m);
-    expect r == {-2, 1, 2};
   }
 
 }

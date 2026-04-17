@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-17 13:40:59
+// Generated: 2026-04-17 19:35:19
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -81,7 +81,7 @@ method TestsForMoveZeroesToEnd()
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Bnz=1:
+  // Test case for combination {1}/Oa≠old:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
@@ -91,11 +91,11 @@ method TestsForMoveZeroesToEnd()
   {
     var a := new int[1] [6];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 1 || nz == 0 || nz == 1;
+    expect nz == 0 || nz == 1 || nz == 0;
     expect a[..] == [6];
   }
 
-  // Test case for combination {1}/Onz>=2:
+  // Test case for combination {1}/R3:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
@@ -103,10 +103,10 @@ method TestsForMoveZeroesToEnd()
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
   //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[1] [5];
+    var a := new int[1] [4];
     var nz := MoveZeroesToEnd(a);
-    expect nz == 2 || nz == 1 || nz == 0;
-    expect a[..] == [5];
+    expect nz == 0 || nz == 1 || nz == 0;
+    expect a[..] == [4];
   }
 
 }

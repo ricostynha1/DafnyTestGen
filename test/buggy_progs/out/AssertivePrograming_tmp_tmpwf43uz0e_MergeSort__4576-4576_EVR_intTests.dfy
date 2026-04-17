@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-17 13:48:42
+// Generated: 2026-04-17 19:26:39
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
@@ -234,9 +234,24 @@ method TestsForMergeSort()
     expect b.Length == a.Length;
     expect Sorted(b[..]);
     expect multiset(a[..]) == multiset(b[..]);
+    expect b == []; // observed from implementation
   }
 
-  // Test case for combination {1}/O|a|=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Q|b|>=2:
+  //   POST: b.Length == a.Length
+  //   POST: Sorted(b[..])
+  //   POST: multiset(a[..]) == multiset(b[..])
+  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
+  {
+    var a := new int[2] [21, 22];
+    var b := MergeSort(a);
+    // expect b.Length == a.Length;
+    // expect Sorted(b[..]);
+    // expect multiset(a[..]) == multiset(b[..]);
+  }
+
+  // Test case for combination {1}/Q|b|=1:
   //   POST: b.Length == a.Length
   //   POST: Sorted(b[..])
   //   POST: multiset(a[..]) == multiset(b[..])
@@ -247,19 +262,7 @@ method TestsForMergeSort()
     expect b.Length == a.Length;
     expect Sorted(b[..]);
     expect multiset(a[..]) == multiset(b[..]);
-  }
-
-  // Test case for combination {1}/O|a|>=2:
-  //   POST: b.Length == a.Length
-  //   POST: Sorted(b[..])
-  //   POST: multiset(a[..]) == multiset(b[..])
-  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
-  {
-    var a := new int[2] [22, 21];
-    var b := MergeSort(a);
-    expect b.Length == a.Length;
-    expect Sorted(b[..]);
-    expect multiset(a[..]) == multiset(b[..]);
+    expect b == [2]; // observed from implementation
   }
 
 }

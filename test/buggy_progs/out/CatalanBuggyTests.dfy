@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CatalanBuggy.dfy
 // Method: CatalanNumber
-// Generated: 2026-04-17 13:52:36
+// Generated: 2026-04-17 19:30:37
 
 function C(n: nat): nat  
 {
@@ -55,14 +55,14 @@ method TestsForCatalanNumber()
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {2}/Ores>=2:
+  // Test case for combination {2}/R3:
   //   POST: !(n == 0)
   //   POST: res == (4 * n - 2) * C(n - 1) / (n + 1)
   //   ENSURES: res == C(n)
   {
-    var n := 5;
+    var n := 3;
     var res := CatalanNumber(n);
-    // expect res == 42; // got 0
+    // expect res == 5; // got 0
   }
 
 }

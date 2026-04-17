@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-17 13:44:34
+// Generated: 2026-04-17 19:38:42
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the

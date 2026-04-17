@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-17 13:35:49
+// Generated: 2026-04-17 19:30:15
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)

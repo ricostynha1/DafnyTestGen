@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-17 13:35:54
+// Generated: 2026-04-17 19:30:21
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -72,7 +72,7 @@ method TestsForCalcSumOfNegatives()
     expect result == 0;
   }
 
-  // Test case for combination {2}/Oresult>0:
+  // Test case for combination {2}/R3:
   //   POST: !(a.Length == 0)
   //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
   //   ENSURES: result == SumOfNegatives(a)

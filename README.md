@@ -473,6 +473,24 @@ Two flavors of "unresolved RHS" benefit from this, both handled by the same mech
 
 Because the injector only captures **output variables and the RHS of equality-shaped postconditions**, not arbitrary subexpressions, postconditions that are not equality-shaped on an output (e.g., `ensures result > Filter(s, p)`) cannot be rescued this way — they remain as the original literal in the generated expect.
 
+3. **Postcondition has no equality on an output, but implementation passes at runtime** — when postconditions constrain outputs only indirectly (e.g. `ensures AllPrime(f) && IsSorted(f) && ProdF(f) == n` for prime factorization), Z3's chosen model may be unreliable or simply one valid witness among many. In that case, after a test passes at runtime (the implementation's concrete output satisfied the postconditions), the observed output is injected as a supplemental `expect` with a marker comment:
+    ```dafny
+    method PrimeFactors(n: nat) returns (f: seq<nat>)
+      requires n > 1
+      ensures AllPrime(f) && IsSorted(f) && ProdF(f) == n
+    {...}
+    // Generated test case
+    {
+      var n := 3;
+      var f := PrimeFactors(n);
+      expect AllPrime(f);
+      expect IsSorted(f);
+      expect ProdF(f) == n;
+      expect f == [3]; // observed from implementation
+    }
+    ```
+    The postcondition literals remain as primary oracles (they fail for any non-conforming output); the observed-value line is a supplemental pin users can review and loosen when the spec admits alternative valid outputs. Tautological literals of the form `{input} == expr` are skipped at emission (the input is already pinned at its `var x := ...;` declaration).
+
 ### Failing-test diagnostics (expected vs. got)
 
 When a test fails at runtime, the `expect` assertions are commented out in the emmited test code. 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-17 13:44:00
+// Generated: 2026-04-17 19:38:10
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)

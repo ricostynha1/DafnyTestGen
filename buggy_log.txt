@@ -34,9 +34,10 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
+  Solving 1/4...     Solving 2/4...     Solving 3/4...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2b: type/size coverage (6 new entries)
-  Solving 3/7...     Solving 4/7...     Subsumption pruning: 4 skipped
+  Subsumption pruning: 6 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
                             Phase 3 complete: 3 test(s)
@@ -58,10 +59,10 @@
                             Phase 1 complete: 1 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 8 test case(s)...
-  Batch: 2/8 completed, 6 incomplete (crash) - re-checking individually...
+  Batch: 1/8 completed, 7 incomplete (crash) - re-checking individually...
   Test 1/8: PASS
-  Test 2/8: PASS
-  Test 3/8: FAIL
+  Test 2/8: FAIL
+  Test 3/8: PASS
   Test 4/8: PASS
   Test 5/8: PASS
   Test 6/8: PASS
@@ -87,13 +88,13 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Solving 1/7...     Solving 2/7...     Solving 4/7...     Solving 7/7...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 2 test(s)
   Phase 2: refined-range BVA (6 new entries)
-  Solving 7/10...     Solving 10/10...     Subsumption pruning: 4 skipped
+  Solving 10/13...     Solving 13/13...     Subsumption pruning: 4 skipped
                             Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (10 new entries, 2 pruned)
-  Solving 11/20...     Solving 15/20...     Solving 16/20...     Solving 17/20...     Solving 18/20...     Subsumption pruning: 5 skipped
+  Solving 14/23...     Solving 18/23...     Solving 19/23...     Solving 20/23...     Solving 21/23...     Subsumption pruning: 5 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
                             Phase 3 complete: 3 test(s)
@@ -128,8 +129,10 @@
   Solving 4/4...     Subsumption pruning: 1 skipped
                             Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (9 new entries, 3 pruned)
-  Solving 5/13...     Solving 6/13...     Solving 7/13...     Solving 8/13...     Solving 9/13...     Solving 12/13...     Solving 13/13...     Subsumption pruning: 2 skipped
-                            Phase 2b complete: 4 test(s)
+  Solving 5/13...     Solving 6/13...     Solving 7/13...     Solving 8/13...     Solving 9/13...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 13/13...     Solving 13/13...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -316,10 +319,8 @@
   Solving 6/12...     Solving 7/12...     Solving 10/12...     Solving 11/12...     Subsumption pruning: 4 skipped
                             Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (6 new entries, 2 pruned)
-  Solving 14/18...     Solving 16/18...     Subsumption pruning: 4 skipped
-                            Phase 2b complete: 3 test(s)
-  Phase 3: repeats (up to 3 per condition)
-                            Phase 3 complete: 3 test(s)
+  Solving 14/18...     Solving 16/18...     Solving 17/18...     Subsumption pruning: 2 skipped
+                            Phase 2b complete: 4 test(s)
 
 [DafnyTestGen] Processing method: getAllShuffledDataEntries
   Auto strategy: progressive (minTests=4)
@@ -332,19 +333,20 @@
   Phase 3: repeats (up to 3 per condition)
                             Phase 3 complete: 3 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 10 test case(s)...
-  Batch: 8/10 completed, 2 incomplete (timeout) - re-checking individually...
-  Test 1/10: PASS
-  Test 2/10: PASS
-  Test 3/10: PASS
-  Test 4/10: PASS
-  Test 5/10: PASS
-  Test 6/10: PASS
-  Test 7/10: PASS
-  Test 8/10: PASS
-  Test 9/10: FAIL
-  Test 10/10: FAIL
-[DafnyTestGen] Results: 8 passing, 2 failing
+[DafnyTestGen] Checking 11 test case(s)...
+  Batch: 9/11 completed, 2 incomplete (timeout) - re-checking individually...
+  Test 1/11: PASS
+  Test 2/11: PASS
+  Test 3/11: PASS
+  Test 4/11: PASS
+  Test 5/11: PASS
+  Test 6/11: PASS
+  Test 7/11: PASS
+  Test 8/11: PASS
+  Test 9/11: PASS
+  Test 10/11: FAIL
+  Test 11/11: FAIL
+[DafnyTestGen] Results: 9 passing, 2 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDLTests.dfy
 
 = Processing: Dafny_Learning_Experience_MVR_CountIndex.dfy                                        =
@@ -388,11 +390,13 @@
   Solving 1/14...     Solving 2/14...     Solving 6/14...     Solving 8/14...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 2 test(s)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 15/18...     Solving 16/18...     Solving 18/18...     Subsumption pruning: 1 skipped
-                            Phase 2 complete: 3 test(s)
+  Solving 15/18...     Solving 16/18...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 2 test(s)
   Phase 2b: type/size coverage (8 new entries, 4 pruned)
-  Solving 19/26...     Solving 20/26...     Solving 21/26...     Solving 22/26...     Solving 23/26...     Solving 26/26...     Subsumption pruning: 2 skipped
-                            Phase 2b complete: 4 test(s)
+  Solving 19/26...     Solving 20/26...     Solving 21/26...     Solving 22/26...     Solving 23/26...     Subsumption pruning: 3 skipped
+                            Phase 2b complete: 2 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 26/26...     Solving 26/26...                               Phase 3 complete: 3 test(s)
 
 [DafnyTestGen] Processing method: Mult
   Auto strategy: progressive (minTests=4)
@@ -406,24 +410,23 @@
   Solving 9/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 16 test case(s)...
-  Test 1/16: PASS
-  Test 2/16: PASS
-  Test 3/16: PASS
-  Test 4/16: PASS
-  Test 5/16: PASS
-  Test 6/16: PASS
-  Test 7/16: PASS
-  Test 8/16: PASS
-  Test 9/16: PASS
-  Test 10/16: PASS
-  Test 11/16: PASS
-  Test 12/16: PASS
-  Test 13/16: PASS
-  Test 14/16: PASS
-  Test 15/16: PASS
-  Test 16/16: PASS
-[DafnyTestGen] Results: 16 passing, 0 failing
+[DafnyTestGen] Checking 15 test case(s)...
+  Test 1/15: PASS
+  Test 2/15: PASS
+  Test 3/15: PASS
+  Test 4/15: PASS
+  Test 5/15: PASS
+  Test 6/15: PASS
+  Test 7/15: PASS
+  Test 8/15: PASS
+  Test 9/15: PASS
+  Test 10/15: PASS
+  Test 11/15: PASS
+  Test 12/15: PASS
+  Test 13/15: PASS
+  Test 14/15: PASS
+  Test 15/15: PASS
+[DafnyTestGen] Results: 15 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_MVR_CountIndexTests.dfy
 
 = Processing: Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndex.dfy                                        =
@@ -467,11 +470,13 @@
   Solving 1/14...     Solving 2/14...     Solving 6/14...     Solving 8/14...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 2 test(s)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 15/18...     Solving 16/18...     Solving 18/18...     Subsumption pruning: 1 skipped
-                            Phase 2 complete: 3 test(s)
+  Solving 15/18...     Solving 16/18...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 2 test(s)
   Phase 2b: type/size coverage (8 new entries, 4 pruned)
-  Solving 19/26...     Solving 20/26...     Solving 21/26...     Solving 22/26...     Solving 23/26...     Solving 26/26...     Subsumption pruning: 2 skipped
-                            Phase 2b complete: 4 test(s)
+  Solving 19/26...     Solving 20/26...     Solving 21/26...     Solving 22/26...     Solving 23/26...     Subsumption pruning: 3 skipped
+                            Phase 2b complete: 2 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 26/26...     Solving 26/26...                               Phase 3 complete: 3 test(s)
 
 [DafnyTestGen] Processing method: Mult
   Auto strategy: progressive (minTests=4)
@@ -485,24 +490,23 @@
   Solving 9/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 16 test case(s)...
-  Test 1/16: PASS
-  Test 2/16: PASS
-  Test 3/16: PASS
-  Test 4/16: PASS
-  Test 5/16: PASS
-  Test 6/16: PASS
-  Test 7/16: PASS
-  Test 8/16: PASS
-  Test 9/16: PASS
-  Test 10/16: PASS
-  Test 11/16: PASS
-  Test 12/16: PASS
-  Test 13/16: PASS
-  Test 14/16: PASS
-  Test 15/16: PASS
-  Test 16/16: PASS
-[DafnyTestGen] Results: 16 passing, 0 failing
+[DafnyTestGen] Checking 15 test case(s)...
+  Test 1/15: PASS
+  Test 2/15: PASS
+  Test 3/15: PASS
+  Test 4/15: PASS
+  Test 5/15: PASS
+  Test 6/15: PASS
+  Test 7/15: PASS
+  Test 8/15: PASS
+  Test 9/15: PASS
+  Test 10/15: PASS
+  Test 11/15: PASS
+  Test 12/15: PASS
+  Test 13/15: PASS
+  Test 14/15: PASS
+  Test 15/15: PASS
+[DafnyTestGen] Results: 15 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\out\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本__2211_MVR_CountIndexTests.dfy
 
 [DafnyTestGen] Processed 11 files.

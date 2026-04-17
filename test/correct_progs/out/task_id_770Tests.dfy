@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_770.dfy
 // Method: SumOfFourthPowerOfOddNumbers
-// Generated: 2026-04-17 13:41:48
+// Generated: 2026-04-17 19:36:00
 
 // Returns the sum of the fourth power of the first n odd numbers.
 method SumOfFourthPowerOfOddNumbers(n: nat) returns (sum: nat)

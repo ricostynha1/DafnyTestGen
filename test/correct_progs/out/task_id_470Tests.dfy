@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-17 13:38:04
+// Generated: 2026-04-17 19:32:34
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -61,7 +61,7 @@ method TestsForPairwiseAddition()
     expect result[..] == [0];
   }
 
-  // Test case for combination {1}/O|result|>=2:
+  // Test case for combination {1}/Q|result|>=2:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-04-17 13:36:01
+// Generated: 2026-04-17 19:30:29
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates
@@ -91,7 +91,7 @@ method TestsForRemoveElements()
     var a := new int[0] [];
     var b := new int[0] [];
     var res := RemoveElements<int>(a, b);
-    expect res == [];
+    expect res == removeElems(a[..], b[..]);
   }
 
   // Test case for combination {1}/O|a|=1:
@@ -101,7 +101,7 @@ method TestsForRemoveElements()
     var a := new int[1] [2];
     var b := new int[0] [];
     var res := RemoveElements<int>(a, b);
-    expect res == [2];
+    expect res == removeElems(a[..], b[..]);
   }
 
   // Test case for combination {1}/O|a|>=2:
@@ -111,7 +111,7 @@ method TestsForRemoveElements()
     var a := new int[2] [3, 4];
     var b := new int[1] [10];
     var res := RemoveElements<int>(a, b);
-    expect res == [3, 4];
+    expect res == removeElems(a[..], b[..]);
   }
 
   // Test case for combination {1}/O|b|>=2:
@@ -121,7 +121,7 @@ method TestsForRemoveElements()
     var a := new int[0] [];
     var b := new int[2] [5, 6];
     var res := RemoveElements<int>(a, b);
-    expect res == [];
+    expect res == removeElems(a[..], b[..]);
   }
 
 }

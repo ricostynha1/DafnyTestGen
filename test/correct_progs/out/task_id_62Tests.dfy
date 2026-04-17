@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-17 13:40:41
+// Generated: 2026-04-17 19:35:03
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)

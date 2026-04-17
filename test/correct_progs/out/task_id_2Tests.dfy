@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-17 13:36:15
+// Generated: 2026-04-17 19:30:44
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -93,6 +93,30 @@ method TestsForSharedElements()
     var b := new int[2] [5, 6];
     var result := SharedElements<int>(a, b);
     expect result == {};
+  }
+
+  // Test case for combination {1}/Q|result|>=2:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[2] [-2, 3];
+    var b := new int[2] [3, -2];
+    var result := SharedElements<int>(a, b);
+    expect result == {-2, 3};
+  }
+
+  // Test case for combination {1}/Q|result|=1:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[1] [-2];
+    var b := new int[1] [-2];
+    var result := SharedElements<int>(a, b);
+    expect result == {-2};
   }
 
 }

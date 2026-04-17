@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-04-17 13:52:25
+// Generated: 2026-04-17 19:30:29
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -509,6 +509,7 @@ method TestsForInsertIntoSorted()
     expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
     expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
     expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b == [1]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -538,6 +539,7 @@ method TestsForInsertIntoSorted()
     expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
     expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
     expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b == [31396, 31397]; // observed from implementation
   }
 
   // Test case for combination {1}/Bkey=2:
@@ -567,6 +569,7 @@ method TestsForInsertIntoSorted()
     expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
     expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
     expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b == [2]; // observed from implementation
   }
 
 }

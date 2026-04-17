@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_267.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-17 13:36:34
+// Generated: 2026-04-17 19:31:08
 
 // Calculate the sum of the squares of the first n odd numbers.
 // (Not a very good example, because the sum can be calculated directly by a formula,

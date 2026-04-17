@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-17 13:41:38
+// Generated: 2026-04-17 19:35:51
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-17 13:34:04
+// Generated: 2026-04-17 19:28:45
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -60,6 +60,7 @@ method TestsForMerge()
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
+    expect c == []; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -74,6 +75,7 @@ method TestsForMerge()
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
+    expect c == [-7719, 38, 39]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|=1:
@@ -88,6 +90,7 @@ method TestsForMerge()
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
+    expect c == [17]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|b|>=2:
@@ -102,6 +105,7 @@ method TestsForMerge()
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
+    expect c == [-7719, 38]; // observed from implementation
   }
 
 }

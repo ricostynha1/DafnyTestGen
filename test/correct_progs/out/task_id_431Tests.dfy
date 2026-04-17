@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-04-17 13:37:34
+// Generated: 2026-04-17 19:32:03
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)

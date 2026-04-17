@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-17 13:41:45
+// Generated: 2026-04-17 19:35:57
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -56,7 +56,7 @@ method TestsForDifference()
     var a: seq<int> := [];
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, b);
   }
 
   // Test case for combination {2}:
@@ -67,7 +67,7 @@ method TestsForDifference()
     var a: seq<int> := [2];
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
-    expect diff == [2];
+    expect diff == filter(a, b);
   }
 
   // Test case for combination {1}/O|b|=1:
@@ -78,7 +78,7 @@ method TestsForDifference()
     var a: seq<int> := [];
     var b: seq<int> := [2];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, b);
   }
 
   // Test case for combination {1}/O|b|>=2:
@@ -89,7 +89,7 @@ method TestsForDifference()
     var a: seq<int> := [];
     var b: seq<int> := [3, 4];
     var diff := Difference<int>(a, b);
-    expect diff == [];
+    expect diff == filter(a, b);
   }
 
 }

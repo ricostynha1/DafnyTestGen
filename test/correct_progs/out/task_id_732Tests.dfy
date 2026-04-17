@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-17 13:41:18
+// Generated: 2026-04-17 19:35:35
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -60,6 +60,7 @@ method TestsForReplaceWithColon()
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
+    expect v == ['Z', '"']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -71,6 +72,7 @@ method TestsForReplaceWithColon()
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
+    expect v == ['F']; // observed from implementation
   }
 
 }

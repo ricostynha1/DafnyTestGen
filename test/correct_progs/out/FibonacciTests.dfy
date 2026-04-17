@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-17 13:32:40
+// Generated: 2026-04-17 19:27:33
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -61,7 +61,7 @@ method TestsForCalcFib()
     expect res == 1;
   }
 
-  // Test case for combination {2}/Ores=1:
+  // Test case for combination {2}/R2:
   //   POST: !(n < 2)
   //   POST: res == Fib(n - 2) + Fib(n - 1)
   //   ENSURES: res == Fib(n)
