@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-04-16 22:44:34
+// Generated: 2026-04-17 13:53:04
 
 // res.dfy
 
@@ -18,7 +18,7 @@ method abs(x: int) returns (y: int)
 }
 
 
-method Passing()
+method TestsForabs()
 {
   // Test case for combination {1}:
   //   POST: !(x > 0)
@@ -32,10 +32,7 @@ method Passing()
     expect y == 0;
   }
 
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {2}:
   //   POST: x > 0
   //   POST: y == x
@@ -48,7 +45,8 @@ method Failing()
     // expect y == 1; // got -1
   }
 
-  // Test case for combination {1}/Oy>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Ox<0:
   //   POST: !(x > 0)
   //   POST: x <= 0
   //   POST: y == -x
@@ -60,6 +58,7 @@ method Failing()
     // expect y == 1; // got -1
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/R3:
   //   POST: !(x > 0)
   //   POST: x <= 0
@@ -76,6 +75,6 @@ method Failing()
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForabs();
+  print "TestsForabs: all non-failing tests passed!\n";
 }

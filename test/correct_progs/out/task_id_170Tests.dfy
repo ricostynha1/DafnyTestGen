@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-16 22:33:08
+// Generated: 2026-04-17 13:36:06
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -40,7 +40,7 @@ method SumInRangeTest(){
   assert s5 == 14;
 }
 
-method Passing()
+method TestsForCalcSumRange()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= start <= end <= a.Length
@@ -68,41 +68,36 @@ method Passing()
     expect sum == 13;
   }
 
-  // Test case for combination {1}/Ba=0,start==end,end==a_len:
+  // Test case for combination {1}/Bstart=1:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST: sum == SumSeq(a[start .. end])
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[0] [];
-    var start := 0;
-    var end := 0;
-    var sum := CalcSumRange(a, start, end);
-    expect sum == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,start==end,end==a_len:
-  //   PRE:  0 <= start <= end <= a.Length
-  //   POST: sum == SumSeq(a[start .. end])
-  //   POST: sum == 0
-  //   ENSURES: sum == SumSeq(a[start .. end])
-  {
-    var a := new int[1] [2];
+    var a := new int[1] [9];
     var start := 1;
     var end := 1;
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }
 
-}
+  // Test case for combination {2}/Bstart=1:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: !(|a[start .. end]| == 0)
+  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [9, 12];
+    var start := 1;
+    var end := 2;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 12;
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcSumRange();
+  print "TestsForCalcSumRange: all non-failing tests passed!\n";
 }

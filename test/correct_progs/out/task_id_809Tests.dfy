@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-16 22:41:41
+// Generated: 2026-04-17 13:44:34
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -39,7 +39,7 @@ method TestIsSmaller(){
   assert res3 == false;
 }
 
-method Passing()
+method TestsForIsSmaller()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
@@ -104,13 +104,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsSmaller();
+  print "TestsForIsSmaller: all non-failing tests passed!\n";
 }

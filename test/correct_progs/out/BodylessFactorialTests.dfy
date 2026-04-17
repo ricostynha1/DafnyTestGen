@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BodylessFactorial.dfy
 // Method: CalcFact
-// Generated: 2026-04-16 22:44:33
+// Generated: 2026-04-17 13:31:51
 
 function Fact(n: nat): nat
 {
@@ -12,7 +12,7 @@ method CalcFact(n: nat) returns (f: nat)
   ensures f == Fact(n)
 
 
-method GeneratedTests_CalcFact()
+method TestsForCalcFact()
 {
   // Test case for combination {1}:
   //   POST: f == Fact(n)
@@ -34,7 +34,7 @@ method GeneratedTests_CalcFact()
     // expect f == Fact(n);
   }
 
-  // Test case for combination {2}/Of>=2:
+  // Test case for combination {2}/Bn=2:
   //   POST: !(n == 0)
   //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
@@ -44,7 +44,7 @@ method GeneratedTests_CalcFact()
     // expect f == Fact(n);
   }
 
-  // Test case for combination {2}/R3:
+  // Test case for combination {2}/Of>=2:
   //   POST: !(n == 0)
   //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
@@ -58,6 +58,6 @@ method GeneratedTests_CalcFact()
 
 method Main()
 {
-  GeneratedTests_CalcFact();
-  print "GeneratedTests_CalcFact: all tests passed!\n";
+  TestsForCalcFact();
+  print "TestsForCalcFact: all tests passed!\n";
 }

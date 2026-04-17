@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_310.dfy
 // Method: ToCharArray
-// Generated: 2026-04-16 22:34:16
+// Generated: 2026-04-17 13:36:59
 
 // Converts a string (sequence of characters) to an array of characters.
 method ToCharArray(s: string) returns (a: array<char>)
@@ -30,7 +30,7 @@ method ToCharArrayTest(){
   assert res3[..] == ['1','5','.','1','0'];
 }
 
-method Passing()
+method TestsForToCharArray()
 {
   // Test case for combination {1}:
   //   POST: a[..] == s
@@ -41,7 +41,7 @@ method Passing()
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Bs=1:
+  // Test case for combination {1}/O|s|=1:
   //   POST: a[..] == s
   //   ENSURES: a[..] == s
   {
@@ -50,33 +50,19 @@ method Passing()
     expect a[..] == [' '];
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/O|s|>=2:
   //   POST: a[..] == s
   //   ENSURES: a[..] == s
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := [' ', '8'];
     var a := ToCharArray(s);
-    expect a[..] == [' ', '!'];
+    expect a[..] == [' ', '8'];
   }
 
-  // Test case for combination {1}/Bs=3:
-  //   POST: a[..] == s
-  //   ENSURES: a[..] == s
-  {
-    var s: seq<char> := [' ', '!', '"'];
-    var a := ToCharArray(s);
-    expect a[..] == [' ', '!', '"'];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForToCharArray();
+  print "TestsForToCharArray: all non-failing tests passed!\n";
 }

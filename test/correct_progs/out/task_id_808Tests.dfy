@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_808.dfy
 // Method: Contains
-// Generated: 2026-04-16 22:41:36
+// Generated: 2026-04-17 13:44:30
 
 // Checks if a sequence 's' contains a value 'x'.
 method Contains<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -35,7 +35,7 @@ method ContainsTest(){
 
 
 
-method Passing()
+method TestsForContains()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -59,7 +59,18 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bs=1,x=0:
+  // Test case for combination {1}/O|s|>=2:
+  //   POST: result
+  //   POST: x in s
+  //   ENSURES: result <==> x in s
+  {
+    var s: seq<int> := [10, 21];
+    var x := 10;
+    var result := Contains<int>(s, x);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/Ox=0:
   //   POST: result
   //   POST: x in s
   //   ENSURES: result <==> x in s
@@ -70,26 +81,10 @@ method Passing()
     expect result == true;
   }
 
-  // Test case for combination {1}/Bs=1,x=1:
-  //   POST: result
-  //   POST: x in s
-  //   ENSURES: result <==> x in s
-  {
-    var s: seq<int> := [1];
-    var x := 1;
-    var result := Contains<int>(s, x);
-    expect result == true;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForContains();
+  print "TestsForContains: all non-failing tests passed!\n";
 }

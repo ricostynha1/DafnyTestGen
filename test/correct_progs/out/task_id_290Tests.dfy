@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_290.dfy
 // Method: MaxLengthSublist
-// Generated: 2026-04-16 22:34:06
+// Generated: 2026-04-17 13:36:51
 
 // Returns the longest list in a non-empty list of lists.
 // If there are multiple lists of the same length, any one can be returned.
@@ -35,7 +35,7 @@ method MaxLengthListTest(){
 }
 
 
-method Passing()
+method TestsForMaxLengthSublist()
 {
   // Test case for combination {1}:
   //   PRE:  |lists| > 0
@@ -61,40 +61,34 @@ method Passing()
     expect maxSublist == [5];
   }
 
-  // Test case for combination {1}/Blists=inner>=2:
+  // Test case for combination {1}/O|maxSublist|=0:
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[7, 6], [18, 19], [12, 13]];
+    var lists: seq<seq<int>> := [[], [], [], [], []];
     var maxSublist := MaxLengthSublist<int>(lists);
-    expect maxSublist in lists;
-    expect forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|;
+    expect maxSublist == [];
   }
 
-  // Test case for combination {1}/O|maxSublist|>=3:
+  // Test case for combination {1}/O|maxSublist|>=2:
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[19, 18, 20], [], [19, 18, 20], []];
+    var lists: seq<seq<int>> := [[15, 14], [22], [], [], [], [15, 14]];
     var maxSublist := MaxLengthSublist<int>(lists);
-    expect maxSublist == [19, 18, 20];
+    expect maxSublist == [15, 14];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMaxLengthSublist();
+  print "TestsForMaxLengthSublist: all non-failing tests passed!\n";
 }

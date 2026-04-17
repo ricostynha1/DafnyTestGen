@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-16 22:38:12
+// Generated: 2026-04-17 13:40:52
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -55,7 +55,7 @@ method SmallestMissingNumberTest() {
 }
 
 
-method Passing()
+method TestsForSmallestMissingNumber()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(s)
@@ -93,13 +93,13 @@ method Passing()
     expect forall k: nat :: k < v ==> k in s;
   }
 
-  // Test case for combination {1}/Bs=3,s-shape=const:
+  // Test case for combination {1}/Bv=1:
   //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [1237, 1237, 1237];
+    var s: seq<nat> := [0];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -107,13 +107,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSmallestMissingNumber();
+  print "TestsForSmallestMissingNumber: all non-failing tests passed!\n";
 }

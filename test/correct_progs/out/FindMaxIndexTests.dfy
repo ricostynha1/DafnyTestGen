@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-16 22:29:34
+// Generated: 2026-04-17 13:32:50
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -23,7 +23,7 @@ method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
 
 
 
-method Passing()
+method TestsForFindMaxIndex()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -51,7 +51,7 @@ method Passing()
     expect maxIndex == 0;
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/BmaxIndex=1:
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
@@ -59,33 +59,28 @@ method Passing()
   //   ENSURES: 0 <= maxIndex < a.Length
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[3] [-5282.5, -5282.25, -5282.0];
+    var a := new real[2] [-7758.0, -7758.0];
+    var maxIndex := FindMaxIndex(a);
+    expect maxIndex == 1 || maxIndex == 0;
+  }
+
+  // Test case for combination {1}/OmaxIndex>=2:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= maxIndex
+  //   POST: maxIndex < a.Length
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: 0 <= maxIndex < a.Length
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  {
+    var a := new real[3] [0.0, -7719.0, 38.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 2;
   }
 
-  // Test case for combination {1}/OmaxIndex=1:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  {
-    var a := new real[4] [-38.0, 0.0, -7719.0, -21238.0];
-    var maxIndex := FindMaxIndex(a);
-    expect maxIndex == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindMaxIndex();
+  print "TestsForFindMaxIndex: all non-failing tests passed!\n";
 }

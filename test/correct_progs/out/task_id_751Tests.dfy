@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-04-16 22:38:48
+// Generated: 2026-04-17 13:41:33
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -47,7 +47,7 @@ method IsMinHeapTest(){
 
 }
 
-method Passing()
+method TestsForIsMinHeap()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -102,13 +102,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsMinHeap();
+  print "TestsForIsMinHeap: all non-failing tests passed!\n";
 }

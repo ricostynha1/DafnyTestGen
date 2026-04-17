@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SwapTuple.dfy
 // Method: SwapTuple
-// Generated: 2026-04-16 22:32:30
+// Generated: 2026-04-17 13:35:27
 
 method SwapTuple(t: (int, int)) returns (r: (int, int))
   ensures r.0 == t.1
@@ -11,7 +11,7 @@ method SwapTuple(t: (int, int)) returns (r: (int, int))
 }
 
 
-method Passing()
+method TestsForSwapTuple()
 {
   // Test case for combination {1}:
   //   POST: r.0 == t.1
@@ -24,18 +24,7 @@ method Passing()
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1:
-  //   POST: r.0 == t.1
-  //   POST: r.1 == t.0
-  //   ENSURES: r.0 == t.1
-  //   ENSURES: r.1 == t.0
-  {
-    var t := (0, 1);
-    var r := SwapTuple(t);
-    expect r == (1, 0);
-  }
-
-  // Test case for combination {1}/Bt.0=1,t.1=0:
+  // Test case for combination {1}/R2:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   ENSURES: r.0 == t.1
@@ -46,26 +35,32 @@ method Passing()
     expect r == (0, 1);
   }
 
-  // Test case for combination {1}/Bt.0=1,t.1=1:
+  // Test case for combination {1}/R3:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   ENSURES: r.0 == t.1
   //   ENSURES: r.1 == t.0
   {
-    var t := (1, 1);
+    var t := (-1, 0);
     var r := SwapTuple(t);
-    expect r == (1, 1);
+    expect r == (0, -1);
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: r.0 == t.1
+  //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  {
+    var t := (-2, 0);
+    var r := SwapTuple(t);
+    expect r == (0, -2);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSwapTuple();
+  print "TestsForSwapTuple: all non-failing tests passed!\n";
 }

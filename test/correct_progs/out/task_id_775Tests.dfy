@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-04-16 22:39:05
+// Generated: 2026-04-17 13:41:53
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -33,7 +33,7 @@ method IsOddAtIndexOddTest(){
   assert !out2;
 }
 
-method Passing()
+method TestsForIsOddAtIndexOdd()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -98,13 +98,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsOddAtIndexOdd();
+  print "TestsForIsOddAtIndexOdd: all non-failing tests passed!\n";
 }

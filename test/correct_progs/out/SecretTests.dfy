@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-04-16 22:31:41
+// Generated: 2026-04-17 13:34:49
 
 class Secret {
     var secret: int
@@ -27,7 +27,7 @@ class Secret {
 }
 
 
-method Passing()
+method TestsForGuess()
 {
   // Test case for combination {1}:
   //   PRE:  known == false
@@ -75,30 +75,7 @@ method Passing()
     expect obj.count == 1;
   }
 
-  // Test case for combination {1}/Bg=0,secret=0,count=1:
-  //   PRE:  known == false
-  //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   POST: g == old(secret)
-  //   POST: result == true
-  //   POST: known == true
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := false;
-    obj.count := 1;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    expect result == true;
-    expect guesses == 2;
-    expect obj.known == true;
-    expect obj.count == 2;
-  }
-
-  // Test case for combination {1}/Bg=1,secret=1,count=0:
+  // Test case for combination {1}/Og>0:
   //   PRE:  known == false
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
@@ -112,8 +89,31 @@ method Passing()
     var obj := new Secret;
     obj.secret := 1;
     obj.known := false;
-    obj.count := 0;
+    obj.count := 1;
     var g := 1;
+    var result, guesses := obj.Guess(g);
+    expect result == true;
+    expect guesses == 2;
+    expect obj.known == true;
+    expect obj.count == 2;
+  }
+
+  // Test case for combination {1}/Og<0:
+  //   PRE:  known == false
+  //   PRE:  count >= 0
+  //   POST: count == old(count) + 1
+  //   POST: guesses == count
+  //   POST: g == old(secret)
+  //   POST: result == true
+  //   POST: known == true
+  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
+  {
+    var obj := new Secret;
+    obj.secret := -1;
+    obj.known := false;
+    obj.count := 0;
+    var g := -1;
     var result, guesses := obj.Guess(g);
     expect result == true;
     expect guesses == 1;
@@ -123,13 +123,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForGuess();
+  print "TestsForGuess: all non-failing tests passed!\n";
 }

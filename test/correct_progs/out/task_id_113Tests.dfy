@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-16 22:32:43
+// Generated: 2026-04-17 13:35:43
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -42,7 +42,7 @@ method IsIntegerTest(){
   assert !res4;
 }
 
-method Passing()
+method TestsForIsInteger()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -94,20 +94,15 @@ method Passing()
   //   POST: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['0', '8'];
+    var s: seq<char> := ['1', '0'];
     var result := IsInteger(s);
     expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsInteger();
+  print "TestsForIsInteger: all non-failing tests passed!\n";
 }

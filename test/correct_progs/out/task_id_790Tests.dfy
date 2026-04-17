@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-16 22:41:11
+// Generated: 2026-04-17 13:44:00
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -39,7 +39,7 @@ method IsEvenAtIndexEvenTest(){
   assert res3;
 }
 
-method Passing()
+method TestsForIsEvenAtIndexEven()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -72,6 +72,16 @@ method Passing()
     expect result == false;
   }
 
+  // Test case for combination {5}:
+  //   POST: !result
+  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (|s| - 1) :: (IsEven(i) && !IsEven(s[i])) && (IsEven(i_2) && !IsEven(s[i_2]))
+  //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
+  {
+    var s: seq<int> := [4875, 15, -1];
+    var result := IsEvenAtIndexEven(s);
+    expect result == false;
+  }
+
   // Test case for combination {1}/Q|s|>=2:
   //   POST: result
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
@@ -94,13 +104,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsEvenAtIndexEven();
+  print "TestsForIsEvenAtIndexEven: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-16 22:30:45
+// Generated: 2026-04-17 13:34:00
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -32,7 +32,7 @@ method MaxDistEqual(a: array<int>) returns (maxDist: nat)
 
 
 
-method Passing()
+method TestsForMaxDistEqual()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -59,7 +59,7 @@ method Passing()
     expect maxDist == 0;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/BmaxDist=1:
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
   //   POST: 0 + maxDist < a.Length && a[0] == a[0 + maxDist]
@@ -67,33 +67,27 @@ method Passing()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[2] [3, 6];
+    var a := new int[2] [8, 8];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
+    expect maxDist == 1;
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {2}/BmaxDist=1:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: 0 + maxDist < a.Length && a[0] == a[0 + maxDist]
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[3] [4, 7, 8];
+    var a := new int[3] [15, 16, 16];
     var maxDist := MaxDistEqual(a);
-    expect maxDist == 0;
+    expect maxDist == 1;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMaxDistEqual();
+  print "TestsForMaxDistEqual: all non-failing tests passed!\n";
 }

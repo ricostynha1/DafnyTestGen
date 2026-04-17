@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-04-15 22:40:31
+// Generated: 2026-04-17 13:52:39
 
 // Clover_longest_prefix.dfy
 
@@ -24,7 +24,7 @@ method LongestCommonPrefix(str1: seq<char>, str2: seq<char>) returns (prefix: se
 }
 
 
-method Passing()
+method TestsForLongestCommonPrefix()
 {
   // Test case for combination {1}:
   //   POST: |prefix| <= |str1|
@@ -74,7 +74,7 @@ method Passing()
     expect prefix == [];
   }
 
-  // Test case for combination {1}/Bstr1=0,str2=0:
+  // Test case for combination {1}/O|str1|=1:
   //   POST: |prefix| <= |str1|
   //   POST: prefix == str1[0 .. |prefix|]
   //   POST: |prefix| <= |str2|
@@ -83,21 +83,16 @@ method Passing()
   //   ENSURES: |prefix| <= |str1| && prefix == str1[0 .. |prefix|] && |prefix| <= |str2| && prefix == str2[0 .. |prefix|]
   //   ENSURES: |prefix| == |str1| || |prefix| == |str2| || str1[|prefix|] != str2[|prefix|]
   {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [];
+    var str1: seq<char> := [' '];
+    var str2: seq<char> := [' '];
     var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == [];
+    expect prefix == [' '];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForLongestCommonPrefix();
+  print "TestsForLongestCommonPrefix: all non-failing tests passed!\n";
 }

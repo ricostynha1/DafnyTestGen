@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-16 22:41:49
+// Generated: 2026-04-17 13:35:30
 
 // --- (int, int) tuples ---
 
@@ -64,7 +64,7 @@ method Swap3First(t: (int, int, int)) returns (r: (int, int, int))
 }
 
 
-method Passing()
+method TestsForSwapTuple()
 {
   // Test case for combination {1}:
   //   POST: r.0 == t.1
@@ -77,18 +77,7 @@ method Passing()
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1:
-  //   POST: r.0 == t.1
-  //   POST: r.1 == t.0
-  //   ENSURES: r.0 == t.1
-  //   ENSURES: r.1 == t.0
-  {
-    var t := (0, 1);
-    var r := SwapTuple(t);
-    expect r == (1, 0);
-  }
-
-  // Test case for combination {1}/Bt.0=1,t.1=0:
+  // Test case for combination {1}/R2:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   ENSURES: r.0 == t.1
@@ -99,17 +88,32 @@ method Passing()
     expect r == (0, 1);
   }
 
-  // Test case for combination {1}/Bt.0=1,t.1=1:
+  // Test case for combination {1}/R3:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   ENSURES: r.0 == t.1
   //   ENSURES: r.1 == t.0
   {
-    var t := (1, 1);
+    var t := (-1, 0);
     var r := SwapTuple(t);
-    expect r == (1, 1);
+    expect r == (0, -1);
   }
 
+  // Test case for combination {1}/R4:
+  //   POST: r.0 == t.1
+  //   POST: r.1 == t.0
+  //   ENSURES: r.0 == t.1
+  //   ENSURES: r.1 == t.0
+  {
+    var t := (-2, 0);
+    var r := SwapTuple(t);
+    expect r == (0, -2);
+  }
+
+}
+
+method TestsForScaleTuple()
+{
   // Test case for combination {1}:
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
@@ -123,7 +127,7 @@ method Passing()
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=0,k=2:
+  // Test case for combination {1}/Bk=2:
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
@@ -136,32 +140,23 @@ method Passing()
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1,k=1:
+  // Test case for combination {1}/R3:
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
   //   ENSURES: r.0 == t.0 * k
   //   ENSURES: r.1 == t.1 * k
   {
-    var t := (0, 1);
+    var t := (1, 1);
     var k := 1;
     var r := ScaleTuple(t, k);
-    expect r == (0, 1);
+    expect r == (1, 1);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1,k=2:
-  //   PRE:  k > 0
-  //   POST: r.0 == t.0 * k
-  //   POST: r.1 == t.1 * k
-  //   ENSURES: r.0 == t.0 * k
-  //   ENSURES: r.1 == t.1 * k
-  {
-    var t := (0, 1);
-    var k := 2;
-    var r := ScaleTuple(t, k);
-    expect r == (0, 2);
-  }
+}
 
+method TestsForAddTuples()
+{
   // Test case for combination {1}:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
@@ -174,19 +169,7 @@ method Passing()
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Ba.0=0,a.1=0,b.0=0,b.1=1:
-  //   POST: r.0 == a.0 + b.0
-  //   POST: r.1 == a.1 + b.1
-  //   ENSURES: r.0 == a.0 + b.0
-  //   ENSURES: r.1 == a.1 + b.1
-  {
-    var a := (0, 0);
-    var b := (0, 1);
-    var r := AddTuples(a, b);
-    expect r == (0, 1);
-  }
-
-  // Test case for combination {1}/Ba.0=0,a.1=0,b.0=1,b.1=0:
+  // Test case for combination {1}/R2:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
   //   ENSURES: r.0 == a.0 + b.0
@@ -198,18 +181,34 @@ method Passing()
     expect r == (1, 0);
   }
 
-  // Test case for combination {1}/Ba.0=0,a.1=0,b.0=1,b.1=1:
+  // Test case for combination {1}/R3:
   //   POST: r.0 == a.0 + b.0
   //   POST: r.1 == a.1 + b.1
   //   ENSURES: r.0 == a.0 + b.0
   //   ENSURES: r.1 == a.1 + b.1
   {
     var a := (0, 0);
-    var b := (1, 1);
+    var b := (-1, 0);
     var r := AddTuples(a, b);
-    expect r == (1, 1);
+    expect r == (-1, 0);
   }
 
+  // Test case for combination {1}/R4:
+  //   POST: r.0 == a.0 + b.0
+  //   POST: r.1 == a.1 + b.1
+  //   ENSURES: r.0 == a.0 + b.0
+  //   ENSURES: r.1 == a.1 + b.1
+  {
+    var a := (0, 0);
+    var b := (-2, 0);
+    var r := AddTuples(a, b);
+    expect r == (-2, 0);
+  }
+
+}
+
+method TestsForTupleMax()
+{
   // Test case for combination {1}:
   //   POST: r == t.0
   //   POST: r >= t.0
@@ -235,30 +234,34 @@ method Passing()
     expect r == 1;
   }
 
-  // Test case for combination {1}/Bt.0=1,t.1=0:
+  // Test case for combination {1}/Or>0:
   //   POST: r == t.0
   //   POST: r >= t.0
   //   POST: r >= t.1
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (1, 0);
+    var t := (1, -1);
     var r := TupleMax(t);
     expect r == 1;
   }
 
-  // Test case for combination {1}/Bt.0=1,t.1=1:
+  // Test case for combination {1}/Or<0:
   //   POST: r == t.0
   //   POST: r >= t.0
   //   POST: r >= t.1
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (1, 1);
+    var t := (-1, -2);
     var r := TupleMax(t);
-    expect r == 1;
+    expect r == -1;
   }
 
+}
+
+method TestsForMixedTuple()
+{
   // Test case for combination {1}:
   //   PRE:  x >= 0
   //   POST: r.0 == x
@@ -272,20 +275,20 @@ method Passing()
     expect r == (0, 0.0);
   }
 
-  // Test case for combination {1}/Bx=0,y=1.0:
+  // Test case for combination {1}/Ox>0:
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
   //   ENSURES: r.0 == x
   //   ENSURES: r.1 == y
   {
-    var x := 0;
+    var x := 1;
     var y := 1.0;
     var r := MixedTuple(x, y);
-    expect r == (0, 1.0);
+    expect r == (1, 1.0);
   }
 
-  // Test case for combination {1}/Bx=0,y=-1.0:
+  // Test case for combination {1}/Oy<0:
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
@@ -298,19 +301,10 @@ method Passing()
     expect r == (0, -1.0);
   }
 
-  // Test case for combination {1}/Bx=0,y=0.5:
-  //   PRE:  x >= 0
-  //   POST: r.0 == x
-  //   POST: r.1 == y
-  //   ENSURES: r.0 == x
-  //   ENSURES: r.1 == y
-  {
-    var x := 0;
-    var y := 0.5;
-    var r := MixedTuple(x, y);
-    expect r == (0, 0.5);
-  }
+}
 
+method TestsForClassifySign()
+{
   // Test case for combination {1}:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
@@ -322,7 +316,7 @@ method Passing()
     expect r == (0, true);
   }
 
-  // Test case for combination {1}/Bx=1:
+  // Test case for combination {1}/Ox>0:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
   //   ENSURES: r.0 == x
@@ -333,7 +327,7 @@ method Passing()
     expect r == (1, true);
   }
 
-  // Test case for combination {1}/Or.0<0:
+  // Test case for combination {1}/Ox<0:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
   //   ENSURES: r.0 == x
@@ -344,6 +338,10 @@ method Passing()
     expect r == (-1, false);
   }
 
+}
+
+method TestsForSwap3First()
+{
   // Test case for combination {1}:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
@@ -357,7 +355,7 @@ method Passing()
     expect r == (0, 0, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=0,t.2=1:
+  // Test case for combination {1}/R2:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
@@ -365,12 +363,12 @@ method Passing()
   //   ENSURES: r.1 == t.0
   //   ENSURES: r.2 == t.2
   {
-    var t := (0, 0, 1);
+    var t := (1, 0, 0);
     var r := Swap3First(t);
-    expect r == (0, 0, 1);
+    expect r == (0, 1, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1,t.2=0:
+  // Test case for combination {1}/R3:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
@@ -378,12 +376,12 @@ method Passing()
   //   ENSURES: r.1 == t.0
   //   ENSURES: r.2 == t.2
   {
-    var t := (0, 1, 0);
+    var t := (2, 0, 0);
     var r := Swap3First(t);
-    expect r == (1, 0, 0);
+    expect r == (0, 2, 0);
   }
 
-  // Test case for combination {1}/Bt.0=0,t.1=1,t.2=1:
+  // Test case for combination {1}/R4:
   //   POST: r.0 == t.1
   //   POST: r.1 == t.0
   //   POST: r.2 == t.2
@@ -391,20 +389,27 @@ method Passing()
   //   ENSURES: r.1 == t.0
   //   ENSURES: r.2 == t.2
   {
-    var t := (0, 1, 1);
+    var t := (-1, 0, 0);
     var r := Swap3First(t);
-    expect r == (1, 0, 1);
+    expect r == (0, -1, 0);
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSwapTuple();
+  print "TestsForSwapTuple: all non-failing tests passed!\n";
+  TestsForScaleTuple();
+  print "TestsForScaleTuple: all non-failing tests passed!\n";
+  TestsForAddTuples();
+  print "TestsForAddTuples: all non-failing tests passed!\n";
+  TestsForTupleMax();
+  print "TestsForTupleMax: all non-failing tests passed!\n";
+  TestsForMixedTuple();
+  print "TestsForMixedTuple: all non-failing tests passed!\n";
+  TestsForClassifySign();
+  print "TestsForClassifySign: all non-failing tests passed!\n";
+  TestsForSwap3First();
+  print "TestsForSwap3First: all non-failing tests passed!\n";
 }

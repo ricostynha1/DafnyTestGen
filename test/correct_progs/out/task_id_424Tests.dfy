@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-16 22:34:52
+// Generated: 2026-04-17 13:37:27
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)
@@ -40,7 +40,7 @@ method ExtractRearCharsTest(){
   assert res3 == ['a', 'b', 'c'];
 }
 
-method Passing()
+method TestsForExtractRearChars()
 {
   // Test case for combination {1}:
   //   PRE:  forall i: int :: 0 <= i < |l| ==> |l[i]| > 0
@@ -78,27 +78,10 @@ method Passing()
     expect r == [' '];
   }
 
-  // Test case for combination {1}/Bl=3:
-  //   PRE:  forall i: int :: 0 <= i < |l| ==> |l[i]| > 0
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == Last(l[i])
-  {
-    var l: seq<string> := [" 8%", "p", "41"];
-    var r := ExtractRearChars(l);
-    expect r == ['%', 'p', '1'];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForExtractRearChars();
+  print "TestsForExtractRearChars: all non-failing tests passed!\n";
 }

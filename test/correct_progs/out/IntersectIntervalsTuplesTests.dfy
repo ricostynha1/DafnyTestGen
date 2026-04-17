@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-16 22:30:12
+// Generated: 2026-04-17 13:33:25
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -58,7 +58,7 @@ method TestIntersectIntervals()
     //@invalid var r3 := IntersectIntervals(a3); should not verify due to precondition violation
 }
 
-method Passing()
+method TestsForIntersectIntervals()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -71,7 +71,7 @@ method Passing()
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/R2:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
@@ -82,7 +82,7 @@ method Passing()
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/R3:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
@@ -93,7 +93,7 @@ method Passing()
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
 
-  // Test case for combination {1}/Or.0>0:
+  // Test case for combination {1}/R4:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
@@ -106,13 +106,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIntersectIntervals();
+  print "TestsForIntersectIntervals: all non-failing tests passed!\n";
 }

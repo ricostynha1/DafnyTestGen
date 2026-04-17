@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-04-16 22:31:11
+// Generated: 2026-04-17 13:34:26
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -35,7 +35,7 @@ predicate IsEven(n: nat) {
 
 
 
-method Passing()
+method TestsForPartitionOddEven()
 {
   // Test case for combination {1}:
   //   POST: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
@@ -48,50 +48,32 @@ method Passing()
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}/Oa≠old:
   //   POST: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[1] [2];
+    var a := new nat[2] [38, 183];
     PartitionOddEven(a);
-    expect a[..] == [2];
+    expect a[..] == [183, 38];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/R3:
   //   POST: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [17758, 17759];
+    var a := new nat[1] [609];
     PartitionOddEven(a);
-    expect a[..] == [17759, 17758];
+    expect a[..] == [609];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new nat[3] [0, 4894, 1];
-    var old_a := a[..];
-    PartitionOddEven(a);
-    expect !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j]);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForPartitionOddEven();
+  print "TestsForPartitionOddEven: all non-failing tests passed!\n";
 }

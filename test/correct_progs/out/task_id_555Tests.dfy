@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-04-16 22:35:37
+// Generated: 2026-04-17 13:38:23
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -58,7 +58,7 @@ method DifferenceSumCubesAndSumNumbersTest(){
   assert res1==30;
 }
 
-method Passing()
+method TestsForDifferenceSumCubesAndSumNumbers()
 {
   // Test case for combination {1}:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
@@ -78,7 +78,7 @@ method Passing()
     expect diff == 0;
   }
 
-  // Test case for combination {1}/Odiff>0:
+  // Test case for combination {1}/On>=2:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
@@ -87,6 +87,10 @@ method Passing()
     expect diff == 6;
   }
 
+}
+
+method TestsForSumCubes()
+{
   // Test case for combination {1}:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
@@ -105,7 +109,7 @@ method Passing()
     expect s == 1;
   }
 
-  // Test case for combination {1}/Os>=2:
+  // Test case for combination {1}/On>=2:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
@@ -114,6 +118,10 @@ method Passing()
     expect s == 9;
   }
 
+}
+
+method TestsForSumNumbers()
+{
   // Test case for combination {1}:
   //   POST: s == n * (n + 1) / 2
   //   ENSURES: s == n * (n + 1) / 2
@@ -132,24 +140,23 @@ method Passing()
     expect s == 1;
   }
 
-  // Test case for combination {1}/Os>=2:
+  // Test case for combination {1}/On>=2:
   //   POST: s == n * (n + 1) / 2
   //   ENSURES: s == n * (n + 1) / 2
   {
-    var n := 4;
+    var n := 2;
     var s := SumNumbers(n);
-    expect s == 10;
+    expect s == 3;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDifferenceSumCubesAndSumNumbers();
+  print "TestsForDifferenceSumCubesAndSumNumbers: all non-failing tests passed!\n";
+  TestsForSumCubes();
+  print "TestsForSumCubes: all non-failing tests passed!\n";
+  TestsForSumNumbers();
+  print "TestsForSumNumbers: all non-failing tests passed!\n";
 }

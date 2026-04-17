@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-16 22:41:28
+// Generated: 2026-04-17 13:44:23
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -40,7 +40,7 @@ method ContainsEvenNumberTest(){
 }
 
 
-method Passing()
+method TestsForContainsEvenNumber()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -73,26 +73,20 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: result
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: IsEven(a[0])
+  // Test case for combination {5}/O|a|=1:
+  //   POST: !result
+  //   POST: !exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[2] [0, 6];
+    var a := new int[1] [1];
     var result := ContainsEvenNumber(a);
-    expect result == true;
+    expect result == false;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForContainsEvenNumber();
+  print "TestsForContainsEvenNumber: all non-failing tests passed!\n";
 }

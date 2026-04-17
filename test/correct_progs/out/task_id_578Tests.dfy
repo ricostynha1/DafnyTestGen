@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-04-16 22:36:31
+// Generated: 2026-04-17 13:39:04
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -30,7 +30,7 @@ method InterleaveTest(){
   assert res1 == [1, 10, 100, 2, 20, 200, 3, 30, 300];
 }
 
-method Passing()
+method TestsForInterleave()
 {
   // Test case for combination {1}:
   //   PRE:  |s1| == |s2| == |s3|
@@ -76,13 +76,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForInterleave();
+  print "TestsForInterleave: all non-failing tests passed!\n";
 }

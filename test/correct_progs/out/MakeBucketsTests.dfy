@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-16 22:30:30
+// Generated: 2026-04-17 13:33:46
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -53,7 +53,7 @@ function count(x: nat, s: seq<nat>) : nat {
 
 
 
-method Passing()
+method TestsForMakeBuckets()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -68,41 +68,49 @@ method Passing()
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[2] [7719, 7720];
+    var a := new nat[2] [7719, 3];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/O|b|=1:
   //   PRE:  a.Length > 0
   //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[3] [7719, 7720, 8957];
+    var a := new nat[1] [0];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
   }
 
-}
+  // Test case for combination {1}/O|b|>=2:
+  //   PRE:  a.Length > 0
+  //   POST: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   POST: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  {
+    var a := new nat[1] [1];
+    var b := MakeBuckets(a);
+    expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
+    expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMakeBuckets();
+  print "TestsForMakeBuckets: all non-failing tests passed!\n";
 }

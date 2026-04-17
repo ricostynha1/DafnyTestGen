@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-16 22:30:50
+// Generated: 2026-04-17 13:34:04
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -46,7 +46,7 @@ method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
 
 
 
-method Passing()
+method TestsForMerge()
 {
   // Test case for combination {1}:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
@@ -106,13 +106,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMerge();
+  print "TestsForMerge: all non-failing tests passed!\n";
 }

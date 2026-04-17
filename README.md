@@ -105,7 +105,7 @@ The `exists` clause decomposes into: max at position 0 (left), max in middle, ma
 
 ### Decomposition of universal quantifiers
 
-A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers, and to any array, sequence, set, multiset, or map input referenced by the quantifier. Negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above.
+A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers, and to any array, sequence, set, multiset, or map input referenced by the quantifier. Negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above. This is important to promote **specification coverage**, i.e., to make sure that all pieces of the specification are exercised by the test suite. 
 
 Consider the sortedness postcondition:
 
@@ -214,7 +214,7 @@ Tier is skipped if `classLiterals` already implies it (syntactic prune), or if P
 
 #### Mutation tiers (post vs pre)
 
-For mutable variables mentioned in `ensures` **both** as post-state and inside `old(...)`, Phase 2b also emits a pair: `x = old(x)` (no-op path) and `x != old(x)` (actually mutated path). Applies to mutable array parameters, mutable scalar class fields, and mutable array/seq class fields.
+For mutable variables mentioned in `ensures` **both** as post-state and inside `old(...)`, Phase 2b also emits a pair: `x = old(x)` (no-op path) and `x != old(x)` (actually mutated path). Applies to mutable array parameters, mutable scalar class fields, and mutable array/seq class fields. This is important to make sure that the test suite will detect vacuous implementations. 
 
 ### Walkthroughs
 

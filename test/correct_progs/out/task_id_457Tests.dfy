@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_457.dfy
 // Method: MinLengthSublist
-// Generated: 2026-04-16 22:35:21
+// Generated: 2026-04-17 13:38:00
 
 // Find the shortest sublist in a non-empty list of sublists.
 method MinLengthSublist<T>(s: seq<seq<T>>) returns (minSublist: seq<T>)
@@ -35,7 +35,7 @@ method MinLengthSublistTest(){
 }
 
 
-method Passing()
+method TestsForMinLengthSublist()
 {
   // Test case for combination {1}:
   //   PRE:  |s| > 0
@@ -62,41 +62,35 @@ method Passing()
     expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
   }
 
-  // Test case for combination {1}/Bs=inner>=2:
+  // Test case for combination {1}/O|minSublist|=0:
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   //   ENSURES: minSublist in s
   //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[7, 6], [18, 19], [12, 13]];
+    var s: seq<seq<int>> := [[], [], [], [], []];
     var minSublist := MinLengthSublist<int>(s);
-    expect minSublist in s;
-    expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
+    expect minSublist == [];
   }
 
-  // Test case for combination {1}/O|minSublist|>=3:
+  // Test case for combination {1}/O|minSublist|>=2:
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   //   ENSURES: minSublist in s
   //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[22, 21, 23], [8, 25, 34], [11, 12, 13], [7, 31, 39]];
+    var s: seq<seq<int>> := [[21, 22], [7, 8], [10, 11], [17, 31], [23, 24], [21, 22]];
     var minSublist := MinLengthSublist<int>(s);
     expect minSublist in s;
     expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMinLengthSublist();
+  print "TestsForMinLengthSublist: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-16 22:38:18
+// Generated: 2026-04-17 13:40:59
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -65,7 +65,7 @@ method MoveZeroesToEndTest(){
     assert nz2 == 2 && a2[..] == [1, 1, 0, 0];
 }
 
-method Passing()
+method TestsForMoveZeroesToEnd()
 {
   // Test case for combination {1}:
   //   POST: 0 <= nz <= a.Length
@@ -81,7 +81,7 @@ method Passing()
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}/Bnz=1:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
@@ -89,15 +89,13 @@ method Passing()
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
   //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[1] [3];
-    var old_a := a[..];
+    var a := new int[1] [6];
     var nz := MoveZeroesToEnd(a);
-    expect 0 <= nz <= a.Length;
-    expect a[..nz] == FilterNZ(old_a);
-    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1 || nz == 0 || nz == 1;
+    expect a[..] == [6];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/Onz>=2:
   //   POST: 0 <= nz <= a.Length
   //   POST: a[..nz] == FilterNZ(old(a[..]))
   //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
@@ -105,39 +103,16 @@ method Passing()
   //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
   //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[2] [4, 3];
-    var old_a := a[..];
+    var a := new int[1] [5];
     var nz := MoveZeroesToEnd(a);
-    expect 0 <= nz <= a.Length;
-    expect a[..nz] == FilterNZ(old_a);
-    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 2 || nz == 1 || nz == 0;
+    expect a[..] == [5];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: 0 <= nz <= a.Length
-  //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
-  //   ENSURES: 0 <= nz <= a.Length
-  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
-  {
-    var a := new int[3] [5, 4, 6];
-    var old_a := a[..];
-    var nz := MoveZeroesToEnd(a);
-    expect 0 <= nz <= a.Length;
-    expect a[..nz] == FilterNZ(old_a);
-    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMoveZeroesToEnd();
+  print "TestsForMoveZeroesToEnd: all non-failing tests passed!\n";
 }

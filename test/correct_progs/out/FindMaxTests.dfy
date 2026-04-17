@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-16 22:29:29
+// Generated: 2026-04-17 13:32:45
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -22,7 +22,7 @@ method FindMax(a: array<real>) returns (max: real)
 
 
 
-method Passing()
+method TestsForFindMax()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
@@ -49,15 +49,15 @@ method Passing()
     expect max == 0.0;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {3}/Q|a|>=2:
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
-  //   POST: max == a[0]
+  //   POST: max == a[(a.Length - 1)]
   //   POST: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[2] [0.0, -0.5];
+    var a := new real[2] [0.0, 0.0];
     var max := FindMax(a);
     expect max == 0.0;
   }
@@ -70,20 +70,15 @@ method Passing()
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[3] [0.5, 0.0, -38.0];
+    var a := new real[1] [0.5];
     var max := FindMax(a);
     expect max == 0.5;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindMax();
+  print "TestsForFindMax: all non-failing tests passed!\n";
 }

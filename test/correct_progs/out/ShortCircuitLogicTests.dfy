@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-16 22:32:09
+// Generated: 2026-04-17 13:35:16
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0
@@ -23,7 +23,7 @@ method ZeroLengthOrValue(a: array<int>) returns (result: bool)
 
 
 
-method Passing()
+method TestsForGetFirstOrZero()
 {
   // Test case for combination {2}:
   //   POST: !(a.Length == 0)
@@ -49,30 +49,34 @@ method Passing()
     expect result == 0;
   }
 
-  // Test case for combination {2}/Ba=2:
+  // Test case for combination {2}/O|a|>=2:
   //   POST: !(a.Length == 0)
   //   POST: a.Length > 0
   //   POST: result == a[0]
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 4];
     var result := GetFirstOrZero(a);
-    expect result == 4;
+    expect result == 3;
   }
 
-  // Test case for combination {2}/Ba=3:
+  // Test case for combination {2}/Oresult=0:
   //   POST: !(a.Length == 0)
   //   POST: a.Length > 0
   //   POST: result == a[0]
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[1] [0];
     var result := GetFirstOrZero(a);
-    expect result == 5;
+    expect result == 0;
   }
 
+}
+
+method TestsForZeroLengthOrValue()
+{
   // Test case for combination {1}:
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
@@ -82,20 +86,11 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[2] [4, 3];
-    var result := ZeroLengthOrValue(a);
-    expect result == false;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: result == (a.Length == 0 || a[0] == 0)
-  //   ENSURES: result == (a.Length == 0 || a[0] == 0)
-  {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[2] [3, 4];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }
@@ -104,20 +99,17 @@ method Passing()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[4] [0, 9, 10, 8];
+    var a := new int[1] [0];
     var result := ZeroLengthOrValue(a);
     expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForGetFirstOrZero();
+  print "TestsForGetFirstOrZero: all non-failing tests passed!\n";
+  TestsForZeroLengthOrValue();
+  print "TestsForZeroLengthOrValue: all non-failing tests passed!\n";
 }

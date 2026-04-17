@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-16 22:38:28
+// Generated: 2026-04-17 13:41:09
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -37,7 +37,7 @@ method AllSequencesEqualLengthTest(){
 
 }
 
-method Passing()
+method TestsForAllSequencesEqualLength()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -81,13 +81,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAllSequencesEqualLength();
+  print "TestsForAllSequencesEqualLength: all non-failing tests passed!\n";
 }

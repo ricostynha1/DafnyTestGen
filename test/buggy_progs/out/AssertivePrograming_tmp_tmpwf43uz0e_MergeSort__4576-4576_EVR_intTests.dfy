@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-15 22:32:28
+// Generated: 2026-04-17 13:48:42
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
@@ -221,100 +221,116 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForMergeSort()
 {
   // Test case for combination {1}:
   //   POST: b.Length == a.Length
+  //   POST: Sorted(b[..])
+  //   POST: multiset(a[..]) == multiset(b[..])
   //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[0] [];
     var b := MergeSort(a);
     expect b.Length == a.Length;
+    expect Sorted(b[..]);
+    expect multiset(a[..]) == multiset(b[..]);
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/O|a|=1:
   //   POST: b.Length == a.Length
+  //   POST: Sorted(b[..])
+  //   POST: multiset(a[..]) == multiset(b[..])
   //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[1] [2];
     var b := MergeSort(a);
     expect b.Length == a.Length;
+    expect Sorted(b[..]);
+    expect multiset(a[..]) == multiset(b[..]);
   }
 
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: b.Length == a.Length
+  //   POST: Sorted(b[..])
+  //   POST: multiset(a[..]) == multiset(b[..])
+  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
+  {
+    var a := new int[2] [22, 21];
+    var b := MergeSort(a);
+    expect b.Length == a.Length;
+    expect Sorted(b[..]);
+    expect multiset(a[..]) == multiset(b[..]);
+  }
+
+}
+
+method TestsForMerge()
+{
   // Test case for combination {1}:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
+  //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[0] [];
+    var b := new int[1] [37];
     var c := new int[0] [];
-    var d := new int[0] [];
+    var d := new int[1] [39];
     Merge(b, c, d);
-    expect b[..] == [];
+    expect Sorted(b[..]);
+    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
   // Test case for combination {1}/Q|c|>=2:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
+  //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[3] [43, 44, 45];
-    var c := new int[2] [-7719, 38];
-    var d := new int[1] [31];
+    var b := new int[2] [44, 43];
+    var c := new int[2] [-2718, 21238];
+    var d := new int[0] [];
     Merge(b, c, d);
     expect Sorted(b[..]);
+    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
   // Test case for combination {1}/Q|c|=1:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
+  //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[1] [22];
-    var c := new int[1] [18];
+    var b := new int[1] [30];
+    var c := new int[1] [27];
     var d := new int[0] [];
     Merge(b, c, d);
     expect Sorted(b[..]);
+    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
   // Test case for combination {1}/Q|d|>=2:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
   //   POST: Sorted(b[..])
+  //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[2] [31, 32];
+    var b := new int[2] [48, 47];
     var c := new int[0] [];
-    var d := new int[2] [-7719, 38];
+    var d := new int[2] [-2718, 8861];
     Merge(b, c, d);
     expect Sorted(b[..]);
+    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
 }
 
-method Failing()
+method TestsForMergeLoop()
 {
-  // Test case for combination {1}/Q|a|>=2:
-  //   POST: b.Length == a.Length
-  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
-  {
-    var a := new int[2] [3, 4];
-    var b := MergeSort(a);
-    // expect b.Length == a.Length;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: b.Length == a.Length
-  //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    var b := MergeSort(a);
-    // expect b.Length == a.Length;
-  }
-
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
@@ -347,6 +363,10 @@ method Failing()
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMergeSort();
+  print "TestsForMergeSort: all non-failing tests passed!\n";
+  TestsForMerge();
+  print "TestsForMerge: all non-failing tests passed!\n";
+  TestsForMergeLoop();
+  print "TestsForMergeLoop: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-04-16 22:32:38
+// Generated: 2026-04-17 13:35:39
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)
@@ -32,7 +32,7 @@ method AppendArrayToSeqTest(){
   assert res3 == [11, 12, 7, 8, 9];
 }
 
-method Passing()
+method TestsForAppendArrayToSeq()
 {
   // Test case for combination {1}:
   //   POST: r == s + a[..]
@@ -44,45 +44,40 @@ method Passing()
     expect r == [];
   }
 
-  // Test case for combination {1}/Bs=0,a=1:
+  // Test case for combination {1}/O|s|=1:
   //   POST: r == s + a[..]
   //   ENSURES: r == s + a[..]
   {
-    var s: seq<int> := [];
-    var a := new int[1] [2];
+    var s: seq<int> := [2];
+    var a := new int[0] [];
     var r := AppendArrayToSeq<int>(s, a);
     expect r == [2];
   }
 
-  // Test case for combination {1}/Bs=0,a=2:
+  // Test case for combination {1}/O|s|>=2:
+  //   POST: r == s + a[..]
+  //   ENSURES: r == s + a[..]
+  {
+    var s: seq<int> := [4, 5];
+    var a := new int[1] [11];
+    var r := AppendArrayToSeq<int>(s, a);
+    expect r == [4, 5, 11];
+  }
+
+  // Test case for combination {1}/O|a|>=2:
   //   POST: r == s + a[..]
   //   ENSURES: r == s + a[..]
   {
     var s: seq<int> := [];
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 6];
     var r := AppendArrayToSeq<int>(s, a);
-    expect r == [4, 3];
+    expect r == [3, 6];
   }
 
-  // Test case for combination {1}/Bs=0,a=3:
-  //   POST: r == s + a[..]
-  //   ENSURES: r == s + a[..]
-  {
-    var s: seq<int> := [];
-    var a := new int[3] [5, 4, 6];
-    var r := AppendArrayToSeq<int>(s, a);
-    expect r == [5, 4, 6];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAppendArrayToSeq();
+  print "TestsForAppendArrayToSeq: all non-failing tests passed!\n";
 }

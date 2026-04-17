@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-04-16 22:37:59
+// Generated: 2026-04-17 13:40:37
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -36,7 +36,7 @@ method ElementWiseModuloTest(){
 
 
 
-method Passing()
+method TestsForElementWiseModulo()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
@@ -80,29 +80,10 @@ method Passing()
     expect result[..] == [0];
   }
 
-  // Test case for combination {1}/Ba=3,b=3:
-  //   PRE:  a.Length == b.Length
-  //   PRE:  forall i: int :: 0 <= i < b.Length ==> b[i] != 0
-  //   POST: result.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
-  //   ENSURES: result.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
-  {
-    var a := new int[3] [0, 4, 6];
-    var b := new int[3] [1, 2, 3];
-    var result := ElementWiseModulo(a, b);
-    expect result[..] == [0, 0, 0];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForElementWiseModulo();
+  print "TestsForElementWiseModulo: all non-failing tests passed!\n";
 }

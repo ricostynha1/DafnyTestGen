@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_454.dfy
 // Method: ContainsZ
-// Generated: 2026-04-16 22:35:18
+// Generated: 2026-04-17 13:37:56
 
 // Checks if a string contains the letter 'z' or 'Z'
 method ContainsZ(s: string) returns (result: bool)
@@ -33,7 +33,7 @@ method ContainsZTest() {
   assert !out3;
 }
 
-method Passing()
+method TestsForContainsZ()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -41,6 +41,17 @@ method Passing()
   //   ENSURES: result <==> 'z' in s || 'Z' in s
   {
     var s: seq<char> := ['z'];
+    var result := ContainsZ(s);
+    expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST: result
+  //   POST: !('z' in s)
+  //   POST: 'Z' in s
+  //   ENSURES: result <==> 'z' in s || 'Z' in s
+  {
+    var s: seq<char> := ['Z'];
     var result := ContainsZ(s);
     expect result == true;
   }
@@ -56,35 +67,20 @@ method Passing()
     expect result == false;
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/O|s|>=2:
   //   POST: result
   //   POST: 'z' in s
   //   ENSURES: result <==> 'z' in s || 'Z' in s
   {
-    var s: seq<char> := ['z', '{'];
+    var s: seq<char> := ['{', 'z'];
     var result := ContainsZ(s);
     expect result == true;
   }
 
-  // Test case for combination {1}/Bs=3:
-  //   POST: result
-  //   POST: 'z' in s
-  //   ENSURES: result <==> 'z' in s || 'Z' in s
-  {
-    var s: seq<char> := ['z', '|', '{'];
-    var result := ContainsZ(s);
-    expect result == true;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForContainsZ();
+  print "TestsForContainsZ: all non-failing tests passed!\n";
 }

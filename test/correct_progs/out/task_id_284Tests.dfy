@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-16 22:34:01
+// Generated: 2026-04-17 13:36:46
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -34,7 +34,7 @@ method AllElementsEqualTest(){
 }
 
 
-method Passing()
+method TestsForAllElementsEqualTo()
 {
   // Test case for combination {1}:
   //   POST: result
@@ -94,13 +94,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAllElementsEqualTo();
+  print "TestsForAllElementsEqualTo: all non-failing tests passed!\n";
 }

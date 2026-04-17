@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-16 22:35:41
+// Generated: 2026-04-17 13:38:29
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -37,7 +37,7 @@ method ToggleCaseTest(){
   assert out2=="liTTle";
 }
 
-method Passing()
+method TestsForToggleCase()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, Toggle)
@@ -71,26 +71,10 @@ method Passing()
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
   }
 
-  // Test case for combination {1}/Bs=3:
-  //   POST: IsMapSeq(s, v, Toggle)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
-  //   ENSURES: IsMapSeq(s, v, Toggle)
-  {
-    var s: seq<char> := ['F', 'G', 'H'];
-    var v := ToggleCase(s);
-    expect IsMapSeq(s, v, Toggle);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForToggleCase();
+  print "TestsForToggleCase: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-16 22:29:48
+// Generated: 2026-04-17 13:32:59
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -54,7 +54,7 @@ function Min(a: array<real>, len : nat := a.Length) : (res: real)
 
 
 
-method Passing()
+method TestsForIntersectIntervals()
 {
   // Test case for combination {1}:
   //   PRE:  left.Length == right.Length
@@ -100,14 +100,14 @@ method Passing()
   //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
-    var left := new real[2] [8854.75, 0.0];
-    var right := new real[2] [8855.0, 0.25];
+    var left := new real[2] [-0.25, 0.0];
+    var right := new real[2] [-0.125, 0.125];
     var l, r := IntersectIntervals(left, right);
     expect l == 0.0;
     expect r == 0.0;
   }
 
-  // Test case for combination {1}/Bleft=3,right=3:
+  // Test case for combination {1}/Ol>0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
   //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
@@ -117,22 +117,17 @@ method Passing()
   //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
-    var left := new real[3] [-32289.0, -32288.0, -32287.0];
-    var right := new real[3] [-32288.0, -32286.0, -32285.0];
+    var left := new real[1] [0.03125];
+    var right := new real[1] [0.0625];
     var l, r := IntersectIntervals(left, right);
-    expect l == 0.0;
-    expect r == 0.0;
+    expect l == 0.03125;
+    expect r == 0.0625;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIntersectIntervals();
+  print "TestsForIntersectIntervals: all non-failing tests passed!\n";
 }

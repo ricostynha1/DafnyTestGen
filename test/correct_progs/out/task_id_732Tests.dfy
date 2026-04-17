@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-16 22:38:36
+// Generated: 2026-04-17 13:41:18
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -39,7 +39,7 @@ method ReplaceWithColonTest(){
 }
 
 
-method Passing()
+method TestsForReplaceWithColon()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
@@ -73,26 +73,10 @@ method Passing()
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
   }
 
-  // Test case for combination {1}/Bs=3:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
-  {
-    var s: seq<char> := ['F', 'G', 'H'];
-    var v := ReplaceWithColon(s);
-    expect IsMapSeq(s, v, ReplaceCharWithColon);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForReplaceWithColon();
+  print "TestsForReplaceWithColon: all non-failing tests passed!\n";
 }

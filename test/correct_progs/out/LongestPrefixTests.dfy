@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-16 22:30:26
+// Generated: 2026-04-17 13:33:42
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 
@@ -20,7 +20,7 @@ method LongestPrefix(a: array<int>, b: array <int>) returns (i: nat)
 }
 
 
-method Passing()
+method TestsForLongestPrefix()
 {
   // Test case for combination {1}:
   //   POST: i <= a.Length
@@ -70,7 +70,7 @@ method Passing()
     expect i == 0;
   }
 
-  // Test case for combination {1}/Ba=0,b=1:
+  // Test case for combination {1}/Bi=1:
   //   POST: i <= a.Length
   //   POST: i <= b.Length
   //   POST: a[..i] == b[..i]
@@ -79,21 +79,16 @@ method Passing()
   //   ENSURES: a[..i] == b[..i]
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
-    var a := new int[0] [];
+    var a := new int[1] [2];
     var b := new int[1] [2];
     var i := LongestPrefix(a, b);
-    expect i == 0;
+    expect i == 1;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForLongestPrefix();
+  print "TestsForLongestPrefix: all non-failing tests passed!\n";
 }

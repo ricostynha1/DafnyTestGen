@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-16 22:33:27
+// Generated: 2026-04-17 13:36:23
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -55,7 +55,7 @@ method IntersectionTest(){
   //@invalid assert res3 == [3, 1]; // not guaranteed
 }
 
-method Passing()
+method TestsForIntersection()
 {
   // Test case for combination {1}:
   //   POST: forall k: int :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
@@ -115,21 +115,16 @@ method Passing()
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[0] [];
-    var b := new int[2] [24, 25];
+    var a := new int[1] [38];
+    var b := new int[2] [19, 22];
     var res := Intersection<int>(a, b);
     expect res == [];
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIntersection();
+  print "TestsForIntersection: all non-failing tests passed!\n";
 }

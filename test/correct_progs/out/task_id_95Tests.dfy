@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-16 22:41:46
+// Generated: 2026-04-17 13:44:40
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -41,7 +41,7 @@ method SmallestListLengthTest(){
 }
 
 
-method Passing()
+method TestsForSmallestListLength()
 {
   // Test case for combination {1}:
   //   PRE:  |s| > 0
@@ -68,20 +68,19 @@ method Passing()
     expect v == 0;
   }
 
-  // Test case for combination {1}/Bs=inner>=1:
+  // Test case for combination {2}/Bv=1:
   //   PRE:  |s| > 0
   //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: 0 <= (|s| - 1)
-  //   POST: v == |s[0]|
+  //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
   //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[11], [14]];
+    var s: seq<seq<int>> := [[4], [7], [9], [10], [11]];
     var v := SmallestListLength<int>(s);
     expect v == 1;
   }
 
-  // Test case for combination {1}/Bs=inner>=2:
+  // Test case for combination {1}/Ov>=2:
   //   PRE:  |s| > 0
   //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST: 0 <= (|s| - 1)
@@ -89,20 +88,15 @@ method Passing()
   //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[12, 13], [18, 19], [24, 25]];
+    var s: seq<seq<int>> := [[11, 12], [17, 20]];
     var v := SmallestListLength<int>(s);
     expect v == 2;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSmallestListLength();
+  print "TestsForSmallestListLength: all non-failing tests passed!\n";
 }

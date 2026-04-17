@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-16 22:35:34
+// Generated: 2026-04-17 13:38:20
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -47,7 +47,7 @@ method TestToLowercase()
     assert result == "1234567890";
 }
 
-method Passing()
+method TestsForToLowercase()
 {
   // Test case for combination {1}:
   //   POST: IsMapSeq(s, v, CharToLower)
@@ -81,26 +81,10 @@ method Passing()
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
   }
 
-  // Test case for combination {1}/Bs=3:
-  //   POST: IsMapSeq(s, v, CharToLower)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
-  //   ENSURES: IsMapSeq(s, v, CharToLower)
-  {
-    var s: seq<char> := ['F', 'G', 'H'];
-    var v := ToLowercase(s);
-    expect IsMapSeq(s, v, CharToLower);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForToLowercase();
+  print "TestsForToLowercase: all non-failing tests passed!\n";
 }

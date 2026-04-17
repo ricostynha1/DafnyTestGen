@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-16 22:41:18
+// Generated: 2026-04-17 13:44:07
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -48,7 +48,7 @@ method ArraySumTest(){
   assert s3 == 0;
 }
 
-method Passing()
+method TestsForCalcArraySum()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= n <= a.Length
@@ -74,7 +74,7 @@ method Passing()
     expect sum == 4;
   }
 
-  // Test case for combination {1}/Ba=1,n=0:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
   //   POST: sum == 0
@@ -86,13 +86,13 @@ method Passing()
     expect sum == 0;
   }
 
-  // Test case for combination {1}/Ba=2,n=0:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  0 <= n <= a.Length
   //   POST: sum == ArraySum(a, 0, n)
   //   POST: sum == 0
   //   ENSURES: sum == ArraySum(a, 0, n)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 4];
     var n := 0;
     var sum := CalcArraySum(a, n);
     expect sum == 0;
@@ -100,13 +100,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcArraySum();
+  print "TestsForCalcArraySum: all non-failing tests passed!\n";
 }
