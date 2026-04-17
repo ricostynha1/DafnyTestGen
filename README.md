@@ -169,86 +169,65 @@ Z3 can freely assign values to the residual `filter(...)` calls, and the structu
 
 ## Boundary Value Analysis
 
-BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen extracts bounds from contracts and generates boundary tiers that are combined with DNF clauses to produce test entries.
+BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen applies the **single-fault principle**: each BVA query pins exactly **one** variable to a boundary value; all other variables remain free for Z3 to choose. This avoids combinatorial explosion, prevents combining potentially conflicting constraints, and may facilitate fault localization.
 
-### Input boundary tiers
+Each DNF clause produced by Phase 1 already defines an equivalence class as the conjunction of precondition literals and clause (post) literals (`classLiterals`). BVA attaches at most one extra pin per query on top of those class literals.
 
-Input boundary tiers constrain one or more input parameters. **This includes not only method parameters, but also all class fields, which are treated as synthetic inputs for boundary analysis.** The tiers are derived from the preconditions and types of these inputs. Each input parameter contributes a list of tiers, and the lists are **cross-producted** across all inputs to form the combined tier set. For example, if parameter `a` has 4 size tiers (lengths 0–3) and parameter `k` has 3 integer tiers (`k=0`, `k=1`, `k=n`), the combined tier set has 4×3 = 12 entries. The cross-product is **capped at 64 total tiers**; when it would exceed this, the input with the most tiers is greedily dropped until the product fits.
+### Phase 2 — refined-range BVA
 
-The combined tier set is then further combined with the DNF clauses: each clause is paired with each tier as a separate SMT query. Input boundary tiers are applied only in **Phase 2** of the progressive strategy (when Phase 1 alone did not reach the minimum test count).
+For each (DNF clause, variable) pair, the refined range of the variable is solved from `classLiterals`:
 
-#### Scalar integer inputs
+| Pattern in `classLiterals` | Contribution |
+|---|---|
+| `v >= E`, `E <= v` | lower bound `E` |
+| `v > E`,  `E < v`  | lower bound `E+1` |
+| `v <= E`, `E >= v` | upper bound `E` |
+| `v < E`,  `E > v`  | upper bound `E-1` |
+| `v == E`          | pins `v = E` (lower = upper = E) |
+| `v != E`          | if `E == lo` numerically → `lo++`; if `E == hi` → `hi--` |
 
-For integer (`int`, `nat`) input parameters, literal boundary values are extracted from preconditions. If preconditions impose a minimum value `lo` for parameter `x`, tiers are generated at `x = lo` and `x = lo + 1` (unless `lo = hi`). Reciprocally, if preconditions impose a maximum value `hi` for parameter `x`, tiers are generated at `x = hi` and `x = hi - 1` (unless `lo = hi` or `hi = 0`  and type is `nat`). Additionally, fixed tiers `x = 0` and `x = 1` are always generated (unless they are excluded by the range restrictions in the preconditions).
+Numeric fold: `lo = max(lower bounds)`, `hi = min(upper bounds)`. Symbolic bounds that aren't comparable numerically are kept as separate relational boundary candidates.
 
-#### Relational bounds for integer inputs
+Phase 2 emits, per (clause, variable):
 
-For integer (`int`, `nat`) input parameters, when a precondition constrains such a parameter relative to another variable (e.g., `requires k <= s.Length`), a relational boundary tier is generated (e.g., `k == s.Length`). The other variable can be another `int`/`nat`/`real` scalar or the length of an array/sequence. Relational tiers are placed **first** in the per-parameter tier list, so they are prioritized in the cross-product ordering.
+- Numeric endpoints: `v = lo`, `v = hi`.
+- Numeric interior: `v = lo+1`, `v = hi-1` when distinct from endpoints.
+- Symbolic endpoints for each relational bound: `v = E`, plus `v = E-1` / `v = E+1` for the interior side.
 
-#### Scalar real inputs
+**Skip rule (single-value pin).** If `classLiterals` already pins `v` to a single value (refined `lo == hi`, e.g. because the clause contains `v == E`, or `!= N` tightening collapses `0 <= k <= 0`), Phase 2 emits **no** query for `v`. Phase 1 baseline already covers that point.
 
-For `real` input parameters, fixed tiers `0.0`, `1.0`, `-1.0`, and `0.5` are always generated regardless of what preconditions say. Precondition-bound extraction for real values is not implemented.
+Covered types: `int`, `nat`, and numeric type synonyms. Applies uniformly to inputs, outputs, and mutable class field post-states.
 
-#### Scalar boolean inputs
+### Phase 2b — type/size coverage
 
-For `bool` input parameters, fixed tiers `false` and `true` are always generated regardless of what preconditions say.
+Categorical fallback, one pin per query, when Phase 2 does not cover a variable (or the variable's type isn't integer). Tiers:
 
-#### Enum datatypes
+- **`nat`**: `=0`, `=1`, `>=2`
+- **`int`**: `=0`, `>0`, `<0`
+- **`bool`**: `=true`, `=false`
+- **`real`**: `=0`, `>0`, `<0`
+- **enum datatypes**: one tier per constructor
+- **seq / array / string**: `|v|=0`, `|v|=1`, `|v|>=2`
+- **set / multiset / map**: `|v|=0`, `|v|=1`, `|v|>=2`
 
-For input parameters of simple enum datatypes (all constructors parameterless, e.g., `datatype Color = Red | White | Blue`), one tier is generated per constructor (encoded as integers `Red→0`, `White→1`, `Blue→2`) for exhaustive value coverage, regardless of what preconditions say.
+Tier is skipped if `classLiterals` already implies it (syntactic prune), or if Phase 2 already emitted an equivalent pin (dedup by `dafnyKey`).
 
-#### Array and sequence sizes
+#### Mutation tiers (post vs pre)
 
-For each array or sequence input parameter, size tiers fix the length to 0, 1, 2, …, `--tiers - 1` (default: 0–3, controlled by `-t`). For sizes ≥ 2, elements are additionally constrained to be **pairwise distinct** (i.e., `a[i] != a[j]` for all `i != j`), preventing Z3 from choosing degenerate inputs such as `[0, 0, 0]`. If a DNF clause forces equal elements (e.g., a contract requires `a[0] == a[1]`), that clause+tier combination yields UNSAT and is silently skipped — other combinations are unaffected. The distinctness constraint is omitted when ordering shape tiers are active for the parameter (see below). In the case of nested sequences, the inner sequences are constrained to be of different lengths (instead of simply being distinct). 
+For mutable variables mentioned in `ensures` **both** as post-state and inside `old(...)`, Phase 2b also emits a pair: `x = old(x)` (no-op path) and `x != old(x)` (actually mutated path). Applies to mutable array parameters, mutable scalar class fields, and mutable array/seq class fields.
 
-Note that in Phase 1, no size is imposed at all — Z3 freely picks the size and element values. The size tiers only appear in Phase 2.
+### Walkthroughs
 
-#### Set, multiset and map sizes
+- **`CalcComb(n, k)`** with pre `0 <= k <= n` and three DNF clauses:
+  - `k == 0`: refined `lo = hi = 0` → pinned; Phase 2 emits nothing for `k`.
+  - `!(k==0) && k == n`: pinned to `n`; Phase 2 emits nothing for `k`.
+  - `!(k==0) && !(k==n)`: `0 <= k <= n` tightened by `k != 0` → `lo = 1`, by `k != n` → `hi = n-1`. Phase 2 emits `k = 1` and `k = n-1` (strict-interior endpoints).
 
-Similarly, for each input parameter of type set, multiset or map, cardinality tiers fix the size of the set, multiset or map domain, respectively, to 0, 1, 2, …, `--tiers - 1`. For sets and maps, the maximum number of tiers is capped to the size of the universe (such as the number of constructures in an enum datatype).
+- **`LinearSearch(a, x)`** with ensures `if ∃k. a[k]==x then 0 <= index < a.Length && a[index]==x else index == -1`:
+  - Clause `index == -1`: pinned; Phase 2 emits nothing for `index`.
+  - Clause `0 <= index < a.Length && a[index] == x`: refined `lo = 0`, `hi = a.Length - 1`. Phase 2 emits `index = 0` and (if not subsumed) `index = a.Length - 1`.
 
-#### Nested sequence inner-length tiers
-
-For `seq<seq<T>>` and `seq<string>` input parameters, two additional tiers constrain the **minimum inner sublist length** to ensure Z3 produces non-trivial inner content:
-- `inner>=1`: all active sublists have length ≥ 1
-- `inner>=2`: all active sublists have length ≥ 2
-
-Without these, Z3 gravitates toward empty inner sublists (length 0). These floor tiers are placed **before** the outer-length size tiers so the progressive strategy picks them up early. 
-
-#### Tuple components
-
-For tuple input parameters, each tuple component is processed separately.
-
-
-#### Ordering shape tiers
-
-When a precondition constrains an array or sequence with a non-strict ordering (`<=` or `>=`), the weak ordering is decomposed into structurally distinct cases:
-- **constant** (`a-shape=const`): all elements are equal (e.g., `[3, 3, 3]`)
-- **strictly ordered** (`a-shape=strict-asc` or `strict-desc`): all consecutive pairs are strictly ordered, no duplicates (e.g., `[-3, -2, -1]`)
-
-This is detected from: `IsSorted(a[..])` predicate calls, `forall i, j :: ... ==> a[i] <= a[j]` (two-variable), and `forall i :: ... ==> a[i] <= a[i+1]` (consecutive pairs). The same applies for `>=` (descending). Shape tiers are cross-producted with size tiers and other boundary parameters. When shape tiers are present for a parameter, the pairwise distinctness constraint is omitted from its size tiers.
-
-
-### Output boundary tiers
-
-When postconditions don't uniquely determine the output, Z3 naturally gravitates toward minimal values (e.g., `maxDist=0`, `|result|=0`). Output boundary tiers are added in **Phase 2b** of the progressive strategy, constraining return values and mutable scalar class fields to explore different output regions:
-
-- **`nat`**: `=0`, `=1`, `≥2`
-- **`int`**: `>0`, `<0`, `=0`
-- **`bool`**: `true`, `false`
-- **`real`**: `>0`, `<0`, `=0`
-- **Tuple components**: each component gets its own tiers
-- **Sequences** (return): length tiers `|f|≥3`, `|f|≥2`, `|f|=1`
-- **Sets, multisets, maps** (return): cardinality tiers `|f|≥3`, `|f|≥2`, `|f|≥1`
-- **Enum return values**: one tier per constructor (e.g., `r=Red`, `r=White`, `r=Blue`)
-
-E.g., seq-length tiers for `method PrimeFactors(n: nat) returns(f: seq<nat>)` force outputs with `|f|≥2` (composite numbers like `n=35 → f(35)==[5,7]`) and `|f|≥3` (`n=539 → f==[7,7,11]`).
-
-#### Mutation boundary tiers (final vs initial value)
-
-For mutable variables — mutable array parameters, mutable scalar class fields, and mutable array/seq class fields — Phase 2b also adds a pair of tiers comparing the post-state against the pre-state: `x=old` (final equals initial, i.e. no-op path) and `x≠old` (actually mutated path). These exercise the two branches of postconditions that depend on whether mutation actually occurred.
-
-To avoid noise, these tiers are emitted **only when the variable is mentioned in `ensures` both as post-state and inside `old(...)`** — if the spec doesn't care about the old or new content, the tier would be worthless. 
+Each Phase 2 query pins only `index`; the array and `x` remain free, so Z3 is forced to construct inputs that actually produce that specific `index` value.
 
 
 ## Repetition (`-r`)
@@ -262,13 +241,13 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition (including the existential and universal quantifier decompositions described above). Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
-2. **Phase 2 — Input boundary analysis** (only when Phase 1 yields < `--min-tests`): Add input boundary value tiers crossed with DNF clauses from phase 1. 
+2. **Phase 2 — Refined-range BVA** (only when Phase 1 yields < `--min-tests`): For each (DNF clause, variable), solve the refined range from `classLiterals` and emit one SMT query per boundary value (endpoints + interior + symbolic relational bounds). Single-fault: one variable pinned per query.
 
-3. **Phase 2b — Output boundary analysis** (only when still < `--min-tests`): Add output boundary tiers crossed with DNF clauses from phase 1 (but not with input boundary tiers from phase 2). Non-trivial tiers are tried first (Z3 naturally produces minimal values without guidance). Notice that output boundary tiers and input boundary tiers are never combined in the same SMT query, so a single test case never simultaneously constrains both inputs and outputs to boundary values.
+3. **Phase 2b — Type/size coverage** (only when still < `--min-tests`): For each (DNF clause, variable) not covered by Phase 2, emit categorical pins (nat/int/bool/real tiers, seq/set cardinality tiers, enum constructors, mutation pre-vs-post pair). Still single-fault. Because each query pins exactly one variable, inputs and outputs are never simultaneously constrained to boundary values in the same query.
 
 4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached for a method.
 
-**Subsumption pruning.** To maximize diversity with a limited number of test cases, across all phases, each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched. This eliminates redundant tests from overlapping `exists` decompositions in Phase 1, and from output/input boundary tiers in Phases 2/2b that are already witnessed by an earlier model. The check is bounded to the most recent 20 prior cases and is conservative on translator failures (no pruning when the pin can't be built).
+**Subsumption pruning.** To maximize diversity with a limited number of test cases, across all phases (except phase 3), each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched. This eliminates redundant tests from overlapping `exists` decompositions in Phase 1, and from output/input boundary tiers in Phases 2/2b that are already witnessed by an earlier model. The check is bounded to the most recent 20 prior cases and is conservative on translator failures (no pruning when the pin can't be built).
 
 
 ## Class Support
@@ -294,7 +273,16 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
 ## Test Emission
 
-For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. For each method `M` with generated tests, a test method `GeneratedTests_M()` is emitted, and a `Main()` method is added that calls all test methods. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
+For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
+
+### Grouping (`--grouping` / `-g`)
+
+Two options control how test cases are grouped in the emitted file:
+
+- **`by-method`** (default) — one test method `TestsFor<M>()` per source method `M`. Failing tests (detected by `--check`) are placed alongside passing ones with their `expect` lines commented out and a `// FAILING:` header.
+- **`by-status`** — a single `Passing()` method holding all passing tests from every source method, plus a `Failing()` method for failing ones. Failing tests have their `expect` lines commented out.
+
+In both cases, `Main()` calls all emitted test methods so a single `dafny run` or `dafny build` executes every non-failing test.
 
 A typical test case assigns concrete input values produced by Z3, calls the method under test, and checks the returned outputs with `expect` assertions (using the output values produced by Z3):
 
@@ -305,7 +293,7 @@ method FindMax(a: array<real>) returns (max: real)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 {...}
 
-method GeneratedTests_FindMax()
+method TestsForFindMax()
 {
   {
     var a := new real[2] [0.5, 0.0];
@@ -317,7 +305,7 @@ method GeneratedTests_FindMax()
 
 method Main()
 {
-  GeneratedTests_FindMax();
+  TestsForFindMax();
 }
 ```
 
@@ -444,14 +432,14 @@ method CalcFact(n: nat) returns (f: nat)
 
 This supports **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to skip bodyless methods entirely instead.
 
-### Check Mode (`-c`)
+### Check Mode (`--check` / `-c`, default on; disable with `--no-check`)
 
-When `--check` is enabled, DafnyTestGen compiles the generated tests into a single Dafny file with `dafny build --no-verify` and runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `DONE:N` / `FAIL:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (infinite loop), the remaining tests are automatically re-run individually against the same binary with a test-index argument — no recompilation needed. Tests are then split into two methods:
+Check mode is **on by default**. DafnyTestGen compiles the generated tests into a single Dafny file with `dafny build --no-verify` and runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `DONE:N` / `FAIL:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (infinite loop), the remaining tests are automatically re-run individually against the same binary with a test-index argument — no recompilation needed. Each test case is then classified as passing or failing:
 
-- **`Passing()`** — tests whose `expect`s held at runtime (expects remain active)
-- **`Failing()`** — tests whose `expect`s failed at runtime (expects commented out)
+- Passing tests keep their `expect`s active.
+- Failing tests have their `expect`s commented out (with captured expected/actual annotations) so the file still compiles. A `// FAILING:` header flags them in `by-method` grouping; in `by-status` they land in a separate `Failing()` method.
 
-When any bodyless method is present, the check is disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
+Use `--no-check` to skip validation entirely; in that case all generated tests are emitted without a pass/fail classification. When any bodyless method is present in the source, the check is auto-disabled (since `dafny build` fails on them) and unchecked tests are written with a warning.
 
 ### Runtime value injection in check mode
 
@@ -604,7 +592,9 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--boundary` | `-b` | Boundary value analysis on inputs |
 | `--simple` | `-s` | One test per DNF clause (default) |
 | `--tiers <n>` | `-t` | Sequence/array/set/multiset/map size tiers for boundary analysis (default: 4) |
-| `--check` | `-c` | Run each test with Dafny, split output into Passing/Failing (not supported for programs with bodyless methods) |
+| `--check` | `-c` | Validate each test at runtime (default: on). Failing tests have their expects commented out. Auto-disabled for programs with bodyless methods |
+| `--no-check` | | Disable runtime validation (overrides `--check`) |
+| `--grouping <mode>` | `-g` | Test grouping: `by-method` (one `TestsFor<M>()` per source method, default) or `by-status` (`Passing()`/`Failing()` split) |
 | `--repeat <n>` | `-r` | Generate N distinct test cases per scenario (default: 1) |
 | `--min-tests <n>` | `-n` | Minimum test count for progressive auto strategy (default: 4) |
 | `--max-tests <n>` | `-x` | Maximum number of generated tests per method (0 = unlimited) |
