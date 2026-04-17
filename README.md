@@ -481,12 +481,12 @@ Because the injector only captures **output variables and the RHS of equality-sh
     {...}
     // Generated test case
     {
-      var n := 3;
+      var n := 4;
       var f := PrimeFactors(n);
       expect AllPrime(f);
       expect IsSorted(f);
       expect ProdF(f) == n;
-      expect f == [3]; // observed from implementation
+      expect f == [2, 2]; // observed from implementation
     }
     ```
     The postcondition literals remain as primary oracles (they fail for any non-conforming output); the observed-value line is a supplemental pin users can review and loosen when the spec admits alternative valid outputs.
