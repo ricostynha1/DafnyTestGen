@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-04-17 19:32:22
+// Generated: 2026-04-18 12:12:08
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -66,6 +66,17 @@ method TestsForCubeElements()
     var a := new int[1] [0];
     var cubed := CubeElements(a);
     expect cubed[..] == [0];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: cubed.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: cubed.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  {
+    var a := new int[1] [-1];
+    var cubed := CubeElements(a);
+    expect cubed[..] == [-1];
   }
 
 }

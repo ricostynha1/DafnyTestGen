@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-04-17 19:32:00
+// Generated: 2026-04-18 12:11:52
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -52,6 +52,7 @@ method TestsForFilterOddNumbers()
 {
   // Test case for combination {1}:
   //   POST: oddList == FilterOdd(arr[..])
+  //   POST: oddList == []
   //   ENSURES: oddList == FilterOdd(arr[..])
   {
     var arr := new int[0] [];
@@ -59,22 +60,37 @@ method TestsForFilterOddNumbers()
     expect oddList == [];
   }
 
-  // Test case for combination {1}/O|arr|=1:
-  //   POST: oddList == FilterOdd(arr[..])
+  // Test case for combination {2}:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: arr[..][|arr[..]| - 1] % 2 != 0
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[1] [2];
+    var arr := new int[1] [-1];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-1];
+  }
+
+  // Test case for combination {3}:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: !(arr[..][|arr[..]| - 1] % 2 != 0)
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1])
+  //   ENSURES: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [0];
     var oddList := FilterOddNumbers(arr);
     expect oddList == [];
   }
 
-  // Test case for combination {1}/O|arr|>=2:
-  //   POST: oddList == FilterOdd(arr[..])
+  // Test case for combination {2}/O|arr|>=2:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: arr[..][|arr[..]| - 1] % 2 != 0
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[2] [3, 4];
+    var arr := new int[2] [8, -1];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == [3];
+    expect oddList == [-1];
   }
 
 }
