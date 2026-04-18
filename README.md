@@ -236,6 +236,27 @@ For mutable variables mentioned in `ensures` **both** as post-state and inside `
 Each Phase 2 query pins only `index`; the array and `x` remain free, so Z3 is forced to construct inputs that actually produce that specific `index` value.
 
 
+## Anti-trivial bias (default on; disable with `--no-bias`)
+
+Z3 minimizes model size by default. For specifications involving recursive/uninterpreted functions (e.g. `Power(b, n)`, `Factorial(n)`, `Product(xs)`), that preference picks *special* values that trivially satisfy postconditions without exercising real arithmetic:
+
+- `0` is the absorbing element for multiplication (`Power(0, n) = 0`).
+- `1` is the neutral element (`Power(1, n) = 1`).
+- Empty sequences and singletons vacuously satisfy quantified postconditions.
+
+Without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
+
+DafnyTestGen adds two Z3-native nudges per query:
+
+1. **Soft constraints** (`assert-soft`): for each primitive-typed input `v`, emit `(assert-soft (not (= v 0)) :weight 2)` and `(assert-soft (not (= v 1)) :weight 1)`. For sequences/arrays, also bias their length away from `{0, 1}` and their first few elements away from `{0, 1}`. Soft asserts are satisfied-when-possible: if the hard constraints force `v = 0`, Z3 picks `v = 0` and simply pays the weight. **Zero cost on correctness.**
+
+2. **Randomized seed**: `smt.arith.random_initial_value`, `smt.random-seed`, `sat.random-seed` are set from a deterministic per-method hash, so Z3 explores more of the model space while the solution remains reproducible.
+
+Bias is skipped in the uniqueness alt-enum query (where we *want* Z3 to freely enumerate all valid outputs, including zeros).
+
+Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or for reproducing an upstream Z3 baseline.
+
+
 ## Repetition (`-r`)
 
 The `--repeat <n>` option generates **N distinct test cases** per scenario. After finding a satisfying assignment, Z3 is asked again with an additional constraint excluding the previous solution, producing a different input. This is useful for increasing confidence that a scenario works across multiple input values, not just the first one Z3 happens to find.
@@ -626,6 +647,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--skip-bodyless` | `-p` | Skip bodyless methods instead of generating spec-only tests (default: generate spec-only tests with call/expects commented out) |
 | `--uniqueness-rounds <n>` | `-u` | Max rounds of uniqueness checking to enumerate all valid outputs (default: 2). When all valid outputs are exhaustively enumerated, emit `expect out == v1 \|\| out == v2;` instead of postcondition literals |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
+| `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 

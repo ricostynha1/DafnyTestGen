@@ -1,6 +1,6 @@
 // Recursive definition of the sum of the decimal digits of a natural number n.
 ghost function SumOfDigits(n: nat) : (sum: nat) { 
-    if n > 0 then SumOfDigits(n / 10) + n % 10 else 0
+    if n > 9 then SumOfDigits(n / 10) + n % 10 else n
 }
 
 // Computes the sum of the decimal digits of a natural number n.

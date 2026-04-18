@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-04-18 12:12:00
+// Generated: 2026-04-18 23:50:39
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.
@@ -71,7 +71,7 @@ method TestsForFindNegativeNumbers()
   //   POST: res == Filter<T>(a[..][..|a[..]| - 1], (x: int) => x < 0)
   //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
-    var a := new int[1] [38];
+    var a := new int[1] [31359];
     var res := FindNegativeNumbers(a);
     expect res == [];
   }
@@ -82,7 +82,7 @@ method TestsForFindNegativeNumbers()
   //   POST: res == Filter<T>(a[..][..|a[..]| - 1], (x: int) => x < 0) + [a[..][|a[..]| - 1]]
   //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
-    var a := new int[2] [6, -1];
+    var a := new int[2] [4, -1];
     var res := FindNegativeNumbers(a);
     expect res == [-1];
   }

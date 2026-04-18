@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-18 12:12:04
+// Generated: 2026-04-18 23:48:41
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -36,10 +36,10 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [];
-    var b: seq<int> := [];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [-1];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [];
+    expect result == [1];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -49,23 +49,23 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [0, 0];
-    var b: seq<int> := [0, 0];
+    var a: seq<int> := [-2, 2];
+    var b: seq<int> := [2, -1];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [0, 0];
+    expect result == [-4, -2];
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/Q|a|=0:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [];
+    var b: seq<int> := [];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [0];
+    expect result == [];
   }
 
   // Test case for combination {1}/R4:
@@ -75,10 +75,10 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [1];
-    var b: seq<int> := [2];
+    var a: seq<int> := [2];
+    var b: seq<int> := [3];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [2];
+    expect result == [6];
   }
 
 }

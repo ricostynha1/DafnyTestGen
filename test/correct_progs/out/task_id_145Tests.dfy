@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-04-18 10:24:17
+// Generated: 2026-04-18 23:06:27
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
