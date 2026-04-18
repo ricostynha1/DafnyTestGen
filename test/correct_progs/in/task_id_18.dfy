@@ -1,11 +1,11 @@
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
 method RemoveChars(s1: string, s2: string) returns (v: string)
-  ensures v == Filter(s1, c => !(c in s2))
+  ensures v == Filter(s1, s2)
 {
   v := [];
   for i := 0 to |s1|
-    invariant v == Filter(s1[..i], c => !(c in s2))
+    invariant v == Filter(s1[..i], s2)
   {
     if !(s1[i] in s2) {
       v := v + [s1[i]];
@@ -16,12 +16,12 @@ method RemoveChars(s1: string, s2: string) returns (v: string)
 }
 
 // Filters a sequence using a predicate.
-// Returns a new sequence with the elements of s that satisfy the predicate p.
-ghost function {:fuel 6} Filter<T>(s: seq<T>, p: T -> bool): (r : seq<T>)
+// Returns a new sequence with the elements of s that are not in t.
+ghost function {:fuel 6} Filter<T(==)>(s: seq<T>, t: seq<T>): (r : seq<T>)
 {
     if |s| == 0 then []
-    else if p(s[|s|-1] ) then Filter(s[..|s|-1] , p) + [s[|s|-1] ]
-    else Filter(s[..|s|-1] , p)
+    else if s[|s|-1] !in t then Filter(s[..|s|-1] , t) + [s[|s|-1] ]
+    else Filter(s[..|s|-1] , t)
 }
 
 

@@ -14,7 +14,7 @@ method CalcCountTrue(a: array<bool>) returns (count: nat)
   assert a[..] == a[..a.Length]; // proof helper
 }
 
-ghost function {:fuel 6} countTrue(s: seq<bool>): nat
+ghost function {:fuel 3} countTrue(s: seq<bool>): nat
 {
   if |s| == 0 then 0
   else if s[|s|-1] then countTrue(s[..|s|-1]) + 1

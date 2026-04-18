@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-04-17 19:30:02
+// Generated: 2026-04-18 10:10:29
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -19,7 +19,7 @@ method CalcCountTrue(a: array<bool>) returns (count: nat)
   assert a[..] == a[..a.Length]; // proof helper
 }
 
-function {:fuel 6} countTrue(s: seq<bool>): nat
+function {:fuel 3} countTrue(s: seq<bool>): nat
 {
   if |s| == 0 then 0
   else if s[|s|-1] then countTrue(s[..|s|-1]) + 1
@@ -48,6 +48,7 @@ method TestsForCalcCountTrue()
 {
   // Test case for combination {1}:
   //   POST: count == countTrue(a[..])
+  //   POST: count == 0
   //   ENSURES: count == countTrue(a[..])
   {
     var a := new bool[0] [];
@@ -55,8 +56,21 @@ method TestsForCalcCountTrue()
     expect count == 0;
   }
 
-  // Test case for combination {1}/O|a|=1:
-  //   POST: count == countTrue(a[..])
+  // Test case for combination {2}:
+  //   POST: !(|a[..]| == 0)
+  //   POST: a[..][|a[..]| - 1]
+  //   POST: count == countTrue(a[..][..|a[..]| - 1]) + 1
+  //   ENSURES: count == countTrue(a[..])
+  {
+    var a := new bool[1] [true];
+    var count := CalcCountTrue(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {3}:
+  //   POST: !(|a[..]| == 0)
+  //   POST: !(a[..][|a[..]| - 1])
+  //   POST: count == countTrue(a[..][..|a[..]| - 1])
   //   ENSURES: count == countTrue(a[..])
   {
     var a := new bool[1] [false];
@@ -64,13 +78,15 @@ method TestsForCalcCountTrue()
     expect count == 0;
   }
 
-  // Test case for combination {1}/O|a|>=2:
-  //   POST: count == countTrue(a[..])
+  // Test case for combination {2}/O|a|>=2:
+  //   POST: !(|a[..]| == 0)
+  //   POST: a[..][|a[..]| - 1]
+  //   POST: count == countTrue(a[..][..|a[..]| - 1]) + 1
   //   ENSURES: count == countTrue(a[..])
   {
-    var a := new bool[2] [false, false];
+    var a := new bool[2] [false, true];
     var count := CalcCountTrue(a);
-    expect count == 0;
+    expect count == 1;
   }
 
 }

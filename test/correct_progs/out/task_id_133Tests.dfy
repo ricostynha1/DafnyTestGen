@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-17 19:30:21
+// Generated: 2026-04-18 10:14:29
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -54,32 +54,35 @@ method TestsForCalcSumOfNegatives()
 
   // Test case for combination {2}:
   //   POST: !(a.Length == 0)
-  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
+  //   POST: a[a.Length - 1] < 0
+  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
   //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-1];
+    var result := CalcSumOfNegatives(a);
+    expect result == -1;
+  }
+
+  // Test case for combination {3}:
+  //   POST: !(a.Length == 0)
+  //   POST: !(a[a.Length - 1] < 0)
+  //   POST: result == SumOfNegatives(a, a.Length - 1)
+  //   ENSURES: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [38];
     var result := CalcSumOfNegatives(a);
     expect result == 0;
   }
 
   // Test case for combination {2}/O|a|>=2:
   //   POST: !(a.Length == 0)
-  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
+  //   POST: a[a.Length - 1] < 0
+  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
   //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[2] [3, 4];
+    var a := new int[2] [6, -1];
     var result := CalcSumOfNegatives(a);
-    expect result == 0;
-  }
-
-  // Test case for combination {2}/R3:
-  //   POST: !(a.Length == 0)
-  //   POST: result == if a[a.Length - 1] < 0 then SumOfNegatives(a, a.Length - 1) + a[a.Length - 1] else SumOfNegatives(a, a.Length - 1)
-  //   ENSURES: result == SumOfNegatives(a)
-  {
-    var a := new int[1] [5];
-    var result := CalcSumOfNegatives(a);
-    expect result == 0;
+    expect result == -1;
   }
 
 }

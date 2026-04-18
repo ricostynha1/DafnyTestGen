@@ -14,7 +14,7 @@ DafnyTestGen can be used in different scenarios, including:
 
 Most automated test generators for contract-equipped languages — such as Pex/IntelliTest (C#), AutoTest (Eiffel), and DART/CUTE — derive test diversity from *implementation paths* via dynamic symbolic execution (DSE) or random testing, using contracts only as runtime oracles. DafnyTestGen takes a fundamentally different approach:
 
-1. **Specification-driven partitioning, not code coverage.** Test scenarios are derived by decomposing *postconditions* into Disjunctive Normal Form (DNF), treating each clause as a distinct equivalence class. A method with `ensures (if C then A else B)` produces two test scenarios regardless of implementation complexity. This is closer in spirit to the category-partition method (Ostrand & Balcer, 1988), but fully automated via logical decomposition of formal contracts.
+1. **Specification-driven partitioning, not code coverage.** Test scenarios are derived by decomposing *preconditions* and *postconditions* into Disjunctive Normal Form (DNF), treating each clause as a distinct equivalence class. A method with `ensures (if C then A else B)` produces two test scenarios regardless of implementation complexity. This is closer in spirit to the category-partition method, but fully automated via logical decomposition of formal contracts.
 
 2. **Hybrid SMT / runtime architecture.** SMT solving generates both concrete *inputs* and expected *outputs*. When postconditions are not fully translatable to SMT (e.g., they involve recursive or uninterpreted functions) but have the explicit form `result == expression`, the expression can be evaluated by the Dafny runtime in check mode to obtain concrete output values that are injected back into the test code. As a last resort, the postcondition literals themselves are emitted as `expect` assertions. This layered approach sidesteps fundamental SMT limitations while still producing concrete, readable tests whenever possible.
 
@@ -115,6 +115,12 @@ method IsSortedArr(a: array<int>) returns (sorted: bool)
 ```
 
 Without size decomposition, Z3 tends to pick the smallest witness for the positive branch — a length-0 or length-1 array — and the non-trivial sorted case (length ≥ 2) is never exercised in Phase 1. With size decomposition, the positive clause (`sorted`) is split into three goals forcing `|a|=0`, `|a|=1`, and `|a|>=2`, yielding e.g. `[]`, `[2]`, and `[-7719, 38]` as separate passing tests.
+
+**Nested `forall` over `seq<seq<T>>`.** The same vacuity problem recurses when the outer `forall` body contains an inner `forall` over a collection element's elements — e.g., `forall i :: 0 <= i < |a| ==> forall j :: 0 <= j < |a[i]| ==> P(a[i][j])`. Outer-size tiers alone let Z3 satisfy the nested case with empty inner sequences (`a = [[], []]`), since the inner `forall j` is vacuously true when `|a[i]| = 0`. To force non-trivial inner content, each outer-size tier is augmented with **inner-size tiers** on `|a[0]|`, emitted as additional Phase 1 goals `|a[0]|=0`, `|a[0]|=1`, `|a[0]|>=2` guarded by `|a|>=1`. This applies when the outer collection has type `seq<seq<T>>` (or `seq<string>`) and a positive forall references it.
+
+Example — `DeepElementWiseAddition(a, b: seq<seq<int>>) returns (result: seq<seq<int>>)` with postcondition `forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])` (the inlined auxiliary predicate hides a nested `forall j`). Outer tiers alone yield `[]`, `[[]]`, `[[], []]` — all with empty inners, never exercising the element-wise sum. The `|a[0]|>=2` tier adds e.g. `a = [[0, 37], [38], []]`, `b = [[0, 39], [48], []]` → `result = [[0, 76], [86], []]`, a test that actually checks the arithmetic.
+
+Subsumption pruning across tiers pins prior models at the flat-encoding level (`a_{i}_len`, `a_{i}_elems`) so that a new `|a[0]|>=2` goal is not falsely considered covered by a prior `|a|=2` model whose inner elements were unconstrained.
 
 ### Predicate and function inlining  
 
