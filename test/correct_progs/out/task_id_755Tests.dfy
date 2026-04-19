@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-19 21:37:10
+// Generated: 2026-04-19 21:59:47
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -68,10 +68,10 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[2] [30364, 29949];
+    var s := new int[2] [-20, -19];
     var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == 29949;
-    expect secondSmallest == 30364;
+    expect smallest == -20;
+    expect secondSmallest == -19;
   }
 
   // Test case for combination {1}/Rel:
@@ -104,13 +104,13 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[4] [613, 417, 1566, 0];
+    var s := new int[4] [16, 5, 19, 0];
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 0;
-    expect secondSmallest == 417;
+    expect secondSmallest == 5;
   }
 
-  // Test case for combination {1}/Osmallest<0:
+  // Test case for combination {1}/OsecondSmallest=0:
   //   PRE:  exists i: int, j: int :: 0 <= i < j < s.Length && s[i] != s[j]
   //   POST: smallest in s[..]
   //   POST: forall k: int :: 0 <= k < s.Length ==> s[k] >= smallest
@@ -122,10 +122,10 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[2] [-5, 166];
+    var s := new int[4] [13, -1, 16, 0];
     var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == -5;
-    expect secondSmallest == 166;
+    expect smallest == -1;
+    expect secondSmallest == 0;
   }
 
 }

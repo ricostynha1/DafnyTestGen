@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-04-19 21:28:55
+// Generated: 2026-04-19 21:52:34
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -72,9 +72,9 @@ method TestsForInsertionSort()
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [7897, 7896];
+    var a := new T[2] [4294967069, 4294967068];
     InsertionSort(a);
-    expect a[..] == [7896, 7897];
+    expect a[..] == [4294967068, 4294967069];
   }
 
   // Test case for combination {1}/R3:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-19 21:30:24
+// Generated: 2026-04-19 21:54:04
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -64,8 +64,8 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 4294966815;
-    var a := new nat[2] [5540, 4294966815];
+    var x := 20;
+    var a := new nat[2] [19, 20];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
@@ -77,8 +77,8 @@ method TestsForContains()
   //   POST: !(x in a[..len])
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 8;
-    var a := new nat[2] [6097, 4294966815];
+    var x := -1;
+    var a := new nat[2] [19, 20];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
@@ -90,8 +90,8 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 2529;
-    var a := new nat[1] [2529];
+    var x := 20;
+    var a := new nat[1] [20];
     var len := 1;
     var res := Contains(x, a, len);
     expect res == true;
@@ -103,8 +103,8 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 2232;
-    var a := new nat[3] [5313, 2232, 4294966825];
+    var x := 10;
+    var a := new nat[3] [20, 10, 9];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
@@ -153,9 +153,9 @@ method TestsForRecaman()
   //   POST: res == R(n - 1) - n
   //   ENSURES: res == R(n)
   {
-    var n := 524;
+    var n := 20;
     var res := Recaman(n);
-    // expect res == R(n); // got 1416
+    // expect res == R(n); // got 42
   }
 
 }

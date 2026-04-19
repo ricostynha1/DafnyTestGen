@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-19 21:34:40
+// Generated: 2026-04-19 21:57:24
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -36,10 +36,10 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [2];
-    var b: seq<int> := [3];
+    var a: seq<int> := [-20];
+    var b: seq<int> := [-19];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [6];
+    expect result == [380];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -49,10 +49,10 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [-2, 2];
-    var b: seq<int> := [2, 4];
+    var a: seq<int> := [16, -19];
+    var b: seq<int> := [-20, 20];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [-4, 8];
+    expect result == [-320, -380];
   }
 
   // Test case for combination {1}/Q|a|=0:

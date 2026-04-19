@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-19 21:36:58
+// Generated: 2026-04-19 21:59:35
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -52,8 +52,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [1776];
-    var target := 1776;
+    var arr := new int[1] [-1];
+    var target := -1;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -66,8 +66,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [1776];
-    var target := 9;
+    var arr := new int[1] [-13];
+    var target := -20;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
@@ -83,8 +83,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-1, -1];
-    var target := -1;
+    var arr := new int[2] [-2, 8];
+    var target := -2;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -97,8 +97,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-1, 1776];
-    var target := 10;
+    var arr := new int[2] [-14, -14];
+    var target := -19;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
@@ -112,7 +112,7 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
     var arr := new int[0] [];
-    var target := 2;
+    var target := -20;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }

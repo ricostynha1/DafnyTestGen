@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-19 21:36:32
+// Generated: 2026-04-19 21:59:06
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -63,7 +63,7 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [4294966872];
+    var s: seq<nat> := [20];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -76,7 +76,7 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [1622, 4991];
+    var s: seq<nat> := [11, 20];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -102,7 +102,7 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [4294966873];
+    var s: seq<nat> := [13];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;

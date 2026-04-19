@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-19 21:29:24
+// Generated: 2026-04-19 21:53:06
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -31,8 +31,8 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [18];
-    var x := 9;
+    var a := new int[1] [-20];
+    var x := -19;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
@@ -44,8 +44,8 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [12];
-    var x := 12;
+    var a := new int[1] [-20];
+    var x := -20;
     var index := LinearSearch(a, x);
     expect index == 0;
   }
@@ -70,8 +70,8 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[2] [6, 7];
-    var x := 7;
+    var a := new int[2] [-19, -5];
+    var x := -5;
     var index := LinearSearch(a, x);
     expect index == 1;
   }

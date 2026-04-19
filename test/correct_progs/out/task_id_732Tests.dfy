@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-19 21:36:55
+// Generated: 2026-04-19 21:59:31
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -56,11 +56,11 @@ method TestsForReplaceWithColon()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['K', 'R'];
+    var s: seq<char> := ['~', '+'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['K', 'R']; // observed from implementation
+    expect v == ['~', '+']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -68,11 +68,11 @@ method TestsForReplaceWithColon()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['e'];
+    var s: seq<char> := ['3'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['e']; // observed from implementation
+    expect v == ['3']; // observed from implementation
   }
 
   // Test case for combination {1}/Rel:

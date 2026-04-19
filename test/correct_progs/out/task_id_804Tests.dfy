@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-19 21:38:12
+// Generated: 2026-04-19 22:00:58
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -48,7 +48,7 @@ method TestsForContainsEvenNumber()
   //   POST: IsEven(a[0])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[1] [54512];
+    var a := new int[1] [-20];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }
@@ -58,7 +58,17 @@ method TestsForContainsEvenNumber()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && IsEven(a[i])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[3] [27, 64678, 1154];
+    var a := new int[3] [-15, -20, -1];
+    var result := ContainsEvenNumber(a);
+    expect result == true;
+  }
+
+  // Test case for combination {4}:
+  //   POST: result
+  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (a.Length - 1) :: (IsEven(a[i])) && (IsEven(a[i_2]))
+  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
+  {
+    var a := new int[2] [-20, -14];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }
@@ -68,20 +78,9 @@ method TestsForContainsEvenNumber()
   //   POST: !exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [-19];
     var result := ContainsEvenNumber(a);
     expect result == false;
-  }
-
-  // Test case for combination {1}/O|a|>=2:
-  //   POST: result
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: IsEven(a[0])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
-  {
-    var a := new int[2] [31964, 9];
-    var result := ContainsEvenNumber(a);
-    expect result == true;
   }
 
 }

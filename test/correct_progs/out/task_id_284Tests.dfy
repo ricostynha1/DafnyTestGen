@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-19 21:33:42
+// Generated: 2026-04-19 21:56:29
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)

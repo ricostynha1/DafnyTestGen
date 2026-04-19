@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-19 21:37:04
+// Generated: 2026-04-19 21:59:41
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -40,10 +40,10 @@ method TestsForRotateRight()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [56];
-    var n := 2;
+    var l: seq<int> := [-20];
+    var n := 7;
     var r := RotateRight(l, n);
-    expect r == [56];
+    expect r == [-20];
   }
 
   // Test case for combination {1}/Q|l|>=2:
@@ -52,10 +52,10 @@ method TestsForRotateRight()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [55, 55];
-    var n := 5;
+    var l: seq<int> := [-19, -20];
+    var n := 3;
     var r := RotateRight(l, n);
-    expect r == [55, 55];
+    expect r == [-20, -19];
   }
 
   // Test case for combination {1}/Q|l|=0:
@@ -65,7 +65,7 @@ method TestsForRotateRight()
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
     var l: seq<int> := [];
-    var n := 2;
+    var n := 20;
     var r := RotateRight(l, n);
     expect r == [];
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-19 21:37:57
+// Generated: 2026-04-19 22:00:42
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -46,7 +46,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [82250];
+    var s: seq<int> := [8];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
@@ -57,7 +57,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: IsEven(0) && !IsEven(s[0])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [3];
+    var s: seq<int> := [-1];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
   }
@@ -67,7 +67,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: exists i :: 1 <= i < (|s| - 1) && IsEven(i) && !IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [19, 20, 5287, 21, -1];
+    var s: seq<int> := [-20, -11, -1, 19, 55067];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
   }
@@ -77,7 +77,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [82252, 22];
+    var s: seq<int> := [6, -20];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }

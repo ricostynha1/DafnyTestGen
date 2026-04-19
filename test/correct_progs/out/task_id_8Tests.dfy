@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
 // Method: SquareElements
-// Generated: 2026-04-19 21:38:06
+// Generated: 2026-04-19 22:00:51
 
 // Returns an array of the same length as the input array, 
 // with each element of the input array squared.
@@ -43,9 +43,9 @@ method TestsForSquareElements()
   //   ENSURES: squared.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [-20];
     var squared := SquareElements(a);
-    expect squared[..] == [1];
+    expect squared[..] == [400];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -54,9 +54,9 @@ method TestsForSquareElements()
   //   ENSURES: squared.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
-    var a := new int[2] [-1, -1];
+    var a := new int[2] [-20, -20];
     var squared := SquareElements(a);
-    expect squared[..] == [1, 1];
+    expect squared[..] == [400, 400];
   }
 
   // Test case for combination {1}/Q|a|=0:

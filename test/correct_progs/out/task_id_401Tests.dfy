@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-19 21:34:12
+// Generated: 2026-04-19 21:56:54
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -126,10 +126,10 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [-2];
-    var b: seq<int> := [-1];
+    var a: seq<int> := [4];
+    var b: seq<int> := [9];
     var result := ElementWiseAddition(a, b);
-    expect result == [-3];
+    expect result == [13];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -139,10 +139,10 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [23145, 11229];
-    var b: seq<int> := [-2, 43456];
+    var a: seq<int> := [2, 12];
+    var b: seq<int> := [-17, 13];
     var result := ElementWiseAddition(a, b);
-    expect result == [23143, 54685];
+    expect result == [-15, 25];
   }
 
   // Test case for combination {1}/Q|a|=0:

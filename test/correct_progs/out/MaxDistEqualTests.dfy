@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-19 21:29:52
+// Generated: 2026-04-19 21:53:31
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -42,7 +42,7 @@ method TestsForMaxDistEqual()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[1] [11];
+    var a := new int[1] [2];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }
@@ -54,7 +54,7 @@ method TestsForMaxDistEqual()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[3] [25, 14, 14];
+    var a := new int[4] [-1, 3, 12, 12];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 1;
   }
@@ -66,7 +66,7 @@ method TestsForMaxDistEqual()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[2] [26, 12];
+    var a := new int[2] [-20, -19];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }

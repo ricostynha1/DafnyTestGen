@@ -173,6 +173,47 @@ The DNF engine splits the inlined expression `X == (if C then A else B)` into th
 
 Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch. 
 
+### Per-literal relevance check (Phase 1r, default on; disable with `--no-relevance`)
+
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where the *defining* literal `Q_last` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
+
+Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
+
+```
+elem in arr[..]                  // Q1
+∧ 0 ≤ pos < arr.Length           // Q2, Q3
+∧ arr[pos] == elem               // Q4
+∧ elem !in arr[pos+1..]          // Q_last  — the "last" constraint
+```
+
+Without relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All four literals hold, but `Q_last` is vacuous (no duplicates → nothing to be the "last" of). The defining behaviour is never exercised.
+
+DafnyTestGen adds **Phase 1r** between Phase 1 and Phase 2: for each clause it asks Z3 to prove `Q_last` is non-redundant by finding inputs where the clause has *two distinct* output assignments, identical except that `Q_last` separates them. Formally:
+
+```
+pre(ins)
+∧ Q1(ins, outs1) ∧ ... ∧ Qm(ins, outs1)              // outs1 satisfies the full clause
+∧ Q1(ins, outs2) ∧ ... ∧ Q_{m-1}(ins, outs2) ∧ ¬Q_last(ins, outs2)
+∧ outs1 ≠ outs2
+```
+
+- **SAT** → `Q_last` strictly prunes outputs for these inputs. Emit `outs1` as a test case labelled `{clause}/Rel`.
+- **UNSAT** → `Q_last` is entailed by the other literals (redundant); skip.
+
+For `LastPosition`, the relevance query forces `arr` to contain duplicates of `elem` so that an "earlier" index breaks `Q_last` while the "last" index satisfies it. Generated test:
+
+```dafny
+var arr := new int[2] [0, 0];
+var elem := 0;
+var pos := LastPosition(arr, elem);
+expect pos == 1;     // forced to the LAST occurrence
+```
+
+**Safety**: only the **last** literal of each clause is negated. Earlier literals (typically guards like `0 ≤ pos < arr.Length`) remain intact under `outs2`, so `arr[pos]` etc. stay well-defined. A secondary check verifies that every output-variable appearing in `Q_last` also appears in some earlier literal.
+
+Pass `--no-relevance` / `-nr` to disable Phase 1r.
+
+
 ## Boundary Value Analysis
 
 BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen applies the **single-fault principle**: each BVA query pins exactly **one** variable to a boundary value; all other variables remain free for Z3 to choose. This avoids combinatorial explosion, prevents combining potentially conflicting constraints, and may facilitate fault localization.
@@ -250,52 +291,13 @@ DafnyTestGen adds two Z3-native nudges per query:
 
 1. **Soft constraints** (`assert-soft`): for each primitive-typed input `v`, emit `(assert-soft (not (= v 0)) :weight 2)` and `(assert-soft (not (= v 1)) :weight 1)`. For sequences/arrays, also bias their length away from `{0, 1}` and their first few elements away from `{0, 1}`. Soft asserts are satisfied-when-possible: if the hard constraints force `v = 0`, Z3 picks `v = 0` and simply pays the weight. **Zero cost on correctness.**
 
+   **Magnitude caps** (also soft): each `int`/`nat` input gets `(assert-soft (<= v 20) :weight 3)` (and `(>= v -20)` for signed), and each `seq`/`array` gets `(assert-soft (<= (seq.len xs) 8) :weight 2)` plus element-magnitude caps at positions 0..2. Higher weight than the 0/1 nudges, so magnitude bound dominates when both are satisfiable. Keeps Z3 from picking e.g. `n = 4294966430` for recursive-function arguments that would time out the Dafny static checker — while still allowing large values when the spec demands them.
+
 2. **Randomized seed**: `smt.arith.random_initial_value`, `smt.random-seed`, `sat.random-seed` are set from a deterministic per-method hash, so Z3 explores more of the model space while the solution remains reproducible.
 
 Bias is skipped in the uniqueness alt-enum query (where we *want* Z3 to freely enumerate all valid outputs, including zeros).
 
 Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or for reproducing an upstream Z3 baseline.
-
-
-## Per-literal relevance check (default on; disable with `--no-relevance`)
-
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where the *defining* literal `Q_last` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
-
-Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
-
-```
-elem in arr[..]                  // Q1
-∧ 0 ≤ pos < arr.Length           // Q2, Q3
-∧ arr[pos] == elem               // Q4
-∧ elem !in arr[pos+1..]          // Q_last  — the "last" constraint
-```
-
-Without relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All four literals hold, but `Q_last` is vacuous (no duplicates → nothing to be the "last" of). The defining behaviour is never exercised.
-
-DafnyTestGen adds **Phase 1r** between Phase 1 and Phase 2: for each clause it asks Z3 to prove `Q_last` is non-redundant by finding inputs where the clause has *two distinct* output assignments, identical except that `Q_last` separates them. Formally:
-
-```
-pre(ins)
-∧ Q1(ins, outs1) ∧ ... ∧ Qm(ins, outs1)              // outs1 satisfies the full clause
-∧ Q1(ins, outs2) ∧ ... ∧ Q_{m-1}(ins, outs2) ∧ ¬Q_last(ins, outs2)
-∧ outs1 ≠ outs2
-```
-
-- **SAT** → `Q_last` strictly prunes outputs for these inputs. Emit `outs1` as a test case labelled `{clause}/Rel`.
-- **UNSAT** → `Q_last` is entailed by the other literals (redundant); skip.
-
-For `LastPosition`, the relevance query forces `arr` to contain duplicates of `elem` so that an "earlier" index breaks `Q_last` while the "last" index satisfies it. Generated test:
-
-```dafny
-var arr := new int[2] [0, 0];
-var elem := 0;
-var pos := LastPosition(arr, elem);
-expect pos == 1;     // forced to the LAST occurrence
-```
-
-**Safety**: only the **last** literal of each clause is negated. Earlier literals (typically guards like `0 ≤ pos < arr.Length`) remain intact under `outs2`, so `arr[pos]` etc. stay well-defined. A secondary check verifies that every output-variable appearing in `Q_last` also appears in some earlier literal.
-
-Pass `--no-relevance` / `-nr` to disable Phase 1r.
 
 
 ## Repetition (`-r`)

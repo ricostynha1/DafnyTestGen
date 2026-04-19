@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_433.dfy
 // Method: IsGreater
-// Generated: 2026-04-19 21:34:29
+// Generated: 2026-04-19 21:57:11
 
 // Checks if a number 'n' is greater than all elements in an array 'a'
 method IsGreater(n: int, a: array<int>) returns (result: bool)
@@ -35,8 +35,8 @@ method TestsForIsGreater()
   //   POST: forall i: int :: 0 <= i < a.Length ==> n > a[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := 2;
-    var a := new int[1] [-1];
+    var n := 20;
+    var a := new int[1] [-20];
     var result := IsGreater(n, a);
     expect result == true;
   }
@@ -47,8 +47,8 @@ method TestsForIsGreater()
   //   POST: !(n > a[0])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := -1;
-    var a := new int[1] [28322];
+    var n := -20;
+    var a := new int[1] [-20];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -58,8 +58,8 @@ method TestsForIsGreater()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && !(n > a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := -1;
-    var a := new int[3] [21, 13045, -1];
+    var n := -19;
+    var a := new int[3] [-18, -19, -20];
     var result := IsGreater(n, a);
     expect result == false;
   }
@@ -69,8 +69,8 @@ method TestsForIsGreater()
   //   POST: forall i: int :: 0 <= i < a.Length ==> n > a[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := 3;
-    var a := new int[2] [2, -1];
+    var n := 20;
+    var a := new int[2] [-19, -20];
     var result := IsGreater(n, a);
     expect result == true;
   }
@@ -80,7 +80,7 @@ method TestsForIsGreater()
   //   POST: forall i: int :: 0 <= i < a.Length ==> n > a[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> n > a[i]
   {
-    var n := 2;
+    var n := -1;
     var a := new int[0] [];
     var result := IsGreater(n, a);
     expect result == true;

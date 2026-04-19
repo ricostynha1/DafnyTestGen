@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-19 21:36:36
+// Generated: 2026-04-19 21:59:10
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -90,9 +90,9 @@ method TestsForFindEvenNumbers()
   //   POST: evenList == Filter<T>(arr[..][..|arr[..]| - 1], IsEven) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
-    var arr := new int[1] [4];
+    var arr := new int[1] [-1];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [4];
+    expect evenList == [];
   }
 
   // Test case for combination {2}/O|arr|>=2:
@@ -101,9 +101,9 @@ method TestsForFindEvenNumbers()
   //   POST: evenList == Filter<T>(arr[..][..|arr[..]| - 1], IsEven) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
-    var arr := new int[2] [5, 9];
+    var arr := new int[2] [-2, -1];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [];
+    expect evenList == [-2];
   }
 
   // Test case for combination {2}/R3:
@@ -112,9 +112,9 @@ method TestsForFindEvenNumbers()
   //   POST: evenList == Filter<T>(arr[..][..|arr[..]| - 1], IsEven) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
-    var arr := new int[1] [6];
+    var arr := new int[1] [-20];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [6];
+    expect evenList == [-20];
   }
 
 }

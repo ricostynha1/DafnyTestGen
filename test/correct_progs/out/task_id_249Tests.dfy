@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-19 21:32:34
+// Generated: 2026-04-19 21:56:12
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -67,8 +67,8 @@ method TestsForIntersection()
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[1] [25];
-    var b := new int[0] [];
+    var a := new int[1] [33];
+    var b := new int[1] [16];
     var res := Intersection<int>(a, b);
     expect res == [];
   }
@@ -83,10 +83,10 @@ method TestsForIntersection()
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[2] [30, 24];
-    var b := new int[2] [47, 30];
+    var a := new int[2] [17, 17];
+    var b := new int[2] [17, 17];
     var res := Intersection<int>(a, b);
-    expect res == [30];
+    expect res == [17];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -101,22 +101,6 @@ method TestsForIntersection()
   {
     var a := new int[0] [];
     var b := new int[0] [];
-    var res := Intersection<int>(a, b);
-    expect res == [];
-  }
-
-  // Test case for combination {1}/Q|b|=1:
-  //   POST: forall k: int :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in res
-  //   POST: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   POST: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  //   ENSURES: forall k: int :: 0 <= k < |res| ==> res[k] in a[..] && res[k] in b[..]
-  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in res
-  //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
-  //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
-  {
-    var a := new int[1] [24];
-    var b := new int[1] [25];
     var res := Intersection<int>(a, b);
     expect res == [];
   }

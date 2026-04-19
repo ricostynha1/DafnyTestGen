@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
 // Method: ReplaceChars
-// Generated: 2026-04-19 21:34:58
+// Generated: 2026-04-19 21:57:42
 
 // Replace all occurrences of oldChar in string s by newChar 
 // and return the resulting string.
@@ -75,9 +75,9 @@ method TestsForReplaceChars()
   {
     var s: seq<char> := ['~'];
     var oldChar := '~';
-    var newChar := '_';
+    var newChar := ' ';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['_'];
+    expect v == [' '];
   }
 
   // Test case for combination {1}/Rel:
