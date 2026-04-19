@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_587.dfy
 // Method: ArrayToSeq
-// Generated: 2026-04-17 19:33:40
+// Generated: 2026-04-19 21:35:37
 
 // Converts an array to a sequence
 method ArrayToSeq<T>(a: array<T>) returns (s: seq<T>)
@@ -49,6 +49,15 @@ method TestsForArrayToSeq()
     var a := new int[2] [3, 4];
     var s := ArrayToSeq<int>(a);
     expect s == [3, 4];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: s == a[..]
+  //   ENSURES: s == a[..]
+  {
+    var a := new int[1] [6];
+    var s := ArrayToSeq<int>(a);
+    expect s == [6];
   }
 
 }

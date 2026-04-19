@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-18 22:16:22
+// Generated: 2026-04-19 21:34:12
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -126,10 +126,10 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [-2];
+    var b: seq<int> := [-1];
     var result := ElementWiseAddition(a, b);
-    expect result == [0];
+    expect result == [-3];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -139,10 +139,10 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [-1, -20163];
-    var b: seq<int> := [21239, 8855];
+    var a: seq<int> := [23145, 11229];
+    var b: seq<int> := [-2, 43456];
     var result := ElementWiseAddition(a, b);
-    expect result == [21238, -11308];
+    expect result == [23143, 54685];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -158,17 +158,17 @@ method TestsForElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/R4:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   POST: |a| == |b|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [-2];
-    var b: seq<int> := [7721];
+    var a: seq<int> := [0];
+    var b: seq<int> := [0];
     var result := ElementWiseAddition(a, b);
-    expect result == [7719];
+    expect result == [0];
   }
 
 }

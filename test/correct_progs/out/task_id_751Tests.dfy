@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-04-17 19:35:47
+// Generated: 2026-04-19 21:37:07
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -54,7 +54,7 @@ method TestsForIsMinHeap()
   //   POST: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   //   ENSURES: result <==> forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[1] [13];
+    var a := new int[1] [-49628];
     var result := IsMinHeap(a);
     expect result == true;
   }
@@ -65,7 +65,7 @@ method TestsForIsMinHeap()
   //   POST: !(a[Parent(1)] <= a[1])
   //   ENSURES: result <==> forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[2] [7719, 7718];
+    var a := new int[2] [10133, 10132];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -75,7 +75,7 @@ method TestsForIsMinHeap()
   //   POST: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   //   ENSURES: result <==> forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[4] [7719, 16, 7718, 24];
+    var a := new int[6] [38684, 27870, 28553, -29023, -12592, -15234];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -85,7 +85,7 @@ method TestsForIsMinHeap()
   //   POST: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   //   ENSURES: result <==> forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
-    var a := new int[2] [-7719, 38];
+    var a := new int[2] [-116650, -116650];
     var result := IsMinHeap(a);
     expect result == true;
   }

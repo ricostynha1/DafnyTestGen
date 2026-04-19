@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-04-18 23:48:36
+// Generated: 2026-04-19 21:34:23
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -77,7 +77,7 @@ method TestsForFilterOddNumbers()
   //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1])
   //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[1] [-2];
+    var arr := new int[1] [61166];
     var oddList := FilterOddNumbers(arr);
     expect oddList == [];
   }

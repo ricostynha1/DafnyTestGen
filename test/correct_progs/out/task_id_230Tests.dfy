@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-17 19:30:49
+// Generated: 2026-04-19 21:32:29
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -46,7 +46,7 @@ method TestsForReplaceBlanksWithChar()
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
   {
     var s: seq<char> := [];
-    var ch := ' ';
+    var ch := '~';
     var v := ReplaceBlanksWithChar(s, ch);
     expect v == [];
   }
@@ -57,9 +57,9 @@ method TestsForReplaceBlanksWithChar()
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' ', ' '];
-    var ch := '!';
+    var ch := 'T';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == ['!', '!'];
+    expect v == ['T', 'T'];
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -68,9 +68,20 @@ method TestsForReplaceBlanksWithChar()
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' '];
-    var ch := 'F';
+    var ch := '~';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == ['F'];
+    expect v == ['~'];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   POST: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  //   ENSURES: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  {
+    var s: seq<char> := ['!'];
+    var ch := ' ';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == ['!'];
   }
 
 }

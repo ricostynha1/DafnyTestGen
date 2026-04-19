@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-18 23:07:09
+// Generated: 2026-04-19 21:35:34
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -127,7 +127,7 @@ method TestsForcontains()
   //   POST: !(x in a[..])
   //   ENSURES: res <==> x in a[..]
   {
-    var a := new int[1] [9];
+    var a := new int[0] [];
     var x := 8;
     var res := contains<int>(a, x);
     expect res == false;

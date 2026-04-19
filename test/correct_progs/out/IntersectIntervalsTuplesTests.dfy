@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-17 19:28:11
+// Generated: 2026-04-19 21:29:22
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -77,7 +77,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[2] [(0.0, 0.5), (21237.5, 21238.0)];
+    var a := new (real, real)[2] [(0.0, 0.5), (31573.0, 31573.5)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
@@ -88,7 +88,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[3] [(0.0, 0.5), (2436.5, 2437.0), (20652.0, 20652.5)];
+    var a := new (real, real)[3] [(0.0, 0.5), (33294.0, 33294.5), (29774.5, 29775.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
@@ -99,7 +99,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[4] [(0.0, 0.5), (8854.5, 8855.0), (20162.0, 20162.5), (32284.5, 32285.0)];
+    var a := new (real, real)[4] [(0.0, 0.5), (40245.0, 40245.5), (22549.5, 22550.0), (20548.0, 20548.5)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }

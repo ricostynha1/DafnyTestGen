@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-17 19:35:38
+// Generated: 2026-04-19 21:36:58
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -52,8 +52,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [38];
-    var target := 38;
+    var arr := new int[1] [1776];
+    var target := 1776;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -66,8 +66,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[0] [];
-    var target := 0;
+    var arr := new int[1] [1776];
+    var target := 9;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
@@ -83,8 +83,8 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-21238, 7719];
-    var target := -21238;
+    var arr := new int[2] [-1, -1];
+    var target := -1;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -97,13 +97,13 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-38, 0];
-    var target := 8;
+    var arr := new int[2] [-1, 1776];
+    var target := 10;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
 
-  // Test case for combination {3}/Q|arr|=1:
+  // Test case for combination {3}/Q|arr|=0:
   //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: target !in arr[..]
   //   POST: index == -1
@@ -111,10 +111,27 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [2];
-    var target := 3;
+    var arr := new int[0] [];
+    var target := 2;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
+  //   POST: !(target !in arr[..])
+  //   POST: target in arr[..]
+  //   POST: 0 <= index
+  //   POST: index < arr.Length
+  //   POST: arr[index] == target
+  //   POST: target !in arr[..index]
+  //   ENSURES: target !in arr[..] ==> index == -1
+  //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
+  {
+    var arr := new int[2] [-7719, -7719];
+    var target := -7719;
+    var index := FindFirstOccurrence(arr, target);
+    expect index == 0;
   }
 
 }

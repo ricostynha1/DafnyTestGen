@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_770.dfy
 // Method: SumOfFourthPowerOfOddNumbers
-// Generated: 2026-04-17 19:36:00
+// Generated: 2026-04-19 21:37:18
 
 // Returns the sum of the fourth power of the first n odd numbers.
 method SumOfFourthPowerOfOddNumbers(n: nat) returns (sum: nat)
@@ -39,6 +39,15 @@ method TestsForSumOfFourthPowerOfOddNumbers()
   //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
+    var n := 2;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 82;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
     var n := 0;
     var sum := SumOfFourthPowerOfOddNumbers(n);
     expect sum == 0;
@@ -53,13 +62,13 @@ method TestsForSumOfFourthPowerOfOddNumbers()
     expect sum == 1;
   }
 
-  // Test case for combination {1}/On>=2:
+  // Test case for combination {1}/R4:
   //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
-    var n := 45;
+    var n := 15;
     var sum := SumOfFourthPowerOfOddNumbers(n);
-    expect sum == 590247021;
+    expect sum == 2421007;
   }
 
 }

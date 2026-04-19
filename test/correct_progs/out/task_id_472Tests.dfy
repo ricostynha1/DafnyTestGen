@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-17 19:32:37
+// Generated: 2026-04-19 21:34:56
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -56,7 +56,7 @@ method TestsForContainsConsecutiveNumbers()
   //   POST: a[0] + 1 == a[0 + 1]
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
-    var a := new int[2] [28957, 28958];
+    var a := new int[2] [-2, -1];
     var result := ContainsConsecutiveNumbers(a);
     expect result == true;
   }
@@ -66,22 +66,22 @@ method TestsForContainsConsecutiveNumbers()
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
-    var a := new int[4] [17, 28957, 28958, 25];
-    var result := ContainsConsecutiveNumbers(a);
-    expect result == true;
-  }
-
-  // Test case for combination {4}:
-  //   POST: result
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (a.Length - 1 - 1) :: (a[i] + 1 == a[i + 1]) && (a[i_2] + 1 == a[i_2 + 1])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  {
-    var a := new int[3] [7718, 7719, 7720];
+    var a := new int[5] [23, 10859, 10860, 10861, 22292];
     var result := ContainsConsecutiveNumbers(a);
     expect result == true;
   }
 
   // Test case for combination {5}:
+  //   POST: !result
+  //   POST: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  {
+    var a := new int[1] [-1];
+    var result := ContainsConsecutiveNumbers(a);
+    expect result == false;
+  }
+
+  // Test case for combination {5}/O|a|=0:
   //   POST: !result
   //   POST: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]

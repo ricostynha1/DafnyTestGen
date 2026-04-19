@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-17 19:38:42
+// Generated: 2026-04-19 21:38:22
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -47,8 +47,8 @@ method TestsForIsSmaller()
   //   POST: forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [];
-    var b: seq<int> := [];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [13435];
     var result := IsSmaller(a, b);
     expect result == true;
   }
@@ -60,8 +60,8 @@ method TestsForIsSmaller()
   //   POST: !(a[0] < b[0])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [7719];
-    var b: seq<int> := [-38];
+    var a: seq<int> := [56741];
+    var b: seq<int> := [56741];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -72,8 +72,8 @@ method TestsForIsSmaller()
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [16, 7719, 24];
-    var b: seq<int> := [16, 7719, 24];
+    var a: seq<int> := [30, 2282, 3282, 33752];
+    var b: seq<int> := [31, -1, -4166, 33753];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -84,20 +84,20 @@ method TestsForIsSmaller()
   //   POST: forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [23675, 8854];
-    var b: seq<int> := [23676, 8855];
+    var a: seq<int> := [-2, 4374];
+    var b: seq<int> := [2885, 12624];
     var result := IsSmaller(a, b);
     expect result == true;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/Q|a|=0:
   //   PRE:  |a| == |b|
   //   POST: result
   //   POST: forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [7719];
-    var b: seq<int> := [7720];
+    var a: seq<int> := [];
+    var b: seq<int> := [];
     var result := IsSmaller(a, b);
     expect result == true;
   }

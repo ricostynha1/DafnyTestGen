@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-17 19:38:10
+// Generated: 2026-04-19 21:37:57
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -46,7 +46,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [];
+    var s: seq<int> := [82250];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
@@ -57,7 +57,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: IsEven(0) && !IsEven(s[0])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [1];
+    var s: seq<int> := [3];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
   }
@@ -67,17 +67,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST: exists i :: 1 <= i < (|s| - 1) && IsEven(i) && !IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [12, 13, -1, 21];
-    var result := IsEvenAtIndexEven(s);
-    expect result == false;
-  }
-
-  // Test case for combination {5}:
-  //   POST: !result
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (|s| - 1) :: (IsEven(i) && !IsEven(s[i])) && (IsEven(i_2) && !IsEven(s[i_2]))
-  //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
-  {
-    var s: seq<int> := [4875, 15, -1];
+    var s: seq<int> := [19, 20, 5287, 21, -1];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
   }
@@ -87,17 +77,17 @@ method TestsForIsEvenAtIndexEven()
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [0, 10];
+    var s: seq<int> := [82252, 22];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
 
-  // Test case for combination {1}/Q|s|=1:
+  // Test case for combination {1}/Q|s|=0:
   //   POST: result
   //   POST: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [0];
+    var s: seq<int> := [];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }

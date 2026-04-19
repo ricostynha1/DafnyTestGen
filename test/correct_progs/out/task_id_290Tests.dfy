@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_290.dfy
 // Method: MaxLengthSublist
-// Generated: 2026-04-18 23:07:05
+// Generated: 2026-04-19 21:33:45
 
 // Returns the longest list in a non-empty list of lists.
 // If there are multiple lists of the same length, any one can be returned.
@@ -56,7 +56,7 @@ method TestsForMaxLengthSublist()
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[], [], [], [], [], [], []];
+    var lists: seq<seq<int>> := [[], []];
     var maxSublist := MaxLengthSublist<int>(lists);
     expect maxSublist == [];
   }
@@ -68,21 +68,23 @@ method TestsForMaxLengthSublist()
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[9, 6], [14], [17], [20], [23], [29, 31], [26], []];
+    var lists: seq<seq<int>> := [[8, 7], [13], [16, 18]];
     var maxSublist := MaxLengthSublist<int>(lists);
-    expect maxSublist == [29, 31] || maxSublist == [9, 6];
+    expect maxSublist == [16, 18] || maxSublist == [8, 7];
   }
 
-  // Test case for combination {1}/R4:
+  // Test case for combination {1}/Rel:
   //   PRE:  |lists| > 0
   //   POST: maxSublist in lists
   //   POST: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[10], [], [], []];
+    var lists: seq<seq<int>> := [[14], [14], [14], [14], [14], [14], [], [6]];
     var maxSublist := MaxLengthSublist<int>(lists);
-    expect maxSublist == [10];
+    expect maxSublist in lists;
+    expect forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|;
+    expect maxSublist == [14]; // observed from implementation
   }
 
 }

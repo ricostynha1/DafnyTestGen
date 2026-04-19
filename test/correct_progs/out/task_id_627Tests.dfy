@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-17 19:35:13
+// Generated: 2026-04-19 21:36:32
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -63,7 +63,7 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [];
+    var s: seq<nat> := [4294966872];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -76,20 +76,20 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [2438, 4234];
+    var s: seq<nat> := [1622, 4991];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
     expect v == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Q|s|=1:
+  // Test case for combination {1}/Q|s|=0:
   //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [1];
+    var s: seq<nat> := [];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -102,11 +102,11 @@ method TestsForSmallestMissingNumber()
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [0];
+    var s: seq<nat> := [4294966873];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
-    expect v == 1; // observed from implementation
+    expect v == 0; // observed from implementation
   }
 
 }

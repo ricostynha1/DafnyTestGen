@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-17 19:33:02
+// Generated: 2026-04-19 21:35:18
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -38,7 +38,7 @@ method TestsForIsSortedArr()
   //   POST: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[0] [];
+    var a := new int[1] [-1];
     var sorted := IsSortedArr(a);
     expect sorted == true;
   }
@@ -49,7 +49,7 @@ method TestsForIsSortedArr()
   //   POST: !(a[0] <= a[0 + 1])
   //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[2] [7719, 7718];
+    var a := new int[2] [-1, -2];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
@@ -59,7 +59,7 @@ method TestsForIsSortedArr()
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
   //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[4] [18, 8367, 8366, 26];
+    var a := new int[5] [24, 24256, 11586, -15095, -15096];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
@@ -69,17 +69,17 @@ method TestsForIsSortedArr()
   //   POST: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[2] [-7719, 38];
+    var a := new int[2] [6637, 7926];
     var sorted := IsSortedArr(a);
     expect sorted == true;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/Q|a|=0:
   //   POST: sorted
   //   POST: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
-    var a := new int[1] [2];
+    var a := new int[0] [];
     var sorted := IsSortedArr(a);
     expect sorted == true;
   }

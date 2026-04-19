@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_69.dfy
 // Method: InSeq
-// Generated: 2026-04-17 19:35:25
+// Generated: 2026-04-19 21:36:46
 
 // Checks if a sequence 's' of elements of any type T contains a given value 'x' of type T.
 method InSeq<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -54,7 +54,7 @@ method TestsForInSeq()
   //   POST: !(x in s)
   //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [9];
+    var s: seq<int> := [];
     var x := 8;
     var result := InSeq<int>(s, x);
     expect result == false;
@@ -65,7 +65,7 @@ method TestsForInSeq()
   //   POST: x in s
   //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [10, 21];
+    var s: seq<int> := [10, 20];
     var x := 10;
     var result := InSeq<int>(s, x);
     expect result == true;

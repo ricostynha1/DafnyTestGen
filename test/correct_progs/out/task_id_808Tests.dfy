@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_808.dfy
 // Method: Contains
-// Generated: 2026-04-17 19:38:36
+// Generated: 2026-04-19 21:38:19
 
 // Checks if a sequence 's' contains a value 'x'.
 method Contains<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -53,7 +53,7 @@ method TestsForContains()
   //   POST: !(x in s)
   //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [9];
+    var s: seq<int> := [];
     var x := 8;
     var result := Contains<int>(s, x);
     expect result == false;
@@ -64,7 +64,7 @@ method TestsForContains()
   //   POST: x in s
   //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [10, 21];
+    var s: seq<int> := [10, 20];
     var x := 10;
     var result := Contains<int>(s, x);
     expect result == true;

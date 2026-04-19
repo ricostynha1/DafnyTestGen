@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-17 19:32:55
+// Generated: 2026-04-19 21:35:11
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -54,11 +54,11 @@ method TestsForToggleCase()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['Z', '"'];
+    var s: seq<char> := ['2', '6'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
-    expect v == ['z', '"']; // observed from implementation
+    expect v == ['2', '6']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -66,11 +66,23 @@ method TestsForToggleCase()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   //   ENSURES: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['F'];
+    var s: seq<char> := ['/'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
-    expect v == ['f']; // observed from implementation
+    expect v == ['/']; // observed from implementation
+  }
+
+  // Test case for combination {1}/Rel:
+  //   POST: IsMapSeq(s, v, Toggle)
+  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
+  //   ENSURES: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['6'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
+    expect v == ['6']; // observed from implementation
   }
 
 }

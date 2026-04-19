@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-17 19:26:45
+// Generated: 2026-04-19 21:51:46
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -102,9 +102,9 @@ method TestsForMaxFirst()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[1] [(38, 11)];
+    var a := new (int, int)[1] [(17839, 11)];
     var r := MaxFirst(a);
-    expect r == 38;
+    expect r == 17839;
   }
 
   // Test case for combination {2}:
@@ -114,34 +114,21 @@ method TestsForMaxFirst()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[3] [(-38, 25), (0, 26), (-7719, 27)];
+    var a := new (int, int)[3] [(-17839, 25), (0, 26), (-16144, 27)];
     var r := MaxFirst(a);
     expect r == 0;
   }
 
-  // Test case for combination {1}/Or<0:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: r == a[0].0
-  //   POST: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
-  //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
-  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
-  {
-    var a := new (int, int)[2] [(-39, 14), (-39, 15)];
-    var r := MaxFirst(a);
-    expect r == -39;
-  }
-
-  // Test case for combination {2}/Or>0:
+  // Test case for combination {2}/Rel:
   //   PRE:  a.Length > 0
   //   POST: exists i :: 1 <= i < (a.Length - 1) && r == a[i].0
   //   POST: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[4] [(-38, 28), (7720, 29), (-21238, 30), (-2437, 31)];
+    var a := new (int, int)[4] [(-7719, 30), (-2, 31), (0, 32), (-1, 33)];
     var r := MaxFirst(a);
-    expect r == 7720;
+    expect r == 0;
   }
 
 }

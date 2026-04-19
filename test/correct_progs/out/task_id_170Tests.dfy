@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-17 19:30:33
+// Generated: 2026-04-19 21:32:19
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -48,9 +48,9 @@ method TestsForCalcSumRange()
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[1] [12];
-    var start := 0;
-    var end := 0;
+    var a := new int[2] [10, 11];
+    var start := 2;
+    var end := 2;
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }
@@ -61,11 +61,24 @@ method TestsForCalcSumRange()
   //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[1] [13];
-    var start := 0;
-    var end := 1;
+    var a := new int[3] [11, 12, 13];
+    var start := 2;
+    var end := 3;
     var sum := CalcSumRange(a, start, end);
     expect sum == 13;
+  }
+
+  // Test case for combination {1}/Bstart=0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST: sum == SumSeq(a[start .. end])
+  //   POST: sum == 0
+  //   ENSURES: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[1] [8];
+    var start := 0;
+    var end := 0;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 0;
   }
 
   // Test case for combination {1}/Bstart=1:
@@ -74,24 +87,11 @@ method TestsForCalcSumRange()
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[1] [9];
+    var a := new int[1] [10];
     var start := 1;
     var end := 1;
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
-  }
-
-  // Test case for combination {2}/Bstart=1:
-  //   PRE:  0 <= start <= end <= a.Length
-  //   POST: !(|a[start .. end]| == 0)
-  //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
-  //   ENSURES: sum == SumSeq(a[start .. end])
-  {
-    var a := new int[2] [9, 12];
-    var start := 1;
-    var end := 2;
-    var sum := CalcSumRange(a, start, end);
-    expect sum == 12;
   }
 
 }

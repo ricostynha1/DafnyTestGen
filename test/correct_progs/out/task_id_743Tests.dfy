@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-17 19:35:44
+// Generated: 2026-04-19 21:37:04
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -40,10 +40,10 @@ method TestsForRotateRight()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [];
-    var n := 8;
+    var l: seq<int> := [56];
+    var n := 2;
     var r := RotateRight(l, n);
-    expect r == [];
+    expect r == [56];
   }
 
   // Test case for combination {1}/Q|l|>=2:
@@ -52,34 +52,34 @@ method TestsForRotateRight()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [9, 17];
-    var n := 0;
+    var l: seq<int> := [55, 55];
+    var n := 5;
     var r := RotateRight(l, n);
-    expect r == [9, 17];
+    expect r == [55, 55];
   }
 
-  // Test case for combination {1}/Q|l|=1:
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  {
-    var l: seq<int> := [2];
-    var n := 0;
-    var r := RotateRight(l, n);
-    expect r == [2];
-  }
-
-  // Test case for combination {1}/Bn=1:
+  // Test case for combination {1}/Q|l|=0:
   //   POST: |r| == |l|
   //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
     var l: seq<int> := [];
-    var n := 1;
+    var n := 2;
     var r := RotateRight(l, n);
     expect r == [];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   POST: |r| == |l|
+  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  //   ENSURES: |r| == |l|
+  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [10];
+    var n := 0;
+    var r := RotateRight(l, n);
+    expect r == [10];
   }
 
 }

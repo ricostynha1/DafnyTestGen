@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-04-17 19:29:03
+// Generated: 2026-04-19 21:30:12
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -43,6 +43,17 @@ method TestsForPartitionOddEven()
   //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
+    var a := new nat[1] [4294966546];
+    PartitionOddEven(a);
+    expect a[..] == [4294966546];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   POST: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  {
     var a := new nat[0] [];
     PartitionOddEven(a);
     expect a[..] == [];
@@ -54,9 +65,9 @@ method TestsForPartitionOddEven()
   //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [38, 183];
+    var a := new nat[2] [4294971552, 4294971557];
     PartitionOddEven(a);
-    expect a[..] == [183, 38];
+    expect a[..] == [4294971557, 4294971552];
   }
 
   // Test case for combination {1}/R3:
@@ -65,9 +76,9 @@ method TestsForPartitionOddEven()
   //   ENSURES: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[1] [609];
+    var a := new nat[1] [3919];
     PartitionOddEven(a);
-    expect a[..] == [609];
+    expect a[..] == [3919];
   }
 
 }

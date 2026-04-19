@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-17 19:32:34
+// Generated: 2026-04-19 21:34:51
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -44,21 +44,21 @@ method TestsForPairwiseAddition()
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[0] [];
+    var a := new int[2] [2654, 29220];
     var result := PairwiseAddition(a);
-    expect result[..] == [];
+    expect result[..] == [31874];
   }
 
-  // Test case for combination {1}/Q|a|>=2:
+  // Test case for combination {1}/Q|a|=0:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [0, 0];
+    var a := new int[0] [];
     var result := PairwiseAddition(a);
-    expect result[..] == [0];
+    expect result[..] == [];
   }
 
   // Test case for combination {1}/Q|result|>=2:
@@ -68,9 +68,21 @@ method TestsForPairwiseAddition()
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[4] [21239, -21239, 0, 0];
+    var a := new int[4] [926, 16972, -17121, 24277];
     var result := PairwiseAddition(a);
-    expect result[..] == [0, 0];
+    expect result[..] == [17898, 7156];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  a.Length % 2 == 0
+  //   POST: result.Length == a.Length / 2
+  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   ENSURES: result.Length == a.Length / 2
+  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  {
+    var a := new int[2] [11797, 8855];
+    var result := PairwiseAddition(a);
+    expect result[..] == [20652];
   }
 
 }

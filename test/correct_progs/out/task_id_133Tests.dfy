@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-18 10:14:29
+// Generated: 2026-04-19 21:32:10
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -69,7 +69,7 @@ method TestsForCalcSumOfNegatives()
   //   POST: result == SumOfNegatives(a, a.Length - 1)
   //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[1] [38];
+    var a := new int[1] [20608];
     var result := CalcSumOfNegatives(a);
     expect result == 0;
   }
@@ -80,7 +80,7 @@ method TestsForCalcSumOfNegatives()
   //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
   //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[2] [6, -1];
+    var a := new int[2] [4, -1];
     var result := CalcSumOfNegatives(a);
     expect result == -1;
   }

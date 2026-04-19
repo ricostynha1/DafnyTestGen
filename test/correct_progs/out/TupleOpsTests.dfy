@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-17 19:38:50
+// Generated: 2026-04-19 21:38:31
 
 // --- (int, int) tuples ---
 
@@ -99,17 +99,6 @@ method TestsForSwapTuple()
     expect r == (0, -1);
   }
 
-  // Test case for combination {1}/R4:
-  //   POST: r.0 == t.1
-  //   POST: r.1 == t.0
-  //   ENSURES: r.0 == t.1
-  //   ENSURES: r.1 == t.0
-  {
-    var t := (-2, 0);
-    var r := SwapTuple(t);
-    expect r == (0, -2);
-  }
-
 }
 
 method TestsForScaleTuple()
@@ -122,12 +111,12 @@ method TestsForScaleTuple()
   //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
-    var k := 1;
+    var k := 2;
     var r := ScaleTuple(t, k);
     expect r == (0, 0);
   }
 
-  // Test case for combination {1}/Bk=2:
+  // Test case for combination {1}/Rel:
   //   PRE:  k > 0
   //   POST: r.0 == t.0 * k
   //   POST: r.1 == t.1 * k
@@ -135,7 +124,20 @@ method TestsForScaleTuple()
   //   ENSURES: r.1 == t.1 * k
   {
     var t := (0, 0);
-    var k := 2;
+    var k := 15;
+    var r := ScaleTuple(t, k);
+    expect r == (0, 0);
+  }
+
+  // Test case for combination {1}/Bk=1:
+  //   PRE:  k > 0
+  //   POST: r.0 == t.0 * k
+  //   POST: r.1 == t.1 * k
+  //   ENSURES: r.0 == t.0 * k
+  //   ENSURES: r.1 == t.1 * k
+  {
+    var t := (0, 0);
+    var k := 1;
     var r := ScaleTuple(t, k);
     expect r == (0, 0);
   }
@@ -147,10 +149,10 @@ method TestsForScaleTuple()
   //   ENSURES: r.0 == t.0 * k
   //   ENSURES: r.1 == t.1 * k
   {
-    var t := (1, 1);
-    var k := 1;
+    var t := (-1, -1);
+    var k := 2;
     var r := ScaleTuple(t, k);
-    expect r == (1, 1);
+    expect r == (-2, -2);
   }
 
 }
@@ -193,18 +195,6 @@ method TestsForAddTuples()
     expect r == (-1, 0);
   }
 
-  // Test case for combination {1}/R4:
-  //   POST: r.0 == a.0 + b.0
-  //   POST: r.1 == a.1 + b.1
-  //   ENSURES: r.0 == a.0 + b.0
-  //   ENSURES: r.1 == a.1 + b.1
-  {
-    var a := (0, 0);
-    var b := (-2, 0);
-    var r := AddTuples(a, b);
-    expect r == (-2, 0);
-  }
-
 }
 
 method TestsForTupleMax()
@@ -229,9 +219,9 @@ method TestsForTupleMax()
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (0, 1);
+    var t := (687, 688);
     var r := TupleMax(t);
-    expect r == 1;
+    expect r == 688;
   }
 
   // Test case for combination {1}/Or>0:
@@ -241,9 +231,9 @@ method TestsForTupleMax()
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (1, -1);
+    var t := (4294967197, -1);
     var r := TupleMax(t);
-    expect r == 1;
+    expect r == 4294967197;
   }
 
   // Test case for combination {1}/Or<0:
@@ -253,9 +243,9 @@ method TestsForTupleMax()
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (-1, -2);
+    var t := (-2, -2);
     var r := TupleMax(t);
-    expect r == -1;
+    expect r == -2;
   }
 
 }
@@ -269,23 +259,23 @@ method TestsForMixedTuple()
   //   ENSURES: r.0 == x
   //   ENSURES: r.1 == y
   {
-    var x := 0;
+    var x := 2;
     var y := 0.0;
     var r := MixedTuple(x, y);
-    expect r == (0, 0.0);
+    expect r == (2, 0.0);
   }
 
-  // Test case for combination {1}/Ox>0:
+  // Test case for combination {1}/Rel:
   //   PRE:  x >= 0
   //   POST: r.0 == x
   //   POST: r.1 == y
   //   ENSURES: r.0 == x
   //   ENSURES: r.1 == y
   {
-    var x := 1;
-    var y := 1.0;
+    var x := 0;
+    var y := 3.0;
     var r := MixedTuple(x, y);
-    expect r == (1, 1.0);
+    expect r == (0, 3.0);
   }
 
   // Test case for combination {1}/Oy<0:
@@ -295,10 +285,23 @@ method TestsForMixedTuple()
   //   ENSURES: r.0 == x
   //   ENSURES: r.1 == y
   {
-    var x := 0;
+    var x := 2;
     var y := -1.0;
     var r := MixedTuple(x, y);
-    expect r == (0, -1.0);
+    expect r == (2, -1.0);
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  x >= 0
+  //   POST: r.0 == x
+  //   POST: r.1 == y
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == y
+  {
+    var x := 2;
+    var y := 2.0;
+    var r := MixedTuple(x, y);
+    expect r == (2, 2.0);
   }
 
 }
@@ -311,23 +314,12 @@ method TestsForClassifySign()
   //   ENSURES: r.0 == x
   //   ENSURES: r.1 == (x >= 0)
   {
-    var x := 0;
+    var x := 2;
     var r := ClassifySign(x);
-    expect r == (0, true);
+    expect r == (2, true);
   }
 
-  // Test case for combination {1}/Ox>0:
-  //   POST: r.0 == x
-  //   POST: r.1 == (x >= 0)
-  //   ENSURES: r.0 == x
-  //   ENSURES: r.1 == (x >= 0)
-  {
-    var x := 1;
-    var r := ClassifySign(x);
-    expect r == (1, true);
-  }
-
-  // Test case for combination {1}/Ox<0:
+  // Test case for combination {1}/Rel:
   //   POST: r.0 == x
   //   POST: r.1 == (x >= 0)
   //   ENSURES: r.0 == x
@@ -336,6 +328,17 @@ method TestsForClassifySign()
     var x := -1;
     var r := ClassifySign(x);
     expect r == (-1, false);
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST: r.0 == x
+  //   POST: r.1 == (x >= 0)
+  //   ENSURES: r.0 == x
+  //   ENSURES: r.1 == (x >= 0)
+  {
+    var x := 0;
+    var r := ClassifySign(x);
+    expect r == (0, true);
   }
 
 }
@@ -376,22 +379,9 @@ method TestsForSwap3First()
   //   ENSURES: r.1 == t.0
   //   ENSURES: r.2 == t.2
   {
-    var t := (2, 0, 0);
+    var t := (4294966416, 0, 0);
     var r := Swap3First(t);
-    expect r == (0, 2, 0);
-  }
-
-  // Test case for combination {1}/R4:
-  //   POST: r.0 == t.1
-  //   POST: r.1 == t.0
-  //   POST: r.2 == t.2
-  //   ENSURES: r.0 == t.1
-  //   ENSURES: r.1 == t.0
-  //   ENSURES: r.2 == t.2
-  {
-    var t := (-1, 0, 0);
-    var r := Swap3First(t);
-    expect r == (0, -1, 0);
+    expect r == (0, 4294966416, 0);
   }
 
 }

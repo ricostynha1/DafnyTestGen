@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-04-18 10:49:44
+// Generated: 2026-04-19 21:32:16
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates

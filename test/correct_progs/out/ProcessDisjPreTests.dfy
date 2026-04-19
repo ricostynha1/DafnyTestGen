@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ProcessDisjPre.dfy
 // Method: Process
-// Generated: 2026-04-17 19:29:10
+// Generated: 2026-04-19 21:30:19
 
 // Method with disjunctive precondition.
 method Process(x: int, y: int) returns (r: int)
@@ -19,10 +19,10 @@ method TestsForProcess()
   //   POST: r == x + y
   //   ENSURES: r == x + y
   {
-    var x := 1;
-    var y := 0;
+    var x := 2;
+    var y := 2;
     var r := Process(x, y);
-    expect r == 1;
+    expect r == 4;
   }
 
   // Test case for combination P{2}/{1}:
@@ -30,32 +30,32 @@ method TestsForProcess()
   //   POST: r == x + y
   //   ENSURES: r == x + y
   {
-    var x := 0;
-    var y := 1;
+    var x := -1;
+    var y := 2;
     var r := Process(x, y);
     expect r == 1;
   }
 
-  // Test case for combination P{1}/{1}/Bx=2:
+  // Test case for combination P{1}/{1}/Bx=1:
   //   PRE:  x > 0 || y > 0
   //   POST: r == x + y
   //   ENSURES: r == x + y
   {
-    var x := 2;
-    var y := -2;
-    var r := Process(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination P{2}/{1}/By=2:
-  //   PRE:  x > 0 || y > 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := 0;
+    var x := 1;
     var y := 2;
     var r := Process(x, y);
-    expect r == 2;
+    expect r == 3;
+  }
+
+  // Test case for combination P{2}/{1}/By=1:
+  //   PRE:  x > 0 || y > 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 1;
+    var r := Process(x, y);
+    expect r == 0;
   }
 
 }

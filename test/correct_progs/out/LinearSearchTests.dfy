@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-17 19:28:14
+// Generated: 2026-04-19 21:29:24
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -31,8 +31,8 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [9];
-    var x := 8;
+    var a := new int[1] [18];
+    var x := 9;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
@@ -44,8 +44,21 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[1] [4];
-    var x := 4;
+    var a := new int[1] [12];
+    var x := 12;
+    var index := LinearSearch(a, x);
+    expect index == 0;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   POST: 0 <= index
+  //   POST: index < a.Length
+  //   POST: a[index] == x
+  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
+  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  {
+    var a := new int[2] [7, 13];
+    var x := 7;
     var index := LinearSearch(a, x);
     expect index == 0;
   }
@@ -57,23 +70,10 @@ method TestsForLinearSearch()
   //   ENSURES: 0 <= index < a.Length ==> a[index] == x
   //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
   {
-    var a := new int[2] [3, 5];
-    var x := 5;
+    var a := new int[2] [6, 7];
+    var x := 7;
     var index := LinearSearch(a, x);
     expect index == 1;
-  }
-
-  // Test case for combination {1}/O|a|=0:
-  //   POST: !(0 <= index)
-  //   POST: index == -1
-  //   POST: x !in a[..]
-  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
-  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
-  {
-    var a := new int[0] [];
-    var x := 0;
-    var index := LinearSearch(a, x);
-    expect index == -1;
   }
 
 }

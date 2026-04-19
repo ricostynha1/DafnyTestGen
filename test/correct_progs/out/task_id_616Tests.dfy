@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-04-17 19:35:00
+// Generated: 2026-04-19 21:36:20
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -46,10 +46,10 @@ method TestsForElementWiseModulo()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
-    var a := new int[0] [];
-    var b := new int[0] [];
+    var a := new int[1] [-1];
+    var b := new int[1] [-2];
     var result := ElementWiseModulo(a, b);
-    expect result[..] == [];
+    expect result[..] == [1];
   }
 
   // Test case for combination {1}/Q|b|>=2:
@@ -60,13 +60,13 @@ method TestsForElementWiseModulo()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
-    var a := new int[2] [1, 1];
-    var b := new int[2] [1, 1];
+    var a := new int[2] [3, -3];
+    var b := new int[2] [-1, 2];
     var result := ElementWiseModulo(a, b);
-    expect result[..] == [0, 0];
+    expect result[..] == [0, 1];
   }
 
-  // Test case for combination {1}/Q|b|=1:
+  // Test case for combination {1}/Q|b|=0:
   //   PRE:  a.Length == b.Length
   //   PRE:  forall i: int :: 0 <= i < b.Length ==> b[i] != 0
   //   POST: result.Length == a.Length
@@ -74,10 +74,24 @@ method TestsForElementWiseModulo()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
-    var a := new int[1] [0];
-    var b := new int[1] [1];
+    var a := new int[0] [];
+    var b := new int[0] [];
     var result := ElementWiseModulo(a, b);
-    expect result[..] == [0];
+    expect result[..] == [];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  a.Length == b.Length
+  //   PRE:  forall i: int :: 0 <= i < b.Length ==> b[i] != 0
+  //   POST: result.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  //   ENSURES: result.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
+  {
+    var a := new int[1] [2];
+    var b := new int[1] [3];
+    var result := ElementWiseModulo(a, b);
+    expect result[..] == [2];
   }
 
 }

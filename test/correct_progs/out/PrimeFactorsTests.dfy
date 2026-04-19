@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-17 19:29:07
+// Generated: 2026-04-19 21:30:16
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -292,6 +292,24 @@ method TestsForPrimeFactors()
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
   {
+    var n := 271;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [271]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  n > 1
+  //   POST: AllPrime(f)
+  //   POST: IsSorted(f)
+  //   POST: ProdF(f) == n
+  //   POST: n == f[0] * ProdF(f[1..])
+  //   ENSURES: AllPrime(f)
+  //   ENSURES: IsSorted(f)
+  //   ENSURES: ProdF(f) == n
+  {
     var n := 2;
     var f := PrimeFactors(n);
     expect AllPrime(f);
@@ -310,12 +328,12 @@ method TestsForPrimeFactors()
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
   {
-    var n := 3;
+    var n := 270;
     var f := PrimeFactors(n);
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
-    expect f == [3]; // observed from implementation
+    expect f == [2, 3, 3, 3, 5]; // observed from implementation
   }
 
   // Test case for combination {1}/R3:
@@ -328,30 +346,12 @@ method TestsForPrimeFactors()
   //   ENSURES: IsSorted(f)
   //   ENSURES: ProdF(f) == n
   {
-    var n := 4;
+    var n := 269;
     var f := PrimeFactors(n);
     expect AllPrime(f);
     expect IsSorted(f);
     expect ProdF(f) == n;
-    expect f == [2, 2]; // observed from implementation
-  }
-
-  // Test case for combination {1}/R4:
-  //   PRE:  n > 1
-  //   POST: AllPrime(f)
-  //   POST: IsSorted(f)
-  //   POST: ProdF(f) == n
-  //   POST: n == f[0] * ProdF(f[1..])
-  //   ENSURES: AllPrime(f)
-  //   ENSURES: IsSorted(f)
-  //   ENSURES: ProdF(f) == n
-  {
-    var n := 5;
-    var f := PrimeFactors(n);
-    expect AllPrime(f);
-    expect IsSorted(f);
-    expect ProdF(f) == n;
-    expect f == [5]; // observed from implementation
+    expect f == [269]; // observed from implementation
   }
 
 }

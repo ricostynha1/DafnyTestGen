@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-17 19:30:09
+// Generated: 2026-04-19 21:32:02
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -50,7 +50,7 @@ method TestsForIsInteger()
   //   POST: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['0'];
+    var s: seq<char> := ['9'];
     var result := IsInteger(s);
     expect result == true;
   }
@@ -72,7 +72,7 @@ method TestsForIsInteger()
   //   POST: !IsDigit(s[0])
   //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['~'];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -83,7 +83,7 @@ method TestsForIsInteger()
   //   POST: exists i :: 1 <= i < (|s| - 1) && !IsDigit(s[i])
   //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['p', ':', ' '];
+    var s: seq<char> := ['Q', '~', '\U{005C}'];
     var result := IsInteger(s);
     expect result == false;
   }
@@ -94,7 +94,7 @@ method TestsForIsInteger()
   //   POST: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['1', '0'];
+    var s: seq<char> := ['8', '9'];
     var result := IsInteger(s);
     expect result == true;
   }

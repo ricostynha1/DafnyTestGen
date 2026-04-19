@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-17 19:29:49
+// Generated: 2026-04-19 21:31:43
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0
@@ -32,9 +32,9 @@ method TestsForGetFirstOrZero()
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[1] [2];
+    var a := new int[1] [6];
     var result := GetFirstOrZero(a);
-    expect result == 2;
+    expect result == 6;
   }
 
   // Test case for combination {3}:
@@ -56,9 +56,9 @@ method TestsForGetFirstOrZero()
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[2] [3, 4];
+    var a := new int[2] [7, 8];
     var result := GetFirstOrZero(a);
-    expect result == 3;
+    expect result == 7;
   }
 
   // Test case for combination {2}/Oresult=0:
@@ -81,7 +81,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [6];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }
@@ -90,7 +90,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[2] [3, 4];
+    var a := new int[2] [7, 8];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }
@@ -102,6 +102,15 @@ method TestsForZeroLengthOrValue()
     var a := new int[1] [0];
     var result := ZeroLengthOrValue(a);
     expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: result == (a.Length == 0 || a[0] == 0)
+  //   ENSURES: result == (a.Length == 0 || a[0] == 0)
+  {
+    var a := new int[1] [9];
+    var result := ZeroLengthOrValue(a);
+    expect result == false;
   }
 
 }

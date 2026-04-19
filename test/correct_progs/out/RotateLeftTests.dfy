@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-04-17 19:29:21
+// Generated: 2026-04-19 21:31:18
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -31,6 +31,18 @@ method TestsForRotateLeft()
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
+    var a := new int[1] [17];
+    RotateLeft(a);
+    expect a[..] == [17];
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  a.Length > 0
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
+  {
     var a := new int[1] [16];
     RotateLeft(a);
     expect a[..] == [16];
@@ -43,9 +55,9 @@ method TestsForRotateLeft()
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[2] [23, 28];
+    var a := new int[2] [22, 24];
     RotateLeft(a);
-    expect a[..] == [28, 23];
+    expect a[..] == [24, 22];
   }
 
   // Test case for combination {1}/R3:
@@ -55,9 +67,9 @@ method TestsForRotateLeft()
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[1] [17];
+    var a := new int[1] [18];
     RotateLeft(a);
-    expect a[..] == [17];
+    expect a[..] == [18];
   }
 
 }

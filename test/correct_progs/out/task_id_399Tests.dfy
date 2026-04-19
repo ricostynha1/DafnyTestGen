@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-17 19:31:42
+// Generated: 2026-04-19 21:34:08
 
 // Performs the bitwise XOR operation on two sequences of bv32 values (with equal length).
 method BitwiseXOR(a: seq<bv32>, b: seq<bv32>) returns (result: seq<bv32>)
@@ -73,6 +73,21 @@ method TestsForBitwiseXOR()
     expect |result| == |a|;
     expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
     expect result == [7]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [12];
+    var b: seq<bv32> := [10];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [6]; // observed from implementation
   }
 
 }

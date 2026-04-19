@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-17 19:29:17
+// Generated: 2026-04-19 21:30:24
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -64,9 +64,9 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 7719;
-    var a := new nat[1] [7719];
-    var len := 1;
+    var x := 4294966815;
+    var a := new nat[2] [5540, 4294966815];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
   }
@@ -77,11 +77,24 @@ method TestsForContains()
   //   POST: !(x in a[..len])
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 0;
-    var a := new nat[0] [];
-    var len := 0;
+    var x := 8;
+    var a := new nat[2] [6097, 4294966815];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
+  }
+
+  // Test case for combination {1}/Blen=1:
+  //   PRE:  len <= a.Length
+  //   POST: res
+  //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
+  {
+    var x := 2529;
+    var a := new nat[1] [2529];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == true;
   }
 
   // Test case for combination {1}/Blen=a_len-1:
@@ -90,24 +103,11 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 7719;
-    var a := new nat[2] [7719, 2437];
-    var len := 1;
+    var x := 2232;
+    var a := new nat[3] [5313, 2232, 4294966825];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
-  }
-
-  // Test case for combination {2}/Blen=1:
-  //   PRE:  len <= a.Length
-  //   POST: !res
-  //   POST: !(x in a[..len])
-  //   ENSURES: res <==> x in a[..len]
-  {
-    var x := 3;
-    var a := new nat[1] [2];
-    var len := 1;
-    var res := Contains(x, a, len);
-    expect res == false;
   }
 
 }
@@ -122,6 +122,40 @@ method TestsForRecaman()
     var n := 0;
     var res := Recaman(n);
     expect res == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
+  {
+    var n := 2;
+    var res := Recaman(n);
+    expect res == 3;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
+  {
+    var n := 1;
+    var res := Recaman(n);
+    expect res == 1;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R3:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
+  {
+    var n := 524;
+    var res := Recaman(n);
+    // expect res == R(n); // got 1416
   }
 
 }
