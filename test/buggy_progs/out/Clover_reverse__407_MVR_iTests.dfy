@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_reverse__407_MVR_i.dfy
 // Method: reverse
-// Generated: 2026-04-17 19:30:44
+// Generated: 2026-04-20 22:29:19
 
 // Clover_reverse.dfy
 
@@ -29,28 +29,37 @@ method TestsForreverse()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
+    var a := new int[1] [-10];
+    reverse(a);
+    expect a[..] == [-10];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  {
     var a := new int[0] [];
     reverse(a);
     expect a[..] == [];
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {1}/Oa≠old:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[2] [11, 8];
+    var a := new int[2] [-8, -1];
     reverse(a);
-    // expect a[..] == [8, 11];
+    // expect a[..] == [-1, -8];
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/R4:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[1] [9];
+    var a := new int[1] [-9];
     reverse(a);
-    expect a[..] == [9];
+    expect a[..] == [-9];
   }
 
 }
