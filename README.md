@@ -175,43 +175,55 @@ Z3 can freely assign values to the residual `filter(...)` calls, and the structu
 
 ### Per-literal relevance check (embedded in Phase 1; disable with `--no-relevance`)
 
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where the *defining* literal `Q_last` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
 
 ```
 elem in arr[..]                  // Q1
-∧ 0 ≤ pos < arr.Length           // Q2, Q3
+∧ 0 ≤ pos                        // Q2
+∧ pos < arr.Length               // Q3
 ∧ arr[pos] == elem               // Q4
-∧ elem !in arr[pos+1..]          // Q_last  — the "last" constraint
+∧ elem !in arr[pos+1..]          // Q5  — the "last" constraint
 ```
 
-Without a relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All four literals hold, but `Q_last` is vacuous (no duplicates → nothing to be the "last" of). The defining behaviour is never exercised.
+Without a relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All five literals hold, but `Q1`, `Q4`, and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
 
-DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it first asks Z3 to prove `Q_last` is non-redundant by finding inputs where the clause has *two distinct* output assignments, identical except that `Q_last` separates them. Formally:
+**Formulation.** Each safe literal `Qk` is relevant iff there exist ins, outs, and outs_k such that
 
 ```
 pre(ins)
-∧ Q1(ins, outs1) ∧ ... ∧ Qm(ins, outs1)              // outs1 satisfies the full clause
-∧ Q1(ins, outs2) ∧ ... ∧ Q_{m-1}(ins, outs2) ∧ ¬Q_last(ins, outs2)
-∧ outs1 ≠ outs2
+∧ Q1(ins, outs) ∧ ... ∧ Qm(ins, outs)                              // outs satisfies the full clause
+∧ Q1(ins, outs_k) ∧ ... ∧ ¬Qk(ins, outs_k) ∧ ... ∧ Qm(ins, outs_k) // clause minus Qk, with ¬Qk
+∧ outs ≠ outs_k
 ```
 
-- **SAT** → `Q_last` strictly prunes outputs for these inputs. Emit `outs1` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause instead of two).
-- **UNSAT** / **unknown** / skipped (unsafe candidate, residual uninterpreted function) → fall back to the plain Phase 1 clause query.
+DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `outs_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find ins for which *every* `Qk ∈ S` strictly prunes the output space.
 
-For `LastPosition`, the relevance query forces `arr` to contain duplicates of `elem` so that an "earlier" index breaks `Q_last` while the "last" index satisfies it. Generated test:
+- **SAT** → every `Qk ∈ S` is simultaneously relevant at these ins. Emit `outs` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause instead of two).
+- **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
+- **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
+
+For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the chosen index to actually hold `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
-var arr := new int[2] [-10, -10];
+var arr := new int[4] [-10, -10, -10, -9];
 var elem := -10;
 var pos := LastPosition(arr, elem);
-expect pos == 1;     // forced to the LAST occurrence
+expect pos == 2;     // LAST occurrence of -10 (index 2), not the earlier ones at 0, 1
 ```
 
 Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis, so replacing the plain clause query keeps the suite minimal without sacrificing coverage.
 
-**Safety**: only the **last** literal of each clause is negated. Earlier literals (typically guards like `0 ≤ pos < arr.Length`) remain intact under `outs2`, so `arr[pos]` etc. stay well-defined. A secondary check verifies that every output-variable appearing in `Q_last` also appears in some earlier literal. Clauses whose last literal still references an uninterpreted user-defined function (typically recursive functions like `Count`, `Power`) are skipped — Z3 is free to fabricate function values, which would make the two-output separation spurious.
+**Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyTestGen classifies a literal `Qk` as safe iff:
+
+1. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`.
+2. `Qk` references at least one output variable.
+3. Every output variable in `Qk` also appears in some other literal of the clause (so `outs_k` is partially constrained rather than free).
+
+Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate consistent function values on both `outs` and `outs_k` sides, defeating the separation.
+
+Even when a relevance query yields a less-than-ideal choice of ins, the emitted test remains correct: `outs` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
 
 Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
 
@@ -695,7 +707,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--uniqueness-rounds <n>` | `-u` | Max rounds of uniqueness checking to enumerate all valid outputs (default: 2). When all valid outputs are exhaustively enumerated, emit `expect out == v1 \|\| out == v2;` instead of postcondition literals |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
-| `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where the *last* literal Q_m strictly prunes outputs (e.g. `arr` with duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
+| `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
