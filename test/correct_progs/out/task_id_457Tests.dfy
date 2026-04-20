@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_457.dfy
 // Method: MinLengthSublist
-// Generated: 2026-04-20 09:12:00
+// Generated: 2026-04-20 14:59:08
 
 // Find the shortest sublist in a non-empty list of sublists.
 method MinLengthSublist<T>(s: seq<seq<T>>) returns (minSublist: seq<T>)
@@ -44,9 +44,11 @@ method TestsForMinLengthSublist()
   //   ENSURES: minSublist in s
   //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[10], [9], [], [], [], [], [], []];
+    var s: seq<seq<int>> := [[20, 30], [10], [17], [9], [19], [16], [18]];
     var minSublist := MinLengthSublist<int>(s);
-    expect minSublist == [];
+    expect minSublist in s;
+    expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
+    expect minSublist == [10]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -61,16 +63,16 @@ method TestsForMinLengthSublist()
     expect minSublist == [];
   }
 
-  // Test case for combination {1}/Q|s[0]|>=2:
+  // Test case for combination {1}/Q|minSublist|>=2:
   //   PRE:  |s| > 0
   //   POST: minSublist in s
   //   POST: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   //   ENSURES: minSublist in s
   //   ENSURES: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[6, 5], [11]];
+    var s: seq<seq<int>> := [[6, 7], [12, 13]];
     var minSublist := MinLengthSublist<int>(s);
-    expect minSublist == [11];
+    expect minSublist == [12, 13] || minSublist == [6, 7];
   }
 
 }

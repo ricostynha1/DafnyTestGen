@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch2.dfy
 // Method: LinearSearch
-// Generated: 2026-04-20 09:03:07
+// Generated: 2026-04-20 14:55:00
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -46,8 +46,8 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[3] [-10, -7, -8];
-    var x := -7;
+    var a := new int[3] [-6, -5, -6];
+    var x := -5;
     var index := LinearSearch(a, x);
     expect index == 1;
   }
@@ -60,8 +60,8 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[2] [-1, -2];
-    var x := -2;
+    var a := new int[2] [6, -1];
+    var x := -1;
     var index := LinearSearch(a, x);
     expect index == 1;
   }
@@ -73,13 +73,13 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[4] [10, -1, 10, 22];
-    var x := 10;
+    var a := new int[3] [-9, -10, -10];
+    var x := -10;
     var index := LinearSearch(a, x);
     expect 0 <= index;
     expect index < a.Length;
     expect a[index] == x;
-    expect index == 0; // observed from implementation
+    expect index == 1; // observed from implementation
   }
 
   // Test case for combination {5}:

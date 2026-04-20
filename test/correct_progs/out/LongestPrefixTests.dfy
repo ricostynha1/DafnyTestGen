@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-20 09:03:16
+// Generated: 2026-04-20 14:55:07
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 
@@ -22,7 +22,24 @@ method LongestPrefix(a: array<int>, b: array <int>) returns (i: nat)
 
 method TestsForLongestPrefix()
 {
-  // Test case for combination {1}/Rel:
+  // Test case for combination {3}/Rel:
+  //   POST: i <= a.Length
+  //   POST: i <= b.Length
+  //   POST: a[..i] == b[..i]
+  //   POST: i < a.Length
+  //   POST: i < b.Length
+  //   POST: a[i] != b[i]
+  //   ENSURES: i <= a.Length && i <= b.Length
+  //   ENSURES: a[..i] == b[..i]
+  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
+  {
+    var a := new int[2] [-10, -2];
+    var b := new int[2] [-10, -1];
+    var i := LongestPrefix(a, b);
+    expect i == 1;
+  }
+
+  // Test case for combination {1}:
   //   POST: i <= a.Length
   //   POST: i <= b.Length
   //   POST: a[..i] == b[..i]
@@ -37,7 +54,7 @@ method TestsForLongestPrefix()
     expect i == 1;
   }
 
-  // Test case for combination {2}/Rel:
+  // Test case for combination {2}:
   //   POST: i <= a.Length
   //   POST: i <= b.Length
   //   POST: a[..i] == b[..i]
@@ -47,25 +64,8 @@ method TestsForLongestPrefix()
   //   ENSURES: a[..i] == b[..i]
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
-    var a := new int[2] [-10, 3];
-    var b := new int[1] [-10];
-    var i := LongestPrefix(a, b);
-    expect i == 1;
-  }
-
-  // Test case for combination {3}/Rel:
-  //   POST: i <= a.Length
-  //   POST: i <= b.Length
-  //   POST: a[..i] == b[..i]
-  //   POST: i < a.Length
-  //   POST: i < b.Length
-  //   POST: a[i] != b[i]
-  //   ENSURES: i <= a.Length && i <= b.Length
-  //   ENSURES: a[..i] == b[..i]
-  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
-  {
     var a := new int[2] [-1, -10];
-    var b := new int[2] [-1, -9];
+    var b := new int[1] [-1];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
@@ -80,7 +80,7 @@ method TestsForLongestPrefix()
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
     var a := new int[0] [];
-    var b := new int[1] [10];
+    var b := new int[1] [-1];
     var i := LongestPrefix(a, b);
     expect i == 0;
   }

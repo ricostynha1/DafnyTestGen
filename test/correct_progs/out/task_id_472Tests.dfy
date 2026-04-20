@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-20 09:12:10
+// Generated: 2026-04-20 14:59:15
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -66,7 +66,7 @@ method TestsForContainsConsecutiveNumbers()
   //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
-    var a := new int[5] [-10, -5, -4, -3, 3153];
+    var a := new int[5] [-10, -7, -6, -5, 15973];
     var result := ContainsConsecutiveNumbers(a);
     expect result == true;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-20 09:03:24
+// Generated: 2026-04-20 14:55:13
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -118,7 +118,7 @@ method TestsForMapLookup()
   //   POST: r == m[k]
   //   ENSURES: r == m[k]
   {
-    var m: map<int, int> := map[-1 := 0, 0 := 0, 1 := 0, 3 := 0, 4 := 0];
+    var m: map<int, int> := map[0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0];
     var k := 3;
     var r := MapLookup(m, k);
     expect r == 0;
@@ -140,8 +140,8 @@ method TestsForMapLookup()
   //   POST: r == m[k]
   //   ENSURES: r == m[k]
   {
-    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0];
-    var k := -2;
+    var m: map<int, int> := map[-1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var k := -1;
     var r := MapLookup(m, k);
     expect r == 0;
   }
@@ -213,8 +213,8 @@ method TestsForMapUpdate()
   //   ENSURES: k in r
   //   ENSURES: r[k] == v
   {
-    var m: map<int, int> := map[2 := 0];
-    var k := 3;
+    var m: map<int, int> := map[5 := 0];
+    var k := 2;
     var v := -10;
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
@@ -228,8 +228,8 @@ method TestsForMapUpdate()
   //   ENSURES: k in r
   //   ENSURES: r[k] == v
   {
-    var m: map<int, int> := map[2 := 0, 4 := 0];
-    var k := 3;
+    var m: map<int, int> := map[1 := 0, 2 := 0, 4 := 0, 5 := 0];
+    var k := 2;
     var v := -9;
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
@@ -305,21 +305,21 @@ method TestsForMapRemoveKey()
   //   ENSURES: r == m - {k}
   //   ENSURES: k !in r
   {
-    var m: map<int, int> := map[1 := 0, 2 := 0];
-    var k := 2;
+    var m: map<int, int> := map[-1 := 0];
+    var k := -1;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
   }
 
-  // Test case for combination {1}/O|m|=1:
+  // Test case for combination {1}/O|m|>=2:
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
   //   ENSURES: r == m - {k}
   //   ENSURES: k !in r
   {
-    var m: map<int, int> := map[-2 := 0];
-    var k := -2;
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 4 := 0];
+    var k := -1;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
   }
@@ -337,15 +337,15 @@ method TestsForMapRemoveKey()
     expect r == m - {k};
   }
 
-  // Test case for combination {1}/O|r|=1:
+  // Test case for combination {1}/Ok>0:
   //   PRE:  k in m
   //   POST: r == m - {k}
   //   POST: k !in r
   //   ENSURES: r == m - {k}
   //   ENSURES: k !in r
   {
-    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 5 := 0];
-    var k := 5;
+    var m: map<int, int> := map[-1 := 0, 1 := 0, 4 := 0, 5 := 0];
+    var k := 4;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
   }
@@ -367,27 +367,27 @@ method TestsForMapKeys()
   //   POST: r == m.Keys
   //   ENSURES: r == m.Keys
   {
-    var m: map<int, int> := map[2 := 0];
+    var m: map<int, int> := map[3 := 0];
     var r := MapKeys(m);
-    expect r == {2};
+    expect r == {3};
   }
 
   // Test case for combination {1}/O|m|>=2:
   //   POST: r == m.Keys
   //   ENSURES: r == m.Keys
   {
-    var m: map<int, int> := map[3 := 0, 4 := 0];
+    var m: map<int, int> := map[-2 := 0, 2 := 0];
     var r := MapKeys(m);
-    expect r == {3, 4};
+    expect r == {-2, 2};
   }
 
   // Test case for combination {1}/R4:
   //   POST: r == m.Keys
   //   ENSURES: r == m.Keys
   {
-    var m: map<int, int> := map[1 := 0];
+    var m: map<int, int> := map[2 := 0, 4 := 0];
     var r := MapKeys(m);
-    expect r == {1};
+    expect r == {2, 4};
   }
 
 }

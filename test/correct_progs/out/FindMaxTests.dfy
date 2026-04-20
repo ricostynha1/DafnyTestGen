@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-20 09:02:02
+// Generated: 2026-04-20 14:54:13
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -31,9 +31,9 @@ method TestsForFindMax()
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[4] [0.0, -0.5, 0.0, -0.25];
+    var a := new real[4] [-9357.5, -9357.5, -9357.25, -9357.75];
     var max := FindMax(a);
-    expect max == 0.0;
+    expect max == -9357.25;
   }
 
   // Test case for combination {4}/Rel:
@@ -43,35 +43,35 @@ method TestsForFindMax()
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[4] [0.0, -0.5, -0.5, 0.0];
+    var a := new real[4] [0.0, -0.25, 0.0, -0.25];
     var max := FindMax(a);
     expect max == 0.0;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {3}:
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
-  //   POST: max == a[0]
+  //   POST: max == a[(a.Length - 1)]
   //   POST: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[1] [2.0];
+    var a := new real[1] [0.0];
     var max := FindMax(a);
-    expect max == 2.0;
+    expect max == 0.0;
   }
 
-  // Test case for combination {1}/Omax<0:
+  // Test case for combination {3}/Q|a|>=2:
   //   PRE:  a.Length > 0
   //   POST: 0 <= (a.Length - 1)
-  //   POST: max == a[0]
+  //   POST: max == a[(a.Length - 1)]
   //   POST: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   //   ENSURES: exists k: int :: 0 <= k < a.Length && max == a[k]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[1] [-1.0];
+    var a := new real[2] [-0.5, 0.0];
     var max := FindMax(a);
-    expect max == -1.0;
+    expect max == 0.0;
   }
 
 }

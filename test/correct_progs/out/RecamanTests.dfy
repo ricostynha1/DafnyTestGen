@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-20 09:04:14
+// Generated: 2026-04-20 14:56:01
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -65,7 +65,7 @@ method TestsForContains()
   //   ENSURES: res <==> x in a[..len]
   {
     var x := 10;
-    var a := new nat[2] [4, 10];
+    var a := new nat[2] [5, 10];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
@@ -77,8 +77,8 @@ method TestsForContains()
   //   POST: !(x in a[..len])
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 2;
-    var a := new nat[2] [10, 9];
+    var x := 9;
+    var a := new nat[2] [10, 8];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
@@ -103,8 +103,8 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 10;
-    var a := new nat[3] [10, 10, 9];
+    var x := 8;
+    var a := new nat[3] [8, 10, 5];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-04-20 09:04:27
+// Generated: 2026-04-20 14:56:10
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -53,9 +53,31 @@ method TestsForSelectionSort()
   //   ENSURES: IsSorted(a)
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [-10];
+    var a := new int[2] [-1, 2];
     SelectionSort(a);
-    expect a[..] == [-10];
+    expect a[..] == [-1, 2];
+  }
+
+  // Test case for combination {1}/Q|a|=1:
+  //   POST: IsSorted(a)
+  //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[1] [-1];
+    SelectionSort(a);
+    expect a[..] == [-1];
+  }
+
+  // Test case for combination {1}/Q|a|=0:
+  //   POST: IsSorted(a)
+  //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[0] [];
+    SelectionSort(a);
+    expect a[..] == [];
   }
 
   // Test case for combination {1}/Oa≠old:
@@ -64,20 +86,9 @@ method TestsForSelectionSort()
   //   ENSURES: IsSorted(a)
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [3, -1];
+    var a := new int[2] [-1, -2];
     SelectionSort(a);
-    expect a[..] == [-1, 3];
-  }
-
-  // Test case for combination {1}/Q|a|>=2/R3:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[1] [-9];
-    SelectionSort(a);
-    expect a[..] == [-9];
+    expect a[..] == [-2, -1];
   }
 
 }

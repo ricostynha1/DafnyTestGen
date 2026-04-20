@@ -9,8 +9,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (3 new entries)
   Subsumption pruning: 3 skipped
                             Phase 2b complete: 1 test(s)
@@ -21,8 +21,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (3 new entries)
   Subsumption pruning: 3 skipped
                             Phase 2b complete: 1 test(s)
@@ -34,9 +34,12 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 4 DNF clauses
-  Solving 1/16...     Solving 2/16...     Subsumption pruning: 14 skipped
+  Relevance: 2 clause(s) solved via relevance, 2 redundant, 0 skipped
+  Subsumption pruning: 14 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (2 added, 2 redundant, 0 skipped)
+  Phase 2b: type/size coverage (24 new entries)
+  Solving 18/38...     Solving 20/38...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 4 test(s)
   Deduplicated: 4 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 8 test case(s)...
@@ -61,9 +64,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 2 redundant, 0 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 4/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 1 redundant, 1 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -86,8 +89,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 3/4...     Solving 4/4...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Warning: -c (check) is not supported for programs with bodyless methods (dafny build cannot compile them). Writing unchecked tests.
@@ -103,14 +106,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2b: type/size coverage (2 new entries)
-  Solving 5/6...     Subsumption pruning: 1 skipped
+  Subsumption pruning: 2 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 5/5...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -130,8 +133,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 3/4...     Solving 4/4...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -153,8 +156,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 4 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 4 skipped
   Solving 1/4...     Solving 2/4...     Solving 3/4...     Solving 4/4...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 4 skipped)
   Phase 2b: type/size coverage (20 new entries, 4 pruned)
   Solving 5/24...     Solving 6/24...     Solving 7/24...     Solving 8/24...     Solving 9/24...     Solving 10/24...     Solving 11/24...     Solving 12/24...     Solving 13/24...     Solving 15/24...     Solving 16/24...     Solving 17/24...     Solving 18/24...     Solving 19/24...     Solving 20/24...     Solving 21/24...     Solving 22/24...     Solving 23/24...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 3 test(s)
@@ -179,8 +182,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2: refined-range BVA (12 new entries)
   Solving 4/15...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -203,9 +206,9 @@
   Generating tests via Boogie/Z3...
   Note: postcondition reaches set/map comprehension - subsumption uses input-only pin
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Subsumption pruning: 6 skipped
                             Phase 2b complete: 3 test(s)
@@ -230,8 +233,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (4 new entries, 1 pruned)
   Solving 2/5...     Solving 5/5...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 1 test(s)
@@ -242,8 +245,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (2 new entries, 1 pruned)
   Solving 2/3...     Solving 3/3...                               Phase 2b complete: 1 test(s)
   Phase 3: repeats (up to 4 per condition)
@@ -271,10 +274,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2: refined-range BVA (6 new entries)
-  Solving 2/7...     Solving 3/7...                               Phase 2 complete: 4 test(s)
+  Solving 1/6...     Solving 3/6...     Solving 4/6...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -294,8 +298,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 3/4...     Solving 4/4...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -317,8 +321,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 3/4...     Solving 4/4...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -340,8 +344,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 3/8...     Solving 4/8...                               Phase 2 complete: 4 test(s)
 
@@ -349,8 +353,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 2/7...     Solving 3/7...     Solving 4/7...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -376,8 +380,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 3/4...     Solving 4/4...                               Phase 2 complete: 2 test(s)
   Phase 2b: type/size coverage (9 new entries, 3 pruned)
@@ -404,17 +408,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 4 DNF clauses
-  Solving 1/16...     Solving 2/16...     Solving 7/16...     Solving 9/16...     Solving 10/16...     Solving 11/16...     Solving 13/16...     Solving 15/16...     Solving 16/16...     Subsumption pruning: 7 skipped
-                            Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (2 added, 2 redundant, 0 skipped)
+  Relevance: 2 clause(s) solved via relevance, 2 redundant, 0 skipped
+  Solving 2/14...     Solving 5/14...     Solving 7/14...     Solving 8/14...     Solving 9/14...     Solving 11/14...     Solving 13/14...     Solving 14/14...     Subsumption pruning: 6 skipped
+                            Phase 1 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 5 test case(s)...
-  Test 1/5: PASS
-  Test 2/5: PASS
-  Test 3/5: PASS
-  Test 4/5: PASS
-  Test 5/5: PASS
-[DafnyTestGen] Results: 5 passing, 0 failing
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\FindMaxTests.dfy
 
 = Processing: FindMaxIndex.dfy                                        =
@@ -427,12 +430,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 6/8...     Subsumption pruning: 1 skipped
-                            Phase 2 complete: 4 test(s)
+  Solving 6/7...     Subsumption pruning: 3 skipped
+                            Phase 2 complete: 2 test(s)
+  Phase 2b: type/size coverage (4 new entries, 2 pruned)
+  Solving 8/11...     Solving 11/11...     Subsumption pruning: 2 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 11/11...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -452,14 +460,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2b: type/size coverage (2 new entries)
-  Solving 5/6...     Subsumption pruning: 1 skipped
+  Subsumption pruning: 2 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 5/5...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -479,9 +487,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/35...     Solving 2/35...     Solving 3/35...     Solving 4/35...     Solving 6/35...     Solving 8/35...     Solving 16/35...     Solving 17/35...     Solving 19/35...     Solving 20/35...     Solving 21/35...     Solving 23/35...     Solving 31/35...     Solving 32/35...     Solving 34/35...     Solving 35/35...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
   Phase 2b: type/size coverage (58 new entries, 2 pruned)
   Solving 36/93...     Solving 38/93...     Solving 39/93...     Solving 41/93...     Solving 42/93...     Solving 43/93...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -504,25 +512,21 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 16 DNF clauses
-  Solving 1/112...     Solving 2/112...     Solving 7/112...     Solving 10/112...     Solving 12/112...     Solving 19/112...     Solving 21/112...     Solving 22/112...     Solving 25/112...     Solving 27/112...     Solving 28/112...     Solving 30/112...     Solving 31/112...     Solving 33/112...     Solving 34/112...     Solving 36/112...     Solving 37/112...     Solving 39/112...     Solving 40/112...     Solving 43/112...     Solving 45/112...     Solving 46/112...     Solving 49/112...     Solving 51/112...     Solving 52/112...     Solving 54/112...     Solving 55/112...     Solving 57/112...     Solving 58/112...     Solving 60/112...     Solving 61/112...     Solving 63/112...     Solving 64/112...     Solving 67/112...     Solving 69/112...     Solving 70/112...     Solving 73/112...     Solving 75/112...     Solving 76/112...     Solving 78/112...     Solving 79/112...     Solving 81/112...     Solving 82/112...     Solving 84/112...     Solving 85/112...     Solving 87/112...     Solving 88/112...     Solving 91/112...     Solving 93/112...     Solving 94/112...     Solving 97/112...     Solving 99/112...     Solving 100/112...     Solving 102/112...     Solving 103/112...     Solving 105/112...     Solving 106/112...     Solving 108/112...     Solving 109/112...     Solving 111/112...     Solving 112/112...     Subsumption pruning: 51 skipped
-                            Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (8 added, 8 redundant, 0 skipped)
+  Relevance: 8 clause(s) solved via relevance, 8 redundant, 0 skipped
+  Solving 10/104...     Solving 11/104...     Solving 13/104...     Solving 14/104...     Solving 17/104...     Solving 19/104...     Solving 20/104...     Solving 22/104...     Solving 23/104...     Solving 25/104...     Solving 26/104...     Solving 28/104...     Solving 29/104...     Solving 31/104...     Solving 32/104...     Solving 35/104...     Solving 37/104...     Solving 38/104...     Solving 41/104...     Solving 43/104...     Solving 44/104...     Solving 46/104...     Solving 47/104...     Solving 49/104...     Solving 50/104...     Solving 52/104...     Solving 53/104...     Solving 55/104...     Solving 56/104...     Solving 59/104...     Solving 61/104...     Solving 62/104...     Solving 65/104...     Solving 67/104...     Solving 68/104...     Solving 70/104...     Solving 71/104...     Solving 73/104...     Solving 74/104...     Solving 76/104...     Solving 77/104...     Solving 79/104...     Solving 80/104...     Solving 83/104...     Solving 85/104...     Solving 86/104...     Solving 89/104...     Solving 91/104...     Solving 92/104...     Solving 94/104...     Solving 95/104...     Solving 97/104...     Solving 98/104...     Solving 100/104...     Solving 101/104...     Solving 103/104...     Solving 104/104...     Subsumption pruning: 47 skipped
+                            Phase 1 complete: 9 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 13 test case(s)...
-  Test 1/13: PASS
-  Test 2/13: PASS
-  Test 3/13: PASS
-  Test 4/13: PASS
-  Test 5/13: PASS
-  Test 6/13: PASS
-  Test 7/13: PASS
-  Test 8/13: PASS
-  Test 9/13: PASS
-  Test 10/13: PASS
-  Test 11/13: PASS
-  Test 12/13: PASS
-  Test 13/13: PASS
-[DafnyTestGen] Results: 13 passing, 0 failing
+[DafnyTestGen] Checking 9 test case(s)...
+  Test 1/9: PASS
+  Test 2/9: PASS
+  Test 3/9: PASS
+  Test 4/9: PASS
+  Test 5/9: PASS
+  Test 6/9: PASS
+  Test 7/9: PASS
+  Test 8/9: PASS
+  Test 9/9: PASS
+[DafnyTestGen] Results: 9 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\IntersectIntervalsSimplifiedTests.dfy
 
 = Processing: IntersectIntervalsTuples.dfy                                        =
@@ -535,9 +539,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/4...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (3 new entries)
   Subsumption pruning: 3 skipped
                             Phase 2b complete: 1 test(s)
@@ -562,11 +566,13 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
-  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 1 skipped)
+  Relevance: 2 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 2 test(s)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 4/6...     Subsumption pruning: 1 skipped
-                            Phase 2 complete: 4 test(s)
+  Solving 1/4...     Solving 3/4...     Subsumption pruning: 2 skipped
+                            Phase 2 complete: 3 test(s)
+  Phase 2b: type/size coverage (17 new entries, 1 pruned)
+  Solving 5/21...                               Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -586,19 +592,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
-  Solving 1/5...     Solving 2/5...     Solving 5/5...     Subsumption pruning: 2 skipped
-                            Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (4 added, 0 redundant, 1 skipped)
+  Relevance: 4 clause(s) solved via relevance, 0 redundant, 1 skipped
+  Solving 1/1...                               Phase 1 complete: 5 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 7 test case(s)...
-  Test 1/7: PASS
-  Test 2/7: PASS
-  Test 3/7: PASS
-  Test 4/7: PASS
-  Test 5/7: PASS
-  Test 6/7: PASS
-  Test 7/7: PASS
-[DafnyTestGen] Results: 7 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\LinearSearch2Tests.dfy
 
 = Processing: LinearSearchFirst.dfy                                        =
@@ -611,20 +614,18 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
-  Solving 1/17...     Solving 2/17...     Solving 4/17...     Solving 5/17...     Solving 8/17...     Solving 10/17...     Solving 11/17...     Solving 14/17...     Solving 16/17...     Solving 17/17...     Subsumption pruning: 7 skipped
-                            Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (4 added, 0 redundant, 1 skipped)
-  Deduplicated: 8 -> 7 unique test cases
+  Relevance: 4 clause(s) solved via relevance, 0 redundant, 1 skipped
+  Solving 1/13...     Solving 3/13...     Solving 4/13...     Solving 6/13...     Solving 7/13...     Solving 10/13...     Solving 12/13...     Solving 13/13...     Subsumption pruning: 5 skipped
+                            Phase 1 complete: 6 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 7 test case(s)...
-  Test 1/7: PASS
-  Test 2/7: PASS
-  Test 3/7: PASS
-  Test 4/7: PASS
-  Test 5/7: PASS
-  Test 6/7: PASS
-  Test 7/7: PASS
-[DafnyTestGen] Results: 7 passing, 0 failing
+[DafnyTestGen] Checking 6 test case(s)...
+  Test 1/6: PASS
+  Test 2/6: PASS
+  Test 3/6: PASS
+  Test 4/6: PASS
+  Test 5/6: PASS
+  Test 6/6: PASS
+[DafnyTestGen] Results: 6 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\LinearSearchFirstTests.dfy
 
 = Processing: LongestPrefix.dfy                                        =
@@ -637,17 +638,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
-  Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (3 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 2 redundant, 0 skipped
+  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 3 test(s)
+  Phase 2: refined-range BVA (18 new entries)
+  Solving 3/20...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\LongestPrefixTests.dfy
 
 = Processing: MakeBuckets.dfy                                        =
@@ -660,14 +661,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 4/7...     Solving 7/7...     Subsumption pruning: 3 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Solving 6/6...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
-  Solving 8/13...     Solving 11/13...     Subsumption pruning: 4 skipped
-                            Phase 2b complete: 3 test(s)
+  Solving 7/12...     Solving 10/12...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 2 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 13/13...                               Phase 3 complete: 4 test(s)
+  Solving 12/12...     Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -687,8 +688,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (8 new entries)
   Solving 2/9...     Solving 4/9...     Solving 5/9...     Subsumption pruning: 5 skipped
                             Phase 2b complete: 3 test(s)
@@ -699,18 +700,18 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
-  Solving 2/10...     Solving 3/10...     Solving 5/10...     Solving 9/10...     Subsumption pruning: 4 skipped
+  Solving 2/10...     Solving 4/10...     Solving 5/10...     Solving 7/10...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
 
 [DafnyTestGen] Processing method: MapSize
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 3 test(s)
@@ -721,8 +722,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (12 new entries)
   Solving 3/13...     Solving 4/13...     Solving 5/13...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -731,8 +732,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 6/10...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -741,8 +742,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 4/10...     Solving 5/10...     Solving 6/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -751,8 +752,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 3/7...     Solving 4/7...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 3 test(s)
@@ -801,18 +802,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 4 DNF clauses
-  Solving 1/16...     Solving 2/16...     Solving 4/16...     Solving 7/16...     Solving 9/16...     Solving 10/16...     Solving 13/16...     Solving 15/16...     Solving 16/16...     Subsumption pruning: 7 skipped
-                            Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (3 added, 1 redundant, 0 skipped)
+  Relevance: 3 clause(s) solved via relevance, 1 redundant, 0 skipped
+  Solving 1/13...     Solving 4/13...     Solving 6/13...     Solving 7/13...     Solving 8/13...     Solving 10/13...     Solving 12/13...     Solving 13/13...     Subsumption pruning: 5 skipped
+                            Phase 1 complete: 5 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\MaxDistEqualTests.dfy
 
 = Processing: Merge.dfy                                        =
@@ -825,18 +825,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Solving 5/10...     Solving 7/10...     Subsumption pruning: 5 skipped
-                            Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Solving 6/9...     Subsumption pruning: 6 skipped
+                            Phase 1 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\MergeTests.dfy
 
 = Processing: Mode.dfy                                        =
@@ -849,11 +847,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/3...     Solving 3/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
-  Solving 5/10...     Solving 8/10...     Subsumption pruning: 2 skipped
+  Solving 4/9...     Solving 7/9...     Solving 8/9...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
@@ -874,18 +872,20 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (8 new entries)
-  Solving 2/9...     Solving 4/9...     Solving 5/9...     Solving 6/9...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 4 test(s)
+  Solving 2/9...     Solving 3/9...     Solving 5/9...     Subsumption pruning: 5 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 9/9...                               Phase 3 complete: 4 test(s)
 
 [DafnyTestGen] Processing method: MultisetUnion
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -894,8 +894,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -904,8 +904,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 3/10...     Solving 6/10...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -915,8 +915,8 @@
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 2 branches
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (16 new entries)
   Solving 4/18...     Solving 5/18...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -925,8 +925,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -935,8 +935,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 1 redundant, 0 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 1 redundant, 0 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -945,8 +945,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (6 new entries, 2 pruned)
@@ -957,10 +957,10 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
-  Solving 2/10...     Solving 3/10...     Solving 5/10...     Subsumption pruning: 1 skipped
+  Solving 3/10...     Solving 4/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 36 test case(s)...
@@ -1014,17 +1014,16 @@
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (2 new entries)
   Solving 2/3...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 3 test(s)
+                            Phase 2b complete: 2 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 3/3...                               Phase 3 complete: 4 test(s)
+  Solving 3/3...     Solving 3/3...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
-  Test 2/4: PASS
-  Test 3/4: PASS (rescued - Z3 value corrected by runtime)
+  Test 2/4: PASS (rescued - Z3 value corrected by runtime)
+  Test 3/4: PASS
   Test 4/4: PASS
 [DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\PartitionOddEvenTests.dfy
@@ -1041,12 +1040,11 @@
   Phase 1: 1 DNF clauses
   Solving 1/4...     Solving 4/4...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 5/10...     Solving 6/10...     Solving 8/10...     Subsumption pruning: 3 skipped
-                            Phase 2b complete: 2 test(s)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 10/10...     Solving 10/10...                               Phase 3 complete: 4 test(s)
+                            Phase 2b complete: 1 test(s)
+  Phase 3: repeats (up to 4 per condition)
+  Solving 10/10...     Solving 10/10...     Solving 10/10...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1067,8 +1065,8 @@
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 2 branches
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 3/8...     Solving 4/8...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -1090,14 +1088,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2b: type/size coverage (2 new entries)
-  Solving 5/6...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 3 test(s)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 4/5...                               Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1117,8 +1112,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (8 new entries)
   Solving 3/10...     Solving 4/10...     Solving 6/10...     Subsumption pruning: 1 skipped
                             Phase 2 complete: 4 test(s)
@@ -1127,9 +1122,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2: refined-range BVA (4 new entries)
   Solving 4/7...     Subsumption pruning: 3 skipped
                             Phase 2 complete: 3 test(s)
@@ -1140,7 +1135,6 @@
   Solving 21/21...     Solving 21/21...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 8 test case(s)...
-  Batch: 7/8 completed, 1 incomplete (timeout) - re-checking individually...
   Test 1/8: PASS
   Test 2/8: PASS
   Test 3/8: PASS
@@ -1148,8 +1142,8 @@
   Test 5/8: PASS
   Test 6/8: PASS
   Test 7/8: PASS
-  Test 8/8: FAIL
-[DafnyTestGen] Results: 7 passing, 1 failing
+  Test 8/8: PASS
+[DafnyTestGen] Results: 8 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\RecamanTests.dfy
 
 = Processing: RotateLeft.dfy                                        =
@@ -1162,14 +1156,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 2 test(s)
   Phase 2b: type/size coverage (2 new entries)
-  Solving 5/6...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 3 test(s)
+  Subsumption pruning: 2 skipped
+                            Phase 2b complete: 2 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 5/5...     Solving 5/5...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1189,10 +1183,10 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
-  Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
+  Relevance: 2 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 2 test(s)
   Phase 2b: type/size coverage (34 new entries, 2 pruned)
-  Solving 3/36...     Solving 4/36...                               Phase 2b complete: 4 test(s)
+  Solving 1/34...     Solving 2/34...                               Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1212,14 +1206,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2b: type/size coverage (2 new entries)
-  Solving 5/6...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 3 test(s)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 4/5...                               Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1240,8 +1231,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (8 new entries)
   Solving 2/9...     Solving 3/9...     Solving 5/9...     Subsumption pruning: 5 skipped
                             Phase 2b complete: 3 test(s)
@@ -1252,8 +1243,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Subsumption pruning: 7 skipped
                             Phase 2b complete: 3 test(s)
@@ -1264,20 +1255,20 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
-  Solving 3/10...     Solving 4/10...     Solving 6/10...     Subsumption pruning: 2 skipped
+  Solving 3/10...     Solving 4/10...     Solving 7/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
 
 [DafnyTestGen] Processing method: SetDifference
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
-  Solving 3/10...     Solving 4/10...     Solving 9/10...     Subsumption pruning: 5 skipped
+  Solving 3/10...     Solving 4/10...     Solving 10/10...     Subsumption pruning: 6 skipped
                             Phase 2b complete: 4 test(s)
 
 [DafnyTestGen] Processing method: SetSubset
@@ -1285,8 +1276,8 @@
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 2 branches
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (16 new entries)
   Solving 4/18...     Solving 5/18...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1295,9 +1286,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/4...     Solving 2/4...     Solving 3/4...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (5 new entries)
   Subsumption pruning: 5 skipped
                             Phase 2b complete: 3 test(s)
@@ -1308,8 +1299,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (5 new entries)
   Solving 3/6...     Solving 4/6...     Solving 5/6...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1318,9 +1309,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (8 new entries)
   Solving 15/15...     Subsumption pruning: 7 skipped
                             Phase 2b complete: 4 test(s)
@@ -1329,8 +1320,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 5/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1339,8 +1330,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 2/10...     Solving 4/10...     Solving 5/10...     Solving 6/10...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1349,8 +1340,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (6 new entries, 2 pruned)
@@ -1360,8 +1351,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Subsumption pruning: 7 skipped
                             Phase 2b complete: 3 test(s)
@@ -1372,8 +1363,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (5 new entries)
   Solving 2/6...     Solving 3/6...     Solving 5/6...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 3 test(s)
@@ -1384,8 +1375,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 7/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -1394,8 +1385,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (8 new entries)
   Solving 2/9...     Solving 3/9...     Solving 5/9...     Solving 6/9...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1404,8 +1395,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 7/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -1488,8 +1479,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (17 new entries, 1 pruned)
   Solving 4/20...     Solving 5/20...     Solving 6/20...     Solving 7/20...     Solving 8/20...     Solving 9/20...     Solving 10/20...     Solving 12/20...     Solving 13/20...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1498,8 +1489,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (5 new entries)
   Solving 2/6...     Solving 4/6...     Solving 5/6...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 3 test(s)
@@ -1528,8 +1519,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 2/7...     Solving 3/7...     Solving 4/7...     Solving 6/7...     Subsumption pruning: 1 skipped
                             Phase 2 complete: 4 test(s)
@@ -1538,8 +1529,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 2/7...     Solving 6/7...     Subsumption pruning: 4 skipped
                             Phase 2 complete: 3 test(s)
@@ -1551,8 +1542,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (6 new entries)
   Solving 2/7...     Solving 6/7...     Subsumption pruning: 4 skipped
                             Phase 2 complete: 3 test(s)
@@ -1588,17 +1579,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 1/1...     Solving 1/1...                               Phase 3 complete: 4 test(s)
-  Deduplicated: 4 -> 3 unique test cases
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 3: repeats (up to 4 per condition)
+                            Phase 3 complete: 1 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 3 test case(s)...
-  Test 1/3: PASS
-  Test 2/3: PASS
-  Test 3/3: PASS
-[DafnyTestGen] Results: 3 passing, 0 failing
+[DafnyTestGen] Checking 1 test case(s)...
+  Test 1/1: PASS
+[DafnyTestGen] Results: 1 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\SwapTupleTests.dfy
 
 = Processing: task_id_105.dfy                                        =
@@ -1611,8 +1599,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (17 new entries, 1 pruned)
   Solving 5/20...     Solving 6/20...     Solving 7/20...     Solving 8/20...     Solving 9/20...     Solving 11/20...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -1635,8 +1623,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 7/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -1659,9 +1647,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 6 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 6 skipped
   Solving 1/9...     Solving 2/9...     Solving 3/9...     Solving 4/9...     Solving 7/9...     Solving 9/9...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 6 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -1682,9 +1670,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (8 new entries)
   Solving 3/10...     Solving 4/10...     Solving 5/10...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -1706,8 +1694,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (17 new entries, 1 pruned)
   Solving 5/20...     Solving 6/20...     Solving 7/20...     Solving 8/20...     Solving 9/20...     Solving 11/20...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -1730,14 +1718,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
-  Solving 5/10...     Solving 10/10...     Subsumption pruning: 4 skipped
-                            Phase 2b complete: 3 test(s)
+  Solving 4/9...     Solving 9/9...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 2 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 10/10...                               Phase 3 complete: 4 test(s)
+  Solving 9/9...     Solving 9/9...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1757,8 +1745,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (27 new entries)
   Solving 5/30...     Solving 6/30...     Solving 8/30...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -1781,8 +1769,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (20 new entries)
   Solving 3/22...     Solving 4/22...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
@@ -1804,8 +1792,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (26 new entries, 1 pruned)
   Solving 4/29...     Solving 5/29...     Solving 7/29...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -1828,19 +1816,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 3/10...     Solving 5/10...     Solving 8/10...     Solving 9/10...     Subsumption pruning: 4 skipped
-                            Phase 1 complete: 6 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Solving 4/9...     Solving 7/9...     Subsumption pruning: 5 skipped
+                            Phase 1 complete: 5 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 7 test case(s)...
-  Test 1/7: PASS
-  Test 2/7: PASS
-  Test 3/7: PASS
-  Test 4/7: PASS
-  Test 5/7: PASS
-  Test 6/7: PASS
-  Test 7/7: PASS
-[DafnyTestGen] Results: 7 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_2Tests.dfy
 
 = Processing: task_id_230.dfy                                        =
@@ -1853,9 +1839,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1875,17 +1866,21 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Solving 8/10...     Subsumption pruning: 6 skipped
-                            Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/9...     Solving 3/9...     Subsumption pruning: 7 skipped
+                            Phase 1 complete: 3 test(s)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 5 test case(s)...
-  Test 1/5: PASS
-  Test 2/5: PASS
-  Test 3/5: PASS
-  Test 4/5: PASS
-  Test 5/5: PASS
-[DafnyTestGen] Results: 5 passing, 0 failing
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_249Tests.dfy
 
 = Processing: task_id_251.dfy                                        =
@@ -1898,9 +1893,12 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 3/7...     Solving 6/7...     Subsumption pruning: 3 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Solving 5/6...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Solving 11/15...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1920,9 +1918,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1942,8 +1945,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (4 new entries, 2 pruned)
@@ -1970,9 +1973,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -1992,9 +2000,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2014,9 +2027,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 6/8...     Solving 7/8...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -2037,16 +2050,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Solving 5/10...     Subsumption pruning: 6 skipped
-                            Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/9...     Solving 3/9...     Solving 4/9...     Solving 5/9...     Subsumption pruning: 5 skipped
+                            Phase 1 complete: 4 test(s)
+  Deduplicated: 4 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 4 test case(s)...
-  Test 1/4: PASS
-  Test 2/4: PASS
-  Test 3/4: PASS
-  Test 4/4: PASS
-[DafnyTestGen] Results: 4 passing, 0 failing
+[DafnyTestGen] Checking 3 test case(s)...
+  Test 1/3: PASS
+  Test 2/3: PASS
+  Test 3/3: PASS
+[DafnyTestGen] Results: 3 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_290Tests.dfy
 
 = Processing: task_id_3.dfy                                        =
@@ -2059,18 +2072,18 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/5...     Solving 3/5...     Solving 5/5...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
   Phase 2: refined-range BVA (10 new entries)
   Solving 6/15...     Solving 7/15...     Solving 8/15...     Solving 9/15...     Solving 10/15...     Solving 11/15...     Solving 12/15...     Solving 13/15...     Solving 14/15...     Solving 15/15...                               Phase 2 complete: 4 test(s)
+  Deduplicated: 4 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 4 test case(s)...
-  Test 1/4: PASS
-  Test 2/4: PASS
-  Test 3/4: PASS
-  Test 4/4: PASS
-[DafnyTestGen] Results: 4 passing, 0 failing
+[DafnyTestGen] Checking 3 test case(s)...
+  Test 1/3: PASS
+  Test 2/3: PASS
+  Test 3/3: PASS
+[DafnyTestGen] Results: 3 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_3Tests.dfy
 
 = Processing: task_id_310.dfy                                        =
@@ -2083,8 +2096,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 3/7...     Solving 4/7...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 3 test(s)
@@ -2110,9 +2123,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/10...     Solving 2/10...     Solving 3/10...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Subsumption pruning: 9 skipped
                             Phase 2b complete: 3 test(s)
@@ -2137,18 +2150,23 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/19...     Solving 2/19...     Solving 3/19...     Solving 5/19...     Solving 6/19...     Subsumption pruning: 14 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Deduplicated: 5 -> 4 unique test cases
 
 [DafnyTestGen] Processing method: ElementWiseAddition
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 8 test case(s)...
   Test 1/8: PASS
@@ -2172,8 +2190,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 3/15...     Solving 5/15...     Solving 6/15...     Solving 8/15...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -2196,10 +2214,10 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 3/10...     Solving 5/10...     Solving 7/10...     Subsumption pruning: 5 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Solving 4/9...     Solving 6/9...     Subsumption pruning: 5 skipped
                             Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
-  Deduplicated: 5 -> 3 unique test cases
+  Deduplicated: 4 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 3 test case(s)...
   Test 1/3: PASS
@@ -2218,8 +2236,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (18 new entries)
   Solving 5/21...     Solving 6/21...     Solving 8/21...     Solving 9/21...     Solving 10/21...     Solving 12/21...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -2242,8 +2260,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 3/15...     Solving 5/15...     Solving 6/15...     Solving 8/15...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
@@ -2266,9 +2284,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -2289,8 +2307,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (18 new entries)
   Solving 5/21...     Solving 6/21...     Solving 8/21...     Solving 9/21...     Solving 10/21...     Solving 12/21...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -2313,9 +2331,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2335,9 +2358,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 4/7...     Subsumption pruning: 4 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2357,8 +2385,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (10 new entries, 5 pruned)
   Solving 4/13...     Solving 6/13...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -2381,17 +2409,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Solving 5/10...     Solving 8/10...     Subsumption pruning: 5 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/9...     Solving 3/9...     Solving 5/9...     Solving 7/9...     Subsumption pruning: 5 skipped
                             Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Deduplicated: 4 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 5 test case(s)...
-  Test 1/5: PASS
-  Test 2/5: PASS
-  Test 3/5: PASS
-  Test 4/5: PASS
-  Test 5/5: PASS
-[DafnyTestGen] Results: 5 passing, 0 failing
+[DafnyTestGen] Checking 3 test case(s)...
+  Test 1/3: PASS
+  Test 2/3: PASS
+  Test 3/3: PASS
+[DafnyTestGen] Results: 3 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_457Tests.dfy
 
 = Processing: task_id_470.dfy                                        =
@@ -2404,9 +2431,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 3/7...     Solving 4/7...     Solving 5/7...     Subsumption pruning: 3 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/6...     Solving 3/6...     Solving 4/6...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Solving 8/12...     Subsumption pruning: 5 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2426,9 +2458,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/5...     Solving 2/5...     Solving 5/5...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
   Phase 2b: type/size coverage (16 new entries, 9 pruned)
   Solving 6/21...     Solving 7/21...     Solving 9/21...     Solving 10/21...     Solving 12/21...     Solving 13/21...     Solving 15/21...     Solving 16/21...     Solving 18/21...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 4 test(s)
@@ -2451,9 +2483,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2473,8 +2510,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 2/7...     Solving 4/7...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 2 test(s)
@@ -2499,9 +2536,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 13/13...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2521,8 +2563,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (4 new entries, 2 pruned)
@@ -2535,8 +2577,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (4 new entries, 2 pruned)
@@ -2549,8 +2591,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (4 new entries, 2 pruned)
@@ -2585,9 +2627,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 13/13...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2607,10 +2654,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2: refined-range BVA (2 new entries)
-  Solving 3/4...     Solving 4/4...                               Phase 2 complete: 4 test(s)
+  Solving 4/4...     Subsumption pruning: 1 skipped
+                            Phase 2 complete: 3 test(s)
+  Phase 2b: type/size coverage (12 new entries)
+  Solving 5/16...     Solving 6/16...     Solving 11/16...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2630,9 +2681,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -2653,8 +2704,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (18 new entries)
   Solving 5/21...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -2677,9 +2728,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (12 new entries)
   Solving 3/14...     Solving 5/14...     Solving 6/14...     Solving 8/14...     Subsumption pruning: 8 skipped
                             Phase 2b complete: 3 test(s)
@@ -2704,8 +2755,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 4/15...     Solving 5/15...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -2728,9 +2779,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/13...     Solving 2/13...     Solving 3/13...     Solving 12/13...     Subsumption pruning: 9 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/12...     Solving 3/12...     Solving 11/12...     Subsumption pruning: 9 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (12 new entries)
+  Solving 23/24...     Subsumption pruning: 11 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 24/24...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2750,8 +2806,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (9 new entries)
   Solving 3/10...     Solving 4/10...     Solving 7/10...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 4 test(s)
@@ -2760,8 +2816,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 3/15...     Solving 5/15...     Solving 6/15...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -2788,8 +2844,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 3/7...     Solving 4/7...     Subsumption pruning: 4 skipped
                             Phase 2b complete: 3 test(s)
@@ -2815,20 +2871,21 @@
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 16 branches
   Phase 1: 1 DNF clauses
-  Solving 2/64...     Solving 5/64...     Solving 6/64...     Solving 9/64...     Solving 10/64...     Solving 13/64...     Solving 14/64...     Solving 15/64...     Solving 21/64...     Solving 22/64...     Solving 24/64...     Solving 25/64...     Solving 27/64...     Solving 28/64...     Solving 30/64...     Solving 31/64...     Solving 33/64...     Solving 34/64...     Solving 36/64...     Solving 37/64...     Solving 39/64...     Solving 40/64...     Solving 42/64...     Solving 43/64...     Solving 45/64...     Solving 46/64...     Solving 51/64...     Solving 52/64...     Solving 54/64...     Solving 55/64...     Solving 57/64...     Solving 58/64...     Solving 60/64...     Solving 61/64...     Solving 63/64...     Solving 64/64...     Subsumption pruning: 20 skipped
-                            Phase 1 complete: 8 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 16 skipped)
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 16 skipped
+  Solving 2/64...     Solving 5/64...     Solving 6/64...     Solving 9/64...     Solving 10/64...     Solving 13/64...     Solving 14/64...     Solving 15/64...     Solving 16/64...     Solving 21/64...     Solving 22/64...     Solving 24/64...     Solving 25/64...     Solving 27/64...     Solving 28/64...     Solving 30/64...     Solving 31/64...     Solving 33/64...     Solving 34/64...     Solving 36/64...     Solving 37/64...     Solving 39/64...     Solving 40/64...     Solving 42/64...     Solving 43/64...     Solving 45/64...     Solving 46/64...     Solving 51/64...     Solving 52/64...     Solving 54/64...     Solving 55/64...     Solving 57/64...     Solving 58/64...     Solving 60/64...     Solving 61/64...     Solving 63/64...     Solving 64/64...     Subsumption pruning: 19 skipped
+                            Phase 1 complete: 9 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 8 test case(s)...
-  Test 1/8: PASS
-  Test 2/8: PASS
-  Test 3/8: PASS
-  Test 4/8: PASS
-  Test 5/8: PASS
-  Test 6/8: PASS
-  Test 7/8: PASS
-  Test 8/8: PASS
-[DafnyTestGen] Results: 8 passing, 0 failing
+[DafnyTestGen] Checking 9 test case(s)...
+  Test 1/9: PASS
+  Test 2/9: PASS
+  Test 3/9: PASS
+  Test 4/9: PASS
+  Test 5/9: PASS
+  Test 6/9: PASS
+  Test 7/9: PASS
+  Test 8/9: PASS
+  Test 9/9: PASS
+[DafnyTestGen] Results: 9 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_594Tests.dfy
 
 = Processing: task_id_599.dfy                                        =
@@ -2841,8 +2898,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (8 new entries, 1 pruned)
@@ -2869,9 +2926,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 1 redundant, 2 skipped
   Solving 1/9...     Solving 2/9...     Solving 3/9...     Solving 4/9...     Solving 5/9...     Solving 8/9...     Solving 9/9...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (0 added, 1 redundant, 2 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2891,18 +2948,23 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
-  Solving 1/5...     Solving 2/5...     Solving 4/5...     Subsumption pruning: 2 skipped
-                            Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
+  Solving 1/5...     Solving 4/5...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2: refined-range BVA (10 new entries)
-  Solving 6/15...     Solving 7/15...                               Phase 2 complete: 4 test(s)
+  Solving 6/15...     Solving 7/15...     Solving 8/15...     Solving 9/15...     Solving 10/15...     Solving 11/15...     Solving 12/15...     Solving 13/15...     Solving 14/15...     Solving 15/15...                               Phase 2 complete: 3 test(s)
+  Phase 2b: type/size coverage (19 new entries, 6 pruned)
+  Solving 16/34...     Solving 17/34...     Solving 19/34...     Solving 20/34...     Solving 22/34...     Solving 23/34...     Solving 24/34...     Solving 26/34...     Solving 27/34...     Solving 28/34...     Solving 29/34...     Solving 30/34...     Solving 31/34...     Solving 32/34...     Solving 34/34...     Subsumption pruning: 4 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 34/34...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
-  Test 1/4: PASS
+  Test 1/4: FAIL
   Test 2/4: PASS
   Test 3/4: PASS
   Test 4/4: PASS
-[DafnyTestGen] Results: 4 passing, 0 failing
+[DafnyTestGen] Results: 3 passing, 1 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_605Tests.dfy
 
 = Processing: task_id_610.dfy                                        =
@@ -2915,16 +2977,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 3/5...     Solving 4/5...     Subsumption pruning: 2 skipped
+  Solving 1/4...     Solving 2/4...     Solving 3/4...     Subsumption pruning: 1 skipped
                             Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (7 new entries, 2 pruned)
-  Solving 6/12...     Subsumption pruning: 6 skipped
+  Solving 5/11...     Subsumption pruning: 6 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 12/12...                               Phase 3 complete: 4 test(s)
+  Solving 11/11...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2944,9 +3006,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -2966,11 +3033,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
-  Solving 5/10...     Solving 9/10...     Subsumption pruning: 3 skipped
+  Solving 4/9...     Solving 7/9...     Solving 8/9...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
@@ -2991,9 +3058,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 4/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2: refined-range BVA (2 new entries)
+  Solving 8/9...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3013,9 +3082,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 13/13...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3035,9 +3109,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 1 redundant, 0 skipped
   Solving 1/4...     Solving 2/4...     Solving 4/4...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 1 redundant, 0 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 6/6...     Subsumption pruning: 1 skipped
                             Phase 2 complete: 4 test(s)
@@ -3060,9 +3134,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (18 new entries)
   Solving 5/21...     Solving 6/21...     Solving 8/21...     Solving 9/21...     Solving 10/21...     Solving 12/21...     Solving 16/21...     Subsumption pruning: 11 skipped
                             Phase 2b complete: 3 test(s)
@@ -3087,16 +3161,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
-  Solving 1/12...     Solving 2/12...     Solving 3/12...     Subsumption pruning: 9 skipped
-                            Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 2 skipped)
-  Deduplicated: 4 -> 3 unique test cases
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 2 skipped
+  Solving 1/11...     Solving 2/11...     Solving 3/11...     Solving 4/11...     Solving 6/11...     Solving 8/11...     Solving 10/11...     Solving 11/11...     Subsumption pruning: 3 skipped
+                            Phase 1 complete: 5 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 3 test case(s)...
-  Test 1/3: PASS
-  Test 2/3: PASS
-  Test 3/3: PASS
-[DafnyTestGen] Results: 3 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_632Tests.dfy
 
 = Processing: task_id_644.dfy                                        =
@@ -3109,15 +3184,12 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Subsumption pruning: 3 skipped
-                            Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
+                            Phase 1 complete: 3 test(s)
   Phase 2: refined-range BVA (4 new entries)
-  Solving 6/8...     Subsumption pruning: 3 skipped
-                            Phase 2 complete: 3 test(s)
-  Phase 2b: type/size coverage (3 new entries, 2 pruned)
-  Solving 10/11...     Subsumption pruning: 1 skipped
-                            Phase 2b complete: 4 test(s)
+  Solving 7/7...     Subsumption pruning: 3 skipped
+                            Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3137,8 +3209,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 3/15...     Solving 5/15...     Solving 6/15...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -3161,18 +3233,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 4/8...     Solving 6/8...     Solving 7/8...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 6 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
-  Deduplicated: 6 -> 5 unique test cases
+  Deduplicated: 6 -> 4 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 5 test case(s)...
-  Test 1/5: PASS
-  Test 2/5: PASS
-  Test 3/5: PASS
-  Test 4/5: PASS
-  Test 5/5: PASS
-[DafnyTestGen] Results: 5 passing, 0 failing
+[DafnyTestGen] Checking 4 test case(s)...
+  Test 1/4: PASS
+  Test 2/4: PASS
+  Test 3/4: PASS
+  Test 4/4: PASS
+[DafnyTestGen] Results: 4 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_70Tests.dfy
 
 = Processing: task_id_728.dfy                                        =
@@ -3185,9 +3256,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/10...     Solving 2/10...     Solving 4/10...     Subsumption pruning: 7 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/9...     Solving 3/9...     Subsumption pruning: 7 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (9 new entries)
+  Subsumption pruning: 9 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 18/18...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3207,9 +3283,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/7...     Solving 2/7...     Solving 3/7...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 13/13...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3229,18 +3310,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
-  Solving 1/12...     Solving 2/12...     Solving 3/12...     Solving 7/12...     Solving 9/12...     Solving 10/12...     Solving 12/12...     Subsumption pruning: 2 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 2 skipped
+  Solving 1/11...     Solving 2/11...     Solving 7/11...     Solving 8/11...     Solving 9/11...     Solving 11/11...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 2 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_733Tests.dfy
 
 = Processing: task_id_741.dfy                                        =
@@ -3253,9 +3333,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/5...     Solving 2/5...     Solving 3/5...     Solving 4/5...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3275,9 +3355,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 4/7...     Subsumption pruning: 4 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2: refined-range BVA (2 new entries)
+  Solving 7/8...                               Phase 2 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3297,9 +3379,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -3320,11 +3402,11 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/4...     Solving 3/4...     Solving 4/4...     Subsumption pruning: 1 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 2/3...     Solving 3/3...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
   Phase 2b: type/size coverage (9 new entries)
-  Solving 5/13...     Solving 6/13...     Solving 8/13...     Solving 11/13...     Subsumption pruning: 3 skipped
+  Solving 4/12...     Solving 5/12...     Solving 7/12...     Solving 8/12...     Solving 10/12...     Subsumption pruning: 2 skipped
                             Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
@@ -3345,9 +3427,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/5...     Solving 2/5...     Solving 3/5...     Solving 4/5...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3367,8 +3449,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 3 skipped
   Solving 1/3...     Solving 2/3...     Solving 3/3...                               Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 3 skipped)
   Phase 2b: type/size coverage (26 new entries, 1 pruned)
   Solving 4/29...     Solving 5/29...     Solving 7/29...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -3391,8 +3473,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 1 skipped
   Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 1 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 2/3...     Solving 3/3...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (4 new entries, 2 pruned)
@@ -3419,9 +3501,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 4/8...     Solving 5/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 6 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 6 test case(s)...
   Test 1/6: PASS
@@ -3444,47 +3526,42 @@
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 16 branches
   Phase 1: 1 DNF clauses
-  Solving 2/64...     Solving 3/64...     Solving 5/64...     Solving 6/64...     Solving 9/64...     Solving 21/64...     Solving 22/64...     Solving 23/64...     Solving 24/64...     Solving 25/64...     Solving 27/64...     Solving 28/64...     Solving 30/64...     Solving 31/64...     Solving 32/64...     Solving 33/64...     Solving 34/64...     Solving 36/64...     Solving 37/64...     Solving 39/64...     Solving 40/64...     Solving 42/64...     Solving 43/64...     Solving 45/64...     Solving 46/64...     Solving 51/64...     Solving 52/64...     Solving 54/64...     Solving 55/64...     Solving 57/64...     Solving 58/64...     Solving 60/64...     Solving 61/64...     Solving 63/64...     Solving 64/64...     Subsumption pruning: 21 skipped
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 16 skipped
+  Solving 2/64...     Solving 3/64...     Solving 4/64...     Solving 5/64...     Solving 6/64...     Solving 9/64...     Solving 13/64...     Solving 21/64...     Solving 22/64...     Solving 24/64...     Solving 25/64...     Solving 27/64...     Solving 28/64...     Solving 30/64...     Solving 31/64...     Solving 33/64...     Solving 34/64...     Solving 36/64...     Solving 37/64...     Solving 39/64...     Solving 40/64...     Solving 42/64...     Solving 43/64...     Solving 45/64...     Solving 46/64...     Solving 51/64...     Solving 52/64...     Solving 54/64...     Solving 55/64...     Solving 57/64...     Solving 58/64...     Solving 60/64...     Solving 61/64...     Solving 63/64...     Solving 64/64...     Subsumption pruning: 21 skipped
                             Phase 1 complete: 7 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 16 skipped)
 
 [DafnyTestGen] Processing method: FirstEvenOddIndices
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Disjunctive precondition: 16 branches
   Phase 1: 1 DNF clauses
-  Solving 2/64...     Solving 5/64...     Solving 6/64...     Solving 9/64...     Solving 10/64...     Solving 21/64...     Solving 22/64...     Solving 24/64...     Solving 25/64...     Solving 27/64...     Solving 28/64...     Solving 30/64...     Solving 31/64...     Solving 33/64...     Solving 34/64...     Solving 36/64...     Solving 37/64...     Solving 39/64...     Solving 40/64...     Solving 42/64...     Solving 43/64...     Solving 45/64...     Solving 46/64...     Solving 51/64...     Solving 52/64...     Solving 54/64...     Solving 55/64...     Solving 57/64...     Solving 58/64...     Solving 60/64...     Solving 61/64...     Solving 63/64...     Solving 64/64...     Subsumption pruning: 23 skipped
-                            Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (14 added, 2 redundant, 0 skipped)
+  Relevance: 14 clause(s) solved via relevance, 2 redundant, 0 skipped
+  Solving 7/50...     Solving 8/50...     Solving 10/50...     Solving 11/50...     Solving 13/50...     Solving 14/50...     Solving 16/50...     Solving 17/50...     Solving 19/50...     Solving 20/50...     Solving 22/50...     Solving 23/50...     Solving 25/50...     Solving 26/50...     Solving 28/50...     Solving 29/50...     Solving 31/50...     Solving 32/50...     Solving 37/50...     Solving 38/50...     Solving 40/50...     Solving 41/50...     Solving 43/50...     Solving 44/50...     Solving 46/50...     Solving 47/50...     Solving 49/50...     Solving 50/50...     Subsumption pruning: 14 skipped
+                            Phase 1 complete: 14 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 26 test case(s)...
-  Test 1/26: PASS
-  Test 2/26: PASS
-  Test 3/26: PASS
-  Test 4/26: PASS
-  Test 5/26: PASS
-  Test 6/26: PASS
-  Test 7/26: PASS
-  Test 8/26: PASS
-  Test 9/26: PASS
-  Test 10/26: PASS
-  Test 11/26: PASS
-  Test 12/26: PASS
-  Test 13/26: PASS
-  Test 14/26: PASS
-  Test 15/26: PASS
-  Test 16/26: PASS
-  Test 17/26: PASS
-  Test 18/26: PASS
-  Test 19/26: PASS
-  Test 20/26: PASS
-  Test 21/26: PASS
-  Test 22/26: PASS
-  Test 23/26: PASS
-  Test 24/26: PASS
-  Test 25/26: PASS
-  Test 26/26: PASS
-[DafnyTestGen] Results: 26 passing, 0 failing
+[DafnyTestGen] Checking 21 test case(s)...
+  Test 1/21: PASS
+  Test 2/21: PASS
+  Test 3/21: PASS
+  Test 4/21: PASS
+  Test 5/21: PASS
+  Test 6/21: PASS
+  Test 7/21: PASS
+  Test 8/21: PASS
+  Test 9/21: PASS
+  Test 10/21: PASS
+  Test 11/21: PASS
+  Test 12/21: PASS
+  Test 13/21: PASS
+  Test 14/21: PASS
+  Test 15/21: PASS
+  Test 16/21: PASS
+  Test 17/21: PASS
+  Test 18/21: PASS
+  Test 19/21: PASS
+  Test 20/21: PASS
+  Test 21/21: PASS
+[DafnyTestGen] Results: 21 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_784Tests.dfy
 
 = Processing: task_id_790.dfy                                        =
@@ -3497,9 +3574,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 3 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -3520,18 +3597,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 3 DNF clauses
-  Solving 1/12...     Solving 2/12...     Solving 3/12...     Solving 7/12...     Solving 9/12...     Solving 10/12...     Solving 12/12...     Subsumption pruning: 2 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 2 skipped
+  Solving 1/11...     Solving 2/11...     Solving 7/11...     Solving 8/11...     Solving 9/11...     Solving 11/11...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 2 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_793Tests.dfy
 
 = Processing: task_id_798.dfy                                        =
@@ -3544,8 +3620,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (17 new entries, 1 pruned)
   Solving 3/19...     Solving 5/19...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -3568,9 +3644,14 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/7...     Solving 2/7...     Solving 4/7...     Subsumption pruning: 4 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 1/6...     Solving 3/6...     Subsumption pruning: 4 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Phase 2b: type/size coverage (6 new entries)
+  Subsumption pruning: 6 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 12/12...                               Phase 3 complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3590,9 +3671,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/5...     Solving 2/5...     Solving 4/5...     Solving 5/5...     Subsumption pruning: 1 skipped
                             Phase 1 complete: 3 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
   Phase 2: refined-range BVA (2 new entries)
   Solving 6/7...     Solving 7/7...                               Phase 2 complete: 3 test(s)
   Phase 2b: type/size coverage (16 new entries, 9 pruned)
@@ -3617,9 +3698,12 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
-  Solving 1/5...     Solving 2/5...     Solving 4/5...     Solving 5/5...     Subsumption pruning: 1 skipped
-                            Phase 1 complete: 4 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
+  Solving 1/5...     Solving 2/5...     Solving 5/5...     Subsumption pruning: 2 skipped
+                            Phase 1 complete: 3 test(s)
+  Phase 2b: type/size coverage (16 new entries, 9 pruned)
+  Solving 6/21...     Solving 9/21...     Solving 10/21...     Solving 12/21...     Solving 15/21...     Solving 16/21...     Solving 18/21...     Subsumption pruning: 6 skipped
+                            Phase 2b complete: 4 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 4 test case(s)...
   Test 1/4: PASS
@@ -3639,18 +3723,17 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
-  Solving 1/8...     Solving 2/8...     Solving 3/8...     Solving 5/8...     Solving 6/8...     Solving 8/8...     Subsumption pruning: 2 skipped
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 1 skipped
+  Solving 1/7...     Solving 2/7...     Solving 4/7...     Solving 6/7...     Solving 7/7...     Subsumption pruning: 2 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 1 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 6 test case(s)...
-  Test 1/6: PASS
-  Test 2/6: PASS
-  Test 3/6: PASS
-  Test 4/6: PASS
-  Test 5/6: PASS
-  Test 6/6: PASS
-[DafnyTestGen] Results: 6 passing, 0 failing
+[DafnyTestGen] Checking 5 test case(s)...
+  Test 1/5: PASS
+  Test 2/5: PASS
+  Test 3/5: PASS
+  Test 4/5: PASS
+  Test 5/5: PASS
+[DafnyTestGen] Results: 5 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_807Tests.dfy
 
 = Processing: task_id_808.dfy                                        =
@@ -3663,8 +3746,8 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 2 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 2 skipped)
   Phase 2b: type/size coverage (13 new entries, 3 pruned)
   Solving 3/15...     Solving 5/15...     Solving 6/15...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -3687,9 +3770,9 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 5 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 0 redundant, 5 skipped
   Solving 1/11...     Solving 2/11...     Solving 3/11...     Solving 6/11...     Solving 8/11...     Subsumption pruning: 6 skipped
                             Phase 1 complete: 5 test(s)
-  Phase 1r: relevance (0 added, 0 redundant, 5 skipped)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
 [DafnyTestGen] Checking 5 test case(s)...
   Test 1/5: PASS
@@ -3710,18 +3793,16 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 4 DNF clauses
-  Solving 1/28...     Solving 2/28...     Solving 7/28...     Solving 8/28...     Solving 9/28...     Solving 12/28...     Solving 13/28...     Solving 14/28...     Solving 15/28...     Solving 19/28...     Solving 24/28...     Solving 25/28...     Subsumption pruning: 16 skipped
-                            Phase 1 complete: 6 test(s)
-  Phase 1r: relevance (4 added, 0 redundant, 0 skipped)
-  Deduplicated: 10 -> 5 unique test cases
+  Relevance: 4 clause(s) solved via relevance, 0 redundant, 0 skipped
+  Solving 3/24...     Solving 4/24...     Solving 6/24...     Solving 8/24...     Solving 9/24...     Solving 12/24...     Solving 15/24...     Solving 20/24...     Solving 21/24...     Subsumption pruning: 15 skipped
+                            Phase 1 complete: 7 test(s)
+  Deduplicated: 7 -> 3 unique test cases
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 5 test case(s)...
-  Test 1/5: PASS
-  Test 2/5: PASS
-  Test 3/5: PASS
-  Test 4/5: PASS
-  Test 5/5: PASS
-[DafnyTestGen] Results: 5 passing, 0 failing
+[DafnyTestGen] Checking 3 test case(s)...
+  Test 1/3: PASS
+  Test 2/3: PASS
+  Test 3/3: PASS
+[DafnyTestGen] Results: 3 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\task_id_95Tests.dfy
 
 = Processing: TupleOps.dfy                                        =
@@ -3734,37 +3815,39 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 1/1...     Solving 1/1...                               Phase 3 complete: 4 test(s)
-  Deduplicated: 4 -> 3 unique test cases
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 3: repeats (up to 4 per condition)
+                            Phase 3 complete: 1 test(s)
 
 [DafnyTestGen] Processing method: ScaleTuple
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2: refined-range BVA (2 new entries)
-  Solving 2/3...     Solving 3/3...                               Phase 2 complete: 4 test(s)
+  Solving 1/2...     Solving 2/2...                               Phase 2 complete: 3 test(s)
+  Phase 2b: type/size coverage (2 new entries, 1 pruned)
+  Solving 3/4...     Solving 4/4...                               Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 4/4...                               Phase 3 complete: 4 test(s)
 
 [DafnyTestGen] Processing method: AddTuples
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 1/1...     Solving 1/1...                               Phase 3 complete: 4 test(s)
-  Deduplicated: 4 -> 3 unique test cases
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 3: repeats (up to 4 per condition)
+                            Phase 3 complete: 1 test(s)
 
 [DafnyTestGen] Processing method: TupleMax
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 2 DNF clauses
+  Relevance: 0 clause(s) solved via relevance, 2 redundant, 0 skipped
   Solving 1/2...     Solving 2/2...                               Phase 1 complete: 2 test(s)
-  Phase 1r: relevance (0 added, 2 redundant, 0 skipped)
   Phase 2b: type/size coverage (6 new entries)
   Solving 4/8...     Solving 5/8...     Subsumption pruning: 1 skipped
                             Phase 2b complete: 4 test(s)
@@ -3773,60 +3856,55 @@
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2b: type/size coverage (5 new entries, 1 pruned)
-  Solving 6/6...     Subsumption pruning: 4 skipped
+  Solving 1/5...     Solving 5/5...     Subsumption pruning: 3 skipped
                             Phase 2b complete: 3 test(s)
   Phase 3: repeats (up to 3 per condition)
-  Solving 6/6...                               Phase 3 complete: 4 test(s)
+  Solving 5/5...                               Phase 3 complete: 4 test(s)
 
 [DafnyTestGen] Processing method: ClassifySign
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
   Phase 2b: type/size coverage (3 new entries)
-  Solving 2/4...     Solving 3/4...                               Phase 2b complete: 4 test(s)
+  Solving 1/3...     Solving 2/3...     Subsumption pruning: 1 skipped
+                            Phase 2b complete: 3 test(s)
+  Phase 3: repeats (up to 3 per condition)
+  Solving 3/3...                               Phase 3 complete: 3 test(s)
 
 [DafnyTestGen] Processing method: Swap3First
   Auto strategy: progressive (minTests=4)
   Generating tests via Boogie/Z3...
   Phase 1: 1 DNF clauses
-  Solving 1/1...                               Phase 1 complete: 1 test(s)
-  Phase 1r: relevance (1 added, 0 redundant, 0 skipped)
-  Phase 3: repeats (up to 3 per condition)
-  Solving 1/1...     Solving 1/1...                               Phase 3 complete: 4 test(s)
-  Deduplicated: 4 -> 3 unique test cases
+  Relevance: 1 clause(s) solved via relevance, 0 redundant, 0 skipped
+                            Phase 1 complete: 1 test(s)
+  Phase 3: repeats (up to 4 per condition)
+                            Phase 3 complete: 1 test(s)
 [DafnyTestGen] Checking tests with: C:\Users\jpf\.vscode\extensions\dafny-lang.ide-vscode-3.5.2\out\resources\4.11.0\github\dafny\dafny.exe
-[DafnyTestGen] Checking 25 test case(s)...
-  Test 1/25: PASS
-  Test 2/25: PASS
-  Test 3/25: PASS
-  Test 4/25: PASS
-  Test 5/25: PASS
-  Test 6/25: PASS
-  Test 7/25: PASS
-  Test 8/25: PASS
-  Test 9/25: PASS
-  Test 10/25: PASS
-  Test 11/25: PASS
-  Test 12/25: PASS
-  Test 13/25: PASS
-  Test 14/25: PASS
-  Test 15/25: PASS
-  Test 16/25: PASS
-  Test 17/25: PASS
-  Test 18/25: PASS
-  Test 19/25: PASS
-  Test 20/25: PASS
-  Test 21/25: PASS
-  Test 22/25: PASS
-  Test 23/25: PASS
-  Test 24/25: PASS
-  Test 25/25: PASS
-[DafnyTestGen] Results: 25 passing, 0 failing
+[DafnyTestGen] Checking 18 test case(s)...
+  Test 1/18: PASS
+  Test 2/18: PASS
+  Test 3/18: PASS
+  Test 4/18: PASS
+  Test 5/18: PASS
+  Test 6/18: PASS
+  Test 7/18: PASS
+  Test 8/18: PASS
+  Test 9/18: PASS
+  Test 10/18: PASS
+  Test 11/18: PASS
+  Test 12/18: PASS
+  Test 13/18: PASS
+  Test 14/18: PASS
+  Test 15/18: PASS
+  Test 16/18: PASS
+  Test 17/18: PASS
+  Test 18/18: PASS
+[DafnyTestGen] Results: 18 passing, 0 failing
 [DafnyTestGen] Tests written to: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\out\TupleOpsTests.dfy
 
 [DafnyTestGen] Processed 128 files.

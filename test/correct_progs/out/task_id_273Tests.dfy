@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-20 09:09:58
+// Generated: 2026-04-20 14:57:41
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -44,10 +44,10 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1];
-    var b: seq<int> := [-6];
+    var a: seq<int> := [-7];
+    var b: seq<int> := [-9];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [5];
+    expect result == [2];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -57,10 +57,10 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1, -5];
-    var b: seq<int> := [8, 10];
+    var a: seq<int> := [-1, -8];
+    var b: seq<int> := [7, 9];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [-9, -15];
+    expect result == [-8, -17];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -83,10 +83,10 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [3];
-    var b: seq<int> := [2];
+    var a: seq<int> := [7, -9];
+    var b: seq<int> := [4, -10];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [1];
+    expect result == [3, 1];
   }
 
 }

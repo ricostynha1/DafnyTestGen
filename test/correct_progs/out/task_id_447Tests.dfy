@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-04-20 09:11:51
+// Generated: 2026-04-20 14:59:02
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -41,9 +41,9 @@ method TestsForCubeElements()
   //   ENSURES: cubed.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
-    var a := new int[1] [-6];
+    var a := new int[1] [5];
     var cubed := CubeElements(a);
-    expect cubed[..] == [-216];
+    expect cubed[..] == [125];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -52,9 +52,9 @@ method TestsForCubeElements()
   //   ENSURES: cubed.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
-    var a := new int[2] [3, 2];
+    var a := new int[2] [-4, -6];
     var cubed := CubeElements(a);
-    expect cubed[..] == [27, 8];
+    expect cubed[..] == [-64, -216];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -66,6 +66,17 @@ method TestsForCubeElements()
     var a := new int[0] [];
     var cubed := CubeElements(a);
     expect cubed[..] == [];
+  }
+
+  // Test case for combination {1}/Q|a|>=2/R3:
+  //   POST: cubed.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: cubed.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  {
+    var a := new int[2] [-2, 6];
+    var cubed := CubeElements(a);
+    expect cubed[..] == [-8, 216];
   }
 
 }

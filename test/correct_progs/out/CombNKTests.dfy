@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-20 08:56:46
+// Generated: 2026-04-20 14:53:49
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -81,10 +81,10 @@ method TestsForCalcComb()
   //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   //   ENSURES: res == Comb(n, k)
   {
-    var n := 10;
-    var k := 9;
+    var n := 4;
+    var k := 3;
     var res := CalcComb(n, k);
-    expect res == 10;
+    expect res == 4;
   }
 
   // Test case for combination {1}/Bn=0:

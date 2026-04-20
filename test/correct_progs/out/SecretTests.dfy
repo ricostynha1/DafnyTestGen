@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-04-20 09:04:23
+// Generated: 2026-04-20 14:56:08
 
 class Secret {
     var secret: int
@@ -29,7 +29,7 @@ class Secret {
 
 method TestsForGuess()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  known == false
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
@@ -52,7 +52,7 @@ method TestsForGuess()
     expect obj.count == 11;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Rel:
   //   PRE:  known == false
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1

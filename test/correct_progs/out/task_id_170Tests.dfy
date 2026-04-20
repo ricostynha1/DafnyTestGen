@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-20 09:09:18
+// Generated: 2026-04-20 14:57:09
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -48,7 +48,7 @@ method TestsForCalcSumRange()
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[2] [6, 5];
+    var a := new int[2] [-1, 4];
     var start := 2;
     var end := 2;
     var sum := CalcSumRange(a, start, end);
@@ -61,11 +61,11 @@ method TestsForCalcSumRange()
   //   POST: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[3] [-10, -1, -2];
+    var a := new int[3] [-10, 9, 4];
     var start := 2;
     var end := 3;
     var sum := CalcSumRange(a, start, end);
-    expect sum == -2;
+    expect sum == 4;
   }
 
   // Test case for combination {1}/Bstart=0:
@@ -74,7 +74,7 @@ method TestsForCalcSumRange()
   //   POST: sum == 0
   //   ENSURES: sum == SumSeq(a[start .. end])
   {
-    var a := new int[1] [10];
+    var a := new int[1] [-1];
     var start := 0;
     var end := 0;
     var sum := CalcSumRange(a, start, end);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-20 09:15:15
+// Generated: 2026-04-20 15:01:38
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -52,10 +52,10 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-10, -10];
-    var target := -10;
+    var arr := new int[4] [-10, -10, -9, -9];
+    var target := -9;
     var index := FindFirstOccurrence(arr, target);
-    expect index == 0;
+    expect index == 2;
   }
 
   // Test case for combination {3}:
@@ -66,7 +66,7 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[1] [-2];
+    var arr := new int[1] [-3];
     var target := -10;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
@@ -97,7 +97,7 @@ method TestsForFindFirstOccurrence()
   //   ENSURES: target !in arr[..] ==> index == -1
   //   ENSURES: target in arr[..] ==> 0 <= index < arr.Length && arr[index] == target && target !in arr[..index]
   {
-    var arr := new int[2] [-3, -3];
+    var arr := new int[2] [-4, -1];
     var target := -9;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;

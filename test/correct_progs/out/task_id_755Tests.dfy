@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_755.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-20 09:15:32
+// Generated: 2026-04-20 15:01:54
 
 
 // Obtains the smallest and second smallest element in an array of integers (in a single scan).
@@ -68,10 +68,10 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[3] [-10, -8, -3];
+    var s := new int[3] [-10, -2, 10];
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == -10;
-    expect secondSmallest == -8;
+    expect secondSmallest == -2;
   }
 
   // Test case for combination {1}/Osmallest=0:
@@ -86,10 +86,10 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[4] [9, 10, 2, 0];
+    var s := new int[4] [6, 7, 5, 0];
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 0;
-    expect secondSmallest == 2;
+    expect secondSmallest == 5;
   }
 
   // Test case for combination {1}/Osmallest>0:
@@ -104,7 +104,7 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[2] [9, 10];
+    var s := new int[2] [10, 9];
     var smallest, secondSmallest := SecondSmallest(s);
     expect smallest == 9;
     expect secondSmallest == 10;
@@ -122,9 +122,9 @@ method TestsForSecondSmallest()
   //   ENSURES: secondSmallest in s[..] && secondSmallest > smallest
   //   ENSURES: forall k: int :: 0 <= k < s.Length && s[k] != smallest ==> s[k] >= secondSmallest
   {
-    var s := new int[4] [-2, 6, 5, 0];
+    var s := new int[4] [3, 2, -1, 0];
     var smallest, secondSmallest := SecondSmallest(s);
-    expect smallest == -2;
+    expect smallest == -1;
     expect secondSmallest == 0;
   }
 

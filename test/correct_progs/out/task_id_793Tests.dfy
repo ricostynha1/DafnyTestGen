@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-20 09:17:18
+// Generated: 2026-04-20 15:03:16
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -56,10 +56,10 @@ method TestsForLastPosition()
   //   ENSURES: elem !in arr[..] ==> pos == -1
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
-    var arr := new int[2] [-10, -10];
+    var arr := new int[4] [-10, -10, -10, -9];
     var elem := -10;
     var pos := LastPosition(arr, elem);
-    expect pos == 1;
+    expect pos == 2;
   }
 
   // Test case for combination {3}:
@@ -102,7 +102,7 @@ method TestsForLastPosition()
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
     var arr := new int[2] [-4, -1];
-    var elem := -10;
+    var elem := -9;
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_290.dfy
 // Method: MaxLengthSublist
-// Generated: 2026-04-20 09:10:13
+// Generated: 2026-04-20 14:57:54
 
 // Returns the longest list in a non-empty list of lists.
 // If there are multiple lists of the same length, any one can be returned.
@@ -44,11 +44,11 @@ method TestsForMaxLengthSublist()
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[], [7], [5], [14], [16], [7], [7], [7]];
+    var lists: seq<seq<int>> := [[], [10], [6], [22], [20], [11], [18], [7]];
     var maxSublist := MaxLengthSublist<int>(lists);
     expect maxSublist in lists;
     expect forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|;
-    expect maxSublist == [7]; // observed from implementation
+    expect maxSublist == [10]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|lists|=1:
@@ -70,9 +70,9 @@ method TestsForMaxLengthSublist()
   //   ENSURES: maxSublist in lists
   //   ENSURES: forall l: seq<int> :: l in lists ==> |l| <= |maxSublist|
   {
-    var lists: seq<seq<int>> := [[6, 5], [12, 13]];
+    var lists: seq<seq<int>> := [[6, 5], [12, 14]];
     var maxSublist := MaxLengthSublist<int>(lists);
-    expect maxSublist == [12, 13] || maxSublist == [6, 5];
+    expect maxSublist == [12, 14] || maxSublist == [6, 5];
   }
 
 }

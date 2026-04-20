@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-20 09:01:48
+// Generated: 2026-04-20 14:54:03
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.

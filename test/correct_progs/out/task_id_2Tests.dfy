@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-20 09:09:26
+// Generated: 2026-04-20 14:57:16
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -53,10 +53,10 @@ method TestsForSharedElements()
   //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
   //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
-    var a := new int[1] [4];
-    var b := new int[1] [4];
+    var a := new int[1] [-2];
+    var b := new int[1] [-2];
     var result := SharedElements<int>(a, b);
-    expect result == {4};
+    expect result == {-2};
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -101,10 +101,10 @@ method TestsForSharedElements()
   //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
   //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
-    var a := new int[2] [5, 0];
-    var b := new int[2] [0, 5];
+    var a := new int[2] [1, -2];
+    var b := new int[2] [-2, 1];
     var result := SharedElements<int>(a, b);
-    expect result == {0, 5};
+    expect result == {-2, 1};
   }
 
 }

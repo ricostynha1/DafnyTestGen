@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-20 09:12:24
+// Generated: 2026-04-20 14:59:24
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -66,11 +66,11 @@ method TestsForToLowercase()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['a', '3'];
+    var s: seq<char> := ['~', 'h'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['a', '3']; // observed from implementation
+    expect v == ['~', 'h']; // observed from implementation
   }
 
   // Test case for combination {1}/Q|s|=1:
@@ -78,11 +78,11 @@ method TestsForToLowercase()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['4'];
+    var s: seq<char> := ['!'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['4']; // observed from implementation
+    expect v == ['!']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
@@ -90,11 +90,11 @@ method TestsForToLowercase()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   //   ENSURES: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['C'];
+    var s: seq<char> := ['~'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['c']; // observed from implementation
+    expect v == ['~']; // observed from implementation
   }
 
 }

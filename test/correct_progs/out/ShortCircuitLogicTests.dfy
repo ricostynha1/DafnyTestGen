@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-20 09:04:53
+// Generated: 2026-04-20 14:56:31
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0
@@ -90,7 +90,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[2] [3, -10];
+    var a := new int[2] [-1, -10];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }

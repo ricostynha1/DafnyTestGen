@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-20 09:03:43
+// Generated: 2026-04-20 14:55:27
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -55,7 +55,7 @@ predicate IsSorted(a: array<int>)
 
 method TestsForMode()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
@@ -63,11 +63,11 @@ method TestsForMode()
   //   ENSURES: m in a[..]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[1] [-7];
+    var a := new int[1] [-10];
     var m := Mode(a);
     expect m in a[..];
     expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-    expect m == -7; // observed from implementation
+    expect m == -10; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -78,7 +78,7 @@ method TestsForMode()
   //   ENSURES: m in a[..]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[2] [-10, 3];
+    var a := new int[2] [-10, -3];
     var m := Mode(a);
     expect m in a[..];
     expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
@@ -93,14 +93,14 @@ method TestsForMode()
   //   ENSURES: m in a[..]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[4] [-5, -1, -1, 0];
+    var a := new int[4] [-5, -5, -1, 0];
     var m := Mode(a);
     expect m in a[..];
     expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-    expect m == -1; // observed from implementation
+    expect m == -5; // observed from implementation
   }
 
-  // Test case for combination {1}/R4:
+  // Test case for combination {1}/Om>0:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
@@ -108,11 +108,11 @@ method TestsForMode()
   //   ENSURES: m in a[..]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[1] [-10];
+    var a := new int[1] [3];
     var m := Mode(a);
     expect m in a[..];
     expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-    expect m == -10; // observed from implementation
+    expect m == 3; // observed from implementation
   }
 
 }

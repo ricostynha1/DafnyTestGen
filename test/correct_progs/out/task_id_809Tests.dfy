@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-20 09:17:53
+// Generated: 2026-04-20 15:03:49
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -60,8 +60,8 @@ method TestsForIsSmaller()
   //   POST: !(a[0] < b[0])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [-8];
-    var b: seq<int> := [-8];
+    var a: seq<int> := [-9];
+    var b: seq<int> := [-9];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -72,8 +72,8 @@ method TestsForIsSmaller()
   //   POST: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [-2, 10, -1, 9237];
-    var b: seq<int> := [3, 8, -10, 9238];
+    var a: seq<int> := [-8, 10, -1, 9660];
+    var b: seq<int> := [8, 2, -10, 9661];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -84,8 +84,8 @@ method TestsForIsSmaller()
   //   POST: forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   //   ENSURES: result <==> forall i: int :: 0 <= i < |a| ==> a[i] < b[i]
   {
-    var a: seq<int> := [-10, -7];
-    var b: seq<int> := [-8, -6];
+    var a: seq<int> := [-10, -4];
+    var b: seq<int> := [-8, -3];
     var result := IsSmaller(a, b);
     expect result == true;
   }

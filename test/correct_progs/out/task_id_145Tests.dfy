@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-04-20 09:09:10
+// Generated: 2026-04-20 14:57:02
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
@@ -55,9 +55,9 @@ method TestsForMaxDifference()
   //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
   //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
-    var a := new int[2] [8, -10];
+    var a := new int[2] [2, 10];
     var diff := MaxDifference(a);
-    expect diff == 18;
+    expect diff == 8;
   }
 
   // Test case for combination {1}/Q|a|=1:
@@ -79,9 +79,9 @@ method TestsForMaxDifference()
   //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
   //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
-    var a := new int[1] [-9];
+    var a := new int[2] [-9, -6];
     var diff := MaxDifference(a);
-    expect diff == 0;
+    expect diff == 3;
   }
 
   // Test case for combination {1}/Q|a|>=2/R3:
@@ -91,9 +91,9 @@ method TestsForMaxDifference()
   //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
   //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
-    var a := new int[1] [-8];
+    var a := new int[2] [10, 2];
     var diff := MaxDifference(a);
-    expect diff == 0;
+    expect diff == 8;
   }
 
 }

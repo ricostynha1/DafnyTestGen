@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-04-20 09:12:19
+// Generated: 2026-04-20 14:59:21
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -89,9 +89,9 @@ method TestsForSumMinMax()
   //   POST: sum == Max(a[..]) + Min(a[..])
   //   ENSURES: sum == Max(a[..]) + Min(a[..])
   {
-    var a := new int[2] [10, -10];
+    var a := new int[2] [-2, -10];
     var sum := SumMinMax(a);
-    expect sum == 0;
+    expect sum == -12;
   }
 
   // Test case for combination {1}/R3:
