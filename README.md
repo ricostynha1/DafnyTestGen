@@ -80,17 +80,16 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 
-### Decomposition of existential quantifiers (multi-entries clause disabled with `--no-exists-multi`)
+### Decomposition of existential quantifiers
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
-Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to  `P(lo) || P(lo+1) || ... || P (hi-1)`, are automatically decomposed into 4 clauses representing boundary, middle, and multiple-match cases:
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to  `P(lo) || P(lo+1) || ... || P (hi-1)`, are automatically decomposed into 3 clauses representing boundary and middle cases:
 
 1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position (guaranteed to exist)
 2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
-3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranted to exist)
-4. **Multiple entries**: `exists k, k_2 :: lo <= k < k_2 < hi && P(k) && P(k_2)` — property holds at two distinct positions simultaneously (forces inputs where the property is satisfied more than once)
+3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position (guaranteed to exist)
 
-These clauses feed into the same DNF/FDNF analysis, combining with other pre- and postcondition clauses via cross-product. The four clauses are **not mutually exclusive** — when 𝑃 holds at multiple positions, all of them may be satisfied simultaneously. This is intentional: unlike equivalence class partitioning, which requires disjoint input regions, our approach deliberately allows overlap to preserve solver tractability while exercising distinct structural patterns of quantified predicates, without overcomplicating the generated expressions. If Z3 produces the same input for overlapping clauses, the input exclusion mechanism deduplicates the result.
+These clauses feed into the same DNF/FDNF analysis, combining with other pre- and postcondition clauses via cross-product. The three clauses are **not mutually exclusive** — when 𝑃 holds at multiple positions, all of them may be satisfied simultaneously. This is intentional: unlike equivalence class partitioning, which requires disjoint input regions, our approach deliberately allows overlap to preserve solver tractability while exercising distinct structural patterns of quantified predicates, without overcomplicating the generated expressions. If Z3 produces the same input for overlapping clauses, the input exclusion mechanism deduplicates the result.
 
 Equivalent range definitions are supported (using other relational operators or a conjuntion of two inequalities instead of chained inequalities), as in `exists k :: k >= lo && k < hi && P(k)`. 
 Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled similarly. 
@@ -104,9 +103,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right), and max at two distinct positions (multiple entries). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
-
-The per-literal relevance check (below) and Boundary Value Analysis together cover much of what multi-entries provides (duplicate-sensitive specs like `LastPosition`), but not all of it — methods with several exists-decomposed preconditions rely on the cross-product of multi-entries clauses to reach their best input diversity (e.g., `ProductFirstEvenOdd` drops from 21 to 11 tests without it on the suite). Pass `--no-exists-multi` / `-nem` to skip clause 4 when the cross-product blowup outweighs the coverage.
+The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
 
 ### Decomposition of universal quantifiers (disable with `--no-forall-decomp`)
 
@@ -167,9 +164,7 @@ Z3 can freely assign values to the residual `filter(...)` calls, and the structu
 
 ### Anti-trivial bias (disable with `--no-bias`)
 
-Z3 minimizes model size by default, so it may pick special values that trivially satisfy the specification.
-
-For example, without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
+Z3 minimizes model size by default, so it may pick special values that trivially satisfy the specification. E.g., without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
 
 DafnyTestGen adds two Z3-native nudges per query:
 
@@ -700,7 +695,6 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
 | `--no-forall-decomp` | `-nfd` | Disable forall size-tier decomposition. By default, clauses with a positive `forall` over a collection are split into `\|a\|=0`, `\|a\|=1`, `\|a\|>=2` sub-clauses (and inner tiers for `seq<seq<T>>`) to force non-vacuous witnesses |
-| `--no-exists-multi` | `-nem` | Disable the "multiple entries" clause in exists-decomposition (keep left / middle / right boundaries only). By default, `exists k :: lo <= k < hi && P(k)` also produces a clause forcing ≥2 distinct positions satisfying `P` |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
