@@ -167,13 +167,9 @@ Z3 can freely assign values to the residual `filter(...)` calls, and the structu
 
 ### Anti-trivial bias (disable with `--no-bias`)
 
-Z3 minimizes model size by default. For specifications involving recursive/uninterpreted functions (e.g. `Power(b, n)`, `Factorial(n)`, `Product(xs)`), that preference picks *special* values that trivially satisfy postconditions without exercising real arithmetic:
+Z3 minimizes model size by default, so it may pick special values that trivially satisfy the specification.
 
-- `0` is the absorbing element for multiplication (`Power(0, n) = 0`).
-- `1` is the neutral element (`Power(1, n) = 1`).
-- Empty sequences and singletons vacuously satisfy quantified postconditions.
-
-Without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
+For example, without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
 
 DafnyTestGen adds two Z3-native nudges per query:
 
