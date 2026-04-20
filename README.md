@@ -80,7 +80,7 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
 
-### Decomposition of existential quantifiers
+### Decomposition of existential quantifiers (multi-entries clause disabled with `--no-exists-multi`)
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses.
 Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to  `P(lo) || P(lo+1) || ... || P (hi-1)`, are automatically decomposed into 4 clauses representing boundary, middle, and multiple-match cases:
@@ -106,24 +106,13 @@ method FindMax(a: array<int>) returns (max: int)
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right), and max at two distinct positions (multiple entries). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
 
-### Decomposition of universal quantifiers
+The per-literal relevance check (below) and Boundary Value Analysis together cover much of what multi-entries provides (duplicate-sensitive specs like `LastPosition`), but not all of it — methods with several exists-decomposed preconditions rely on the cross-product of multi-entries clauses to reach their best input diversity (e.g., `ProductFirstEvenOdd` drops from 21 to 11 tests without it on the suite). Pass `--no-exists-multi` / `-nem` to skip clause 4 when the cross-product blowup outweighs the coverage.
 
-A positive `forall` quantifier over an array or sequence is vacuously true when the collection is too short for the range to be non-empty. To exercise both the vacuous and non-trivial cases, each clause containing such a quantifier is decomposed by **collection size** into three sub-clauses: `|a| = 0`, `|a| = 1`, and `|a| >= 2`. This applies to both pre- and postcondition quantifiers, and to any array, sequence, set, multiset, or map input referenced by the quantifier. Negated `forall` is skipped since `!(forall ...)` is already handled as `exists` via the decomposition above. This is important to promote **specification coverage**, i.e., to make sure that all pieces of the specification are exercised by the test suite. 
+### Decomposition of universal quantifiers (disable with `--no-forall-decomp`)
 
-Consider the sortedness postcondition:
+A positive `forall` over a collection is vacuously true when the collection is too short for the range to be non-empty. Each clause containing such a quantifier is split by **collection size** into sub-clauses `|a|=0`, `|a|=1`, `|a|>=2` (pre- or post-condition, any array/seq/set/multiset/map). For nested `forall` over `seq<seq<T>>`, inner-size tiers on `|a[0]|` are emitted too, so Z3 can't dodge the inner body with empty inner sequences.
 
-```dafny
-method IsSortedArr(a: array<int>) returns (sorted: bool)
-  ensures sorted <==> forall i :: 0 <= i < a.Length - 1 ==> a[i] <= a[i+1]
-```
-
-Without size decomposition, Z3 tends to pick the smallest witness for the positive branch — a length-0 or length-1 array — and the non-trivial sorted case (length ≥ 2) is never exercised in Phase 1. With size decomposition, the positive clause (`sorted`) is split into three goals forcing `|a|=0`, `|a|=1`, and `|a|>=2`, yielding e.g. `[]`, `[2]`, and `[-7719, 38]` as separate passing tests.
-
-**Nested `forall` over `seq<seq<T>>`.** The same vacuity problem recurses when the outer `forall` body contains an inner `forall` over a collection element's elements — e.g., `forall i :: 0 <= i < |a| ==> forall j :: 0 <= j < |a[i]| ==> P(a[i][j])`. Outer-size tiers alone let Z3 satisfy the nested case with empty inner sequences (`a = [[], []]`), since the inner `forall j` is vacuously true when `|a[i]| = 0`. To force non-trivial inner content, each outer-size tier is augmented with **inner-size tiers** on `|a[0]|`, emitted as additional Phase 1 goals `|a[0]|=0`, `|a[0]|=1`, `|a[0]|>=2` guarded by `|a|>=1`. This applies when the outer collection has type `seq<seq<T>>` (or `seq<string>`) and a positive forall references it.
-
-Example — `DeepElementWiseAddition(a, b: seq<seq<int>>) returns (result: seq<seq<int>>)` with postcondition `forall i :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])` (the inlined auxiliary predicate hides a nested `forall j`). Outer tiers alone yield `[]`, `[[]]`, `[[], []]` — all with empty inners, never exercising the element-wise sum. The `|a[0]|>=2` tier adds e.g. `a = [[0, 37], [38], []]`, `b = [[0, 39], [48], []]` → `result = [[0, 76], [86], []]`, a test that actually checks the arithmetic.
-
-Subsumption pruning across tiers pins prior models at the flat-encoding level (`a_{i}_len`, `a_{i}_elems`) so that a new `|a[0]|>=2` goal is not falsely considered covered by a prior `|a|=2` model whose inner elements were unconstrained.
+Boundary Value Analysis and the per-literal relevance check (below) cover much of the same territory — BVA pins collection sizes to `0`, `1`, `>=2` anyway, and relevance forces non-vacuous witnesses when the quantifier is a safe literal. Forall decomposition still contributes incremental coverage on the suite (measured: ~25% of programs lose at least one passing test when disabled), so it stays on by default. Pass `--no-forall-decomp` / `-nfd` to skip it.
 
 ### Predicate and function inlining  
 
@@ -231,7 +220,7 @@ DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it c
 - **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
 
-For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the chosen index to actually hold `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
+For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the chosen index to actually hold `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
 var arr := new int[4] [-10, -10, -10, -9];
@@ -714,6 +703,8 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
+| `--no-forall-decomp` | `-nfd` | Disable forall size-tier decomposition. By default, clauses with a positive `forall` over a collection are split into `\|a\|=0`, `\|a\|=1`, `\|a\|>=2` sub-clauses (and inner tiers for `seq<seq<T>>`) to force non-vacuous witnesses |
+| `--no-exists-multi` | `-nem` | Disable the "multiple entries" clause in exists-decomposition (keep left / middle / right boundaries only). By default, `exists k :: lo <= k < hi && P(k)` also produces a clause forcing ≥2 distinct positions satisfying `P` |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
