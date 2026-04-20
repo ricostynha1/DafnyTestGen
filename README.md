@@ -37,6 +37,9 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 
 Disjunctive postconditions and preconditions naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a` option), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
+
+### DNF decomposition rules
+
 The DNF decomposition respects Dafny **short-circuit evaluation** of Boolean operators, to avoid generating test cases that would cause runtime errors. Consider the following example:
 
 ```dafny
