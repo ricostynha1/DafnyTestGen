@@ -173,7 +173,7 @@ The DNF engine splits the inlined expression `X == (if C then A else B)` into th
 
 Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch. 
 
-### Per-literal relevance check (Phase 1r, default on; disable with `--no-relevance`)
+### Per-literal relevance check (embedded in Phase 1; disable with `--no-relevance`)
 
 Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where the *defining* literal `Q_last` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
 
@@ -186,9 +186,9 @@ elem in arr[..]                  // Q1
 ∧ elem !in arr[pos+1..]          // Q_last  — the "last" constraint
 ```
 
-Without relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All four literals hold, but `Q_last` is vacuous (no duplicates → nothing to be the "last" of). The defining behaviour is never exercised.
+Without a relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All four literals hold, but `Q_last` is vacuous (no duplicates → nothing to be the "last" of). The defining behaviour is never exercised.
 
-DafnyTestGen adds **Phase 1r** between Phase 1 and Phase 2: for each clause it asks Z3 to prove `Q_last` is non-redundant by finding inputs where the clause has *two distinct* output assignments, identical except that `Q_last` separates them. Formally:
+DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it first asks Z3 to prove `Q_last` is non-redundant by finding inputs where the clause has *two distinct* output assignments, identical except that `Q_last` separates them. Formally:
 
 ```
 pre(ins)
@@ -197,21 +197,23 @@ pre(ins)
 ∧ outs1 ≠ outs2
 ```
 
-- **SAT** → `Q_last` strictly prunes outputs for these inputs. Emit `outs1` as a test case labelled `{clause}/Rel`.
-- **UNSAT** → `Q_last` is entailed by the other literals (redundant); skip.
+- **SAT** → `Q_last` strictly prunes outputs for these inputs. Emit `outs1` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause instead of two).
+- **UNSAT** / **unknown** / skipped (unsafe candidate, residual uninterpreted function) → fall back to the plain Phase 1 clause query.
 
 For `LastPosition`, the relevance query forces `arr` to contain duplicates of `elem` so that an "earlier" index breaks `Q_last` while the "last" index satisfies it. Generated test:
 
 ```dafny
-var arr := new int[2] [0, 0];
-var elem := 0;
+var arr := new int[2] [-10, -10];
+var elem := -10;
 var pos := LastPosition(arr, elem);
 expect pos == 1;     // forced to the LAST occurrence
 ```
 
-**Safety**: only the **last** literal of each clause is negated. Earlier literals (typically guards like `0 ≤ pos < arr.Length`) remain intact under `outs2`, so `arr[pos]` etc. stay well-defined. A secondary check verifies that every output-variable appearing in `Q_last` also appears in some earlier literal.
+Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis, so replacing the plain clause query keeps the suite minimal without sacrificing coverage.
 
-Pass `--no-relevance` / `-nr` to disable Phase 1r.
+**Safety**: only the **last** literal of each clause is negated. Earlier literals (typically guards like `0 ≤ pos < arr.Length`) remain intact under `outs2`, so `arr[pos]` etc. stay well-defined. A secondary check verifies that every output-variable appearing in `Q_last` also appears in some earlier literal. Clauses whose last literal still references an uninterpreted user-defined function (typically recursive functions like `Count`, `Power`) are skipped — Z3 is free to fabricate function values, which would make the two-output separation spurious.
+
+Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
 
 
 ## Boundary Value Analysis
@@ -428,7 +430,7 @@ This is more precise than postcondition literals (it pins the exact set of valid
 
 The same fallback applies when postconditions cannot be fully translated to SMT (e.g., they contain recursive functions with uninterpreted calls remaining after inlining, higher-order ghost functions, or bitvector operators): Z3's concrete outputs cannot be trusted and the original postcondition literals are used as `expect` assertions instead.
 
-**Limitation — residual uninterpreted functions.** When the spec references user-defined functions that remain uninterpreted after 2-pass inlining (typically recursive functions like `Count`, `Power`, `R`), the uniqueness enumeration is **skipped entirely**. Z3 is free to assign arbitrary values to uninterpreted-function calls, so a "different output satisfying the spec" query would fabricate phantom alternatives that do not reflect real semantics. For example, in `Mode([-6, -1, -1, 0])` the true mode is `-1`, but without this skip Z3 happily reports `m = 0` as an alternative (by picking `Count(0) = 2, Count(-1) = 1`). DafnyTestGen detects such cases (any `declare-fun` with non-empty arity remaining in the SMT query) and emits a single observed-value `expect` derived from the check-mode runtime instead of a disjunctive enumeration. The original postcondition literals are still emitted as `expect` assertions. The **per-literal relevance check** (Phase 1r) applies the same skip rule for the same reason.
+**Limitation — residual uninterpreted functions.** When the spec references user-defined functions that remain uninterpreted after 2-pass inlining (typically recursive functions like `Count`, `Power`, `R`), the uniqueness enumeration is **skipped entirely**. Z3 is free to assign arbitrary values to uninterpreted-function calls, so a "different output satisfying the spec" query would fabricate phantom alternatives that do not reflect real semantics. For example, in `Mode([-6, -1, -1, 0])` the true mode is `-1`, but without this skip Z3 happily reports `m = 0` as an alternative (by picking `Count(0) = 2, Count(-1) = 1`). DafnyTestGen detects such cases (any `declare-fun` with non-empty arity remaining in the SMT query) and emits a single observed-value `expect` derived from the check-mode runtime instead of a disjunctive enumeration. The original postcondition literals are still emitted as `expect` assertions. The **per-literal relevance check** applies the same skip rule for the same reason.
 
 ### Test emission for mutable objects and class fields
 
@@ -693,7 +695,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--uniqueness-rounds <n>` | `-u` | Max rounds of uniqueness checking to enumerate all valid outputs (default: 2). When all valid outputs are exhaustively enumerated, emit `expect out == v1 \|\| out == v2;` instead of postcondition literals |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
-| `--no-relevance` | `-nr` | Disable per-literal relevance check (Phase 1r). By default, for each clause Q1 ∧ … ∧ Qm an extra Z3 query forces inputs where the *last* literal Q_m strictly prunes outputs (e.g. `arr` with duplicates of `elem` for `LastPosition`), so the defining behaviour is exercised |
+| `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where the *last* literal Q_m strictly prunes outputs (e.g. `arr` with duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 

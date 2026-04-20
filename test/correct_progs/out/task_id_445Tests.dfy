@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-19 21:57:24
+// Generated: 2026-04-20 09:11:46
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -29,17 +29,17 @@ method MultiplyElementsTest(){
 
 method TestsForElementWiseMultiplication()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [-20];
-    var b: seq<int> := [-19];
+    var a: seq<int> := [2];
+    var b: seq<int> := [3];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [380];
+    expect result == [6];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -49,10 +49,10 @@ method TestsForElementWiseMultiplication()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [16, -19];
-    var b: seq<int> := [-20, 20];
+    var a: seq<int> := [-9, -4];
+    var b: seq<int> := [-1, -3];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [-320, -380];
+    expect result == [9, 12];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -68,17 +68,17 @@ method TestsForElementWiseMultiplication()
     expect result == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [-2];
-    var b: seq<int> := [-1];
+    var a: seq<int> := [-10];
+    var b: seq<int> := [-9];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [2];
+    expect result == [90];
   }
 
 }

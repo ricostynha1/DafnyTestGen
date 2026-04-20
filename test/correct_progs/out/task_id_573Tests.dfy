@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-04-19 21:58:08
+// Generated: 2026-04-20 09:12:53
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -86,9 +86,9 @@ method TestsForUniqueProduct()
   //   POST: product == 1
   //   ENSURES: product == SetProduct(elems(a))
   {
-    var a := new int[1] [-20];
+    var a := new int[1] [-10];
     var product := UniqueProduct(a);
-    expect product == -20;
+    expect product == -10;
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -106,9 +106,9 @@ method TestsForUniqueProduct()
   //   POST: product == 1
   //   ENSURES: product == SetProduct(elems(a))
   {
-    var a := new int[2] [-1, -10];
+    var a := new int[2] [8, -10];
     var product := UniqueProduct(a);
-    expect product == 10;
+    expect product == -80;
   }
 
   // Test case for combination {1}/R4:
@@ -116,9 +116,9 @@ method TestsForUniqueProduct()
   //   POST: product == 1
   //   ENSURES: product == SetProduct(elems(a))
   {
-    var a := new int[1] [-19];
+    var a := new int[1] [-9];
     var product := UniqueProduct(a);
-    expect product == -19;
+    expect product == -9;
   }
 
 }

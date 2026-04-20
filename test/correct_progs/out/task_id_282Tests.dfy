@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-19 21:56:26
+// Generated: 2026-04-20 09:10:03
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -36,7 +36,7 @@ method ElementWiseSubtractionTest(){
 
 method TestsForElementWiseSubtraction()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
@@ -44,9 +44,9 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[1] [-1];
-    var b := new int[1] [16];
+    var b := new int[1] [-6];
     var result := ElementWiseSubtraction(a, b);
-    expect result[..] == [-17];
+    expect result[..] == [5];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -56,10 +56,10 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[2] [-2, 15];
-    var b := new int[2] [11, 8];
+    var a := new int[2] [-1, 6];
+    var b := new int[2] [8, 2];
     var result := ElementWiseSubtraction(a, b);
-    expect result[..] == [-13, 7];
+    expect result[..] == [-9, 4];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -75,17 +75,17 @@ method TestsForElementWiseSubtraction()
     expect result[..] == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  a.Length == b.Length
   //   POST: result.Length == a.Length
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[1] [8855];
-    var b := new int[1] [8855];
+    var a := new int[1] [3];
+    var b := new int[1] [4];
     var result := ElementWiseSubtraction(a, b);
-    expect result[..] == [0];
+    expect result[..] == [-1];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-04-19 21:59:28
+// Generated: 2026-04-20 09:15:05
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -33,17 +33,17 @@ method AddListsTest(){
 
 method TestsForElementWiseAddition()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [11];
-    var b: seq<int> := [13];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [-2];
     var result := ElementWiseAddition(a, b);
-    expect result == [24];
+    expect result == [-3];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -53,10 +53,10 @@ method TestsForElementWiseAddition()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [6, -1];
-    var b: seq<int> := [5, 14];
+    var a: seq<int> := [8, -4];
+    var b: seq<int> := [5, 10];
     var result := ElementWiseAddition(a, b);
-    expect result == [11, 13];
+    expect result == [13, 6];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -72,17 +72,17 @@ method TestsForElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [40650];
-    var b: seq<int> := [40650];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [9];
     var result := ElementWiseAddition(a, b);
-    expect result == [81300];
+    expect result == [8];
   }
 
 }

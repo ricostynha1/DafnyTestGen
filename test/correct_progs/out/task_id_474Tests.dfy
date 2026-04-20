@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
 // Method: ReplaceChars
-// Generated: 2026-04-19 21:57:42
+// Generated: 2026-04-20 09:12:15
 
 // Replace all occurrences of oldChar in string s by newChar 
 // and return the resulting string.
@@ -44,16 +44,16 @@ method ReplaceCharsTest(){
 
 method TestsForReplaceChars()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   POST: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   {
-    var s: seq<char> := [];
-    var oldChar := '~';
-    var newChar := '~';
+    var s: seq<char> := ['`'];
+    var oldChar := '`';
+    var newChar := 'a';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == [];
+    expect v == ['a'];
   }
 
   // Test case for combination {1}/Q|s|>=2:
@@ -61,35 +61,35 @@ method TestsForReplaceChars()
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   {
-    var s: seq<char> := ['|', '|'];
-    var oldChar := '|';
-    var newChar := '}';
+    var s: seq<char> := ['~', '~'];
+    var oldChar := '~';
+    var newChar := '.';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['}', '}'];
+    expect v == ['.', '.'];
   }
 
-  // Test case for combination {1}/Q|s|=1:
+  // Test case for combination {1}/Q|s|=0:
   //   POST: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   {
-    var s: seq<char> := ['~'];
-    var oldChar := '~';
+    var s: seq<char> := [];
+    var oldChar := ' ';
     var newChar := ' ';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == [' '];
+    expect v == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|s|>=2/R3:
   //   POST: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   {
-    var s: seq<char> := ['1'];
-    var oldChar := '1';
-    var newChar := '0';
+    var s: seq<char> := [];
+    var oldChar := '}';
+    var newChar := '~';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['0'];
+    expect v == [];
   }
 
 }

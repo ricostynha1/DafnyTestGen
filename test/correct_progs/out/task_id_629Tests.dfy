@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-19 21:59:10
+// Generated: 2026-04-20 09:14:36
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -112,9 +112,9 @@ method TestsForFindEvenNumbers()
   //   POST: evenList == Filter<T>(arr[..][..|arr[..]| - 1], IsEven) + [arr[..][|arr[..]| - 1]]
   //   ENSURES: evenList == Filter(arr[..], IsEven)
   {
-    var arr := new int[1] [-20];
+    var arr := new int[1] [-10];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [-20];
+    expect evenList == [-10];
   }
 
 }

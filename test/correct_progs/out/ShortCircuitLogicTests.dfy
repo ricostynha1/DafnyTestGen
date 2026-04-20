@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ShortCircuitLogic.dfy
 // Method: GetFirstOrZero
-// Generated: 2026-04-19 21:55:24
+// Generated: 2026-04-20 09:04:53
 
 method GetFirstOrZero(a: array<int>) returns (result: int)
   ensures a.Length == 0 ==> result == 0
@@ -32,9 +32,9 @@ method TestsForGetFirstOrZero()
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[1] [-20];
+    var a := new int[1] [-10];
     var result := GetFirstOrZero(a);
-    expect result == -20;
+    expect result == -10;
   }
 
   // Test case for combination {3}:
@@ -56,9 +56,9 @@ method TestsForGetFirstOrZero()
   //   ENSURES: a.Length == 0 ==> result == 0
   //   ENSURES: a.Length > 0 ==> result == a[0]
   {
-    var a := new int[2] [-19, -20];
+    var a := new int[2] [-9, -10];
     var result := GetFirstOrZero(a);
-    expect result == -19;
+    expect result == -9;
   }
 
   // Test case for combination {2}/Oresult=0:
@@ -81,7 +81,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[1] [-20];
+    var a := new int[1] [-10];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }
@@ -90,7 +90,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[2] [-1, -20];
+    var a := new int[2] [3, -10];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }
@@ -108,7 +108,7 @@ method TestsForZeroLengthOrValue()
   //   POST: result == (a.Length == 0 || a[0] == 0)
   //   ENSURES: result == (a.Length == 0 || a[0] == 0)
   {
-    var a := new int[1] [-19];
+    var a := new int[1] [-9];
     var result := ZeroLengthOrValue(a);
     expect result == false;
   }

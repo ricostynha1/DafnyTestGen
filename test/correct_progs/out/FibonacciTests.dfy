@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-19 21:52:25
+// Generated: 2026-04-20 09:01:57
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -46,9 +46,9 @@ method TestsForCalcFib()
   //   POST: res == Fib(n - 2) + Fib(n - 1)
   //   ENSURES: res == Fib(n)
   {
-    var n := 20;
+    var n := 10;
     var res := CalcFib(n);
-    expect res == 6765;
+    expect res == 55;
   }
 
   // Test case for combination {1}/On=0:
@@ -66,9 +66,9 @@ method TestsForCalcFib()
   //   POST: res == Fib(n - 2) + Fib(n - 1)
   //   ENSURES: res == Fib(n)
   {
-    var n := 19;
+    var n := 9;
     var res := CalcFib(n);
-    expect res == 4181;
+    expect res == 34;
   }
 
 }

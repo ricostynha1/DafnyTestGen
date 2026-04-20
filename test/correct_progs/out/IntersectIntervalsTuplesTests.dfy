@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-19 21:53:03
+// Generated: 2026-04-20 09:02:59
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -66,7 +66,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[1] [(-1.0, 0.0)];
+    var a := new (real, real)[1] [(0.0, 0.5)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
@@ -77,7 +77,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[2] [(-1.0, 0.0), (16862.0, 16863.0)];
+    var a := new (real, real)[2] [(0.0, 0.5), (42839.0, 42839.5)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
@@ -88,7 +88,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[3] [(-1.0, 0.0), (27348.0, 27349.0), (18690.0, 18691.0)];
+    var a := new (real, real)[3] [(0.0, 0.5), (31888.0, 31888.5), (24008.0, 24008.5)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }
@@ -99,7 +99,7 @@ method TestsForIntersectIntervals()
   //   POST: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   //   ENSURES: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[4] [(-1.0, 0.0), (18690.0, 18691.0), (24115.0, 24116.0), (7842.0, 7843.0)];
+    var a := new (real, real)[4] [(0.0, 0.5), (28376.0, 28376.5), (27836.0, 27836.5), (16782.5, 16783.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
   }

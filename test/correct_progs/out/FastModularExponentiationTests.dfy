@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-19 21:52:21
+// Generated: 2026-04-20 09:01:52
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -135,7 +135,7 @@ method TestsForFastExponentiation()
   //   POST: p == 1
   //   ENSURES: p == Power(x, n)
   {
-    var x := 20;
+    var x := 10;
     var n := 0;
     var p := FastExponentiation(x, n);
     expect p == 1;
@@ -146,10 +146,10 @@ method TestsForFastExponentiation()
   //   POST: p == x * Power(x, n - 1)
   //   ENSURES: p == Power(x, n)
   {
-    var x := 20;
-    var n := 20;
+    var x := 10;
+    var n := 10;
     var p := FastExponentiation(x, n);
-    expect p == 104857600000000000000000000;
+    expect p == 10000000000;
   }
 
   // Test case for combination {1}/Bx=0:
@@ -184,7 +184,7 @@ method TestsForFastModularExponentiation()
   //   ENSURES: res == Power(x, n) % m
   {
     var x := 2;
-    var n := 20;
+    var n := 10;
     var m := 2;
     var res := FastModularExponentiation(x, n, m);
     expect res == 0;
@@ -196,8 +196,8 @@ method TestsForFastModularExponentiation()
   //   ENSURES: res == Power(x, n) % m
   {
     var x := 0;
-    var n := 20;
-    var m := 20;
+    var n := 10;
+    var m := 10;
     var res := FastModularExponentiation(x, n, m);
     expect res == 0;
   }
@@ -208,7 +208,7 @@ method TestsForFastModularExponentiation()
   //   ENSURES: res == Power(x, n) % m
   {
     var x := 1;
-    var n := 20;
+    var n := 10;
     var m := 2;
     var res := FastModularExponentiation(x, n, m);
     expect res == 1;
@@ -219,7 +219,7 @@ method TestsForFastModularExponentiation()
   //   POST: res == Power(x, n) % m
   //   ENSURES: res == Power(x, n) % m
   {
-    var x := 20;
+    var x := 10;
     var n := 0;
     var m := 2;
     var res := FastModularExponentiation(x, n, m);

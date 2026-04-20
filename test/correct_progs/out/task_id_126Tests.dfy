@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-19 21:55:45
+// Generated: 2026-04-20 09:09:01
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -77,10 +77,10 @@ method TestsForSumOfCommonDivisors()
   //   POST: sum == 0
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
-    var a := 20;
-    var b := 20;
+    var a := 10;
+    var b := 10;
     var sum := SumOfCommonDivisors(a, b);
-    expect sum == 42;
+    expect sum == 18;
   }
 
   // Test case for combination {1}/Ba=1:
@@ -90,7 +90,7 @@ method TestsForSumOfCommonDivisors()
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 1;
-    var b := 20;
+    var b := 10;
     var sum := SumOfCommonDivisors(a, b);
     expect sum == 1;
   }
@@ -102,7 +102,7 @@ method TestsForSumOfCommonDivisors()
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
     var a := 2;
-    var b := 20;
+    var b := 10;
     var sum := SumOfCommonDivisors(a, b);
     expect sum == 3;
   }
@@ -113,7 +113,7 @@ method TestsForSumOfCommonDivisors()
   //   POST: sum == 0
   //   ENSURES: sum == sumSeq(commonDivisors(a, b))
   {
-    var a := 20;
+    var a := 10;
     var b := 1;
     var sum := SumOfCommonDivisors(a, b);
     expect sum == 1;

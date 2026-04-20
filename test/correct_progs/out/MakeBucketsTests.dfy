@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-19 21:53:19
+// Generated: 2026-04-20 09:03:20
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -63,12 +63,12 @@ method TestsForMakeBuckets()
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[1] [20];
+    var a := new nat[1] [10];
     var b := MakeBuckets(a);
     expect b.Length > 0;
     expect b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
-    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]; // observed from implementation
+    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -79,28 +79,12 @@ method TestsForMakeBuckets()
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[2] [20, 15];
+    var a := new nat[2] [10, 6];
     var b := MakeBuckets(a);
     expect b.Length > 0;
     expect b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
-    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; // observed from implementation
-  }
-
-  // Test case for combination {1}/Rel:
-  //   PRE:  a.Length > 0
-  //   POST: b.Length > 0
-  //   POST: b.Length == MaxSeq(a[..]) + 1
-  //   POST: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
-  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
-  //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
-  {
-    var a := new nat[1] [2];
-    var b := MakeBuckets(a);
-    expect b.Length > 0;
-    expect b.Length == MaxSeq(a[..]) + 1;
-    expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
-    expect b == [0, 0, 1]; // observed from implementation
+    expect b == [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1]; // observed from implementation
   }
 
   // Test case for combination {1}/R3:
@@ -111,12 +95,28 @@ method TestsForMakeBuckets()
   //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[1] [19];
+    var a := new nat[1] [9];
     var b := MakeBuckets(a);
     expect b.Length > 0;
     expect b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
-    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]; // observed from implementation
+    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  a.Length > 0
+  //   POST: b.Length > 0
+  //   POST: b.Length == MaxSeq(a[..]) + 1
+  //   POST: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  //   ENSURES: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
+  //   ENSURES: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
+  {
+    var a := new nat[1] [8];
+    var b := MakeBuckets(a);
+    expect b.Length > 0;
+    expect b.Length == MaxSeq(a[..]) + 1;
+    expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
+    expect b == [0, 0, 0, 0, 0, 0, 0, 0, 1]; // observed from implementation
   }
 
 }

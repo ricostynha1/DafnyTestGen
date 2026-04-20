@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-04-19 21:52:34
+// Generated: 2026-04-20 09:02:10
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -44,7 +44,7 @@ method InsertionSort(a: array<T>)
 
 method TestsForInsertionSort()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   //   ENSURES: IsSorted(a[..])
@@ -55,37 +55,26 @@ method TestsForInsertionSort()
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Rel:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new T[1] [42];
-    InsertionSort(a);
-    expect a[..] == [42];
-  }
-
   // Test case for combination {1}/Oa≠old:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [4294967069, 4294967068];
+    var a := new T[2] [19, 18];
     InsertionSort(a);
-    expect a[..] == [4294967068, 4294967069];
+    expect a[..] == [18, 19];
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[1] [18];
+    var a := new T[1] [20];
     InsertionSort(a);
-    expect a[..] == [18];
+    expect a[..] == [20];
   }
 
 }

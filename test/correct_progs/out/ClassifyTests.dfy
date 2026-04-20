@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-04-19 21:52:02
+// Generated: 2026-04-20 08:56:44
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -32,7 +32,7 @@ method TestsForClassify()
   //   ENSURES: x == 0 ==> r == 0
   //   ENSURES: x > 0 ==> r == 1
   {
-    var x := 20;
+    var x := 10;
     var r := Classify(x);
     expect r == 1;
   }
@@ -62,7 +62,7 @@ method TestsForClassify()
   //   ENSURES: x == 0 ==> r == 0
   //   ENSURES: x > 0 ==> r == 1
   {
-    var x := -20;
+    var x := -10;
     var r := Classify(x);
     expect r == -1;
   }
@@ -77,7 +77,7 @@ method TestsForClassify()
   //   ENSURES: x == 0 ==> r == 0
   //   ENSURES: x > 0 ==> r == 1
   {
-    var x := 19;
+    var x := 9;
     var r := Classify(x);
     expect r == 1;
   }

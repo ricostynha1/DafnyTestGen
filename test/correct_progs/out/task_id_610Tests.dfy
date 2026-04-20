@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-04-19 21:58:49
+// Generated: 2026-04-20 09:14:06
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -40,23 +40,23 @@ method RemoveElementTest(){
 
 method TestsForRemoveElementAt()
 {
-  // Test case for combination {1}:
-  //   PRE:  0 <= k < s.Length
-  //   POST: v[..] == s[..k] + s[k + 1..]
-  //   ENSURES: v[..] == s[..k] + s[k + 1..]
-  {
-    var s := new int[3] [-20, -1, -13];
-    var k := 2;
-    var v := RemoveElementAt(s, k);
-    expect v[..] == [-20, -1];
-  }
-
   // Test case for combination {1}/Rel:
   //   PRE:  0 <= k < s.Length
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[1] [12];
+    var s := new int[3] [-1, 6, -10];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-1, 6];
+  }
+
+  // Test case for combination {1}/Bk=0:
+  //   PRE:  0 <= k < s.Length
+  //   POST: v[..] == s[..k] + s[k + 1..]
+  //   ENSURES: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[1] [-1];
     var k := 0;
     var v := RemoveElementAt(s, k);
     expect v[..] == [];
@@ -67,10 +67,10 @@ method TestsForRemoveElementAt()
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[2] [15, -20];
+    var s := new int[2] [-1, -10];
     var k := 1;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [15];
+    expect v[..] == [-1];
   }
 
   // Test case for combination {1}/R3:
@@ -78,10 +78,10 @@ method TestsForRemoveElementAt()
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[4] [-19, 15, -20, 21];
+    var s := new int[3] [-10, -1, 7];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-19, 15, 21];
+    expect v[..] == [-10, -1];
   }
 
 }

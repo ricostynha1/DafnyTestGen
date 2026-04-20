@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-04-19 21:55:38
+// Generated: 2026-04-20 09:05:14
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)

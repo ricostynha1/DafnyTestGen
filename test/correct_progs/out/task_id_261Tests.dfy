@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-19 21:56:17
+// Generated: 2026-04-20 09:09:49
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -40,7 +40,7 @@ method ElementWiseDivisionTest(){
 
 method TestsForElementWiseDivision()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
@@ -48,10 +48,10 @@ method TestsForElementWiseDivision()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [-2];
-    var b: seq<int> := [-1];
+    var a: seq<int> := [2];
+    var b: seq<int> := [4];
     var result := ElementWiseDivision(a, b);
-    expect result == [2];
+    expect result == [0];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -62,10 +62,10 @@ method TestsForElementWiseDivision()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [-1, 20];
-    var b: seq<int> := [-20, 5];
+    var a: seq<int> := [-2, -7];
+    var b: seq<int> := [4, 3];
     var result := ElementWiseDivision(a, b);
-    expect result == [1, 4];
+    expect result == [-1, -3];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -82,7 +82,7 @@ method TestsForElementWiseDivision()
     expect result == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  |a| == |b|
   //   PRE:  0 !in b
   //   POST: |result| == |a|
@@ -90,10 +90,10 @@ method TestsForElementWiseDivision()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [1];
-    var b: seq<int> := [1];
+    var a: seq<int> := [2];
+    var b: seq<int> := [-3];
     var result := ElementWiseDivision(a, b);
-    expect result == [1];
+    expect result == [0];
   }
 
 }

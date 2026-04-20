@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-19 21:57:36
+// Generated: 2026-04-20 09:12:04
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -37,16 +37,16 @@ method PairwiseAdditionTest(){
 
 method TestsForPairwiseAddition()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [9, 20];
+    var a := new int[2] [10, 8];
     var result := PairwiseAddition(a);
-    expect result[..] == [29];
+    expect result[..] == [18];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -68,21 +68,21 @@ method TestsForPairwiseAddition()
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[4] [-3, -20, -1, 4499];
+    var a := new int[4] [-1, -10, 2, 27760];
     var result := PairwiseAddition(a);
-    expect result[..] == [-23, 4498];
+    expect result[..] == [-11, 27762];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [11797, 8855];
+    var a := new int[2] [-10, -9];
     var result := PairwiseAddition(a);
-    expect result[..] == [20652];
+    expect result[..] == [-19];
   }
 
 }

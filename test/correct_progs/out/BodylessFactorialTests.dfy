@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BodylessFactorial.dfy
 // Method: CalcFact
-// Generated: 2026-04-19 21:51:54
+// Generated: 2026-04-20 08:56:37
 
 function Fact(n: nat): nat
 {
@@ -29,7 +29,7 @@ method TestsForCalcFact()
   //   POST: f == n * Fact(n - 1)
   //   ENSURES: f == Fact(n)
   {
-    var n := 20;
+    var n := 10;
     // var f := CalcFact(n);
     // expect f == Fact(n);
   }

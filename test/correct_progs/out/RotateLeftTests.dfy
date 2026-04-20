@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-04-19 21:54:58
+// Generated: 2026-04-20 09:04:20
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
@@ -24,18 +24,6 @@ method RotateLeft(a: array<int>)
 
 method TestsForRotateLeft()
 {
-  // Test case for combination {1}:
-  //   PRE:  a.Length > 0
-  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
-  //   POST: a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
-  //   ENSURES: a[a.Length - 1] == old(a[0])
-  {
-    var a := new int[1] [-20];
-    RotateLeft(a);
-    expect a[..] == [-20];
-  }
-
   // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
   //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
@@ -43,9 +31,9 @@ method TestsForRotateLeft()
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[1] [16];
+    var a := new int[1] [10];
     RotateLeft(a);
-    expect a[..] == [16];
+    expect a[..] == [10];
   }
 
   // Test case for combination {1}/Oa≠old:
@@ -55,21 +43,33 @@ method TestsForRotateLeft()
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[2] [-2, 11];
+    var a := new int[2] [10, -10];
     RotateLeft(a);
-    expect a[..] == [11, -2];
+    expect a[..] == [-10, 10];
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Q|a|>=2/R2:
   //   PRE:  a.Length > 0
   //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
   //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[1] [-3];
+    var a := new int[1] [-10];
     RotateLeft(a);
-    expect a[..] == [-3];
+    expect a[..] == [-10];
+  }
+
+  // Test case for combination {1}/Q|a|>=2/R3:
+  //   PRE:  a.Length > 0
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
+  {
+    var a := new int[1] [-1];
+    RotateLeft(a);
+    expect a[..] == [-1];
   }
 
 }

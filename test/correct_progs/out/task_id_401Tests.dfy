@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-19 21:56:54
+// Generated: 2026-04-20 09:10:54
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -119,17 +119,17 @@ method TestsForDeepElementWiseAddition()
 
 method TestsForElementWiseAddition()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   POST: |a| == |b|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [4];
-    var b: seq<int> := [9];
+    var a: seq<int> := [9];
+    var b: seq<int> := [10];
     var result := ElementWiseAddition(a, b);
-    expect result == [13];
+    expect result == [19];
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -139,10 +139,10 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [2, 12];
-    var b: seq<int> := [-17, 13];
+    var a: seq<int> := [-1, -1];
+    var b: seq<int> := [10, 7];
     var result := ElementWiseAddition(a, b);
-    expect result == [-15, 25];
+    expect result == [9, 6];
   }
 
   // Test case for combination {1}/Q|a|=0:
@@ -158,17 +158,17 @@ method TestsForElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|a|>=2/R3:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   POST: |a| == |b|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [10];
+    var b: seq<int> := [4];
     var result := ElementWiseAddition(a, b);
-    expect result == [0];
+    expect result == [14];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-19 21:56:35
+// Generated: 2026-04-20 09:10:23
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -42,20 +42,9 @@ method TestsForIsNonPrime()
   //   POST: n % 2 == 0
   //   ENSURES: result <==> exists k: int :: 1 < k < n && n % k == 0
   {
-    var n := 20;
+    var n := 10;
     var result := IsNonPrime(n);
     expect result == true;
-  }
-
-  // Test case for combination {5}:
-  //   PRE:  n > 1
-  //   POST: !result
-  //   POST: !exists k: int :: 1 < k < n && n % k == 0
-  //   ENSURES: result <==> exists k: int :: 1 < k < n && n % k == 0
-  {
-    var n := 19;
-    var result := IsNonPrime(n);
-    expect result == false;
   }
 
   // Test case for combination {5}/Bn=2:

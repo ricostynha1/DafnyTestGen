@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-04-19 21:58:14
+// Generated: 2026-04-20 09:13:03
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -32,18 +32,18 @@ method InterleaveTest(){
 
 method TestsForInterleave()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
   //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   //   ENSURES: |r| == 3 * |s1|
   //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
-    var s1: seq<int> := [];
-    var s2: seq<int> := [];
-    var s3: seq<int> := [];
+    var s1: seq<int> := [88];
+    var s2: seq<int> := [30];
+    var s3: seq<int> := [30];
     var r := Interleave<int>(s1, s2, s3);
-    expect r == [];
+    expect r == [88, 30, 30];
   }
 
   // Test case for combination {1}/Q|s1|>=2:
@@ -60,32 +60,32 @@ method TestsForInterleave()
     expect r == [28, 30, 30, 34, 36, 36];
   }
 
-  // Test case for combination {1}/Q|s1|=1:
+  // Test case for combination {1}/Q|s1|=0:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
   //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   //   ENSURES: |r| == 3 * |s1|
   //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
-    var s1: seq<int> := [4];
-    var s2: seq<int> := [5];
-    var s3: seq<int> := [6];
+    var s1: seq<int> := [];
+    var s2: seq<int> := [];
+    var s3: seq<int> := [];
     var r := Interleave<int>(s1, s2, s3);
-    expect r == [4, 5, 6];
+    expect r == [];
   }
 
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}/Q|s1|>=2/R3:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
   //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   //   ENSURES: |r| == 3 * |s1|
   //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
-    var s1: seq<int> := [88];
-    var s2: seq<int> := [30];
-    var s3: seq<int> := [30];
+    var s1: seq<int> := [29];
+    var s2: seq<int> := [33];
+    var s3: seq<int> := [33];
     var r := Interleave<int>(s1, s2, s3);
-    expect r == [88, 30, 30];
+    expect r == [29, 33, 33];
   }
 
 }

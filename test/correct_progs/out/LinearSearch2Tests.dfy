@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch2.dfy
 // Method: LinearSearch
-// Generated: 2026-04-19 21:53:09
+// Generated: 2026-04-20 09:03:07
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -25,44 +25,6 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 
 method TestsForLinearSearch()
 {
-  // Test case for combination {1}:
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: a[0] == x
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
-  {
-    var a := new int[1] [-20];
-    var x := -20;
-    var index := LinearSearch(a, x);
-    expect index == 0;
-  }
-
-  // Test case for combination {2}:
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && a[k] == x
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
-  {
-    var a := new int[3] [-4, -4, -7];
-    var x := -4;
-    var index := LinearSearch(a, x);
-    expect index == 0 || index == 1;
-  }
-
-  // Test case for combination {5}:
-  //   POST: !exists k: int :: 0 <= k < a.Length && a[k] == x
-  //   POST: index == -1
-  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
-  {
-    var a := new int[1] [-19];
-    var x := -20;
-    var index := LinearSearch(a, x);
-    expect index == -1;
-  }
-
   // Test case for combination {1}/Rel:
   //   POST: 0 <= (a.Length - 1)
   //   POST: a[0] == x
@@ -71,8 +33,8 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[2] [5, 8];
-    var x := 5;
+    var a := new int[2] [-1, 6];
+    var x := -1;
     var index := LinearSearch(a, x);
     expect index == 0;
   }
@@ -84,10 +46,10 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[4] [24, 25, 8, 18];
-    var x := 8;
+    var a := new int[3] [-10, -7, -8];
+    var x := -7;
     var index := LinearSearch(a, x);
-    expect index == 2;
+    expect index == 1;
   }
 
   // Test case for combination {3}/Rel:
@@ -98,8 +60,8 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[2] [8, 5];
-    var x := 5;
+    var a := new int[2] [-1, -2];
+    var x := -2;
     var index := LinearSearch(a, x);
     expect index == 1;
   }
@@ -111,13 +73,24 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[4] [26, 9, 29, 9];
-    var x := 9;
+    var a := new int[4] [10, -1, 10, 22];
+    var x := 10;
     var index := LinearSearch(a, x);
     expect 0 <= index;
     expect index < a.Length;
     expect a[index] == x;
-    expect index == 1; // observed from implementation
+    expect index == 0; // observed from implementation
+  }
+
+  // Test case for combination {5}:
+  //   POST: !exists k: int :: 0 <= k < a.Length && a[k] == x
+  //   POST: index == -1
+  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
+  {
+    var a := new int[1] [-10];
+    var x := -9;
+    var index := LinearSearch(a, x);
+    expect index == -1;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-19 21:58:39
+// Generated: 2026-04-20 09:13:42
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -43,10 +43,10 @@ method TestsForSumAndAverage()
   //   ENSURES: sum == n * (n + 1) / 2
   //   ENSURES: average == sum as real / n as real
   {
-    var n := 20;
+    var n := 10;
     var sum, average := SumAndAverage(n);
-    expect sum == 210;
-    expect average == 10.50;
+    expect sum == 55;
+    expect average == 5.5;
   }
 
   // Test case for combination {1}/Bn=1:

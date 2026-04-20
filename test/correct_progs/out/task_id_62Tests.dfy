@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-19 21:58:55
+// Generated: 2026-04-20 09:14:16
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -46,35 +46,35 @@ method FindSmallestTest(){
 
 method TestsForFindSmallest()
 {
-  // Test case for combination {1}:
-  //   PRE:  s.Length > 0
-  //   POST: isMin(s[..], min)
-  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
-  //   ENSURES: isMin(s[..], min)
-  {
-    var s := new int[1] [-20];
-    var min := FindSmallest(s);
-    expect min == -20;
-  }
-
-  // Test case for combination {1}/Q|s|>=2:
-  //   PRE:  s.Length > 0
-  //   POST: isMin(s[..], min)
-  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
-  //   ENSURES: isMin(s[..], min)
-  {
-    var s := new int[2] [20, -20];
-    var min := FindSmallest(s);
-    expect min == -20;
-  }
-
   // Test case for combination {1}/Rel:
   //   PRE:  s.Length > 0
   //   POST: isMin(s[..], min)
   //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
-    var s := new int[2] [39, 0];
+    var s := new int[2] [-1, -10];
+    var min := FindSmallest(s);
+    expect min == -10;
+  }
+
+  // Test case for combination {1}/Q|s|=1:
+  //   PRE:  s.Length > 0
+  //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
+  //   ENSURES: isMin(s[..], min)
+  {
+    var s := new int[1] [-10];
+    var min := FindSmallest(s);
+    expect min == -10;
+  }
+
+  // Test case for combination {1}/Omin=0:
+  //   PRE:  s.Length > 0
+  //   POST: isMin(s[..], min)
+  //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
+  //   ENSURES: isMin(s[..], min)
+  {
+    var s := new int[4] [10, 9, 6, 0];
     var min := FindSmallest(s);
     expect min == 0;
   }
@@ -85,9 +85,9 @@ method TestsForFindSmallest()
   //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
-    var s := new int[1] [20];
+    var s := new int[1] [2];
     var min := FindSmallest(s);
-    expect min == 20;
+    expect min == 2;
   }
 
 }

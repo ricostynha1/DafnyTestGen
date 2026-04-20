@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-04-19 21:53:39
+// Generated: 2026-04-20 09:03:43
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -65,7 +65,9 @@ method TestsForMode()
   {
     var a := new int[1] [-7];
     var m := Mode(a);
-    expect m == -7;
+    expect m in a[..];
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -7; // observed from implementation
   }
 
   // Test case for combination {1}/Q|a|>=2:
@@ -76,24 +78,11 @@ method TestsForMode()
   //   ENSURES: m in a[..]
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[2] [-20, -1];
-    var m := Mode(a);
-    expect m == -1 || m == -20;
-  }
-
-  // Test case for combination {1}/Rel:
-  //   PRE:  IsSorted(a)
-  //   PRE:  a.Length > 0
-  //   POST: m in a[..]
-  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  //   ENSURES: m in a[..]
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
-  {
-    var a := new int[2] [28957, 28958];
+    var a := new int[2] [-10, 3];
     var m := Mode(a);
     expect m in a[..];
     expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
-    expect m == 28957; // observed from implementation
+    expect m == -10; // observed from implementation
   }
 
   // Test case for combination {1}/Om=0:
@@ -106,7 +95,24 @@ method TestsForMode()
   {
     var a := new int[4] [-5, -1, -1, 0];
     var m := Mode(a);
-    expect m == 0 || m == -5 || m == -1;
+    expect m in a[..];
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  IsSorted(a)
+  //   PRE:  a.Length > 0
+  //   POST: m in a[..]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  {
+    var a := new int[1] [-10];
+    var m := Mode(a);
+    expect m in a[..];
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -10; // observed from implementation
   }
 
 }

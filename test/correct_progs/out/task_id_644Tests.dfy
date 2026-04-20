@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-19 21:59:19
+// Generated: 2026-04-20 09:14:51
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -42,19 +42,6 @@ method ReverseUptoKTest(){
 
 method TestsForReverseUptoK()
 {
-  // Test case for combination {1}:
-  //   PRE:  0 <= k <= s.Length
-  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  {
-    var s := new int[2] [9, 9];
-    var k := 2;
-    ReverseUptoK<int>(s, k);
-    expect s[..] == [9, 9];
-  }
-
   // Test case for combination {1}/Rel:
   //   PRE:  0 <= k <= s.Length
   //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
@@ -62,10 +49,23 @@ method TestsForReverseUptoK()
   //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
-    var s := new int[1] [33];
+    var s := new int[2] [11, 11];
+    var k := 2;
+    ReverseUptoK<int>(s, k);
+    expect s[..] == [11, 11];
+  }
+
+  // Test case for combination {1}/Bk=0:
+  //   PRE:  0 <= k <= s.Length
+  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[1] [9];
     var k := 0;
     ReverseUptoK<int>(s, k);
-    expect s[..] == [33];
+    expect s[..] == [9];
   }
 
   // Test case for combination {1}/Bk=1:
