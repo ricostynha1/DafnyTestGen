@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_18.dfy
 // Method: RemoveChars
-// Generated: 2026-04-20 14:57:12
+// Generated: 2026-04-20 22:09:13
 
 // Remove from the first string all characters which are present in the second string.
 // Preserves the order of the remaining elements.
@@ -61,10 +61,10 @@ method TestsForRemoveChars()
   //   POST: v == Filter<T>(s1[..|s1| - 1], s2) + [s1[|s1| - 1]]
   //   ENSURES: v == Filter(s1, s2)
   {
-    var s1: seq<char> := ['i'];
-    var s2: seq<char> := [];
+    var s1: seq<char> := ['~'];
+    var s2: seq<char> := ['}'];
     var v := RemoveChars(s1, s2);
-    expect v == ['i'];
+    expect v == ['~'];
   }
 
   // Test case for combination {3}:
@@ -73,8 +73,8 @@ method TestsForRemoveChars()
   //   POST: v == Filter<T>(s1[..|s1| - 1], s2)
   //   ENSURES: v == Filter(s1, s2)
   {
-    var s1: seq<char> := ['~'];
-    var s2: seq<char> := ['~'];
+    var s1: seq<char> := ['j'];
+    var s2: seq<char> := ['j'];
     var v := RemoveChars(s1, s2);
     expect v == [];
   }

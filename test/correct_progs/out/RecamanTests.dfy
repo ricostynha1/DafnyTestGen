@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-20 14:56:01
+// Generated: 2026-04-20 22:07:59
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -78,7 +78,7 @@ method TestsForContains()
   //   ENSURES: res <==> x in a[..len]
   {
     var x := 9;
-    var a := new nat[2] [10, 8];
+    var a := new nat[2] [8, 10];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
@@ -103,8 +103,8 @@ method TestsForContains()
   //   POST: x in a[..len]
   //   ENSURES: res <==> x in a[..len]
   {
-    var x := 8;
-    var a := new nat[3] [8, 10, 5];
+    var x := 10;
+    var a := new nat[3] [10, 9, 6];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
@@ -130,9 +130,9 @@ method TestsForRecaman()
   //   POST: res == R(n - 1) - n
   //   ENSURES: res == R(n)
   {
-    var n := 2;
+    var n := 10;
     var res := Recaman(n);
-    expect res == 3;
+    expect res == 11;
   }
 
   // Test case for combination {2}/Bn=1:
@@ -146,15 +146,15 @@ method TestsForRecaman()
     expect res == 1;
   }
 
-  // Test case for combination {2}/R3:
+  // Test case for combination {2}/Bn=2:
   //   POST: !(n == 0)
   //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
   //   POST: res == R(n - 1) - n
   //   ENSURES: res == R(n)
   {
-    var n := 10;
+    var n := 2;
     var res := Recaman(n);
-    expect res == 11;
+    expect res == 3;
   }
 
 }

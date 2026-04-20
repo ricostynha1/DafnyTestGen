@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-04-20 15:01:41
+// Generated: 2026-04-20 22:12:46
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).
@@ -55,22 +55,22 @@ method TestsForAllCharactersSame()
     expect result == false;
   }
 
-  // Test case for combination {1}/Q|s|>=2:
-  //   POST: result
-  //   POST: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
-  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
-  {
-    var s: seq<char> := ['~', '~'];
-    var result := AllCharactersSame(s);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Q|s|=1:
+  // Test case for combination {1}/O|s|=1:
   //   POST: result
   //   POST: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
   //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := ['~'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/O|s|>=2:
+  //   POST: result
+  //   POST: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['~', '~'];
     var result := AllCharactersSame(s);
     expect result == true;
   }

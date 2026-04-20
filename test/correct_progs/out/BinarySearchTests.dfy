@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-04-20 14:53:27
+// Generated: 2026-04-20 22:05:55
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -69,21 +69,23 @@ method TestsForBinarySearch()
     expect index == 0;
   }
 
-  // Test case for combination {1}/Q|a|>=2:
+  // Test case for combination {2}/Bindex=1:
   //   PRE:  IsSorted(a[..])
-  //   POST: !(index != -1)
-  //   POST: index == -1
-  //   POST: x !in a[..]
+  //   POST: index != -1
+  //   POST: 0 <= index
+  //   POST: index < a.Length
+  //   POST: a[index] == x
+  //   POST: !(index == -1)
   //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
   //   ENSURES: index == -1 ==> x !in a[..]
   {
-    var a := new T[2] [-10436, 26747];
-    var x := 9;
+    var a := new T[2] [-18873, 22868];
+    var x := 22868;
     var index := BinarySearch(a, x);
-    expect index == -1;
+    expect index == 1;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  IsSorted(a[..])
   //   POST: !(index != -1)
   //   POST: index == -1
@@ -95,22 +97,6 @@ method TestsForBinarySearch()
     var x := 3;
     var index := BinarySearch(a, x);
     expect index == -1;
-  }
-
-  // Test case for combination {2}/Q|a|>=2:
-  //   PRE:  IsSorted(a[..])
-  //   POST: index != -1
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   POST: !(index == -1)
-  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
-  //   ENSURES: index == -1 ==> x !in a[..]
-  {
-    var a := new T[2] [-29290, 10436];
-    var x := 10436;
-    var index := BinarySearch(a, x);
-    expect index == 1;
   }
 
 }

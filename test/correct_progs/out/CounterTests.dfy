@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-04-20 14:53:55
+// Generated: 2026-04-20 22:06:14
 
 class Counter {
     var count: int
@@ -36,7 +36,18 @@ method TestsForIncrement()
     expect obj.count == 11;
   }
 
-  // Test case for combination {1}/R2:
+  // Test case for combination {1}/Ocount=0:
+  //   PRE:  count >= 0
+  //   POST: count == old(count) + 1
+  //   ENSURES: count == old(count) + 1
+  {
+    var obj := new Counter;
+    obj.count := 0;
+    obj.Increment();
+    expect obj.count == 1;
+  }
+
+  // Test case for combination {1}/R3:
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
   //   ENSURES: count == old(count) + 1
@@ -47,7 +58,7 @@ method TestsForIncrement()
     expect obj.count == 10;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/R4:
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
   //   ENSURES: count == old(count) + 1
@@ -56,17 +67,6 @@ method TestsForIncrement()
     obj.count := 8;
     obj.Increment();
     expect obj.count == 9;
-  }
-
-  // Test case for combination {1}/R4:
-  //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   ENSURES: count == old(count) + 1
-  {
-    var obj := new Counter;
-    obj.count := 7;
-    obj.Increment();
-    expect obj.count == 8;
   }
 
 }
@@ -83,12 +83,12 @@ method TestsForReset()
     expect obj.count == 0;
   }
 
-  // Test case for combination {1}/R2:
+  // Test case for combination {1}/Ocount>0:
   //   POST: count == 0
   //   ENSURES: count == 0
   {
     var obj := new Counter;
-    obj.count := -9;
+    obj.count := 10;
     obj.Reset();
     expect obj.count == 0;
   }
@@ -98,7 +98,7 @@ method TestsForReset()
   //   ENSURES: count == 0
   {
     var obj := new Counter;
-    obj.count := -8;
+    obj.count := -9;
     obj.Reset();
     expect obj.count == 0;
   }
@@ -108,7 +108,7 @@ method TestsForReset()
   //   ENSURES: count == 0
   {
     var obj := new Counter;
-    obj.count := -7;
+    obj.count := -8;
     obj.Reset();
     expect obj.count == 0;
   }

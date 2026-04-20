@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-04-20 15:02:10
+// Generated: 2026-04-20 22:13:07
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -40,7 +40,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST: forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[1] [7];
+    var a := new int[1] [-10];
     var result := IsOddAtIndexOdd(a);
     expect result == true;
   }
@@ -50,7 +50,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && IsOdd(i) && !IsOdd(a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[3] [-9, -10, -3];
+    var a := new int[3] [-7, -10, -3];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }
@@ -61,32 +61,12 @@ method TestsForIsOddAtIndexOdd()
   //   POST: IsOdd((a.Length - 1)) && !IsOdd(a[(a.Length - 1)])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[2] [-10, 2];
+    var a := new int[2] [-10, 8];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }
 
-  // Test case for combination {5}:
-  //   POST: !result
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (a.Length - 1) :: (IsOdd(i) && !IsOdd(a[i])) && (IsOdd(i_2) && !IsOdd(a[i_2]))
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
-  {
-    var a := new int[4] [-10, 10, -9, 0];
-    var result := IsOddAtIndexOdd(a);
-    expect result == false;
-  }
-
-  // Test case for combination {1}/Q|a|>=2:
-  //   POST: result
-  //   POST: forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
-  {
-    var a := new int[2] [-8, -1];
-    var result := IsOddAtIndexOdd(a);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   POST: result
   //   POST: forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])

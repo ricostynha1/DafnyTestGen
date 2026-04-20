@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-04-20 15:01:30
+// Generated: 2026-04-20 22:12:38
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -41,25 +41,12 @@ method TestsForElementWiseAddition()
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
     var a: seq<int> := [2];
-    var b: seq<int> := [-6];
+    var b: seq<int> := [-1];
     var result := ElementWiseAddition(a, b);
-    expect result == [-4];
+    expect result == [1];
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
-  {
-    var a: seq<int> := [8, -8];
-    var b: seq<int> := [-1, 10];
-    var result := ElementWiseAddition(a, b);
-    expect result == [7, 2];
-  }
-
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
@@ -72,17 +59,17 @@ method TestsForElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/Q|a|>=2/R3:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [3, 10];
-    var b: seq<int> := [4, -10];
+    var a: seq<int> := [10, 3];
+    var b: seq<int> := [-1, 8];
     var result := ElementWiseAddition(a, b);
-    expect result == [7, 0];
+    expect result == [9, 11];
   }
 
 }

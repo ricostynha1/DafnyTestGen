@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearchFirst.dfy
 // Method: LinearSearchFirst
-// Generated: 2026-04-20 14:55:05
+// Generated: 2026-04-20 22:06:56
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -48,42 +48,13 @@ method TestsForLinearSearchFirst()
   //   POST: forall k: int :: 0 <= k < index ==> a[k] != x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x && forall k: int :: 0 <= k < index ==> a[k] != x else index == -1
   {
-    var a := new int[3] [-10, -9, -9];
-    var x := -9;
+    var a := new int[3] [-2, -1, -1];
+    var x := -1;
     var index := LinearSearchFirst(a, x);
     expect index == 1;
   }
 
-  // Test case for combination {3}/Rel:
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: a[(a.Length - 1)] == x
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   POST: forall k: int :: 0 <= k < index ==> a[k] != x
-  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x && forall k: int :: 0 <= k < index ==> a[k] != x else index == -1
-  {
-    var a := new int[4] [-1, -1, -2, -2];
-    var x := -2;
-    var index := LinearSearchFirst(a, x);
-    expect index == 2;
-  }
-
-  // Test case for combination {4}/Rel:
-  //   POST: exists k, k_2 | 0 <= k && k < k_2 && k_2 <= (a.Length - 1) :: (a[k] == x) && (a[k_2] == x)
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   POST: forall k: int :: 0 <= k < index ==> a[k] != x
-  //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x && forall k: int :: 0 <= k < index ==> a[k] != x else index == -1
-  {
-    var a := new int[4] [-10, -8, -9, -9];
-    var x := -9;
-    var index := LinearSearchFirst(a, x);
-    expect index == 2;
-  }
-
-  // Test case for combination {5}:
+  // Test case for combination {4}:
   //   POST: !exists k: int :: 0 <= k < a.Length && a[k] == x
   //   POST: index == -1
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x && forall k: int :: 0 <= k < index ==> a[k] != x else index == -1
@@ -94,7 +65,7 @@ method TestsForLinearSearchFirst()
     expect index == -1;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/Bindex=a_len-1:
   //   POST: 0 <= (a.Length - 1)
   //   POST: a[0] == x
   //   POST: 0 <= index

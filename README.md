@@ -20,7 +20,7 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 
 3. **Output uniqueness analysis.** When postconditions are fully translated to SMT but only constrain outputs implicitly (not via explicit `result == expression` clauses), Z3 produces concrete output values that may not be the only valid ones. A second Z3 query pins the concrete inputs and asks whether a *different* output satisfies the spec. If UNSAT, the output is uniquely determined and a concrete `expect res == 5;` is emitted; otherwise, the postcondition literals are used instead (`expect a[index] == x;`). With `--uniqueness-rounds N`, the tool iteratively enumerates up to N alternative valid outputs; if exhausted, a disjunctive `expect index == 0 || index == 1;` is emitted — more precise than postcondition literals while still covering all valid outputs. This lightweight determinism analysis handles under-constrained specifications without requiring user annotations.
 
-4. **Quantifier decomposition for boundary analysis.** Existential quantifiers `exists k :: lo <= k < hi && P(k)` are decomposed into boundary (k=lo, k=hi−1), middle, and multiple-match cases, with strict/non-strict inequality awareness. Universal quantifiers over collections trigger size-based decomposition (|a|=0, |a|=1, |a|≥2) to exercise both vacuously-true and non-trivial cases. These are combined with other contract clauses via cross-product.
+4. **Quantifier decomposition for boundary analysis.** Existential quantifiers `exists k :: lo <= k < hi && P(k)` are decomposed into boundary (k=lo, k=hi−1) and middle cases, with strict/non-strict inequality awareness. Universal quantifiers rely on BVA size tiers (|a|=0, |a|=1, |a|≥2 applied to every array/seq/set/multiset/map input and output) and the per-literal relevance check to force non-vacuous witnesses. These are combined with other contract clauses via cross-product.
 
 5. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
 
@@ -104,12 +104,6 @@ method FindMax(a: array<int>) returns (max: int)
 ```
 
 The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position a.Length-1 (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
-
-### Decomposition of universal quantifiers (disable with `--no-forall-decomp`)
-
-A positive `forall` over a collection is vacuously true when the collection is too short for the range to be non-empty. Each clause containing such a quantifier is split by **collection size** into sub-clauses `|a|=0`, `|a|=1`, `|a|>=2` (pre- or post-condition, any array/seq/set/multiset/map). For nested `forall` over `seq<seq<T>>`, inner-size tiers on `|a[0]|` are emitted too, so Z3 can't dodge the inner body with empty inner sequences.
-
-Boundary Value Analysis and the per-literal relevance check (below) cover much of the same territory — BVA pins collection sizes to `0`, `1`, `>=2` anyway, and relevance forces non-vacuous witnesses when the quantifier is a safe literal. Forall decomposition still contributes incremental coverage on the suite (measured: ~25% of programs lose at least one passing test when disabled), so it stays on by default. Pass `--no-forall-decomp` / `-nfd` to skip it.
 
 ### Predicate and function inlining  
 
@@ -694,7 +688,6 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
-| `--no-forall-decomp` | `-nfd` | Disable forall size-tier decomposition. By default, clauses with a positive `forall` over a collection are split into `\|a\|=0`, `\|a\|=1`, `\|a\|>=2` sub-clauses (and inner tiers for `seq<seq<T>>`) to force non-vacuous witnesses |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 

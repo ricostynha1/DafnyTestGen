@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MaxDistEqual.dfy
 // Method: MaxDistEqual
-// Generated: 2026-04-20 21:24:10
+// Generated: 2026-04-20 22:07:15
 
 // Finds the maximum distance between equal elements in a non-empty array.
 method MaxDistEqual(a: array<int>) returns (maxDist: nat)
@@ -54,7 +54,7 @@ method TestsForMaxDistEqual()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[4] [-1, -2, -1, -2];
+    var a := new int[4] [-2, -1, -2, -1];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 2;
   }
@@ -67,20 +67,19 @@ method TestsForMaxDistEqual()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[1] [4];
+    var a := new int[1] [-10];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }
 
-  // Test case for combination {3}/Q|a|>=2:
+  // Test case for combination {2}/BmaxDist=0:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: (a.Length - 1) + maxDist < a.Length && a[(a.Length - 1)] == a[(a.Length - 1) + maxDist]
+  //   POST: exists i :: 1 <= i < (a.Length - 1) && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   POST: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   //   ENSURES: exists i: int :: 0 <= i < a.Length && i + maxDist < a.Length && a[i] == a[i + maxDist]
   //   ENSURES: forall i: int, j: int :: 0 <= i < j < a.Length && a[i] == a[j] ==> j - i <= maxDist
   {
-    var a := new int[2] [-1, -3];
+    var a := new int[3] [-10, -8, -9];
     var maxDist := MaxDistEqual(a);
     expect maxDist == 0;
   }

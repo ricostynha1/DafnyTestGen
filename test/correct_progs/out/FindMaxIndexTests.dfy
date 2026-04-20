@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-20 14:54:16
+// Generated: 2026-04-20 22:06:35
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -33,12 +33,25 @@ method TestsForFindMaxIndex()
   //   ENSURES: 0 <= maxIndex < a.Length
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[2] [26253.0, 26253.5];
+    var a := new real[2] [0.0, -0.5];
+    var maxIndex := FindMaxIndex(a);
+    expect maxIndex == 0;
+  }
+
+  // Test case for combination {1}/BmaxIndex=1:
+  //   PRE:  a.Length > 0
+  //   POST: 0 <= maxIndex
+  //   POST: maxIndex < a.Length
+  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   ENSURES: 0 <= maxIndex < a.Length
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  {
+    var a := new real[2] [-6102.0, 0.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 1;
   }
 
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  a.Length > 0
   //   POST: 0 <= maxIndex
   //   POST: maxIndex < a.Length
@@ -59,22 +72,9 @@ method TestsForFindMaxIndex()
   //   ENSURES: 0 <= maxIndex < a.Length
   //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[3] [-0.5, -11945.0, 0.0];
+    var a := new real[3] [-0.5, -6102.5, 0.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 2;
-  }
-
-  // Test case for combination {1}/Q|a|>=2/R3:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  {
-    var a := new real[2] [-1.0, -11945.0];
-    var maxIndex := FindMaxIndex(a);
-    expect maxIndex == 0;
   }
 
 }

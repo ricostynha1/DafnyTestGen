@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-20 14:55:24
+// Generated: 2026-04-20 22:07:20
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -55,30 +55,15 @@ method TestsForMerge()
   //   ENSURES: IsSorted(c[..])
   //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[1] [-9];
-    var b := new int[1] [-10];
+    var a := new int[1] [-1];
+    var b := new int[2] [-5, 3];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c == [-10, -9]; // observed from implementation
+    expect c == [-5, -1, 3]; // observed from implementation
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
-  //   POST: IsSorted(c[..])
-  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  //   ENSURES: IsSorted(c[..])
-  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  {
-    var a := new int[2] [-9, -2];
-    var b := new int[2] [-8, -1];
-    var c := Merge(a, b);
-    expect IsSorted(c[..]);
-    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c == [-9, -8, -2, -1]; // observed from implementation
-  }
-
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
@@ -93,7 +78,22 @@ method TestsForMerge()
     expect c == [10]; // observed from implementation
   }
 
-  // Test case for combination {1}/Q|b|=0:
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
+  //   POST: IsSorted(c[..])
+  //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  //   ENSURES: IsSorted(c[..])
+  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
+  {
+    var a := new int[2] [-10, -7];
+    var b := new int[1] [-10];
+    var c := Merge(a, b);
+    expect IsSorted(c[..]);
+    expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
+    expect c == [-10, -10, -7]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|b|=0:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST: IsSorted(c[..])
   //   POST: multiset(c[..]) == multiset(a[..]) + multiset(b[..])

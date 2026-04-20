@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_760.dfy
 // Method: HasOnlyOneDistinctElement
-// Generated: 2026-04-20 15:01:58
+// Generated: 2026-04-20 22:12:58
 
 // Checks if the given array has only one distinct element (or is empty).
 method HasOnlyOneDistinctElement<T(==)>(a: array<T>) returns (result: bool)
@@ -60,22 +60,22 @@ method TestsForHasOnlyOneDistinctElement()
     expect result == false;
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   POST: result
-  //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
-  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
-  {
-    var a := new int[2] [9, 9];
-    var result := HasOnlyOneDistinctElement<int>(a);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/O|a|=1:
   //   POST: result
   //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   {
     var a := new int[1] [2];
+    var result := HasOnlyOneDistinctElement<int>(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: result
+  //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  {
+    var a := new int[2] [9, 9];
     var result := HasOnlyOneDistinctElement<int>(a);
     expect result == true;
   }

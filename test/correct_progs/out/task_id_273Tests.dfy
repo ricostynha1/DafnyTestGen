@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-20 14:57:41
+// Generated: 2026-04-20 22:09:49
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -44,26 +44,13 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-7];
-    var b: seq<int> := [-9];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [-4];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [2];
+    expect result == [3];
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  {
-    var a: seq<int> := [-1, -8];
-    var b: seq<int> := [7, 9];
-    var result := ElementWiseSubtraction(a, b);
-    expect result == [-8, -17];
-  }
-
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
@@ -76,17 +63,17 @@ method TestsForElementWiseSubtraction()
     expect result == [];
   }
 
-  // Test case for combination {1}/Q|a|>=2/R3:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
   //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [7, -9];
-    var b: seq<int> := [4, -10];
+    var a: seq<int> := [-1, -2];
+    var b: seq<int> := [10, -10];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [3, 1];
+    expect result == [-11, 8];
   }
 
 }

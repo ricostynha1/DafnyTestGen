@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ProcessDisjPre.dfy
 // Method: Process
-// Generated: 2026-04-20 14:55:55
+// Generated: 2026-04-20 22:07:52
 
 // Method with disjunctive precondition.
 method Process(x: int, y: int) returns (r: int)
@@ -30,10 +30,10 @@ method TestsForProcess()
   //   POST: r == x + y
   //   ENSURES: r == x + y
   {
-    var x := -1;
+    var x := -10;
     var y := 10;
     var r := Process(x, y);
-    expect r == 9;
+    expect r == 0;
   }
 
   // Test case for combination P{1}/{1}/Bx=1:

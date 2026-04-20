@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-20 15:01:02
+// Generated: 2026-04-20 22:12:17
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -70,26 +70,13 @@ method TestsForSmallestMissingNumber()
     expect v == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Q|s|>=2:
+  // Test case for combination {1}/Bv=0:
   //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
   //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [9, 10];
-    var v := SmallestMissingNumber(s);
-    expect IsSmallestMissingNumber(s, v);
-    expect forall k: nat :: k < v ==> k in s;
-    expect v == 0; // observed from implementation
-  }
-
-  // Test case for combination {1}/Q|s|=0:
-  //   PRE:  IsSorted(s)
-  //   POST: IsSmallestMissingNumber(s, v)
-  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
-  //   ENSURES: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [];
+    var s: seq<nat> := [8];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;
@@ -103,6 +90,19 @@ method TestsForSmallestMissingNumber()
   //   ENSURES: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [9];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect forall k: nat :: k < v ==> k in s;
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|s|=0:
+  //   PRE:  IsSorted(s)
+  //   POST: IsSmallestMissingNumber(s, v)
+  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
+  //   ENSURES: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect forall k: nat :: k < v ==> k in s;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-04-20 15:03:40
+// Generated: 2026-04-20 22:13:43
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -62,7 +62,7 @@ method TestsForFindFirstOdd()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < index ==> !(a[i] % 2 != 0)
   //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[2] [-1, -1];
+    var a := new int[2] [-1, -7];
     var index := FindFirstOdd(a);
     expect index == 0;
   }
@@ -72,32 +72,12 @@ method TestsForFindFirstOdd()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
   //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[1] [-2];
+    var a := new int[1] [4];
     var index := FindFirstOdd(a);
     expect index == -1;
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   POST: IsFirstOdd(a, index)
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
-  //   ENSURES: IsFirstOdd(a, index)
-  {
-    var a := new int[2] [-10, 10];
-    var index := FindFirstOdd(a);
-    expect index == -1;
-  }
-
-  // Test case for combination {1}/Q|a|=0:
-  //   POST: IsFirstOdd(a, index)
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
-  //   ENSURES: IsFirstOdd(a, index)
-  {
-    var a := new int[0] [];
-    var index := FindFirstOdd(a);
-    expect index == -1;
-  }
-
-  // Test case for combination {2}/Q|a|=1:
+  // Test case for combination {2}/Bindex=1:
   //   POST: !(index == -1)
   //   POST: 0 <= index
   //   POST: index < a.Length
@@ -105,9 +85,19 @@ method TestsForFindFirstOdd()
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < index ==> !(a[i] % 2 != 0)
   //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[1] [-9];
+    var a := new int[2] [-10, -9];
     var index := FindFirstOdd(a);
-    expect index == 0;
+    expect index == 1;
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: IsFirstOdd(a, index)
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
+  {
+    var a := new int[0] [];
+    var index := FindFirstOdd(a);
+    expect index == -1;
   }
 
 }

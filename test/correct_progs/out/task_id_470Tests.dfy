@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-20 14:59:11
+// Generated: 2026-04-20 22:11:03
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -44,12 +44,12 @@ method TestsForPairwiseAddition()
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [6, 9];
+    var a := new int[2] [7, 8];
     var result := PairwiseAddition(a);
     expect result[..] == [15];
   }
 
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
@@ -61,28 +61,16 @@ method TestsForPairwiseAddition()
     expect result[..] == [];
   }
 
-  // Test case for combination {1}/Q|result|>=2:
+  // Test case for combination {1}/O|result|>=2:
   //   PRE:  a.Length % 2 == 0
   //   POST: result.Length == a.Length / 2
   //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   //   ENSURES: result.Length == a.Length / 2
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[4] [-7, -10, 4, 26352];
+    var a := new int[4] [-8, -10, 9, 30850];
     var result := PairwiseAddition(a);
-    expect result[..] == [-17, 26356];
-  }
-
-  // Test case for combination {1}/Q|a|>=2/R3:
-  //   PRE:  a.Length % 2 == 0
-  //   POST: result.Length == a.Length / 2
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
-  //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
-  {
-    var a := new int[2] [-8, -10];
-    var result := PairwiseAddition(a);
-    expect result[..] == [-18];
+    expect result[..] == [-18, 30859];
   }
 
 }

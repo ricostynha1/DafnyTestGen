@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-04-20 15:00:41
+// Generated: 2026-04-20 22:12:03
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -45,10 +45,10 @@ method TestsForRemoveElementAt()
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-1, 6, 8];
+    var s := new int[3] [-1, -9, -10];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-1, 6];
+    expect v[..] == [-1, -9];
   }
 
   // Test case for combination {1}/Bk=0:
@@ -67,10 +67,10 @@ method TestsForRemoveElementAt()
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[2] [-1, -10];
+    var s := new int[2] [7, -10];
     var k := 1;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-1];
+    expect v[..] == [7];
   }
 
   // Test case for combination {1}/R3:
@@ -78,10 +78,10 @@ method TestsForRemoveElementAt()
   //   POST: v[..] == s[..k] + s[k + 1..]
   //   ENSURES: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-10, 7, 8];
+    var s := new int[3] [-10, 5, -4];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-10, 7];
+    expect v[..] == [-10, 5];
   }
 
 }

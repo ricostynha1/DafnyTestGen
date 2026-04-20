@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-20 15:03:58
+// Generated: 2026-04-20 22:13:52
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -63,21 +63,21 @@ method TestsForSmallestListLength()
   //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[9], [8, 24], [10, 27], [11, 33], [12, 35], [25], [28, 36]];
+    var s: seq<seq<int>> := [[9], [8], [10, 28], [11, 25], [12, 24]];
     var v := SmallestListLength<int>(s);
     expect v == 1;
   }
 
-  // Test case for combination {4}/Rel:
+  // Test case for combination {2}/Bv=0:
   //   PRE:  |s| > 0
   //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i, i_2 | 0 <= i && i < i_2 && i_2 <= (|s| - 1) :: (v == |s[i]|) && (v == |s[i_2]|)
+  //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
   //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[7, 19], [9, 30], [10, 32], [11, 31], [21, 41], [22], [16], [17, 33]];
+    var s: seq<seq<int>> := [[], [], [], [], [], [], [], []];
     var v := SmallestListLength<int>(s);
-    expect v == 1;
+    expect v == 0;
   }
 
 }

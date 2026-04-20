@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-20 14:54:24
+// Generated: 2026-04-20 22:06:41
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -87,8 +87,8 @@ method TestsForIntersectIntervals()
   //   ENSURES: l == if Max(left) < Min(right) then Max(left) else 0.0
   //   ENSURES: r == if Max(left) < Min(right) then Min(right) else 0.0
   {
-    var left := new real[2] [31405.0, -0.25];
-    var right := new real[2] [31405.25, 0.0];
+    var left := new real[2] [1709.0, -0.25];
+    var right := new real[2] [1709.25, 0.0];
     var l, r := IntersectIntervals(left, right);
     expect l == 0.0;
     expect r == 0.0;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-20 14:58:28
+// Generated: 2026-04-20 22:10:25
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -71,21 +71,7 @@ method TestsForDeepElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   PRE:  |a| == |b|
-  //   PRE:  forall i: int :: 0 <= i < |a| ==> |a[i]| == |b[i]|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
-  {
-    var a: seq<seq<int>> := [[], []];
-    var b: seq<seq<int>> := [[], []];
-    var result := DeepElementWiseAddition(a, b);
-    expect result == [[], []];
-  }
-
-  // Test case for combination {1}/Q|a|=1:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  |a| == |b|
   //   PRE:  forall i: int :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
@@ -99,7 +85,7 @@ method TestsForDeepElementWiseAddition()
     expect result == [[]];
   }
 
-  // Test case for combination {1}/Q|a[0]|>=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   PRE:  forall i: int :: 0 <= i < |a| ==> |a[i]| == |b[i]|
   //   POST: |result| == |a|
@@ -107,12 +93,26 @@ method TestsForDeepElementWiseAddition()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
   {
-    var a: seq<seq<int>> := [[0, 37], [38], []];
-    var b: seq<seq<int>> := [[0, 39], [48], []];
+    var a: seq<seq<int>> := [[0], []];
+    var b: seq<seq<int>> := [[0], []];
+    var result := DeepElementWiseAddition(a, b);
+    expect result == [[0], []];
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  |a| == |b|
+  //   PRE:  forall i: int :: 0 <= i < |a| ==> |a[i]| == |b[i]|
+  //   POST: |result| == |a|
+  //   POST: forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i])
+  {
+    var a: seq<seq<int>> := [[], [31], []];
+    var b: seq<seq<int>> := [[], [38], []];
     var result := DeepElementWiseAddition(a, b);
     expect |result| == |a|;
     expect forall i: int :: 0 <= i < |result| ==> IsElementWiseAddition(a[i], b[i], result[i]);
-    expect result == [[0, 76], [86], []]; // observed from implementation
+    expect result == [[], [69], []]; // observed from implementation
   }
 
 }
@@ -126,26 +126,13 @@ method TestsForElementWiseAddition()
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [-2];
-    var b: seq<int> := [8];
+    var a: seq<int> := [-1];
+    var b: seq<int> := [9];
     var result := ElementWiseAddition(a, b);
-    expect result == [6];
+    expect result == [8];
   }
 
-  // Test case for combination {1}/Q|a|>=2:
-  //   PRE:  |a| == |b|
-  //   POST: IsElementWiseAddition(a, b, result)
-  //   POST: |a| == |b|
-  //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
-  //   ENSURES: IsElementWiseAddition(a, b, result)
-  {
-    var a: seq<int> := [-1, 7];
-    var b: seq<int> := [6, -10];
-    var result := ElementWiseAddition(a, b);
-    expect result == [5, -3];
-  }
-
-  // Test case for combination {1}/Q|a|=0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   POST: |a| == |b|
@@ -158,17 +145,17 @@ method TestsForElementWiseAddition()
     expect result == [];
   }
 
-  // Test case for combination {1}/Q|a|>=2/R3:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: IsElementWiseAddition(a, b, result)
   //   POST: |a| == |b|
   //   POST: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   //   ENSURES: IsElementWiseAddition(a, b, result)
   {
-    var a: seq<int> := [8, -3];
-    var b: seq<int> := [5, 10];
+    var a: seq<int> := [-3, 4];
+    var b: seq<int> := [3, -6];
     var result := ElementWiseAddition(a, b);
-    expect result == [13, 7];
+    expect result == [0, -2];
   }
 
 }

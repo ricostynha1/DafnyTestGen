@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-20 15:04:01
+// Generated: 2026-04-20 22:13:54
 
 // --- (int, int) tuples ---
 
@@ -72,9 +72,9 @@ method TestsForSwapTuple()
   //   ENSURES: r.0 == t.1
   //   ENSURES: r.1 == t.0
   {
-    var t := (4294966640, 116);
+    var t := (146, 4294966792);
     var r := SwapTuple(t);
-    expect r == (116, 4294966640);
+    expect r == (4294966792, 146);
   }
 
 }
@@ -143,10 +143,10 @@ method TestsForAddTuples()
   //   ENSURES: r.0 == a.0 + b.0
   //   ENSURES: r.1 == a.1 + b.1
   {
-    var a := (679, 35);
+    var a := (105, 82);
     var b := (0, 0);
     var r := AddTuples(a, b);
-    expect r == (679, 35);
+    expect r == (105, 82);
   }
 
 }
@@ -173,9 +173,9 @@ method TestsForTupleMax()
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (889, 890);
+    var t := (773, 936);
     var r := TupleMax(t);
-    expect r == 890;
+    expect r == 936;
   }
 
   // Test case for combination {1}/Or>0:
@@ -185,9 +185,9 @@ method TestsForTupleMax()
   //   ENSURES: r == t.0 || r == t.1
   //   ENSURES: r >= t.0 && r >= t.1
   {
-    var t := (953, -1);
+    var t := (1, -1);
     var r := TupleMax(t);
-    expect r == 953;
+    expect r == 1;
   }
 
   // Test case for combination {1}/Or<0:
@@ -307,9 +307,9 @@ method TestsForSwap3First()
   //   ENSURES: r.1 == t.0
   //   ENSURES: r.2 == t.2
   {
-    var t := (4294966637, 671, 753);
+    var t := (202, 4294966612, 7);
     var r := Swap3First(t);
-    expect r == (671, 4294966637, 753);
+    expect r == (4294966612, 202, 7);
   }
 
 }
