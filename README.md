@@ -173,9 +173,33 @@ The DNF engine splits the inlined expression `X == (if C then A else B)` into th
 
 Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch. 
 
-### Per-literal relevance check (embedded in Phase 1; disable with `--no-relevance`)
+### Anti-trivial bias (disable with `--no-bias`)
 
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites.
+Z3 minimizes model size by default. For specifications involving recursive/uninterpreted functions (e.g. `Power(b, n)`, `Factorial(n)`, `Product(xs)`), that preference picks *special* values that trivially satisfy postconditions without exercising real arithmetic:
+
+- `0` is the absorbing element for multiplication (`Power(0, n) = 0`).
+- `1` is the neutral element (`Power(1, n) = 1`).
+- Empty sequences and singletons vacuously satisfy quantified postconditions.
+
+Without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
+
+DafnyTestGen adds two Z3-native nudges per query:
+
+1. **Soft constraints** (`assert-soft`): for each primitive-typed input `v`, emit `(assert-soft (not (= v 0)) :weight 2)` and `(assert-soft (not (= v 1)) :weight 1)`. For sequences/arrays, also bias their length away from `{0, 1}` and their first few elements away from `{0, 1}`. Soft asserts are satisfied-when-possible: if the hard constraints force `v = 0`, Z3 picks `v = 0` and simply pays the weight. **Zero cost on correctness.**
+
+   **Magnitude caps** (also soft): each `int`/`nat` input gets `(assert-soft (<= v 10) :weight 3)` (and `(>= v -10)` for signed), and each `seq`/`array` gets `(assert-soft (<= (seq.len xs) 8) :weight 2)` plus element-magnitude caps at positions 0..2. Higher weight than the 0/1 nudges, so magnitude bound dominates when both are satisfiable. Keeps Z3 from picking e.g. `n = 4294966430` for recursive-function arguments that would time out the Dafny static checker — while still allowing large values when the spec demands them.
+
+2. **Randomized seed**: `smt.arith.random_initial_value`, `smt.random-seed`, `sat.random-seed` are set from a deterministic per-method hash, so Z3 explores more of the model space while the solution remains reproducible.
+
+Bias applies to every SMT query — Phase 1 (DNF), Phase 2/2b (BVA), the relevance query, and Phase 3 repeats — so even variables not pinned by a BVA tier still get nudged away from trivial values and into bounded magnitudes. It is skipped only in the uniqueness alt-enum query (where we *want* Z3 to freely enumerate all valid outputs, including zeros).
+
+**Quantifier caveat**: Z3's optimize module does not fully support quantified constraints (`forall` / `exists`). When a clause contains a quantifier and the full query returns `unknown` under bias, DafnyTestGen automatically retries the same query with bias off before falling through to the input-only fallback. This rescues cases like `IsPrime(n)`'s prime-witness clause, where bias + `forall k :: 2 ≤ k < n ==> n % k ≠ 0` made Z3 give up.
+
+Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or for reproducing an upstream Z3 baseline.
+
+### Per-literal relevance check (disable with `--no-relevance`)
+
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (and so the spec is not really covered).
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
 
@@ -187,7 +211,7 @@ elem in arr[..]                  // Q1
 ∧ elem !in arr[pos+1..]          // Q5  — the "last" constraint
 ```
 
-Without a relevance check, Z3 picks `arr = [14548]`, `elem = 14548`, `pos = 0`. All five literals hold, but `Q1`, `Q4`, and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
+Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q1`, `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
 
 **Formulation.** Each safe literal `Qk` is relevant iff there exist ins, outs, and outs_k such that
 
@@ -200,7 +224,7 @@ pre(ins)
 
 DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `outs_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find ins for which *every* `Qk ∈ S` strictly prunes the output space.
 
-- **SAT** → every `Qk ∈ S` is simultaneously relevant at these ins. Emit `outs` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause instead of two).
+- **SAT** → every `Qk ∈ S` is simultaneously relevant at these ins. Emit `outs` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
 - **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
 
@@ -213,7 +237,7 @@ var pos := LastPosition(arr, elem);
 expect pos == 2;     // LAST occurrence of -10 (index 2), not the earlier ones at 0, 1
 ```
 
-Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis, so replacing the plain clause query keeps the suite minimal without sacrificing coverage.
+Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis.
 
 **Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyTestGen classifies a literal `Qk` as safe iff:
 
@@ -221,7 +245,7 @@ Corner cases such as vacuously-true clauses (empty arrays, single-element inputs
 2. `Qk` references at least one output variable.
 3. Every output variable in `Qk` also appears in some other literal of the clause (so `outs_k` is partially constrained rather than free).
 
-Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate consistent function values on both `outs` and `outs_k` sides, defeating the separation.
+Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `outs_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
 Even when a relevance query yields a less-than-ideal choice of ins, the emitted test remains correct: `outs` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
 
@@ -233,6 +257,8 @@ Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then 
 BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen applies the **single-fault principle**: each BVA query pins exactly **one** variable to a boundary value; all other variables remain free for Z3 to choose. This avoids combinatorial explosion, prevents combining potentially conflicting constraints, and may facilitate fault localization.
 
 Each DNF clause produced by Phase 1 already defines an equivalence class as the conjunction of precondition literals and clause (post) literals (`classLiterals`). BVA attaches at most one extra pin per query on top of those class literals.
+
+[Anti-trivial bias](#anti-trivial-bias-disable-with---no-bias) is applied to every BVA query as well. Only one variable is hard-pinned per query; the others remain free, so the soft-assert nudges steer them away from trivial values (`0`, `1`, empty / singleton collections) and into bounded magnitudes, producing tests that actually exercise the spec rather than degenerate corner cases.
 
 ### Phase 2 — refined-range BVA
 
@@ -289,29 +315,6 @@ For mutable variables mentioned in `ensures` **both** as post-state and inside `
   - Clause `0 <= index < a.Length && a[index] == x`: refined `lo = 0`, `hi = a.Length - 1`. Phase 2 emits `index = 0` and (if not subsumed) `index = a.Length - 1`.
 
 Each Phase 2 query pins only `index`; the array and `x` remain free, so Z3 is forced to construct inputs that actually produce that specific `index` value.
-
-
-## Anti-trivial bias (default on; disable with `--no-bias`)
-
-Z3 minimizes model size by default. For specifications involving recursive/uninterpreted functions (e.g. `Power(b, n)`, `Factorial(n)`, `Product(xs)`), that preference picks *special* values that trivially satisfy postconditions without exercising real arithmetic:
-
-- `0` is the absorbing element for multiplication (`Power(0, n) = 0`).
-- `1` is the neutral element (`Power(1, n) = 1`).
-- Empty sequences and singletons vacuously satisfy quantified postconditions.
-
-Without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
-
-DafnyTestGen adds two Z3-native nudges per query:
-
-1. **Soft constraints** (`assert-soft`): for each primitive-typed input `v`, emit `(assert-soft (not (= v 0)) :weight 2)` and `(assert-soft (not (= v 1)) :weight 1)`. For sequences/arrays, also bias their length away from `{0, 1}` and their first few elements away from `{0, 1}`. Soft asserts are satisfied-when-possible: if the hard constraints force `v = 0`, Z3 picks `v = 0` and simply pays the weight. **Zero cost on correctness.**
-
-   **Magnitude caps** (also soft): each `int`/`nat` input gets `(assert-soft (<= v 10) :weight 3)` (and `(>= v -10)` for signed), and each `seq`/`array` gets `(assert-soft (<= (seq.len xs) 8) :weight 2)` plus element-magnitude caps at positions 0..2. Higher weight than the 0/1 nudges, so magnitude bound dominates when both are satisfiable. Keeps Z3 from picking e.g. `n = 4294966430` for recursive-function arguments that would time out the Dafny static checker — while still allowing large values when the spec demands them.
-
-2. **Randomized seed**: `smt.arith.random_initial_value`, `smt.random-seed`, `sat.random-seed` are set from a deterministic per-method hash, so Z3 explores more of the model space while the solution remains reproducible.
-
-Bias is skipped in the uniqueness alt-enum query (where we *want* Z3 to freely enumerate all valid outputs, including zeros).
-
-Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or for reproducing an upstream Z3 baseline.
 
 
 ## Repetition (`-r`)
