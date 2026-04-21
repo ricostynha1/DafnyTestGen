@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-21 22:52:18
+// Generated: 2026-04-21 23:13:39
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)

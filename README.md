@@ -198,8 +198,6 @@ pre(X)
 ∧ Q1(X, Y_k) ∧ ... ∧ ¬Qk(X, Y_k) ∧ ... ∧ Qm(X, Y_k)        // clause minus Qk, with ¬Qk
 ```
 
-(`Y ≠ Y_k` is implied: `Qk(X, Y)` and `¬Qk(X, Y_k)` share the same `X`, so assuming `Y = Y_k` would contradict one of them. The implementation still emits the inequality as a solver hint, but it's redundant semantically.)
-
 DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space.
 
 - **SAT** → every `Qk ∈ S` is simultaneously relevant at these inputs. Emit `Y` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).

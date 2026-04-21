@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-21 22:52:25
+// Generated: 2026-04-21 23:13:45
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -63,10 +63,10 @@ method TestsForIntersection()
   //   POST Q3: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST Q4: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[5] [49, 86, 49, 49, 85];
-    var b := new int[3] [49, 85, 85];
+    var a := new int[5] [77, 49, 49, 51, 51];
+    var b := new int[6] [49, 75, 102, 51, 113, 114];
     var res := Intersection<int>(a, b);
-    expect res == [49, 85];
+    expect res == [49, 51];
   }
 
   // Test case for combination {1}/V2:
@@ -75,8 +75,8 @@ method TestsForIntersection()
   //   POST Q3: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   POST Q4: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[1] [34];
-    var b := new int[1] [16];
+    var a := new int[1] [32];
+    var b := new int[1] [33];
     var res := Intersection<int>(a, b);
     expect res == [];
   }
