@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-21 23:10:15
+// Generated: 2026-04-21 23:35:00
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -98,9 +98,9 @@ method TestsForMaxFirst()
   //   POST Q1: exists i :: 1 <= i < (a.Length - 1) && r == a[i].0
   //   POST Q2: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[4] [(-16967, 30), (-16967, 31), (-16966, 32), (-16968, 33)];
+    var a := new (int, int)[4] [(378, 30), (380, 31), (381, 32), (379, 33)];
     var r := MaxFirst(a);
-    expect r == -16966;
+    expect r == 381;
     expect a[..] == _System._ITuple2`2[System.Numerics.BigInteger,System.Numerics.BigInteger][]; // observed from implementation
   }
 
@@ -110,7 +110,7 @@ method TestsForMaxFirst()
   //   POST Q2: r == a[(a.Length - 1)].0
   //   POST Q3: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0  // VACUOUS (forced true by other literals for this ins)
   {
-    var a := new (int, int)[1] [(0, 15)];
+    var a := new (int, int)[1] [(0, 14)];
     var r := MaxFirst(a);
     expect r == 0;
     expect a[..] == _System._ITuple2`2[System.Numerics.BigInteger,System.Numerics.BigInteger][]; // observed from implementation
@@ -121,7 +121,7 @@ method TestsForMaxFirst()
   //   POST Q1: exists i :: 1 <= i < (a.Length - 1) && r == a[i].0
   //   POST Q2: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[3] [(-29405, 22), (0, 23), (-26674, 24)];
+    var a := new (int, int)[3] [(-17333, 21), (0, 22), (-27378, 23)];
     var r := MaxFirst(a);
     expect r == 0;
     expect a[..] == _System._ITuple2`2[System.Numerics.BigInteger,System.Numerics.BigInteger][]; // observed from implementation
