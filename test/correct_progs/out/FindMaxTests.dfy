@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-21 22:49:38
+// Generated: 2026-04-21 23:10:59
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -29,9 +29,9 @@ method TestsForFindMax()
   //   POST Q1: exists k :: 1 <= k < (a.Length - 1) && max == a[k]
   //   POST Q2: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[4] [0.0, 27703.5, 27704.0, 10227.5];
+    var a := new real[4] [0.0, 25417.5, 25418.0, -6506.5];
     var max := FindMax(a);
-    expect max == 27704.0;
+    expect max == 25418.0;
   }
 
   // Test case for combination {1}:
@@ -50,7 +50,7 @@ method TestsForFindMax()
   //   POST Q1: exists k :: 1 <= k < (a.Length - 1) && max == a[k]
   //   POST Q2: forall k: int :: 0 <= k < a.Length ==> max >= a[k]  // VACUOUS (forced true by other literals for this ins)
   {
-    var a := new real[3] [0.0, 0.0, -20452.0];
+    var a := new real[3] [0.0, 0.0, -5903.0];
     var max := FindMax(a);
     expect max == 0.0;
   }

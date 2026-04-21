@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsRecursFunc.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-21 22:49:47
+// Generated: 2026-04-21 23:11:09
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -66,11 +66,11 @@ method TestsForIntersectIntervals()
   //   POST Q4: right.Length == 1
   //   POST Q5: r == right[0]
   {
-    var left := new real[1] [0.0];
-    var right := new real[1] [0.5];
+    var left := new real[1] [-1.0];
+    var right := new real[1] [0.0];
     var l, r := IntersectIntervals(left, right);
-    expect l == 0.0;
-    expect r == 0.5;
+    expect l == -1.0;
+    expect r == 0.0;
   }
 
   // Test case for combination {4}:
@@ -90,6 +90,23 @@ method TestsForIntersectIntervals()
     expect r == 0.0;
   }
 
+  // Test case for combination {1}/Ol=0:
+  //   PRE:  left.Length == right.Length
+  //   PRE:  left.Length > 0
+  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
+  //   POST Q1: Max(left) >= Min(right)
+  //   POST Q2: l == 0.0
+  //   POST Q3: r == 0.0
+  //   POST Q4: right.Length == 1
+  //   POST Q5: r == right[0]
+  {
+    var left := new real[1] [0.0];
+    var right := new real[1] [0.5];
+    var l, r := IntersectIntervals(left, right);
+    expect l == 0.0;
+    expect r == 0.5;
+  }
+
   // Test case for combination {1}/Ol>0:
   //   PRE:  left.Length == right.Length
   //   PRE:  left.Length > 0
@@ -105,23 +122,6 @@ method TestsForIntersectIntervals()
     var l, r := IntersectIntervals(left, right);
     expect l == 0.125;
     expect r == 0.25;
-  }
-
-  // Test case for combination {1}/Ol<0:
-  //   PRE:  left.Length == right.Length
-  //   PRE:  left.Length > 0
-  //   PRE:  forall i: int :: 0 <= i < left.Length ==> left[i] < right[i]
-  //   POST Q1: Max(left) >= Min(right)
-  //   POST Q2: l == 0.0
-  //   POST Q3: r == 0.0
-  //   POST Q4: right.Length == 1
-  //   POST Q5: r == right[0]
-  {
-    var left := new real[1] [-1.0];
-    var right := new real[1] [0.0];
-    var l, r := IntersectIntervals(left, right);
-    expect l == -1.0;
-    expect r == 0.0;
   }
 
 }

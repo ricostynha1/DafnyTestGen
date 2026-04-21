@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-21 22:49:34
+// Generated: 2026-04-21 23:10:56
 
 /* 
 * Formal specification and verification of a simple method for calculating 

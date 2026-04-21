@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-04-21 22:49:06
+// Generated: 2026-04-21 23:10:24
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -62,9 +62,9 @@ method TestsForBubbleSort()
   //   POST Q1: IsSorted(a[..])
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [8, 9];
+    var a := new int[2] [-8, 8];
     BubbleSort(a);
-    expect a[..] == [8, 9];
+    expect a[..] == [-8, 8];
   }
 
   // Test case for combination {1}/V1:
@@ -89,9 +89,9 @@ method TestsForBubbleSort()
   //   POST Q1: IsSorted(a[..])
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [-1, -7];
+    var a := new int[2] [8, 6];
     BubbleSort(a);
-    expect a[..] == [-7, -1];
+    expect a[..] == [6, 8];
   }
 
 }

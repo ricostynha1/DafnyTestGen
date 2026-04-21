@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PartitionOddEven.dfy
 // Method: PartitionOddEven
-// Generated: 2026-04-21 22:50:44
+// Generated: 2026-04-21 23:12:09
 
 // Rearranges the elements in an array 'a' of natural numbers,
 // so that all odd numbers appear before all even numbers.
@@ -41,9 +41,9 @@ method TestsForPartitionOddEven()
   //   POST Q1: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [9, 4];
+    var a := new nat[2] [9, 10];
     PartitionOddEven(a);
-    expect a[..] == [9, 4];
+    expect a[..] == [9, 10];
   }
 
   // Test case for combination {1}/V1:
@@ -64,14 +64,13 @@ method TestsForPartitionOddEven()
     expect a[..] == [];
   }
 
-  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Oa≠old:
   //   POST Q1: !exists i: int, j: int :: 0 <= i < j < a.Length && IsEven(a[i]) && IsOdd(a[j])
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new nat[2] [10, 8];
+    var a := new nat[2] [10, 9];
     PartitionOddEven(a);
-    // expect a[..] == [8, 10]; // LHS=[10, 8], RHS=[8, 10]
+    expect a[..] == [9, 10];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-21 22:49:31
+// Generated: 2026-04-21 23:10:52
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -178,11 +178,11 @@ method TestsForFastModularExponentiation()
   //   PRE:  m > 0
   //   POST Q1: res == Power(x, n) % m
   {
-    var x := 3;
-    var n := 2;
-    var m := 4;
+    var x := 2;
+    var n := 10;
+    var m := 2;
     var res := FastModularExponentiation(x, n, m);
-    expect res == 1;
+    expect res == 0;
   }
 
   // Test case for combination {1}/Bx=0:
@@ -202,7 +202,7 @@ method TestsForFastModularExponentiation()
   {
     var x := 1;
     var n := 10;
-    var m := 3;
+    var m := 10;
     var res := FastModularExponentiation(x, n, m);
     expect res == 1;
   }

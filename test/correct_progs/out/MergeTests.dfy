@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-21 22:50:24
+// Generated: 2026-04-21 23:11:50
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -53,12 +53,12 @@ method TestsForMerge()
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[2] [-10, -8];
-    var b := new int[2] [-9, -9];
+    var a := new int[2] [-9, -5];
+    var b := new int[2] [-10, -6];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c[..] == [-10, -9, -9, -8]; // observed from implementation
+    expect c[..] == [-10, -9, -6, -5]; // observed from implementation
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -79,12 +79,12 @@ method TestsForMerge()
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[1] [-6];
+    var a := new int[1] [-7];
     var b := new int[1] [-10];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c[..] == [-10, -6]; // observed from implementation
+    expect c[..] == [-10, -7]; // observed from implementation
   }
 
   // Test case for combination {1}/O|b|=0:
