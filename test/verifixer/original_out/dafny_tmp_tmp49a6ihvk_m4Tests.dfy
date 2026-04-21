@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny_tmp_tmp49a6ihvk_m4.dfy
 // Method: DutchFlag
-// Generated: 2026-03-26 22:53:21
+// Generated: 2026-04-08 19:05:47
 
 // dafny_tmp_tmp49a6ihvk_m4.dfy
 
@@ -41,56 +41,61 @@ method DutchFlag(a: array<Color>)
 datatype Color = Red | White | Blue
 
 
-method GeneratedTests_DutchFlag()
+method Passing()
 {
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new Color[0] [];
-    var old_a := a[..];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new Color[1] [Red];
-    var old_a := a[..];
+    var a := new Color[1] [Blue];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect a[..] == [Blue];
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new Color[2] [Blue, Red];
-    var old_a := a[..];
+    var a := new Color[2] [White, Red];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect a[..] == [Red, White];
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new Color[3] [Blue, Red, White];
-    var old_a := a[..];
+    var a := new Color[3] [Red, White, Blue];
     DutchFlag(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j]);
-    expect multiset(a[..]) == multiset(old_a[..]);
+    expect a[..] == [Red, White, Blue];
   }
 
 }
 
+method Failing()
+{
+  // (no failing tests)
+}
+
 method Main()
 {
-  GeneratedTests_DutchFlag();
-  print "GeneratedTests_DutchFlag: all tests passed!\n";
+  Passing();
+  Failing();
 }

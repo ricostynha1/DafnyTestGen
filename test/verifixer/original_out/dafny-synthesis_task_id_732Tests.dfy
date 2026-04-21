@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-03-26 14:58:08
+// Generated: 2026-04-08 19:10:53
 
 // dafny-synthesis_task_id_732.dfy
 
@@ -32,53 +32,83 @@ method ReplaceWithColon(s: string) returns (v: string)
 }
 
 
-method Passing()
+method GeneratedTests_ReplaceWithColon()
 {
   // Test case for combination {1}:
   //   POST: |v| == |s|
   //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
   {
     var s: seq<char> := [];
     var v := ReplaceWithColon(s);
     expect v == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=1:
   //   POST: |v| == |s|
   //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
   {
-    var s: seq<char> := ['.'];
+    var s: seq<char> := [' '];
     var v := ReplaceWithColon(s);
-    expect v == [':'];
+    expect |v| == |s|;
+    expect forall i: int  :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i]);
   }
 
   // Test case for combination {1}/Bs=2:
   //   POST: |v| == |s|
   //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
   {
     var s: seq<char> := [' ', ','];
     var v := ReplaceWithColon(s);
-    expect v == [':', ':'];
+    expect |v| == |s|;
+    expect forall i: int  :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i]);
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: |v| == |s|
   //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
   {
-    var s: seq<char> := [' ', '-', '.'];
+    var s: seq<char> := [',', '-', '.'];
     var v := ReplaceWithColon(s);
-    expect v == [':', '-', ':'];
+    expect |v| == |s|;
+    expect forall i: int  :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i]);
+  }
+
+  // Test case for combination {1}/O|v|>=3:
+  //   POST: |v| == |s|
+  //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  {
+    var s: seq<char> := ['.', ' ', ' ', ' '];
+    var v := ReplaceWithColon(s);
+    expect |v| == |s|;
+    expect forall i: int  :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i]);
+  }
+
+  // Test case for combination {1}/O|v|>=2:
+  //   POST: |v| == |s|
+  //   POST: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  //   ENSURES: |v| == |s|
+  //   ENSURES: forall i: int {:trigger v[i]} {:trigger s[i]} :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i])
+  {
+    var s: seq<char> := ['.', ' ', ' ', ' ', ' '];
+    var v := ReplaceWithColon(s);
+    expect |v| == |s|;
+    expect forall i: int  :: (0 <= i < |s| ==> IsSpaceCommaDot(s[i]) ==> v[i] == ':') && (0 <= i < |s| ==> !IsSpaceCommaDot(s[i]) ==> v[i] == s[i]);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  GeneratedTests_ReplaceWithColon();
+  print "GeneratedTests_ReplaceWithColon: all tests passed!\n";
 }

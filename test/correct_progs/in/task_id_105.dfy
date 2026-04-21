@@ -1,17 +1,25 @@
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
-  ensures count == multiset(a[..])[true]
+  ensures count == countTrue(a[..])
 {
   count := 0;
   for i := 0 to a.Length
-    invariant count == multiset(a[..i])[true]
+    invariant count == countTrue(a[..i])
   {
     if a[i] {
       count := count + 1;
     }
+    assert a[..i+1] == a[..i] + [a[i]]; // proof helper
   }
   assert a[..] == a[..a.Length]; // proof helper
 }
+
+ghost function {:fuel 3} countTrue(s: seq<bool>): nat
+{
+  if |s| == 0 then 0
+  else if s[|s|-1] then countTrue(s[..|s|-1]) + 1
+  else countTrue(s[..|s|-1])
+} 
 
 // Test cases checked statically.
 method CountTrueTest(){

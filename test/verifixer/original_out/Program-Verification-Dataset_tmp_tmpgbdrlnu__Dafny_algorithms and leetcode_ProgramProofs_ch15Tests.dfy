@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15.dfy
 // Method: SelectionSort
-// Generated: 2026-03-26 14:59:17
+// Generated: 2026-04-08 19:16:47
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15.dfy
 
@@ -60,10 +60,10 @@ twostate predicate SwapFrame(a: array<int>, lo: int, hi: int)
   reads a
   decreases {a}, a, lo, hi
 {
-  (forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 
+  (forall i: int {:trigger (a[i])} {:trigger a[i]} :: 
     0 <= i < lo || hi <= i < a.Length ==>
-      a[i] == old(a[i])) &&
-  multiset(a[..]) == old(multiset(a[..]))
+      a[i] == (a[i])) &&
+  multiset(a[..]) == (multiset(a[..]))
 }
 
 method QuickSortAux(a: array<int>, lo: int, hi: int)
@@ -122,88 +122,102 @@ method Passing()
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [2];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [6, 5];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [8, 7, 9];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
   // Test case for combination {1}:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [5];
+    var a := new int[1] [2];
     var old_multiset_a := multiset(a[..]);
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [6, 5];
     var old_multiset_a := multiset(a[..]);
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
   //   POST: multiset(a[..]) == old(multiset(a[..]))
+  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [8, 7, 9];
     var old_multiset_a := multiset(a[..]);
     QuickSort(a);
-    expect forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
   }
 

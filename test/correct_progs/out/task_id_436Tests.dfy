@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_436.dfy
 // Method: FindNegativeNumbers
-// Generated: 2026-03-25 13:52:29
+// Generated: 2026-04-20 22:30:57
 
 // Resturns a sequence with the negative numbers in the input array 'a', 
 // by the same order as they appear in the array.
@@ -42,49 +42,55 @@ method FindNegativeNumbersTest(){
   assert res3 == [];
 }
 
-method Passing()
+method TestsForFindNegativeNumbers()
 {
   // Test case for combination {1}:
-  //   POST: res == Filter(a[..], x => x < 0)
+  //   POST: res == Filter(a[..], (x: int) => x < 0)
+  //   POST: res == []
+  //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
     var a := new int[0] [];
     var res := FindNegativeNumbers(a);
-    expect res == []; // == Filter(a[..], x => x < 0)
+    expect res == [];
   }
 
-  // Test case for combination {1}:
-  //   POST: res == Filter(a[..], x => x < 0)
+  // Test case for combination {2}:
+  //   POST: !(|a[..]| == 0)
+  //   POST: a[..][|a[..]| - 1] < 0
+  //   POST: res == Filter<T>(a[..][..|a[..]| - 1], (x: int) => x < 0) + [a[..][|a[..]| - 1]]
+  //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-10];
     var res := FindNegativeNumbers(a);
-    expect res == []; // == Filter(a[..], x => x < 0)
+    expect res == [-10];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: res == Filter(a[..], x => x < 0)
+  // Test case for combination {3}:
+  //   POST: !(|a[..]| == 0)
+  //   POST: !(a[..][|a[..]| - 1] < 0)
+  //   POST: res == Filter<T>(a[..][..|a[..]| - 1], (x: int) => x < 0)
+  //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [10];
     var res := FindNegativeNumbers(a);
-    expect res == []; // == Filter(a[..], x => x < 0)
+    expect res == [];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: res == Filter(a[..], x => x < 0)
+  // Test case for combination {2}/O|a|>=2:
+  //   POST: !(|a[..]| == 0)
+  //   POST: a[..][|a[..]| - 1] < 0
+  //   POST: res == Filter<T>(a[..][..|a[..]| - 1], (x: int) => x < 0) + [a[..][|a[..]| - 1]]
+  //   ENSURES: res == Filter(a[..], (x: int) => x < 0)
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[2] [8, -10];
     var res := FindNegativeNumbers(a);
-    expect res == []; // == Filter(a[..], x => x < 0)
+    expect res == [-10];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindNegativeNumbers();
+  print "TestsForFindNegativeNumbers: all non-failing tests passed!\n";
 }

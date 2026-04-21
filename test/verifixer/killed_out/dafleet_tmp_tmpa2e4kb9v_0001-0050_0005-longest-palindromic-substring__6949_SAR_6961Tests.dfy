@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring__6949_SAR_6961.dfy
 // Method: expand_from_center
-// Generated: 2026-03-26 14:56:39
+// Generated: 2026-04-08 16:44:43
 
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
@@ -85,7 +85,7 @@ method {:vcs_split_on_every_assert} longestPalindrome'(s: string)
   var s' := insert_bogus_chars(s, bogus);
   var radii := new int[|s'|];
   var center, radius := 0, 0;
-  ghost var loop_counter_outer, loop_counter_inner1, loop_counter_inner2 := 0, 0, 0;
+  var loop_counter_outer, loop_counter_inner1, loop_counter_inner2 := 0, 0, 0;
   while center < |s'|
     invariant 0 <= center <= |s'|
     invariant forall c: int {:trigger radii[c]} | 0 <= c < center :: max_radius(s', c, radii[c])
@@ -228,7 +228,7 @@ lemma lemma_mirrored_palindrome(s': string, c: int, r: int, c1: int, r1: int, c2
     for r2: int := 0 to r1
       invariant palindromic_radius(s', c2, r2)
     {
-      ghost var r2' := r2 + 1;
+      var r2' := r2 + 1;
       assert s'[c1 + r2'] == s'[c2 - r2'] by {
         lemma_palindromic_radius_contains(s', c, r, abs(c - c1 - r2'));
       }
@@ -239,7 +239,7 @@ lemma lemma_mirrored_palindrome(s': string, c: int, r: int, c1: int, r1: int, c2
         lemma_palindromic_radius_contains(s', c1, r1, r2');
       }
     }
-    ghost var r2' := r1 + 1;
+    var r2' := r1 + 1;
     assert s'[c1 + r2'] == s'[c2 - r2'] by {
       lemma_palindromic_radius_contains(s', c, r, abs(c - c1 - r2'));
     }
@@ -254,7 +254,7 @@ lemma lemma_mirrored_palindrome(s': string, c: int, r: int, c1: int, r1: int, c2
     for r2: int := 0 to c + r - c2
       invariant palindromic_radius(s', c2, r2)
     {
-      ghost var r2' := r2 + 1;
+      var r2' := r2 + 1;
       assert s'[c1 + r2'] == s'[c2 - r2'] by {
         lemma_palindromic_radius_contains(s', c, r, abs(c - c1 - r2'));
       }
@@ -266,7 +266,7 @@ lemma lemma_mirrored_palindrome(s': string, c: int, r: int, c1: int, r1: int, c2
       }
     }
     if c2 + r1 > c + r {
-      ghost var r2' := c + r - c2 + 1;
+      var r2' := c + r - c2 + 1;
       if inbound_radius(s', c, r + 1) {
         assert s'[c1 + r2'] == s'[c2 - r2'] by {
           lemma_palindromic_radius_contains(s', c, r, abs(c - c1 - r2'));
@@ -309,7 +309,7 @@ lemma /*{:_inductionTrigger palindromic(s, lo, hi), argmax(radii, 0), insert_bog
     if (k + radii[k]) % 2 == 1 {
       lemma_palindrome_bogus(s, s', bogus, k, radii[k]);
     }
-    ghost var lo, hi := (k - radii[k]) / 2, (k + radii[k]) / 2;
+    var lo, hi := (k - radii[k]) / 2, (k + radii[k]) / 2;
     lemma_palindrome_isomorph(s, s', bogus, lo, hi);
     forall i: int, j: int | 0 <= i <= j <= |s| && i + j == k && j - i > radii[k]
       ensures !palindromic(s, i, j)
@@ -323,7 +323,7 @@ lemma /*{:_inductionTrigger palindromic(s, lo, hi), argmax(radii, 0), insert_bog
     forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == k + 1
       ensures j - i <= hi - lo
     {
-      ghost var k := k + 1;
+      var k := k + 1;
       assert max_interval_for_same_center(s, k, (k - radii[k]) / 2, (k + radii[k]) / 2);
     }
   }
@@ -352,8 +352,8 @@ lemma /*{:_inductionTrigger palindromic(s, lo, hi), insert_bogus_chars(s, bogus)
       if (lo + hi - r) % 2 == 1 {
         lemma_palindrome_bogus(s, s', bogus, lo + hi, r);
       } else {
-        ghost var i', j' := lo + hi - (r + 1), lo + hi + r + 1;
-        ghost var i, j := i' / 2, j' / 2;
+        var i', j' := lo + hi - (r + 1), lo + hi + r + 1;
+        var i, j := i' / 2, j' / 2;
         assert s[i] == s[j] by {
           lemma_palindromic_contains(s, lo, hi, i, j + 1);
         }
@@ -361,7 +361,7 @@ lemma /*{:_inductionTrigger palindromic(s, lo, hi), insert_bogus_chars(s, bogus)
     }
   }
   if palindromic_radius(s', lo + hi, hi - lo) {
-    ghost var lo', hi' := lo, hi;
+    var lo', hi' := lo, hi;
     while lo' + 1 <= hi' - 1
       invariant lo <= lo' <= hi' <= hi
       invariant lo' + hi' == lo + hi
@@ -382,7 +382,7 @@ lemma /*{:_inductionTrigger insert_bogus_chars(s, bogus)}*/ /*{:_induction s, bo
   ensures inbound_radius(s', c, r + 1) && palindromic_radius(s', c, r + 1)
   decreases s, s', bogus, c, r
 {
-  ghost var left, right := c - (r + 1), c + r + 1;
+  var left, right := c - (r + 1), c + r + 1;
   assert left == left / 2 * 2;
   assert right == right / 2 * 2;
   assert s'[left] == s'[right] == bogus;
@@ -396,55 +396,111 @@ method GeneratedTests_expand_from_center()
   //   PRE:  palindromic(s, i0, j0)
   //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
-  {
-    var s: seq<char> := [];
-    var i0 := 0;
-    var j0 := 0;
-    var lo, hi := expand_from_center(s, i0, j0);
-    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= i0 <= j0 <= |s|
-  //   PRE:  palindromic(s, i0, j0)
-  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
-  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
   {
     var s: seq<char> := [' '];
-    var i0 := 1;
+    var i0 := 0;
     var j0 := 1;
     var lo, hi := expand_from_center(s, i0, j0);
-    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect lo == 0;
+    expect hi == 1;
   }
 
-  // Test case for combination {1}/Bs=3,i0=1,j0=1:
+  // Test case for combination {1}/Bs=2,i0=0,j0==s_len:
   //   PRE:  0 <= i0 <= j0 <= |s|
   //   PRE:  palindromic(s, i0, j0)
   //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
   {
-    var s: seq<char> := [' ', '!', '"'];
-    var i0 := 1;
-    var j0 := 1;
-    var lo, hi := expand_from_center(s, i0, j0);
-    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
-  }
-
-  // Test case for combination {1}/Bs=3,i0=0,j0=1:
-  //   PRE:  0 <= i0 <= j0 <= |s|
-  //   PRE:  palindromic(s, i0, j0)
-  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
-  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
-  {
-    var s: seq<char> := [' ', '!', '"'];
+    var s: seq<char> := [' ', '!'];
     var i0 := 0;
     var j0 := 1;
     var lo, hi := expand_from_center(s, i0, j0);
     expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+  }
+
+  // Test case for combination {1}/Bs=2,i0=1,j0==s_len:
+  //   PRE:  0 <= i0 <= j0 <= |s|
+  //   PRE:  palindromic(s, i0, j0)
+  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', '!'];
+    var i0 := 1;
+    var j0 := 2;
+    var lo, hi := expand_from_center(s, i0, j0);
+    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+  }
+
+  // Test case for combination {1}/Bs=3,i0=0,j0==s_len:
+  //   PRE:  0 <= i0 <= j0 <= |s|
+  //   PRE:  palindromic(s, i0, j0)
+  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  {
+    var s: seq<char> := ['$', '!', ' '];
+    var i0 := 0;
+    var j0 := 1;
+    var lo, hi := expand_from_center(s, i0, j0);
+    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+  }
+
+  // Test case for combination {1}/Olo>0:
+  //   PRE:  0 <= i0 <= j0 <= |s|
+  //   PRE:  palindromic(s, i0, j0)
+  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  {
+    var s: seq<char> := ['"', '!', '/', ' '];
+    var i0 := 3;
+    var j0 := 4;
+    var lo, hi := expand_from_center(s, i0, j0);
+    expect 0 <= lo <= hi <= |s| && palindromic(s, lo, hi);
+    expect forall i: int, j: int | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo;
+  }
+
+  // Test case for combination {1}/Olo=0:
+  //   PRE:  0 <= i0 <= j0 <= |s|
+  //   PRE:  palindromic(s, i0, j0)
+  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', ' '];
+    var i0 := 1;
+    var j0 := 1;
+    var lo, hi := expand_from_center(s, i0, j0);
+    expect lo == 0;
+    expect hi == 2;
+  }
+
+  // Test case for combination {1}/Ohi>0:
+  //   PRE:  0 <= i0 <= j0 <= |s|
+  //   PRE:  palindromic(s, i0, j0)
+  //   POST: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) && i + j == i0 + j0 :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', ' '];
+    var i0 := 0;
+    var j0 := 2;
+    var lo, hi := expand_from_center(s, i0, j0);
+    expect lo == 0;
+    expect hi == 2;
   }
 
 }
@@ -455,48 +511,75 @@ method GeneratedTests_longestPalindrome()
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
-  {
-    var s: seq<char> := [];
-    var ans, lo, hi := longestPalindrome(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
-  }
-
-  // Test case for combination {1}:
-  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
-  //   POST: palindromic(s, lo, hi)
-  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
     var s: seq<char> := [' '];
     var ans, lo, hi := longestPalindrome(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' '];
+    expect lo == 0;
+    expect hi == 1;
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/O|ans|>=3:
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := [' ', ')', ' '];
     var ans, lo, hi := longestPalindrome(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' ', ')', ' '];
+    expect lo == 0;
+    expect hi == 3;
   }
 
-  // Test case for combination {1}/Bs=3:
+  // Test case for combination {1}/O|ans|>=2:
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
-    var s: seq<char> := [' ', '"', '!'];
+    var s: seq<char> := [' ', ' '];
     var ans, lo, hi := longestPalindrome(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' ', ' '];
+    expect lo == 0;
+    expect hi == 2;
+  }
+
+  // Test case for combination {1}/Olo=0:
+  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   POST: palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', 'a', 'p', ' '];
+    var ans, lo, hi := longestPalindrome(s);
+    expect ans == [' ', 'a', 'p', ' '];
+    expect lo == 0;
+    expect hi == 4;
+  }
+
+  // Test case for combination {1}/Ohi>0:
+  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   POST: palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', '{', 'l', '/', ' '];
+    var ans, lo, hi := longestPalindrome(s);
+    expect ans == [' ', '{', 'l', '/', ' '];
+    expect lo == 0;
+    expect hi == 5;
   }
 
 }
@@ -507,48 +590,75 @@ method GeneratedTests_longestPalindrome'()
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
-  {
-    var s: seq<char> := [];
-    var ans, lo, hi := longestPalindrome'(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
-  }
-
-  // Test case for combination {1}:
-  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
-  //   POST: palindromic(s, lo, hi)
-  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
     var s: seq<char> := [' '];
     var ans, lo, hi := longestPalindrome'(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' '];
+    expect lo == 0;
+    expect hi == 1;
   }
 
-  // Test case for combination {1}/Bs=2:
+  // Test case for combination {1}/O|ans|>=3:
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := [' ', ')', ' '];
     var ans, lo, hi := longestPalindrome'(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' ', ')', ' '];
+    expect lo == 0;
+    expect hi == 3;
   }
 
-  // Test case for combination {1}/Bs=3:
+  // Test case for combination {1}/O|ans|>=2:
   //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
   //   POST: palindromic(s, lo, hi)
   //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
   {
-    var s: seq<char> := [' ', '"', '!'];
+    var s: seq<char> := [' ', ' '];
     var ans, lo, hi := longestPalindrome'(s);
-    expect 0 <= lo <= hi <= |s| && ans == s[lo .. hi];
-    expect palindromic(s, lo, hi);
-    expect forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo;
+    expect ans == [' ', ' '];
+    expect lo == 0;
+    expect hi == 2;
+  }
+
+  // Test case for combination {1}/Olo=0:
+  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   POST: palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', 'a', 'p', ' '];
+    var ans, lo, hi := longestPalindrome'(s);
+    expect ans == [' ', 'a', 'p', ' '];
+    expect lo == 0;
+    expect hi == 4;
+  }
+
+  // Test case for combination {1}/Ohi>0:
+  //   POST: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   POST: palindromic(s, lo, hi)
+  //   POST: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  //   ENSURES: 0 <= lo <= hi <= |s| && ans == s[lo .. hi]
+  //   ENSURES: palindromic(s, lo, hi)
+  //   ENSURES: forall i: int, j: int {:trigger palindromic(s, i, j)} | 0 <= i <= j <= |s| && palindromic(s, i, j) :: j - i <= hi - lo
+  {
+    var s: seq<char> := [' ', '{', 'l', '/', ' '];
+    var ans, lo, hi := longestPalindrome'(s);
+    expect ans == [' ', '{', 'l', '/', ' '];
+    expect lo == 0;
+    expect hi == 5;
   }
 
 }

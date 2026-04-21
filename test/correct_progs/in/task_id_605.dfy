@@ -1,7 +1,7 @@
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
     requires n > 1
-    ensures result <==> (forall k :: 2 <= k < n ==> n % k != 0)
+    ensures result <==> forall k :: 2 <= k < n ==> n % k != 0
 {
     for i := 2 to n/2 + 1
         invariant forall k :: 2 <= k < i ==> n % k != 0

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one__969-973_EVR_int.dfy
 // Method: add_by_one
-// Generated: 2026-03-26 15:04:33
+// Generated: 2026-04-08 16:21:07
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one.dfy
 
@@ -35,7 +35,7 @@ method bar(x: int, y: int) returns (r: int)
   i, r := *, *;
   assume i <= y && r == x + i;
   assume y - i >= 0;
-  ghost var rank_before := y - i;
+  var rank_before := y - i;
   if i < y {
     r := 0;
     i := i + 1;
@@ -53,6 +53,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 0;
@@ -60,9 +61,10 @@ method Passing()
     expect r == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,y=1:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 1;
@@ -73,6 +75,7 @@ method Passing()
   // Test case for combination {1}/Bx=1,y=0:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 0;
@@ -83,6 +86,7 @@ method Passing()
   // Test case for combination {1}/Bx=1,y=1:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 1;
@@ -90,9 +94,43 @@ method Passing()
     expect r == 2;
   }
 
+  // Test case for combination {1}/Or>0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 2;
+    var r := add_by_one(x, y);
+    expect r == 1;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -2;
+    var y := 1;
+    var r := add_by_one(x, y);
+    expect r == -1;
+  }
+
+  // Test case for combination {1}/Or=0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 1;
+    var r := add_by_one(x, y);
+    expect r == 0;
+  }
+
   // Test case for combination {1}:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 0;
@@ -103,6 +141,7 @@ method Passing()
   // Test case for combination {1}/Bx=1,y=0:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 0;
@@ -110,13 +149,25 @@ method Passing()
     expect r == 1;
   }
 
+  // Test case for combination {1}/Or=0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 1;
+    var r := bar(x, y);
+    expect r == 0;
+  }
+
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,y=1:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 1;
@@ -127,11 +178,34 @@ method Failing()
   // Test case for combination {1}/Bx=1,y=1:
   //   PRE:  y >= 0
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 1;
     var r := bar(x, y);
     // expect r == 2;
+  }
+
+  // Test case for combination {1}/Or>0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 2;
+    var r := bar(x, y);
+    // expect r == 1;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   PRE:  y >= 0
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -2;
+    var y := 1;
+    var r := bar(x, y);
+    // expect r == -1;
   }
 
 }

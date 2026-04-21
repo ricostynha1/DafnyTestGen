@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-03-28 00:33:36
+// Generated: 2026-04-20 22:27:39
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -12,13 +12,13 @@
 method SelectionSort(a: array<int>)
   modifies a
   ensures IsSorted(a) 
-  ensures multiset(a[..]) == multiset((a[..]))
+  ensures multiset(a[..]) == multiset(old(a[..]))
 {
     // In each iteration, find the minimum value in the unsorted part of the array
     // (on the right) and append it (by swapping) to the sorted part (on the left).
     for i := 0 to a.Length 
       invariant forall l, r :: 0 <= l < i && l < r < a.Length ==> a[l] <= a[r] // a[..i] sorted and <= a[i..]
-      invariant multiset(a[..]) == multiset((a[..]))
+      invariant multiset(a[..]) == multiset(old(a[..]))
     {
         // Find the minimum value in the unsorted part of the array
         var jMin := i;
@@ -45,61 +45,45 @@ predicate IsSorted(a: array<int>)
 }
 
 
-method Passing()
+method TestsForSelectionSort()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[2] [9, -1];
+    SelectionSort(a);
+    expect a[..] == [-1, 9];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: IsSorted(a)
+  //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
-    var old_a := a[..];
     SelectionSort(a);
-    expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}/O|a|=1:
   //   POST: IsSorted(a)
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a)
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [3];
-    var old_a := a[..];
+    var a := new int[1] [2];
     SelectionSort(a);
-    expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[2] [4, 3];
-    var old_a := a[..];
-    SelectionSort(a);
-    expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[3] [5, 4, 6];
-    var old_a := a[..];
-    SelectionSort(a);
-    expect IsSorted(a);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSelectionSort();
+  print "TestsForSelectionSort: all non-failing tests passed!\n";
 }

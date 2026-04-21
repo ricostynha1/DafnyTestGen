@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-03-25 13:52:03
+// Generated: 2026-04-20 22:30:02
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -33,42 +33,36 @@ method IsNonPrimeTest(){
 }
 
 
-method Passing()
+method TestsForIsNonPrime()
 {
   // Test case for combination {1}:
   //   PRE:  n > 1
   //   POST: result
-  //   POST: exists k :: 1 < k < n && n % k == 0
+  //   POST: 2 <= (n - 1)
+  //   POST: n % 2 == 0
+  //   ENSURES: result <==> exists k: int :: 1 < k < n && n % k == 0
   {
-    var n := 4;
+    var n := 10;
     var result := IsNonPrime(n);
     expect result == true;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {4}/Bn=2:
   //   PRE:  n > 1
   //   POST: !result
-  //   POST: !exists k :: 1 < k < n && n % k == 0
+  //   POST: !exists k: int :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int :: 1 < k < n && n % k == 0
   {
     var n := 2;
     var result := IsNonPrime(n);
     expect result == false;
   }
 
-  // Test case for combination {1}:
-  //   PRE:  n > 1
-  //   POST: result
-  //   POST: exists k :: 1 < k < n && n % k == 0
-  {
-    var n := 6;
-    var result := IsNonPrime(n);
-    expect result == true;
-  }
-
-  // Test case for combination {2}:
+  // Test case for combination {4}/Bn=3:
   //   PRE:  n > 1
   //   POST: !result
-  //   POST: !exists k :: 1 < k < n && n % k == 0
+  //   POST: !exists k: int :: 1 < k < n && n % k == 0
+  //   ENSURES: result <==> exists k: int :: 1 < k < n && n % k == 0
   {
     var n := 3;
     var result := IsNonPrime(n);
@@ -77,13 +71,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsNonPrime();
+  print "TestsForIsNonPrime: all non-failing tests passed!\n";
 }

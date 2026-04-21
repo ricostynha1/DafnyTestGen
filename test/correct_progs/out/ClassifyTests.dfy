@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-03-28 00:34:52
+// Generated: 2026-04-20 22:24:45
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -20,69 +20,72 @@ method Classify(x: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForClassify()
 {
   // Test case for combination {2}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
   //   POST: !(x == 0)
+  //   POST: x > 0
   //   POST: r == 1
+  //   ENSURES: x < 0 ==> r == -1
+  //   ENSURES: x == 0 ==> r == 0
+  //   ENSURES: x > 0 ==> r == 1
   {
-    var x := 97;
+    var x := 10;
     var r := Classify(x);
     expect r == 1;
-    expect !(x < 0);
-    expect !(x == 0);
   }
 
   // Test case for combination {3}:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
+  //   POST: x == 0
   //   POST: r == 0
   //   POST: !(x > 0)
+  //   ENSURES: x < 0 ==> r == -1
+  //   ENSURES: x == 0 ==> r == 0
+  //   ENSURES: x > 0 ==> r == 1
   {
     var x := 0;
     var r := Classify(x);
     expect r == 0;
-    expect !(x < 0);
-    expect !(x > 0);
   }
 
-  // Test case for combination {5}:
+  // Test case for combination {4}:
   //   PRE:  -100 <= x <= 100
+  //   POST: x < 0
   //   POST: r == -1
   //   POST: !(x == 0)
   //   POST: !(x > 0)
+  //   ENSURES: x < 0 ==> r == -1
+  //   ENSURES: x == 0 ==> r == 0
+  //   ENSURES: x > 0 ==> r == 1
   {
-    var x := -4;
+    var x := -10;
     var r := Classify(x);
     expect r == -1;
-    expect !(x == 0);
-    expect !(x > 0);
   }
 
-  // Test case for combination {2}/Bx=100:
+  // Test case for combination {2}/R2:
   //   PRE:  -100 <= x <= 100
   //   POST: !(x < 0)
   //   POST: !(x == 0)
+  //   POST: x > 0
   //   POST: r == 1
+  //   ENSURES: x < 0 ==> r == -1
+  //   ENSURES: x == 0 ==> r == 0
+  //   ENSURES: x > 0 ==> r == 1
   {
-    var x := 100;
+    var x := 9;
     var r := Classify(x);
     expect r == 1;
-    expect !(x < 0);
-    expect !(x == 0);
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForClassify();
+  print "TestsForClassify: all non-failing tests passed!\n";
 }

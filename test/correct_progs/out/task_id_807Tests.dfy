@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_807.dfy
 // Method: FindFirstOdd
-// Generated: 2026-03-25 13:55:00
+// Generated: 2026-04-20 22:35:30
 
 // Finds the index of the first odd number in an arrray.
 // If there is no odd number, returns -1.
@@ -52,41 +52,58 @@ method FindFirstOddTest(){
     assert out3 == -1;
 }
 
-method Passing()
+method TestsForFindFirstOdd()
 {
-  // Test case for combination {1}:
-  //   POST: IsFirstOdd(a, index)
+  // Test case for combination {2}/Rel:
+  //   POST: !(index == -1)
+  //   POST: 0 <= index
+  //   POST: index < a.Length
+  //   POST: a[index] % 2 != 0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[1] [4875];
+    var a := new int[2] [-1, -7];
     var index := FindFirstOdd(a);
     expect index == 0;
   }
 
   // Test case for combination {1}:
   //   POST: IsFirstOdd(a, index)
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[2] [1, 29];
+    var a := new int[1] [8];
     var index := FindFirstOdd(a);
-    expect index == 0;
+    expect index == -1;
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: IsFirstOdd(a, index)
+  // Test case for combination {2}/Bindex=1:
+  //   POST: !(index == -1)
+  //   POST: 0 <= index
+  //   POST: index < a.Length
+  //   POST: a[index] % 2 != 0
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < index ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
   {
-    var a := new int[3] [0, -1, 13];
+    var a := new int[2] [10, -1];
     var index := FindFirstOdd(a);
     expect index == 1;
   }
 
-}
+  // Test case for combination {1}/O|a|=0:
+  //   POST: IsFirstOdd(a, index)
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i && i < a.Length ==> !(a[i] % 2 != 0)
+  //   ENSURES: IsFirstOdd(a, index)
+  {
+    var a := new int[0] [];
+    var index := FindFirstOdd(a);
+    expect index == -1;
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindFirstOdd();
+  print "TestsForFindFirstOdd: all non-failing tests passed!\n";
 }

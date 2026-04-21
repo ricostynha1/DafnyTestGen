@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-03-25 13:50:49
+// Generated: 2026-04-20 22:28:51
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
@@ -46,47 +46,36 @@ method MaxDifferenceTest(){
   assert out3 == 2 == 3 - 1;
 }
 
-method Passing()
+method TestsForMaxDifference()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i, j :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   POST: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
-    var a := new int[1] [281];
+    var a := new int[2] [-10, 10];
+    var diff := MaxDifference(a);
+    expect diff == 20;
+  }
+
+  // Test case for combination {1}/O|a|=1:
+  //   PRE:  a.Length > 0
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   POST: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  //   ENSURES: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
+  //   ENSURES: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
+  {
+    var a := new int[1] [-10];
     var diff := MaxDifference(a);
     expect diff == 0;
   }
 
-  // Test case for combination {1}:
-  //   PRE:  a.Length > 0
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i, j :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
-  {
-    var a := new int[2] [8765, 667];
-    var diff := MaxDifference(a);
-    expect diff == 8098;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a.Length > 0
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
-  //   POST: forall i, j :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
-  {
-    var a := new int[3] [7750, 6906, 6907];
-    var diff := MaxDifference(a);
-    expect diff == 844;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMaxDifference();
+  print "TestsForMaxDifference: all non-failing tests passed!\n";
 }

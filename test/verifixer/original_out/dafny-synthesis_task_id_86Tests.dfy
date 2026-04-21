@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_86.dfy
 // Method: CenteredHexagonalNumber
-// Generated: 2026-03-26 14:58:18
+// Generated: 2026-04-08 19:11:37
 
 // dafny-synthesis_task_id_86.dfy
 
@@ -19,24 +19,27 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  n >= 0
   //   POST: result == 3 * n * (n - 1) + 1
+  //   ENSURES: result == 3 * n * (n - 1) + 1
   {
     var n := 0;
     var result := CenteredHexagonalNumber(n);
     expect result == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
   //   POST: result == 3 * n * (n - 1) + 1
+  //   ENSURES: result == 3 * n * (n - 1) + 1
   {
     var n := 1;
     var result := CenteredHexagonalNumber(n);
     expect result == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Oresult>=2:
   //   PRE:  n >= 0
   //   POST: result == 3 * n * (n - 1) + 1
+  //   ENSURES: result == 3 * n * (n - 1) + 1
   {
     var n := 2;
     var result := CenteredHexagonalNumber(n);

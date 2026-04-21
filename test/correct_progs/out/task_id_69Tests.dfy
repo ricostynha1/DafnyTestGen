@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_69.dfy
 // Method: InSeq
-// Generated: 2026-03-25 13:54:05
+// Generated: 2026-04-20 22:33:45
 
 // Checks if a sequence 's' of elements of any type T contains a given value 'x' of type T.
 method InSeq<T(==)>(s: seq<T>, x: T) returns (result: bool)
@@ -36,11 +36,12 @@ method InSeqTest(){
     assert res3 == false;
 }
 
-method Passing()
+method TestsForInSeq()
 {
   // Test case for combination {1}:
   //   POST: result
   //   POST: x in s
+  //   ENSURES: result <==> x in s
   {
     var s: seq<int> := [8];
     var x := 8;
@@ -51,42 +52,40 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !result
   //   POST: !(x in s)
+  //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [9];
+    var s: seq<int> := [];
     var x := 8;
     var result := InSeq<int>(s, x);
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|s|>=2:
   //   POST: result
   //   POST: x in s
+  //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [9];
-    var x := 9;
+    var s: seq<int> := [10, 20];
+    var x := 10;
     var result := InSeq<int>(s, x);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !(x in s)
+  // Test case for combination {1}/Ox=0:
+  //   POST: result
+  //   POST: x in s
+  //   ENSURES: result <==> x in s
   {
-    var s: seq<int> := [];
-    var x := 9;
+    var s: seq<int> := [0];
+    var x := 0;
     var result := InSeq<int>(s, x);
-    expect result == false;
+    expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForInSeq();
+  print "TestsForInSeq: all non-failing tests passed!\n";
 }

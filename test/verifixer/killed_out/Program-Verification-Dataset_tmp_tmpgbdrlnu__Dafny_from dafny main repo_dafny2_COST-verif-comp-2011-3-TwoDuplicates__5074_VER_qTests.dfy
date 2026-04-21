@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates__5074_VER_q.dfy
 // Method: Search
-// Generated: 2026-03-26 15:04:56
+// Generated: 2026-04-08 16:21:37
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates.dfy
 
@@ -67,15 +67,28 @@ method Search(a: array<int>) returns (p: int, q: int)
 
 method Passing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Op>0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST: p != q
+  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
     var a := new int[5] [2, 0, 1, 1, 2];
     var p, q := Search(a);
-    expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+    expect p != q;
+  }
+
+  // Test case for combination {1}/Op=0:
+  //   PRE:  4 <= a.Length
+  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
+  //   POST: p != q
+  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  {
+    var a := new int[7] [3, 4, 3, 2, 0, 2, 0];
+    var p, q := Search(a);
+    expect p != q;
   }
 
 }
@@ -86,22 +99,36 @@ method Failing()
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST: p != q
+  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
     var a := new int[4] [0, 1, 0, 1];
     var p, q := Search(a);
-    // expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+    // expect p != q;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/Op<0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST: p != q
+  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
     var a := new int[6] [2, 3, 2, 1, 3, 1];
     var p, q := Search(a);
-    // expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+    // expect p != q;
+  }
+
+  // Test case for combination {1}/Oq>0:
+  //   PRE:  4 <= a.Length
+  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
+  //   POST: p != q
+  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  {
+    var a := new int[8] [2, 3, 4, 1, 5, 1, 1, 5];
+    var p, q := Search(a);
+    // expect p != q;
   }
 
 }

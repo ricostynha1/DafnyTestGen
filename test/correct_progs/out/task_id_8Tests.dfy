@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_8.dfy
 // Method: SquareElements
-// Generated: 2026-03-25 13:54:51
+// Generated: 2026-04-20 22:35:15
 
 // Returns an array of the same length as the input array, 
 // with each element of the input array squared.
@@ -35,49 +35,45 @@ method SquareElementsTest(){
   assert res3[..] == [];
 }
 
-method Passing()
+method TestsForSquareElements()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: squared.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  {
+    var a := new int[1] [-1];
+    var squared := SquareElements(a);
+    expect squared[..] == [1];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: squared.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: squared.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
     var a := new int[0] [];
     var squared := SquareElements(a);
+    expect squared[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   POST: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
+  //   ENSURES: squared.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
   {
-    var a := new int[1] [2];
+    var a := new int[2] [-1, -10];
     var squared := SquareElements(a);
+    expect squared[..] == [1, 100];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
-  {
-    var a := new int[2] [4, 3];
-    var squared := SquareElements(a);
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: squared.Length == a.Length
-  //   POST: forall i :: 0 <= i < a.Length ==> squared[i] == a[i] * a[i]
-  {
-    var a := new int[3] [5, 4, 6];
-    var squared := SquareElements(a);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSquareElements();
+  print "TestsForSquareElements: all non-failing tests passed!\n";
 }

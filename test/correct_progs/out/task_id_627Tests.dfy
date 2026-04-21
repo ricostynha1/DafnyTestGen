@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-03-25 13:53:54
+// Generated: 2026-04-20 22:33:22
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -9,10 +9,14 @@ predicate IsSmallestMissingNumber(s: seq<nat>, v: nat) {
     v !in s && forall k : nat :: k < v ==> k in s
 }
 
+predicate IsSorted(s: seq<nat>) {
+    forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+}   
+
 // Given a sorted sequence 's' of natural numbers,
 // finds the smallest natural number 'v that is not present in the sequence. 
 method SmallestMissingNumber(s: seq<nat>) returns (v: nat)
-    requires forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+    requires IsSorted(s)
     ensures IsSmallestMissingNumber(s, v) 
 {
     v := 0; 
@@ -51,53 +55,64 @@ method SmallestMissingNumberTest() {
 }
 
 
-method Passing()
+method TestsForSmallestMissingNumber()
 {
   // Test case for combination {1}:
-  //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+  //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
+  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
+  //   ENSURES: IsSmallestMissingNumber(s, v)
   {
-    var s: seq<nat> := [3];
+    var s: seq<nat> := [10];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
+    expect IsSmallestMissingNumber(s, v);
+    expect forall k: nat :: k < v ==> k in s;
+    expect v == 0; // observed from implementation
   }
 
-  // Test case for combination {1}:
-  //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
+  // Test case for combination {1}/Bv=0:
+  //   PRE:  IsSorted(s)
   //   POST: IsSmallestMissingNumber(s, v)
+  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
+  //   ENSURES: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [8];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect forall k: nat :: k < v ==> k in s;
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bv=1:
+  //   PRE:  IsSorted(s)
+  //   POST: IsSmallestMissingNumber(s, v)
+  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
+  //   ENSURES: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [9];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect forall k: nat :: k < v ==> k in s;
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|s|=0:
+  //   PRE:  IsSorted(s)
+  //   POST: IsSmallestMissingNumber(s, v)
+  //   POST: forall k: nat {:trigger k in s} :: k < v ==> k in s
+  //   ENSURES: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [];
     var v := SmallestMissingNumber(s);
-    expect v == 0;
+    expect IsSmallestMissingNumber(s, v);
+    expect forall k: nat :: k < v ==> k in s;
+    expect v == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bs=2:
-  //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
-  //   POST: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [-2, -1];
-    var v := SmallestMissingNumber(s);
-    expect v == 0;
-  }
-
-  // Test case for combination {1}/Bs=3:
-  //   PRE:  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]
-  //   POST: IsSmallestMissingNumber(s, v)
-  {
-    var s: seq<nat> := [0, 8, 9];
-    var v := SmallestMissingNumber(s);
-    expect v == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSmallestMissingNumber();
+  print "TestsForSmallestMissingNumber: all non-failing tests passed!\n";
 }

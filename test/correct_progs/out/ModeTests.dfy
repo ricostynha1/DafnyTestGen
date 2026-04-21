@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Mode.dfy
 // Method: Mode
-// Generated: 2026-03-28 00:33:09
+// Generated: 2026-04-20 22:26:33
 
 // Returns the mode (element with highest frequency) in a non-empty sorted array.
 // In case multiple solutins exist, returns an arbitrary one.
@@ -53,53 +53,72 @@ predicate IsSorted(a: array<int>)
 
 
 
-method Passing()
+method TestsForMode()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
-  //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-10];
     var m := Mode(a);
     expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -10; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
-  //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-10, -3];
     var m := Mode(a);
     expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -10; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/Om=0:
   //   PRE:  IsSorted(a)
   //   PRE:  a.Length > 0
   //   POST: m in a[..]
-  //   POST: forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[4] [-6, -6, -1, 0];
     var m := Mode(a);
     expect m in a[..];
-    expect forall k :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == -6; // observed from implementation
   }
 
-}
+  // Test case for combination {1}/Om>0:
+  //   PRE:  IsSorted(a)
+  //   PRE:  a.Length > 0
+  //   POST: m in a[..]
+  //   POST: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  //   ENSURES: m in a[..]
+  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m)
+  {
+    var a := new int[1] [3];
+    var m := Mode(a);
+    expect m in a[..];
+    expect forall k: int :: 0 <= k < a.Length ==> Count(a[..], a[k]) <= Count(a[..], m);
+    expect m == 3; // observed from implementation
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMode();
+  print "TestsForMode: all non-failing tests passed!\n";
 }

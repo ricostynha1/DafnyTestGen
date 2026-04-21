@@ -1,11 +1,11 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-03-25 13:54:54
+// Generated: 2026-04-20 22:35:21
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
-  ensures result <==> exists i : nat ::  i * i == n
+  ensures result <==> exists i ::  0 <= i <= n && i * i == n
 {
     var i := 0;
     while i * i < n
@@ -43,11 +43,13 @@ method IsPerfectSquareTest(){
     r := IsPerfectSquare(1000001); assert !r;
 }
 
-method Passing()
+method TestsForIsPerfectSquare()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: exists i: nat :: i * i == n
+  //   POST: 0 <= n
+  //   POST: 0 * 0 == n
+  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
   {
     var n := 0;
     var result := IsPerfectSquare(n);
@@ -55,41 +57,42 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: nat :: i * i == n
+  //   POST: result
+  //   POST: exists i :: 1 <= i < n && i * i == n
+  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
   {
-    var n := 2;
+    var n := 9;
     var result := IsPerfectSquare(n);
-    expect result == false;
+    expect result == true;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {4}:
+  //   NOTE: Z3 returned UNKNOWN on full query; retry dropped 1 exists-quantified postcondition(s).
+  //         Remaining literals still checked; dropped literal(s) not verified by Z3.
+  //   POST: !result
+  //   POST: !exists i: int :: 0 <= i <= n && i * i == n
+  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
+  {
+    var n := 10;
+    var result := IsPerfectSquare(n);
+    expect !result;
+  }
+
+  // Test case for combination {3}/On=1:
   //   POST: result
-  //   POST: exists i: nat :: i * i == n
+  //   POST: 0 <= n
+  //   POST: n * n == n
+  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
   {
     var n := 1;
     var result := IsPerfectSquare(n);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: nat :: i * i == n
-  {
-    var n := 3;
-    var result := IsPerfectSquare(n);
-    expect result == false;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsPerfectSquare();
+  print "TestsForIsPerfectSquare: all non-failing tests passed!\n";
 }

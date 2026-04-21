@@ -1,16 +1,17 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-03-25 13:52:37
+// Generated: 2026-04-20 22:31:06
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
     ensures fresh(cubed)
-    ensures  IsMapSeq(a[..], cubed[..], cube)
+    ensures cubed.Length == a.Length
+    ensures forall i :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
 {
     cubed := new int[a.Length];
     for i := 0 to a.Length
-        invariant IsMapSeq(a[..i], cubed[..i], cube)
+        invariant forall j :: 0 <= j < i ==> cubed[j] == cube(a[j])
     {
         cubed[i] := cube(a[i]);
     }
@@ -20,12 +21,6 @@ function cube(x: int) : int {
      x * x * x
 }
 
-// Checks if a sequence 't' is the result of applying a function 'f'
-// to every element of a sequence 's'.
-predicate IsMapSeq<T, E(==)>(s: seq<T>, t: seq<E>, f: T -> E) 
-{
-  |t| == |s| && forall i :: 0 <= i < |s| ==> t[i] == f(s[i])
-}
 
 // Test cases checked statically.
 method CubeElementsTest(){
@@ -38,49 +33,45 @@ method CubeElementsTest(){
   assert res2[..] == [8, 1, 0, -1, -8];
 }
 
-method Passing()
+method TestsForCubeElements()
 {
-  // Test case for combination {1}:
-  //   POST: IsMapSeq(a[..], cubed[..], cube)
+  // Test case for combination {1}/Rel:
+  //   POST: cubed.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: cubed.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  {
+    var a := new int[1] [5];
+    var cubed := CubeElements(a);
+    expect cubed[..] == [125];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: cubed.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: cubed.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[0] [];
     var cubed := CubeElements(a);
-    expect IsMapSeq(a[..], cubed[..], cube);
+    expect cubed[..] == [];
   }
 
-  // Test case for combination {1}:
-  //   POST: IsMapSeq(a[..], cubed[..], cube)
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: cubed.Length == a.Length
+  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   ENSURES: cubed.Length == a.Length
+  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
-    var a := new int[1] [2];
+    var a := new int[2] [6, -6];
     var cubed := CubeElements(a);
-    expect IsMapSeq(a[..], cubed[..], cube);
+    expect cubed[..] == [216, -216];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: IsMapSeq(a[..], cubed[..], cube)
-  {
-    var a := new int[2] [4, 3];
-    var cubed := CubeElements(a);
-    expect IsMapSeq(a[..], cubed[..], cube);
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: IsMapSeq(a[..], cubed[..], cube)
-  {
-    var a := new int[3] [5, 4, 6];
-    var cubed := CubeElements(a);
-    expect IsMapSeq(a[..], cubed[..], cube);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCubeElements();
+  print "TestsForCubeElements: all non-failing tests passed!\n";
 }

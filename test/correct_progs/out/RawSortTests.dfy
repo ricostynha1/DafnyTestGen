@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-03-28 00:33:26
+// Generated: 2026-04-20 22:27:17
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -11,10 +11,9 @@
 type T = int 
 
 // Checks if array 'a' is sorted by non-descending order.
-predicate Sorted(a: array<T>)
-  reads a
+predicate IsSorted(s: seq<T>)
 { 
-   forall i, j :: 0 <= i < j < a.Length ==> a[i] <= a[j] 
+   forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j] 
 }
 
 // Obtains the set of all inversions in an array 'a', i.e., 
@@ -28,8 +27,8 @@ function Inversions(a: array<T>): set<(nat, nat)>
 // Sorts an array by simply swapping elements out of order, chosen randomly.
 method RawSort(a: array<T>)
    modifies a
-   ensures Sorted(a)
-   ensures multiset(a[..]) == multiset((a[..]))
+   ensures IsSorted(a[..])
+   ensures multiset(a[..]) == multiset(old(a[..]))
    decreases |Inversions(a)|
 {
    if i, j :| 0 <= i < j < a.Length && a[i] > a[j]  {
@@ -60,61 +59,45 @@ lemma MappingProp<T1, T2>(a: set<T1>, b: set<T2>, k: T2, m: map<T1, T2>)
 }
 
 
-method Passing()
+method TestsForRawSort()
 {
-  // Test case for combination {1}:
-  //   POST: Sorted(a)
+  // Test case for combination {1}/Rel:
+  //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new T[2] [7612, 7611];
+    RawSort(a);
+    expect a[..] == [7611, 7612];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: IsSorted(a[..])
+  //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[0] [];
-    var old_a := a[..];
     RawSort(a);
-    expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: Sorted(a)
+  // Test case for combination {1}/O|a|=1:
+  //   POST: IsSorted(a[..])
   //   POST: multiset(a[..]) == multiset(old(a[..]))
+  //   ENSURES: IsSorted(a[..])
+  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[1] [3];
-    var old_a := a[..];
+    var a := new T[1] [2];
     RawSort(a);
-    expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: Sorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new T[2] [4, 3];
-    var old_a := a[..];
-    RawSort(a);
-    expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: Sorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new T[3] [5, 4, 6];
-    var old_a := a[..];
-    RawSort(a);
-    expect Sorted(a);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForRawSort();
+  print "TestsForRawSort: all non-failing tests passed!\n";
 }

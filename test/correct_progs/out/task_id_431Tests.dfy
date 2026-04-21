@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-03-25 13:52:23
+// Generated: 2026-04-20 22:30:40
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -49,57 +49,56 @@ method HasCommonElementTest(){
     assert out3;
 }
 
-method Passing()
+method TestsForHasCommonElement()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[1] [4];
-    var b := new int[1] [4];
+    var a := new int[1] [8];
+    var b := new int[1] [8];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
   }
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST: !exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[0] [];
-    var b := new int[0] [];
+    var a := new int[1] [18];
+    var b := new int[1] [11];
     var result := HasCommonElement<int>(a, b);
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: result
-  //   POST: exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[2] [6, 16];
-    var b := new int[1] [6];
+    var a := new int[2] [9, 14];
+    var b := new int[1] [9];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i, j :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  // Test case for combination {1}/O|b|>=2:
+  //   POST: result
+  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[1] [2];
-    var b := new int[1] [5];
+    var a := new int[1] [10];
+    var b := new int[2] [10, 17];
     var result := HasCommonElement<int>(a, b);
-    expect result == false;
+    expect result == true;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForHasCommonElement();
+  print "TestsForHasCommonElement: all non-failing tests passed!\n";
 }

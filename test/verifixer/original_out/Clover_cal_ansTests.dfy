@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_cal_ans.dfy
 // Method: CalDiv
-// Generated: 2026-03-26 14:55:07
+// Generated: 2026-04-08 19:03:59
 
 // Clover_cal_ans.dfy
 
@@ -25,6 +25,8 @@ method Passing()
   // Test case for combination {1}:
   //   POST: x == 191 / 7
   //   POST: y == 191 % 7
+  //   ENSURES: x == 191 / 7
+  //   ENSURES: y == 191 % 7
   {
     var x, y := CalDiv();
     expect x == 27;

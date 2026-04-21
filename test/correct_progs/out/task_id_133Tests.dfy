@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-03-25 13:50:45
+// Generated: 2026-04-20 22:28:47
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -40,49 +40,55 @@ method SumOfNegativesTest(){
   assert out2 == -14;
 }
 
-method Passing()
+method TestsForCalcSumOfNegatives()
 {
   // Test case for combination {1}:
   //   POST: result == SumOfNegatives(a)
+  //   POST: result == 0
+  //   ENSURES: result == SumOfNegatives(a)
   {
     var a := new int[0] [];
     var result := CalcSumOfNegatives(a);
-    expect result == 0; // == SumOfNegatives(a)
+    expect result == 0;
   }
 
-  // Test case for combination {1}:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {2}:
+  //   POST: !(a.Length == 0)
+  //   POST: a[a.Length - 1] < 0
+  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
+  //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-10];
     var result := CalcSumOfNegatives(a);
-    expect result == 0; // == SumOfNegatives(a)
+    expect result == -10;
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {3}:
+  //   POST: !(a.Length == 0)
+  //   POST: !(a[a.Length - 1] < 0)
+  //   POST: result == SumOfNegatives(a, a.Length - 1)
+  //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [7];
     var result := CalcSumOfNegatives(a);
-    expect result == 0; // == SumOfNegatives(a)
+    expect result == 0;
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: result == SumOfNegatives(a)
+  // Test case for combination {2}/O|a|>=2:
+  //   POST: !(a.Length == 0)
+  //   POST: a[a.Length - 1] < 0
+  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
+  //   ENSURES: result == SumOfNegatives(a)
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[2] [3, -10];
     var result := CalcSumOfNegatives(a);
-    expect result == 0; // == SumOfNegatives(a)
+    expect result == -10;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcSumOfNegatives();
+  print "TestsForCalcSumOfNegatives: all non-failing tests passed!\n";
 }

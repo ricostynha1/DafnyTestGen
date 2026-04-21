@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9__570_VER_c.dfy
 // Method: ComputeFib
-// Generated: 2026-03-26 15:03:58
+// Generated: 2026-04-08 16:20:07
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise9.dfy
 
@@ -39,33 +39,44 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: b == fib(n)
+  //   ENSURES: b == fib(n)
   {
     var n := 0;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
   //   POST: b == fib(n)
+  //   ENSURES: b == fib(n)
   {
     var n := 1;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 1;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {2}/Ob=1:
   //   POST: b == fib(n)
+  //   ENSURES: b == fib(n)
   {
     var n := 2;
     var b := ComputeFib(n);
-    expect b == fib(n);
+    expect b == 1;
   }
 
 }
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {2}/Ob=0:
+  //   POST: b == fib(n)
+  //   ENSURES: b == fib(n)
+  {
+    var n := 3;
+    var b := ComputeFib(n);
+    // expect b == 0;
+  }
+
 }
 
 method Main()

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index.dfy
 // Method: Index
-// Generated: 2026-03-26 14:56:24
+// Generated: 2026-04-08 19:06:46
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_Index.dfy
 
@@ -86,39 +86,52 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  1 <= n
   //   POST: 0 <= i < n
+  //   ENSURES: 0 <= i < n
   {
     var n := 1;
     var i := Index(n);
     expect i == 0;
   }
 
+  // Test case for combination {1}/Bn=2:
+  //   PRE:  1 <= n
+  //   POST: 0 <= i < n
+  //   ENSURES: 0 <= i < n
+  {
+    var n := 2;
+    var i := Index(n);
+    expect i == 1;
+    expect 0 <= i < n;
+  }
+
+  // Test case for combination {1}/Oi>0:
+  //   PRE:  1 <= n
+  //   POST: 0 <= i < n
+  //   ENSURES: 0 <= i < n
+  {
+    var n := 3;
+    var i := Index(n);
+    expect i == 1;
+    expect 0 <= i < n;
+  }
+
+  // Test case for combination {1}/Oi=0:
+  //   PRE:  1 <= n
+  //   POST: 0 <= i < n
+  //   ENSURES: 0 <= i < n
+  {
+    var n := 4;
+    var i := Index(n);
+    expect i == 2;
+  }
+
   // Test case for combination {1}:
   //   POST: m <= x
   //   POST: m <= y
   //   POST: m == x
-  {
-    var x := 0;
-    var y := 1;
-    var m := Min(x, y);
-    expect m == 0;
-  }
-
-  // Test case for combination {2}:
-  //   POST: m <= x
-  //   POST: m <= y
   //   POST: m == y
-  {
-    var x := 0;
-    var y := -1;
-    var m := Min(x, y);
-    expect m == -1;
-  }
-
-  // Test case for combination {1,2}:
-  //   POST: m <= x
-  //   POST: m <= y
-  //   POST: m == x
-  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
   {
     var x := 0;
     var y := 0;
@@ -126,20 +139,124 @@ method Passing()
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
   //   POST: m <= x
   //   POST: m <= y
   //   POST: m == x
+  //   POST: !(m == y)
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
   {
-    var x := -1;
-    var y := 2;
+    var x := 0;
+    var y := 1;
+    var m := Min(x, y);
+    expect m == 0;
+  }
+
+  // Test case for combination {3}:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: !(m == x)
+  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := 0;
+    var y := -1;
     var m := Min(x, y);
     expect m == -1;
   }
 
+  // Test case for combination {1}/Bx=1,y=1:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: m == x
+  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := 1;
+    var y := 1;
+    var m := Min(x, y);
+    expect m == 1;
+  }
+
+  // Test case for combination {1}/Om<0:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: m == x
+  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := -1;
+    var y := -1;
+    var m := Min(x, y);
+    expect m == -1;
+  }
+
+  // Test case for combination {2}/Om>0:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := 1;
+    var y := 2;
+    var m := Min(x, y);
+    expect m == 1;
+  }
+
+  // Test case for combination {2}/Om<0:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := -1;
+    var y := 0;
+    var m := Min(x, y);
+    expect m == -1;
+  }
+
+  // Test case for combination {3}/Om>0:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: !(m == x)
+  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := 2;
+    var y := 1;
+    var m := Min(x, y);
+    expect m == 1;
+  }
+
+  // Test case for combination {3}/Om=0:
+  //   POST: m <= x
+  //   POST: m <= y
+  //   POST: !(m == x)
+  //   POST: m == y
+  //   ENSURES: m <= x && m <= y
+  //   ENSURES: m == x || m == y
+  {
+    var x := 1;
+    var y := 0;
+    var m := Min(x, y);
+    expect m == 0;
+  }
+
   // Test case for combination {1}:
   //   POST: s == x + y
-  //   POST: m == if x >= y then x else y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
   {
     var x := 0;
     var y := 0;
@@ -148,20 +265,26 @@ method Passing()
     expect m == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
   //   POST: s == x + y
-  //   POST: m == if x >= y then x else y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
   {
-    var x := 0;
-    var y := 1;
+    var x := -1;
+    var y := 0;
     var s, m := MaxSum(x, y);
-    expect s == 1;
-    expect m == 1;
+    expect s == -1;
+    expect m == 0;
   }
 
   // Test case for combination {1}/Bx=1,y=0:
   //   POST: s == x + y
-  //   POST: m == if x >= y then x else y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
   {
     var x := 1;
     var y := 0;
@@ -172,7 +295,10 @@ method Passing()
 
   // Test case for combination {1}/Bx=1,y=1:
   //   POST: s == x + y
-  //   POST: m == if x >= y then x else y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
   {
     var x := 1;
     var y := 1;
@@ -181,27 +307,141 @@ method Passing()
     expect m == 1;
   }
 
+  // Test case for combination {1}/Os<0:
+  //   POST: s == x + y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := 2;
+    var y := -3;
+    var s, m := MaxSum(x, y);
+    expect s == -1;
+    expect m == 2;
+  }
+
+  // Test case for combination {1}/Os=0:
+  //   POST: s == x + y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := 4;
+    var y := -4;
+    var s, m := MaxSum(x, y);
+    expect s == 0;
+    expect m == 4;
+  }
+
+  // Test case for combination {1}/Om>0:
+  //   POST: s == x + y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := 3;
+    var y := -5;
+    var s, m := MaxSum(x, y);
+    expect s == -2;
+    expect m == 3;
+  }
+
+  // Test case for combination {1}/Om<0:
+  //   POST: s == x + y
+  //   POST: x >= y
+  //   POST: m == x
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := -1;
+    var y := -6;
+    var s, m := MaxSum(x, y);
+    expect s == -7;
+    expect m == -1;
+  }
+
+  // Test case for combination {2}/Os>0:
+  //   POST: s == x + y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := 0;
+    var y := 1;
+    var s, m := MaxSum(x, y);
+    expect s == 1;
+    expect m == 1;
+  }
+
+  // Test case for combination {2}/Os=0:
+  //   POST: s == x + y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := -2;
+    var y := 2;
+    var s, m := MaxSum(x, y);
+    expect s == 0;
+    expect m == 2;
+  }
+
+  // Test case for combination {2}/Om>0:
+  //   POST: s == x + y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := 1;
+    var y := 3;
+    var s, m := MaxSum(x, y);
+    expect s == 4;
+    expect m == 3;
+  }
+
+  // Test case for combination {2}/Om<0:
+  //   POST: s == x + y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := -3;
+    var y := -2;
+    var s, m := MaxSum(x, y);
+    expect s == -5;
+    expect m == -2;
+  }
+
+  // Test case for combination {2}/Om=0:
+  //   POST: s == x + y
+  //   POST: !(x >= y)
+  //   POST: m == y
+  //   ENSURES: s == x + y
+  //   ENSURES: m == if x >= y then x else y
+  {
+    var x := -2;
+    var y := 0;
+    var s, m := MaxSum(x, y);
+    expect s == -2;
+    expect m == 0;
+  }
+
   // Test case for combination {1}:
   //   PRE:  s <= 2 * m
   //   POST: s == x + y
   //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  {
-    var s := 0;
-    var m := 1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 1;
-    expect y == -1;
-  }
-
-  // Test case for combination {1,2}:
-  //   PRE:  s <= 2 * m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
   //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
   {
     var s := 0;
     var m := 0;
@@ -210,42 +450,198 @@ method Passing()
     expect y == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
   //   PRE:  s <= 2 * m
   //   POST: s == x + y
   //   POST: m == x
+  //   POST: !(m == y)
   //   POST: x <= m
   //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
   {
-    var s := -1;
+    var s := 0;
+    var m := 1;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 1;
+    expect y == -1;
+  }
+
+  // Test case for combination {1}/Bs=2,m=1:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := 2;
+    var m := 1;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 1;
+    expect y == 1;
+  }
+
+  // Test case for combination {1}/Ox<0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -2;
+    var m := -1;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -1;
+    expect y == -1;
+  }
+
+  // Test case for combination {1}/Oy>0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := 4;
     var m := 2;
     var x, y := ReconstructFromMaxSum(s, m);
     expect x == 2;
+    expect y == 2;
+  }
+
+  // Test case for combination {1}/Oy<0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -4;
+    var m := -2;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -2;
+    expect y == -2;
+  }
+
+  // Test case for combination {2}/Ox<0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -3;
+    var m := -1;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -1;
+    expect y == -2;
+  }
+
+  // Test case for combination {2}/Ox=0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -1;
+    var m := 0;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 0;
+    expect y == -1;
+  }
+
+  // Test case for combination {2}/Oy>0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := 3;
+    var m := 2;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 2;
+    expect y == 1;
+  }
+
+  // Test case for combination {2}/Oy<0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -5;
+    var m := -2;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -2;
     expect y == -3;
+  }
+
+  // Test case for combination {2}/Oy=0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: m == x
+  //   POST: !(m == y)
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := 4;
+    var m := 4;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 4;
+    expect y == 0;
+  }
+
+  // Test case for combination {3}/Oy>0:
+  //   PRE:  s <= 2 * m
+  //   POST: s == x + y
+  //   POST: !(m == x)
+  //   POST: m == y
+  //   POST: x <= m
+  //   POST: y <= m
+  //   ENSURES: s == x + y
+  //   ENSURES: (m == x || m == y) && x <= m && y <= m
+  {
+    var s := -1;
+    var m := 1;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == 1;
+    expect y == -2;
   }
 
 }
 
 method Failing()
 {
-  // Test case for combination {1}:
-  //   PRE:  1 <= n
-  //   POST: 0 <= i < n
-  {
-    var n := 2;
-    var i := Index(n);
-    // expect i == 0;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  1 <= n
-  //   POST: 0 <= i < n
-  {
-    var n := 3;
-    var i := Index(n);
-    // expect i == 0;
-  }
-
+  // (no failing tests)
 }
 
 method Main()

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-03-25 13:53:23
+// Generated: 2026-04-20 22:32:18
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -65,47 +65,56 @@ method DissimilarElementsTest(){
     assert  res3 == {3, 4, 5, 6};
 }
 
-method Passing()
+method TestsForDissimilarElements()
 {
   // Test case for combination {1}:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  //   POST: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[0] [];
     var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
-    expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
+    expect res == {};
   }
 
-  // Test case for combination {1}:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
+  // Test case for combination {1}/O|a|=1:
+  //   POST: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
     var a := new int[1] [2];
-    var b := new int[1] [6];
-    var res := DissimilarElements<int>(a, b);
-    expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
-  }
-
-  // Test case for combination {1}/Ba=3,b=1:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[1] [14];
-    var res := DissimilarElements<int>(a, b);
-    expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
-  }
-
-  // Test case for combination {1}/Ba=3,b=0:
-  //   POST: res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..]
-  {
-    var a := new int[3] [5, 4, 6];
     var b := new int[0] [];
     var res := DissimilarElements<int>(a, b);
-    expect res == (set x | x in a[..] && x !in b[..]) + set x | x in b[..] && x !in a[..];
+    expect res == {2};
   }
 
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  {
+    var a := new int[2] [3, 4];
+    var b := new int[1] [9];
+    var res := DissimilarElements<int>(a, b);
+    expect res == {3, 4, 9};
+  }
+
+  // Test case for combination {1}/O|b|>=2:
+  //   POST: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  //   ENSURES: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
+  {
+    var a := new int[1] [12];
+    var b := new int[2] [5, 6];
+    var res := DissimilarElements<int>(a, b);
+    expect res == {5, 6, 12};
+  }
+
+}
+
+method TestsForcontains()
+{
   // Test case for combination {1}:
   //   POST: res
   //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
     var a := new int[1] [8];
     var x := 8;
@@ -116,42 +125,42 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !res
   //   POST: !(x in a[..])
+  //   ENSURES: res <==> x in a[..]
   {
-    var a := new int[1] [9];
+    var a := new int[0] [];
     var x := 8;
     var res := contains<int>(a, x);
     expect res == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: res
   //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
-    var a := new int[1] [9];
-    var x := 9;
+    var a := new int[2] [10, 20];
+    var x := 10;
     var res := contains<int>(a, x);
     expect res == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !res
-  //   POST: !(x in a[..])
+  // Test case for combination {1}/Ox=0:
+  //   POST: res
+  //   POST: x in a[..]
+  //   ENSURES: res <==> x in a[..]
   {
-    var a := new int[0] [];
-    var x := 9;
+    var a := new int[1] [0];
+    var x := 0;
     var res := contains<int>(a, x);
-    expect res == false;
+    expect res == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDissimilarElements();
+  print "TestsForDissimilarElements: all non-failing tests passed!\n";
+  TestsForcontains();
+  print "TestsForcontains: all non-failing tests passed!\n";
 }

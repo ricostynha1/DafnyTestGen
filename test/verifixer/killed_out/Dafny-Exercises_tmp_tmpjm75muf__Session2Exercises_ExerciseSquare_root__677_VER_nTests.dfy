@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseSquare_root__677_VER_n.dfy
 // Method: mroot1
-// Generated: 2026-03-26 14:58:03
+// Generated: 2026-04-08 16:49:13
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseSquare_root.dfy
 
@@ -63,18 +63,9 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 15;
-    var r := mroot1(n);
-    expect r == 3;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 13;
     var r := mroot1(n);
     expect r == 3;
   }
@@ -83,6 +74,7 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 0;
     var r := mroot1(n);
@@ -93,19 +85,21 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 1;
     var r := mroot1(n);
     expect r == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Or>0:
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
-    var n := 15;
-    var r := mroot2(n);
+    var n := 9;
+    var r := mroot1(n);
     expect r == 3;
   }
 
@@ -113,8 +107,9 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
-    var n := 13;
+    var n := 15;
     var r := mroot2(n);
     expect r == 3;
   }
@@ -123,6 +118,7 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 0;
     var r := mroot2(n);
@@ -133,10 +129,22 @@ method Passing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 1;
     var r := mroot2(n);
     expect r == 1;
+  }
+
+  // Test case for combination {1}/Or>0:
+  //   PRE:  n >= 0
+  //   POST: r >= 0
+  //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  {
+    var n := 9;
+    var r := mroot2(n);
+    expect r == 3;
   }
 
 }
@@ -147,18 +155,9 @@ method Failing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 15;
-    var r := mroot3(n);
-    // expect r == 3;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 13;
     var r := mroot3(n);
     // expect r == 3;
   }
@@ -167,6 +166,7 @@ method Failing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 0;
     var r := mroot3(n);
@@ -177,10 +177,22 @@ method Failing()
   //   PRE:  n >= 0
   //   POST: r >= 0
   //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
   {
     var n := 1;
     var r := mroot3(n);
     // expect r == 1;
+  }
+
+  // Test case for combination {1}/Or>0:
+  //   PRE:  n >= 0
+  //   POST: r >= 0
+  //   POST: r * r <= n < (r + 1) * (r + 1)
+  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  {
+    var n := 9;
+    var r := mroot3(n);
+    // expect r == 3;
   }
 
 }

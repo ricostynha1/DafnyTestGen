@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_06_Hoangkim_ex_06_hoangkim.dfy
 // Method: gcdI
-// Generated: 2026-03-26 14:59:45
+// Generated: 2026-04-08 19:17:38
 
 // Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_06_Hoangkim_ex_06_hoangkim.dfy
 
@@ -57,41 +57,56 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  m > 0 && n > 0
   //   POST: d == gcd(m, n)
+  //   ENSURES: d == gcd(m, n)
   {
     var m := 1;
     var n := 1;
     var d := gcdI(m, n);
-    expect d == gcd(m, n);
+    expect d == 1;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
   //   PRE:  m > 0 && n > 0
   //   POST: d == gcd(m, n)
-  {
-    var m := 2;
-    var n := 2;
-    var d := gcdI(m, n);
-    expect d == gcd(m, n);
-  }
-
-  // Test case for combination {1}/Bm=1,n=2:
-  //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
+  //   ENSURES: d == gcd(m, n)
   {
     var m := 1;
     var n := 2;
     var d := gcdI(m, n);
-    expect d == gcd(m, n);
+    expect d == 1;
   }
 
-  // Test case for combination {1}/Bm=2,n=1:
+  // Test case for combination {1}/Bm=2,n=2:
   //   PRE:  m > 0 && n > 0
   //   POST: d == gcd(m, n)
+  //   ENSURES: d == gcd(m, n)
+  {
+    var m := 2;
+    var n := 2;
+    var d := gcdI(m, n);
+    expect d == 2;
+  }
+
+  // Test case for combination {2}/Bm=2,n=1:
+  //   PRE:  m > 0 && n > 0
+  //   POST: d == gcd(m, n)
+  //   ENSURES: d == gcd(m, n)
   {
     var m := 2;
     var n := 1;
     var d := gcdI(m, n);
-    expect d == gcd(m, n);
+    expect d == 1;
+  }
+
+  // Test case for combination {2}/Od=0:
+  //   PRE:  m > 0 && n > 0
+  //   POST: d == gcd(m, n)
+  //   ENSURES: d == gcd(m, n)
+  {
+    var m := 1;
+    var n := 3;
+    var d := gcdI(m, n);
+    expect d == 1;
   }
 
 }

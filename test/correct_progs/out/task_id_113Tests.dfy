@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-03-25 13:50:39
+// Generated: 2026-04-20 22:28:36
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -42,14 +42,15 @@ method IsIntegerTest(){
   assert !res4;
 }
 
-method Passing()
+method TestsForIsInteger()
 {
   // Test case for combination {1}:
   //   POST: result
   //   POST: |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['0'];
+    var s: seq<char> := ['9'];
     var result := IsInteger(s);
     expect result == true;
   }
@@ -57,6 +58,7 @@ method Passing()
   // Test case for combination {2}:
   //   POST: !result
   //   POST: !(|s| > 0)
+  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
     var s: seq<char> := [];
     var result := IsInteger(s);
@@ -65,32 +67,31 @@ method Passing()
 
   // Test case for combination {3}:
   //   POST: !result
-  //   POST: !forall i :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST: |s| > 0
+  //   POST: 0 <= (|s| - 1)
+  //   POST: !IsDigit(s[0])
+  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['~'];
     var result := IsInteger(s);
     expect result == false;
   }
 
-  // Test case for combination {1}:
-  //   POST: result
+  // Test case for combination {4}:
+  //   POST: !result
   //   POST: |s| > 0
-  //   POST: forall i :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST: exists i :: 1 <= i < (|s| - 1) && !IsDigit(s[i])
+  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
-    var s: seq<char> := ['8', '0'];
+    var s: seq<char> := ['~', '/', '\U{0027}'];
     var result := IsInteger(s);
-    expect result == true;
+    expect result == false;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsInteger();
+  print "TestsForIsInteger: all non-failing tests passed!\n";
 }

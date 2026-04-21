@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-03-28 00:33:29
+// Generated: 2026-04-20 22:27:22
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -56,93 +56,113 @@ method Recaman(n: nat) returns (res: nat)
 
 
 
-method Passing()
+method TestsForContains()
 {
   // Test case for combination {1}:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
-    var x := 8;
-    var a := new nat[1] [8];
-    var len := 1;
+    var x := 10;
+    var a := new nat[2] [4, 10];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
   // Test case for combination {2}:
   //   PRE:  len <= a.Length
   //   POST: !res
   //   POST: !(x in a[..len])
+  //   ENSURES: res <==> x in a[..len]
   {
-    var x := 8;
-    var a := new nat[0] [];
-    var len := 0;
+    var x := -1;
+    var a := new nat[2] [10, 5];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
-    expect !(x in a[..len]);
   }
 
-  // Test case for combination {1}/Bx=1,a=3,len=1:
+  // Test case for combination {1}/Blen=1:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
-    var x := 1;
-    var a := new nat[3] [1, 4, 5];
+    var x := 10;
+    var a := new nat[1] [10];
     var len := 1;
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
-  // Test case for combination {1}/Bx=1,a=2,len==a:
+  // Test case for combination {1}/Blen=a_len-1:
   //   PRE:  len <= a.Length
   //   POST: res
   //   POST: x in a[..len]
+  //   ENSURES: res <==> x in a[..len]
   {
-    var x := 1;
-    var a := new nat[2] [1, 3];
-    var len := 1;
+    var x := 10;
+    var a := new nat[3] [10, 8, 9];
+    var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
-    expect x in a[..len];
   }
 
+}
+
+method TestsForRecaman()
+{
   // Test case for combination {1}:
   //   POST: res == R(n)
+  //   POST: res == 0
+  //   ENSURES: res == R(n)
   {
     var n := 0;
     var res := Recaman(n);
     expect res == 0;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: res == R(n)
-  {
-    var n := 1;
-    var res := Recaman(n);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/R3:
-  //   POST: res == R(n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
   {
     var n := 2;
     var res := Recaman(n);
     expect res == 3;
   }
 
-}
+  // Test case for combination {2}/Bn=1:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
+  {
+    var n := 1;
+    var res := Recaman(n);
+    expect res == 1;
+  }
 
-method Failing()
-{
-  // (no failing tests)
+  // Test case for combination {2}/R3:
+  //   POST: !(n == 0)
+  //   POST: R(n - 1) - n > 0 && !exists k: int {:trigger R(k)} :: 0 <= k && k < n && R(k) == R(n - 1) - n
+  //   POST: res == R(n - 1) - n
+  //   ENSURES: res == R(n)
+  {
+    var n := 10;
+    var res := Recaman(n);
+    expect res == 11;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForContains();
+  print "TestsForContains: all non-failing tests passed!\n";
+  TestsForRecaman();
+  print "TestsForRecaman: all non-failing tests passed!\n";
 }

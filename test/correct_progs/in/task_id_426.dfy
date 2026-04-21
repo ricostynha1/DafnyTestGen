@@ -1,15 +1,15 @@
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
-  ensures oddList == Filter(arr[..], IsOdd)
+  ensures oddList == FilterOdd(arr[..])
 {
   oddList := [];
   for i := 0 to arr.Length
-    invariant oddList == Filter(arr[..i], IsOdd)
+    invariant oddList == FilterOdd(arr[..i])
   {
-    assert arr[..i+1] == arr[..i] + [arr[i]]; // proof helper
     if IsOdd(arr[i]) {
       oddList := oddList + [arr[i]];
     }
+    assert arr[..i+1] == arr[..i] + [arr[i]]; // proof helper
   }
   assert arr[..] == arr[..arr.Length]; // proof helper
 }
@@ -20,10 +20,10 @@ predicate IsOdd(n: int) {
 }
 
 // Select from a sequence 'a' the elements that satisfy a predicate 'p'.
-ghost function {:fuel 4} Filter<T>(a: seq<T>, p: (T) -> bool): seq<T> {
+ghost function {:fuel 4} FilterOdd(a: seq<int>): seq<int> {
   if |a| == 0 then []
-  else if p(a[|a|-1]) then Filter(a[..|a|-1], p) + [a[|a|-1]]
-  else Filter(a[..|a|-1], p)
+  else if IsOdd(a[|a|-1]) then FilterOdd(a[..|a|-1]) + [a[|a|-1]]
+  else FilterOdd(a[..|a|-1])
 }
 
 

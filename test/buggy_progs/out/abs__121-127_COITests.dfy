@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-03-25 13:27:02
+// Generated: 2026-04-20 23:27:56
 
 // res.dfy
 
@@ -18,80 +18,63 @@ method abs(x: int) returns (y: int)
 }
 
 
-method Passing()
+method TestsForabs()
 {
-  // Test case for combination {2,4}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}:
   //   POST: !(x > 0)
+  //   POST: x <= 0
   //   POST: y == -x
+  //   ENSURES: x > 0 ==> y == x
+  //   ENSURES: x <= 0 ==> y == -x
+  {
+    var x := -10;
+    var y := abs(x);
+    // expect y == 10; // got -10
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}:
+  //   POST: x > 0
   //   POST: y == x
+  //   POST: !(x <= 0)
+  //   ENSURES: x > 0 ==> y == x
+  //   ENSURES: x <= 0 ==> y == -x
+  {
+    var x := 10;
+    var y := abs(x);
+    // expect y == 10; // got -10
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST: !(x > 0)
+  //   POST: x <= 0
+  //   POST: y == -x
+  //   ENSURES: x > 0 ==> y == x
+  //   ENSURES: x <= 0 ==> y == -x
   {
     var x := 0;
     var y := abs(x);
     expect y == 0;
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {2}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R3:
   //   POST: !(x > 0)
+  //   POST: x <= 0
   //   POST: y == -x
+  //   ENSURES: x > 0 ==> y == x
+  //   ENSURES: x <= 0 ==> y == -x
   {
-    var x := -1;
+    var x := -9;
     var y := abs(x);
-    // expect y == 1;
-  }
-
-  // Test case for combination {3}:
-  //   POST: y == x
-  //   POST: !(x <= 0)
-  {
-    var x := 1;
-    var y := abs(x);
-    // expect y == 1;
-  }
-
-  // Test case for combination {2}/R2:
-  //   POST: !(x > 0)
-  //   POST: y == -x
-  {
-    var x := -2;
-    var y := abs(x);
-    // expect y == 2;
-  }
-
-  // Test case for combination {2}/R3:
-  //   POST: !(x > 0)
-  //   POST: y == -x
-  {
-    var x := -3;
-    var y := abs(x);
-    // expect y == 3;
-  }
-
-  // Test case for combination {3}/R2:
-  //   POST: y == x
-  //   POST: !(x <= 0)
-  {
-    var x := 2;
-    var y := abs(x);
-    // expect y == 2;
-  }
-
-  // Test case for combination {3}/R3:
-  //   POST: y == x
-  //   POST: !(x <= 0)
-  {
-    var x := 3;
-    var y := abs(x);
-    // expect y == 3;
+    // expect y == 9; // got -9
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForabs();
+  print "TestsForabs: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_587.dfy
 // Method: ArrayToSeq
-// Generated: 2026-03-25 13:53:26
+// Generated: 2026-04-20 22:32:23
 
 // Converts an array to a sequence
 method ArrayToSeq<T>(a: array<T>) returns (s: seq<T>)
@@ -22,49 +22,48 @@ method ArrayToSeqTest(){
 }
 
 
-method Passing()
+method TestsForArrayToSeq()
 {
   // Test case for combination {1}:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[0] [];
     var s := ArrayToSeq<int>(a);
     expect s == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|=1:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
     var a := new int[1] [2];
     var s := ArrayToSeq<int>(a);
     expect s == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [3, 4];
     var s := ArrayToSeq<int>(a);
-    expect s == [4, 3];
+    expect s == [3, 4];
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/R4:
   //   POST: s == a[..]
+  //   ENSURES: s == a[..]
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[1] [6];
     var s := ArrayToSeq<int>(a);
-    expect s == [5, 4, 6];
+    expect s == [6];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForArrayToSeq();
+  print "TestsForArrayToSeq: all non-failing tests passed!\n";
 }

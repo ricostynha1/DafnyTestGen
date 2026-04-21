@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-03-25 13:52:56
+// Generated: 2026-04-20 22:31:40
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -58,89 +58,132 @@ method DifferenceSumCubesAndSumNumbersTest(){
   assert res1==30;
 }
 
-method Passing()
+method TestsForDifferenceSumCubesAndSumNumbers()
 {
   // Test case for combination {1}:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 10;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 2970;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 0;
     var diff := DifferenceSumCubesAndSumNumbers(n);
     expect diff == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
     var n := 1;
     var diff := DifferenceSumCubesAndSumNumbers(n);
     expect diff == 0;
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/R4:
   //   POST: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  //   ENSURES: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
   {
-    var n := 4;
+    var n := 9;
     var diff := DifferenceSumCubesAndSumNumbers(n);
-    expect diff == 90;
+    expect diff == 1980;
   }
 
+}
+
+method TestsForSumCubes()
+{
   // Test case for combination {1}:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 10;
+    var s := SumCubes(n);
+    expect s == 3025;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 0;
     var s := SumCubes(n);
     expect s == 0;
   }
 
-  // Test case for combination {1}:
-  //   POST: s == n * n * (n + 1) * (n + 1) / 4
-  {
-    var n := 5;
-    var s := SumCubes(n);
-    expect s == 225;
-  }
-
   // Test case for combination {1}/Bn=1:
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
     var n := 1;
     var s := SumCubes(n);
     expect s == 1;
   }
 
+  // Test case for combination {1}/R4:
+  //   POST: s == n * n * (n + 1) * (n + 1) / 4
+  //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 9;
+    var s := SumCubes(n);
+    expect s == 2025;
+  }
+
+}
+
+method TestsForSumNumbers()
+{
   // Test case for combination {1}:
   //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
+  {
+    var n := 10;
+    var s := SumNumbers(n);
+    expect s == 55;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
   {
     var n := 0;
     var s := SumNumbers(n);
     expect s == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bn=1:
   //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
+  {
+    var n := 1;
+    var s := SumNumbers(n);
+    expect s == 1;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: s == n * (n + 1) / 2
+  //   ENSURES: s == n * (n + 1) / 2
   {
     var n := 2;
     var s := SumNumbers(n);
     expect s == 3;
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: s == n * (n + 1) / 2
-  {
-    var n := 1;
-    var s := SumNumbers(n);
-    expect s == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDifferenceSumCubesAndSumNumbers();
+  print "TestsForDifferenceSumCubesAndSumNumbers: all non-failing tests passed!\n";
+  TestsForSumCubes();
+  print "TestsForSumCubes: all non-failing tests passed!\n";
+  TestsForSumNumbers();
+  print "TestsForSumNumbers: all non-failing tests passed!\n";
 }

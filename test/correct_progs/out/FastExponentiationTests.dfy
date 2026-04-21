@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-03-28 00:32:43
+// Generated: 2026-04-20 22:25:08
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -42,10 +42,12 @@ lemma PowerSquareLemma(x: real, n: nat)
 
 
 
-method Passing()
+method TestsForFastExponentiation()
 {
   // Test case for combination {1}:
   //   POST: p == Power(x, n)
+  //   POST: p == 1.0
+  //   ENSURES: p == Power(x, n)
   {
     var x := 0.0;
     var n := 0;
@@ -53,8 +55,21 @@ method Passing()
     expect p == 1.0;
   }
 
-  // Test case for combination {1}/Bx=0.0,n=1:
-  //   POST: p == Power(x, n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: p == x * Power(x, n - 1)
+  //   ENSURES: p == Power(x, n)
+  {
+    var x := 0.0;
+    var n := 10;
+    var p := FastExponentiation(x, n);
+    expect p == 0.0;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST: !(n == 0)
+  //   POST: p == x * Power(x, n - 1)
+  //   ENSURES: p == Power(x, n)
   {
     var x := 0.0;
     var n := 1;
@@ -62,33 +77,21 @@ method Passing()
     expect p == 0.0;
   }
 
-  // Test case for combination {1}/Bx=1.0,n=0:
-  //   POST: p == Power(x, n)
+  // Test case for combination {2}/Bn=2:
+  //   POST: !(n == 0)
+  //   POST: p == x * Power(x, n - 1)
+  //   ENSURES: p == Power(x, n)
   {
-    var x := 1.0;
-    var n := 0;
+    var x := 0.0;
+    var n := 2;
     var p := FastExponentiation(x, n);
-    expect p == 1.0;
+    expect p == 0.0;
   }
 
-  // Test case for combination {1}/Bx=1.0,n=1:
-  //   POST: p == Power(x, n)
-  {
-    var x := 1.0;
-    var n := 1;
-    var p := FastExponentiation(x, n);
-    expect p == 1.0;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFastExponentiation();
+  print "TestsForFastExponentiation: all non-failing tests passed!\n";
 }

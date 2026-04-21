@@ -1,15 +1,17 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-03-25 13:51:03
+// Generated: 2026-04-20 22:29:09
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
-  ensures result == elems(a[..]) * elems(b[..])
+  ensures forall x :: x in result ==> x in a[..] && x in b[..]
+  ensures forall x :: x in a[..] && x in b[..] ==> x in result
 {
   result := {};
   for i := 0 to a.Length // loop through the first array
-    invariant result == elems(a[..i]) * elems(b[..])
+    invariant forall x :: x in result ==> x in a[..i] && x in b[..]
+    invariant forall x :: x in a[..i] && x in b[..] ==> x in result
   {
     if a[i] !in result && a[i] in b[..] {
       result := result + {a[i]};
@@ -17,10 +19,6 @@ method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
   }
 }
 
-// Auxiliary function that returns the set of elements (without duplicates) in a sequence.
-function elems<T>(s: seq<T>) : set<T> {
-  set x | x in s
-}
 
 // Test cases checked statically.
 method SharedElementsTest(){
@@ -47,53 +45,60 @@ method SharedElementsTest(){
   assert res3 == {};
 }
 
-method Passing()
+method TestsForSharedElements()
 {
-  // Test case for combination {1}:
-  //   POST: result == elems(a[..]) * elems(b[..])
+  // Test case for combination {1}/Rel:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[1] [-2];
+    var b := new int[1] [-2];
+    var result := SharedElements<int>(a, b);
+    expect result == {-2};
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
     var a := new int[0] [];
     var b := new int[0] [];
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == {};
   }
 
-  // Test case for combination {1}:
-  //   POST: result == elems(a[..]) * elems(b[..])
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
-    var a := new int[1] [2];
-    var b := new int[1] [6];
+    var a := new int[2] [3, 4];
+    var b := new int[1] [9];
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == {};
   }
 
-  // Test case for combination {1}/Ba=3,b=1:
-  //   POST: result == elems(a[..]) * elems(b[..])
+  // Test case for combination {1}/O|b|>=2:
+  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[1] [14];
+    var a := new int[1] [12];
+    var b := new int[2] [5, 6];
     var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
+    expect result == {};
   }
 
-  // Test case for combination {1}/Ba=3,b=0:
-  //   POST: result == elems(a[..]) * elems(b[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[0] [];
-    var result := SharedElements<int>(a, b);
-    expect result == elems(a[..]) * elems(b[..]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSharedElements();
+  print "TestsForSharedElements: all non-failing tests passed!\n";
 }

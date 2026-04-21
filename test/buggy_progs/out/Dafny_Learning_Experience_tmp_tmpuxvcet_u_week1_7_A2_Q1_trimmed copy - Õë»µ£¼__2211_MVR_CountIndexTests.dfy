@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - Õë»µ£¼__2211_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-03-25 13:29:04
+// Generated: 2026-04-20 23:32:44
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -165,559 +165,264 @@ method Mult(x: int, y: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForFooCount()
 {
   // Test case for combination P{1}/{1}:
   //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
   //   POST: p == Count(CountIndex, a)
+  //   POST: p == 0
+  //   ENSURES: p == Count(CountIndex, a)
   {
     var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[0] [];
+    var a: seq<int> := [8];
+    var b := new int[1] [-10];
     var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
+    expect p == 0;
   }
 
-  // Test case for combination P{2}/{1}:
+  // Test case for combination P{2}/{2}:
   //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 1;
-    var a: seq<int> := [7];
-    var b := new int[1] [10];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[2] [4, 3];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[3] [5, 4, 6];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [2];
-    var b := new int[0] [];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [3];
-    var b := new int[1] [4];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [11];
-    var b := new int[2] [4, 3];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [17];
-    var b := new int[3] [5, 4, 6];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[1] [3];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[1] [10];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4];
-    var b := new int[3] [7, 6, 8];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[0] [];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[1] [15];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[2] [8, 7];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[0] [];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=2,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
+  //   POST: !(CountIndex == 0)
+  //   POST: a[CountIndex - 1] % 2 == 0
+  //   POST: p == 1 + Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
+    var a: seq<int> := [-10, -8];
+    var b := new int[2] [-1, -7];
     var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
+    expect p == 2;
   }
 
-  // Test case for combination P{2}/{1}/BCountIndex=2,a=3,b=3:
+  // Test case for combination P{2}/{3}:
   //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
+  //   POST: !(CountIndex == 0)
+  //   POST: !(a[CountIndex - 1] % 2 == 0)
+  //   POST: p == Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
+    var a: seq<int> := [-1, -1];
+    var b := new int[2] [10, 4];
     var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
+    expect p == 0;
   }
 
-  // Test case for combination P{2}/{1}/BCountIndex=1,a=3,b=3:
+  // Test case for combination P{2}/{2}/BCountIndex=1:
   //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
+  //   POST: !(CountIndex == 0)
+  //   POST: a[CountIndex - 1] % 2 == 0
+  //   POST: p == 1 + Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
   {
     var CountIndex := 1;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
+    var a: seq<int> := [8];
+    var b := new int[1] [-1];
     var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=1,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 1;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
-    var p := FooCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[0] [];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 1;
-    var a: seq<int> := [7];
-    var b := new int[1] [10];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[2] [4, 3];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[3] [5, 4, 6];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [2];
-    var b := new int[0] [];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [3];
-    var b := new int[1] [4];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [11];
-    var b := new int[2] [4, 3];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=1,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [17];
-    var b := new int[3] [5, 4, 6];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=0,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [];
-    var b := new int[1] [3];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[1] [10];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4];
-    var b := new int[3] [7, 6, 8];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[0] [];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=1:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[1] [15];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=3,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[2] [8, 7];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{1}/{1}/BCountIndex=0,a=2,b=0:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 0;
-    var a: seq<int> := [4, 3];
-    var b := new int[0] [];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=2,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 2;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=2,a=3,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 2;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=1,a=3,b=3:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 1;
-    var a: seq<int> := [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination P{2}/{1}/BCountIndex=1,a=2,b=2:
-  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
-  //   POST: p == Count(CountIndex, a)
-  {
-    var CountIndex := 1;
-    var a: seq<int> := [4, 3];
-    var b := new int[2] [6, 5];
-    var p := ComputeCount(CountIndex, a, b);
-    expect p == Count(CountIndex, a);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  a.Length == b.Length
-  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[0] [];
-    var b := new int[0] [];
-    var p := PreCompute(a, b);
-    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {1}/Ba=2,b=2:
-  //   PRE:  a.Length == b.Length
-  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[2] [4, 3];
-    var b := new int[2] [6, 5];
-    var p := PreCompute(a, b);
-    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {1}/Ba=1,b=1:
-  //   PRE:  a.Length == b.Length
-  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[1] [3];
-    var b := new int[1] [4];
-    var p := PreCompute(a, b);
-    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {1}/Ba=3,b=3:
-  //   PRE:  a.Length == b.Length
-  //   POST: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    var b := new int[3] [8, 7, 9];
-    var p := PreCompute(a, b);
-    expect (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 0;
-    var y := 0;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=0,y=1:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 0;
-    var y := 1;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,y=0:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 1;
-    var y := 0;
-    var r := Mult(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   PRE:  x >= 0 && y >= 0
-  //   POST: r == x * y
-  {
-    var x := 1;
-    var y := 1;
-    var r := Mult(x, y);
-    expect r == 1;
+    expect p == 1;
   }
 
 }
 
-method Failing()
+method TestsForComputeCount()
 {
-  // (no failing tests)
+  // Test case for combination P{1}/{1}:
+  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
+  //   POST: p == Count(CountIndex, a)
+  //   POST: p == 0
+  //   ENSURES: p == Count(CountIndex, a)
+  {
+    var CountIndex := 0;
+    var a: seq<int> := [8];
+    var b := new int[1] [-10];
+    var p := ComputeCount(CountIndex, a, b);
+    expect p == 0;
+  }
+
+  // Test case for combination P{2}/{2}:
+  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
+  //   POST: !(CountIndex == 0)
+  //   POST: a[CountIndex - 1] % 2 == 0
+  //   POST: p == 1 + Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
+  {
+    var CountIndex := 2;
+    var a: seq<int> := [-10, -8];
+    var b := new int[2] [8, -7];
+    var p := ComputeCount(CountIndex, a, b);
+    expect p == 2;
+  }
+
+  // Test case for combination P{2}/{3}:
+  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
+  //   POST: !(CountIndex == 0)
+  //   POST: !(a[CountIndex - 1] % 2 == 0)
+  //   POST: p == Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
+  {
+    var CountIndex := 2;
+    var a: seq<int> := [-9, -9];
+    var b := new int[2] [-8, -1];
+    var p := ComputeCount(CountIndex, a, b);
+    expect p == 0;
+  }
+
+  // Test case for combination P{2}/{2}/BCountIndex=1:
+  //   PRE:  CountIndex == 0 || (|a| == b.Length && 1 <= CountIndex <= |a|)
+  //   POST: !(CountIndex == 0)
+  //   POST: a[CountIndex - 1] % 2 == 0
+  //   POST: p == 1 + Count(CountIndex - 1, a)
+  //   ENSURES: p == Count(CountIndex, a)
+  {
+    var CountIndex := 1;
+    var a: seq<int> := [6];
+    var b := new int[1] [-1];
+    var p := ComputeCount(CountIndex, a, b);
+    expect p == 1;
+  }
+
+}
+
+method TestsForPreCompute()
+{
+  // Test case for combination {2}:
+  //   PRE:  a.Length == b.Length
+  //   POST: !(b.Length == 0)
+  //   POST: a.Length == b.Length
+  //   POST: 1 <= b.Length
+  //   POST: b.Length <= a.Length
+  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  //   ENSURES: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[1] [-2];
+    var b := new int[1] [-1];
+    var p := PreCompute(a, b);
+    expect !(b.Length == 0);
+    expect a.Length == b.Length;
+    expect 1 <= b.Length;
+    expect b.Length <= a.Length;
+    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/O|a|>=2:
+  //   PRE:  a.Length == b.Length
+  //   POST: !(b.Length == 0)
+  //   POST: a.Length == b.Length
+  //   POST: 1 <= b.Length
+  //   POST: b.Length <= a.Length
+  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  //   ENSURES: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[2] [-1, 3];
+    var b := new int[2] [4, 6];
+    var p := PreCompute(a, b);
+    expect !(b.Length == 0);
+    expect a.Length == b.Length;
+    expect 1 <= b.Length;
+    expect b.Length <= a.Length;
+    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 0; // observed from implementation
+  }
+
+  // Test case for combination {2}/R3:
+  //   PRE:  a.Length == b.Length
+  //   POST: !(b.Length == 0)
+  //   POST: a.Length == b.Length
+  //   POST: 1 <= b.Length
+  //   POST: b.Length <= a.Length
+  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  //   ENSURES: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[1] [4];
+    var b := new int[1] [5];
+    var p := PreCompute(a, b);
+    expect !(b.Length == 0);
+    expect a.Length == b.Length;
+    expect 1 <= b.Length;
+    expect b.Length <= a.Length;
+    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R4:
+  //   PRE:  a.Length == b.Length
+  //   POST: !(b.Length == 0)
+  //   POST: a.Length == b.Length
+  //   POST: 1 <= b.Length
+  //   POST: b.Length <= a.Length
+  //   POST: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  //   ENSURES: (b.Length == 0 || (a.Length == b.Length && 1 <= b.Length <= a.Length)) && forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
+  {
+    var a := new int[1] [-10];
+    var b := new int[1] [6];
+    var p := PreCompute(a, b);
+    expect !(b.Length == 0);
+    expect a.Length == b.Length;
+    expect 1 <= b.Length;
+    expect b.Length <= a.Length;
+    expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
+    expect p == 1; // observed from implementation
+  }
+
+}
+
+method TestsForMult()
+{
+  // Test case for combination {1}:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 10;
+    var y := 10;
+    var r := Mult(x, y);
+    expect r == 100;
+  }
+
+  // Test case for combination {1}/Bx=0:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 0;
+    var y := 10;
+    var r := Mult(x, y);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bx=1:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 1;
+    var y := 10;
+    var r := Mult(x, y);
+    expect r == 10;
+  }
+
+  // Test case for combination {1}/By=0:
+  //   PRE:  x >= 0 && y >= 0
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 10;
+    var y := 0;
+    var r := Mult(x, y);
+    expect r == 0;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFooCount();
+  print "TestsForFooCount: all non-failing tests passed!\n";
+  TestsForComputeCount();
+  print "TestsForComputeCount: all non-failing tests passed!\n";
+  TestsForPreCompute();
+  print "TestsForPreCompute: all non-failing tests passed!\n";
+  TestsForMult();
+  print "TestsForMult: all non-failing tests passed!\n";
 }

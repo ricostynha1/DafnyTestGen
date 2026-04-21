@@ -1,20 +1,20 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-03-25 13:52:20
+// Generated: 2026-04-20 22:30:35
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
-  ensures oddList == Filter(arr[..], IsOdd)
+  ensures oddList == FilterOdd(arr[..])
 {
   oddList := [];
   for i := 0 to arr.Length
-    invariant oddList == Filter(arr[..i], IsOdd)
+    invariant oddList == FilterOdd(arr[..i])
   {
-    assert arr[..i+1] == arr[..i] + [arr[i]]; // proof helper
     if IsOdd(arr[i]) {
       oddList := oddList + [arr[i]];
     }
+    assert arr[..i+1] == arr[..i] + [arr[i]]; // proof helper
   }
   assert arr[..] == arr[..arr.Length]; // proof helper
 }
@@ -25,10 +25,10 @@ predicate IsOdd(n: int) {
 }
 
 // Select from a sequence 'a' the elements that satisfy a predicate 'p'.
-function {:fuel 4} Filter<T>(a: seq<T>, p: (T) -> bool): seq<T> {
+function {:fuel 4} FilterOdd(a: seq<int>): seq<int> {
   if |a| == 0 then []
-  else if p(a[|a|-1]) then Filter(a[..|a|-1], p) + [a[|a|-1]]
-  else Filter(a[..|a|-1], p)
+  else if IsOdd(a[|a|-1]) then FilterOdd(a[..|a|-1]) + [a[|a|-1]]
+  else FilterOdd(a[..|a|-1])
 }
 
 
@@ -48,49 +48,55 @@ method FilterOddNumbersTest(){
 }
 
 
-method Passing()
+method TestsForFilterOddNumbers()
 {
   // Test case for combination {1}:
-  //   POST: oddList == Filter(arr[..], IsOdd)
+  //   POST: oddList == FilterOdd(arr[..])
+  //   POST: oddList == []
+  //   ENSURES: oddList == FilterOdd(arr[..])
   {
     var arr := new int[0] [];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == []; // == Filter(arr[..], IsOdd)
+    expect oddList == [];
   }
 
-  // Test case for combination {1}:
-  //   POST: oddList == Filter(arr[..], IsOdd)
+  // Test case for combination {2}:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: arr[..][|arr[..]| - 1] % 2 != 0
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
+  //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[1] [2];
+    var arr := new int[1] [-1];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == []; // == Filter(arr[..], IsOdd)
+    expect oddList == [-1];
   }
 
-  // Test case for combination {1}/Barr=2:
-  //   POST: oddList == Filter(arr[..], IsOdd)
+  // Test case for combination {3}:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: !(arr[..][|arr[..]| - 1] % 2 != 0)
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1])
+  //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[2] [4, 3];
+    var arr := new int[1] [8];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == [3]; // == Filter(arr[..], IsOdd)
+    expect oddList == [];
   }
 
-  // Test case for combination {1}/Barr=3:
-  //   POST: oddList == Filter(arr[..], IsOdd)
+  // Test case for combination {2}/O|arr|>=2:
+  //   POST: !(|arr[..]| == 0)
+  //   POST: arr[..][|arr[..]| - 1] % 2 != 0
+  //   POST: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
+  //   ENSURES: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[3] [5, 4, 6];
+    var arr := new int[2] [-10, -1];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == [5]; // == Filter(arr[..], IsOdd)
+    expect oddList == [-1];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFilterOddNumbers();
+  print "TestsForFilterOddNumbers: all non-failing tests passed!\n";
 }

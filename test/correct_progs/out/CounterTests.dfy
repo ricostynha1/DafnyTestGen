@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-03-28 00:32:32
+// Generated: 2026-04-20 22:24:58
 
 class Counter {
     var count: int
@@ -9,7 +9,7 @@ class Counter {
     method Increment()
         modifies this
         requires count >= 0
-        ensures count == (count) + 1
+        ensures count == old(count) + 1
     {
         count := count + 1;
     }
@@ -23,77 +23,102 @@ class Counter {
 }
 
 
-method Passing()
+method TestsForIncrement()
 {
   // Test case for combination {1}:
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
+  //   ENSURES: count == old(count) + 1
+  {
+    var obj := new Counter;
+    obj.count := 10;
+    obj.Increment();
+    expect obj.count == 11;
+  }
+
+  // Test case for combination {1}/Ocount=0:
+  //   PRE:  count >= 0
+  //   POST: count == old(count) + 1
+  //   ENSURES: count == old(count) + 1
   {
     var obj := new Counter;
     obj.count := 0;
-    var old_count := obj.count;
     obj.Increment();
-    expect obj.count == old_count + 1;
-  }
-
-  // Test case for combination {1}/Bcount=1:
-  //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  {
-    var obj := new Counter;
-    obj.count := 1;
-    var old_count := obj.count;
-    obj.Increment();
-    expect obj.count == old_count + 1;
+    expect obj.count == 1;
   }
 
   // Test case for combination {1}/R3:
   //   PRE:  count >= 0
   //   POST: count == old(count) + 1
+  //   ENSURES: count == old(count) + 1
   {
     var obj := new Counter;
-    obj.count := 2;
-    var old_count := obj.count;
+    obj.count := 9;
     obj.Increment();
-    expect obj.count == old_count + 1;
+    expect obj.count == 10;
   }
 
-  // Test case for combination {1}:
-  //   POST: count == 0
+  // Test case for combination {1}/R4:
+  //   PRE:  count >= 0
+  //   POST: count == old(count) + 1
+  //   ENSURES: count == old(count) + 1
   {
     var obj := new Counter;
-    obj.count := 0;
-    obj.Reset();
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Bcount=1:
-  //   POST: count == 0
-  {
-    var obj := new Counter;
-    obj.count := 1;
-    obj.Reset();
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/R3:
-  //   POST: count == 0
-  {
-    var obj := new Counter;
-    obj.count := -1;
-    obj.Reset();
-    expect obj.count == 0;
+    obj.count := 8;
+    obj.Increment();
+    expect obj.count == 9;
   }
 
 }
 
-method Failing()
+method TestsForReset()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   POST: count == 0
+  //   ENSURES: count == 0
+  {
+    var obj := new Counter;
+    obj.count := -10;
+    obj.Reset();
+    expect obj.count == 0;
+  }
+
+  // Test case for combination {1}/Ocount>0:
+  //   POST: count == 0
+  //   ENSURES: count == 0
+  {
+    var obj := new Counter;
+    obj.count := 10;
+    obj.Reset();
+    expect obj.count == 0;
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST: count == 0
+  //   ENSURES: count == 0
+  {
+    var obj := new Counter;
+    obj.count := -9;
+    obj.Reset();
+    expect obj.count == 0;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST: count == 0
+  //   ENSURES: count == 0
+  {
+    var obj := new Counter;
+    obj.count := -8;
+    obj.Reset();
+    expect obj.count == 0;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIncrement();
+  print "TestsForIncrement: all non-failing tests passed!\n";
+  TestsForReset();
+  print "TestsForReset: all non-failing tests passed!\n";
 }

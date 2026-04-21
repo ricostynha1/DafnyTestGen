@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_760.dfy
 // Method: HasOnlyOneDistinctElement
-// Generated: 2026-03-25 13:54:27
+// Generated: 2026-04-20 22:34:23
 
 // Checks if the given array has only one distinct element (or is empty).
 method HasOnlyOneDistinctElement<T(==)>(a: array<T>) returns (result: bool)
@@ -38,11 +38,12 @@ method HasOnlyOneDistinctElementTest(){
 }
 
 
-method Passing()
+method TestsForHasOnlyOneDistinctElement()
 {
   // Test case for combination {1}:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   {
     var a := new int[0] [];
     var result := HasOnlyOneDistinctElement<int>(a);
@@ -51,40 +52,38 @@ method Passing()
 
   // Test case for combination {2}:
   //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   POST: !forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   {
-    var a := new int[2] [6, 8];
+    var a := new int[2] [8, 16];
     var result := HasOnlyOneDistinctElement<int>(a);
     expect result == false;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|=1:
   //   POST: result
-  //   POST: forall i, j :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   {
     var a := new int[1] [2];
     var result := HasOnlyOneDistinctElement<int>(a);
     expect result == true;
   }
 
-  // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !forall i, j :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  // Test case for combination {1}/O|a|>=2:
+  //   POST: result
+  //   POST: forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
+  //   ENSURES: result <==> forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] == a[j]
   {
-    var a := new int[3] [7, 25, 9];
+    var a := new int[2] [9, 9];
     var result := HasOnlyOneDistinctElement<int>(a);
-    expect result == false;
+    expect result == true;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForHasOnlyOneDistinctElement();
+  print "TestsForHasOnlyOneDistinctElement: all non-failing tests passed!\n";
 }

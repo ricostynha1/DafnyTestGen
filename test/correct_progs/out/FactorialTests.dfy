@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Factorial.dfy
 // Method: CalcFact
-// Generated: 2026-03-28 00:35:09
+// Generated: 2026-04-21 11:30:22
 
 // Recursive definition of the factorial of a number 'n'. 
 function Fact(n: nat) : nat 
@@ -23,41 +23,65 @@ method CalcFact(n: nat) returns (f: nat)
 }
 
 
-method Passing()
+method TestsForCalcFact()
 {
   // Test case for combination {1}:
   //   POST: f == Fact(n)
+  //   POST: f == 1
+  //   ENSURES: f == Fact(n)
   {
     var n := 0;
     var f := CalcFact(n);
-    expect f == 1;
+    if (!(f == 1)) {
+      print "FAIL: expected f == 1; got LHS=", f, ", RHS=", 1, "\n";
+      expect false;
+    }
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   POST: f == Fact(n)
+  // Test case for combination {2}:
+  //   POST: !(n == 0)
+  //   POST: f == n * Fact(n - 1)
+  //   ENSURES: f == Fact(n)
+  {
+    var n := 10;
+    var f := CalcFact(n);
+    if (!(f == 3628800)) {
+      print "FAIL: expected f == 3628800; got LHS=", f, ", RHS=", 3628800, "\n";
+      expect false;
+    }
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST: !(n == 0)
+  //   POST: f == n * Fact(n - 1)
+  //   ENSURES: f == Fact(n)
   {
     var n := 1;
     var f := CalcFact(n);
-    expect f == 1;
+    if (!(f == 1)) {
+      print "FAIL: expected f == 1; got LHS=", f, ", RHS=", 1, "\n";
+      expect false;
+    }
   }
 
-  // Test case for combination {1}/R3:
-  //   POST: f == Fact(n)
+  // Test case for combination {2}/Bn=2:
+  //   POST: !(n == 0)
+  //   POST: f == n * Fact(n - 1)
+  //   ENSURES: f == Fact(n)
   {
     var n := 2;
     var f := CalcFact(n);
-    expect f == 2;
+    if (!(f == 2)) {
+      print "FAIL: expected f == 2; got LHS=", f, ", RHS=", 2, "\n";
+      expect false;
+    }
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcFact();
+  print "TestsForCalcFact: all non-failing tests passed!\n";
 }
+

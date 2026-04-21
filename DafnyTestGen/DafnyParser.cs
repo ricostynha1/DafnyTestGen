@@ -11,14 +11,30 @@ record ClassInfo(
     List<(string Name, string Type)>? ConstructorParams = null,
     List<Expression>? ConstructorRequires = null,
     List<(string Name, string Type)>? GhostFields = null,
-    List<string>? ClassTypeParams = null);
+    List<string>? ClassTypeParams = null,
+    string? ConstructorName = null);
 
 static class DafnyParser
 {
     internal static async Task<Microsoft.Dafny.Program?> ParseProgram(string source, Uri uri, DafnyOptions options, ErrorReporter reporter)
     {
         var result = await ProgramParser.Parse(source, uri, reporter);
-        return result?.Program;
+        var prog = result?.Program;
+        if (prog != null)
+        {
+            // Resolve so AST has IdentifierExpr/FunctionCallExpr instead of unresolved NameSegment/ApplySuffix.
+            // Enables Substituter-based function inlining (FunctionInliner).
+            try
+            {
+                var resolver = new ProgramResolver(prog);
+                await resolver.Resolve(System.Threading.CancellationToken.None);
+            }
+            catch
+            {
+                // Resolve is best-effort; parsing-only path stays valid for the rest of the pipeline.
+            }
+        }
+        return prog;
     }
 
     internal static IEnumerable<TopLevelDecl> AllTopLevelDecls(Microsoft.Dafny.Program program)
@@ -67,7 +83,8 @@ static class DafnyParser
     }
 
     internal static List<Method> FindTestableMethodsAuto(Microsoft.Dafny.Program program,
-        Dictionary<string, List<string>>? enumDatatypes = null)
+        Dictionary<string, List<string>>? enumDatatypes = null,
+        HashSet<string>? classNames = null)
     {
         var result = new List<Method>();
         foreach (var topDecl in AllTopLevelDecls(program))
@@ -91,7 +108,7 @@ static class DafnyParser
                         // For methods inside classes, allow simple classes through
                         if (cls is ClassDecl && cls is not DefaultClassDecl)
                         {
-                            var ci = GetClassInfo(m, (ClassDecl)cls, enumDatatypes);
+                            var ci = GetClassInfo(m, (ClassDecl)cls, enumDatatypes, classNames);
                             if (ci == null)
                             {
                                 continue; // reason already printed by GetClassInfo
@@ -111,11 +128,12 @@ static class DafnyParser
     /// supported types, and the method doesn't require Valid()/RepInv().
     /// </summary>
     internal static ClassInfo? GetClassInfo(Method method,
-        Dictionary<string, List<string>>? enumDatatypes = null)
+        Dictionary<string, List<string>>? enumDatatypes = null,
+        HashSet<string>? classNames = null)
     {
         // Try to get the enclosing class from the method's AST
         if (method.EnclosingClass is ClassDecl cls)
-            return GetClassInfo(method, cls, enumDatatypes);
+            return GetClassInfo(method, cls, enumDatatypes, classNames);
         return null;
     }
 
@@ -126,7 +144,8 @@ static class DafnyParser
     }
 
     internal static ClassInfo? GetClassInfo(Method method, ClassDecl cls,
-        Dictionary<string, List<string>>? enumDatatypes = null)
+        Dictionary<string, List<string>>? enumDatatypes = null,
+        HashSet<string>? classNames = null)
     {
         // Detect {:autocontracts}
         bool isAutoContracts = false;
@@ -156,40 +175,41 @@ static class DafnyParser
                 constFields.Add((cf.Name, cf.Type.ToString()));
         }
 
-        // Collect ghost fields (for non-autocontracts: pass to Z3, skip in test code)
+        // Collect ghost fields
+        // For non-autocontracts: pass to Z3 as inputs, skip assignment in test code
+        // For autocontracts: collect for obj. prefix + old() capture (ghost qualifier stripped in test copy)
         var ghostFields = new List<(string Name, string Type)>();
-        if (!isAutoContracts)
+        foreach (var member in cls.Members)
         {
-            foreach (var member in cls.Members)
+            if (member is Field f && f is not ConstantField && f.IsGhost && f.Name != "Repr")
             {
-                if (member is Field f && f is not ConstantField && f.IsGhost && f.Name != "Repr")
-                {
-                    var ft = f.Type.ToString();
-                    if (TypeUtils.IsSupportedFieldType(ft, enumDatatypes))
-                        ghostFields.Add((f.Name, ft));
-                }
-                if (member is ConstantField cf && cf.IsGhost && cf.Name != "Repr")
-                {
-                    var ct = cf.Type.ToString();
-                    if (TypeUtils.IsSupportedFieldType(ct, enumDatatypes))
-                        ghostFields.Add((cf.Name, ct));
-                }
+                var ft = f.Type.ToString();
+                if (TypeUtils.IsSupportedFieldType(ft, enumDatatypes, classNames))
+                    ghostFields.Add((f.Name, ft));
+            }
+            if (member is ConstantField cf && cf.IsGhost && cf.Name != "Repr")
+            {
+                var ct = cf.Type.ToString();
+                if (TypeUtils.IsSupportedFieldType(ct, enumDatatypes, classNames))
+                    ghostFields.Add((cf.Name, ct));
             }
         }
 
         // All fields (var + const) must have supported types
         foreach (var (name, type) in fields.Concat(constFields))
-            if (!TypeUtils.IsSupportedFieldType(type, enumDatatypes))
+            if (!TypeUtils.IsSupportedFieldType(type, enumDatatypes, classNames))
                 return RejectClass(method.Name, cls.Name, $"field '{name}' has unsupported type '{type}'");
 
         // Find the constructor and its params/requires
+        // Dafny unnamed constructors have Name == "_ctor"; named constructors have their actual name.
+        // Detect by checking if the member's runtime type name contains "Constructor".
         List<(string Name, string Type)>? ctorParams = null;
         List<Expression>? ctorRequires = null;
+        string? ctorName = null;
         foreach (var member in cls.Members)
         {
-            if (member.Name == "_ctor")
+            if (member.Name == "_ctor" || member.GetType().Name.Contains("Constructor"))
             {
-                // Constructor may not be a Method subtype in this Dafny version — use dynamic
                 try
                 {
                     dynamic ctor = member;
@@ -197,6 +217,9 @@ static class DafnyParser
                     var reqs = (IEnumerable<AttributedExpression>)ctor.Req;
                     ctorParams = ins.Select(p => (p.Name, Type: p.Type.ToString())).ToList();
                     ctorRequires = reqs.Select(r => (Expression)r.E).ToList();
+                    // Named constructors: use actual name; unnamed ("_ctor"): leave null
+                    if (member.Name != "_ctor")
+                        ctorName = member.Name;
                 }
                 catch { /* ignore if properties don't exist */ }
                 break; // use the first constructor
@@ -206,12 +229,13 @@ static class DafnyParser
         // Capture class-level type parameters
         var classTypeParams = cls.TypeArgs?.Select(tp => tp.Name).ToList();
 
-        return new ClassInfo(cls.Name, fields, isAutoContracts, constFields, ctorParams, ctorRequires, ghostFields, classTypeParams);
+        return new ClassInfo(cls.Name, fields, isAutoContracts, constFields, ctorParams, ctorRequires, ghostFields, classTypeParams, ctorName);
     }
 
     /// <summary>
-    /// Finds non-recursive predicates and functions that can be inlined into postcondition literals.
-    /// Returns a list of (name, paramNames, bodyString) for each inlinable predicate/function.
+    /// Finds all functions and predicates with bodies that can be inlined into contracts.
+    /// Collects both recursive and non-recursive functions uniformly.
+    /// Returns a list of (name, paramNames, bodyString, isClassMember) for each.
     /// </summary>
     internal static List<(string name, List<string> paramNames, string body, bool isClassMember)> FindInlinablePredicates(
         Microsoft.Dafny.Program program)
@@ -228,27 +252,36 @@ static class DafnyParser
                     if (member is Function func && func.Body != null)
                     {
                         var bodyStr = DnfEngine.ExprToString(func.Body);
-                        // Skip recursive functions (body references the function name)
-                        if (bodyStr.Contains(func.Name + "(")) continue;
                         var paramNames = func.Ins.Select(p => p.Name).ToList();
                         result.Add((func.Name, paramNames, bodyStr, isClassMember));
                     }
                 }
             }
         }
-        // Remove predicates whose body calls another inlinable predicate.
-        // Transitive inlining of nested predicates with quantifiers causes
-        // exponential SMT expansion (e.g., 8^3 = 512 instances for 3 levels).
-        var names = new HashSet<string>(result.Select(r => r.name));
-        result = result.Where(r =>
-        {
-            var callsOther = names.Any(n => n != r.name && r.body.Contains(n + "("));
-            if (callsOther)
-                Console.WriteLine($"  Note: predicate '{r.name}' calls other predicates — not inlining (would cause SMT explosion)");
-            return !callsOther;
-        }).ToList();
-
         return result;
+    }
+
+    /// <summary>
+    /// Splits a comma-separated argument string, respecting nested parentheses and brackets.
+    /// </summary>
+    static List<string> SplitArgs(string argsStr)
+    {
+        var args = new List<string>();
+        int depth = 0;
+        int start = 0;
+        for (int i = 0; i < argsStr.Length; i++)
+        {
+            char c = argsStr[i];
+            if (c == '(' || c == '[') depth++;
+            else if (c == ')' || c == ']') depth--;
+            else if (c == ',' && depth == 0)
+            {
+                args.Add(argsStr.Substring(start, i - start).Trim());
+                start = i + 1;
+            }
+        }
+        args.Add(argsStr.Substring(start).Trim());
+        return args;
     }
 
     /// <summary>
@@ -262,16 +295,25 @@ static class DafnyParser
     {
         var result = literal;
         const int maxInlinedLength = 50_000; // safety limit to prevent exponential growth
-        for (int pass = 0; pass < 3; pass++) // max 3 inlining passes for nested calls
+        const int maxPasses = 2; // up to 2 levels for non-recursive funcs; recursive funcs capped at 1 level.
+        for (int pass = 0; pass < maxPasses; pass++)
         {
             var changed = false;
             foreach (var (name, paramNames, body, _) in predicates)
             {
-                // Find occurrences of name(args...)
-                var pattern = @"\b" + Regex.Escape(name) + @"\s*\(";
-                while (result.Length < maxInlinedLength && Regex.IsMatch(result, pattern))
+                bool isRecursive = Regex.IsMatch(body, @"\b" + Regex.Escape(name) + @"\s*\(");
+                // Recursive funcs: only inline once (pass 0). Further passes would just deepen the unrolling.
+                // Non-recursive funcs: inline across passes so nested non-recursive calls expand.
+                if (pass > 0 && isRecursive) continue;
+
+                // Find occurrences of name(args...) — search forward past each replacement
+                // to avoid re-inlining calls introduced by the replacement (recursive functions).
+                var regex = new Regex(@"\b" + Regex.Escape(name) + @"\s*\(");
+                int searchFrom = 0;
+                while (result.Length < maxInlinedLength)
                 {
-                    var match = Regex.Match(result, pattern);
+                    var match = regex.Match(result, searchFrom);
+                    if (!match.Success) break;
                     int argsStart = match.Index + match.Length;
 
                     // Find the closing paren and extract the arguments string
@@ -352,8 +394,12 @@ static class DafnyParser
                         }
                     }
 
-                    // Replace the call with parenthesized inlined body
-                    result = result.Substring(0, match.Index) + "(" + inlined + ")" + result.Substring(pos);
+                    // Replace the call with parenthesized inlined body;
+                    // advance searchFrom past the replacement to avoid re-inlining
+                    // calls introduced by the inlined body (handles recursive functions).
+                    var replacement = "(" + inlined + ")";
+                    result = result.Substring(0, match.Index) + replacement + result.Substring(pos);
+                    searchFrom = match.Index + replacement.Length;
                     changed = true;
                 }
             }
@@ -479,7 +525,7 @@ static class DafnyParser
                     Console.WriteLine($"    PRE:  {pre}");
             }
             foreach (var literal in dnfClauses[i])
-                Console.WriteLine($"    POST: {literal}");
+                Console.WriteLine($"    POST: {DnfEngine.ExprToString(literal)}");
             Console.WriteLine();
         }
     }

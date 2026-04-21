@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-03-25 13:51:54
+// Generated: 2026-04-20 22:29:38
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -35,12 +35,27 @@ method SubtractSequencesTest(){
   assert res3 == [-3, 7, -3];
 }
 
-method Passing()
+method TestsForElementWiseSubtraction()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  {
+    var a: seq<int> := [-1];
+    var b: seq<int> := [-8];
+    var result := ElementWiseSubtraction(a, b);
+    expect result == [7];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -48,48 +63,23 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [-1, -7];
+    var b: seq<int> := [8, 8];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [0];
+    expect result == [-9, -15];
   }
 
-  // Test case for combination {1}/Ba=2,b=2:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  {
-    var a: seq<int> := [0, 21239];
-    var b: seq<int> := [0, 7720];
-    var result := ElementWiseSubtraction(a, b);
-    expect result == [0, 13519];
-  }
-
-  // Test case for combination {1}/Ba=3,b=3:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  {
-    var a: seq<int> := [-23677, -2438, 0];
-    var b: seq<int> := [-7721, -7720, 0];
-    var result := ElementWiseSubtraction(a, b);
-    expect result == [-15956, 5282, 0];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForElementWiseSubtraction();
+  print "TestsForElementWiseSubtraction: all non-failing tests passed!\n";
 }

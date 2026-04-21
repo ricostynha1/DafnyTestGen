@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Microsoft.Dafny;
 
 namespace DafnyTestGen;
@@ -47,6 +47,9 @@ static class SmtTranslator
     // Maximum bounded sequence length used in SMT queries
     internal const int MAX_SEQ_LEN = 8;
 
+    // Maximum bounded inner sequence length for nested seq<seq<T>> types
+    internal const int MAX_INNER_SEQ_LEN = 4;
+
     // Maximum bounded set universe size (elements range from 0..MAX_SET_UNIVERSE-1)
     internal const int MAX_SET_UNIVERSE = 8;
 
@@ -59,9 +62,17 @@ static class SmtTranslator
     internal static Dictionary<string, int> _uninterpFuncs = new();
     // True if any postcondition literal could not be translated to SMT
     internal static bool _hasUntranslatedPost = false;
+    // Tracks precondition strings that were successfully translated to SMT
+    internal static HashSet<string> _translatedPreConditions = new();
     // Enum datatype mappings (set by Program.cs before each method's SMT generation)
     internal static Dictionary<string, List<string>> _enumDatatypes = new();
     internal static Dictionary<string, (string dtName, int ordinal)> _enumConstructors = new();
+
+    // Anti-trivial bias: bias Z3 away from special values (0, 1) when the spec
+    // otherwise allows many solutions. Soft-asserts are ignored when hard constraints
+    // force a specific value, so correctness is preserved. Toggled by --no-bias CLI.
+    internal static bool AntiTrivialBiasEnabled = false;
+    internal static int AntiTrivialBiasSeed = 0;
 
     internal static string BuildSmt2Query(
         List<(string Name, string Type)> inputs,
@@ -73,18 +84,28 @@ static class SmtTranslator
         List<Expression>? exclusions = null,
         List<string>? extraConstraints = null,
         List<Expression>? preLiterals = null,
-        List<Expression>? backgroundPostconditions = null,
-        HashSet<string>? mutableNames = null)
+        HashSet<string>? mutableNames = null,
+        bool skipBias = false)
     {
         mutableNames ??= new HashSet<string>();
 
+        bool biasOn = AntiTrivialBiasEnabled && !skipBias;
+
         var sb = new System.Text.StringBuilder();
         sb.AppendLine("(set-option :produce-models true)");
+        if (biasOn)
+        {
+            sb.AppendLine("(set-option :smt.arith.random_initial_value true)");
+            sb.AppendLine($"(set-option :smt.random-seed {AntiTrivialBiasSeed})");
+            sb.AppendLine($"(set-option :sat.random-seed {AntiTrivialBiasSeed})");
+        }
         sb.AppendLine("(set-logic ALL)");
 
         // Set operation macros (sets encoded as (Array Int Bool))
         var hasSetParam = inputs.Concat(outputs).Any(v => TypeUtils.IsSetType(v.Type));
-        if (hasSetParam)
+        var hasIntSet = inputs.Concat(outputs).Any(v => TypeUtils.IsSetType(v.Type) && !TypeUtils.IsStringElementSet(v.Type));
+        var hasStringSet = inputs.Concat(outputs).Any(v => TypeUtils.IsStringElementSet(v.Type));
+        if (hasIntSet)
         {
             sb.AppendLine();
             sb.AppendLine("; Set operations over (Array Int Bool) encoding");
@@ -99,8 +120,32 @@ static class SmtTranslator
             sb.AppendLine("(define-fun SetDifference ((a (Array Int Bool)) (b (Array Int Bool))) (Array Int Bool)");
             sb.AppendLine($"  ((_ map and) a ((_ map not) b)))");
         }
+        if (hasStringSet)
+        {
+            sb.AppendLine();
+            sb.AppendLine("; String set operations over (Array (Seq Int) Bool) encoding");
+            sb.AppendLine("(define-fun EmptySetStr () (Array (Seq Int) Bool) ((as const (Array (Seq Int) Bool)) false))");
+            sb.AppendLine("(define-fun SubsetOfStr ((a (Array (Seq Int) Bool)) (b (Array (Seq Int) Bool))) Bool");
+            sb.AppendLine($"  (forall ((x (Seq Int))) (=> (select a x) (select b x))))");
+            sb.AppendLine("(define-fun SetUnionStr ((a (Array (Seq Int) Bool)) (b (Array (Seq Int) Bool))) (Array (Seq Int) Bool)");
+            sb.AppendLine($"  ((_ map or) a b))");
+            sb.AppendLine("(define-fun SetIntersectionStr ((a (Array (Seq Int) Bool)) (b (Array (Seq Int) Bool))) (Array (Seq Int) Bool)");
+            sb.AppendLine($"  ((_ map and) a b))");
+            sb.AppendLine("(define-fun SetDifferenceStr ((a (Array (Seq Int) Bool)) (b (Array (Seq Int) Bool))) (Array (Seq Int) Bool)");
+            sb.AppendLine($"  ((_ map and) a ((_ map not) b)))");
+            // String universe constants
+            sb.AppendLine("; String universe constants for set<string>");
+            sb.AppendLine("(declare-const _str_u0 (Seq Int)) (assert (= _str_u0 (as seq.empty (Seq Int))))"); // ""
+            sb.AppendLine("(declare-const _str_u1 (Seq Int)) (assert (= _str_u1 (seq.unit 97)))");  // "a"
+            sb.AppendLine("(declare-const _str_u2 (Seq Int)) (assert (= _str_u2 (seq.unit 98)))");  // "b"
+            sb.AppendLine("(declare-const _str_u3 (Seq Int)) (assert (= _str_u3 (seq.unit 99)))");  // "c"
+            sb.AppendLine("(declare-const _str_u4 (Seq Int)) (assert (= _str_u4 (seq.unit 100)))"); // "d"
+            sb.AppendLine("(declare-const _str_u5 (Seq Int)) (assert (= _str_u5 (seq.unit 101)))"); // "e"
+            sb.AppendLine("(declare-const _str_u6 (Seq Int)) (assert (= _str_u6 (seq.unit 102)))"); // "f"
+            sb.AppendLine("(declare-const _str_u7 (Seq Int)) (assert (= _str_u7 (seq.unit 103)))"); // "g"
+        }
 
-        // Multiset operation macros (multisets encoded as (Array Int Int) — counts)
+        // Multiset operation macros (multisets encoded as (Array Int Int) â€” counts)
         var hasMultisetParam = inputs.Concat(outputs).Any(v => TypeUtils.IsMultisetType(v.Type));
         if (hasMultisetParam)
         {
@@ -108,7 +153,7 @@ static class SmtTranslator
             sb.AppendLine("; Multiset operations over (Array Int Int) encoding (element -> count)");
             sb.AppendLine("(define-fun EmptyMultiset () (Array Int Int) ((as const (Array Int Int)) 0))");
             sb.AppendLine("(define-fun MultisetMember ((x Int) (m (Array Int Int))) Bool (> (select m x) 0))");
-            // Pointwise expansion over bounded universe — avoids (_ map) which requires
+            // Pointwise expansion over bounded universe â€” avoids (_ map) which requires
             // declare-fun (not define-fun), and the forall axioms that entails cause Z3
             // to return "unknown". Since our universe is bounded, we can expand each
             // operation as a chain of store expressions.
@@ -152,6 +197,19 @@ static class SmtTranslator
             }
         }
 
+        // Multiset-forming count helper for permutation constraints:
+        // multiset(a[..]) == multiset(old(a[..])) â†’ count equality over bounded indices
+        var hasMutableArray = inputs.Concat(outputs).Any(v => TypeUtils.IsArrayType(v.Type) && mutableNames.Contains(v.Name));
+        if (hasMutableArray)
+        {
+            // _mset_count(v, s, n): count occurrences of v in first n elements of seq s
+            var countTerms = string.Join("\n     ",
+                Enumerable.Range(0, MAX_SEQ_LEN).Select(i =>
+                    $"(ite (and (> n {i}) (= (seq.nth s {i}) v)) 1 0)"));
+            sb.AppendLine($"(define-fun _mset_count ((v Int) (s (Seq Int)) (n Int)) Int");
+            sb.AppendLine($"  (+ {countTerms}))");
+        }
+
         // Map operation macros (maps encoded as domain (Array Int Bool) + values (Array Int V))
         var hasMapParam = inputs.Concat(outputs).Any(v => TypeUtils.IsMapType(v.Type));
         if (hasMapParam)
@@ -163,7 +221,7 @@ static class SmtTranslator
                 .Where(v => TypeUtils.IsMapType(v.Type))
                 .SelectMany(v => TypeUtils.GetElementUniverse(TypeUtils.GetMapKeyType(v.Type)))
                 .Distinct().OrderBy(x => x).ToArray();
-            // MapMerge: right-biased union — domain = d1 || d2, value = ite(d2, v2, v1)
+            // MapMerge: right-biased union â€” domain = d1 || d2, value = ite(d2, v2, v1)
             sb.AppendLine("(define-fun MapMergeDomain ((d1 (Array Int Bool)) (d2 (Array Int Bool))) (Array Int Bool)");
             sb.AppendLine($"  ((_ map or) d1 d2))");
             sb.AppendLine("(define-fun MapMergeValues ((d1 (Array Int Bool)) (v1 (Array Int Int)) (d2 (Array Int Bool)) (v2 (Array Int Int))) (Array Int Int)");
@@ -235,8 +293,8 @@ static class SmtTranslator
             else if (TypeUtils.IsMapType(type))
             {
                 // Maps are encoded as two parallel arrays over bounded key universe:
-                //   domain (Array K Bool) — which keys are present
-                //   values (Array K V)    — the value for each key
+                //   domain (Array K Bool) â€” which keys are present
+                //   values (Array K V)    â€” the value for each key
                 var keyType = TypeUtils.GetMapKeyType(type);
                 var valType = TypeUtils.GetMapValueType(type);
                 var keyUniverse = TypeUtils.GetElementUniverse(keyType);
@@ -275,6 +333,69 @@ static class SmtTranslator
                     }
                 }
             }
+            else if (TypeUtils.IsSeqType(type) && TypeUtils.IsTupleType(TypeUtils.GetSeqElementType(type)))
+            {
+                // Parallel component sequences: seq<(T, U)> -> s_0: (Seq SMT_T), s_1: (Seq SMT_U)
+                var seqElemType = TypeUtils.GetSeqElementType(type);
+                var seqComponents = TypeUtils.GetTupleComponentTypes(seqElemType);
+                for (int ci = 0; ci < seqComponents.Count; ci++)
+                {
+                    var compSmtType = TypeUtils.DafnyTypeToSmt(seqComponents[ci]);
+                    sb.AppendLine($"(declare-const {name}_{ci} (Seq {compSmtType}))");
+                }
+                sb.AppendLine($"(define-fun {name}_len () Int (seq.len {name}_0))");
+                for (int ci = 1; ci < seqComponents.Count; ci++)
+                    sb.AppendLine($"(assert (= (seq.len {name}_{ci}) {name}_len))");
+            }
+            else if (TypeUtils.IsTupleType(type))
+            {
+                // Flatten tuple into component variables: t: (int, real) -> t_0: Int, t_1: Real
+                var components = TypeUtils.GetTupleComponentTypes(type);
+                for (int i = 0; i < components.Count; i++)
+                {
+                    var compType = components[i];
+                    var compSmtType = TypeUtils.DafnyTypeToSmt(compType);
+                    sb.AppendLine($"(declare-const {name}_{i} {compSmtType})");
+                    if (compType == "nat")
+                        sb.AppendLine($"(assert (>= {name}_{i} 0))");
+                    if (compType == "char")
+                    {
+                        sb.AppendLine($"(assert (>= {name}_{i} 32))");
+                        sb.AppendLine($"(assert (<= {name}_{i} 126))");
+                    }
+                    if (_enumDatatypes.TryGetValue(compType, out var tupleEnumCtors))
+                    {
+                        sb.AppendLine($"(assert (>= {name}_{i} 0))");
+                        sb.AppendLine($"(assert (<= {name}_{i} {tupleEnumCtors.Count - 1}))");
+                    }
+                }
+            }
+            else if (TypeUtils.IsSupportedNestedSeqType(type))
+            {
+                // Flat encoding for nested seq<seq<T>> / seq<string>:
+                // Z3 cannot solve (Seq (Seq T)) symbolically, so we declare
+                // individual (Seq T) variables + an integer length variable.
+                var smtName = TypeUtils.SeqSmtName(name, type);
+                var innerElemType = TypeUtils.GetSeqElementType(type);
+                var innerInnerType = innerElemType == "string" ? "char" :
+                    TypeUtils.IsSeqType(innerElemType) ? TypeUtils.GetSeqElementType(innerElemType) : "int";
+                var innerSmtSort = TypeUtils.DafnyTypeToSmt(innerElemType == "string" ? "seq<char>" : innerElemType);
+                sb.AppendLine($"(declare-const {smtName}_len Int)");
+                sb.AppendLine($"(assert (>= {smtName}_len 0))");
+                sb.AppendLine($"(assert (<= {smtName}_len {MAX_SEQ_LEN}))");
+                for (int i = 0; i < MAX_SEQ_LEN; i++)
+                {
+                    sb.AppendLine($"(declare-const {smtName}_{i} {innerSmtSort})");
+                    sb.AppendLine($"(assert (>= (seq.len {smtName}_{i}) 0))");
+                    sb.AppendLine($"(assert (<= (seq.len {smtName}_{i}) {MAX_INNER_SEQ_LEN}))");
+                    if (innerInnerType == "char")
+                        for (int j = 0; j < MAX_INNER_SEQ_LEN; j++)
+                            sb.AppendLine($"(assert (=> (>= (seq.len {smtName}_{i}) {j + 1}) (and (>= (seq.nth {smtName}_{i} {j}) 32) (<= (seq.nth {smtName}_{i} {j}) 126))))");
+                    if (innerInnerType == "nat")
+                        for (int j = 0; j < MAX_INNER_SEQ_LEN; j++)
+                            sb.AppendLine($"(assert (=> (>= (seq.len {smtName}_{i}) {j + 1}) (>= (seq.nth {smtName}_{i} {j}) 0)))");
+                }
+            }
             else
             {
                 var smtType = TypeUtils.DafnyTypeToSmt(type);
@@ -295,27 +416,64 @@ static class SmtTranslator
             }
         }
 
-        // For array params, declare companion sequence(s) and length alias(es)
-        foreach (var (name, type) in inputs)
+        // For array params (inputs and outputs), declare companion sequence(s) and length alias(es)
+        foreach (var (name, type) in inputs.Concat(outputs))
         {
             if (TypeUtils.IsArrayType(type))
             {
-                var elemType = type.StartsWith("array<")
-                    ? TypeUtils.DafnyTypeToSmt(type.Substring(6, type.Length - 7))
-                    : "Int";
-                if (mutableNames.Contains(name))
+                var rawElemType = type.StartsWith("array<")
+                    ? type.Substring(6, type.Length - 7)
+                    : "int";
+                if (TypeUtils.IsTupleType(rawElemType))
                 {
-                    // Naming: a_pre -> a_pre_seq, a_pre_len (matches TypeUtils.SeqSmtName)
-                    sb.AppendLine($"(declare-const {name}_pre_seq (Seq {elemType}))");
-                    sb.AppendLine($"(declare-const {name}_post_seq (Seq {elemType}))");
-                    sb.AppendLine($"(define-fun {name}_pre_len () Int (seq.len {name}_pre_seq))");
-                    sb.AppendLine($"(define-fun {name}_post_len () Int (seq.len {name}_post_seq))");
-                    sb.AppendLine($"(assert (= (seq.len {name}_pre_seq) (seq.len {name}_post_seq)))");
+                    // Parallel component sequences: array<(T, U)> -> a_seq_0: (Seq SMT_T), a_seq_1: (Seq SMT_U)
+                    var components = TypeUtils.GetTupleComponentTypes(rawElemType);
+                    if (mutableNames.Contains(name))
+                    {
+                        for (int ci = 0; ci < components.Count; ci++)
+                        {
+                            var compSmtType = TypeUtils.DafnyTypeToSmt(components[ci]);
+                            sb.AppendLine($"(declare-const {name}_pre_seq_{ci} (Seq {compSmtType}))");
+                            sb.AppendLine($"(declare-const {name}_post_seq_{ci} (Seq {compSmtType}))");
+                        }
+                        // All component sequences have equal length
+                        sb.AppendLine($"(define-fun {name}_pre_len () Int (seq.len {name}_pre_seq_0))");
+                        sb.AppendLine($"(define-fun {name}_post_len () Int (seq.len {name}_post_seq_0))");
+                        sb.AppendLine($"(assert (= {name}_pre_len {name}_post_len))");
+                        for (int ci = 1; ci < components.Count; ci++)
+                        {
+                            sb.AppendLine($"(assert (= (seq.len {name}_pre_seq_{ci}) {name}_pre_len))");
+                            sb.AppendLine($"(assert (= (seq.len {name}_post_seq_{ci}) {name}_post_len))");
+                        }
+                    }
+                    else
+                    {
+                        for (int ci = 0; ci < components.Count; ci++)
+                        {
+                            var compSmtType = TypeUtils.DafnyTypeToSmt(components[ci]);
+                            sb.AppendLine($"(declare-const {name}_seq_{ci} (Seq {compSmtType}))");
+                        }
+                        sb.AppendLine($"(define-fun {name}_len () Int (seq.len {name}_seq_0))");
+                        for (int ci = 1; ci < components.Count; ci++)
+                            sb.AppendLine($"(assert (= (seq.len {name}_seq_{ci}) {name}_len))");
+                    }
                 }
                 else
                 {
-                    sb.AppendLine($"(declare-const {name}_seq (Seq {elemType}))");
-                    sb.AppendLine($"(define-fun {name}_len () Int (seq.len {name}_seq))");
+                    var elemType = TypeUtils.DafnyTypeToSmt(rawElemType);
+                    if (mutableNames.Contains(name))
+                    {
+                        sb.AppendLine($"(declare-const {name}_pre_seq (Seq {elemType}))");
+                        sb.AppendLine($"(declare-const {name}_post_seq (Seq {elemType}))");
+                        sb.AppendLine($"(define-fun {name}_pre_len () Int (seq.len {name}_pre_seq))");
+                        sb.AppendLine($"(define-fun {name}_post_len () Int (seq.len {name}_post_seq))");
+                        sb.AppendLine($"(assert (= (seq.len {name}_pre_seq) (seq.len {name}_post_seq)))");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"(declare-const {name}_seq (Seq {elemType}))");
+                        sb.AppendLine($"(define-fun {name}_len () Int (seq.len {name}_seq))");
+                    }
                 }
             }
         }
@@ -325,30 +483,82 @@ static class SmtTranslator
         {
             if (TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type))
             {
-                if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
+                var elemTypeStr = TypeUtils.GetSeqElementType(type);
+                var isTupleElem = TypeUtils.IsTupleType(elemTypeStr);
+
+                if (isTupleElem)
+                {
+                    // Tuple element: bound each component sequence length and apply per-component constraints
+                    var tupleComponents = TypeUtils.GetTupleComponentTypes(elemTypeStr);
+                    var seqNames = new List<string>();
+                    if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
+                    {
+                        for (int ci = 0; ci < tupleComponents.Count; ci++)
+                        {
+                            seqNames.Add($"{name}_pre_seq_{ci}");
+                            seqNames.Add($"{name}_post_seq_{ci}");
+                        }
+                    }
+                    else if (TypeUtils.IsArrayType(type))
+                    {
+                        for (int ci = 0; ci < tupleComponents.Count; ci++)
+                            seqNames.Add($"{name}_seq_{ci}");
+                    }
+                    else
+                    {
+                        // seq<(T,U)> â€” component sequences are named {name}_{ci}
+                        for (int ci = 0; ci < tupleComponents.Count; ci++)
+                            seqNames.Add($"{name}_{ci}");
+                    }
+                    foreach (var sn in seqNames)
+                    {
+                        sb.AppendLine($"(assert (>= (seq.len {sn}) 0))");
+                        sb.AppendLine($"(assert (<= (seq.len {sn}) {MAX_SEQ_LEN}))");
+                    }
+                    // Per-component type constraints (nat, char, enum)
+                    for (int ci = 0; ci < tupleComponents.Count; ci++)
+                    {
+                        var compType = tupleComponents[ci];
+                        var compSeqs = seqNames.Where((_, idx) => idx % tupleComponents.Count == ci).ToList();
+                        foreach (var sn in compSeqs)
+                        {
+                            if (compType == "char")
+                                sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {sn}))) (and (>= (seq.nth {sn} i) 32) (<= (seq.nth {sn} i) 126)))))");
+                            if (compType == "nat")
+                                sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {sn}))) (>= (seq.nth {sn} i) 0))))");
+                            if (_enumDatatypes.TryGetValue(compType, out var enumCompCtors))
+                                sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {sn}))) (and (>= (seq.nth {sn} i) 0) (<= (seq.nth {sn} i) {enumCompCtors.Count - 1})))))");
+                        }
+                    }
+                }
+                else if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
                 {
                     foreach (var smtName in new[] { $"{name}_pre_seq", $"{name}_post_seq" })
                     {
                         sb.AppendLine($"(assert (>= (seq.len {smtName}) 0))");
                         sb.AppendLine($"(assert (<= (seq.len {smtName}) {MAX_SEQ_LEN}))");
-                        var elemTypeStr = TypeUtils.GetSeqElementType(type);
+                        if (elemTypeStr == "nat")
+                            sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (>= (seq.nth {smtName} i) 0))))");
                         if (elemTypeStr == "char")
                             sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (and (>= (seq.nth {smtName} i) 32) (<= (seq.nth {smtName} i) 126)))))");
                         if (_enumDatatypes.TryGetValue(elemTypeStr, out var enumElemCtors))
                             sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (and (>= (seq.nth {smtName} i) 0) (<= (seq.nth {smtName} i) {enumElemCtors.Count - 1})))))");
                     }
                 }
-                else
+                else if (!TypeUtils.IsSupportedNestedSeqType(type))
                 {
+                    // Regular (non-nested) seq: bound length and constrain elements
                     var smtName = TypeUtils.SeqSmtName(name, type);
                     sb.AppendLine($"(assert (>= (seq.len {smtName}) 0))");
                     sb.AppendLine($"(assert (<= (seq.len {smtName}) {MAX_SEQ_LEN}))");
-                    var elemType = TypeUtils.GetSeqElementType(type);
-                    if (elemType == "char")
+                    if (elemTypeStr == "nat")
+                        sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (>= (seq.nth {smtName} i) 0))))");
+                    if (elemTypeStr == "char")
                         sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (and (>= (seq.nth {smtName} i) 32) (<= (seq.nth {smtName} i) 126)))))");
-                    if (_enumDatatypes.TryGetValue(elemType, out var enumElemCtors2))
+                    if (_enumDatatypes.TryGetValue(elemTypeStr, out var enumElemCtors2))
                         sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {smtName}))) (and (>= (seq.nth {smtName} i) 0) (<= (seq.nth {smtName} i) {enumElemCtors2.Count - 1})))))");
                 }
+                // (nested seq bounds are handled in the flat encoding declaration block above)
             }
         }
 
@@ -359,29 +569,50 @@ static class SmtTranslator
             if (TypeUtils.IsSetType(type))
             {
                 var elemType = TypeUtils.GetSetElementType(type);
-                var universe = TypeUtils.GetElementUniverse(elemType);
                 var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
-                // Closed-world: membership implies element in universe
-                var universeDisjuncts = string.Join(" ", universe.Select(v => $"(= x {v})"));
-                sb.AppendLine($"(assert (forall ((x Int)) (=> (select {smtName} x) (or {universeDisjuncts}))))");
-                // Cardinality helper: sum of (ite (select S i) 1 0) for each universe element
-                var cardTerms = string.Join(" ", universe.Select(v => $"(ite (select {smtName} {v}) 1 0)"));
-                sb.AppendLine($"(define-fun {smtName}_card () Int (+ {cardTerms}))");
 
-                // If mutable, also bound post-state set and define its cardinality
-                if (mutableNames.Contains(name))
+                if (TypeUtils.IsStringElementSet(type))
                 {
-                    var postName = $"{name}_post";
-                    sb.AppendLine($"(assert (forall ((x Int)) (=> (select {postName} x) (or {universeDisjuncts}))))");
-                    var postCardTerms = string.Join(" ", universe.Select(v => $"(ite (select {postName} {v}) 1 0)"));
-                    sb.AppendLine($"(define-fun {postName}_card () Int (+ {postCardTerms}))");
+                    // String set: use named string universe constants
+                    var smtUniverse = TypeUtils.GetElementUniverseSmt("string");
+                    var universeDisjuncts = string.Join(" ", smtUniverse.Select(v => $"(= x {v})"));
+                    sb.AppendLine($"(assert (forall ((x (Seq Int))) (=> (select {smtName} x) (or {universeDisjuncts}))))");
+                    var cardTerms = string.Join(" ", smtUniverse.Select(v => $"(ite (select {smtName} {v}) 1 0)"));
+                    sb.AppendLine($"(define-fun {smtName}_card () Int (+ {cardTerms}))");
+
+                    if (mutableNames.Contains(name))
+                    {
+                        var postName = $"{name}_post";
+                        sb.AppendLine($"(assert (forall ((x (Seq Int))) (=> (select {postName} x) (or {universeDisjuncts}))))");
+                        var postCardTerms = string.Join(" ", smtUniverse.Select(v => $"(ite (select {postName} {v}) 1 0)"));
+                        sb.AppendLine($"(define-fun {postName}_card () Int (+ {postCardTerms}))");
+                    }
+                }
+                else
+                {
+                    var universe = TypeUtils.GetElementUniverse(elemType);
+                    // Closed-world: membership implies element in universe
+                    var universeDisjuncts = string.Join(" ", universe.Select(v => $"(= x {v})"));
+                    sb.AppendLine($"(assert (forall ((x Int)) (=> (select {smtName} x) (or {universeDisjuncts}))))");
+                    // Cardinality helper: sum of (ite (select S i) 1 0) for each universe element
+                    var cardTerms = string.Join(" ", universe.Select(v => $"(ite (select {smtName} {v}) 1 0)"));
+                    sb.AppendLine($"(define-fun {smtName}_card () Int (+ {cardTerms}))");
+
+                    // If mutable, also bound post-state set and define its cardinality
+                    if (mutableNames.Contains(name))
+                    {
+                        var postName = $"{name}_post";
+                        sb.AppendLine($"(assert (forall ((x Int)) (=> (select {postName} x) (or {universeDisjuncts}))))");
+                        var postCardTerms = string.Join(" ", universe.Select(v => $"(ite (select {postName} {v}) 1 0)"));
+                        sb.AppendLine($"(define-fun {postName}_card () Int (+ {postCardTerms}))");
+                    }
                 }
             }
         }
 
         // Bound multiset element variables and define cardinality helpers.
         // Multisets are constructed from zero-default base with per-element variables (name_e0..name_eN),
-        // so no forall constraints are needed — out-of-universe indices are automatically 0.
+        // so no forall constraints are needed â€” out-of-universe indices are automatically 0.
         foreach (var (name, type) in inputs.Concat(outputs).ToList())
         {
             if (TypeUtils.IsMultisetType(type))
@@ -428,12 +659,34 @@ static class SmtTranslator
             }
         }
 
+        // Constrain string parameters to the string universe when set<string> is present,
+        // so Z3 picks from the bounded universe rather than arbitrary strings.
+        if (hasStringSet)
+        {
+            var smtUniverse = TypeUtils.GetElementUniverseSmt("string");
+            foreach (var (name, type) in inputs.Concat(outputs).ToList())
+            {
+                if (type == "string")
+                {
+                    var varNames = mutableNames.Contains(name)
+                        ? new[] { $"{name}_pre", $"{name}_post" }
+                        : new[] { name };
+                    foreach (var vn in varNames)
+                    {
+                        var disjuncts = string.Join(" ", smtUniverse.Select(v => $"(= {vn} {v})"));
+                        sb.AppendLine($"(assert (or {disjuncts}))");
+                    }
+                }
+            }
+        }
+
         sb.AppendLine();
 
-        // Reset well-formedness guards, uninterpreted functions, and translation status
+        // Reset per-query state (well-formedness guards, uninterpreted functions, translation status)
         _wfGuards.Clear();
         _uninterpFuncs.Clear();
         _hasUntranslatedPost = false;
+        _translatedPreConditions.Clear();
 
         // Collect assertions in a separate buffer so we can discover uninterpreted functions first
         var assertions = new System.Text.StringBuilder();
@@ -452,6 +705,7 @@ static class SmtTranslator
                 assertions.AppendLine($"; Skipped specification-only literal: {litStr}");
                 continue;
             }
+            ResetExprToSmtBudget();
             var smtExpr = ExprToSmt(literal, inputsAndOutputs, mutableNames, isPostContext: true);
             if (smtExpr != null)
                 assertions.AppendLine($"(assert {smtExpr})");
@@ -462,27 +716,6 @@ static class SmtTranslator
             }
         }
 
-        // Assert full (un-decomposed) postconditions as background constraints.
-        // This catches cases where DNF decomposition loses quantifier range guards.
-        // Save WF guard count — background postconditions are disjunctive, so their
-        // WF guards (e.g., index bounds for one disjunct) must not be asserted unconditionally.
-        if (backgroundPostconditions != null)
-        {
-            var wfCountBefore = _wfGuards.Count;
-            foreach (var bgPost in backgroundPostconditions)
-            {
-                var bgStr = DnfEngine.ExprToString(bgPost);
-                if (TypeUtils.IsSpecOnlyLiteral(bgStr)) continue;
-                var smtExpr = ExprToSmt(bgPost, inputsAndOutputs, mutableNames, isPostContext: true);
-                if (smtExpr != null)
-                    assertions.AppendLine($"(assert {smtExpr})");
-            }
-            // Discard WF guards from background postconditions — they may over-constrain
-            // when only some disjuncts are active (e.g., bounds for str1[|prefix|] conflict
-            // with |prefix| == |str1| when the access disjunct is not selected).
-            if (_wfGuards.Count > wfCountBefore)
-                _wfGuards.RemoveRange(wfCountBefore, _wfGuards.Count - wfCountBefore);
-        }
 
         // Encode preconditions (constrain pre-state variables)
         if (preLiterals != null && preLiterals.Count > 0)
@@ -491,13 +724,19 @@ static class SmtTranslator
             {
                 var smtExpr = ExprToSmt(preLit, inputs, mutableNames, isPostContext: false);
                 if (smtExpr != null)
+                {
                     assertions.AppendLine($"(assert {smtExpr})");
+                    _translatedPreConditions.Add(DnfEngine.ExprToString(preLit));
+                }
                 else
                 {
                     var litStr = DnfEngine.ExprToString(preLit);
                     assertions.AppendLine($"; Could not translate precondition: {litStr}");
                 }
             }
+            // Also mark original preconditions as translated (they're guaranteed by their DNF literals)
+            foreach (var pre in preClauses)
+                _translatedPreConditions.Add(DnfEngine.ExprToString(pre));
         }
         else
         {
@@ -505,7 +744,10 @@ static class SmtTranslator
             {
                 var smtExpr = ExprToSmt(pre, inputs, mutableNames, isPostContext: false);
                 if (smtExpr != null)
+                {
                     assertions.AppendLine($"(assert {smtExpr})");
+                    _translatedPreConditions.Add(DnfEngine.ExprToString(pre));
+                }
                 else
                 {
                     var preStr = DnfEngine.ExprToString(pre);
@@ -571,7 +813,7 @@ static class SmtTranslator
             foreach (var excl in exclusions)
             {
                 var wfBefore = _wfGuards.Count;
-                // Exclusions are postcondition literals — translate for post-state
+                // Exclusions are postcondition literals â€” translate for post-state
                 var smtExpr = ExprToSmt(excl, inputsAndOutputs, mutableNames, isPostContext: true);
                 if (smtExpr != null)
                 {
@@ -609,14 +851,115 @@ static class SmtTranslator
                 sb.AppendLine($"(assert {constraint})");
         }
 
+        if (biasOn)
+        {
+            sb.AppendLine();
+            sb.AppendLine("; Anti-trivial bias: soft-prefer non-special (0/1) values");
+            EmitAntiTrivialBias(sb, inputs, mutableNames);
+        }
+
         sb.AppendLine();
         sb.AppendLine("(check-sat)");
         sb.AppendLine("(get-model)");
 
+        EmitGetValueQueries(sb, inputs, outputs, mutableNames);
+
+        // Post-process: rewrite nested seq references to flat encoding.
+        var smtText = RewriteNestedSeqRefs(sb.ToString(), inputs, outputs);
+        return smtText;
+    }
+
+    /// <summary>
+    /// Emits soft-assert constraints that bias Z3 away from absorbing/neutral values (0, 1).
+    /// Uses weight 2 for 0 (absorbing for multiplication), weight 1 for 1 (neutral).
+    /// Covers primitive scalars (int/nat) and plain seq/array element positions 0..BIAS_POS-1.
+    /// Skips enums, chars, bools, tuples, sets, maps, multisets, datatypes, nested seqs.
+    /// </summary>
+    private const int BIAS_POS = 3;
+    private const int BIAS_MAX = 10;   // prefer |scalar| <= BIAS_MAX
+    private const int BIAS_LEN = 8;    // prefer seq/array length <= BIAS_LEN
+    internal static void EmitAntiTrivialBias(
+        System.Text.StringBuilder sb,
+        List<(string Name, string Type)> inputs,
+        HashSet<string> mutableNames)
+    {
+        foreach (var (name, type) in inputs)
+        {
+            // Primitive scalars
+            if (type == "int" || type == "nat")
+            {
+                var sym = mutableNames.Contains(name) ? $"{name}_pre" : name;
+                sb.AppendLine($"(assert-soft (not (= {sym} 0)) :weight 2)");
+                sb.AppendLine($"(assert-soft (not (= {sym} 1)) :weight 1)");
+                sb.AppendLine($"(assert-soft (<= {sym} {BIAS_MAX}) :weight 3)");
+                if (type == "int")
+                    sb.AppendLine($"(assert-soft (>= {sym} (- {BIAS_MAX})) :weight 3)");
+                continue;
+            }
+
+            // Plain seq<int> / seq<nat> (not nested, not tuple elements)
+            if (TypeUtils.IsSeqType(type))
+            {
+                var elem = TypeUtils.GetSeqElementType(type);
+                if (elem != "int" && elem != "nat") continue;
+                if (TypeUtils.IsSupportedNestedSeqType(type)) continue;
+                if (TypeUtils.IsTupleType(elem)) continue;
+                sb.AppendLine($"(assert-soft (not (= (seq.len {name}) 0)) :weight 1)");
+                sb.AppendLine($"(assert-soft (<= (seq.len {name}) {BIAS_LEN}) :weight 2)");
+                for (int k = 0; k < BIAS_POS; k++)
+                {
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {name}) {k}) (not (= (seq.nth {name} {k}) 0))) :weight 2)");
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {name}) {k}) (not (= (seq.nth {name} {k}) 1))) :weight 1)");
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {name}) {k}) (<= (seq.nth {name} {k}) {BIAS_MAX})) :weight 3)");
+                    if (elem == "int")
+                        sb.AppendLine($"(assert-soft (=> (> (seq.len {name}) {k}) (>= (seq.nth {name} {k}) (- {BIAS_MAX}))) :weight 3)");
+                }
+                continue;
+            }
+
+            // array<int> / array<nat>
+            if (TypeUtils.IsArrayType(type))
+            {
+                var rawElem = type.StartsWith("array<") ? type.Substring(6, type.Length - 7) : "int";
+                if (rawElem != "int" && rawElem != "nat") continue;
+                if (TypeUtils.IsTupleType(rawElem)) continue;
+                var seqSym = mutableNames.Contains(name) ? $"{name}_pre_seq" : $"{name}_seq";
+                sb.AppendLine($"(assert-soft (not (= (seq.len {seqSym}) 0)) :weight 1)");
+                sb.AppendLine($"(assert-soft (<= (seq.len {seqSym}) {BIAS_LEN}) :weight 2)");
+                for (int k = 0; k < BIAS_POS; k++)
+                {
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {seqSym}) {k}) (not (= (seq.nth {seqSym} {k}) 0))) :weight 2)");
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {seqSym}) {k}) (not (= (seq.nth {seqSym} {k}) 1))) :weight 1)");
+                    sb.AppendLine($"(assert-soft (=> (> (seq.len {seqSym}) {k}) (<= (seq.nth {seqSym} {k}) {BIAS_MAX})) :weight 3)");
+                    if (rawElem == "int")
+                        sb.AppendLine($"(assert-soft (=> (> (seq.len {seqSym}) {k}) (>= (seq.nth {seqSym} {k}) (- {BIAS_MAX}))) :weight 3)");
+                }
+                continue;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Emits (get-value ...) queries after (get-model) so Z3 produces the
+    /// ((func) value) format that TypeUtils.ParseZ3Model expects. Used by both
+    /// BuildSmt2Query and BuildUniquenessQuery so uniqueness-alt-enum models parse.
+    /// </summary>
+    internal static void EmitGetValueQueries(
+        System.Text.StringBuilder sb,
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        HashSet<string> mutableNames)
+    {
         // Explicitly request scalar output values (get-model may omit them)
         foreach (var (name, type) in outputs)
         {
-            if (!TypeUtils.IsArrayType(type) && !TypeUtils.IsSeqType(type) && !TypeUtils.IsSetType(type) && !TypeUtils.IsMultisetType(type) && !TypeUtils.IsMapType(type))
+            if (TypeUtils.IsTupleType(type))
+            {
+                var components = TypeUtils.GetTupleComponentTypes(type);
+                for (int i = 0; i < components.Count; i++)
+                    sb.AppendLine($"(get-value ({name}_{i}))");
+            }
+            else if (!TypeUtils.IsArrayType(type) && !TypeUtils.IsSeqType(type) && !TypeUtils.IsSetType(type) && !TypeUtils.IsMultisetType(type) && !TypeUtils.IsMapType(type))
                 sb.AppendLine($"(get-value ({name}))");
         }
 
@@ -625,7 +968,39 @@ static class SmtTranslator
         {
             if (TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type))
             {
-                if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
+                var seqElemType = TypeUtils.GetSeqElementType(type);
+                if (TypeUtils.IsTupleType(seqElemType))
+                {
+                    // Tuple element: query each component sequence separately
+                    var tupleComponents = TypeUtils.GetTupleComponentTypes(seqElemType);
+                    if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
+                    {
+                        foreach (var suffix in new[] { "_pre", "_post" })
+                        {
+                            // Length from first component
+                            sb.AppendLine($"(get-value ((seq.len {name}{suffix}_seq_0)))");
+                            for (int ci = 0; ci < tupleComponents.Count; ci++)
+                                for (int i = 0; i < 8; i++)
+                                    sb.AppendLine($"(get-value ((seq.nth {name}{suffix}_seq_{ci} {i})))");
+                        }
+                    }
+                    else if (TypeUtils.IsArrayType(type))
+                    {
+                        sb.AppendLine($"(get-value ((seq.len {name}_seq_0)))");
+                        for (int ci = 0; ci < tupleComponents.Count; ci++)
+                            for (int i = 0; i < 8; i++)
+                                sb.AppendLine($"(get-value ((seq.nth {name}_seq_{ci} {i})))");
+                    }
+                    else
+                    {
+                        // seq<(T,U)> â€” component sequences named {name}_{ci}
+                        sb.AppendLine($"(get-value ((seq.len {name}_0)))");
+                        for (int ci = 0; ci < tupleComponents.Count; ci++)
+                            for (int i = 0; i < 8; i++)
+                                sb.AppendLine($"(get-value ((seq.nth {name}_{ci} {i})))");
+                    }
+                }
+                else if (mutableNames.Contains(name) && TypeUtils.IsArrayType(type))
                 {
                     // Get both pre and post sequence values
                     foreach (var suffix in new[] { "_pre", "_post" })
@@ -639,18 +1014,41 @@ static class SmtTranslator
                 else
                 {
                     var smtName = TypeUtils.SeqSmtName(name, type);
-                    sb.AppendLine($"(get-value ((seq.len {smtName})))");
-                    for (int i = 0; i < 8; i++)
-                        sb.AppendLine($"(get-value ((seq.nth {smtName} {i})))");
+                    if (TypeUtils.IsSupportedNestedSeqType(type))
+                    {
+                        // Flat encoding: query list_len, then each list_K's length and elements
+                        sb.AppendLine($"(get-value ({smtName}_len))");
+                        for (int i = 0; i < MAX_SEQ_LEN; i++)
+                        {
+                            sb.AppendLine($"(get-value ((seq.len {smtName}_{i})))");
+                            for (int j = 0; j < MAX_INNER_SEQ_LEN; j++)
+                                sb.AppendLine($"(get-value ((seq.nth {smtName}_{i} {j})))");
+                        }
+                    }
+                    else
+                    {
+                        sb.AppendLine($"(get-value ((seq.len {smtName})))");
+                        for (int i = 0; i < 8; i++)
+                            sb.AppendLine($"(get-value ((seq.nth {smtName} {i})))");
+                    }
                 }
             }
             else if (TypeUtils.IsSetType(type))
             {
                 var smtName = mutableNames.Contains(name) ? $"{name}_pre" : name;
                 var elemType = TypeUtils.GetSetElementType(type);
-                var universe = TypeUtils.GetElementUniverse(elemType);
-                foreach (var v in universe)
-                    sb.AppendLine($"(get-value ((select {smtName} {v})))");
+                if (TypeUtils.IsStringElementSet(type))
+                {
+                    var smtUniverse = TypeUtils.GetElementUniverseSmt("string");
+                    foreach (var v in smtUniverse)
+                        sb.AppendLine($"(get-value ((select {smtName} {v})))");
+                }
+                else
+                {
+                    var universe = TypeUtils.GetElementUniverse(elemType);
+                    foreach (var v in universe)
+                        sb.AppendLine($"(get-value ((select {smtName} {v})))");
+                }
             }
             else if (TypeUtils.IsMultisetType(type))
             {
@@ -673,20 +1071,84 @@ static class SmtTranslator
             }
         }
 
-        return sb.ToString();
     }
 
-    // ───────────────── AST-based Expression → SMT translator ─────────────────
+    /// <summary>
+    /// Rewrites nested seq references to flat encoding in an already-built SMT
+    /// query string. Used by both BuildSmt2Query and BuildUniquenessQuery so that
+    /// (seq.nth name K) and (seq.len name) in emitted queries match the flat
+    /// {name}_K / {name}_len aliases used by the rest of the translator.
+    /// </summary>
+    internal static string RewriteNestedSeqRefs(string smtText,
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs)
+    {
+        foreach (var (name, type) in inputs.Concat(outputs))
+        {
+            if (TypeUtils.IsSupportedNestedSeqType(type))
+            {
+                var smtName = TypeUtils.SeqSmtName(name, type);
+                for (int k = MAX_SEQ_LEN - 1; k >= 0; k--)
+                    smtText = smtText.Replace($"(seq.nth {smtName} {k})", $"{smtName}_{k}");
+                smtText = smtText.Replace($"(seq.len {smtName})", $"{smtName}_len");
+            }
+        }
+        return smtText;
+    }
+
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ AST-based Expression â†’ SMT translator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /// <summary>
     /// Translates a Dafny AST Expression to an SMT2 expression string.
     /// Handles mutable variable renaming (pre/post state) at the AST level:
-    /// - In post context: bare mutable refs → _post, inside old() → _pre
-    /// - In pre context: mutable refs → _pre
+    /// - In post context: bare mutable refs â†’ _post, inside old() â†’ _pre
+    /// - In pre context: mutable refs â†’ _pre
     /// Falls back to string-based DafnyExprToSmt for LeafExpression nodes
     /// (produced by predicate inlining) and unrecognized AST patterns.
     /// </summary>
+    [System.ThreadStatic] private static int _exprToSmtDepth;
+    [System.ThreadStatic] private static long _exprToSmtCalls;
+    [System.ThreadStatic] private static long _exprToSmtBudget;
+    private const int MAX_EXPR_TO_SMT_DEPTH = 400;
+    private const long MAX_EXPR_TO_SMT_CALLS = 2_000_000;
+
     internal static string? ExprToSmt(Expression expr,
+        List<(string Name, string Type)> inputs,
+        HashSet<string> mutableNames,
+        bool isPostContext,
+        bool insideOld = false)
+    {
+        _exprToSmtCalls++;
+        _exprToSmtBudget++;
+        if (_exprToSmtBudget > MAX_EXPR_TO_SMT_CALLS)
+        {
+            System.Console.Error.WriteLine($"  [GUARD] ExprToSmt call budget exceeded — bailing out");
+            System.Console.Error.Flush();
+            return null;
+        }
+        if (++_exprToSmtDepth > MAX_EXPR_TO_SMT_DEPTH)
+        {
+            _exprToSmtDepth--;
+            System.Console.Error.WriteLine($"  [GUARD] ExprToSmt depth exceeded {MAX_EXPR_TO_SMT_DEPTH} — bailing out");
+            return null;
+        }
+        try
+        {
+            return ExprToSmtImpl(expr, inputs, mutableNames, isPostContext, insideOld);
+        }
+        finally
+        {
+            _exprToSmtDepth--;
+        }
+    }
+
+    internal static void ResetExprToSmtBudget()
+    {
+        _exprToSmtBudget = 0;
+        _exprToSmtCalls = 0;
+    }
+
+    private static string? ExprToSmtImpl(Expression expr,
         List<(string Name, string Type)> inputs,
         HashSet<string> mutableNames,
         bool isPostContext,
@@ -695,7 +1157,7 @@ static class SmtTranslator
         // Unwrap syntax wrappers
         expr = UnwrapExpr(expr);
 
-        // LeafExpression (from predicate inlining) — use string-based fallback
+        // LeafExpression (from predicate inlining) â€” use string-based fallback
         if (expr is LeafExpression leaf)
         {
             var renamedInputs = BuildRenamedInputs(inputs, mutableNames, isPostContext && !insideOld);
@@ -714,7 +1176,7 @@ static class SmtTranslator
             return inner != null ? $"(not {inner})" : null;
         }
 
-        // OldExpr — switch to pre-state renaming
+        // OldExpr â€” switch to pre-state renaming
         if (expr is OldExpr oldExpr)
             return ExprToSmt(oldExpr.Expr, inputs, mutableNames, isPostContext, insideOld: true);
 
@@ -768,11 +1230,69 @@ static class SmtTranslator
                 // Sequence/array in
                 var seqInfo = ResolveSeqForContains(bin.E1, inputs, mutableNames, isPostContext, insideOld);
                 if (seqInfo == null) goto fallback;
-                var (smtSeq, boundSmt) = seqInfo.Value;
-                var containsExpr = boundSmt != null
-                    ? ExpandSeqContainsBounded(smtSeq, valSmt, boundSmt)
-                    : ExpandSeqContains(smtSeq, valSmt);
+                var (smtSeq, upperBound, lowerBound) = seqInfo.Value;
+                string containsExpr;
+                if (lowerBound != null && upperBound != null)
+                    // a[lo..hi] â€” combine both bounds
+                    containsExpr = ExpandSeqContainsBounded(smtSeq, valSmt, upperBound, lowerBound);
+                else if (lowerBound != null)
+                    containsExpr = ExpandSeqContainsFromIndex(smtSeq, valSmt, lowerBound);
+                else if (upperBound != null)
+                    containsExpr = ExpandSeqContainsBounded(smtSeq, valSmt, upperBound);
+                else
+                    containsExpr = ExpandSeqContains(smtSeq, valSmt);
                 return bin.Op == BinaryExpr.Opcode.NotIn ? $"(not {containsExpr})" : containsExpr;
+            }
+
+            // Tuple equality: r == (e1, e2) â†’ (and (= r_0 smt_e1) (= r_1 smt_e2))
+            if ((bin.Op == BinaryExpr.Opcode.Eq || bin.Op == BinaryExpr.Opcode.Neq)
+                && (IsTupleDatatypeValue(bin.E0) || IsTupleDatatypeValue(bin.E1)))
+            {
+                var tupleResult = TranslateTupleEquality(bin, inputs, mutableNames, isPostContext, insideOld);
+                if (tupleResult != null) return tupleResult;
+                goto fallback;
+            }
+
+            // General tuple equality: r == a[0] where both sides are tuple-typed
+            // Expand to (and (= r_0 (seq.nth a_seq_0 0)) (= r_1 (seq.nth a_seq_1 0)))
+            // Type info may not be resolved in DNF literals, so infer from variable list
+            if ((bin.Op == BinaryExpr.Opcode.Eq || bin.Op == BinaryExpr.Opcode.Neq)
+                && (IsTupleTypedExpr(bin.E0, inputs) || IsTupleTypedExpr(bin.E1, inputs)))
+            {
+                var numComponents = GetTupleComponentCount(bin.E0, inputs);
+                if (numComponents <= 0)
+                    numComponents = GetTupleComponentCount(bin.E1, inputs);
+                if (numComponents > 0)
+                {
+                    var eqs = new List<string>();
+                    bool ok = true;
+                    for (int ci = 0; ci < numComponents && ok; ci++)
+                    {
+                        var leftComp = GetTupleComponentSmt(bin.E0, ci, inputs, mutableNames, isPostContext, insideOld);
+                        var rightComp = GetTupleComponentSmt(bin.E1, ci, inputs, mutableNames, isPostContext, insideOld);
+                        if (leftComp == null || rightComp == null) { ok = false; break; }
+                        eqs.Add($"(= {leftComp} {rightComp})");
+                    }
+                    if (ok && eqs.Count > 0)
+                    {
+                        var conjunction = eqs.Count == 1 ? eqs[0] : $"(and {string.Join(" ", eqs)})";
+                        return bin.Op == BinaryExpr.Opcode.Neq ? $"(not {conjunction})" : conjunction;
+                    }
+                }
+            }
+
+            // multiset(s1) == multiset(s2) â†’ permutation constraint via element counting
+            if ((bin.Op == BinaryExpr.Opcode.Eq || bin.Op == BinaryExpr.Opcode.Neq)
+                && UnwrapExpr(bin.E0) is MultiSetFormingExpr mf0
+                && UnwrapExpr(bin.E1) is MultiSetFormingExpr mf1)
+            {
+                var seq0 = ExprToSmt(mf0.E, inputs, mutableNames, isPostContext, insideOld);
+                var seq1 = ExprToSmt(mf1.E, inputs, mutableNames, isPostContext, insideOld);
+                if (seq0 != null && seq1 != null)
+                {
+                    var perm = $"(forall ((v Int)) (= (_mset_count v {seq0} (seq.len {seq0})) (_mset_count v {seq1} (seq.len {seq1}))))";
+                    return bin.Op == BinaryExpr.Opcode.Neq ? $"(not {perm})" : perm;
+                }
             }
 
             var left = ExprToSmt(bin.E0, inputs, mutableNames, isPostContext, insideOld);
@@ -801,31 +1321,45 @@ static class SmtTranslator
                 BinaryExpr.Opcode.Neq => $"(not (= {left} {right}))",
                 BinaryExpr.Opcode.Lt => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(and (SubsetOfMultiset {left} {right}) (not (= {left} {right})))"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(and (SubsetOfStr {left} {right}) (not (= {left} {right})))"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(and (SubsetOf {left} {right}) (not (= {left} {right})))" : $"(< {left} {right})",
                 BinaryExpr.Opcode.Le => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(SubsetOfMultiset {left} {right})"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(SubsetOfStr {left} {right})"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(SubsetOf {left} {right})" : $"(<= {left} {right})",
                 BinaryExpr.Opcode.Gt => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(and (SubsetOfMultiset {right} {left}) (not (= {left} {right})))"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(and (SubsetOfStr {right} {left}) (not (= {left} {right})))"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(and (SubsetOf {right} {left}) (not (= {left} {right})))" : $"(> {left} {right})",
                 BinaryExpr.Opcode.Ge => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(SubsetOfMultiset {right} {left})"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(SubsetOfStr {right} {left})"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(SubsetOf {right} {left})" : $"(>= {left} {right})",
                 BinaryExpr.Opcode.Add => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(MultisetUnion {left} {right})"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(SetUnionStr {left} {right})"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(SetUnion {left} {right})" : IsSeqExprAst(bin.E0, inputs)
                     ? $"(seq.++ {left} {right})" : $"(+ {left} {right})",
                 BinaryExpr.Opcode.Sub => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(MultisetDifference {left} {right})"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(SetDifferenceStr {left} {right})"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(SetDifference {left} {right})" : $"(- {left} {right})",
                 BinaryExpr.Opcode.Mul => IsMultisetExprAst(bin.E0, inputs)
                     ? $"(MultisetIntersection {left} {right})"
+                    : IsStringSetExprAst(bin.E0, inputs)
+                    ? $"(SetIntersectionStr {left} {right})"
                     : IsSetExprAst(bin.E0, inputs)
                     ? $"(SetIntersection {left} {right})" : $"(* {left} {right})",
                 BinaryExpr.Opcode.Div => $"(div {left} {right})",
@@ -836,7 +1370,7 @@ static class SmtTranslator
             goto fallback;
         }
 
-        // DatatypeValue — enum constructor reference (resolved AST, e.g. Red or Red())
+        // DatatypeValue â€” enum constructor reference (resolved AST, e.g. Red or Red())
         if (expr is DatatypeValue dtVal && dtVal.Arguments.Count == 0)
         {
             if (_enumConstructors.TryGetValue(dtVal.MemberName, out var enumInfo))
@@ -846,7 +1380,7 @@ static class SmtTranslator
         // ThisExpr: 'this' has no SMT representation (object reference)
         if (expr is ThisExpr) return null;
 
-        // IdentifierExpr / NameSegment — check enum constructor first, then variable
+        // IdentifierExpr / NameSegment â€” check enum constructor first, then variable
         // Skip 'Repr' (ghost set<object>, not an SMT-representable variable)
         if (expr is IdentifierExpr idExpr)
         {
@@ -916,23 +1450,108 @@ static class SmtTranslator
                     : $"(and {rangeSmt} {bodySmt})";
             }
 
-            // For single-variable quantifiers with seq.nth, expand finitely
-            if (boundVars.Count == 1 && bodySmt.Contains("seq.nth"))
+            // For quantifiers with seq.nth, expand finitely to avoid Z3 quantifier instantiation failures
+            if (boundVars.Count >= 1 && boundVars.Count <= 2 && bodySmt.Contains("seq.nth"))
             {
-                var varName = boundVars[0].Name;
-                var instances = new List<string>();
-                for (int idx = 0; idx < MAX_SEQ_LEN; idx++)
+                if (boundVars.Count == 1)
                 {
-                    var instance = Regex.Replace(bodySmt,
-                        @"(?<![a-zA-Z_])" + Regex.Escape(varName) + @"(?![a-zA-Z_0-9])",
-                        idx.ToString());
-                    instances.Add(instance);
+                    var bv0 = boundVars[0];
+
+                    // First check: if bound var is a VALUE (appears in set select AND compared to seq.nth)
+                    // then skip ALL finite expansions â€” keep as real forall/exists.
+                    // Example: "forall x :: x in result ==> x in a[..]" â€” x ranges over all values,
+                    // not just array indices. Finite expansion would miss values outside arrays.
+                    {
+                        var bvPatEarly = Regex.Escape(bv0.Name);
+                        bool bvInSelectEarly = Regex.IsMatch(bodySmt, @"\(select \S+ " + bvPatEarly + @"\b");
+                        bool bvComparedEarly = Regex.IsMatch(bodySmt,
+                            @"\(= " + bvPatEarly + @" \(seq\.nth ") ||
+                            Regex.IsMatch(bodySmt, @"\(= \(seq\.nth [^)]+\) " + bvPatEarly + @"\b");
+                        if (bvInSelectEarly && bvComparedEarly)
+                            goto skipFiniteExpansion;
+                    }
+
+                    // If the body contains (= varName (seq.nth SEQNAME K)), the bound variable
+                    // is seq-typed (e.g., "forall x :: x in outerSeq ==> body"). Substitute
+                    // (seq.nth outerSeq k) for each k instead of an integer index.
+                    // After post-processing, (seq.nth outerSeq k) â†’ outerSeq_k (flat encoding).
+                    var seqNameMatch = Regex.Match(bodySmt,
+                        @"\(= " + Regex.Escape(bv0.Name) + @" \(seq\.nth (\S+) \d+\)\)");
+                    if (!seqNameMatch.Success)
+                        seqNameMatch = Regex.Match(bodySmt,
+                            @"\(= \(seq\.nth (\S+) \d+\) " + Regex.Escape(bv0.Name) + @"\)");
+                    if (seqNameMatch.Success)
+                    {
+                        var outerSeqSmt = seqNameMatch.Groups[1].Value;
+                        var instances = new List<string>();
+                        for (int k = 0; k < MAX_SEQ_LEN; k++)
+                        {
+                            var elem = $"(seq.nth {outerSeqSmt} {k})";
+                            var instance = Regex.Replace(bodySmt,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(bv0.Name) + @"(?![a-zA-Z_0-9])",
+                                elem);
+                            // Guard: only consider when k is a valid index in the outer seq.
+                            // For forall: (=> guard body) â€” vacuously true for out-of-bounds (correct).
+                            // For exists: (and guard body) â€” out-of-bounds doesn't count as witness.
+                            var guard = $"(>= (seq.len {outerSeqSmt}) {k + 1})";
+                            instance = quantifier == "forall"
+                                ? $"(=> {guard} {instance})"
+                                : $"(and {guard} {instance})";
+                            instances.Add(instance);
+                        }
+                        return quantifier == "forall"
+                            ? $"(and {string.Join(" ", instances)})"
+                            : $"(or {string.Join(" ", instances)})";
+                    }
+
+                    // Check if bound var is a value (appears in set select AND compared to seq.nth)
+                    // â€” if so, skip finite expansion and keep as real forall
+                    var bvPat = Regex.Escape(bv0.Name);
+                    bool bvInSelect = Regex.IsMatch(bodySmt, @"\(select \S+ " + bvPat + @"\b");
+                    bool bvComparedToSeqNth = Regex.IsMatch(bodySmt,
+                        @"\(= " + bvPat + @" \(seq\.nth ") ||
+                        Regex.IsMatch(bodySmt, @"\(= \(seq\.nth [^)]+\) " + bvPat + @"\b");
+                    if (!(bvInSelect && bvComparedToSeqNth))
+                    {
+                        var varName = bv0.Name;
+                        var intInstances = new List<string>();
+                        for (int idx = 0; idx < MAX_SEQ_LEN; idx++)
+                        {
+                            var instance = Regex.Replace(bodySmt,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(varName) + @"(?![a-zA-Z_0-9])",
+                                idx.ToString());
+                            intInstances.Add(instance);
+                        }
+                        return quantifier == "forall"
+                            ? $"(and {string.Join(" ", intInstances)})"
+                            : $"(or {string.Join(" ", intInstances)})";
+                    }
                 }
-                return quantifier == "forall"
-                    ? $"(and {string.Join(" ", instances)})"
-                    : $"(or {string.Join(" ", instances)})";
+                else // boundVars.Count == 2
+                {
+                    var var1 = boundVars[0].Name;
+                    var var2 = boundVars[1].Name;
+                    var instances = new List<string>();
+                    for (int i = 0; i < MAX_SEQ_LEN; i++)
+                    {
+                        for (int j = 0; j < MAX_SEQ_LEN; j++)
+                        {
+                            var instance = Regex.Replace(bodySmt,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(var1) + @"(?![a-zA-Z_0-9])",
+                                i.ToString());
+                            instance = Regex.Replace(instance,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(var2) + @"(?![a-zA-Z_0-9])",
+                                j.ToString());
+                            instances.Add(instance);
+                        }
+                    }
+                    return quantifier == "forall"
+                        ? $"(and {string.Join(" ", instances)})"
+                        : $"(or {string.Join(" ", instances)})";
+                }
             }
 
+        skipFiniteExpansion:
             return $"({quantifier} ({bindings}) {bodySmt})";
         }
 
@@ -947,7 +1566,7 @@ static class SmtTranslator
 
             if (isMultiset && seqSel.SelectOne && seqSel.E0 != null)
             {
-                // M[x] → (select M x) — returns the count/multiplicity
+                // M[x] â†’ (select M x) â€” returns the count/multiplicity
                 var idxSmt = ExprToSmt(seqSel.E0, inputs, mutableNames, isPostContext, insideOld);
                 if (idxSmt == null) goto fallback;
                 return $"(select {seqBaseSmt} {idxSmt})";
@@ -956,7 +1575,7 @@ static class SmtTranslator
             var isMap = origName != null && inputs.Any(v => v.Name == origName && TypeUtils.IsMapType(v.Type));
             if (isMap && seqSel.SelectOne && seqSel.E0 != null)
             {
-                // m[k] → (select m_values k) — returns the value
+                // m[k] â†’ (select m_values k) â€” returns the value
                 var idxSmt = ExprToSmt(seqSel.E0, inputs, mutableNames, isPostContext, insideOld);
                 if (idxSmt == null) goto fallback;
                 return $"(select {seqBaseSmt}_values {idxSmt})";
@@ -964,17 +1583,24 @@ static class SmtTranslator
 
             if (seqSel.SelectOne)
             {
-                // a[i] → seq.nth
+                // a[i] â†’ seq.nth
                 if (seqSel.E0 == null) goto fallback;
                 var idxSmt = ExprToSmt(seqSel.E0, inputs, mutableNames, isPostContext, insideOld);
                 if (idxSmt == null) goto fallback;
-                var smtSeq = isArray ? $"{seqBaseSmt}_seq" : seqBaseSmt;
+                // For tuple-element arrays/seqs, there's no single a_seq â€” use a_seq_0 for bounds check
+                var selElemType = origName != null
+                    ? inputs.FirstOrDefault(v => v.Name == origName).Type
+                    : null;
+                var isTupleElemSel = selElemType != null && TypeUtils.IsTupleType(TypeUtils.GetSeqElementType(selElemType));
+                var smtSeq = isArray
+                    ? (isTupleElemSel ? $"{seqBaseSmt}_seq_0" : $"{seqBaseSmt}_seq")
+                    : (isTupleElemSel ? $"{seqBaseSmt}_0" : seqBaseSmt);
                 var idxName = GetOriginalName(seqSel.E0);
                 if (idxName == null || !_boundVars.Contains(idxName))
                     _wfGuards.Add($"(and (<= 0 {idxSmt}) (< {idxSmt} (seq.len {smtSeq})))");
+                // For tuple elements, return null â€” caller should use GetTupleComponentSmt
+                if (isTupleElemSel) goto fallback;
                 var ret = $"(seq.nth {smtSeq} {idxSmt})";
-                if (smtSeq.Contains("_pre") || smtSeq.Contains("_post"))
-
                 return ret;
             }
             else
@@ -982,23 +1608,90 @@ static class SmtTranslator
                 // a[..], a[lo..hi], a[..hi]
                 var smtSeq = isArray ? $"{seqBaseSmt}_seq" : seqBaseSmt;
                 if (seqSel.E0 == null && seqSel.E1 == null)
-                    return smtSeq; // a[..] → full sequence
+                    return smtSeq; // a[..] â†’ full sequence
                 var fromSmt = seqSel.E0 != null
                     ? ExprToSmt(seqSel.E0, inputs, mutableNames, isPostContext, insideOld) : "0";
                 var toSmt = seqSel.E1 != null
                     ? ExprToSmt(seqSel.E1, inputs, mutableNames, isPostContext, insideOld) : $"(seq.len {smtSeq})";
                 if (fromSmt == null || toSmt == null) goto fallback;
-                return $"(seq.extract {smtSeq} {fromSmt} (- {toSmt} {fromSmt}))";
+                // Optimize: when from=0, length is just toSmt
+                var lenExpr = fromSmt == "0" ? toSmt : $"(- {toSmt} {fromSmt})";
+                return $"(seq.extract {smtSeq} {fromSmt} {lenExpr})";
             }
         }
 
-        // MemberSelectExpr: a.Length → a_len, this.field → field (with renaming)
+        // SeqDisplayExpr: [x] â†’ (seq.unit x), [x, y] â†’ (seq.++ (seq.unit x) (seq.unit y)), [] â†’ empty
+        if (expr is SeqDisplayExpr seqDisp)
+        {
+            if (seqDisp.Elements.Count == 0)
+                return "(as seq.empty (Seq Int))";
+            var elemSmts = new List<string>();
+            foreach (var elem in seqDisp.Elements)
+            {
+                var elemSmt = ExprToSmt(elem, inputs, mutableNames, isPostContext, insideOld);
+                if (elemSmt == null) goto fallback;
+                elemSmts.Add($"(seq.unit {elemSmt})");
+            }
+            if (elemSmts.Count == 1) return elemSmts[0];
+            return $"(seq.++ {string.Join(" ", elemSmts)})";
+        }
+
+        // MemberSelectExpr: a.Length â†’ a_len, this.field â†’ field (with renaming)
         if (expr is MemberSelectExpr memSel)
         {
             if (memSel.MemberName == "Length")
             {
                 var objSmt = ExprToSmt(memSel.Obj, inputs, mutableNames, isPostContext, insideOld);
                 if (objSmt != null) return $"{objSmt}_len";
+                goto fallback;
+            }
+            // Tuple component access: t.0, t.1 (MemberName may be "0" or "_0")
+            var tupleIdxStr = memSel.MemberName.StartsWith("_") ? memSel.MemberName.Substring(1) : memSel.MemberName;
+            if (int.TryParse(tupleIdxStr, out var tupleIdx))
+            {
+                // Special case: a[i].0 where a is array<(T,U)> or seq<(T,U)>
+                // Produces (seq.nth a_seq_0 i) instead of invalid (seq.nth a_seq i)_0
+                if (memSel.Obj is SeqSelectExpr innerSeqSel && innerSeqSel.SelectOne && innerSeqSel.E0 != null)
+                {
+                    var innerOrigName = GetOriginalName(innerSeqSel.Seq);
+                    if (innerOrigName != null)
+                    {
+                        var matchVar = inputs.FirstOrDefault(v => v.Name == innerOrigName);
+                        if (matchVar.Name != null)
+                        {
+                            var innerElemType = TypeUtils.GetSeqElementType(matchVar.Type);
+                            if (TypeUtils.IsTupleType(innerElemType))
+                            {
+                                var idxSmt = ExprToSmt(innerSeqSel.E0, inputs, mutableNames, isPostContext, insideOld);
+                                if (idxSmt != null)
+                                {
+                                    string seqName;
+                                    if (TypeUtils.IsArrayType(matchVar.Type))
+                                    {
+                                        if (mutableNames.Contains(innerOrigName))
+                                        {
+                                            var suffix = (!isPostContext || insideOld) ? "pre" : "post";
+                                            seqName = $"{innerOrigName}_{suffix}_seq_{tupleIdx}";
+                                        }
+                                        else
+                                            seqName = $"{innerOrigName}_seq_{tupleIdx}";
+                                    }
+                                    else
+                                    {
+                                        // seq<(T,U)> â€” component sequences named {name}_{ci}
+                                        seqName = $"{innerOrigName}_{tupleIdx}";
+                                    }
+                                    var idxName = GetOriginalName(innerSeqSel.E0);
+                                    if (idxName == null || !_boundVars.Contains(idxName))
+                                        _wfGuards.Add($"(and (<= 0 {idxSmt}) (< {idxSmt} (seq.len {seqName})))");
+                                    return $"(seq.nth {seqName} {idxSmt})";
+                                }
+                            }
+                        }
+                    }
+                }
+                var objSmt = ExprToSmt(memSel.Obj, inputs, mutableNames, isPostContext, insideOld);
+                if (objSmt != null) return $"{objSmt}_{tupleIdx}";
                 goto fallback;
             }
             // Field access via this.field or implicit this
@@ -1023,6 +1716,50 @@ static class SmtTranslator
                 var objSmt = ExprToSmt(dotName.Lhs, inputs, mutableNames, isPostContext, insideOld);
                 if (objSmt != null) return $"{objSmt}_len";
             }
+            // Tuple component access: t.0, t.1
+            var dotTupleStr = dotName.SuffixName.StartsWith("_") ? dotName.SuffixName.Substring(1) : dotName.SuffixName;
+            if (int.TryParse(dotTupleStr, out var dotTupleIdx))
+            {
+                // Special case: a[i].0 where a is array<(T,U)> or seq<(T,U)>
+                if (dotName.Lhs is SeqSelectExpr innerDotSeqSel && innerDotSeqSel.SelectOne && innerDotSeqSel.E0 != null)
+                {
+                    var innerDotOrigName = GetOriginalName(innerDotSeqSel.Seq);
+                    if (innerDotOrigName != null)
+                    {
+                        var dotMatchVar = inputs.FirstOrDefault(v => v.Name == innerDotOrigName);
+                        if (dotMatchVar.Name != null)
+                        {
+                            var dotElemType = TypeUtils.GetSeqElementType(dotMatchVar.Type);
+                            if (TypeUtils.IsTupleType(dotElemType))
+                            {
+                                var dotIdxSmt = ExprToSmt(innerDotSeqSel.E0, inputs, mutableNames, isPostContext, insideOld);
+                                if (dotIdxSmt != null)
+                                {
+                                    string dotSeqName;
+                                    if (TypeUtils.IsArrayType(dotMatchVar.Type))
+                                    {
+                                        if (mutableNames.Contains(innerDotOrigName))
+                                        {
+                                            var suffix = (!isPostContext || insideOld) ? "pre" : "post";
+                                            dotSeqName = $"{innerDotOrigName}_{suffix}_seq_{dotTupleIdx}";
+                                        }
+                                        else
+                                            dotSeqName = $"{innerDotOrigName}_seq_{dotTupleIdx}";
+                                    }
+                                    else
+                                        dotSeqName = $"{innerDotOrigName}_{dotTupleIdx}";
+                                    var dotIdxName = GetOriginalName(innerDotSeqSel.E0);
+                                    if (dotIdxName == null || !_boundVars.Contains(dotIdxName))
+                                        _wfGuards.Add($"(and (<= 0 {dotIdxSmt}) (< {dotIdxSmt} (seq.len {dotSeqName})))");
+                                    return $"(seq.nth {dotSeqName} {dotIdxSmt})";
+                                }
+                            }
+                        }
+                    }
+                }
+                var objSmt = ExprToSmt(dotName.Lhs, inputs, mutableNames, isPostContext, insideOld);
+                if (objSmt != null) return $"{objSmt}_{dotTupleIdx}";
+            }
             goto fallback;
         }
 
@@ -1033,14 +1770,24 @@ static class SmtTranslator
         // FunctionCallExpr
         if (expr is FunctionCallExpr funcCall)
         {
-            // IsSorted: built-in SMT encoding
+            // IsSorted: built-in SMT encoding â€” finite consecutive-pair expansion
+            // (avoids Z3 quantifier instantiation failures with two-variable forall over seq.nth)
             if (funcCall.Name == "IsSorted" && funcCall.Args.Count == 1)
             {
                 var argSmt = ExprToSmt(funcCall.Args[0], inputs, mutableNames, isPostContext, insideOld);
                 if (argSmt != null)
-                    return $"(forall ((i Int) (j Int)) (=> (and (<= 0 i) (< i j) (< j (seq.len {argSmt}))) (<= (seq.nth {argSmt} i) (seq.nth {argSmt} j))))";
+                {
+                    // For array arguments, ExprToSmt returns the plain name (e.g. "a" or "a_pre").
+                    // Convert to the _seq form so the sort matches (Seq Int), not Int.
+                    var baseName = argSmt.EndsWith("_post") ? argSmt[..^5]
+                                 : argSmt.EndsWith("_pre")  ? argSmt[..^4]
+                                 : argSmt;
+                    var isArray = inputs.Any(v => v.Name == baseName && TypeUtils.IsArrayType(v.Type));
+                    var seqSmt = isArray ? $"{argSmt}_seq" : argSmt;
+                    return BuildIsSortedSmt(seqSmt);
+                }
             }
-            // Generic: uninterpreted function
+            // Generic: defined function (finitely unrolled) or uninterpreted function
             var smtArgs = funcCall.Args.Select(a => ExprToSmt(a, inputs, mutableNames, isPostContext, insideOld)).ToList();
             if (smtArgs.All(a => a != null))
             {
@@ -1050,16 +1797,19 @@ static class SmtTranslator
             goto fallback;
         }
 
-        // UnaryExpr for |expr| (sequence length / set cardinality) — may be UnaryOpExpr with Cardinality
+        // UnaryExpr for |expr| (sequence length / set cardinality) â€” may be UnaryOpExpr with Cardinality
         // Handled in fallback for now.
 
-        // SetDisplayExpr: {e1, e2, ...} — set literal
+        // SetDisplayExpr: {e1, e2, ...} â€” set literal
         if (expr is SetDisplayExpr setDisplay)
         {
+            var setType = setDisplay.Type?.ToString() ?? "";
+            var isStrSet = TypeUtils.IsStringElementSet(setType);
+            var emptyName = isStrSet ? "EmptySetStr" : "EmptySet";
             if (setDisplay.Elements.Count == 0)
-                return "EmptySet";
+                return emptyName;
             // Build a set from elements: (store (store EmptySet e1 true) e2 true) ...
-            var result = "EmptySet";
+            var result = emptyName;
             foreach (var elem in setDisplay.Elements)
             {
                 var elemSmt = ExprToSmt(elem, inputs, mutableNames, isPostContext, insideOld);
@@ -1069,7 +1819,7 @@ static class SmtTranslator
             return result;
         }
 
-        // MultiSetDisplayExpr: multiset{e1, e2, ...} — multiset literal
+        // MultiSetDisplayExpr: multiset{e1, e2, ...} â€” multiset literal
         if (expr is MultiSetDisplayExpr multisetDisplay)
         {
             if (multisetDisplay.Elements.Count == 0)
@@ -1089,7 +1839,7 @@ static class SmtTranslator
         // Fallback: convert to string and use the string-based translator
 
         var exprStr = DnfEngine.ExprToString(expr);
-        // Skip expressions referencing Repr or bare 'this' — these are heap constraints
+        // Skip expressions referencing Repr or bare 'this' â€” these are heap constraints
         // that can't be represented in our SMT encoding
         if (Regex.IsMatch(exprStr, @"\bRepr\b") || Regex.IsMatch(exprStr, @"\bthis\b"))
             return null;
@@ -1138,7 +1888,7 @@ static class SmtTranslator
 
     /// <summary>
     /// Extracts the original (unrenamed) identifier name from an expression.
-    /// Looks through OldExpr wrappers (e.g., old(a)[i] → "a").
+    /// Looks through OldExpr wrappers (e.g., old(a)[i] â†’ "a").
     /// </summary>
     static string? GetOriginalName(Expression expr)
     {
@@ -1150,7 +1900,188 @@ static class SmtTranslator
     }
 
     /// <summary>
-    /// Checks if an AST expression is a sequence type (for + → seq.++ disambiguation).
+    /// Checks if an expression is a tuple DatatypeValue (e.g., (e1, e2) literal).
+    /// </summary>
+    static bool IsTupleDatatypeValue(Expression expr)
+    {
+        expr = UnwrapExpr(expr);
+        return expr is DatatypeValue dtVal && dtVal.Arguments.Count > 0
+            && dtVal.Type?.AsDatatype?.Name?.StartsWith("_System.Tuple") == true;
+    }
+
+    /// <summary>
+    /// Gets the number of tuple components for a tuple-typed expression.
+    /// Returns 0 if not a tuple type.
+    /// </summary>
+    static int GetTupleComponentCount(Expression expr, List<(string Name, string Type)> inputs)
+    {
+        expr = UnwrapExpr(expr);
+        if (expr.Type != null && TypeUtils.IsTupleType(expr.Type.ToString()))
+            return TypeUtils.GetTupleComponentTypes(expr.Type.ToString()).Count;
+        var name = GetOriginalName(expr);
+        if (name != null)
+        {
+            var matchVar = inputs.FirstOrDefault(v => v.Name == name);
+            if (matchVar.Name != null && TypeUtils.IsTupleType(matchVar.Type))
+                return TypeUtils.GetTupleComponentTypes(matchVar.Type).Count;
+        }
+        if (expr is SeqSelectExpr sel && sel.SelectOne)
+        {
+            var arrName = GetOriginalName(sel.Seq);
+            if (arrName != null)
+            {
+                var arrVar = inputs.FirstOrDefault(v => v.Name == arrName);
+                if (arrVar.Name != null)
+                {
+                    var elemType = TypeUtils.GetSeqElementType(arrVar.Type);
+                    if (TypeUtils.IsTupleType(elemType))
+                        return TypeUtils.GetTupleComponentTypes(elemType).Count;
+                }
+            }
+        }
+        if (expr is DatatypeValue dtVal)
+            return dtVal.Arguments.Count;
+        return 0;
+    }
+
+    /// <summary>
+    /// Checks if an expression is tuple-typed by looking at the variable list.
+    /// Handles NameExpr (variable name lookup) and SeqSelectExpr (array/seq indexing with tuple element type).
+    /// </summary>
+    static bool IsTupleTypedExpr(Expression expr, List<(string Name, string Type)> inputs)
+    {
+        expr = UnwrapExpr(expr);
+        // Check AST type first (may be resolved in some contexts)
+        if (expr.Type != null && TypeUtils.IsTupleType(expr.Type.ToString()))
+            return true;
+        // Variable name lookup
+        var name = GetOriginalName(expr);
+        if (name != null)
+        {
+            var matchVar = inputs.FirstOrDefault(v => v.Name == name);
+            if (matchVar.Name != null && TypeUtils.IsTupleType(matchVar.Type))
+                return true;
+        }
+        // Array/seq indexing: a[i] where a has tuple element type
+        if (expr is SeqSelectExpr sel && sel.SelectOne)
+        {
+            var arrName = GetOriginalName(sel.Seq);
+            if (arrName != null)
+            {
+                var arrVar = inputs.FirstOrDefault(v => v.Name == arrName);
+                if (arrVar.Name != null)
+                {
+                    var elemType = TypeUtils.GetSeqElementType(arrVar.Type);
+                    if (TypeUtils.IsTupleType(elemType))
+                        return true;
+                }
+            }
+        }
+        // DatatypeValue tuple literal
+        if (IsTupleDatatypeValue(expr))
+            return true;
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the SMT expression for the ci-th component of a tuple-typed expression.
+    /// Handles: simple variable names (r â†’ r_ci), SeqSelectExpr (a[i] â†’ seq.nth a_seq_ci i),
+    /// DatatypeValue tuple literals ((e1, e2) â†’ translate e_ci), and MemberSelectExpr (a[0].0).
+    /// </summary>
+    static string? GetTupleComponentSmt(Expression expr, int ci,
+        List<(string Name, string Type)> inputs, HashSet<string> mutableNames,
+        bool isPostContext, bool insideOld)
+    {
+        expr = UnwrapExpr(expr);
+
+        // Tuple literal: get the ci-th argument
+        if (expr is DatatypeValue dtVal && dtVal.Arguments.Count > ci)
+            return ExprToSmt(dtVal.Arguments[ci], inputs, mutableNames, isPostContext, insideOld);
+
+        // Simple variable name
+        var name = GetOriginalName(expr);
+        if (name != null)
+        {
+            var matchVar = inputs.FirstOrDefault(v => v.Name == name);
+            if (matchVar.Name != null && TypeUtils.IsTupleType(matchVar.Type))
+            {
+                var smtName = mutableNames.Contains(name)
+                    ? RenameMutable(name, mutableNames, isPostContext, insideOld)
+                    : name;
+                return $"{smtName}_{ci}";
+            }
+        }
+
+        // a[i] where a is array<(T,U)> or seq<(T,U)>
+        if (expr is SeqSelectExpr seqSel2 && seqSel2.SelectOne && seqSel2.E0 != null)
+        {
+            var arrName = GetOriginalName(seqSel2.Seq);
+            if (arrName != null)
+            {
+                var arrVar = inputs.FirstOrDefault(v => v.Name == arrName);
+                if (arrVar.Name != null)
+                {
+                    var elemType = TypeUtils.GetSeqElementType(arrVar.Type);
+                    if (TypeUtils.IsTupleType(elemType))
+                    {
+                        var idxSmt = ExprToSmt(seqSel2.E0, inputs, mutableNames, isPostContext, insideOld);
+                        if (idxSmt != null)
+                        {
+                            string seqName;
+                            if (TypeUtils.IsArrayType(arrVar.Type))
+                            {
+                                if (mutableNames.Contains(arrName))
+                                {
+                                    var suffix = (!isPostContext || insideOld) ? "pre" : "post";
+                                    seqName = $"{arrName}_{suffix}_seq_{ci}";
+                                }
+                                else
+                                    seqName = $"{arrName}_seq_{ci}";
+                            }
+                            else
+                                seqName = $"{arrName}_{ci}";
+                            return $"(seq.nth {seqName} {idxSmt})";
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fallback: try generic translation and append _ci
+        var baseSmt = ExprToSmt(expr, inputs, mutableNames, isPostContext, insideOld);
+        if (baseSmt != null) return $"{baseSmt}_{ci}";
+        return null;
+    }
+
+    /// <summary>
+    /// Translates tuple equality r == (e1, e2) to (and (= r_0 smt_e1) (= r_1 smt_e2)).
+    /// One side should be a tuple DatatypeValue, the other a tuple variable.
+    /// </summary>
+    static string? TranslateTupleEquality(BinaryExpr bin, List<(string Name, string Type)> inputs,
+        HashSet<string> mutableNames, bool isPostContext, bool insideOld)
+    {
+        // Identify which side is the tuple literal and which is the variable
+        var (varExpr, litExpr) = IsTupleDatatypeValue(bin.E1) ? (bin.E0, bin.E1)
+            : IsTupleDatatypeValue(bin.E0) ? (bin.E1, bin.E0)
+            : ((Expression?)null, (Expression?)null);
+        if (varExpr == null || litExpr == null) return null;
+        var dtVal = (DatatypeValue)UnwrapExpr(litExpr);
+        var varSmt = ExprToSmt(varExpr, inputs, mutableNames, isPostContext, insideOld);
+        if (varSmt == null) return null;
+
+        var eqs = new List<string>();
+        for (int i = 0; i < dtVal.Arguments.Count; i++)
+        {
+            var argSmt = ExprToSmt(dtVal.Arguments[i], inputs, mutableNames, isPostContext, insideOld);
+            if (argSmt == null) return null;
+            eqs.Add($"(= {varSmt}_{i} {argSmt})");
+        }
+        var conjunction = eqs.Count == 1 ? eqs[0] : $"(and {string.Join(" ", eqs)})";
+        return bin.Op == BinaryExpr.Opcode.Neq ? $"(not {conjunction})" : conjunction;
+    }
+
+    /// <summary>
+    /// Checks if an AST expression is a sequence type (for + â†’ seq.++ disambiguation).
     /// </summary>
     static bool IsSeqExprAst(Expression expr, List<(string Name, string Type)> inputs)
     {
@@ -1163,6 +2094,7 @@ static class SmtTranslator
                 return true;
         }
         if (expr is SeqSelectExpr sel && !sel.SelectOne) return true;
+        if (expr is SeqDisplayExpr) return true;
         if (expr is OldExpr oldE) return IsSeqExprAst(oldE.Expr, inputs);
         return false;
     }
@@ -1178,6 +2110,20 @@ static class SmtTranslator
                 return true;
         }
         if (expr is OldExpr oldE) return IsSetExprAst(oldE.Expr, inputs);
+        return false;
+    }
+
+    static bool IsStringSetExprAst(Expression expr, List<(string Name, string Type)> inputs)
+    {
+        expr = UnwrapExpr(expr);
+        var name = GetOriginalName(expr);
+        if (name != null)
+        {
+            var match = inputs.FirstOrDefault(v => v.Name == name);
+            if (match != default && TypeUtils.IsStringElementSet(match.Type))
+                return true;
+        }
+        if (expr is OldExpr oldE2) return IsStringSetExprAst(oldE2.Expr, inputs);
         return false;
     }
 
@@ -1211,15 +2157,15 @@ static class SmtTranslator
 
     /// <summary>
     /// Resolves the sequence expression for 'in' / 'not in' operators.
-    /// Returns (smtSeqName, optionalBound) or null if unresolvable.
+    /// Returns (smtSeqName, optionalUpperBound, optionalLowerBound) or null if unresolvable.
     /// </summary>
-    static (string smtSeq, string? bound)? ResolveSeqForContains(Expression expr,
+    static (string smtSeq, string? upperBound, string? lowerBound)? ResolveSeqForContains(Expression expr,
         List<(string Name, string Type)> inputs, HashSet<string> mutableNames,
         bool isPostContext, bool insideOld)
     {
         expr = UnwrapExpr(expr);
 
-        // a[..] or a[..len]
+        // a[..], a[..len], or a[lo..]
         if (expr is SeqSelectExpr sel && !sel.SelectOne)
         {
             var origName = GetOriginalName(sel.Seq);
@@ -1228,12 +2174,13 @@ static class SmtTranslator
             if (baseSmt == null) return null;
             var smtSeq = isArray ? $"{baseSmt}_seq" : baseSmt;
 
+            string? upperBound = null;
+            string? lowerBound = null;
             if (sel.E1 != null)
-            {
-                var boundSmt = ExprToSmt(sel.E1, inputs, mutableNames, isPostContext, insideOld);
-                return (smtSeq, boundSmt);
-            }
-            return (smtSeq, null);
+                upperBound = ExprToSmt(sel.E1, inputs, mutableNames, isPostContext, insideOld);
+            if (sel.E0 != null)
+                lowerBound = ExprToSmt(sel.E0, inputs, mutableNames, isPostContext, insideOld);
+            return (smtSeq, upperBound, lowerBound);
         }
 
         // Bare variable: s or a
@@ -1243,12 +2190,12 @@ static class SmtTranslator
             var isArray = inputs.Any(v => v.Name == name && TypeUtils.IsArrayType(v.Type));
             var renamed = RenameMutable(name, mutableNames, isPostContext, insideOld);
             var smtSeq = isArray ? $"{renamed}_seq" : renamed;
-            return (smtSeq, null);
+            return (smtSeq, null, null);
         }
 
         // Fallback: try full translation
         var smt = ExprToSmt(expr, inputs, mutableNames, isPostContext, insideOld);
-        return smt != null ? (smt, (string?)null) : null;
+        return smt != null ? (smt, (string?)null, (string?)null) : null;
     }
 
     /// <summary>
@@ -1290,7 +2237,7 @@ static class SmtTranslator
         if (mutableNames.Count == 0) return literal;
         var result = literal;
 
-        // Step 1: Handle old() expressions — strip old() and rename mutable refs to _pre.
+        // Step 1: Handle old() expressions â€” strip old() and rename mutable refs to _pre.
         // Process all old(...) occurrences with balanced parenthesis matching.
         while (true)
         {
@@ -1306,7 +2253,7 @@ static class SmtTranslator
                 else if (result[pos] == ')') depth--;
                 pos++;
             }
-            if (depth != 0) break; // unbalanced — safety exit
+            if (depth != 0) break; // unbalanced â€” safety exit
 
             var innerExpr = result.Substring(start, pos - 1 - start);
             // Rename mutable refs in the inner expression to _pre
@@ -1332,26 +2279,70 @@ static class SmtTranslator
     /// Translates a Dafny expression string to an SMT2 expression string.
     /// Handles common patterns. Also populates _wfGuards with side constraints.
     /// </summary>
+    [System.ThreadStatic] private static int _dafnyExprToSmtDepth;
+    private const int MAX_DAFNY_EXPR_TO_SMT_DEPTH = 200;
+    private const int MAX_DAFNY_EXPR_TO_SMT_LEN = 20_000;
+
     internal static string? DafnyExprToSmt(string dafnyExpr, List<(string Name, string Type)> inputs)
+    {
+        if (dafnyExpr.Length > MAX_DAFNY_EXPR_TO_SMT_LEN) return null;
+        if (_dafnyExprToSmtDepth > MAX_DAFNY_EXPR_TO_SMT_DEPTH) return null;
+        _dafnyExprToSmtDepth++;
+        try
+        {
+            return DafnyExprToSmtImpl(dafnyExpr, inputs);
+        }
+        finally
+        {
+            _dafnyExprToSmtDepth--;
+        }
+    }
+
+    private static string? DafnyExprToSmtImpl(string dafnyExpr, List<(string Name, string Type)> inputs)
     {
         var expr = dafnyExpr.Trim();
 
+        // Simplify prefix-slice reductions introduced by predicate inlining:
+        //   name[..N][i]  →  name[i]       (valid under any range guard 0 <= i < N)
+        //   |name[..N]|   →  N             (length of prefix slice)
+        // The enclosing quantifier's range guard ensures i is within bounds. Without
+        // this rewrite, the string translator would fail to translate the slice and
+        // the entire precondition would be silently dropped (see && tolerance).
+        var before = expr;
+        expr = Regex.Replace(expr, @"\b(\w+)\[\.\.([^\[\]]+?)\]\[([^\[\]]+?)\]", "$1[$3]");
+        expr = Regex.Replace(expr, @"\|(\w+)\[\.\.([^\[\]|]+?)\]\|", "($2)");
+
         // Strip balanced outer parentheses: (expr) -> expr
+        // But don't strip tuple literals like (e1, e2) â€” detected by comma at depth 1
         while (expr.StartsWith("(") && expr.EndsWith(")"))
         {
             // Verify the parens are actually balanced outer parens, not e.g. "(a) && (b)"
             int depth = 0;
             bool isOuter = true;
+            bool hasCommaAtDepth1 = false;
             for (int i = 0; i < expr.Length - 1; i++)
             {
                 if (expr[i] == '(') depth++;
                 else if (expr[i] == ')') depth--;
                 if (depth == 0) { isOuter = false; break; }
+                if (expr[i] == ',' && depth == 1) hasCommaAtDepth1 = true;
             }
-            if (isOuter)
+            // Quantifier bodies have commas at depth 1 (bound var list) but are NOT tuple literals.
+            bool isQuantInner = isOuter && Regex.IsMatch(expr, @"^\(\s*(forall|exists)\s");
+            if (isOuter && (!hasCommaAtDepth1 || isQuantInner))
                 expr = expr.Substring(1, expr.Length - 2).Trim();
             else
                 break;
+        }
+
+        // multiset(s1) == multiset(s2) â†’ permutation constraint via element counting
+        var msetEqMatch = Regex.Match(expr, @"^multiset\((.+?)\)\s*==\s*multiset\((.+?)\)$");
+        if (msetEqMatch.Success)
+        {
+            var lhs = DafnyExprToSmt(msetEqMatch.Groups[1].Value, inputs);
+            var rhs = DafnyExprToSmt(msetEqMatch.Groups[2].Value, inputs);
+            if (lhs != null && rhs != null)
+                return $"(forall ((v Int)) (= (_mset_count v {lhs} (seq.len {lhs})) (_mset_count v {rhs} (seq.len {rhs}))))";
         }
 
         // Handle empty set literal: {}
@@ -1460,27 +2451,111 @@ static class SmtTranslator
                         : $"(and {rangeSmt} {bodySmt})";
                 }
 
-                // For single-variable quantifiers whose body references seq.nth,
+                // For quantifiers whose body references seq.nth,
                 // expand into explicit conjunctions/disjunctions over 0..MAX_SEQ_LEN-1.
                 // Z3's quantifier instantiation is incomplete for seq.nth patterns,
                 // causing forall preconditions over array elements to be ignored.
-                if (boundVars.Count == 1 && boundVars[0].smtType == "Int"
-                    && bodySmt.Contains("seq.nth"))
+                // Special case: if the bound variable is seq-typed (e.g., "forall x :: x in outerSeq"),
+                // substitute (seq.nth outerSeq k) rather than integer k.
+                if (boundVars.Count == 1 && bodySmt.Contains("seq.nth"))
                 {
-                    var varName = boundVars[0].name;
-                    var instances = new List<string>();
-                    for (int idx = 0; idx < MAX_SEQ_LEN; idx++)
+                    var bv0s = boundVars[0];
+                    // Try body-pattern detection: if body contains (= varName (seq.nth SEQNAME K)),
+                    // the bound variable is seq-typed. Use (seq.nth outerSeq k) substitution.
+                    // Do NOT require smtType check â€” string-path bound vars default to "Int".
+                    var seqNameMatchS = Regex.Match(bodySmt,
+                        @"\(= " + Regex.Escape(bv0s.name) + @" \(seq\.nth (\S+) \d+\)\)");
+                    if (!seqNameMatchS.Success)
+                        seqNameMatchS = Regex.Match(bodySmt,
+                            @"\(= \(seq\.nth (\S+) \d+\) " + Regex.Escape(bv0s.name) + @"\)");
+                    if (seqNameMatchS.Success)
                     {
-                        // Replace the bound variable with the concrete index
-                        var instance = Regex.Replace(bodySmt,
-                            @"(?<![a-zA-Z_])" + Regex.Escape(varName) + @"(?![a-zA-Z_0-9])",
-                            idx.ToString());
-                        instances.Add(instance);
+                        var outerSeqSmtS = seqNameMatchS.Groups[1].Value;
+                        var seqInstances = new List<string>();
+                        for (int k = 0; k < MAX_SEQ_LEN; k++)
+                        {
+                            var elem = $"(seq.nth {outerSeqSmtS} {k})";
+                            var instance = Regex.Replace(bodySmt,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(bv0s.name) + @"(?![a-zA-Z_0-9])",
+                                elem);
+                            // Guard: only consider when k is a valid index in the outer seq.
+                            // For forall: (=> guard body) â€” vacuously true for out-of-bounds.
+                            // For exists: (and guard body) â€” out-of-bounds doesn't count as witness.
+                            var guard = $"(>= (seq.len {outerSeqSmtS}) {k + 1})";
+                            instance = quantifier == "forall"
+                                ? $"(=> {guard} {instance})"
+                                : $"(and {guard} {instance})";
+                            seqInstances.Add(instance);
+                        }
+                        return quantifier == "forall"
+                            ? $"(and {string.Join(" ", seqInstances)})"
+                            : $"(or {string.Join(" ", seqInstances)})";
                     }
-                    if (quantifier == "forall")
-                        return $"(and {string.Join(" ", instances)})";
-                    else // exists
-                        return $"(or {string.Join(" ", instances)})";
+                }
+                // Skip finite expansion when the bound variable is a VALUE (not an index):
+                // if it appears in both (select set x) and (seq.nth seq x) patterns,
+                // the variable ranges over element values, not array indices.
+                // Finite expansion over 0..MAX_SEQ_LEN-1 would be unsound for value-domain quantifiers.
+                bool boundVarIsValue = false;
+                if (boundVars.Count == 1)
+                {
+                    var bvName = boundVars[0].name;
+                    var bvPattern = Regex.Escape(bvName);
+                    // Check if bound var appears as a set/multiset membership argument
+                    bool inSelect = Regex.IsMatch(bodySmt, @"\(select \S+ " + bvPattern + @"\b");
+                    // Check if bound var appears as the VALUE being searched in seq.nth comparisons
+                    // (i.e., compared against seq.nth, not used as the index argument of seq.nth)
+                    bool comparedToSeqNth = Regex.IsMatch(bodySmt,
+                        @"\(= " + bvPattern + @" \(seq\.nth ") ||
+                        Regex.IsMatch(bodySmt, @"\(= \(seq\.nth [^)]+\) " + bvPattern + @"\b");
+                    if (inSelect && comparedToSeqNth)
+                        boundVarIsValue = true;
+                }
+                if (boundVars.Count >= 1 && boundVars.Count <= 2
+                    && boundVars.All(v => v.smtType == "Int")
+                    && bodySmt.Contains("seq.nth")
+                    && !boundVarIsValue)
+                {
+                    if (boundVars.Count == 1)
+                    {
+                        var varName = boundVars[0].name;
+                        var instances = new List<string>();
+                        for (int idx = 0; idx < MAX_SEQ_LEN; idx++)
+                        {
+                            // Replace the bound variable with the concrete index
+                            var instance = Regex.Replace(bodySmt,
+                                @"(?<![a-zA-Z_])" + Regex.Escape(varName) + @"(?![a-zA-Z_0-9])",
+                                idx.ToString());
+                            instances.Add(instance);
+                        }
+                        if (quantifier == "forall")
+                            return $"(and {string.Join(" ", instances)})";
+                        else // exists
+                            return $"(or {string.Join(" ", instances)})";
+                    }
+                    else // boundVars.Count == 2
+                    {
+                        var var1 = boundVars[0].name;
+                        var var2 = boundVars[1].name;
+                        var instances = new List<string>();
+                        for (int i = 0; i < MAX_SEQ_LEN; i++)
+                        {
+                            for (int j = 0; j < MAX_SEQ_LEN; j++)
+                            {
+                                var instance = Regex.Replace(bodySmt,
+                                    @"(?<![a-zA-Z_])" + Regex.Escape(var1) + @"(?![a-zA-Z_0-9])",
+                                    i.ToString());
+                                instance = Regex.Replace(instance,
+                                    @"(?<![a-zA-Z_])" + Regex.Escape(var2) + @"(?![a-zA-Z_0-9])",
+                                    j.ToString());
+                                instances.Add(instance);
+                            }
+                        }
+                        if (quantifier == "forall")
+                            return $"(and {string.Join(" ", instances)})";
+                        else // exists
+                            return $"(or {string.Join(" ", instances)})";
+                    }
                 }
 
                 var bindings = string.Join(" ", boundVars.Select(v => $"({v.name} {v.smtType})"));
@@ -1642,15 +2717,37 @@ static class SmtTranslator
             return $"(= (seq.nth {arrName}_seq {idxName}) {valName})";
         }
 
-        // Handle !in pattern: x !in S (set) or x !in a[..] or x !in a[..len] or x !in s
-        var notInMatch = Regex.Match(expr, @"^(.+?)\s+!in\s+(\w+)(\[\.\.(\w+)?\])?$");
+        // Handle bounded slice: x [!]in a[lo..hi] or x [!]in a[..][lo..hi] (both bounds explicit)
+        // Must be tried before the generic in/!in patterns, which only match single-bound slices.
+        foreach (var op in new[] { "!in", "in" })
+        {
+            var boundedSliceMatch = Regex.Match(expr, $@"^(.+?)\s+{op}\s+(\w+)(\[\.\.\])?\[(.+?)\s*\.\.\s*(.+?)\]$");
+            if (boundedSliceMatch.Success)
+            {
+                var lhsSmt = DafnyExprToSmt(boundedSliceMatch.Groups[1].Value.Trim(), inputs);
+                var seqNm = boundedSliceMatch.Groups[2].Value;
+                var loSmt = DafnyExprToSmt(boundedSliceMatch.Groups[4].Value, inputs);
+                var hiSmt = DafnyExprToSmt(boundedSliceMatch.Groups[5].Value, inputs);
+                if (lhsSmt != null && loSmt != null && hiSmt != null && seqNm != "Repr")
+                {
+                    var isArr = inputs.Any(v => v.Name == seqNm && TypeUtils.IsArrayType(v.Type));
+                    var smtSeqName = isArr ? $"{seqNm}_seq" : seqNm;
+                    var body = ExpandSeqContainsBounded(smtSeqName, lhsSmt, hiSmt, loSmt);
+                    return op == "!in" ? $"(not {body})" : body;
+                }
+            }
+        }
+
+        // Handle !in pattern: x !in S (set) or x !in a[..] or x !in a[..len] or x !in a[lo..] or x !in s
+        var notInMatch = Regex.Match(expr, @"^(.+?)\s+!in\s+(\w+)(\[(\.\.(\w+)?|(.+?)\.\.)\])?$");
         if (notInMatch.Success)
         {
             var seqName = notInMatch.Groups[2].Value;
             if (seqName == "Repr") return null; // heap ownership constraint
             var valExpr = DafnyExprToSmt(notInMatch.Groups[1].Value.Trim(), inputs);
             var hasSlice = notInMatch.Groups[3].Success;
-            var sliceBound = notInMatch.Groups[4].Success ? notInMatch.Groups[4].Value : null;
+            var sliceUpperBound = notInMatch.Groups[5].Success ? notInMatch.Groups[5].Value : null;
+            var sliceLowerBound = notInMatch.Groups[6].Success ? notInMatch.Groups[6].Value : null;
             if (valExpr != null)
             {
                 // Check if RHS is a set
@@ -1665,9 +2762,17 @@ static class SmtTranslator
 
                 var isArray = inputs.Any(v => v.Name == seqName && TypeUtils.IsArrayType(v.Type));
                 var smtSeq = (hasSlice || isArray) ? $"{seqName}_seq" : seqName;
-                if (sliceBound != null)
+                // Suffix slice: a[lo..] â€” elem not in elements from index lo onward
+                if (sliceLowerBound != null)
                 {
-                    var boundSmt = DafnyExprToSmt(sliceBound, inputs);
+                    var lowerSmt = DafnyExprToSmt(sliceLowerBound, inputs);
+                    if (lowerSmt != null)
+                        return $"(not {ExpandSeqContainsFromIndex(smtSeq, valExpr, lowerSmt)})";
+                }
+                // Prefix slice: a[..hi] â€” elem not in first hi elements
+                if (sliceUpperBound != null)
+                {
+                    var boundSmt = DafnyExprToSmt(sliceUpperBound, inputs);
                     if (boundSmt != null)
                         return $"(not {ExpandSeqContainsBounded(smtSeq, valExpr, boundSmt)})";
                 }
@@ -1675,16 +2780,16 @@ static class SmtTranslator
             }
         }
 
-        // Handle 'in' pattern: x in a[..] or x in a[..len] or x in s
-        // Handle 'in' pattern: x in S (set) or x in a[..] or x in a[..len] or x in s
-        var inMatch = Regex.Match(expr, @"^(.+?)\s+in\s+(\w+)(\[\.\.(\w+)?\])?$");
+        // Handle 'in' pattern: x in S (set) or x in a[..] or x in a[..len] or x in a[lo..] or x in s
+        var inMatch = Regex.Match(expr, @"^(.+?)\s+in\s+(\w+)(\[(\.\.(\w+)?|(.+?)\.\.)\])?$");
         if (inMatch.Success)
         {
             var seqName = inMatch.Groups[2].Value;
             if (seqName == "Repr") return null; // heap ownership constraint
             var valExpr = DafnyExprToSmt(inMatch.Groups[1].Value.Trim(), inputs);
             var hasSlice = inMatch.Groups[3].Success;
-            var sliceBound = inMatch.Groups[4].Success ? inMatch.Groups[4].Value : null;
+            var sliceUpperBound = inMatch.Groups[5].Success ? inMatch.Groups[5].Value : null;
+            var sliceLowerBound = inMatch.Groups[6].Success ? inMatch.Groups[6].Value : null;
             if (valExpr != null)
             {
                 // Check if RHS is a set
@@ -1704,9 +2809,17 @@ static class SmtTranslator
 
                 var isArray = inputs.Any(v => v.Name == seqName && TypeUtils.IsArrayType(v.Type));
                 var smtSeq = (hasSlice || isArray) ? $"{seqName}_seq" : seqName;
-                if (sliceBound != null)
+                // Suffix slice: a[lo..] â€” elem in elements from index lo onward
+                if (sliceLowerBound != null)
                 {
-                    var boundSmt = DafnyExprToSmt(sliceBound, inputs);
+                    var lowerSmt = DafnyExprToSmt(sliceLowerBound, inputs);
+                    if (lowerSmt != null)
+                        return ExpandSeqContainsFromIndex(smtSeq, valExpr, lowerSmt);
+                }
+                // Prefix slice: a[..hi] â€” elem in first hi elements
+                if (sliceUpperBound != null)
+                {
+                    var boundSmt = DafnyExprToSmt(sliceUpperBound, inputs);
                     if (boundSmt != null)
                         return ExpandSeqContainsBounded(smtSeq, valExpr, boundSmt);
                 }
@@ -1721,7 +2834,30 @@ static class SmtTranslator
             return $"{lenMatch.Groups[1].Value}_len";
         }
 
-        // Handle IsSorted(a[..]) or IsSorted(s_a)
+        // Handle array/seq tuple component access: a[i].0, s[i].1
+        var seqTupleAccessMatch = Regex.Match(expr, @"^(\w+)\[(.+)\]\.(\d+)$");
+        if (seqTupleAccessMatch.Success)
+        {
+            var arrName = seqTupleAccessMatch.Groups[1].Value;
+            var idxExpr = seqTupleAccessMatch.Groups[2].Value;
+            var compIdx = seqTupleAccessMatch.Groups[3].Value;
+            var idxSmt = DafnyExprToSmt(idxExpr, inputs);
+            if (idxSmt != null)
+            {
+                var isArr = inputs.Any(v => v.Name == arrName && TypeUtils.IsArrayType(v.Type));
+                var seqName = isArr ? $"{arrName}_seq_{compIdx}" : $"{arrName}_{compIdx}";
+                return $"(seq.nth {seqName} {idxSmt})";
+            }
+        }
+
+        // Handle tuple component access: t.0, t.1
+        var tupleAccessMatch = Regex.Match(expr, @"^(\w+)\.(\d+)$");
+        if (tupleAccessMatch.Success)
+        {
+            return $"{tupleAccessMatch.Groups[1].Value}_{tupleAccessMatch.Groups[2].Value}";
+        }
+
+        // Handle IsSorted(a[..]) or IsSorted(a) or IsSorted(s)
         if (expr.StartsWith("IsSorted("))
         {
             // Extract the argument
@@ -1730,10 +2866,14 @@ static class SmtTranslator
             if (arg.EndsWith("[..]"))
                 seqName = arg.Substring(0, arg.Length - 4) + "_seq";
             else
-                seqName = arg;
+            {
+                // If arg is a plain array variable name, use its _seq form
+                var isArray = inputs.Any(v => v.Name == arg && TypeUtils.IsArrayType(v.Type));
+                seqName = isArray ? $"{arg}_seq" : arg;
+            }
 
-            // Encode: forall i j. 0 <= i < j < |seq| => seq[i] <= seq[j]
-            return $"(forall ((i Int) (j Int)) (=> (and (<= 0 i) (< i j) (< j (seq.len {seqName}))) (<= (seq.nth {seqName} i) (seq.nth {seqName} j))))";
+            // Finite consecutive-pair expansion (avoids two-variable forall over seq.nth)
+            return BuildIsSortedSmt(seqName);
         }
 
         // Handle |expr| (sequence length or set cardinality)
@@ -1758,19 +2898,58 @@ static class SmtTranslator
             {
                 return $"{innerStr}_card";
             }
+            // For seq<(T,U)>, use first component sequence for length
+            var seqTupleVar = inputs.FirstOrDefault(v => v.Name == innerStr && TypeUtils.IsSeqType(v.Type)
+                && TypeUtils.IsTupleType(TypeUtils.GetSeqElementType(v.Type)));
+            if (seqTupleVar.Name != null)
+                return $"(seq.len {innerStr}_0)";
             var inner = DafnyExprToSmt(innerStr, inputs);
             if (inner != null) return $"(seq.len {inner})";
+        }
+
+        // Handle a[..][i] â€” array-to-seq slice then element access (from predicate inlining
+        // where seq param s is substituted with a[..], turning s[k] into a[..][k]).
+        var sliceIndexMatch = Regex.Match(expr, @"^(\w+)\[\.\.\]\[(.+)\]$");
+        if (sliceIndexMatch.Success)
+        {
+            var arrName = sliceIndexMatch.Groups[1].Value;
+            var idx = DafnyExprToSmt(sliceIndexMatch.Groups[2].Value, inputs);
+            if (idx != null)
+            {
+                var isArray = inputs.Any(v => v.Name == arrName && TypeUtils.IsArrayType(v.Type));
+                var smtSeq = isArray ? $"{arrName}_seq" : arrName;
+                if (!_boundVars.Contains(sliceIndexMatch.Groups[2].Value.Trim()))
+                    _wfGuards.Add($"(and (<= 0 {idx}) (< {idx} (seq.len {smtSeq})))");
+                return $"(seq.nth {smtSeq} {idx})";
+            }
         }
 
         // Handle seq[a .. b] (sequence slicing) - must come before seq[i]
         var sliceMatch = Regex.Match(expr, @"^(\w+)\[(.+)\s*\.\.\s*(.+)\]$");
         if (sliceMatch.Success)
         {
-            var seqExpr = DafnyExprToSmt(sliceMatch.Groups[1].Value, inputs);
+            var seqVarName = sliceMatch.Groups[1].Value;
+            var seqExpr = DafnyExprToSmt(seqVarName, inputs);
             var from = DafnyExprToSmt(sliceMatch.Groups[2].Value, inputs);
             var to = DafnyExprToSmt(sliceMatch.Groups[3].Value, inputs);
             if (seqExpr != null && from != null && to != null)
-                return $"(seq.extract {seqExpr} {from} (- {to} {from}))";
+            {
+                // For arrays, use _seq form so seq.extract gets a (Seq ...) not Int
+                var isArray = inputs.Any(v => v.Name == seqVarName && TypeUtils.IsArrayType(v.Type));
+                var smtSeq = isArray ? $"{seqExpr}_seq" : seqExpr;
+                return $"(seq.extract {smtSeq} {from} (- {to} {from}))";
+            }
+        }
+
+        // Handle chained bracket access: base_expr[idx] where base_expr itself has brackets
+        // e.g., l[i][|l[i]| - 1] for nested seq types after function inlining
+        var chainedBracket = SplitLastTopLevelBracket(expr);
+        if (chainedBracket != null && chainedBracket.Value.baseExpr.Contains("["))
+        {
+            var baseSmt = DafnyExprToSmt(chainedBracket.Value.baseExpr, inputs);
+            var idxSmt = DafnyExprToSmt(chainedBracket.Value.index, inputs);
+            if (baseSmt != null && idxSmt != null)
+                return $"(seq.nth {baseSmt} {idxSmt})";
         }
 
         // Handle seq[i] (sequence/array element access) or M[x] (multiset count)
@@ -1805,6 +2984,52 @@ static class SmtTranslator
         if (arrToSeqMatch.Success)
         {
             return $"{arrToSeqMatch.Groups[1].Value}_seq";
+        }
+
+        // Handle a[..expr] (left-slice: first expr elements)
+        var leftSliceMatch = Regex.Match(expr, @"^(\w+)\[\.\.(.+)\]$");
+        if (leftSliceMatch.Success)
+        {
+            var seqVarName = leftSliceMatch.Groups[1].Value;
+            var toExpr = DafnyExprToSmt(leftSliceMatch.Groups[2].Value, inputs);
+            if (toExpr != null)
+            {
+                var isArray = inputs.Any(v => v.Name == seqVarName && TypeUtils.IsArrayType(v.Type));
+                var smtSeq = isArray ? $"{seqVarName}_seq" : seqVarName;
+                return $"(seq.extract {smtSeq} 0 {toExpr})";
+            }
+        }
+
+        // Handle a[expr..] (right-slice: elements from expr to end)
+        var rightSliceMatch = Regex.Match(expr, @"^(\w+)\[(.+)\.\.\]$");
+        if (rightSliceMatch.Success)
+        {
+            var seqVarName = rightSliceMatch.Groups[1].Value;
+            var fromExpr = DafnyExprToSmt(rightSliceMatch.Groups[2].Value, inputs);
+            if (fromExpr != null)
+            {
+                var isArray = inputs.Any(v => v.Name == seqVarName && TypeUtils.IsArrayType(v.Type));
+                var smtSeq = isArray ? $"{seqVarName}_seq" : seqVarName;
+                return $"(seq.extract {smtSeq} {fromExpr} (- (seq.len {smtSeq}) {fromExpr}))";
+            }
+        }
+
+        // Handle sequence display literals: [x], [x, y, z], []
+        if (expr.StartsWith("[") && expr.EndsWith("]"))
+        {
+            var inner = expr.Substring(1, expr.Length - 2).Trim();
+            if (inner.Length == 0)
+                return "(as seq.empty (Seq Int))";
+            var elems = SplitArgs(inner);
+            var elemSmts = new List<string>();
+            foreach (var elem in elems)
+            {
+                var elemSmt = DafnyExprToSmt(elem.Trim(), inputs);
+                if (elemSmt == null) return null;
+                elemSmts.Add($"(seq.unit {elemSmt})");
+            }
+            if (elemSmts.Count == 1) return elemSmts[0];
+            return $"(seq.++ {string.Join(" ", elemSmts)})";
         }
 
         // Handle arithmetic operators with correct left-associativity.
@@ -1923,7 +3148,6 @@ static class SmtTranslator
             var smtArgs = args.Select(a => DafnyExprToSmt(a.Trim(), inputs)).ToList();
             if (smtArgs.All(a => a != null))
             {
-                // Register the function declaration (stored for later emission)
                 _uninterpFuncs[funcName] = smtArgs.Count;
                 return $"({funcName} {string.Join(" ", smtArgs)})";
             }
@@ -1972,7 +3196,7 @@ static class SmtTranslator
                 if ((remaining.StartsWith("forall ") || remaining.StartsWith("exists ")) &&
                     (i == 0 || !char.IsLetterOrDigit(expr[i - 1])))
                 {
-                    // Skip to end — quantifier body extends to end of expression
+                    // Skip to end â€” quantifier body extends to end of expression
                     break;
                 }
             }
@@ -1991,6 +3215,709 @@ static class SmtTranslator
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// Finitely expands IsSorted(seq) into consecutive-pair constraints.
+    /// Instead of an unreliable two-variable forall over seq.nth, generates:
+    ///   (and (=> (>= (seq.len s) 2) (<= (seq.nth s 0) (seq.nth s 1)))
+    ///        (=> (>= (seq.len s) 3) (<= (seq.nth s 1) (seq.nth s 2)))
+    ///        ...)
+    /// Consecutive pairs are sufficient because <= is transitive.
+    /// Z3 handles these ground constraints reliably (no quantifier instantiation needed).
+    /// </summary>
+    internal static string BuildIsSortedSmt(string seqName)
+    {
+        var conjuncts = new List<string>();
+        for (int i = 0; i < MAX_SEQ_LEN - 1; i++)
+            conjuncts.Add($"(=> (>= (seq.len {seqName}) {i + 2}) (<= (seq.nth {seqName} {i}) (seq.nth {seqName} {i + 1})))");
+        return conjuncts.Count == 1 ? conjuncts[0] : $"(and {string.Join(" ", conjuncts)})";
+    }
+
+    /// <summary>
+    /// Builds consecutive-pair constraints with a given comparison operator.
+    /// Used by boundary analysis to generate ordering shape tiers:
+    ///   op="=" â†’ all-equal array, op="&lt;" â†’ strictly ascending, op="&gt;" â†’ strictly descending.
+    /// </summary>
+    internal static string BuildConsecutivePairsSmt(string seqName, string op)
+    {
+        var conjuncts = new List<string>();
+        for (int i = 0; i < MAX_SEQ_LEN - 1; i++)
+            conjuncts.Add($"(=> (>= (seq.len {seqName}) {i + 2}) ({op} (seq.nth {seqName} {i}) (seq.nth {seqName} {i + 1})))");
+        return conjuncts.Count == 1 ? conjuncts[0] : $"(and {string.Join(" ", conjuncts)})";
+    }
+
+    /// <summary>
+    /// Finds the last top-level [...] in expr (bracket-depth-aware).
+    /// Returns (baseExpr, index) where baseExpr is everything before the '[' and
+    /// index is the content inside the brackets.  Returns null if not found.
+    /// </summary>
+    static (string baseExpr, string index)? SplitLastTopLevelBracket(string expr)
+    {
+        if (!expr.EndsWith("]")) return null;
+        int depth = 0;
+        for (int i = expr.Length - 1; i >= 0; i--)
+        {
+            if (expr[i] == ']') depth++;
+            else if (expr[i] == '[')
+            {
+                depth--;
+                if (depth == 0)
+                {
+                    var baseExpr = expr.Substring(0, i).Trim();
+                    var index = expr.Substring(i + 1, expr.Length - i - 2).Trim();
+                    if (baseExpr.Length > 0 && index.Length > 0)
+                        return (baseExpr, index);
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Strategy: take the original query (preconditions + postconditions), fix the input
+    /// values, negate the found output values, then ask Z3 to find a satisfying assignment.
+    ///   UNSAT → no other output is possible → output is uniquely determined.
+    ///   SAT   → another output satisfies the spec → spec is under-constrained for this case.
+    ///
+    /// Returns an empty string if there are no scorable outputs (nothing to check).
+    /// </summary>
+    internal static string BuildUniquenessQuery(
+        string originalQuery,
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        Dictionary<string, string> values,
+        HashSet<string> mutableNames)
+    {
+        // Strip everything from the last (check-sat) onward
+        var checkIdx = originalQuery.LastIndexOf("(check-sat)");
+        if (checkIdx < 0) return "";
+
+        // Skip uniqueness enumeration when the spec references residual
+        // uninterpreted user-defined functions (recursive calls not fully
+        // inlined). Z3 can freely assign values to such calls, fabricating
+        // spurious alternative outputs that do not reflect real semantics.
+        // Any declare-fun with non-empty argument list is an uninterpreted
+        // user fn (variable declarations use empty arg lists).
+        foreach (Match dm in Regex.Matches(originalQuery, @"\(declare-fun\s+\S+\s+\(([^)]*)\)\s"))
+        {
+            if (!string.IsNullOrWhiteSpace(dm.Groups[1].Value))
+                return "";
+        }
+        var sb = new System.Text.StringBuilder(originalQuery.Substring(0, checkIdx));
+
+        // Fix input values to pin the specific scenario Z3 chose
+        foreach (var (name, type) in inputs)
+        {
+            var smtBase = mutableNames.Contains(name) ? $"{name}_pre" : name;
+            if (TypeUtils.IsTupleType(type))
+            {
+                var components = TypeUtils.GetTupleComponentTypes(type);
+                for (int i = 0; i < components.Count; i++)
+                {
+                    if (values.TryGetValue($"{smtBase}_{i}", out var compVal))
+                        sb.AppendLine($"(assert (= {smtBase}_{i} {compVal}))");
+                }
+            }
+            else if (TypeUtils.IsSupportedNestedSeqType(type))
+            {
+                var smtName = TypeUtils.SeqSmtName(smtBase, type);
+                if (values.TryGetValue(smtBase + "_len", out var outerLenStr) && int.TryParse(outerLenStr, out var outerLen))
+                {
+                    sb.AppendLine($"(assert (= {smtName}_len {outerLen}))");
+                    for (int i = 0; i < outerLen; i++)
+                    {
+                        if (values.TryGetValue($"{smtBase}_{i}_len", out var innerLenStr) && int.TryParse(innerLenStr, out var innerLen))
+                        {
+                            sb.AppendLine($"(assert (= (seq.len {smtName}_{i}) {innerLen}))");
+                            if (values.TryGetValue($"{smtBase}_{i}_elems", out var innerElemsStr))
+                            {
+                                var innerElems = innerElemsStr.Split(',');
+                                for (int j = 0; j < Math.Min(innerLen, innerElems.Length); j++)
+                                    sb.AppendLine($"(assert (= (seq.nth {smtName}_{i} {j}) {innerElems[j]}))");
+                            }
+                        }
+                    }
+                }
+            }
+            else if ((TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type)) && TypeUtils.IsTupleType(TypeUtils.GetSeqElementType(type)))
+            {
+                // Tuple-element array/seq: pin each component sequence separately
+                var tupleComponents = TypeUtils.GetTupleComponentTypes(TypeUtils.GetSeqElementType(type));
+                if (values.TryGetValue(smtBase + "_len", out var lenStr) && int.TryParse(lenStr, out var len))
+                {
+                    var firstCompSeq = TypeUtils.IsArrayType(type) ? $"{smtBase}_seq_0" : $"{smtBase}_0";
+                    sb.AppendLine($"(assert (= (seq.len {firstCompSeq}) {len}))");
+                    for (int ci = 0; ci < tupleComponents.Count; ci++)
+                    {
+                        var compSeqName = TypeUtils.IsArrayType(type) ? $"{smtBase}_seq_{ci}" : $"{smtBase}_{ci}";
+                        if (values.TryGetValue($"{smtBase}_elems_{ci}", out var compElemsStr))
+                        {
+                            var compElems = compElemsStr.Split(',');
+                            for (int i = 0; i < Math.Min(len, compElems.Length); i++)
+                                sb.AppendLine($"(assert (= (seq.nth {compSeqName} {i}) {compElems[i]}))");
+                        }
+                    }
+                }
+            }
+            else if (TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type))
+            {
+                var seqName = TypeUtils.SeqSmtName(smtBase, type);
+                if (values.TryGetValue(smtBase + "_len", out var lenStr) && int.TryParse(lenStr, out var len))
+                {
+                    sb.AppendLine($"(assert (= (seq.len {seqName}) {len}))");
+                    if (values.TryGetValue(smtBase + "_elems", out var elemsStr))
+                    {
+                        var elems = elemsStr.Split(',');
+                        for (int i = 0; i < Math.Min(len, elems.Length); i++)
+                            sb.AppendLine($"(assert (= (seq.nth {seqName} {i}) {elems[i]}))");
+                    }
+                }
+            }
+            else if (!TypeUtils.IsSetType(type) && !TypeUtils.IsMultisetType(type) && !TypeUtils.IsMapType(type))
+            {
+                if (values.TryGetValue(smtBase, out var val))
+                    sb.AppendLine($"(assert (= {smtBase} {val}))");
+            }
+        }
+
+        // Build blocking clause: negation of ALL found output values simultaneously.
+        // UNSAT after adding this clause â†’ only one valid output exists for these inputs.
+        var blockClause = BuildOutputBlockingClause(inputs, outputs, values, mutableNames);
+        if (string.IsNullOrEmpty(blockClause)) return ""; // nothing to block
+
+        sb.AppendLine(blockClause);
+        sb.AppendLine("(check-sat)");
+        sb.AppendLine("(get-model)");
+
+        EmitGetValueQueries(sb, inputs, outputs, mutableNames);
+
+        var smtText = RewriteNestedSeqRefs(sb.ToString(), inputs, outputs);
+        return smtText;
+    }
+
+    /// <summary>
+    /// Builds an SMT assertion that blocks a specific set of output values:
+    ///   (assert (not (and (= out1 v1) (= out2 v2) ...)))
+    /// Used by BuildUniquenessQuery and by the iterative enumeration loop in Program.cs.
+    /// Returns empty string if no output values can be blocked.
+    /// </summary>
+    internal static string BuildOutputBlockingClause(
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        Dictionary<string, string> values,
+        HashSet<string> mutableNames)
+    {
+        var eqParts = new List<string>();
+
+        // Mutable inputs' post-states are outputs (e.g. sorted array in BubbleSort)
+        foreach (var (name, type) in inputs)
+        {
+            if (!mutableNames.Contains(name)) continue;
+            var postBase = $"{name}_post";
+            if (TypeUtils.IsSupportedNestedSeqType(type))
+            {
+                var smtName = TypeUtils.SeqSmtName(postBase, type);
+                if (values.TryGetValue(postBase + "_len", out var outerLenStr) && int.TryParse(outerLenStr, out var outerLen))
+                {
+                    eqParts.Add($"(= {smtName}_len {outerLen})");
+                    for (int i = 0; i < outerLen; i++)
+                    {
+                        if (values.TryGetValue($"{postBase}_{i}_len", out var innerLenStr) && int.TryParse(innerLenStr, out var innerLen))
+                        {
+                            eqParts.Add($"(= (seq.len {smtName}_{i}) {innerLen})");
+                            if (values.TryGetValue($"{postBase}_{i}_elems", out var innerElemsStr))
+                            {
+                                var innerElems = innerElemsStr.Split(',');
+                                for (int j = 0; j < Math.Min(innerLen, innerElems.Length); j++)
+                                    eqParts.Add($"(= (seq.nth {smtName}_{i} {j}) {innerElems[j]})");
+                            }
+                        }
+                    }
+                }
+            }
+            else if (TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type))
+            {
+                var seqName = TypeUtils.SeqSmtName(postBase, type);
+                if (values.TryGetValue(postBase + "_len", out var lenStr) && int.TryParse(lenStr, out var len))
+                {
+                    eqParts.Add($"(= (seq.len {seqName}) {len})");
+                    if (values.TryGetValue(postBase + "_elems", out var elemsStr))
+                    {
+                        var elems = elemsStr.Split(',');
+                        for (int i = 0; i < Math.Min(len, elems.Length); i++)
+                            eqParts.Add($"(= (seq.nth {seqName} {i}) {elems[i]})");
+                    }
+                }
+            }
+            else if (!TypeUtils.IsSetType(type) && !TypeUtils.IsMultisetType(type) && !TypeUtils.IsMapType(type))
+            {
+                // Scalar mutable field (e.g., count_post)
+                if (values.TryGetValue(postBase, out var val))
+                    eqParts.Add($"(= {postBase} {val})");
+            }
+        }
+
+        // Explicit return outputs
+        foreach (var (name, type) in outputs)
+        {
+            if (TypeUtils.IsTupleType(type))
+            {
+                var components = TypeUtils.GetTupleComponentTypes(type);
+                for (int i = 0; i < components.Count; i++)
+                {
+                    if (values.TryGetValue($"{name}_{i}", out var compVal))
+                        eqParts.Add($"(= {name}_{i} {compVal})");
+                }
+            }
+            else if (TypeUtils.IsSupportedNestedSeqType(type))
+            {
+                var smtName = TypeUtils.SeqSmtName(name, type);
+                if (values.TryGetValue(name + "_len", out var outerLenStr) && int.TryParse(outerLenStr, out var outerLen))
+                {
+                    eqParts.Add($"(= {smtName}_len {outerLen})");
+                    for (int i = 0; i < outerLen; i++)
+                    {
+                        if (values.TryGetValue($"{name}_{i}_len", out var innerLenStr) && int.TryParse(innerLenStr, out var innerLen))
+                        {
+                            eqParts.Add($"(= (seq.len {smtName}_{i}) {innerLen})");
+                            if (values.TryGetValue($"{name}_{i}_elems", out var innerElemsStr))
+                            {
+                                var innerElems = innerElemsStr.Split(',');
+                                for (int j = 0; j < Math.Min(innerLen, innerElems.Length); j++)
+                                    eqParts.Add($"(= (seq.nth {smtName}_{i} {j}) {innerElems[j]})");
+                            }
+                        }
+                    }
+                }
+            }
+            else if (TypeUtils.IsArrayType(type) || TypeUtils.IsSeqType(type))
+            {
+                var seqName = TypeUtils.SeqSmtName(name, type);
+                if (values.TryGetValue(name + "_len", out var lenStr) && int.TryParse(lenStr, out var len))
+                {
+                    eqParts.Add($"(= (seq.len {seqName}) {len})");
+                    if (values.TryGetValue(name + "_elems", out var elemsStr))
+                    {
+                        var elems = elemsStr.Split(',');
+                        for (int i = 0; i < Math.Min(len, elems.Length); i++)
+                            eqParts.Add($"(= (seq.nth {seqName} {i}) {elems[i]})");
+                    }
+                }
+            }
+            else if (TypeUtils.IsSetType(type) || TypeUtils.IsMultisetType(type))
+            {
+                // Block on set/multiset membership: each known member must be in the set
+                if (values.TryGetValue($"{name}_members", out var membersStr))
+                {
+                    var members = membersStr.Split(',');
+                    foreach (var member in members)
+                        eqParts.Add($"(select {name} {member.Trim()})");
+                }
+                if (values.TryGetValue($"{name}_card", out var cardStr))
+                    eqParts.Add($"(= {name}_card {cardStr})");
+            }
+            else if (!TypeUtils.IsMapType(type))
+            {
+                if (values.TryGetValue(name, out var val))
+                    eqParts.Add($"(= {name} {val})");
+            }
+        }
+
+        if (eqParts.Count == 0) return ""; // nothing to block
+
+        var conjunction = eqParts.Count == 1 ? eqParts[0] : $"(and {string.Join(" ", eqParts)})";
+        return $"(assert (not {conjunction}))";
+    }
+
+    // ─────────────── Phase 1r: per-literal relevance check ───────────────
+
+    /// <summary>
+    /// Builds an SMT query that proves the LAST literal of a clause is relevant
+    /// (strictly prunes solutions). Asks for (ins, outs1, outs2) such that:
+    ///   pre(ins) ∧ Q1..Qm(ins, outs1) ∧ Q1..¬Qm(ins, outs2) ∧ outs1 ≠ outs2
+    /// SAT → emit outs1 as a relevance test (forces Z3 to find ins where Q_last bites).
+    /// UNSAT → Q_last is redundant in this clause; skip.
+    ///
+    /// Safety: only the LAST literal is negated. Earlier literals (typically guards
+    /// like 0 ≤ i &lt; |a|) remain intact under outs2, so a[i] etc. stay well-defined.
+    /// Caller must verify that postLiterals.Last() references at least one output and
+    /// that all its free variables are covered by earlier literals.
+    /// Returns null when the query cannot be safely constructed (e.g., class outputs).
+    /// </summary>
+    internal static string? BuildRelevanceQuery(
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        List<Expression> preLiterals,
+        List<Expression> postLiterals,
+        Method method,
+        HashSet<string>? mutableNames = null,
+        List<int>? safeIndices = null)
+    {
+        mutableNames ??= new HashSet<string>();
+        if (postLiterals.Count == 0) return null;
+
+        // Default: negate only the last literal (backwards-compat).
+        var indices = safeIndices != null && safeIndices.Count > 0
+            ? safeIndices
+            : new List<int> { postLiterals.Count - 1 };
+
+        // Build the base SMT (ins + outs1 + pre + outs1 asserts). Bias ON —
+        // soft asserts don't change SAT/UNSAT (only preferred model), and
+        // EmitAntiTrivialBias only biases inputs, so outs_i is never skewed.
+        // Keeps ins magnitudes in range (BIAS_MAX) so uniqueness enumeration
+        // can afterward enumerate alternative outs within a reasonable budget.
+        var baseSmt = BuildSmt2Query(
+            inputs, outputs, preLiterals, postLiterals, method,
+            verbose: false,
+            exclusions: null,
+            extraConstraints: null,
+            preLiterals: preLiterals,
+            mutableNames: mutableNames,
+            skipBias: false);
+
+        var checkIdx = baseSmt.LastIndexOf("(check-sat)");
+        if (checkIdx < 0) return null;
+
+        // Drop any safe index whose literal references a residual uninterpreted
+        // user-defined function (recursive call not fully inlined). Z3 can assign
+        // arbitrary values to such calls, producing spurious SAT on the ¬Qi(outs_i)
+        // side that doesn't reflect real semantics. Other safe indices proceed.
+        var uninterpFns = new HashSet<string>();
+        foreach (Match dm in Regex.Matches(baseSmt, @"\(declare-fun\s+(\S+)\s+\(([^)]*)\)\s"))
+        {
+            if (!string.IsNullOrWhiteSpace(dm.Groups[2].Value))
+                uninterpFns.Add(dm.Groups[1].Value);
+        }
+        if (uninterpFns.Count > 0)
+        {
+            var filtered = new List<int>();
+            foreach (var idx in indices)
+            {
+                var litDafny = DnfEngine.ExprToString(postLiterals[idx]);
+                bool hasUninterp = false;
+                foreach (var fn in uninterpFns)
+                {
+                    if (Regex.IsMatch(litDafny, @"\b" + Regex.Escape(fn) + @"\s*(<[^>]*>)?\s*\("))
+                    { hasUninterp = true; break; }
+                }
+                if (!hasUninterp) filtered.Add(idx);
+            }
+            if (filtered.Count == 0) return null;
+            indices = filtered;
+        }
+
+        var sb = new System.Text.StringBuilder(baseSmt.Substring(0, checkIdx));
+        var inputsAndOutputs = inputs.Concat(outputs).ToList();
+
+        // Emit one shadow output block per safe index; each block negates exactly
+        // one literal (Qidx) while keeping the others intact.
+        foreach (var idx in indices)
+        {
+            var suffix = $"alt{idx}";
+            sb.AppendLine();
+            sb.AppendLine($"; ─── Relevance: shadow output for Q{idx + 1} (outs_{suffix}) ───");
+            if (!EmitOutputAltDeclarations(sb, inputs, outputs, mutableNames, suffix))
+                return null;
+
+            var renameMap = BuildOutputAltRenameMap(inputs, outputs, mutableNames, suffix);
+            if (renameMap.Count == 0) return null;
+
+            sb.AppendLine();
+            sb.AppendLine($"; ─── Relevance: shadow assertions for Q{idx + 1} (clause minus Q{idx + 1} + ¬Q{idx + 1}) ───");
+            for (int j = 0; j < postLiterals.Count; j++)
+            {
+                var lit = postLiterals[j];
+                var litStr = DnfEngine.ExprToString(lit);
+                if (TypeUtils.IsSpecOnlyLiteral(litStr)) continue;
+                ResetExprToSmtBudget();
+                var smtExpr = ExprToSmt(lit, inputsAndOutputs, mutableNames, isPostContext: true);
+                if (smtExpr == null) return null;
+                smtExpr = ApplyOutputAltRenames(smtExpr, renameMap);
+                if (j == idx) smtExpr = $"(not {smtExpr})";
+                sb.AppendLine($"(assert {smtExpr})");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine($"; ─── Relevance: outs ≠ outs_{suffix} ───");
+            var ineq = BuildOutputInequalityClause(inputs, outputs, mutableNames, suffix);
+            if (ineq == null) return null;
+            sb.AppendLine(ineq);
+        }
+
+        sb.AppendLine();
+        sb.AppendLine("(check-sat)");
+        sb.AppendLine("(get-model)");
+        EmitGetValueQueries(sb, inputs, outputs, mutableNames);
+
+        var smtText = RewriteNestedSeqRefs(sb.ToString(), inputs, outputs);
+        return smtText;
+    }
+
+    /// <summary>
+    /// Emits shadow declarations for every output identifier with "_alt" suffix.
+    /// Mirrors a subset of the type-handling logic in BuildSmt2Query.
+    /// Returns false if an unsupported output type is encountered.
+    /// </summary>
+    private static bool EmitOutputAltDeclarations(
+        System.Text.StringBuilder sb,
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        HashSet<string> mutableNames,
+        string suffix = "alt")
+    {
+        // Outputs (return values): full mirror with suffix
+        foreach (var (name, type) in outputs)
+        {
+            if (!EmitOneOutputAlt(sb, name, type, isMutablePost: false, suffix)) return false;
+        }
+        // Mutable inputs: only the post-state side
+        foreach (var (name, type) in inputs)
+        {
+            if (!mutableNames.Contains(name)) continue;
+            if (!EmitOneOutputAlt(sb, name, type, isMutablePost: true, suffix)) return false;
+        }
+        return true;
+    }
+
+    private static bool EmitOneOutputAlt(System.Text.StringBuilder sb, string name, string type, bool isMutablePost, string suffix = "alt")
+    {
+        // For mutables, the SMT base name is "{name}_post"; for return outputs it's "{name}".
+        var baseName = isMutablePost ? $"{name}_post" : name;
+        var altName = $"{baseName}_{suffix}";
+
+        // Class outputs: not supported
+        if (type.EndsWith("?") || (!TypeUtils.IsSeqType(type) && !TypeUtils.IsArrayType(type)
+            && !TypeUtils.IsSetType(type) && !TypeUtils.IsMultisetType(type)
+            && !TypeUtils.IsMapType(type) && !TypeUtils.IsTupleType(type)
+            && !IsScalarSupported(type)))
+            return false;
+
+        if (TypeUtils.IsSupportedNestedSeqType(type))
+            return false;  // skip relevance for nested seq outputs
+
+        if (TypeUtils.IsTupleType(type))
+        {
+            var components = TypeUtils.GetTupleComponentTypes(type);
+            for (int i = 0; i < components.Count; i++)
+            {
+                var compSmt = TypeUtils.DafnyTypeToSmt(components[i]);
+                sb.AppendLine($"(declare-const {altName}_{i} {compSmt})");
+                EmitScalarBoundsAssert(sb, $"{altName}_{i}", components[i]);
+            }
+            return true;
+        }
+        if (TypeUtils.IsArrayType(type))
+        {
+            var rawElem = type.StartsWith("array<") ? type.Substring(6, type.Length - 7) : "int";
+            if (TypeUtils.IsTupleType(rawElem)) return false; // skip tuple-element arrays for now
+            var elemSmt = TypeUtils.DafnyTypeToSmt(rawElem);
+            sb.AppendLine($"(declare-const {altName}_seq (Seq {elemSmt}))");
+            sb.AppendLine($"(define-fun {altName}_len () Int (seq.len {altName}_seq))");
+            sb.AppendLine($"(assert (>= (seq.len {altName}_seq) 0))");
+            sb.AppendLine($"(assert (<= (seq.len {altName}_seq) {MAX_SEQ_LEN}))");
+            EmitSeqElemBoundsAssert(sb, $"{altName}_seq", rawElem);
+            return true;
+        }
+        if (TypeUtils.IsSeqType(type))
+        {
+            var elem = TypeUtils.GetSeqElementType(type);
+            if (TypeUtils.IsTupleType(elem)) return false;
+            var elemSmt = TypeUtils.DafnyTypeToSmt(elem);
+            sb.AppendLine($"(declare-const {altName} (Seq {elemSmt}))");
+            sb.AppendLine($"(define-fun {altName}_len () Int (seq.len {altName}))");
+            sb.AppendLine($"(assert (>= (seq.len {altName}) 0))");
+            sb.AppendLine($"(assert (<= (seq.len {altName}) {MAX_SEQ_LEN}))");
+            EmitSeqElemBoundsAssert(sb, altName, elem);
+            return true;
+        }
+        if (TypeUtils.IsSetType(type))
+        {
+            sb.AppendLine($"(declare-const {altName} (Array Int Bool))");
+            return true;
+        }
+        if (TypeUtils.IsMultisetType(type))
+        {
+            var elemType = TypeUtils.GetMultisetElementType(type);
+            var universe = TypeUtils.GetElementUniverse(elemType);
+            for (int i = 0; i < universe.Length; i++)
+            {
+                sb.AppendLine($"(declare-const {altName}_e{i} Int)");
+                sb.AppendLine($"(assert (>= {altName}_e{i} 0))");
+                sb.AppendLine($"(assert (<= {altName}_e{i} {MAX_SET_UNIVERSE}))");
+            }
+            var storeChain = "((as const (Array Int Int)) 0)";
+            for (int i = 0; i < universe.Length; i++)
+                storeChain = $"(store {storeChain} {universe[i]} {altName}_e{i})";
+            sb.AppendLine($"(define-fun {altName} () (Array Int Int) {storeChain})");
+            return true;
+        }
+        if (TypeUtils.IsMapType(type))
+        {
+            return false; // skip maps for now (multiple per-key vars, complex)
+        }
+        // Scalar
+        var smtT = TypeUtils.DafnyTypeToSmt(type);
+        sb.AppendLine($"(declare-const {altName} {smtT})");
+        EmitScalarBoundsAssert(sb, altName, type);
+        return true;
+    }
+
+    private static bool IsScalarSupported(string type)
+    {
+        return type == "int" || type == "nat" || type == "bool" || type == "real"
+            || type == "char" || _enumDatatypes.ContainsKey(type);
+    }
+
+    private static void EmitScalarBoundsAssert(System.Text.StringBuilder sb, string smtName, string type)
+    {
+        if (type == "nat") sb.AppendLine($"(assert (>= {smtName} 0))");
+        if (type == "char")
+        {
+            sb.AppendLine($"(assert (>= {smtName} 32))");
+            sb.AppendLine($"(assert (<= {smtName} 126))");
+        }
+        if (_enumDatatypes.TryGetValue(type, out var ctors))
+        {
+            sb.AppendLine($"(assert (>= {smtName} 0))");
+            sb.AppendLine($"(assert (<= {smtName} {ctors.Count - 1}))");
+        }
+    }
+
+    private static void EmitSeqElemBoundsAssert(System.Text.StringBuilder sb, string seqSmtName, string elemType)
+    {
+        if (elemType == "nat")
+            sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {seqSmtName}))) (>= (seq.nth {seqSmtName} i) 0))))");
+        if (elemType == "char")
+            sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {seqSmtName}))) (and (>= (seq.nth {seqSmtName} i) 32) (<= (seq.nth {seqSmtName} i) 126)))))");
+        if (_enumDatatypes.TryGetValue(elemType, out var ctors))
+            sb.AppendLine($"(assert (forall ((i Int)) (=> (and (<= 0 i) (< i (seq.len {seqSmtName}))) (and (>= (seq.nth {seqSmtName} i) 0) (<= (seq.nth {seqSmtName} i) {ctors.Count - 1})))))");
+    }
+
+    /// <summary>
+    /// Builds a map from output SMT identifier → its _alt rename target.
+    /// Order matters in caller (longest first) so suffix-prefixed names rename correctly.
+    /// </summary>
+    private static Dictionary<string, string> BuildOutputAltRenameMap(
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        HashSet<string> mutableNames,
+        string suffix = "alt")
+    {
+        var map = new Dictionary<string, string>();
+        foreach (var (name, type) in outputs)
+            AddOutputAltKeys(map, name, type, isMutablePost: false, suffix);
+        foreach (var (name, type) in inputs)
+        {
+            if (!mutableNames.Contains(name)) continue;
+            AddOutputAltKeys(map, name, type, isMutablePost: true, suffix);
+        }
+        return map;
+    }
+
+    private static void AddOutputAltKeys(Dictionary<string, string> map, string name, string type, bool isMutablePost, string suffix = "alt")
+    {
+        var baseName = isMutablePost ? $"{name}_post" : name;
+        if (TypeUtils.IsTupleType(type))
+        {
+            var comps = TypeUtils.GetTupleComponentTypes(type);
+            for (int i = 0; i < comps.Count; i++) map[$"{baseName}_{i}"] = $"{baseName}_{suffix}_{i}";
+            return;
+        }
+        if (TypeUtils.IsArrayType(type))
+        {
+            map[$"{baseName}_seq"] = $"{baseName}_{suffix}_seq";
+            map[$"{baseName}_len"] = $"{baseName}_{suffix}_len";
+            return;
+        }
+        if (TypeUtils.IsSeqType(type))
+        {
+            map[baseName] = $"{baseName}_{suffix}";
+            map[$"{baseName}_len"] = $"{baseName}_{suffix}_len";
+            return;
+        }
+        if (TypeUtils.IsSetType(type))
+        {
+            map[baseName] = $"{baseName}_{suffix}";
+            return;
+        }
+        if (TypeUtils.IsMultisetType(type))
+        {
+            map[baseName] = $"{baseName}_{suffix}";
+            var elemType = TypeUtils.GetMultisetElementType(type);
+            var universe = TypeUtils.GetElementUniverse(elemType);
+            for (int i = 0; i < universe.Length; i++) map[$"{baseName}_e{i}"] = $"{baseName}_{suffix}_e{i}";
+            return;
+        }
+        // Scalar
+        map[baseName] = $"{baseName}_{suffix}";
+    }
+
+    /// <summary>
+    /// Applies word-boundary regex rename: each map key in smt text is rewritten to
+    /// its _alt target. Longest keys first to avoid partial substring collisions.
+    /// </summary>
+    private static string ApplyOutputAltRenames(string smt, Dictionary<string, string> renames)
+    {
+        foreach (var key in renames.Keys.OrderByDescending(k => k.Length))
+        {
+            smt = Regex.Replace(smt, $@"\b{Regex.Escape(key)}\b", renames[key]);
+        }
+        return smt;
+    }
+
+    /// <summary>
+    /// Builds (assert (or (not (= o1 o1_alt)) (not (= o2 o2_alt)) ...))
+    /// over every output (return + mutable-post). Returns null if no comparable outputs.
+    /// </summary>
+    private static string? BuildOutputInequalityClause(
+        List<(string Name, string Type)> inputs,
+        List<(string Name, string Type)> outputs,
+        HashSet<string> mutableNames,
+        string suffix = "alt")
+    {
+        var disjuncts = new List<string>();
+        foreach (var (name, type) in outputs)
+            CollectIneqTerms(disjuncts, name, type, isMutablePost: false, suffix);
+        foreach (var (name, type) in inputs)
+        {
+            if (!mutableNames.Contains(name)) continue;
+            CollectIneqTerms(disjuncts, name, type, isMutablePost: true, suffix);
+        }
+        if (disjuncts.Count == 0) return null;
+        var inner = disjuncts.Count == 1 ? disjuncts[0] : $"(or {string.Join(" ", disjuncts)})";
+        return $"(assert {inner})";
+    }
+
+    private static void CollectIneqTerms(List<string> disjuncts, string name, string type, bool isMutablePost, string suffix = "alt")
+    {
+        var baseName = isMutablePost ? $"{name}_post" : name;
+        var altName = $"{baseName}_{suffix}";
+        if (TypeUtils.IsTupleType(type))
+        {
+            var comps = TypeUtils.GetTupleComponentTypes(type);
+            for (int i = 0; i < comps.Count; i++)
+                disjuncts.Add($"(not (= {baseName}_{i} {altName}_{i}))");
+            return;
+        }
+        if (TypeUtils.IsArrayType(type))
+        {
+            disjuncts.Add($"(not (= {baseName}_seq {altName}_seq))");
+            return;
+        }
+        if (TypeUtils.IsSeqType(type))
+        {
+            disjuncts.Add($"(not (= {baseName} {altName}))");
+            return;
+        }
+        if (TypeUtils.IsSetType(type) || TypeUtils.IsMultisetType(type))
+        {
+            disjuncts.Add($"(not (= {baseName} {altName}))");
+            return;
+        }
+        // Scalar
+        disjuncts.Add($"(not (= {baseName} {altName}))");
     }
 
     /// <summary>
@@ -2017,6 +3944,29 @@ static class SmtTranslator
         var disjuncts = new List<string>();
         for (int i = 0; i < MAX_SEQ_LEN; i++)
             disjuncts.Add($"(and (>= {boundSmt} {i + 1}) (>= (seq.len {smtSeq}) {i + 1}) (= {valExpr} (seq.nth {smtSeq} {i})))");
+        return $"(or {string.Join(" ", disjuncts)})";
+    }
+
+    /// <summary>
+    /// Like ExpandSeqContainsBounded but with both lower and upper bounds (a[lo..hi]).
+    /// </summary>
+    static string ExpandSeqContainsBounded(string smtSeq, string valExpr, string upperSmt, string lowerSmt)
+    {
+        var disjuncts = new List<string>();
+        for (int i = 0; i < MAX_SEQ_LEN; i++)
+            disjuncts.Add($"(and (>= {i} {lowerSmt}) (>= {upperSmt} {i + 1}) (>= (seq.len {smtSeq}) {i + 1}) (= {valExpr} (seq.nth {smtSeq} {i})))");
+        return $"(or {string.Join(" ", disjuncts)})";
+    }
+
+    /// <summary>
+    /// Like ExpandSeqContains but with a symbolic lower bound (suffix slice a[lo..]).
+    /// For "x in a[lo..]": generates disjunctions guarded by (>= i lowerSmt) and (< i seq.len).
+    /// </summary>
+    static string ExpandSeqContainsFromIndex(string smtSeq, string valExpr, string lowerSmt)
+    {
+        var disjuncts = new List<string>();
+        for (int i = 0; i < MAX_SEQ_LEN; i++)
+            disjuncts.Add($"(and (>= {i} {lowerSmt}) (>= (seq.len {smtSeq}) {i + 1}) (= {valExpr} (seq.nth {smtSeq} {i})))");
         return $"(or {string.Join(" ", disjuncts)})";
     }
 

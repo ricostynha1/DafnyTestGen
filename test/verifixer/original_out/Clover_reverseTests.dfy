@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Clover_reverse.dfy
 // Method: reverse
-// Generated: 2026-03-26 14:55:16
+// Generated: 2026-04-08 19:04:12
 
 // Clover_reverse.dfy
 
@@ -27,38 +27,38 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[0] [];
-    var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[1] [8];
-    var old_a := a[..];
+    var a := new int[1] [2];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect a[..] == [2];
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[2] [4, 3];
-    var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect a[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[3] [6, 5, 4];
-    var old_a := a[..];
     reverse(a);
-    expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[a.Length - 1 - i];
+    expect a[..] == [4, 5, 6];
   }
 
 }

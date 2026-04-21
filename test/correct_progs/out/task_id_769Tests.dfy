@@ -1,16 +1,16 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-03-25 13:54:30
+// Generated: 2026-04-20 22:34:27
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
 method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
-  ensures diff == filter(a, (x) => x !in b)
+  ensures diff == filter(a, b)
 {
   diff := [];
   for i := 0 to |a|
-    invariant diff == filter(a[..i], (x) => x !in b)
+    invariant diff == filter(a[..i], b)
   {
     if a[i] !in b {
       diff := diff + [a[i]];
@@ -20,11 +20,11 @@ method Difference<T(==)>(a: seq<T>, b: seq<T>) returns (diff: seq<T>)
   assert a == a[..|a|]; // proof helper
 }
 
-// Returns the subsequence of elements of 'a' that satisfy a predicate 'p'.
-function {:fuel 3} filter<T>(a: seq<T>, p: (T) -> bool) : seq<T> {
+// Returns the subsequence of elements of 'a' that do not exist in 'b'.
+function {:fuel 3} filter<T(==)>(a: seq<T>, b: seq<T>) : seq<T> {
   if |a| == 0 then a
-  else if p(a[|a| - 1]) then filter(a[..|a| - 1], p) + [a[|a| - 1]]
-  else filter(a[..|a| - 1], p)
+  else if a[|a| - 1] in b then filter(a[..|a| - 1], b)
+  else filter(a[..|a| - 1], b) + [a[|a| - 1]]
 }
 
 // Teste cases checked statically.
@@ -46,53 +46,58 @@ method DifferenceTest(){
 }
 
 
-method Passing()
+method TestsForDifference()
 {
   // Test case for combination {1}:
-  //   POST: diff == filter(a, x => x !in b)
+  //   POST: diff == filter(a, b)
+  //   POST: diff == a
+  //   ENSURES: diff == filter(a, b)
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
-    expect diff == filter(a, x => x !in b);
+    expect diff == [];
   }
 
-  // Test case for combination {1}:
-  //   POST: diff == filter(a, x => x !in b)
+  // Test case for combination {2}:
+  //   POST: !(|a| == 0)
+  //   POST: a[|a| - 1] in b
+  //   POST: diff == filter<int>(a[..|a| - 1], b)
+  //   ENSURES: diff == filter(a, b)
   {
-    var a: seq<int> := [2];
-    var b: seq<int> := [6];
+    var a: seq<int> := [9];
+    var b: seq<int> := [9];
     var diff := Difference<int>(a, b);
-    expect diff == filter(a, x => x !in b);
+    expect diff == [];
   }
 
-  // Test case for combination {1}/Ba=3,b=1:
-  //   POST: diff == filter(a, x => x !in b)
+  // Test case for combination {3}:
+  //   POST: !(|a| == 0)
+  //   POST: !(a[|a| - 1] in b)
+  //   POST: diff == filter<int>(a[..|a| - 1], b) + [a[|a| - 1]]
+  //   ENSURES: diff == filter(a, b)
   {
-    var a: seq<int> := [5, 4, 6];
-    var b: seq<int> := [14];
-    var diff := Difference<int>(a, b);
-    expect diff == filter(a, x => x !in b);
-  }
-
-  // Test case for combination {1}/Ba=3,b=0:
-  //   POST: diff == filter(a, x => x !in b)
-  {
-    var a: seq<int> := [5, 4, 6];
+    var a: seq<int> := [17];
     var b: seq<int> := [];
     var diff := Difference<int>(a, b);
-    expect diff == filter(a, x => x !in b);
+    expect diff == [17];
   }
 
-}
+  // Test case for combination {1}/O|b|=1:
+  //   POST: diff == filter(a, b)
+  //   POST: diff == a
+  //   ENSURES: diff == filter(a, b)
+  {
+    var a: seq<int> := [];
+    var b: seq<int> := [2];
+    var diff := Difference<int>(a, b);
+    expect diff == [];
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDifference();
+  print "TestsForDifference: all non-failing tests passed!\n";
 }

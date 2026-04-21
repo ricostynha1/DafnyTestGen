@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-language-server_tmp_tmpkir0kenl_Test_VSI-Benchmarks_b1__606_LVR_0.dfy
 // Method: Add
-// Generated: 2026-03-26 14:59:39
+// Generated: 2026-04-08 16:53:39
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_VSI-Benchmarks_b1.dfy
 
@@ -80,6 +80,7 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 0;
@@ -89,6 +90,7 @@ method Passing()
 
   // Test case for combination {1}/Bx=1,y=0:
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 0;
@@ -96,8 +98,19 @@ method Passing()
     expect r == 1;
   }
 
+  // Test case for combination {1}/Or=0:
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := 2;
+    var y := -2;
+    var r := Add(x, y);
+    expect r == 0;
+  }
+
   // Test case for combination {1}:
   //   POST: r == x * y
+  //   ENSURES: r == x * y
   {
     var x := 0;
     var y := 1;
@@ -107,6 +120,7 @@ method Passing()
 
   // Test case for combination {1}/Bx=0,y=0:
   //   POST: r == x * y
+  //   ENSURES: r == x * y
   {
     var x := 0;
     var y := 0;
@@ -116,8 +130,39 @@ method Passing()
 
   // Test case for combination {1}/Bx=1,y=0:
   //   POST: r == x * y
+  //   ENSURES: r == x * y
   {
     var x := 1;
+    var y := 0;
+    var r := Mul(x, y);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Or>0:
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := -8;
+    var y := -2;
+    var r := Mul(x, y);
+    expect r == 16;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 3;
+    var y := -3;
+    var r := Mul(x, y);
+    expect r == -9;
+  }
+
+  // Test case for combination {1}/Or=0:
+  //   POST: r == x * y
+  //   ENSURES: r == x * y
+  {
+    var x := 5;
     var y := 0;
     var r := Mul(x, y);
     expect r == 0;
@@ -127,8 +172,9 @@ method Passing()
 
 method Failing()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bx=0,y=1:
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 0;
     var y := 1;
@@ -138,6 +184,7 @@ method Failing()
 
   // Test case for combination {1}/Bx=1,y=1:
   //   POST: r == x + y
+  //   ENSURES: r == x + y
   {
     var x := 1;
     var y := 1;
@@ -145,8 +192,29 @@ method Failing()
     // expect r == 2;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Or>0:
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -1;
+    var y := 2;
+    var r := Add(x, y);
+    // expect r == 1;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   POST: r == x + y
+  //   ENSURES: r == x + y
+  {
+    var x := -2;
+    var y := 1;
+    var r := Add(x, y);
+    // expect r == -1;
+  }
+
+  // Test case for combination {1}/Bx=1,y=1:
   //   POST: r == x * y
+  //   ENSURES: r == x * y
   {
     var x := 1;
     var y := 1;

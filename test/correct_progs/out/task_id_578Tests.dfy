@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-03-25 13:53:19
+// Generated: 2026-04-20 22:32:13
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -30,12 +30,28 @@ method InterleaveTest(){
   assert res1 == [1, 10, 100, 2, 20, 200, 3, 30, 300];
 }
 
-method Passing()
+method TestsForInterleave()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
-  //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   ENSURES: |r| == 3 * |s1|
+  //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  {
+    var s1: seq<int> := [88];
+    var s2: seq<int> := [30];
+    var s3: seq<int> := [30];
+    var r := Interleave<int>(s1, s2, s3);
+    expect r == [88, 30, 30];
+  }
+
+  // Test case for combination {1}/O|s1|=0:
+  //   PRE:  |s1| == |s2| == |s3|
+  //   POST: |r| == 3 * |s1|
+  //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   ENSURES: |r| == 3 * |s1|
+  //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
     var s1: seq<int> := [];
     var s2: seq<int> := [];
@@ -44,39 +60,24 @@ method Passing()
     expect r == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|s1|>=2:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST: |r| == 3 * |s1|
-  //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   POST: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
+  //   ENSURES: |r| == 3 * |s1|
+  //   ENSURES: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
-    var s1: seq<int> := [28];
-    var s2: seq<int> := [31];
-    var s3: seq<int> := [31];
+    var s1: seq<int> := [28, 34];
+    var s2: seq<int> := [30, 36];
+    var s3: seq<int> := [30, 36];
     var r := Interleave<int>(s1, s2, s3);
-    expect r == [28, 31, 31];
+    expect r == [28, 30, 30, 34, 36, 36];
   }
 
-  // Test case for combination {1}/Bs1=2,s2=2,s3=2:
-  //   PRE:  |s1| == |s2| == |s3|
-  //   POST: |r| == 3 * |s1|
-  //   POST: forall i :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
-  {
-    var s1: seq<int> := [7, 8];
-    var s2: seq<int> := [9, 10];
-    var s3: seq<int> := [11, 12];
-    var r := Interleave<int>(s1, s2, s3);
-    expect r == [7, 9, 11, 8, 10, 12];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForInterleave();
+  print "TestsForInterleave: all non-failing tests passed!\n";
 }

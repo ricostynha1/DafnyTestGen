@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 using Microsoft.Dafny;
+using RAST;
 
 namespace DafnyTestGen;
 
@@ -8,12 +10,28 @@ static class DnfEngine
     // ───────────────────────── public API ─────────────────────────
 
     /// <summary>
-    /// Decomposes a Dafny expression into Disjunctive Normal Form (DNF),
-    /// returning a list of conjunctive clauses (each clause is a list of AST Expression nodes).
+    /// Sets the mode: DNF (default) or FDNF. 
+    internal static bool UseFdnf { get; set; } = false;
+
+    /// <summary>
+    /// Decomposes a Dafny expression into Disjunctive Normal Form (DNF) or Full DNF (FDNF),
+    /// depending on the UseFdnf flag. This is a wrapper around the dual-returning version that
+    /// only returns the positive DNF (pos) of the original expression, discarding the negation DNF (neg).
+    /// Returns a list of conjunctive clauses (each clause is a list of AST Expression nodes).
     /// </summary>
     internal static List<List<Expression>> ExprToDnf(Expression expr)
     {
-        return ExprToDnfInner(expr, negated: false);
+        UseFdnf = false;
+        return ExprToDnfInner(expr).pos;
+    }
+
+    /// <summary>
+    ///  Similar for Full DNF (FDNF).
+    /// </summary>
+    internal static List<List<Expression>> ExprToFdnf(Expression expr)
+    {
+        UseFdnf = true;
+        return ExprToDnfInner(expr).pos;
     }
 
     /// <summary>
@@ -35,6 +53,36 @@ static class DnfEngine
     }
 
     /// <summary>
+    /// Cross-product with incremental pruning: merged clauses are checked for syntactic
+    /// contradictions and discarded immediately. Optional extraLits (e.g., precondition
+    /// literals) are included in the contradiction check but not in the output clauses.
+    /// </summary>
+    internal static List<List<Expression>> CrossProductPruned(
+        List<List<Expression>> a, List<List<Expression>> b,
+        List<Expression>? extraLits = null)
+    {
+        var result = new List<List<Expression>>();
+        foreach (var clauseA in a)
+        {
+            foreach (var clauseB in b)
+            {
+                var merged = new List<Expression>(clauseA);
+                merged.AddRange(clauseB);
+                var checkLits = extraLits != null
+                    ? merged.Concat(extraLits).ToList() : merged;
+                if (FindContradiction(checkLits) == null)
+                {
+                    // Deduplicate literals in the merged clause
+                    var seen = new HashSet<string>();
+                    merged = merged.Where(e => seen.Add(ExprToString(e))).ToList();
+                    result.Add(merged);
+                }
+            }
+        }
+        return result;
+    }
+
+    /// <summary>
     /// Converts an Expression AST node to its Dafny source string representation.
     /// </summary>
     internal static string ExprToString(Expression expr)
@@ -46,12 +94,62 @@ static class DnfEngine
         if (expr is UnaryOpExpr { Op: UnaryOpExpr.Opcode.Not } neg && neg.E is LeafExpression negLeaf)
             return $"!({negLeaf.DafnyText})";
 
-        using var sw = new StringWriter();
-        var dummyOptions = new DafnyOptions(TextReader.Null, TextWriter.Null, TextWriter.Null);
-        dummyOptions.ApplyDefaultOptions();
-        var printer = new Printer(sw, dummyOptions, PrintModes.Everything);
-        printer.PrintExpression(expr, false);
-        return sw.ToString().Trim();
+        // Printer emits SplitQuantifier form (with auto-generated _t#N bound vars)
+        // when present. Temporarily null those out so printing uses the original form.
+        var saved = SaveAndClearSplitQuantifiers(expr);
+        try
+        {
+            using var sw = new StringWriter();
+            var dummyOptions = new DafnyOptions(TextReader.Null, TextWriter.Null, TextWriter.Null);
+            dummyOptions.ApplyDefaultOptions();
+            var printer = new Printer(sw, dummyOptions, PrintModes.Everything);
+            printer.PrintExpression(expr, false);
+            return sw.ToString().Trim();
+        }
+        finally
+        {
+            RestoreSplitQuantifiers(saved);
+        }
+    }
+
+    // Bypass setters (which invoke SplitQuantifierToExpression and can NPE). Write the backing fields directly.
+    static readonly System.Reflection.FieldInfo? _splitQuantField =
+        typeof(QuantifierExpr).GetField("_SplitQuantifier",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+    static readonly System.Reflection.FieldInfo? _splitQuantExprField =
+        typeof(QuantifierExpr).GetField("<SplitQuantifierExpression>k__BackingField",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+
+    static List<(QuantifierExpr q, object? split, object? splitExpr)> SaveAndClearSplitQuantifiers(Expression root)
+    {
+        var saved = new List<(QuantifierExpr, object?, object?)>();
+        void Walk(Expression e)
+        {
+            if (e == null) return;
+            if (e is QuantifierExpr q)
+            {
+                var prevList = _splitQuantField?.GetValue(q);
+                var prevExpr = _splitQuantExprField?.GetValue(q);
+                if (prevList != null || prevExpr != null)
+                {
+                    saved.Add((q, prevList, prevExpr));
+                    _splitQuantField?.SetValue(q, null);
+                    _splitQuantExprField?.SetValue(q, null);
+                }
+            }
+            foreach (var sub in e.SubExpressions) Walk(sub);
+        }
+        Walk(root);
+        return saved;
+    }
+
+    static void RestoreSplitQuantifiers(List<(QuantifierExpr q, object? split, object? splitExpr)> saved)
+    {
+        foreach (var (q, split, splitExpr) in saved)
+        {
+            _splitQuantField?.SetValue(q, split);
+            _splitQuantExprField?.SetValue(q, splitExpr);
+        }
     }
 
     /// <summary>
@@ -80,169 +178,392 @@ static class DnfEngine
         return new UnaryOpExpr(Token.NoToken, UnaryOpExpr.Opcode.Not, expr);
     }
 
-    // ───────────────── core recursive decomposition ──────────────────
+    /// <summary>
+    /// Unwraps parentheses and concrete syntax wrappers to reveal the underlying expression.
+    /// </summary>
+    static Expression UnwrapExpr(Expression expr)
+    {
+        while (true)
+        {
+            if (expr is ParensExpression p) { expr = p.E; continue; }
+            if (expr is ConcreteSyntaxExpression c && c.ResolvedExpression != null) { expr = c.ResolvedExpression; continue; }
+            return expr;
+        }
+    }
 
-    static List<List<Expression>> ExprToDnfInner(Expression expr, bool negated)
+    // ───────────────── Core DNF and FDNF with dual returns ──────────────────
+
+    /// <summary>
+    /// Helper: builds the 2-way or 3-way union for DNF or FDNF disjunction.
+    /// FDNF for A || B: pos = CP(A.pos, B.pos) ∪ CP(A.pos, B.neg) ∪ CP(A.neg, B.pos)
+    /// DNF for A || B: pos = A.pos ∪ CP(A.neg, B.pos)
+    /// </summary>
+    static List<List<Expression>> FdnfDisjunction(
+        (List<List<Expression>> pos, List<List<Expression>> neg) a,
+        (List<List<Expression>> pos, List<List<Expression>> neg) b)
+    {
+        var result = new List<List<Expression>>();
+        if (UseFdnf)
+        {
+            result.AddRange(CrossProduct(a.pos, b.pos));
+            result.AddRange(CrossProduct(a.pos, b.neg));
+        }
+        else 
+        {
+            result.AddRange(a.pos);
+        }
+        result.AddRange(CrossProduct(a.neg, b.pos));
+        return result;
+    }
+
+    /// <summary>
+    /// Core FDNF recursive decomposition. Returns (pos, neg) where pos is the FDNF
+    /// of the expression and neg is the FDNF of its negation.
+    /// </summary>
+    static (List<List<Expression>> pos, List<List<Expression>> neg) ExprToDnfInner(Expression expr)
     {
         // Unwrap parentheses / concrete syntax wrappers
-        if (expr is ParensExpression parens)
-            return ExprToDnfInner(parens.E, negated);
-        if (expr is ConcreteSyntaxExpression cse && cse.ResolvedExpression != null)
-            return ExprToDnfInner(cse.ResolvedExpression, negated);
+        expr = UnwrapExpr(expr);
 
-        if (expr is UnaryOpExpr unary && unary.Op == UnaryOpExpr.Opcode.Not)
-            return ExprToDnfInner(unary.E, !negated);
-
-        if (expr is BinaryExpr bin)
+        // Negation: swap pos/neg
+        if (expr is UnaryOpExpr unaryF && unaryF.Op == UnaryOpExpr.Opcode.Not)
         {
-            var op = bin.Op;
+            var inner = ExprToDnfInner(unaryF.E);
+            return (inner.neg, inner.pos);
+        }
+
+        if (expr is BinaryExpr binF)
+        {
+            var op = binF.Op;
 
             // A ==> B  is  !A || B
             if (op == BinaryExpr.Opcode.Imp)
             {
-                if (!negated)
-                {
-                    var notA = ExprToDnfInner(bin.E0, negated: true);
-                    var b = ExprToDnfInner(bin.E1, negated: false);
-                    var result = new List<List<Expression>>(notA);
-                    result.AddRange(b);
-                    return result;
-                }
-                else
-                {
-                    // !(A ==> B) is A && !B
-                    var a = ExprToDnfInner(bin.E0, negated: false);
-                    var notB = ExprToDnfInner(bin.E1, negated: true);
-                    return CrossProduct(a, notB);
-                }
+                var a = ExprToDnfInner(binF.E0);
+                var b = ExprToDnfInner(binF.E1);
+                // !A || B: use disjunction rule with (a.neg, a.pos) as first operand
+                var negA = (pos: a.neg, neg: a.pos);
+                var pos = FdnfDisjunction(negA, b);
+                var neg = CrossProduct(a.pos, b.neg); // !(A ==> B) = A && !B
+                return (pos, neg);
             }
 
+            // A && B
             if (op == BinaryExpr.Opcode.And)
             {
-                if (!negated)
-                {
-                    var a = ExprToDnfInner(bin.E0, false);
-                    var b = ExprToDnfInner(bin.E1, false);
-                    return CrossProduct(a, b);
-                }
-                else
-                {
-                    // !(A && B) = !A || !B
-                    var notA = ExprToDnfInner(bin.E0, true);
-                    var notB = ExprToDnfInner(bin.E1, true);
-                    var result = new List<List<Expression>>(notA);
-                    result.AddRange(notB);
-                    return result;
-                }
+                var a = ExprToDnfInner(binF.E0);
+                var b = ExprToDnfInner(binF.E1);
+                var pos = CrossProduct(a.pos, b.pos);
+                // !(A && B) = !A || !B: disjunction of negations
+                var negA = (pos: a.neg, neg: a.pos);
+                var negB = (pos: b.neg, neg: b.pos);
+                var neg = FdnfDisjunction(negA, negB);
+                return (pos, neg);
             }
 
+            // A || B
             if (op == BinaryExpr.Opcode.Or)
             {
-                if (!negated)
-                {
-                    var a = ExprToDnfInner(bin.E0, false);
-                    var b = ExprToDnfInner(bin.E1, false);
-                    var result = new List<List<Expression>>(a);
-                    result.AddRange(b);
-                    return result;
-                }
-                else
-                {
-                    // !(A || B) = !A && !B
-                    var notA = ExprToDnfInner(bin.E0, true);
-                    var notB = ExprToDnfInner(bin.E1, true);
-                    return CrossProduct(notA, notB);
-                }
+                var a = ExprToDnfInner(binF.E0);
+                var b = ExprToDnfInner(binF.E1);
+                var pos = FdnfDisjunction(a, b);
+                var neg = CrossProduct(a.neg, b.neg); // !(A || B) = !A && !B
+                return (pos, neg);
             }
 
+            // A <==> B: pos = (A && B) || (!A && !B), neg = (A && !B) || (!A && B)
             if (op == BinaryExpr.Opcode.Iff)
             {
-                if (!negated)
+                var a = ExprToDnfInner(binF.E0);
+                var b = ExprToDnfInner(binF.E1);
+                var pos = new List<List<Expression>>();
+                pos.AddRange(CrossProduct(a.pos, b.pos));
+                pos.AddRange(CrossProduct(a.neg, b.neg));
+                var neg = new List<List<Expression>>();
+                neg.AddRange(CrossProduct(a.pos, b.neg));
+                neg.AddRange(CrossProduct(a.neg, b.pos));
+                return (pos, neg);
+            }
+
+            // x == if C then A else B  →  (C && x == A) || (!C && x == B)
+            if (op == BinaryExpr.Opcode.Eq || op == BinaryExpr.Opcode.Neq)
+            {
+                var lhs = UnwrapExpr(binF.E0);
+                var rhs = UnwrapExpr(binF.E1);
+                ITEExpr? eqIte = null;
+                Expression? eqOther = null;
+                if (rhs is ITEExpr rIte) { eqIte = rIte; eqOther = binF.E0; }
+                else if (lhs is ITEExpr lIte) { eqIte = lIte; eqOther = binF.E1; }
+                if (eqIte != null && eqOther != null)
                 {
-                    // A <==> B is (A && B) || (!A && !B)
-                    var ab = CrossProduct(
-                        ExprToDnfInner(bin.E0, false),
-                        ExprToDnfInner(bin.E1, false));
-                    var notAnotB = CrossProduct(
-                        ExprToDnfInner(bin.E0, true),
-                        ExprToDnfInner(bin.E1, true));
-                    var result = new List<List<Expression>>(ab);
-                    result.AddRange(notAnotB);
-                    return result;
-                }
-                else
-                {
-                    // !(A <==> B) is (A && !B) || (!A && B)
-                    var aNotB = CrossProduct(
-                        ExprToDnfInner(bin.E0, false),
-                        ExprToDnfInner(bin.E1, true));
-                    var notAB = CrossProduct(
-                        ExprToDnfInner(bin.E0, true),
-                        ExprToDnfInner(bin.E1, false));
-                    var result = new List<List<Expression>>(aNotB);
-                    result.AddRange(notAB);
-                    return result;
+                    var cmpOp = op == BinaryExpr.Opcode.Eq ? "==" : "!=";
+                    var negCmpOp = op == BinaryExpr.Opcode.Eq ? "!=" : "==";
+                    var thenEq = new LeafExpression($"{ExprToString(eqOther)} {cmpOp} {ExprToString(eqIte.Thn)}");
+                    var elseEq = new LeafExpression($"{ExprToString(eqOther)} {cmpOp} {ExprToString(eqIte.Els)}");
+                    var negThenEq = new LeafExpression($"{ExprToString(eqOther)} {negCmpOp} {ExprToString(eqIte.Thn)}");
+                    var negElseEq = new LeafExpression($"{ExprToString(eqOther)} {negCmpOp} {ExprToString(eqIte.Els)}");
+                    var condFdnf = ExprToDnfInner(eqIte.Test);
+                    // Recurse into branches so nested ITE (e.g., countTrue's 3-branch body)
+                    // decomposes into further clauses instead of becoming a single leaf.
+                    var thenEqFdnf = ExprToDnfInner(thenEq);
+                    var elseEqFdnf = ExprToDnfInner(elseEq);
+                    var negThenEqFdnf = ExprToDnfInner(negThenEq);
+                    var negElseEqFdnf = ExprToDnfInner(negElseEq);
+                    // ITE branches are mutually exclusive (C and !C), so skip "both true" case.
+                    var thenArmPos = CrossProduct(condFdnf.pos, thenEqFdnf.pos);
+                    var elseArmPos = CrossProduct(condFdnf.neg, elseEqFdnf.pos);
+                    var thenArmNeg = CrossProduct(condFdnf.pos, negThenEqFdnf.pos);
+                    var elseArmNeg = CrossProduct(condFdnf.neg, negElseEqFdnf.pos);
+                    var pos = new List<List<Expression>>(thenArmPos);
+                    pos.AddRange(elseArmPos);
+                    var neg = new List<List<Expression>>(thenArmNeg);
+                    neg.AddRange(elseArmNeg);
+                    return (pos, neg);
                 }
             }
         }
 
         // ITEExpr: if T then A else B  is  (T && A) || (!T && B)
-        if (expr is ITEExpr ite)
+        // Branches are mutually exclusive (T and !T), so skip "both true" case.
+        if (expr is ITEExpr iteF)
         {
-            if (!negated)
+            var condFdnf = ExprToDnfInner(iteF.Test);
+            var thenFdnf = ExprToDnfInner(iteF.Thn);
+            var elseFdnf = ExprToDnfInner(iteF.Els);
+            var pos = new List<List<Expression>>();
+            pos.AddRange(CrossProduct(condFdnf.pos, thenFdnf.pos));   // C && A
+            pos.AddRange(CrossProduct(condFdnf.neg, elseFdnf.pos));   // !C && B
+            var neg = new List<List<Expression>>();
+            neg.AddRange(CrossProduct(condFdnf.pos, thenFdnf.neg));   // C && !A
+            neg.AddRange(CrossProduct(condFdnf.neg, elseFdnf.neg));   // !C && !B
+            return (pos, neg);
+        }
+
+        // Exists quantifier: decompose into boundary cases 
+        if (expr is ExistsExpr existsFdnf)
+        {
+            var decomposed = TryDecomposeExists(existsFdnf);
+            if (decomposed != null)
+                return (decomposed, new List<List<Expression>> { new() { Negate(expr) } });
+        }
+        // Forall: neg decomposes as exists-not
+        if (expr is ForallExpr forallFdnf)
+        {
+            var decomposed = TryDecomposeNegatedForall(forallFdnf);
+            if (decomposed != null)
+                return (new List<List<Expression>> { new() { expr } }, decomposed);
+        }
+
+        // LeafExpression with string-level ITE
+        if (expr is LeafExpression leafIteF)
+        {
+            var split = TrySplitStringIte(leafIteF.DafnyText);
+            if (split != null)
             {
-                var thenBranch = CrossProduct(
-                    ExprToDnfInner(ite.Test, false),
-                    ExprToDnfInner(ite.Thn, false));
-                var elseBranch = CrossProduct(
-                    ExprToDnfInner(ite.Test, true),
-                    ExprToDnfInner(ite.Els, false));
-                var result = new List<List<Expression>>(thenBranch);
-                result.AddRange(elseBranch);
-                return result;
+                var (cond, thenBranch, elseBranch) = split.Value;
+                var condLeaf = new LeafExpression(cond);
+                var negCondLeaf = new LeafExpression($"!({cond})");
+                var condFdnf = (
+                    pos: new List<List<Expression>> { new() { condLeaf } },
+                    neg: new List<List<Expression>> { new() { negCondLeaf } }
+                );
+                var thenFdnf = ExprToDnfInner(new LeafExpression(thenBranch));
+                var elseFdnf = ExprToDnfInner(new LeafExpression(elseBranch));
+                // ITE branches are mutually exclusive, skip "both true" case.
+                var pos = new List<List<Expression>>();
+                pos.AddRange(CrossProduct(condFdnf.pos, thenFdnf.pos));
+                pos.AddRange(CrossProduct(condFdnf.neg, elseFdnf.pos));
+                var neg = new List<List<Expression>>();
+                neg.AddRange(CrossProduct(condFdnf.pos, thenFdnf.neg));
+                neg.AddRange(CrossProduct(condFdnf.neg, elseFdnf.neg));
+                return (pos, neg);
             }
+        }
+
+        // LeafExpression with "X == (if C then A else B)": split equality over if-then-else
+        if (expr is LeafExpression leafEqIteF)
+        {
+            var eqSplit = TrySplitEqIte(leafEqIteF.DafnyText);
+            if (eqSplit != null)
+            {
+                var (lhs, eqOp, cond, thenBranch, elseBranch) = eqSplit.Value;
+                var condLeaf = new LeafExpression(cond);
+                var negCondLeaf = new LeafExpression($"!({cond})");
+                var condFdnf = (
+                    pos: new List<List<Expression>> { new() { condLeaf } },
+                    neg: new List<List<Expression>> { new() { negCondLeaf } }
+                );
+                var negEqOp = eqOp == "==" ? "!=" : "==";
+                var thenEq = new LeafExpression($"{lhs} {eqOp} {thenBranch}");
+                var negThenEq = new LeafExpression($"{lhs} {negEqOp} {thenBranch}");
+                var elseEq = new LeafExpression($"{lhs} {eqOp} {elseBranch}");
+                var negElseEq = new LeafExpression($"{lhs} {negEqOp} {elseBranch}");
+                // ITE branches are mutually exclusive, skip "both true" case.
+                var pos = new List<List<Expression>>();
+                pos.AddRange(CrossProduct(condFdnf.pos, new List<List<Expression>> { new() { thenEq } }));
+                pos.AddRange(CrossProduct(condFdnf.neg, new List<List<Expression>> { new() { elseEq } }));
+                var neg = new List<List<Expression>>();
+                neg.AddRange(CrossProduct(condFdnf.pos, new List<List<Expression>> { new() { negThenEq } }));
+                neg.AddRange(CrossProduct(condFdnf.neg, new List<List<Expression>> { new() { negElseEq } }));
+                return (pos, neg);
+            }
+        }
+
+        // Leaf: atomic expression
+        var leafExpr = expr;
+        return (
+            pos: new List<List<Expression>> { new() { leafExpr } },
+            neg: new List<List<Expression>> { new() { Negate(leafExpr) } }
+        );
+    }
+
+
+
+    // ───────── string-level if-then-else splitting ─────────
+
+    /// <summary>
+    /// Tries to split a Dafny string expression of the form "if C then A else B"
+    /// into its condition, then-branch, and else-branch, handling nested ifs and
+    /// balanced parentheses. Returns null if the expression doesn't match.
+    /// </summary>
+    static (string cond, string thenBranch, string elseBranch)? TrySplitStringIte(string text)
+    {
+        text = text.Trim();
+        // Strip outer parentheses if present: (if C then A else B) → if C then A else B
+        while (text.StartsWith("(") && text.EndsWith(")"))
+        {
+            var inner = text.Substring(1, text.Length - 2).Trim();
+            if (inner.StartsWith("if "))
+                text = inner;
             else
+                break;
+        }
+        if (!text.StartsWith("if "))
+            return null;
+
+        // Find the "then" keyword at the top level (not nested in parens/ifs)
+        var thenIdx = FindTopLevelKeyword(text, "then", 3);
+        if (thenIdx < 0) return null;
+
+        var cond = text.Substring(3, thenIdx - 3).Trim();
+        var afterThen = text.Substring(thenIdx + 4).Trim();
+
+        // Find the "else" keyword at the top level of the then-branch.
+        // Must skip nested if-then-else expressions.
+        var elseIdx = FindTopLevelKeyword(afterThen, "else", 0);
+        if (elseIdx < 0) return null;
+
+        var thenBranch = afterThen.Substring(0, elseIdx).Trim();
+        var elseBranch = afterThen.Substring(elseIdx + 4).Trim();
+
+        return (cond, thenBranch, elseBranch);
+    }
+
+    /// <summary>
+    /// Tries to split "LHS == (if C then A else B)" or "LHS != (if C then A else B)"
+    /// into its components. Returns null if the expression doesn't match.
+    /// </summary>
+    static (string lhs, string op, string cond, string thenBranch, string elseBranch)? TrySplitEqIte(string text)
+    {
+        text = text.Trim();
+        // Find == or != at depth 0
+        int depth = 0;
+        int eqIdx = -1;
+        string? op = null;
+        for (int i = 0; i < text.Length - 1; i++)
+        {
+            if (text[i] == '(' || text[i] == '[') { depth++; continue; }
+            if (text[i] == ')' || text[i] == ']') { depth--; continue; }
+            if (depth == 0)
             {
-                var thenBranch = CrossProduct(
-                    ExprToDnfInner(ite.Test, false),
-                    ExprToDnfInner(ite.Thn, true));
-                var elseBranch = CrossProduct(
-                    ExprToDnfInner(ite.Test, true),
-                    ExprToDnfInner(ite.Els, true));
-                var result = new List<List<Expression>>(thenBranch);
-                result.AddRange(elseBranch);
-                return result;
+                if (i + 2 <= text.Length && text.Substring(i, 2) == "==" && (i == 0 || text[i-1] != '!' && text[i-1] != '<' && text[i-1] != '>'))
+                {
+                    eqIdx = i; op = "=="; break;
+                }
+                if (i + 2 <= text.Length && text.Substring(i, 2) == "!=")
+                {
+                    eqIdx = i; op = "!="; break;
+                }
             }
         }
+        if (eqIdx < 0 || op == null) return null;
 
-        // Exists quantifier: decompose into boundary cases
-        // exists k :: lo <= k < hi && body  ->  body[k/lo] || (exists k :: lo<k<hi-1 && body) || body[k/hi-1]
-        if (!negated && expr is ExistsExpr existsExpr)
-        {
-            var decomposed = TryDecomposeExists(existsExpr);
-            if (decomposed != null)
-                return decomposed;
-        }
-        // Negated forall = exists-not -> decompose too
-        if (negated && expr is ForallExpr forallNeg)
-        {
-            // !(forall k :: range ==> body) = exists k :: range && !body
-            var decomposed = TryDecomposeNegatedForall(forallNeg);
-            if (decomposed != null)
-                return decomposed;
-        }
+        var lhs = text[..eqIdx].Trim();
+        var rhs = text[(eqIdx + 2)..].Trim();
 
-        // Leaf: atomic expression (return as-is, or wrapped in negation)
-        var leaf = negated ? Negate(expr) : expr;
-        return new List<List<Expression>> { new List<Expression> { leaf } };
+        // Check if RHS is an if-then-else (possibly wrapped in parens)
+        var iteSplit = TrySplitStringIte(rhs);
+        if (iteSplit == null) return null;
+
+        return (lhs, op, iteSplit.Value.cond, iteSplit.Value.thenBranch, iteSplit.Value.elseBranch);
+    }
+
+    /// <summary>
+    /// Finds the index of a keyword at the top level of a Dafny expression string,
+    /// skipping over parenthesized sub-expressions and nested if-then-else blocks.
+    /// Returns -1 if not found.
+    /// </summary>
+    static int FindTopLevelKeyword(string text, string keyword, int startIdx)
+    {
+        int depth = 0;   // parenthesis depth
+        int ifDepth = 0; // nested if-then-else depth
+        int i = startIdx;
+        while (i <= text.Length - keyword.Length)
+        {
+            var ch = text[i];
+            if (ch == '(') { depth++; i++; continue; }
+            if (ch == ')') { depth--; i++; continue; }
+
+            if (depth == 0)
+            {
+                // Track nested if-then-else (only when not inside parens)
+                if (i + 3 <= text.Length && text.Substring(i, 3) == "if " && ifDepth >= 0)
+                {
+                    if (keyword != "then" || ifDepth > 0)
+                        ifDepth++;
+                    i += 3;
+                    continue;
+                }
+                if (i + 5 <= text.Length && text.Substring(i, 5) == "then ")
+                {
+                    if (keyword == "then" && ifDepth == 0)
+                        return i;
+                    i += 5;
+                    continue;
+                }
+                if (i + 5 <= text.Length && text.Substring(i, 5) == "else ")
+                {
+                    if (ifDepth > 0) { ifDepth--; i += 5; continue; }
+                    if (keyword == "else")
+                        return i;
+                    i += 5;
+                    continue;
+                }
+
+                // Check for exact keyword match at word boundary
+                if (text.Substring(i).StartsWith(keyword) &&
+                    (i + keyword.Length >= text.Length || !char.IsLetterOrDigit(text[i + keyword.Length])) &&
+                    (i == 0 || !char.IsLetterOrDigit(text[i - 1])))
+                {
+                    if (keyword == "then" && ifDepth == 0)
+                        return i;
+                    if (keyword == "else" && ifDepth == 0)
+                        return i;
+                }
+            }
+
+            i++;
+        }
+        return -1;
     }
 
     // ───────── quantifier decomposition (AST-based) ─────────
 
     /// <summary>
     /// Try to decompose an exists quantifier into boundary cases at AST level.
-    /// Pattern: exists k :: lo <= k < hi && body(k)
-    /// Produces 3 DNF clauses: body[k/lo], exists k :: lo+1 <= k < hi-1 && body, body[k/hi-1]
+    /// Pattern: exists k :: lo <=|< k <|<= hi && body(k)
+    /// Computes effective boundaries (adjusting for strict inequalities) and produces
+    /// 3 DNF clauses: body[k/effLo], exists k :: effLo+1 <= k < effHi && body, body[k/effHi]
     /// </summary>
     static List<List<Expression>>? TryDecomposeExists(ExistsExpr existsExpr)
     {
@@ -283,8 +604,9 @@ static class DnfEngine
 
     /// <summary>
     /// Core AST-based decomposition. Given a bound variable and a body expression,
-    /// tries to match patterns like: lo <= k [&& k] < hi && property(k)
-    /// and produces 3 boundary clauses.
+    /// tries to match patterns like: lo <=|< k [&&|&& k] <|<= hi && property(k)
+    /// and produces 4 boundary clauses with effective boundary values
+    /// (adjusted for strict vs non-strict inequalities).
     /// </summary>
     static List<List<Expression>>? TryDecomposeQuantifierBody(
         BoundVar boundVar, Expression body)
@@ -292,44 +614,105 @@ static class DnfEngine
         // Flatten top-level conjuncts
         var conjuncts = FlattenConjuncts(body);
 
-        // Try to find range bounds: lo <= k and k < hi
+        // Try to find range bounds: lo <=|< k <|<= hi
         Expression? lo = null, hi = null;
         int loIdx = -1, hiIdx = -1;
+        bool isStrictLo = false; // true for lo < k, false for lo <= k
+        bool isStrictHi = true;  // true for k < hi, false for k <= hi
 
         for (int i = 0; i < conjuncts.Count; i++)
         {
             var c = Unwrap(conjuncts[i]);
 
-            // Pattern: lo <= k  (or equivalently k >= lo)
-            if (c is BinaryExpr { Op: BinaryExpr.Opcode.Le } leq
+            // Pattern: ChainingExpression  lo <=|< k <|<= hi  (3 operands, 2 operators)
+            if (c is ChainingExpression chain
+                && chain.Operands.Count == 3
+                && chain.Operators.Count == 2
+                && ReferencesVar(chain.Operands[1], boundVar.Name)
+                && !ReferencesVar(chain.Operands[0], boundVar.Name)
+                && !ReferencesVar(chain.Operands[2], boundVar.Name))
+            {
+                // Extract lo from first comparison: Operands[0] op0 k
+                if (chain.Operators[0] == BinaryExpr.Opcode.Le
+                    || chain.Operators[0] == BinaryExpr.Opcode.Lt)
+                {
+                    lo = chain.Operands[0];
+                    loIdx = i;
+                    isStrictLo = chain.Operators[0] == BinaryExpr.Opcode.Lt;
+                }
+                // Extract hi from second comparison: k op1 Operands[2]
+                if (chain.Operators[1] == BinaryExpr.Opcode.Lt
+                    || chain.Operators[1] == BinaryExpr.Opcode.Le)
+                {
+                    hi = chain.Operands[2];
+                    hiIdx = i; // same index — both bounds come from same conjunct
+                    isStrictHi = chain.Operators[1] == BinaryExpr.Opcode.Lt;
+                }
+            }
+
+            // Pattern: lo <= k  (or equivalently k >= lo) — non-strict lower bound
+            if (lo == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Le } leq
                 && ReferencesVar(leq.E1, boundVar.Name) && !ReferencesVar(leq.E0, boundVar.Name))
             {
                 lo = leq.E0;
                 loIdx = i;
+                isStrictLo = false;
             }
-            else if (c is BinaryExpr { Op: BinaryExpr.Opcode.Ge } geq
+            else if (lo == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Ge } geq
                 && ReferencesVar(geq.E0, boundVar.Name) && !ReferencesVar(geq.E1, boundVar.Name))
             {
                 lo = geq.E1;
                 loIdx = i;
+                isStrictLo = false;
             }
 
-            // Pattern: k < hi  (or equivalently hi > k)
-            if (c is BinaryExpr { Op: BinaryExpr.Opcode.Lt } lt
+            // Pattern: lo < k  (or equivalently k > lo) — strict lower bound
+            if (lo == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Lt } ltLo
+                && ReferencesVar(ltLo.E1, boundVar.Name) && !ReferencesVar(ltLo.E0, boundVar.Name))
+            {
+                lo = ltLo.E0;
+                loIdx = i;
+                isStrictLo = true;
+            }
+            else if (lo == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Gt } gtLo
+                && ReferencesVar(gtLo.E0, boundVar.Name) && !ReferencesVar(gtLo.E1, boundVar.Name))
+            {
+                lo = gtLo.E1;
+                loIdx = i;
+                isStrictLo = true;
+            }
+
+            // Pattern: k < hi  (or equivalently hi > k) — strict upper bound
+            if (hi == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Lt } lt
                 && ReferencesVar(lt.E0, boundVar.Name) && !ReferencesVar(lt.E1, boundVar.Name))
             {
                 hi = lt.E1;
                 hiIdx = i;
+                isStrictHi = true;
             }
-            else if (c is BinaryExpr { Op: BinaryExpr.Opcode.Gt } gt
+            else if (hi == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Gt } gt
                 && ReferencesVar(gt.E1, boundVar.Name) && !ReferencesVar(gt.E0, boundVar.Name))
             {
                 hi = gt.E0;
                 hiIdx = i;
+                isStrictHi = true;
             }
 
-            // Pattern: chain comparison  lo <= k < hi  (parsed as (lo <= k) < hi in some cases,
-            // but Dafny AST typically decomposes chains)
+            // Pattern: k <= hi  (or equivalently hi >= k) — non-strict upper bound
+            if (hi == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Le } leHi
+                && ReferencesVar(leHi.E0, boundVar.Name) && !ReferencesVar(leHi.E1, boundVar.Name))
+            {
+                hi = leHi.E1;
+                hiIdx = i;
+                isStrictHi = false;
+            }
+            else if (hi == null && c is BinaryExpr { Op: BinaryExpr.Opcode.Ge } geHi
+                && !ReferencesVar(geHi.E0, boundVar.Name) && ReferencesVar(geHi.E1, boundVar.Name))
+            {
+                hi = geHi.E0;
+                hiIdx = i;
+                isStrictHi = false;
+            }
         }
 
         if (lo == null || hi == null)
@@ -346,27 +729,35 @@ static class DnfEngine
 
         var property = BuildConjunction(propertyConjuncts);
 
-        // Build boundary expressions
-        var loPlus1 = MakeAdd(lo, 1);
-        var hiMinus1 = MakeSub(hi, 1);
+        // Compute effective boundary values accounting for strict vs non-strict bounds.
+        // For lo < k (strict): first valid k is lo+1.  For lo <= k: first valid k is lo.
+        // For k < hi (strict): last valid k is hi-1.   For k <= hi: last valid k is hi.
+        var effectiveLo = isStrictLo ? MakeAdd(lo, 1) : lo;
+        var effectiveHi = isStrictHi ? MakeSub(hi, 1) : hi;
 
-        // Clause 1 (left boundary): property[k := lo]
-        var leftProp = SubstituteVar(property, boundVar.Name, lo);
+        // Guard: effectiveLo <= effectiveHi ensures the range is non-empty.
+        var rangeGuard = ParseToLeafExpression($"{ExprToString(effectiveLo)} <= {ExprToString(effectiveHi)}");
 
-        // Clause 2 (middle): keep as exists with narrowed range (as string, for now)
-        // Build: exists k :: lo+1 <= k < hi-1 && property
-        var middleStr = $"exists {boundVar.Name} :: {ExprToString(loPlus1)} <= {boundVar.Name} < {ExprToString(hiMinus1)} && {ExprToString(property)}";
+        // Clause 1 (left boundary): property[k := effectiveLo]
+        var leftProp = SubstituteVar(property, boundVar.Name, effectiveLo);
+
+        // Clause 2 (middle): exists with narrowed range excluding both boundaries
+        // Range: effectiveLo+1 <= k < effectiveHi (i.e., effectiveLo+1 .. effectiveHi-1 inclusive)
+        var middleLo = MakeAdd(effectiveLo, 1);
+        var middleStr = $"exists {boundVar.Name} :: {ExprToString(middleLo)} <= {boundVar.Name} < {ExprToString(effectiveHi)} && {ExprToString(property)}";
         var middleExpr = ParseToLeafExpression(middleStr);
 
-        // Clause 3 (right boundary): property[k := hi-1]
-        var rightProp = SubstituteVar(property, boundVar.Name, hiMinus1);
+        // Clause 3 (right boundary): property[k := effectiveHi]
+        var rightProp = SubstituteVar(property, boundVar.Name, effectiveHi);
 
-        return new List<List<Expression>>
+        var clauses = new List<List<Expression>>
         {
-            new List<Expression> { leftProp },
+            new List<Expression> { rangeGuard, leftProp },
             new List<Expression> { middleExpr },
-            new List<Expression> { rightProp }
+            new List<Expression> { rangeGuard, rightProp },
         };
+
+        return clauses;
     }
 
     // ──────────────── AST manipulation helpers ────────────────
@@ -374,7 +765,7 @@ static class DnfEngine
     /// <summary>
     /// Flatten nested && into a list of conjuncts.
     /// </summary>
-    static List<Expression> FlattenConjuncts(Expression expr)
+    internal static List<Expression> FlattenConjuncts(Expression expr)
     {
         var result = new List<Expression>();
         FlattenConjunctsInner(Unwrap(expr), result);
@@ -502,24 +893,16 @@ static class DnfEngine
         // Convert all literals to string keys for complement checking
         var litKeys = literals.Select(ExprToString).ToList();
 
-        // 1. Direct complement detection: L and !(L)
-        var positiveSet = new HashSet<string>();
-        var negativeSet = new HashSet<string>(); // stores the inner expression of !(...)
+        // 1. Direct complement detection
+        // Detects: L ∧ !(L), L ∧ !L, X in Y ∧ X !in Y, X == Y ∧ X != Y, etc.
+        var allLits = new HashSet<string>();
         foreach (var key in litKeys)
         {
-            if (key.StartsWith("!(") && key.EndsWith(")"))
-            {
-                var inner = key.Substring(2, key.Length - 3);
-                negativeSet.Add(inner);
-                if (positiveSet.Contains(inner))
-                    return $"complement: {inner} ∧ !({inner})";
-            }
-            else
-            {
-                positiveSet.Add(key);
-                if (negativeSet.Contains(key))
-                    return $"complement: {key} ∧ !({key})";
-            }
+            // Check if the operator-negated form of this literal is already present
+            var negated = NegateOperatorInLiteral(key);
+            if (negated != null && allLits.Contains(negated))
+                return $"complement: {negated} ∧ {key}";
+            allLits.Add(key);
         }
 
         // 2 & 3. Relational contradiction detection via AST analysis
@@ -662,6 +1045,17 @@ static class DnfEngine
         _ => op  // Eq and Neq are symmetric
     };
 
+    // Create list of pairs of mutually contradictory operator combinations:
+    static readonly List<(BinaryExpr.Opcode, BinaryExpr.Opcode)> contradictoryOps = new List<(BinaryExpr.Opcode, BinaryExpr.Opcode)>
+    {
+        (BinaryExpr.Opcode.Eq, BinaryExpr.Opcode.Neq),
+        (BinaryExpr.Opcode.Eq, BinaryExpr.Opcode.Lt),
+        (BinaryExpr.Opcode.Eq, BinaryExpr.Opcode.Gt),
+        (BinaryExpr.Opcode.Lt, BinaryExpr.Opcode.Ge),
+        (BinaryExpr.Opcode.Lt, BinaryExpr.Opcode.Gt),
+        (BinaryExpr.Opcode.Le, BinaryExpr.Opcode.Gt),
+    };
+
     /// <summary>
     /// Check if two relational facts about the same variable are contradictory.
     /// Returns a reason string or null.
@@ -673,28 +1067,8 @@ static class DnfEngine
         // Same variable, same value, contradictory operators
         if (a.valKey == b.valKey)
         {
-            // x == v and x != v
-            if ((a.op == BinaryExpr.Opcode.Eq && b.op == BinaryExpr.Opcode.Neq) ||
-                (a.op == BinaryExpr.Opcode.Neq && b.op == BinaryExpr.Opcode.Eq))
-                return $"contradiction: {a.original} ∧ {b.original}";
-
-            // x < v and x >= v (or x > v and x <= v, etc.)
-            if ((a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Ge) ||
-                (a.op == BinaryExpr.Opcode.Ge && b.op == BinaryExpr.Opcode.Lt) ||
-                (a.op == BinaryExpr.Opcode.Le && b.op == BinaryExpr.Opcode.Gt) ||
-                (a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Le))
-                return $"contradiction: {a.original} ∧ {b.original}";
-
-            // x < v and x > v, x < v and x == v, x > v and x == v
-            if ((a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Gt) ||
-                (a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Lt))
-                return $"contradiction: {a.original} ∧ {b.original}";
-            if ((a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Eq) ||
-                (a.op == BinaryExpr.Opcode.Eq && b.op == BinaryExpr.Opcode.Lt))
-                return $"contradiction: {a.original} ∧ {b.original}";
-            if ((a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Eq) ||
-                (a.op == BinaryExpr.Opcode.Eq && b.op == BinaryExpr.Opcode.Gt))
-                return $"contradiction: {a.original} ∧ {b.original}";
+            if (contradictoryOps.Contains((a.op, b.op)) || contradictoryOps.Contains((b.op, a.op)))
+                return $"contradiction: {a.original} ∧ {b.original} (same variable and value with incompatible operators)";
         }
 
         // Different values: x == v1 and x == v2 where v1 != v2
@@ -706,42 +1080,53 @@ static class DnfEngine
                 return $"contradiction: {a.original} ∧ {b.original} (distinct equalities)";
         }
 
-        // Try numeric comparison: x < a and x > b where a <= b (impossible for integers when a <= b)
-        // x < a and x > b -> needs a > b + 1 for integers (a > b for reals), conservatively use a <= b
+        // Try numeric comparison: x op1 a and x op2 b with no overlap in valid ranges, e.g., x < 0 and x > 0, or x <= 5 and x >= 10.
         if (TryParseNumeric(a.valKey, out var va) && TryParseNumeric(b.valKey, out var vb))
         {
-            // x < va and x > vb: needs va > vb + 1 (integer), so contradiction when va <= vb
-            if (a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Gt && va <= vb)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric: {a.varKey} < {va} ∧ {a.varKey} > {vb})";
-            if (a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Lt && vb <= va)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric: {a.varKey} > {va} ∧ {a.varKey} < {vb})";
-
-            // x < va and x >= vb: contradiction when va <= vb
-            if (a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Ge && va <= vb)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-            if (a.op == BinaryExpr.Opcode.Ge && b.op == BinaryExpr.Opcode.Lt && vb <= va)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-
-            // x <= va and x > vb: contradiction when va < vb
-            if (a.op == BinaryExpr.Opcode.Le && b.op == BinaryExpr.Opcode.Gt && va < vb)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-            if (a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Le && vb < va)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-
-            // x == va and x < vb: contradiction when va >= vb
-            if (a.op == BinaryExpr.Opcode.Eq && b.op == BinaryExpr.Opcode.Lt && va >= vb)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-            if (a.op == BinaryExpr.Opcode.Lt && b.op == BinaryExpr.Opcode.Eq && vb >= va)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-
-            // x == va and x > vb: contradiction when va <= vb
-            if (a.op == BinaryExpr.Opcode.Eq && b.op == BinaryExpr.Opcode.Gt && va <= vb)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-            if (a.op == BinaryExpr.Opcode.Gt && b.op == BinaryExpr.Opcode.Eq && vb <= va)
-                return $"contradiction: {a.original} ∧ {b.original} (numeric)";
-
-            // x == va and x != vb: not a contradiction (different values)
-            // x == va and x == vb where va != vb: already handled above
+            // Compute maximum of lower bounds and minimum of upper bounds to check for contradictions:
+            var maxLower = double.NegativeInfinity;
+            var maxLowerInclusive = false;
+            var minUpper = double.PositiveInfinity;
+            var minUpperInclusive = false;
+            var aUsed = false;
+            var bUsed = false;
+            if (a.op == BinaryExpr.Opcode.Gt || a.op == BinaryExpr.Opcode.Ge || a.op == BinaryExpr.Opcode.Eq)
+            {
+                maxLower = va;
+                maxLowerInclusive = a.op != BinaryExpr.Opcode.Gt;
+                aUsed = true;
+            }
+            if (b.op == BinaryExpr.Opcode.Gt || b.op == BinaryExpr.Opcode.Ge || b.op == BinaryExpr.Opcode.Eq)
+            {
+                if (maxLower == double.NegativeInfinity || vb > maxLower
+                     || (vb == maxLower && maxLowerInclusive))  
+                {
+                    maxLower = vb;
+                    maxLowerInclusive = b.op != BinaryExpr.Opcode.Gt;
+                }
+                bUsed = true;
+            }
+            if (a.op == BinaryExpr.Opcode.Lt || a.op == BinaryExpr.Opcode.Le || a.op == BinaryExpr.Opcode.Eq)
+            {
+                minUpper = va;
+                minUpperInclusive = a.op != BinaryExpr.Opcode.Lt;
+                aUsed = true;
+            }
+            if (b.op == BinaryExpr.Opcode.Lt || b.op == BinaryExpr.Opcode.Le || b.op == BinaryExpr.Opcode.Eq)
+            {
+                if (minUpper == double.PositiveInfinity || vb < minUpper
+                    || (vb == minUpper && minUpperInclusive))
+                {                    
+                    minUpper = vb;
+                    minUpperInclusive = b.op != BinaryExpr.Opcode.Lt;
+                }
+                bUsed = true;
+            }
+            if (aUsed && bUsed)
+            {
+                if (maxLower > minUpper || (maxLower == minUpper && !(maxLowerInclusive && minUpperInclusive)))
+                    return $"contradiction: {a.original} ∧ {b.original} (numeric range: {a.varKey} op {va} and {a.varKey} op {vb} with no overlap)";
+            }
         }
 
         return null;
@@ -759,6 +1144,67 @@ static class DnfEngine
         if (s.StartsWith("- "))
             s = "-" + s.Substring(2);
         return double.TryParse(s, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value);
+    }
+
+    /// <summary>
+    /// Returns the complement of a literal by negating its operator, or null if not recognized.
+    /// Handles: !(expr) ↔ expr, !X ↔ X, X in Y ↔ X !in Y, X == Y ↔ X != Y,
+    /// X &lt; Y ↔ X &gt;= Y, X &gt; Y ↔ X &lt;= Y.
+    /// </summary>
+    internal static string? NegateOperatorInLiteral(string key)
+    {
+        // !( expr ) ↔ expr
+        if (key.StartsWith("!(") && key.EndsWith(")"))
+            return key.Substring(2, key.Length - 3);
+        // !X ↔ X  (for simple identifiers/calls like !success, !prime(n))
+        if (key.StartsWith("!") && key.Length > 1 && char.IsLetterOrDigit(key[1]))
+            return key.Substring(1);
+
+        // Operator complement pairs (matched at top level only, not inside parentheses)
+        var pairs = new[] {
+            (" in ", " !in "),
+            (" == ", " != "),
+            (" < ", " >= "),
+            (" > ", " <= "),
+            (" <= ", " > "),
+            (" >= ", " < "),
+        };
+        foreach (var (op, negOp) in pairs)
+        {
+            // Find the operator at top level (not inside parens/brackets)
+            int idx = FindTopLevelOperator(key, op);
+            if (idx >= 0)
+                return key.Substring(0, idx) + negOp + key.Substring(idx + op.Length);
+            // Also check the reverse direction
+            idx = FindTopLevelOperator(key, negOp);
+            if (idx >= 0)
+                return key.Substring(0, idx) + op + key.Substring(idx + negOp.Length);
+        }
+
+        // expr → !(expr)  (generic negation for anything without a recognized operator)
+        if (!key.StartsWith("!"))
+            return "!(" + key + ")";
+
+        return null;
+    }
+
+    /// <summary>
+    /// Find the first occurrence of an operator string at the top level
+    /// (not nested inside parentheses, brackets, or braces).
+    /// Returns the index, or -1 if not found.
+    /// </summary>
+    static int FindTopLevelOperator(string s, string op)
+    {
+        int depth = 0;
+        for (int i = 0; i <= s.Length - op.Length; i++)
+        {
+            char c = s[i];
+            if (c == '(' || c == '[' || c == '{') depth++;
+            else if (c == ')' || c == ']' || c == '}') depth--;
+            else if (depth == 0 && s.Substring(i, op.Length) == op)
+                return i;
+        }
+        return -1;
     }
 
     // ──────────── SplitTopLevel (kept for backward compat) ──────────────

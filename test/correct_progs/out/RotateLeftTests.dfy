@@ -1,19 +1,19 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RotateLeft.dfy
 // Method: RotateLeft
-// Generated: 2026-03-28 00:33:31
+// Generated: 2026-04-20 22:27:29
 
 // Rotates left the elements of a non-empty array by one position.
 method RotateLeft(a: array<int>) 
  modifies a
  requires a.Length > 0
- ensures forall k :: 0 <= k < a.Length - 1 ==> a[k] == (a[k + 1])
- ensures a[a.Length - 1] == (a[0])
+ ensures forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+ ensures a[a.Length - 1] == old(a[0])
 {
     var tmp := a[0];
     for i := 0 to a.Length - 1
-        invariant forall k :: 0 <= k < i ==> a[k] == (a[k + 1])
-        invariant forall k :: i <= k < a.Length ==> a[k] == (a[k])
+        invariant forall k :: 0 <= k < i ==> a[k] == old(a[k + 1])
+        invariant forall k :: i <= k < a.Length ==> a[k] == old(a[k])
     {
         a[i] := a[i + 1];
     } 
@@ -22,56 +22,36 @@ method RotateLeft(a: array<int>)
 
 
 
-method Passing()
+method TestsForRotateLeft()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[1] [16];
-    var old_a := a[..];
-    var old_a_0 := a[0];
+    var a := new int[1] [-7];
     RotateLeft(a);
-    expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
-    expect a[a.Length - 1] == old_a_0;
+    expect a[..] == [-7];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a.Length > 0
-  //   POST: forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   POST: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
   //   POST: a[a.Length - 1] == old(a[0])
+  //   ENSURES: forall k: int :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
+  //   ENSURES: a[a.Length - 1] == old(a[0])
   {
-    var a := new int[2] [4, 3];
-    var old_a := a[..];
-    var old_a_0 := a[0];
+    var a := new int[2] [6, -10];
     RotateLeft(a);
-    expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
-    expect a[a.Length - 1] == old_a_0;
+    expect a[..] == [-10, 6];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a.Length > 0
-  //   POST: forall k :: 0 <= k < a.Length - 1 ==> a[k] == old(a[k + 1])
-  //   POST: a[a.Length - 1] == old(a[0])
-  {
-    var a := new int[3] [6, 4, 5];
-    var old_a := a[..];
-    var old_a_0 := a[0];
-    RotateLeft(a);
-    expect forall k :: 0 <= k < a.Length - 1 ==> a[k] == old_a[k + 1];
-    expect a[a.Length - 1] == old_a_0;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForRotateLeft();
+  print "TestsForRotateLeft: all non-failing tests passed!\n";
 }

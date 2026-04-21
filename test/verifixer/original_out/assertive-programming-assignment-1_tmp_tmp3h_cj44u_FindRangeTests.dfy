@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\assertive-programming-assignment-1_tmp_tmp3h_cj44u_FindRange.dfy
 // Method: FindRange
-// Generated: 2026-03-26 14:54:46
+// Generated: 2026-04-08 19:03:12
 
 // assertive-programming-assignment-1_tmp_tmp3h_cj44u_FindRange.dfy
 
@@ -201,23 +201,13 @@ method Passing()
   //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
   //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
   //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
   {
     var q: seq<int> := [7719];
     var key := -1;
-    var left, right := FindRange(q, key);
-    expect left == 0;
-    expect right == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Sorted(q)
-  //   POST: left <= right <= |q|
-  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
-  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
-  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
-  {
-    var q: seq<int> := [];
-    var key := -2;
     var left, right := FindRange(q, key);
     expect left == 0;
     expect right == 0;
@@ -229,6 +219,10 @@ method Passing()
   //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
   //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
   //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
   {
     var q: seq<int> := [];
     var key := 0;
@@ -243,9 +237,139 @@ method Passing()
   //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
   //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
   //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
   {
     var q: seq<int> := [];
     var key := 1;
+    var left, right := FindRange(q, key);
+    expect left == 0;
+    expect right == 0;
+  }
+
+  // Test case for combination {1}/Bq=1,key=0:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [39];
+    var key := 0;
+    var left, right := FindRange(q, key);
+    expect left == 0;
+    expect right == 0;
+  }
+
+  // Test case for combination {1}/Oleft>=2:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-7722, -7722];
+    var key := -7721;
+    var left, right := FindRange(q, key);
+    expect left == 2;
+    expect right == 2;
+  }
+
+  // Test case for combination {1}/Oleft=1:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-3];
+    var key := -2;
+    var left, right := FindRange(q, key);
+    expect left == 1;
+    expect right == 1;
+  }
+
+  // Test case for combination {1}/Oleft=0:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [38];
+    var key := -7722;
+    var left, right := FindRange(q, key);
+    expect left == 0;
+    expect right == 0;
+  }
+
+  // Test case for combination {1}/Oright>=2:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-15442, -15442];
+    var key := -15441;
+    var left, right := FindRange(q, key);
+    expect left == 2;
+    expect right == 2;
+  }
+
+  // Test case for combination {1}/Oright=1:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [-7724];
+    var key := -7723;
+    var left, right := FindRange(q, key);
+    expect left == 1;
+    expect right == 1;
+  }
+
+  // Test case for combination {1}/Oright=0:
+  //   PRE:  Sorted(q)
+  //   POST: left <= right <= |q|
+  //   POST: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   POST: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   POST: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  //   ENSURES: left <= right <= |q|
+  //   ENSURES: forall i: int {:trigger q[i]} :: 0 <= i < left ==> q[i] < key
+  //   ENSURES: forall i: int {:trigger q[i]} :: left <= i < right ==> q[i] == key
+  //   ENSURES: forall i: int {:trigger q[i]} :: right <= i < |q| ==> q[i] > key
+  {
+    var q: seq<int> := [41];
+    var key := 40;
     var left, right := FindRange(q, key);
     expect left == 0;
     expect right == 0;

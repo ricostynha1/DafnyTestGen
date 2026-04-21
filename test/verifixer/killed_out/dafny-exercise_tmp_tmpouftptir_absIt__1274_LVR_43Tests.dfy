@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-exercise_tmp_tmpouftptir_absIt__1274_LVR_43.dfy
 // Method: AbsIt
-// Generated: 2026-03-26 14:57:48
+// Generated: 2026-04-08 16:48:40
 
 // dafny-exercise_tmp_tmpouftptir_absIt.dfy
 
@@ -58,49 +58,45 @@ method Passing()
   // Test case for combination {1}:
   //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
   //   POST: s.Length == old(s).Length
+  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   ENSURES: s.Length == old(s).Length
   {
     var s := new int[0] [];
-    var old_s := s[..];
-    var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
-    expect s.Length == old_s2.Length;
+    expect s[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bs=1:
   //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
   //   POST: s.Length == old(s).Length
+  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   ENSURES: s.Length == old(s).Length
   {
     var s := new int[1] [0];
-    var old_s := s[..];
-    var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
-    expect s.Length == old_s2.Length;
+    expect s[..] == [0];
   }
 
   // Test case for combination {1}/Bs=2:
   //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
   //   POST: s.Length == old(s).Length
+  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   ENSURES: s.Length == old(s).Length
   {
     var s := new int[2] [0, 7720];
-    var old_s := s[..];
-    var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
-    expect s.Length == old_s2.Length;
+    expect s[..] == [0, 7720];
   }
 
   // Test case for combination {1}/Bs=3:
   //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
   //   POST: s.Length == old(s).Length
+  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   ENSURES: s.Length == old(s).Length
   {
     var s := new int[3] [0, 7720, 7721];
-    var old_s := s[..];
-    var old_s2 := s;
     AbsIt(s);
-    expect forall i: int {:trigger s[i]} {:trigger old_s[i]} :: 0 <= i < s.Length ==> if old_s[i] < 0 then s[i] == -old_s[i] else s[i] == old_s[i];
-    expect s.Length == old_s2.Length;
+    expect s[..] == [0, 7720, 7721];
   }
 
 }

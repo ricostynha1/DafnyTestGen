@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-03-25 13:53:09
+// Generated: 2026-04-20 22:31:59
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -53,49 +53,54 @@ method RemoveDuplicatesTest(){
   assert res2 == [1];
 }
 
-method Passing()
+method TestsForRemoveDuplicates()
 {
   // Test case for combination {1}:
   //   POST: res == DeDup(a[..])
+  //   POST: res == a[..]
+  //   ENSURES: res == DeDup(a[..])
   {
     var a := new int[0] [];
     var res := RemoveDuplicates<int>(a);
-    expect res == []; // == DeDup(a[..])
+    expect res == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {2}:
+  //   POST: !(|a[..]| <= 1)
+  //   POST: a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1]
+  //   POST: res == DeDup<int>(a[..][0 .. |a[..]| - 1])
+  //   ENSURES: res == DeDup(a[..])
+  {
+    var a := new int[2] [9, 9];
+    var res := RemoveDuplicates<int>(a);
+    expect res == [9];
+  }
+
+  // Test case for combination {3}:
+  //   POST: !(|a[..]| <= 1)
+  //   POST: !(a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1])
+  //   POST: res == DeDup<int>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
+  //   ENSURES: res == DeDup(a[..])
+  {
+    var a := new int[2] [9, 17];
+    var res := RemoveDuplicates<int>(a);
+    expect res == [9, 17];
+  }
+
+  // Test case for combination {1}/O|a|=1:
   //   POST: res == DeDup(a[..])
+  //   POST: res == a[..]
+  //   ENSURES: res == DeDup(a[..])
   {
     var a := new int[1] [2];
     var res := RemoveDuplicates<int>(a);
-    expect res == [2]; // == DeDup(a[..])
+    expect res == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: res == DeDup(a[..])
-  {
-    var a := new int[2] [4, 3];
-    var res := RemoveDuplicates<int>(a);
-    expect res == [4, 3]; // == DeDup(a[..])
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: res == DeDup(a[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    var res := RemoveDuplicates<int>(a);
-    expect res == [5, 4, 6]; // == DeDup(a[..])
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForRemoveDuplicates();
+  print "TestsForRemoveDuplicates: all non-failing tests passed!\n";
 }

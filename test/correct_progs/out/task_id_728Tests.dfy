@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-03-25 13:54:08
+// Generated: 2026-04-20 22:33:54
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -31,12 +31,27 @@ method AddListsTest(){
   assert res2 == [6, 8, 10];
 }
 
-method Passing()
+method TestsForElementWiseAddition()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  {
+    var a: seq<int> := [10];
+    var b: seq<int> := [-1];
+    var result := ElementWiseAddition(a, b);
+    expect result == [9];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  |a| == |b|
+  //   POST: |result| == |a|
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -44,48 +59,23 @@ method Passing()
     expect result == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
   //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
+  //   ENSURES: |result| == |a|
+  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [0];
-    var b: seq<int> := [0];
+    var a: seq<int> := [10, -10];
+    var b: seq<int> := [9, 7];
     var result := ElementWiseAddition(a, b);
-    expect result == [0];
+    expect result == [19, -3];
   }
 
-  // Test case for combination {1}/Ba=2,b=2:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
-  {
-    var a: seq<int> := [0, 21239];
-    var b: seq<int> := [0, 7720];
-    var result := ElementWiseAddition(a, b);
-    expect result == [0, 28959];
-  }
-
-  // Test case for combination {1}/Ba=3,b=3:
-  //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
-  {
-    var a: seq<int> := [-10158, -2438, 0];
-    var b: seq<int> := [-21240, -21239, 0];
-    var result := ElementWiseAddition(a, b);
-    expect result == [-31398, -23677, 0];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForElementWiseAddition();
+  print "TestsForElementWiseAddition: all non-failing tests passed!\n";
 }

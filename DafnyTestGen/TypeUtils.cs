@@ -25,6 +25,53 @@ static class TypeUtils
     /// </summary>
     internal static bool IsTupleType(string type) => type.StartsWith("(") && type.EndsWith(")");
 
+    /// <summary>
+    /// Parses a tuple type string like "(int, real)" into its component types ["int", "real"].
+    /// Handles nested types by tracking parenthesis and angle bracket depth.
+    /// </summary>
+    internal static List<string> GetTupleComponentTypes(string type)
+    {
+        if (!IsTupleType(type)) return new List<string>();
+        var inner = type.Substring(1, type.Length - 2); // strip outer ( and )
+        var components = new List<string>();
+        int depth = 0;
+        int start = 0;
+        for (int i = 0; i < inner.Length; i++)
+        {
+            if (inner[i] == '(' || inner[i] == '<') depth++;
+            else if (inner[i] == ')' || inner[i] == '>') depth--;
+            else if (inner[i] == ',' && depth == 0)
+            {
+                components.Add(inner.Substring(start, i - start).Trim());
+                start = i + 1;
+            }
+        }
+        components.Add(inner.Substring(start).Trim());
+        return components;
+    }
+
+    /// <summary>
+    /// Returns true if the type is seq&lt;seq&lt;T&gt;&gt; or seq&lt;string&gt; where T is a scalar type.
+    /// These nested collection types are supported via native Z3 (Seq (Seq T)) encoding.
+    /// </summary>
+    internal static bool IsSupportedNestedSeqType(string type)
+    {
+        if (!IsSeqType(type)) return false;
+        var elemType = GetSeqElementType(type);
+        // seq<string> is seq<seq<char>> — supported
+        if (elemType == "string") return true;
+        // seq<seq<T>> where T is scalar — supported
+        if (IsSeqType(elemType))
+        {
+            var innerElem = GetSeqElementType(elemType);
+            return IsScalarType(innerElem);
+        }
+        return false;
+    }
+
+    internal static bool IsScalarType(string type) =>
+        type is "int" or "nat" or "bool" or "real" or "char" or "T";
+
     internal static bool IsNestedCollectionType(string type)
     {
         if (IsMapType(type))
@@ -38,6 +85,16 @@ static class TypeUtils
         var elemType = IsSetType(type) ? GetSetElementType(type)
             : IsMultisetType(type) ? GetMultisetElementType(type)
             : GetSeqElementType(type);
+        // Tuples inside seq/array are supported if all components are scalar
+        if (IsTupleType(elemType))
+        {
+            var components = GetTupleComponentTypes(elemType);
+            return components.Any(c => IsSeqType(c) || IsArrayType(c) || IsSetType(c) || IsMultisetType(c) || IsMapType(c) || IsTupleType(c));
+        }
+        // seq<seq<T>> and seq<string> are supported
+        if (IsSupportedNestedSeqType(type)) return false;
+        // set<string> is supported
+        if (IsSetType(type) && GetSetElementType(type) == "string") return false;
         return IsSeqType(elemType) || IsArrayType(elemType) || IsSetType(elemType) || IsMultisetType(elemType) || IsMapType(elemType) || IsTupleType(elemType);
     }
 
@@ -112,6 +169,35 @@ static class TypeUtils
         // int, T, fallback: include some negatives for better coverage
         return new[] { -2, -1, 0, 1, 2, 3, 4, 5 };
     }
+
+    /// <summary>
+    /// Returns SMT expressions for universe elements. For scalar types wraps GetElementUniverse;
+    /// for "string" returns 8 short string constants as SMT (Seq Int) expressions.
+    /// </summary>
+    internal static string[] GetElementUniverseSmt(string elementType)
+    {
+        if (elementType == "string")
+            return new[]
+            {
+                "_str_u0", "_str_u1", "_str_u2", "_str_u3",
+                "_str_u4", "_str_u5", "_str_u6", "_str_u7"
+            };
+        return GetElementUniverse(elementType).Select(v => v.ToString()).ToArray();
+    }
+
+    /// <summary>
+    /// Dafny string literals for each string universe element (maps index to display value).
+    /// </summary>
+    internal static string[] StringUniverseDafny => new[]
+    {
+        "\"\"", "\"a\"", "\"b\"", "\"c\"", "\"d\"", "\"e\"", "\"f\"", "\"g\""
+    };
+
+    /// <summary>
+    /// Returns true if the type is set&lt;string&gt;.
+    /// </summary>
+    internal static bool IsStringElementSet(string type)
+        => IsSetType(type) && GetSetElementType(type) == "string";
 
     /// <summary>
     /// Returns the SMT name used for a sequence variable.
@@ -214,16 +300,33 @@ static class TypeUtils
                 // Parse set membership from get-value responses: ((select setName v) true/false)
                 var members = new List<string>();
                 var setElemType = GetSetElementType(type);
-                var universe = GetElementUniverse(setElemType);
-                foreach (var v in universe)
+                if (IsStringElementSet(type))
                 {
-                    // Z3 get-value returns negative indices as -2 (not (- 2))
-                    var escapedV = v < 0 ? $"(?:\\(- {-v}\\)|{v})" : v.ToString();
-                    var memberPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}\s+{escapedV}\)\s+(true|false)\)");
-                    var memberMatch = memberPattern.Match(fullText);
-                    if (memberMatch.Success && memberMatch.Groups[1].Value == "true")
+                    // String set: query used named constants _str_u0.._str_u7
+                    var smtUniverse = GetElementUniverseSmt("string");
+                    for (int i = 0; i < smtUniverse.Length; i++)
                     {
-                        members.Add(v.ToString());
+                        var memberPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}\s+{Regex.Escape(smtUniverse[i])}\)\s+(true|false)\)");
+                        var memberMatch = memberPattern.Match(fullText);
+                        if (memberMatch.Success && memberMatch.Groups[1].Value == "true")
+                        {
+                            members.Add(StringUniverseDafny[i]); // store as Dafny string literal
+                        }
+                    }
+                }
+                else
+                {
+                    var universe = GetElementUniverse(setElemType);
+                    foreach (var v in universe)
+                    {
+                        // Z3 get-value returns negative indices as -2 (not (- 2))
+                        var escapedV = v < 0 ? $"(?:\\(- {-v}\\)|{v})" : v.ToString();
+                        var memberPattern = new Regex(@$"\(\(select\s+{Regex.Escape(name)}\s+{escapedV}\)\s+(true|false)\)");
+                        var memberMatch = memberPattern.Match(fullText);
+                        if (memberMatch.Success && memberMatch.Groups[1].Value == "true")
+                        {
+                            members.Add(v.ToString());
+                        }
                     }
                 }
                 result[name + "_card"] = members.Count.ToString();
@@ -312,23 +415,138 @@ static class TypeUtils
                 continue;
             }
 
+            var elemType = GetSeqElementType(type);
+
+            // Nested seq<seq<T>> or seq<string>: parse flat encoding (list_len, list_0, list_1, ...)
+            if (IsSupportedNestedSeqType(type))
+            {
+                var smtName2 = SeqSmtName(name, type);
+                // Outer length: ((smtName_len K))
+                var outerLenPattern = new Regex(@$"\(\({Regex.Escape(smtName2)}_len\s+([-\d]+|\(- \d+\))\)\)");
+                var outerLenMatch = outerLenPattern.Match(fullText);
+                int outerLen = 0;
+                if (outerLenMatch.Success)
+                {
+                    var lenVal = NormalizeZ3Int(outerLenMatch.Groups[1].Value);
+                    result[name + "_len"] = lenVal;
+                    int.TryParse(lenVal, out outerLen);
+                }
+
+                var innerElemType = elemType == "string" ? "char" :
+                    IsSeqType(elemType) ? GetSeqElementType(elemType) : "int";
+
+                for (int i = 0; i < Math.Min(outerLen, SmtTranslator.MAX_SEQ_LEN); i++)
+                {
+                    // Inner length: ((seq.len smtName_i) M)
+                    var innerLenPattern = new Regex(@$"\(\(seq\.len\s+{Regex.Escape(smtName2)}_{i}\)\s+([-\d]+|\(- \d+\))\)");
+                    var innerLenMatch = innerLenPattern.Match(fullText);
+                    int innerLen = 0;
+                    if (innerLenMatch.Success)
+                    {
+                        var innerLenVal = NormalizeZ3Int(innerLenMatch.Groups[1].Value);
+                        result[$"{name}_{i}_len"] = innerLenVal;
+                        int.TryParse(innerLenVal, out innerLen);
+                    }
+
+                    // Inner elements: ((seq.nth smtName_i j) V)
+                    var innerElements = new List<string>();
+                    for (int j = 0; j < Math.Min(innerLen, SmtTranslator.MAX_INNER_SEQ_LEN); j++)
+                    {
+                        if (innerElemType == "real")
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(smtName2)}_{i}\s+{j}\)\s+((?:\([^()]*(?:\([^()]*\)[^()]*)*\)|\d+\.\d+|\d+))\)");
+                            var em = ep.Match(fullText);
+                            innerElements.Add(em.Success ? NormalizeZ3Real(em.Groups[1].Value) : "0.0");
+                        }
+                        else if (innerElemType == "bool")
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(smtName2)}_{i}\s+{j}\)\s+(true|false)\)");
+                            var em = ep.Match(fullText);
+                            innerElements.Add(em.Success ? em.Groups[1].Value : "false");
+                        }
+                        else
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(smtName2)}_{i}\s+{j}\)\s+([-\d]+|\(- \d+\))\)");
+                            var em = ep.Match(fullText);
+                            innerElements.Add(em.Success ? NormalizeZ3Int(em.Groups[1].Value) : "0");
+                        }
+                    }
+                    if (innerElements.Count > 0)
+                        result[$"{name}_{i}_elems"] = string.Join(",", innerElements);
+                }
+                continue;
+            }
+
+            // Tuple element type: parse parallel component sequences
+            if (IsTupleType(elemType))
+            {
+                var tupleComponents = GetTupleComponentTypes(elemType);
+                // Determine first component sequence name for length
+                string firstCompSeq;
+                if (IsArrayType(type))
+                    firstCompSeq = $"{name}_seq_0";
+                else
+                    firstCompSeq = $"{name}_0";
+
+                var lenPattern = new Regex(@$"\(\(seq\.len\s+{Regex.Escape(firstCompSeq)}\)\s+([-\d]+|\(- \d+\))\)");
+                var lenMatch = lenPattern.Match(fullText);
+                int seqLen = 0;
+                if (lenMatch.Success)
+                {
+                    var lenVal = NormalizeZ3Int(lenMatch.Groups[1].Value);
+                    result[name + "_len"] = lenVal;
+                    int.TryParse(lenVal, out seqLen);
+                }
+
+                // Parse each component sequence's elements
+                for (int ci = 0; ci < tupleComponents.Count; ci++)
+                {
+                    var compType = tupleComponents[ci];
+                    string compSeqName = IsArrayType(type) ? $"{name}_seq_{ci}" : $"{name}_{ci}";
+                    var compElements = new List<string>();
+                    for (int i = 0; i < Math.Min(seqLen, 8); i++)
+                    {
+                        if (compType == "real")
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(compSeqName)}\s+{i}\)\s+((?:\([^()]*(?:\([^()]*\)[^()]*)*\)|\d+\.\d+|\d+))\)");
+                            var em = ep.Match(fullText);
+                            compElements.Add(em.Success ? NormalizeZ3Real(em.Groups[1].Value) : "0.0");
+                        }
+                        else if (compType == "bool")
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(compSeqName)}\s+{i}\)\s+(true|false)\)");
+                            var em = ep.Match(fullText);
+                            compElements.Add(em.Success ? em.Groups[1].Value : "false");
+                        }
+                        else
+                        {
+                            var ep = new Regex(@$"\(\(seq\.nth\s+{Regex.Escape(compSeqName)}\s+{i}\)\s+([-\d]+|\(- \d+\))\)");
+                            var em = ep.Match(fullText);
+                            compElements.Add(em.Success ? NormalizeZ3Int(em.Groups[1].Value) : "0");
+                        }
+                    }
+                    if (compElements.Count > 0)
+                        result[name + "_elems_" + ci] = string.Join(",", compElements);
+                }
+                continue;
+            }
+
             var smtName = SeqSmtName(name, type);
 
             // Parse (get-value ((seq.len name))) -> ((seq.len name) N)
-            var lenPattern = new Regex(@$"\(\(seq\.len\s+{Regex.Escape(smtName)}\)\s+([-\d]+|\(- \d+\))\)");
-            var lenMatch = lenPattern.Match(fullText);
-            int seqLen = 0;
-            if (lenMatch.Success)
+            var lenPattern2 = new Regex(@$"\(\(seq\.len\s+{Regex.Escape(smtName)}\)\s+([-\d]+|\(- \d+\))\)");
+            var lenMatch2 = lenPattern2.Match(fullText);
+            int seqLen2 = 0;
+            if (lenMatch2.Success)
             {
-                var lenVal = NormalizeZ3Int(lenMatch.Groups[1].Value);
+                var lenVal = NormalizeZ3Int(lenMatch2.Groups[1].Value);
                 result[name + "_len"] = lenVal;
-                int.TryParse(lenVal, out seqLen);
+                int.TryParse(lenVal, out seqLen2);
             }
 
             // Parse element values: ((seq.nth name 0) value)
-            var elemType = GetSeqElementType(type);
             var elements = new List<string>();
-            for (int i = 0; i < Math.Min(seqLen, 8); i++)
+            for (int i = 0; i < Math.Min(seqLen2, 8); i++)
             {
                 if (elemType == "real")
                 {
@@ -460,11 +678,27 @@ static class TypeUtils
     /// <summary>
     /// Returns true if the type is supported as a class field for simple class testing.
     /// </summary>
-    internal static bool IsSupportedFieldType(string type, Dictionary<string, List<string>>? enumDatatypes = null)
+    internal static bool IsSupportedFieldType(string type, Dictionary<string, List<string>>? enumDatatypes = null, HashSet<string>? classNames = null)
     {
-        if (type is "int" or "nat" or "bool" or "real" or "char") return true;
-        if (IsArrayType(type) || IsSeqType(type) || IsSetType(type) || IsMultisetType(type) || IsMapType(type))
-            return !IsNestedCollectionType(type);
+        if (type is "int" or "nat" or "bool" or "real" or "char" or "string") return true;
+        if (IsArrayType(type) || IsSeqType(type) || IsSetType(type) || IsMultisetType(type))
+        {
+            if (IsNestedCollectionType(type)) return false;
+            // Reject collections whose element type is a class/reference type
+            var elemType = IsSetType(type) ? GetSetElementType(type)
+                : IsMultisetType(type) ? GetMultisetElementType(type)
+                : GetSeqElementType(type);
+            if (classNames != null && classNames.Contains(elemType)) return false;
+            return true;
+        }
+        if (IsMapType(type))
+        {
+            if (IsNestedCollectionType(type)) return false;
+            var keyType = GetMapKeyType(type);
+            var valType = GetMapValueType(type);
+            if (classNames != null && (classNames.Contains(keyType) || classNames.Contains(valType))) return false;
+            return true;
+        }
         if (enumDatatypes != null && enumDatatypes.ContainsKey(type)) return true;
         return false;
     }

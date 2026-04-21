@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2__867_BBR_true.dfy
 // Method: Forbid42
-// Generated: 2026-03-26 15:02:57
+// Generated: 2026-04-08 16:17:40
 
 // formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex2.dfy
 
@@ -53,6 +53,7 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  y != 42
   //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
   {
     var x := 0;
     var y := 43;
@@ -60,19 +61,10 @@ method Passing()
     expect z == 0;
   }
 
-  // Test case for combination {1}:
-  //   PRE:  y != 42
-  //   POST: z == x / (42 - y)
-  {
-    var x := 1;
-    var y := -64;
-    var z := Forbid42(x, y);
-    expect z == 0;
-  }
-
   // Test case for combination {1}/Bx=0,y=0:
   //   PRE:  y != 42
   //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
   {
     var x := 0;
     var y := 0;
@@ -83,6 +75,7 @@ method Passing()
   // Test case for combination {1}/Bx=0,y=1:
   //   PRE:  y != 42
   //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
   {
     var x := 0;
     var y := 1;
@@ -90,10 +83,76 @@ method Passing()
     expect z == 0;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {1}/Bx=1,y=0:
+  //   PRE:  y != 42
+  //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
+  {
+    var x := 1;
+    var y := 0;
+    var z := Forbid42(x, y);
+    expect z == 0;
+  }
+
+  // Test case for combination {1}/Oz>0:
+  //   PRE:  y != 42
+  //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
+  {
+    var x := -1;
+    var y := 43;
+    var z := Forbid42(x, y);
+    expect z == 1;
+  }
+
+  // Test case for combination {1}/Oz<0:
+  //   PRE:  y != 42
+  //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
+  {
+    var x := -44;
+    var y := -1;
+    var z := Forbid42(x, y);
+    expect z == -2;
+  }
+
+  // Test case for combination {1}/Oz=0:
+  //   PRE:  y != 42
+  //   POST: z == x / (42 - y)
+  //   ENSURES: z == x / (42 - y)
+  {
+    var x := 0;
+    var y := -2;
+    var z := Forbid42(x, y);
+    expect z == 0;
+  }
+
+  // Test case for combination {6}:
+  //   POST: y != 42
   //   POST: z == x / (42 - y)
   //   POST: err == false
   //   POST: !(y == 42)
+  //   POST: !(z == 0)
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
+  {
+    var x := 1;
+    var y := 43;
+    var z, err := Allow42(x, y);
+    expect z == -1;
+    expect err == false;
+  }
+
+  // Test case for combination {8}:
+  //   POST: y != 42
+  //   POST: z == x / (42 - y)
+  //   POST: err == false
+  //   POST: !(y == 42)
+  //   POST: z == 0
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
   {
     var x := 0;
     var y := 43;
@@ -102,15 +161,71 @@ method Passing()
     expect err == false;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {6}/Oz>0:
+  //   POST: y != 42
   //   POST: z == x / (42 - y)
   //   POST: err == false
   //   POST: !(y == 42)
+  //   POST: !(z == 0)
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
   {
-    var x := 1;
+    var x := -1;
     var y := 43;
     var z, err := Allow42(x, y);
+    expect z == 1;
+    expect err == false;
+  }
+
+  // Test case for combination {6}/Oz<0:
+  //   POST: y != 42
+  //   POST: z == x / (42 - y)
+  //   POST: err == false
+  //   POST: !(y == 42)
+  //   POST: !(z == 0)
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
+  {
+    var x := -2;
+    var y := 40;
+    var z, err := Allow42(x, y);
     expect z == -1;
+    expect err == false;
+  }
+
+  // Test case for combination {6}/Oerr=false:
+  //   POST: y != 42
+  //   POST: z == x / (42 - y)
+  //   POST: err == false
+  //   POST: !(y == 42)
+  //   POST: !(z == 0)
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
+  {
+    var x := -4;
+    var y := 39;
+    var z, err := Allow42(x, y);
+    expect z == -2;
+    expect err == false;
+  }
+
+  // Test case for combination {8}/Oerr=false:
+  //   POST: y != 42
+  //   POST: z == x / (42 - y)
+  //   POST: err == false
+  //   POST: !(y == 42)
+  //   POST: z == 0
+  //   POST: !(err == true)
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
+  {
+    var x := 1;
+    var y := 44;
+    var z, err := Allow42(x, y);
+    expect z == 0;
     expect err == false;
   }
 
@@ -120,22 +235,32 @@ method Failing()
 {
   // Test case for combination {2}:
   //   POST: !(y != 42)
+  //   POST: !(z == x / (42 - y))
+  //   POST: !(err == false)
+  //   POST: y == 42
   //   POST: z == 0
   //   POST: err == true
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
   {
-    var x := 0;
+    var x := 38;
     var y := 42;
     var z, err := Allow42(x, y);
     // expect z == 0;
     // expect err == true;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Oerr=true:
   //   POST: !(y != 42)
+  //   POST: !(z == x / (42 - y))
+  //   POST: !(err == false)
+  //   POST: y == 42
   //   POST: z == 0
   //   POST: err == true
+  //   ENSURES: y != 42 ==> z == x / (42 - y) && err == false
+  //   ENSURES: y == 42 ==> z == 0 && err == true
   {
-    var x := 1;
+    var x := -38;
     var y := 42;
     var z, err := Allow42(x, y);
     // expect z == 0;

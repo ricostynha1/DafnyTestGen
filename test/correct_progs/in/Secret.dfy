@@ -4,7 +4,7 @@ class Secret {
     var count: int
 
     method Guess(g: int) returns (result: bool, guesses: int)
-        modifies this
+        modifies this`count, this`known
         requires known == false
         requires count >= 0
         ensures count == old(count) + 1 && guesses == count

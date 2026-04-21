@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p4__866_VER_sumi.dfy
 // Method: single
-// Generated: 2026-03-26 14:57:40
+// Generated: 2026-04-08 16:48:25
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -50,51 +50,59 @@ method OriginalMain()
 
 method Passing()
 {
-  // Test case for combination {1}:
-  //   PRE:  x.Length > 0
-  //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  {
-    var x := new int[1] [2];
-    var y := new int[1] [6];
-    var b := single(x, y);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  x.Length > 0
-  //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  {
-    var x := new int[2] [3, 9];
-    var y := new int[2] [6, 10];
-    var b := single(x, y);
-  }
-
-  // Test case for combination {1}/Bx=3,y=1:
-  //   PRE:  x.Length > 0
-  //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  {
-    var x := new int[3] [5, 4, 6];
-    var y := new int[1] [14];
-    var b := single(x, y);
-  }
-
-  // Test case for combination {1}/Bx=2,y=3:
-  //   PRE:  x.Length > 0
-  //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  {
-    var x := new int[2] [5, 4];
-    var y := new int[3] [7, 6, 8];
-    var b := single(x, y);
-  }
-
+  // (no passing tests)
 }
 
 method Failing()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   PRE:  x.Length > 0
+  //   PRE:  y.Length > 0
+  //   POST: b[..] == x[..] + y[..]
+  //   ENSURES: b[..] == x[..] + y[..]
+  {
+    var x := new int[1] [3];
+    var y := new int[1] [7];
+    var b := single(x, y);
+    // expect b[..] == [3, 7];
+  }
+
+  // Test case for combination {1}/Bx=1,y=2:
+  //   PRE:  x.Length > 0
+  //   PRE:  y.Length > 0
+  //   POST: b[..] == x[..] + y[..]
+  //   ENSURES: b[..] == x[..] + y[..]
+  {
+    var x := new int[1] [9];
+    var y := new int[2] [4, 3];
+    var b := single(x, y);
+    // expect b[..] == [9, 4, 3];
+  }
+
+  // Test case for combination {1}/Bx=1,y=3:
+  //   PRE:  x.Length > 0
+  //   PRE:  y.Length > 0
+  //   POST: b[..] == x[..] + y[..]
+  //   ENSURES: b[..] == x[..] + y[..]
+  {
+    var x := new int[1] [14];
+    var y := new int[3] [5, 4, 6];
+    var b := single(x, y);
+    // expect b[..] == [14, 5, 4, 6];
+  }
+
+  // Test case for combination {1}/Bx=2,y=1:
+  //   PRE:  x.Length > 0
+  //   PRE:  y.Length > 0
+  //   POST: b[..] == x[..] + y[..]
+  //   ENSURES: b[..] == x[..] + y[..]
+  {
+    var x := new int[2] [4, 3];
+    var y := new int[1] [9];
+    var b := single(x, y);
+    // expect b[..] == [4, 3, 9];
+  }
+
 }
 
 method Main()

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-03-28 00:32:27
+// Generated: 2026-04-20 22:24:49
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -47,11 +47,51 @@ method CalcComb(n: nat, k: nat) returns (res: nat)
 }
 
 
-method Passing()
+method TestsForCalcComb()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= n
   //   POST: res == Comb(n, k)
+  //   POST: res == 1
+  //   ENSURES: res == Comb(n, k)
+  {
+    var n := 10;
+    var k := 0;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  0 <= k <= n
+  //   POST: !(k == 0)
+  //   POST: k == n
+  //   POST: res == 1
+  //   ENSURES: res == Comb(n, k)
+  {
+    var n := 10;
+    var k := 10;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {3}:
+  //   PRE:  0 <= k <= n
+  //   POST: !(k == 0)
+  //   POST: !(k == n)
+  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
+  //   ENSURES: res == Comb(n, k)
+  {
+    var n := 4;
+    var k := 3;
+    var res := CalcComb(n, k);
+    expect res == 4;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  0 <= k <= n
+  //   POST: res == Comb(n, k)
+  //   POST: res == 1
+  //   ENSURES: res == Comb(n, k)
   {
     var n := 0;
     var k := 0;
@@ -59,35 +99,10 @@ method Passing()
     expect res == 1;
   }
 
-  // Test case for combination {1}/Bn=1,k=0:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  {
-    var n := 1;
-    var k := 0;
-    var res := CalcComb(n, k);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Bn=1,k=1:
-  //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  {
-    var n := 1;
-    var k := 1;
-    var res := CalcComb(n, k);
-    expect res == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcComb();
+  print "TestsForCalcComb: all non-failing tests passed!\n";
 }

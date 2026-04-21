@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12__367-370_EVR_int.dfy
 // Method: FindMax
-// Generated: 2026-03-26 15:03:09
+// Generated: 2026-04-08 16:19:04
 
 // laboratory_tmp_tmps8ws6mu2_dafny-tutorial_exercise12.dfy
 
@@ -37,18 +37,22 @@ method Passing()
   //   PRE:  0 < a.Length
   //   POST: 0 <= i < a.Length
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  //   ENSURES: 0 <= i < a.Length
+  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
     var a := new int[1] [38];
     var i := FindMax(a);
     expect i == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=2:
   //   PRE:  0 < a.Length
   //   POST: 0 <= i < a.Length
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  //   ENSURES: 0 <= i < a.Length
+  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
-    var a := new int[2] [-7719, 38];
+    var a := new int[2] [35472, 35473];
     var i := FindMax(a);
     expect i == 1;
   }
@@ -57,10 +61,36 @@ method Passing()
   //   PRE:  0 < a.Length
   //   POST: 0 <= i < a.Length
   //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  //   ENSURES: 0 <= i < a.Length
+  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
   {
     var a := new int[3] [23675, 23674, 23676];
     var i := FindMax(a);
     expect i == 2;
+  }
+
+  // Test case for combination {1}/Oi>0:
+  //   PRE:  0 < a.Length
+  //   POST: 0 <= i < a.Length
+  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  //   ENSURES: 0 <= i < a.Length
+  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  {
+    var a := new int[4] [-7719, -21238, -2437, 38];
+    var i := FindMax(a);
+    expect i == 3;
+  }
+
+  // Test case for combination {1}/Oi=0:
+  //   PRE:  0 < a.Length
+  //   POST: 0 <= i < a.Length
+  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  //   ENSURES: 0 <= i < a.Length
+  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] <= a[i]
+  {
+    var a := new int[5] [7719, -38, -21238, -2437, -8855];
+    var i := FindMax(a);
+    expect i == 0;
   }
 
 }

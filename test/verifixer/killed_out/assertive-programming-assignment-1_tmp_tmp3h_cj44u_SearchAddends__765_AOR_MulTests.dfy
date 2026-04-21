@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\assertive-programming-assignment-1_tmp_tmp3h_cj44u_SearchAddends__765_AOR_Mul.dfy
 // Method: FindAddends
-// Generated: 2026-03-26 14:54:38
+// Generated: 2026-04-08 16:40:15
 
 // assertive-programming-assignment-1_tmp_tmp3h_cj44u_SearchAddends.dfy
 
@@ -113,7 +113,32 @@ lemma LoopInvWhenSumIsBigger(q: seq<int>, x: int, i: nat, j: nat, sum: int)
 
 method Passing()
 {
-  // (no passing tests)
+  // Test case for combination {1}/Bq=3,x=0:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [8856, -8856, 7];
+    var x := 0;
+    var i, j := FindAddends(q, x);
+    expect i == 0;
+    expect j == 1;
+  }
+
+  // Test case for combination {1}/Oi>=2:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [8, 9, 7719, 38];
+    var x := 7757;
+    var i, j := FindAddends(q, x);
+    expect i == 2;
+    expect j == 3;
+  }
+
 }
 
 method Failing()
@@ -122,21 +147,10 @@ method Failing()
   //   PRE:  Sorted(q) && HasAddends(q, x)
   //   POST: i < j < |q|
   //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
   {
     var q: seq<int> := [8, 9];
     var x := 17;
-    var i, j := FindAddends(q, x);
-    // expect i == 0;
-    // expect j == 1;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Sorted(q) && HasAddends(q, x)
-  //   POST: i < j < |q|
-  //   POST: q[i] + q[j] == x
-  {
-    var q: seq<int> := [-21238, -7719];
-    var x := -28957;
     var i, j := FindAddends(q, x);
     // expect i == 0;
     // expect j == 1;
@@ -146,6 +160,7 @@ method Failing()
   //   PRE:  Sorted(q) && HasAddends(q, x)
   //   POST: i < j < |q|
   //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
   {
     var q: seq<int> := [7720, -7720];
     var x := 0;
@@ -158,9 +173,62 @@ method Failing()
   //   PRE:  Sorted(q) && HasAddends(q, x)
   //   POST: i < j < |q|
   //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
   {
     var q: seq<int> := [21239, -21238];
     var x := 1;
+    var i, j := FindAddends(q, x);
+    // expect i == 0;
+    // expect j == 1;
+  }
+
+  // Test case for combination {1}/Oi=1:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [7, 39, 7719];
+    var x := 7758;
+    var i, j := FindAddends(q, x);
+    // expect i == 1;
+    // expect j == 2;
+  }
+
+  // Test case for combination {1}/Oi=0:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [21238, -21239];
+    var x := -1;
+    var i, j := FindAddends(q, x);
+    // expect i == 0;
+    // expect j == 1;
+  }
+
+  // Test case for combination {1}/Oj>=2:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [28957, 11, -28955];
+    var x := 2;
+    var i, j := FindAddends(q, x);
+    // expect i == 0;
+    // expect j == 2;
+  }
+
+  // Test case for combination {1}/Oj=1:
+  //   PRE:  Sorted(q) && HasAddends(q, x)
+  //   POST: i < j < |q|
+  //   POST: q[i] + q[j] == x
+  //   ENSURES: i < j < |q| && q[i] + q[j] == x
+  {
+    var q: seq<int> := [7719, -7721];
+    var x := -2;
     var i, j := FindAddends(q, x);
     // expect i == 0;
     // expect j == 1;

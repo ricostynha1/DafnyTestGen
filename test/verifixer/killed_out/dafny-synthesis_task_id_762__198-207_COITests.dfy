@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_762__198-207_COI.dfy
 // Method: IsMonthWith30Days
-// Generated: 2026-03-26 15:01:43
+// Generated: 2026-04-08 16:56:31
 
 // dafny-synthesis_task_id_762.dfy
 
@@ -20,6 +20,10 @@ method Passing()
   //   PRE:  1 <= month <= 12
   //   POST: result
   //   POST: month == 4
+  //   POST: !(month == 6)
+  //   POST: !(month == 9)
+  //   POST: !(month == 11)
+  //   ENSURES: result <==> month == 4 || month == 6 || month == 9 || month == 11
   {
     var month := 4;
     var result := IsMonthWith30Days(month);
@@ -29,7 +33,11 @@ method Passing()
   // Test case for combination {3}:
   //   PRE:  1 <= month <= 12
   //   POST: result
+  //   POST: !(month == 4)
+  //   POST: !(month == 6)
   //   POST: month == 9
+  //   POST: !(month == 11)
+  //   ENSURES: result <==> month == 4 || month == 6 || month == 9 || month == 11
   {
     var month := 9;
     var result := IsMonthWith30Days(month);
@@ -39,7 +47,11 @@ method Passing()
   // Test case for combination {4}:
   //   PRE:  1 <= month <= 12
   //   POST: result
+  //   POST: !(month == 4)
+  //   POST: !(month == 6)
+  //   POST: !(month == 9)
   //   POST: month == 11
+  //   ENSURES: result <==> month == 4 || month == 6 || month == 9 || month == 11
   {
     var month := 11;
     var result := IsMonthWith30Days(month);
@@ -53,7 +65,11 @@ method Failing()
   // Test case for combination {2}:
   //   PRE:  1 <= month <= 12
   //   POST: result
+  //   POST: !(month == 4)
   //   POST: month == 6
+  //   POST: !(month == 9)
+  //   POST: !(month == 11)
+  //   ENSURES: result <==> month == 4 || month == 6 || month == 9 || month == 11
   {
     var month := 6;
     var result := IsMonthWith30Days(month);
@@ -67,6 +83,7 @@ method Failing()
   //   POST: !(month == 6)
   //   POST: !(month == 9)
   //   POST: !(month == 11)
+  //   ENSURES: result <==> month == 4 || month == 6 || month == 9 || month == 11
   {
     var month := 1;
     var result := IsMonthWith30Days(month);

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p6__942_ROR_Gt.dfy
 // Method: FilterVowelsArray
-// Generated: 2026-03-26 14:57:45
+// Generated: 2026-04-08 16:48:35
 
 // dafny-duck_tmp_tmplawbgxjo_p6.dfy
 
@@ -63,14 +63,16 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: FilterVowels(xs[..]) == ys[..]
+  //   ENSURES: FilterVowels(xs[..]) == ys[..]
   {
     var xs := new char[0] [];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bxs=1:
   //   POST: FilterVowels(xs[..]) == ys[..]
+  //   ENSURES: FilterVowels(xs[..]) == ys[..]
   {
     var xs := new char[1] [' '];
     var ys := FilterVowelsArray(xs);
@@ -79,6 +81,7 @@ method Passing()
 
   // Test case for combination {1}/Bxs=2:
   //   POST: FilterVowels(xs[..]) == ys[..]
+  //   ENSURES: FilterVowels(xs[..]) == ys[..]
   {
     var xs := new char[2] [' ', '!'];
     var ys := FilterVowelsArray(xs);
@@ -87,8 +90,9 @@ method Passing()
 
   // Test case for combination {1}/Bxs=3:
   //   POST: FilterVowels(xs[..]) == ys[..]
+  //   ENSURES: FilterVowels(xs[..]) == ys[..]
   {
-    var xs := new char[3] [' ', '!', '"'];
+    var xs := new char[3] [' ', '"', '!'];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
   }

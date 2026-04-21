@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
 // Method: InitArray
-// Generated: 2026-03-26 14:56:34
+// Generated: 2026-04-08 16:44:28
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -113,82 +113,86 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[0] [];
-    var old_a := a[..];
     IncrementArray(a);
-    expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[1] [7718];
-    var old_a := a[..];
     IncrementArray(a);
-    expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
+    expect a[..] == [7719];
   }
 
   // Test case for combination {1}/Ba=2:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[2] [-21239, 2437];
-    var old_a := a[..];
     IncrementArray(a);
-    expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
+    expect a[..] == [-21238, 2438];
   }
 
   // Test case for combination {1}/Ba=3:
   //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[3] [-8856, 11797, 11798];
-    var old_a := a[..];
     IncrementArray(a);
-    expect forall i: int {:trigger old_a[i]} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old_a[i] + 1;
+    expect a[..] == [-8855, 11798, 11799];
   }
 
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
   //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[0] [];
     var b := new int[0] [];
     var old_a := a[..];
     CopyArray<int>(a, b);
-    expect forall i: int {:trigger old_a[i]} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old_a[i];
+    expect b[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Ba=1,b=1:
   //   PRE:  a.Length == b.Length
   //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
-    var a := new int[1] [9];
-    var b := new int[1] [21];
+    var a := new int[1] [2];
+    var b := new int[1] [6];
     var old_a := a[..];
     CopyArray<int>(a, b);
-    expect forall i: int {:trigger old_a[i]} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old_a[i];
+    expect b[..] == [2];
   }
 
   // Test case for combination {1}/Ba=2,b=2:
   //   PRE:  a.Length == b.Length
   //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[2] [3, 4];
     var b := new int[2] [6, 5];
     var old_a := a[..];
     CopyArray<int>(a, b);
-    expect forall i: int {:trigger old_a[i]} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old_a[i];
+    expect b[..] == [3, 4];
   }
 
   // Test case for combination {1}/Ba=3,b=3:
   //   PRE:  a.Length == b.Length
   //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[3] [4, 5, 6];
     var b := new int[3] [8, 7, 9];
     var old_a := a[..];
     CopyArray<int>(a, b);
-    expect forall i: int {:trigger old_a[i]} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old_a[i];
+    expect b[..] == [4, 5, 6];
   }
 
 }
@@ -197,38 +201,42 @@ method Failing()
 {
   // Test case for combination {1}:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[0] [];
     var d := 0;
     InitArray<int>(a, d);
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d;
-  }
-
-  // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
-  {
-    var a := new int[1] [12];
-    var d := 8;
-    InitArray<int>(a, d);
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d;
+    // expect a[..] == [];
   }
 
   // Test case for combination {1}/Ba=0,d=1:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[0] [];
     var d := 1;
     InitArray<int>(a, d);
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d;
+    // expect a[..] == [];
   }
 
   // Test case for combination {1}/Ba=1,d=0:
   //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[1] [4];
     var d := 0;
     InitArray<int>(a, d);
-    // expect forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d;
+    // expect a[..] == [0];
+  }
+
+  // Test case for combination {1}/Ba=1,d=1:
+  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  {
+    var a := new int[1] [4];
+    var d := 1;
+    InitArray<int>(a, d);
+    // expect a[..] == [1];
   }
 
 }

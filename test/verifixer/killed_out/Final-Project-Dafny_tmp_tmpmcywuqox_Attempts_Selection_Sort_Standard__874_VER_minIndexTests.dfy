@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Selection_Sort_Standard__874_VER_minIndex.dfy
 // Method: selectionSorted
-// Generated: 2026-03-26 15:02:52
+// Generated: 2026-04-08 16:17:35
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Selection_Sort_Standard.dfy
 
@@ -41,38 +41,40 @@ method Passing()
 {
   // Test case for combination {1}:
   //   POST: multiset(old(Array[..])) == multiset(Array[..])
+  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
   {
     var Array := new int[0] [];
-    var old_Array := Array[..];
     selectionSorted(Array);
-    expect multiset(old_Array[..]) == multiset(Array[..]);
+    expect Array[..] == [];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/BArray=1:
   //   POST: multiset(old(Array[..])) == multiset(Array[..])
+  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
   {
-    var Array := new int[1] [6];
-    var old_Array := Array[..];
+    var Array := new int[1] [2];
     selectionSorted(Array);
-    expect multiset(old_Array[..]) == multiset(Array[..]);
+    expect Array[..] == [2];
   }
 
   // Test case for combination {1}/BArray=2:
   //   POST: multiset(old(Array[..])) == multiset(Array[..])
+  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
   {
     var Array := new int[2] [4, 3];
     var old_Array := Array[..];
     selectionSorted(Array);
-    expect multiset(old_Array[..]) == multiset(Array[..]);
+    expect multiset(old_Array) == multiset(Array[..]);
   }
 
   // Test case for combination {1}/BArray=3:
   //   POST: multiset(old(Array[..])) == multiset(Array[..])
+  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
   {
-    var Array := new int[3] [5, 4, 6];
+    var Array := new int[3] [12, 4, 5];
     var old_Array := Array[..];
     selectionSorted(Array);
-    expect multiset(old_Array[..]) == multiset(Array[..]);
+    expect multiset(old_Array) == multiset(Array[..]);
   }
 
 }

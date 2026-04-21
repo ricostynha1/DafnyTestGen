@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 // Method: mPeekSum
-// Generated: 2026-03-26 14:56:56
+// Generated: 2026-04-08 19:09:03
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 
@@ -57,28 +57,61 @@ method Passing()
   // Test case for combination {1}:
   //   PRE:  v.Length > 0
   //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
   {
     var v := new int[1] [2];
     var sum := mPeekSum(v);
-    expect sum == 2; // == peekSum(v, v.Length)
+    expect sum == 2;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/Bv=2:
   //   PRE:  v.Length > 0
   //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
   {
-    var v := new int[2] [3, 4];
+    var v := new int[2] [4, 3];
     var sum := mPeekSum(v);
-    expect sum == 7; // == peekSum(v, v.Length)
+    expect sum == 4;
   }
 
   // Test case for combination {1}/Bv=3:
   //   PRE:  v.Length > 0
   //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
   {
     var v := new int[3] [5, 4, 6];
     var sum := mPeekSum(v);
-    expect sum == 11; // == peekSum(v, v.Length)
+    expect sum == 11;
+  }
+
+  // Test case for combination {1}/Osum>0:
+  //   PRE:  v.Length > 0
+  //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
+  {
+    var v := new int[4] [5, 6, 7, 8];
+    var sum := mPeekSum(v);
+    expect sum == 26;
+  }
+
+  // Test case for combination {1}/Osum<0:
+  //   PRE:  v.Length > 0
+  //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
+  {
+    var v := new int[5] [6, 7, 8, 9, 10];
+    var sum := mPeekSum(v);
+    expect sum == 40;
+  }
+
+  // Test case for combination {1}/Osum=0:
+  //   PRE:  v.Length > 0
+  //   POST: sum == peekSum(v, v.Length)
+  //   ENSURES: sum == peekSum(v, v.Length)
+  {
+    var v := new int[6] [7, 8, 9, 10, 11, 12];
+    var sum := mPeekSum(v);
+    expect sum == 57;
   }
 
 }
