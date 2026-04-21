@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-20 22:35:07
+// Generated: 2026-04-21 21:59:47
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -56,10 +56,11 @@ method TestsForLastPosition()
   //   ENSURES: elem !in arr[..] ==> pos == -1
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
-    var arr := new int[3] [-10, -10, -9];
+    var arr := new int[4] [-10, -10, -10, -9];
     var elem := -10;
     var pos := LastPosition(arr, elem);
-    expect pos == 1;
+    expect pos == 2;
+    expect pos == 2; // observed from implementation
   }
 
   // Test case for combination {3}:
@@ -70,10 +71,11 @@ method TestsForLastPosition()
   //   ENSURES: elem !in arr[..] ==> pos == -1
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
-    var arr := new int[1] [-2];
-    var elem := -10;
+    var arr := new int[1] [-10];
+    var elem := -9;
     var pos := LastPosition(arr, elem);
     expect pos == -1;
+    expect pos == -1; // observed from implementation
   }
 
   // Test case for combination {2}/Bpos=0:
@@ -87,13 +89,14 @@ method TestsForLastPosition()
   //   ENSURES: elem !in arr[..] ==> pos == -1
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
-    var arr := new int[1] [10];
-    var elem := 10;
+    var arr := new int[1] [3];
+    var elem := 3;
     var pos := LastPosition(arr, elem);
     expect pos == 0;
+    expect pos == 0; // observed from implementation
   }
 
-  // Test case for combination {2}/Oelem=0:
+  // Test case for combination {2}/Bpos=1:
   //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST: !(elem !in arr[..])
   //   POST: elem in arr[..]
@@ -104,10 +107,11 @@ method TestsForLastPosition()
   //   ENSURES: elem !in arr[..] ==> pos == -1
   //   ENSURES: elem in arr[..] ==> 0 <= pos < arr.Length && arr[pos] == elem && elem !in arr[pos + 1..]
   {
-    var arr := new int[4] [-9, -9, -1, 0];
-    var elem := 0;
+    var arr := new int[2] [9, 10];
+    var elem := 10;
     var pos := LastPosition(arr, elem);
-    expect pos == 3;
+    expect pos == 1;
+    expect pos == 1; // observed from implementation
   }
 
 }

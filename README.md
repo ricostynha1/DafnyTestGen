@@ -228,6 +228,43 @@ Even when a relevance query yields a less-than-ideal choice of ins, the emitted 
 
 Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
 
+### Per-literal vacuity check (enable with `--vacuity`)
+
+Phase 1r (relevance) proves a literal `Qk` bites **somewhere** across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific `ins` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
+
+Example — `LastPosition(arr, elem)`:
+
+- `Q5 = elem !in arr[pos+1..]` prunes whenever `arr` has duplicates of `elem` (Phase 1r SAT).
+- But whenever `elem` occurs **at most once** in `arr`, `Q3 ∧ Q4` (range + `arr[pos] == elem`) pin `pos` to the unique occurrence, so `arr[pos+1..]` cannot contain another copy — `Q5` is automatically satisfied. Minimal witness: `arr = [X], elem = X, pos = 0`.
+- Dually, whenever **every** element of `arr` equals `elem`, `Q4 = arr[pos] == elem` holds for any `pos`; the clause's remaining constraints force `pos = arr.Length - 1`. `Q4` is vacuous. Witness: `arr = [X, X, X], elem = X, pos = 2`.
+
+Both are worth exercising because they witness a qualitatively different regime than the "typical" Phase 1r test.
+
+**Formulation.** `Qk` is **vacuous for ins** iff
+
+```
+¬∃ outs_alt. (∧_{j≠k} Qj(ins, outs_alt)) ∧ ¬Qk(ins, outs_alt)
+```
+
+and Phase 1v asks for
+
+```
+∃ (ins, outs).  Pre(ins) ∧ ⋀_j Qj(ins, outs)
+             ∧ ¬∃ outs_alt. (∧_{j≠k} Qj(ins, outs_alt)) ∧ ¬Qk(ins, outs_alt)
+```
+
+The outer `∃ ins` quantifier-alternation is handled by **CEGIS**: Phase A asks Z3 for a candidate ins (satisfying the full clause, excluding previously-tried ins); Phase B pins that ins and checks vacuity of `Qk` under it. Phase B UNSAT → vacuity witness found; Phase B SAT → exclude ins and retry (up to 3 attempts per candidate).
+
+**Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal. Combining would require "find ins such that *every* candidate literal is simultaneously vacuous", a strictly narrower requirement that misses most cases.
+
+**Subsumption pruning.** Phase 1v is conservative about emitting tests:
+- **Pre-CEGIS** — before entering the loop, for each prior test case run a single Phase B query against that test's ins. If any prior test's ins already makes `Qk` vacuous, skip this candidate entirely.
+- **Post-CEGIS** — if CEGIS finds a witness but it is subsumed by a prior test (same ins shape), drop the `/V{k}` registration.
+
+**Phase 1r UNSAT skip.** Candidates where Phase 1r returned UNSAT (universally redundant literals) are skipped: the Phase 1 baseline test already exhibits vacuity for those, so a `/V{k}` test would duplicate it.
+
+Tests are labelled `{clause}/V{k+1}` (1-based literal index). Default **OFF**; enable with `--vacuity` / `-v1v`. Expect one CEGIS round to cost up to 6 Z3 calls per candidate literal.
+
 
 ## Boundary Value Analysis
 
@@ -688,6 +725,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
+| `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v). For each safe clause literal `Qk`, CEGIS searches for ins where `Qk` is vacuously satisfied (other literals force it true). Emits `{clause}/V{k+1}` tests. Default OFF |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
