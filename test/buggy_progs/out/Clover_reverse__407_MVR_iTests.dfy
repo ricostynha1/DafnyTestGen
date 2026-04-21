@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_reverse__407_MVR_i.dfy
 // Method: reverse
-// Generated: 2026-04-20 23:31:10
+// Generated: 2026-04-21 22:56:13
 
 // Clover_reverse.dfy
 
@@ -26,8 +26,7 @@ method reverse(a: array<int>)
 method TestsForreverse()
 {
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[1] [5];
     reverse(a);
@@ -35,8 +34,7 @@ method TestsForreverse()
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[0] [];
     reverse(a);
@@ -45,17 +43,18 @@ method TestsForreverse()
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/O|a|>=2:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[2] [9, -7];
+    var a := new int[2] [2, -10];
     reverse(a);
-    // expect a[..] == [-7, 9];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.reverse(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_mfay1rwsezl\runner.cs:line 5792
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_mfay1rwsezl\runner.cs:line 5860
+    // expect a[..] == [-10, 2];
   }
 
   // Test case for combination {1}/R4:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[1] [-10];
     reverse(a);

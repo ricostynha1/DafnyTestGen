@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
 // Method: InitArray
-// Generated: 2026-04-20 23:31:18
+// Generated: 2026-04-21 22:56:21
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -113,45 +113,48 @@ method TestsForInitArray()
 {
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[0] [];
     var d := 0;
     InitArray<int>(a, d);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6042
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6094
     // expect a[..] == [];
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/O|a|=1:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[1] [3];
     var d := 2;
     InitArray<int>(a, d);
-    // expect a[..] == [2];
+    // expect a[..] == [2]; // LHS=[3], RHS=[2]
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/O|a|>=2:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[2] [15, 14];
     var d := 8;
     InitArray<int>(a, d);
-    // expect a[..] == [8, 8];
+    // actual runtime state: a=[15, 8]
+    // expect a[..] == [8, 8]; // LHS=[15, 8], RHS=[8, 8]
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Od=1:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == d
   {
     var a := new int[0] [];
     var d := 1;
     InitArray<int>(a, d);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6042
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6163
     // expect a[..] == [];
   }
 
@@ -160,8 +163,7 @@ method TestsForInitArray()
 method TestsForIncrementArray()
 {
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[1] [-10];
     IncrementArray(a);
@@ -169,8 +171,7 @@ method TestsForIncrementArray()
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[0] [];
     IncrementArray(a);
@@ -178,17 +179,15 @@ method TestsForIncrementArray()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
-    var a := new int[2] [-9, -4];
+    var a := new int[2] [-9, -7];
     IncrementArray(a);
-    expect a[..] == [-8, -3];
+    expect a[..] == [-8, -6];
   }
 
   // Test case for combination {1}/R4:
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
     var a := new int[1] [10];
     IncrementArray(a);
@@ -201,8 +200,7 @@ method TestsForCopyArray()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length == b.Length
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -213,8 +211,7 @@ method TestsForCopyArray()
 
   // Test case for combination {1}/O|a|=1:
   //   PRE:  a.Length == b.Length
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[1] [2];
     var b := new int[1] [6];
@@ -225,8 +222,7 @@ method TestsForCopyArray()
 
   // Test case for combination {1}/O|a|>=2:
   //   PRE:  a.Length == b.Length
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[2] [9, 11];
     var b := new int[2] [26, 27];
@@ -237,8 +233,7 @@ method TestsForCopyArray()
 
   // Test case for combination {1}/R4:
   //   PRE:  a.Length == b.Length
-  //   POST: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
-  //   ENSURES: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
+  //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == old(a[i])
   {
     var a := new int[1] [10];
     var b := new int[1] [23];

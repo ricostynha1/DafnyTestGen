@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-20 22:35:26
+// Generated: 2026-04-21 22:57:18
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -43,10 +43,9 @@ method ContainsEvenNumberTest(){
 method TestsForContainsEvenNumber()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: IsEven(a[0])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
+  //   POST Q1: result
+  //   POST Q2: 0 <= (a.Length - 1)
+  //   POST Q3: IsEven(a[0])
   {
     var a := new int[1] [-10];
     var result := ContainsEvenNumber(a);
@@ -54,9 +53,8 @@ method TestsForContainsEvenNumber()
   }
 
   // Test case for combination {2}:
-  //   POST: result
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && IsEven(a[i])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1) && IsEven(a[i])
   {
     var a := new int[3] [-10, -2, -1];
     var result := ContainsEvenNumber(a);
@@ -64,22 +62,20 @@ method TestsForContainsEvenNumber()
   }
 
   // Test case for combination {4}:
-  //   POST: !result
-  //   POST: !exists i: int :: 0 <= i < a.Length && IsEven(a[i])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [-9];
     var result := ContainsEvenNumber(a);
     expect result == false;
   }
 
   // Test case for combination {3}/O|a|>=2:
-  //   POST: result
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: IsEven(a[(a.Length - 1)])
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
+  //   POST Q1: result
+  //   POST Q2: 0 <= (a.Length - 1)
+  //   POST Q3: IsEven(a[(a.Length - 1)])
   {
-    var a := new int[2] [-5, -10];
+    var a := new int[2] [-4, -10];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }

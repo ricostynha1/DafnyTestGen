@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_472.dfy
 // Method: ContainsConsecutiveNumbers
-// Generated: 2026-04-20 22:31:24
+// Generated: 2026-04-21 22:54:07
 
 // Checks if an array contains at least two consecutive numbers
 method ContainsConsecutiveNumbers(a: array<int>) returns (result: bool)
@@ -51,10 +51,9 @@ method ContainsConsecutiveNumbersTest(){
 method TestsForContainsConsecutiveNumbers()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: 0 <= (a.Length - 1 - 1)
-  //   POST: a[0] + 1 == a[0 + 1]
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST Q1: result
+  //   POST Q2: 0 <= (a.Length - 1 - 1)
+  //   POST Q3: a[0] + 1 == a[0 + 1]
   {
     var a := new int[2] [-10, -9];
     var result := ContainsConsecutiveNumbers(a);
@@ -62,19 +61,17 @@ method TestsForContainsConsecutiveNumbers()
   }
 
   // Test case for combination {2}:
-  //   POST: result
-  //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1 - 1) && a[i] + 1 == a[i + 1]
   {
-    var a := new int[5] [-10, -9, -8, -7, 8490];
+    var a := new int[5] [-10, -5, -4, -3, 21445];
     var result := ContainsConsecutiveNumbers(a);
     expect result == true;
   }
 
   // Test case for combination {4}:
-  //   POST: !result
-  //   POST: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
     var a := new int[1] [-10];
     var result := ContainsConsecutiveNumbers(a);
@@ -82,9 +79,8 @@ method TestsForContainsConsecutiveNumbers()
   }
 
   // Test case for combination {4}/O|a|=0:
-  //   POST: !result
-  //   POST: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
-  //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int :: 0 <= i < a.Length - 1 && a[i] + 1 == a[i + 1]
   {
     var a := new int[0] [];
     var result := ContainsConsecutiveNumbers(a);

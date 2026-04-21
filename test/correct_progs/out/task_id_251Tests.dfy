@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_251.dfy
 // Method: InsertBeforeEach
-// Generated: 2026-04-20 22:29:25
+// Generated: 2026-04-21 22:52:28
 
 // Given a list s = [e1, e2, ...] and an element x, 
 // returns a new list [x, e1, x, e2, ...].
@@ -33,10 +33,8 @@ method InsertBeforeEachTest(){
 method TestsForInsertBeforeEach()
 {
   // Test case for combination {1}/Rel:
-  //   POST: |v| == 2 * |s|
-  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
-  //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [53];
     var x := 20;
@@ -44,11 +42,9 @@ method TestsForInsertBeforeEach()
     expect v == [20, 53];
   }
 
-  // Test case for combination {1}/O|s|=0:
-  //   POST: |v| == 2 * |s|
-  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
-  //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  // Test case for combination {1}/V2:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]  // VACUOUS (forced true by other literals for this ins)
   {
     var s: seq<int> := [];
     var x := 0;
@@ -57,10 +53,8 @@ method TestsForInsertBeforeEach()
   }
 
   // Test case for combination {1}/O|s|>=2:
-  //   POST: |v| == 2 * |s|
-  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
-  //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [22, 25];
     var x := 20;
@@ -69,10 +63,8 @@ method TestsForInsertBeforeEach()
   }
 
   // Test case for combination {1}/Ox=1:
-  //   POST: |v| == 2 * |s|
-  //   POST: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
-  //   ENSURES: |v| == 2 * |s|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
   {
     var s: seq<int> := [];
     var x := 1;

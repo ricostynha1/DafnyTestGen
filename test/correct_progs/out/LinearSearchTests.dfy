@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch.dfy
 // Method: LinearSearch
-// Generated: 2026-04-20 22:25:54
+// Generated: 2026-04-21 22:49:57
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -25,37 +25,31 @@ method LinearSearch(a: array<int>, x: int) returns (index: int)
 method TestsForLinearSearch()
 {
   // Test case for combination {1}/Rel:
-  //   POST: !(0 <= index)
-  //   POST: index == -1
-  //   POST: x !in a[..]
-  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
-  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  //   POST Q1: 0 > index
+  //   POST Q2: index == -1
+  //   POST Q3: x !in a[..]
   {
-    var a := new int[1] [-8];
+    var a := new int[1] [-10];
     var x := -9;
     var index := LinearSearch(a, x);
     expect index == -1;
   }
 
   // Test case for combination {2}/Rel:
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
-  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  //   POST Q1: 0 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: a[index] == x
   {
-    var a := new int[2] [-10, -9];
-    var x := -9;
+    var a := new int[2] [3, 2];
+    var x := 2;
     var index := LinearSearch(a, x);
     expect index == 1;
   }
 
-  // Test case for combination {2}/Bindex=0:
-  //   POST: 0 <= index
-  //   POST: index < a.Length
-  //   POST: a[index] == x
-  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
-  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  // Test case for combination {2}/V3:
+  //   POST Q1: 0 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: a[index] == x  // VACUOUS (forced true by other literals for this ins)
   {
     var a := new int[1] [-10];
     var x := -10;
@@ -64,11 +58,9 @@ method TestsForLinearSearch()
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: !(0 <= index)
-  //   POST: index == -1
-  //   POST: x !in a[..]
-  //   ENSURES: 0 <= index < a.Length ==> a[index] == x
-  //   ENSURES: !(0 <= index < a.Length) ==> index == -1 && x !in a[..]
+  //   POST Q1: 0 > index
+  //   POST Q2: index == -1
+  //   POST Q3: x !in a[..]
   {
     var a := new int[0] [];
     var x := -10;

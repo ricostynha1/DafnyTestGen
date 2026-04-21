@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-04-20 22:32:04
+// Generated: 2026-04-21 22:54:38
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -82,19 +82,17 @@ method UniqueProductTest(){
 method TestsForUniqueProduct()
 {
   // Test case for combination {1}:
-  //   POST: product == SetProduct(elems(a))
-  //   POST: product == 1
-  //   ENSURES: product == SetProduct(elems(a))
+  //   POST Q1: product == SetProduct(elems(a))
+  //   POST Q2: product == 1
   {
-    var a := new int[1] [10];
+    var a := new int[1] [8];
     var product := UniqueProduct(a);
-    expect product == 10;
+    expect product == 8;
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: product == SetProduct(elems(a))
-  //   POST: product == 1
-  //   ENSURES: product == SetProduct(elems(a))
+  //   POST Q1: product == SetProduct(elems(a))
+  //   POST Q2: product == 1
   {
     var a := new int[0] [];
     var product := UniqueProduct(a);
@@ -102,19 +100,17 @@ method TestsForUniqueProduct()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: product == SetProduct(elems(a))
-  //   POST: product == 1
-  //   ENSURES: product == SetProduct(elems(a))
+  //   POST Q1: product == SetProduct(elems(a))
+  //   POST Q2: product == 1
   {
-    var a := new int[2] [2, -3];
+    var a := new int[2] [7, -1];
     var product := UniqueProduct(a);
-    expect product == -6;
+    expect product == -7;
   }
 
   // Test case for combination {1}/R4:
-  //   POST: product == SetProduct(elems(a))
-  //   POST: product == 1
-  //   ENSURES: product == SetProduct(elems(a))
+  //   POST Q1: product == SetProduct(elems(a))
+  //   POST Q2: product == 1
   {
     var a := new int[1] [-10];
     var product := UniqueProduct(a);

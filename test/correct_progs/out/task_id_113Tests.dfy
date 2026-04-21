@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-20 22:28:36
+// Generated: 2026-04-21 22:51:52
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -45,10 +45,9 @@ method IsIntegerTest(){
 method TestsForIsInteger()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: |s| > 0
-  //   POST: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
-  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
   {
     var s: seq<char> := ['9'];
     var result := IsInteger(s);
@@ -56,9 +55,8 @@ method TestsForIsInteger()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !(|s| > 0)
-  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST Q1: !result
+  //   POST Q2: |s| <= 0
   {
     var s: seq<char> := [];
     var result := IsInteger(s);
@@ -66,11 +64,10 @@ method TestsForIsInteger()
   }
 
   // Test case for combination {3}:
-  //   POST: !result
-  //   POST: |s| > 0
-  //   POST: 0 <= (|s| - 1)
-  //   POST: !IsDigit(s[0])
-  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST Q1: !result
+  //   POST Q2: |s| > 0
+  //   POST Q3: 0 <= (|s| - 1)
+  //   POST Q4: !IsDigit(s[0])
   {
     var s: seq<char> := ['~'];
     var result := IsInteger(s);
@@ -78,12 +75,11 @@ method TestsForIsInteger()
   }
 
   // Test case for combination {4}:
-  //   POST: !result
-  //   POST: |s| > 0
-  //   POST: exists i :: 1 <= i < (|s| - 1) && !IsDigit(s[i])
-  //   ENSURES: result <==> |s| > 0 && forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  //   POST Q1: !result
+  //   POST Q2: |s| > 0
+  //   POST Q3: exists i :: 1 <= i < (|s| - 1) && !IsDigit(s[i])
   {
-    var s: seq<char> := ['~', '/', '\U{0027}'];
+    var s: seq<char> := ['+', '~', 'l'];
     var result := IsInteger(s);
     expect result == false;
   }

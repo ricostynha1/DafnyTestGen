@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-04-20 22:30:26
+// Generated: 2026-04-21 22:53:20
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -40,9 +40,8 @@ method AnyValueExistsTest(){
 method TestsForAnyValueExists()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: exists x: int :: x in seq1 && x in seq2
-  //   ENSURES: result <==> exists x: int :: x in seq1 && x in seq2
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
   {
     var seq1: seq<int> := [9];
     var seq2: seq<int> := [9];
@@ -51,9 +50,8 @@ method TestsForAnyValueExists()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists x: int :: x in seq1 && x in seq2
-  //   ENSURES: result <==> exists x: int :: x in seq1 && x in seq2
+  //   POST Q1: !result
+  //   POST Q2: !exists x: int :: x in seq1 && x in seq2
   {
     var seq1: seq<int> := [8];
     var seq2: seq<int> := [];
@@ -62,9 +60,8 @@ method TestsForAnyValueExists()
   }
 
   // Test case for combination {1}/O|seq1|>=2:
-  //   POST: result
-  //   POST: exists x: int :: x in seq1 && x in seq2
-  //   ENSURES: result <==> exists x: int :: x in seq1 && x in seq2
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
   {
     var seq1: seq<int> := [10, 30];
     var seq2: seq<int> := [10];
@@ -73,9 +70,8 @@ method TestsForAnyValueExists()
   }
 
   // Test case for combination {1}/O|seq2|>=2:
-  //   POST: result
-  //   POST: exists x: int :: x in seq1 && x in seq2
-  //   ENSURES: result <==> exists x: int :: x in seq1 && x in seq2
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
   {
     var seq1: seq<int> := [27, 12];
     var seq2: seq<int> := [12, 34];

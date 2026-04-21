@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-04-20 22:28:56
+// Generated: 2026-04-21 22:52:04
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates
@@ -85,9 +85,8 @@ method RemoveElementsDups(){
 method TestsForRemoveElements()
 {
   // Test case for combination {1}:
-  //   POST: res == removeElems(a[..], b[..])
-  //   POST: res == []
-  //   ENSURES: res == removeElems(a[..], b[..])
+  //   POST Q1: res == removeElems(a[..], b[..])
+  //   POST Q2: res == []
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -96,10 +95,9 @@ method TestsForRemoveElements()
   }
 
   // Test case for combination {2}:
-  //   POST: !(|a[..]| == 0)
-  //   POST: a[..][|a[..]| - 1] !in b[..] && a[..][|a[..]| - 1] !in a[..][..|a[..]| - 1]
-  //   POST: res == removeElems<int>(a[..][..|a[..]| - 1], b[..]) + [a[..][|a[..]| - 1]]
-  //   ENSURES: res == removeElems(a[..], b[..])
+  //   POST Q1: |a[..]| != 0
+  //   POST Q2: a[..][|a[..]| - 1] !in b[..] && a[..][|a[..]| - 1] !in a[..][..|a[..]| - 1]
+  //   POST Q3: res == removeElems<int>(a[..][..|a[..]| - 1], b[..]) + [a[..][|a[..]| - 1]]
   {
     var a := new int[1] [17];
     var b := new int[0] [];
@@ -108,10 +106,9 @@ method TestsForRemoveElements()
   }
 
   // Test case for combination {3}:
-  //   POST: !(|a[..]| == 0)
-  //   POST: !(a[..][|a[..]| - 1] !in b[..] && a[..][|a[..]| - 1] !in a[..][..|a[..]| - 1])
-  //   POST: res == removeElems<int>(a[..][..|a[..]| - 1], b[..])
-  //   ENSURES: res == removeElems(a[..], b[..])
+  //   POST Q1: |a[..]| != 0
+  //   POST Q2: a[..][|a[..]| - 1] in b[..] && a[..][|a[..]| - 1] !in a[..][..|a[..]| - 1]
+  //   POST Q3: res == removeElems<int>(a[..][..|a[..]| - 1], b[..])
   {
     var a := new int[1] [9];
     var b := new int[1] [9];
@@ -120,9 +117,8 @@ method TestsForRemoveElements()
   }
 
   // Test case for combination {1}/O|b|=1:
-  //   POST: res == removeElems(a[..], b[..])
-  //   POST: res == []
-  //   ENSURES: res == removeElems(a[..], b[..])
+  //   POST Q1: res == removeElems(a[..], b[..])
+  //   POST Q2: res == []
   {
     var a := new int[0] [];
     var b := new int[1] [2];

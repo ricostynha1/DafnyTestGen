@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-20 22:29:38
+// Generated: 2026-04-21 22:52:40
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -39,23 +39,19 @@ method TestsForElementWiseSubtraction()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1];
-    var b: seq<int> := [-8];
+    var a: seq<int> := [-7];
+    var b: seq<int> := [-10];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [7];
+    expect result == [3];
   }
 
   // Test case for combination {1}/O|a|=0:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
     var a: seq<int> := [];
     var b: seq<int> := [];
@@ -65,15 +61,13 @@ method TestsForElementWiseSubtraction()
 
   // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1, -7];
-    var b: seq<int> := [8, 8];
+    var a: seq<int> := [-1, -9];
+    var b: seq<int> := [9, -5];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [-9, -15];
+    expect result == [-10, -4];
   }
 
 }

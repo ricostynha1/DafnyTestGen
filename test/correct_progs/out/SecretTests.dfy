@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Secret.dfy
 // Method: Guess
-// Generated: 2026-04-20 22:27:33
+// Generated: 2026-04-21 22:51:09
 
 class Secret {
     var secret: int
@@ -32,13 +32,11 @@ method TestsForGuess()
   // Test case for combination {1}/Rel:
   //   PRE:  known == false
   //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   POST: g == old(secret)
-  //   POST: result == true
-  //   POST: known == true
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
+  //   POST Q1: count == old(count) + 1
+  //   POST Q2: guesses == count
+  //   POST Q3: g == old(secret)
+  //   POST Q4: result == true
+  //   POST Q5: known == true
   {
     var obj := new Secret;
     obj.secret := -10;
@@ -50,18 +48,17 @@ method TestsForGuess()
     expect guesses == 11;
     expect obj.known == true;
     expect obj.count == 11;
+    expect obj[..] == _module.Secret; // observed from implementation
   }
 
   // Test case for combination {2}/Rel:
   //   PRE:  known == false
   //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   POST: !(g == old(secret))
-  //   POST: result == false
-  //   POST: known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
+  //   POST Q1: count == old(count) + 1
+  //   POST Q2: guesses == count
+  //   POST Q3: g != old(secret)
+  //   POST Q4: result == false
+  //   POST Q5: known == false
   {
     var obj := new Secret;
     obj.secret := -9;
@@ -73,18 +70,17 @@ method TestsForGuess()
     expect guesses == 11;
     expect obj.known == false;
     expect obj.count == 11;
+    expect obj[..] == _module.Secret; // observed from implementation
   }
 
   // Test case for combination {1}/Og=0:
   //   PRE:  known == false
   //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   POST: g == old(secret)
-  //   POST: result == true
-  //   POST: known == true
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
+  //   POST Q1: count == old(count) + 1
+  //   POST Q2: guesses == count
+  //   POST Q3: g == old(secret)
+  //   POST Q4: result == true
+  //   POST Q5: known == true
   {
     var obj := new Secret;
     obj.secret := 0;
@@ -96,18 +92,17 @@ method TestsForGuess()
     expect guesses == 11;
     expect obj.known == true;
     expect obj.count == 11;
+    expect obj[..] == _module.Secret; // observed from implementation
   }
 
   // Test case for combination {1}/Og>0:
   //   PRE:  known == false
   //   PRE:  count >= 0
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   POST: g == old(secret)
-  //   POST: result == true
-  //   POST: known == true
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  //   ENSURES: if g == old(secret) then result == true && known == true else result == false && known == false
+  //   POST Q1: count == old(count) + 1
+  //   POST Q2: guesses == count
+  //   POST Q3: g == old(secret)
+  //   POST Q4: result == true
+  //   POST Q5: known == true
   {
     var obj := new Secret;
     obj.secret := 10;
@@ -119,6 +114,7 @@ method TestsForGuess()
     expect guesses == 11;
     expect obj.known == true;
     expect obj.count == 11;
+    expect obj[..] == _module.Secret; // observed from implementation
   }
 
 }

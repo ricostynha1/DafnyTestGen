@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Merge.dfy
 // Method: Merge
-// Generated: 2026-04-21 22:21:25
+// Generated: 2026-04-21 22:50:24
 
 // Auxiliary predicate that checks if a sequence 's' is sorted.
 predicate IsSorted(s: seq<int>) {
@@ -52,23 +52,19 @@ method TestsForMerge()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  //   ENSURES: IsSorted(c[..])
-  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[2] [-8, -2];
-    var b := new int[2] [-6, -5];
+    var a := new int[2] [-10, -8];
+    var b := new int[2] [-9, -9];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c[..] == [-8, -6, -5, -2]; // observed from implementation
+    expect c[..] == [-10, -9, -9, -8]; // observed from implementation
   }
 
   // Test case for combination {1}/O|a|=0:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  //   ENSURES: IsSorted(c[..])
-  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[0] [];
     var b := new int[1] [10];
@@ -82,23 +78,19 @@ method TestsForMerge()
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  //   ENSURES: IsSorted(c[..])
-  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
-    var a := new int[1] [-4];
+    var a := new int[1] [-6];
     var b := new int[1] [-10];
     var c := Merge(a, b);
     expect IsSorted(c[..]);
     expect multiset(c[..]) == multiset(a[..]) + multiset(b[..]);
-    expect c[..] == [-10, -4]; // observed from implementation
+    expect c[..] == [-10, -6]; // observed from implementation
   }
 
   // Test case for combination {1}/O|b|=0:
   //   PRE:  IsSorted(a[..]) && IsSorted(b[..])
   //   POST Q2: IsSorted(c[..])
   //   POST Q3: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
-  //   ENSURES: IsSorted(c[..])
-  //   ENSURES: multiset(c[..]) == multiset(a[..]) + multiset(b[..])
   {
     var a := new int[1] [10];
     var b := new int[0] [];

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_770.dfy
 // Method: SumOfFourthPowerOfOddNumbers
-// Generated: 2026-04-20 22:34:31
+// Generated: 2026-04-21 22:56:44
 
 // Returns the sum of the fourth power of the first n odd numbers.
 method SumOfFourthPowerOfOddNumbers(n: nat) returns (sum: nat)
@@ -36,8 +36,7 @@ method SumOfFourthPowerOfOddNumbersTest(){
 method TestsForSumOfFourthPowerOfOddNumbers()
 {
   // Test case for combination {1}:
-  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
-  //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
     var n := 10;
     var sum := SumOfFourthPowerOfOddNumbers(n);
@@ -45,8 +44,7 @@ method TestsForSumOfFourthPowerOfOddNumbers()
   }
 
   // Test case for combination {1}/Bn=0:
-  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
-  //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
     var n := 0;
     var sum := SumOfFourthPowerOfOddNumbers(n);
@@ -54,8 +52,7 @@ method TestsForSumOfFourthPowerOfOddNumbers()
   }
 
   // Test case for combination {1}/Bn=1:
-  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
-  //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
     var n := 1;
     var sum := SumOfFourthPowerOfOddNumbers(n);
@@ -63,8 +60,7 @@ method TestsForSumOfFourthPowerOfOddNumbers()
   }
 
   // Test case for combination {1}/R4:
-  //   POST: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
-  //   ENSURES: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
     var n := 9;
     var sum := SumOfFourthPowerOfOddNumbers(n);

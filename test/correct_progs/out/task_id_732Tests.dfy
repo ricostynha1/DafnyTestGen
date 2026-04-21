@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-20 22:33:58
+// Generated: 2026-04-21 22:56:14
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -42,9 +42,8 @@ method ReplaceWithColonTest(){
 method TestsForReplaceWithColon()
 {
   // Test case for combination {1}:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
     var s: seq<char> := [];
     var v := ReplaceWithColon(s);
@@ -54,39 +53,36 @@ method TestsForReplaceWithColon()
   }
 
   // Test case for combination {1}/O|s|=1:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['^'];
+    var s: seq<char> := ['~'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['^']; // observed from implementation
+    expect v == ['~']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['~', 'H'];
+    var s: seq<char> := ['~', ':'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['~', 'H']; // observed from implementation
+    expect v == ['~', ':']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
-  //   POST: IsMapSeq(s, v, ReplaceCharWithColon)
-  //   POST: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
-  //   ENSURES: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['a'];
+    var s: seq<char> := ['}'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['a']; // observed from implementation
+    expect v == ['}']; // observed from implementation
   }
 
 }

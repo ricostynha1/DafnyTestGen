@@ -190,18 +190,18 @@ elem in arr[..]                  // Q1
 
 Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q1`, `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
 
-**Formulation.** Each safe literal `Qk` is relevant iff there exist ins, outs, and outs_k such that
+**Formulation.** Let `X` be the tuple of input parameters and `Y` the tuple of output values. Each safe literal `Qk` is relevant iff there exist `X`, `Y`, and `Y_k` such that
 
 ```
-pre(ins)
-∧ Q1(ins, outs) ∧ ... ∧ Qm(ins, outs)                              // outs satisfies the full clause
-∧ Q1(ins, outs_k) ∧ ... ∧ ¬Qk(ins, outs_k) ∧ ... ∧ Qm(ins, outs_k) // clause minus Qk, with ¬Qk
-∧ outs ≠ outs_k
+pre(X)
+∧ Q1(X, Y) ∧ ... ∧ Qm(X, Y)                                // Y satisfies the full clause
+∧ Q1(X, Y_k) ∧ ... ∧ ¬Qk(X, Y_k) ∧ ... ∧ Qm(X, Y_k)        // clause minus Qk, with ¬Qk
+∧ Y ≠ Y_k
 ```
 
-DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `outs_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find ins for which *every* `Qk ∈ S` strictly prunes the output space.
+DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space.
 
-- **SAT** → every `Qk ∈ S` is simultaneously relevant at these ins. Emit `outs` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
+- **SAT** → every `Qk ∈ S` is simultaneously relevant at these inputs. Emit `Y` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
 - **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
 
@@ -224,13 +224,13 @@ Corner cases such as vacuously-true clauses (empty arrays, single-element inputs
 
 Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `outs_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
-Even when a relevance query yields a less-than-ideal choice of ins, the emitted test remains correct: `outs` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
+Even when a relevance query yields a less-than-ideal choice of `X`, the emitted test remains correct: `Y` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
 
 Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
 
 ### Per-literal vacuity check (enable with `--vacuity`)
 
-Phase 1r (relevance) proves a literal `Qk` bites **somewhere** across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific `ins` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
+Phase 1r (relevance) proves a literal `Qk` bites **somewhere** across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific input tuple `X` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
 
 Example — `LastPosition(arr, elem)`:
 
@@ -240,26 +240,26 @@ Example — `LastPosition(arr, elem)`:
 
 Both are worth exercising because they witness a qualitatively different regime than the "typical" Phase 1r test.
 
-**Formulation.** `Qk` is **vacuous for ins** iff
+**Formulation.** Let `X` be the tuple of inputs, `Y` the tuple of outputs, and `Y'` an alternate output tuple. `Qk` is **vacuous for `X`** iff
 
 ```
-¬∃ outs_alt. (∧_{j≠k} Qj(ins, outs_alt)) ∧ ¬Qk(ins, outs_alt)
+¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
 ```
 
 and Phase 1v asks for
 
 ```
-∃ (ins, outs).  Pre(ins) ∧ ⋀_j Qj(ins, outs)
-             ∧ ¬∃ outs_alt. (∧_{j≠k} Qj(ins, outs_alt)) ∧ ¬Qk(ins, outs_alt)
+∃ (X, Y).  Pre(X) ∧ ⋀_j Qj(X, Y)
+        ∧ ¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
 ```
 
-The outer `∃ ins` quantifier-alternation is handled by **CEGIS**: Phase A asks Z3 for a candidate ins (satisfying the full clause, excluding previously-tried ins); Phase B pins that ins and checks vacuity of `Qk` under it. Phase B UNSAT → vacuity witness found; Phase B SAT → exclude ins and retry (up to 3 attempts per candidate).
+The outer `∃ X` quantifier-alternation is handled by **CEGIS**: Phase A asks Z3 for a candidate `X` (satisfying the full clause, excluding previously-tried inputs); Phase B pins that `X` and checks vacuity of `Qk` under it. Phase B UNSAT → vacuity witness found; Phase B SAT → exclude `X` and retry (up to 3 attempts per candidate).
 
-**Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal. Combining would require "find ins such that *every* candidate literal is simultaneously vacuous", a strictly narrower requirement that misses most cases.
+**Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal. Combining would require "find `X` such that *every* candidate literal is simultaneously vacuous", a strictly narrower requirement that misses most cases.
 
 **Subsumption pruning.** Phase 1v is conservative about emitting tests:
-- **Pre-CEGIS** — before entering the loop, for each prior test case run a single Phase B query against that test's ins. If any prior test's ins already makes `Qk` vacuous, skip this candidate entirely.
-- **Post-CEGIS** — if CEGIS finds a witness but it is subsumed by a prior test (same ins shape), drop the `/V{k}` registration.
+- **Pre-CEGIS** — before entering the loop, for each prior test case from the same clause run a single Phase B query against that test's `X`. If any prior test's `X` already makes `Qk` vacuous, skip this candidate entirely.
+- **Post-CEGIS** — if CEGIS finds a witness but its `X` is structurally identical to a prior test's, drop the `/V{k}` registration.
 
 **Phase 1r UNSAT skip.** Candidates where Phase 1r returned UNSAT (universally redundant literals) are skipped: the Phase 1 baseline test already exhibits vacuity for those, so a `/V{k}` test would duplicate it.
 

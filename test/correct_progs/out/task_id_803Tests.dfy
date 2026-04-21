@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-20 22:35:21
+// Generated: 2026-04-21 22:57:14
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -46,10 +46,9 @@ method IsPerfectSquareTest(){
 method TestsForIsPerfectSquare()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: 0 <= n
-  //   POST: 0 * 0 == n
-  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
+  //   POST Q1: result
+  //   POST Q2: 0 <= n
+  //   POST Q3: 0 * 0 == n
   {
     var n := 0;
     var result := IsPerfectSquare(n);
@@ -57,9 +56,8 @@ method TestsForIsPerfectSquare()
   }
 
   // Test case for combination {2}:
-  //   POST: result
-  //   POST: exists i :: 1 <= i < n && i * i == n
-  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
   {
     var n := 9;
     var result := IsPerfectSquare(n);
@@ -67,22 +65,18 @@ method TestsForIsPerfectSquare()
   }
 
   // Test case for combination {4}:
-  //   NOTE: Z3 returned UNKNOWN on full query; retry dropped 1 exists-quantified postcondition(s).
-  //         Remaining literals still checked; dropped literal(s) not verified by Z3.
-  //   POST: !result
-  //   POST: !exists i: int :: 0 <= i <= n && i * i == n
-  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int :: 0 <= i <= n && i * i == n
   {
-    var n := 10;
+    var n := 2;
     var result := IsPerfectSquare(n);
-    expect !result;
+    expect result == false;
   }
 
   // Test case for combination {3}/On=1:
-  //   POST: result
-  //   POST: 0 <= n
-  //   POST: n * n == n
-  //   ENSURES: result <==> exists i: int :: 0 <= i <= n && i * i == n
+  //   POST Q1: result
+  //   POST Q2: 0 <= n
+  //   POST Q3: n * n == n
   {
     var n := 1;
     var result := IsPerfectSquare(n);

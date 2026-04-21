@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-20 22:32:33
+// Generated: 2026-04-21 22:54:59
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -38,10 +38,8 @@ method TestsForSumAndAverage()
 {
   // Test case for combination {1}:
   //   PRE:  n > 0
-  //   POST: sum == n * (n + 1) / 2
-  //   POST: average == sum as real / n as real
-  //   ENSURES: sum == n * (n + 1) / 2
-  //   ENSURES: average == sum as real / n as real
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
   {
     var n := 10;
     var sum, average := SumAndAverage(n);
@@ -51,10 +49,8 @@ method TestsForSumAndAverage()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n > 0
-  //   POST: sum == n * (n + 1) / 2
-  //   POST: average == sum as real / n as real
-  //   ENSURES: sum == n * (n + 1) / 2
-  //   ENSURES: average == sum as real / n as real
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
   {
     var n := 1;
     var sum, average := SumAndAverage(n);
@@ -64,10 +60,8 @@ method TestsForSumAndAverage()
 
   // Test case for combination {1}/Bn=2:
   //   PRE:  n > 0
-  //   POST: sum == n * (n + 1) / 2
-  //   POST: average == sum as real / n as real
-  //   ENSURES: sum == n * (n + 1) / 2
-  //   ENSURES: average == sum as real / n as real
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
   {
     var n := 2;
     var sum, average := SumAndAverage(n);
@@ -77,10 +71,8 @@ method TestsForSumAndAverage()
 
   // Test case for combination {1}/R4:
   //   PRE:  n > 0
-  //   POST: sum == n * (n + 1) / 2
-  //   POST: average == sum as real / n as real
-  //   ENSURES: sum == n * (n + 1) / 2
-  //   ENSURES: average == sum as real / n as real
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
   {
     var n := 4;
     var sum, average := SumAndAverage(n);

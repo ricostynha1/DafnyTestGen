@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-20 22:29:09
+// Generated: 2026-04-21 22:52:14
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -48,10 +48,8 @@ method SharedElementsTest(){
 method TestsForSharedElements()
 {
   // Test case for combination {1}/Rel:
-  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
     var a := new int[1] [-2];
     var b := new int[1] [-2];
@@ -59,11 +57,9 @@ method TestsForSharedElements()
     expect result == {-2};
   }
 
-  // Test case for combination {1}/O|a|=0:
-  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  // Test case for combination {1}/V2:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result  // VACUOUS (forced true by other literals for this ins)
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -72,24 +68,20 @@ method TestsForSharedElements()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
     var a := new int[2] [3, 4];
-    var b := new int[1] [9];
+    var b := new int[0] [];
     var result := SharedElements<int>(a, b);
     expect result == {};
   }
 
   // Test case for combination {1}/O|b|>=2:
-  //   POST: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   POST: forall x: int :: x in a[..] && x in b[..] ==> x in result
-  //   ENSURES: forall x: int :: x in result ==> x in a[..] && x in b[..]
-  //   ENSURES: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
   {
-    var a := new int[1] [12];
+    var a := new int[0] [];
     var b := new int[2] [5, 6];
     var result := SharedElements<int>(a, b);
     expect result == {};

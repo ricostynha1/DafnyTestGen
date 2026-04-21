@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-20 22:31:18
+// Generated: 2026-04-21 22:54:03
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -39,22 +39,18 @@ method TestsForPairwiseAddition()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  a.Length % 2 == 0
-  //   POST: result.Length == a.Length / 2
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
-  //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST Q1: result.Length == a.Length / 2
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [9, 3];
+    var a := new int[2] [8, 6];
     var result := PairwiseAddition(a);
-    expect result[..] == [12];
+    expect result[..] == [14];
   }
 
   // Test case for combination {1}/O|a|=0:
   //   PRE:  a.Length % 2 == 0
-  //   POST: result.Length == a.Length / 2
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
-  //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST Q1: result.Length == a.Length / 2
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
     var a := new int[0] [];
     var result := PairwiseAddition(a);
@@ -63,14 +59,12 @@ method TestsForPairwiseAddition()
 
   // Test case for combination {1}/O|result|>=2:
   //   PRE:  a.Length % 2 == 0
-  //   POST: result.Length == a.Length / 2
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
-  //   ENSURES: result.Length == a.Length / 2
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
+  //   POST Q1: result.Length == a.Length / 2
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[4] [-9, -10, 9, 14088];
+    var a := new int[4] [-9, -10, 8, 9448];
     var result := PairwiseAddition(a);
-    expect result[..] == [-19, 14097];
+    expect result[..] == [-19, 9456];
   }
 
 }

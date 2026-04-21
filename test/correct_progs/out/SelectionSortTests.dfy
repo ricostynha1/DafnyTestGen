@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SelectionSort.dfy
 // Method: SelectionSort
-// Generated: 2026-04-20 22:27:39
+// Generated: 2026-04-21 22:51:12
 
 /* 
 * Formal verification with Dafny of the selection sort algorithm 
@@ -48,36 +48,30 @@ predicate IsSorted(a: array<int>)
 method TestsForSelectionSort()
 {
   // Test case for combination {1}/Rel:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [9, -1];
+    var a := new int[2] [9, -3];
     SelectionSort(a);
-    expect a[..] == [-1, 9];
+    expect a[..] == [-3, 9];
+  }
+
+  // Test case for combination {1}/V1:
+  //   POST Q1: IsSorted(a)  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[1] [10];
+    SelectionSort(a);
+    expect a[..] == [10];
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
     SelectionSort(a);
     expect a[..] == [];
-  }
-
-  // Test case for combination {1}/O|a|=1:
-  //   POST: IsSorted(a)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[1] [2];
-    SelectionSort(a);
-    expect a[..] == [2];
   }
 
 }

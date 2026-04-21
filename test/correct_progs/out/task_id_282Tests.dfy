@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-20 22:29:43
+// Generated: 2026-04-21 22:52:44
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -38,23 +38,19 @@ method TestsForElementWiseSubtraction()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  a.Length == b.Length
-  //   POST: result.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
-  //   ENSURES: result.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   POST Q1: result.Length == a.Length
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[1] [-5];
-    var b := new int[1] [-8];
+    var a := new int[1] [-7];
+    var b := new int[1] [-10];
     var result := ElementWiseSubtraction(a, b);
     expect result[..] == [3];
   }
 
   // Test case for combination {1}/O|a|=0:
   //   PRE:  a.Length == b.Length
-  //   POST: result.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
-  //   ENSURES: result.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   POST Q1: result.Length == a.Length
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
     var a := new int[0] [];
     var b := new int[0] [];
@@ -64,15 +60,13 @@ method TestsForElementWiseSubtraction()
 
   // Test case for combination {1}/O|a|>=2:
   //   PRE:  a.Length == b.Length
-  //   POST: result.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
-  //   ENSURES: result.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
+  //   POST Q1: result.Length == a.Length
+  //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[2] [-1, -7];
-    var b := new int[2] [8, 8];
+    var a := new int[2] [-1, -2];
+    var b := new int[2] [10, -4];
     var result := ElementWiseSubtraction(a, b);
-    expect result[..] == [-9, -15];
+    expect result[..] == [-11, 2];
   }
 
 }

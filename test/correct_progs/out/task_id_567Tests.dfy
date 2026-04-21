@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_567.dfy
 // Method: IsSortedArr
-// Generated: 2026-04-20 22:31:54
+// Generated: 2026-04-21 22:54:31
 
 // Checks if an array is sorted in non-decreasing order.
 method IsSortedArr(a: array<int>) returns (sorted: bool)
@@ -34,9 +34,8 @@ method IsSortedTest(){
 method TestsForIsSortedArr()
 {
   // Test case for combination {1}:
-  //   POST: sorted
-  //   POST: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST Q1: sorted
+  //   POST Q2: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
     var a := new int[1] [-10];
     var sorted := IsSortedArr(a);
@@ -44,30 +43,27 @@ method TestsForIsSortedArr()
   }
 
   // Test case for combination {2}:
-  //   POST: !sorted
-  //   POST: 0 <= (a.Length - 1 - 1)
-  //   POST: !(a[0] <= a[0 + 1])
-  //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST Q1: !sorted
+  //   POST Q2: 0 <= (a.Length - 1 - 1)
+  //   POST Q3: a[0] > a[0 + 1]
   {
-    var a := new int[2] [10, 6];
+    var a := new int[2] [10, 5];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
 
   // Test case for combination {3}:
-  //   POST: !sorted
-  //   POST: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
-  //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST Q1: !sorted
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1 - 1) && !(a[i] <= a[i + 1])
   {
-    var a := new int[5] [-10, 10, 8, -17725, -17812];
+    var a := new int[5] [-10, 10, 9, -15252, -15253];
     var sorted := IsSortedArr(a);
     expect sorted == false;
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: sorted
-  //   POST: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
-  //   ENSURES: sorted <==> forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
+  //   POST Q1: sorted
+  //   POST Q2: forall i: int :: 0 <= i < a.Length - 1 ==> a[i] <= a[i + 1]
   {
     var a := new int[0] [];
     var sorted := IsSortedArr(a);

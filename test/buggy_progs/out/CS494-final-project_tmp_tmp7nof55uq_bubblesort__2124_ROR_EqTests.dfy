@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
 // Method: BubbleSort
-// Generated: 2026-04-20 23:31:14
+// Generated: 2026-04-21 22:56:17
 
 // CS494-final-project_tmp_tmp7nof55uq_bubblesort.dfy
 
@@ -63,26 +63,22 @@ method TestsForBubbleSort()
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Rel:
   //   PRE:  a != null && a.Length > 0
-  //   POST: sorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: sorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: sorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [8, 10, 8];
+    var a := new int[3] [-7, -10, -7];
     BubbleSort(a);
-    // expect a[..] == [8, 8, 10];
+    // expect a[..] == [-10, -7, -7]; // LHS=[-7, -10, -7], RHS=[-10, -7, -7]
   }
 
-  // Test case for combination {1}/O|a|=1:
+  // Test case for combination {1}/V1:
   //   PRE:  a != null && a.Length > 0
-  //   POST: sorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: sorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: sorted(a, 0, a.Length)  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-2];
     BubbleSort(a);
-    expect a[..] == [2];
+    expect a[..] == [-2];
   }
 
 }

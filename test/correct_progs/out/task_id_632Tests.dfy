@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-20 22:33:36
+// Generated: 2026-04-21 22:55:54
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -68,14 +68,11 @@ method MoveZeroesToEndTest(){
 method TestsForMoveZeroesToEnd()
 {
   // Test case for combination {1}/Rel:
-  //   POST: 0 <= nz
-  //   POST: nz <= a.Length
-  //   POST: a[..nz] == FilterNZ(old(a[..]))
-  //   POST: forall k: int :: nz <= k < a.Length ==> a[k] == 0
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
-  //   ENSURES: 0 <= nz <= a.Length
-  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  //   POST Q1: 0 <= nz
+  //   POST Q2: nz <= a.Length
+  //   POST Q3: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q4: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  //   POST Q5: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
     var a := new int[0] [];
     var old_a := a[..];
@@ -89,15 +86,12 @@ method TestsForMoveZeroesToEnd()
   }
 
   // Test case for combination {2}:
-  //   POST: 0 <= nz
-  //   POST: nz <= a.Length
-  //   POST: !(|old(a[..])| == 0)
-  //   POST: old(a[..])[|old(a[..])| - 1] != 0
-  //   POST: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1]) + [old(a[..])[|old(a[..])| - 1]]
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
-  //   ENSURES: 0 <= nz <= a.Length
-  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  //   POST Q1: 0 <= nz
+  //   POST Q2: nz <= a.Length
+  //   POST Q3: |old(a[..])| != 0
+  //   POST Q4: old(a[..])[|old(a[..])| - 1] != 0
+  //   POST Q5: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1]) + [old(a[..])[|old(a[..])| - 1]]
+  //   POST Q6: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
     var a := new int[1] [-10];
     var old_a := a[..];
@@ -110,17 +104,14 @@ method TestsForMoveZeroesToEnd()
   }
 
   // Test case for combination {3}:
-  //   POST: 0 <= nz
-  //   POST: nz <= a.Length
-  //   POST: !(|old(a[..])| == 0)
-  //   POST: !(old(a[..])[|old(a[..])| - 1] != 0)
-  //   POST: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1])
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
-  //   ENSURES: 0 <= nz <= a.Length
-  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  //   POST Q1: 0 <= nz
+  //   POST Q2: nz <= a.Length
+  //   POST Q3: |old(a[..])| != 0
+  //   POST Q4: old(a[..])[|old(a[..])| - 1] == 0
+  //   POST Q5: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1])
+  //   POST Q6: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
-    var a := new int[4] [4, -10, -1, 0];
+    var a := new int[4] [9, 7, 10, 0];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz;
@@ -131,17 +122,14 @@ method TestsForMoveZeroesToEnd()
   }
 
   // Test case for combination {2}/O|a|>=2:
-  //   POST: 0 <= nz
-  //   POST: nz <= a.Length
-  //   POST: !(|old(a[..])| == 0)
-  //   POST: old(a[..])[|old(a[..])| - 1] != 0
-  //   POST: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1]) + [old(a[..])[|old(a[..])| - 1]]
-  //   POST: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
-  //   ENSURES: 0 <= nz <= a.Length
-  //   ENSURES: a[..nz] == FilterNZ(old(a[..]))
-  //   ENSURES: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  //   POST Q1: 0 <= nz
+  //   POST Q2: nz <= a.Length
+  //   POST Q3: |old(a[..])| != 0
+  //   POST Q4: old(a[..])[|old(a[..])| - 1] != 0
+  //   POST Q5: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1]) + [old(a[..])[|old(a[..])| - 1]]
+  //   POST Q6: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
-    var a := new int[2] [-9, -1];
+    var a := new int[2] [-9, 9];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-04-21 22:21:17
+// Generated: 2026-04-21 22:49:02
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -45,26 +45,35 @@ method TestsForBinarySearch()
   //   POST Q2: 0 <= index
   //   POST Q3: index < a.Length
   //   POST Q4: a[index] == x
-  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
-  //   ENSURES: index == -1 ==> x !in a[..]
   {
-    var a := new T[2] [-11614, 24701];
-    var x := -11614;
+    var a := new T[2] [-26389, 16428];
+    var x := -26389;
     var index := BinarySearch(a, x);
     expect index == 0;
   }
 
   // Test case for combination {1}:
   //   PRE:  IsSorted(a[..])
-  //   POST Q1: !(index != -1)
+  //   POST Q1: index == -1
   //   POST Q2: x !in a[..]
-  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
-  //   ENSURES: index == -1 ==> x !in a[..]
   {
     var a := new T[0] [];
     var x := 8;
     var index := BinarySearch(a, x);
     expect index == -1;
+  }
+
+  // Test case for combination {2}/V4:
+  //   PRE:  IsSorted(a[..])
+  //   POST Q1: index != -1
+  //   POST Q2: 0 <= index
+  //   POST Q3: index < a.Length
+  //   POST Q4: a[index] == x  // VACUOUS (forced true by other literals for this ins)
+  {
+    var a := new T[1] [17];
+    var x := 17;
+    var index := BinarySearch(a, x);
+    expect index == 0;
   }
 
   // Test case for combination {2}/Bindex=1:
@@ -73,26 +82,11 @@ method TestsForBinarySearch()
   //   POST Q2: 0 <= index
   //   POST Q3: index < a.Length
   //   POST Q4: a[index] == x
-  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
-  //   ENSURES: index == -1 ==> x !in a[..]
   {
-    var a := new T[2] [-24701, 11724];
-    var x := 11724;
+    var a := new T[2] [-16428, 27285];
+    var x := 27285;
     var index := BinarySearch(a, x);
     expect index == 1;
-  }
-
-  // Test case for combination {1}/O|a|=1:
-  //   PRE:  IsSorted(a[..])
-  //   POST Q1: !(index != -1)
-  //   POST Q2: x !in a[..]
-  //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
-  //   ENSURES: index == -1 ==> x !in a[..]
-  {
-    var a := new T[1] [2];
-    var x := 3;
-    var index := BinarySearch(a, x);
-    expect index == -1;
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-20 22:25:08
+// Generated: 2026-04-21 22:49:29
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -45,9 +45,8 @@ lemma PowerSquareLemma(x: real, n: nat)
 method TestsForFastExponentiation()
 {
   // Test case for combination {1}:
-  //   POST: p == Power(x, n)
-  //   POST: p == 1.0
-  //   ENSURES: p == Power(x, n)
+  //   POST Q1: p == Power(x, n)
+  //   POST Q2: p == 1.0
   {
     var x := 0.0;
     var n := 0;
@@ -56,9 +55,8 @@ method TestsForFastExponentiation()
   }
 
   // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: p == x * Power(x, n - 1)
-  //   ENSURES: p == Power(x, n)
+  //   POST Q1: n != 0
+  //   POST Q2: p == x * Power(x, n - 1)
   {
     var x := 0.0;
     var n := 10;
@@ -67,9 +65,8 @@ method TestsForFastExponentiation()
   }
 
   // Test case for combination {2}/Bn=1:
-  //   POST: !(n == 0)
-  //   POST: p == x * Power(x, n - 1)
-  //   ENSURES: p == Power(x, n)
+  //   POST Q1: n != 0
+  //   POST Q2: p == x * Power(x, n - 1)
   {
     var x := 0.0;
     var n := 1;
@@ -78,9 +75,8 @@ method TestsForFastExponentiation()
   }
 
   // Test case for combination {2}/Bn=2:
-  //   POST: !(n == 0)
-  //   POST: p == x * Power(x, n - 1)
-  //   ENSURES: p == Power(x, n)
+  //   POST Q1: n != 0
+  //   POST Q2: p == x * Power(x, n - 1)
   {
     var x := 0.0;
     var n := 2;

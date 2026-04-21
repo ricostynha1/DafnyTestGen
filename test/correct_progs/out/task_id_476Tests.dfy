@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-04-20 22:31:32
+// Generated: 2026-04-21 22:54:14
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -76,42 +76,38 @@ method TestsForSumMinMax()
 {
   // Test case for combination {1}:
   //   PRE:  a.Length > 0
-  //   POST: sum == Max(a[..]) + Min(a[..])
-  //   ENSURES: sum == Max(a[..]) + Min(a[..])
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-1];
+    var sum := SumMinMax(a);
+    expect sum == -2;
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[2] [-2, -10];
+    var sum := SumMinMax(a);
+    expect sum == -12;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
   {
     var a := new int[1] [-10];
     var sum := SumMinMax(a);
     expect sum == -20;
   }
 
-  // Test case for combination {1}/O|a|>=2:
+  // Test case for combination {1}/R4:
   //   PRE:  a.Length > 0
-  //   POST: sum == Max(a[..]) + Min(a[..])
-  //   ENSURES: sum == Max(a[..]) + Min(a[..])
-  {
-    var a := new int[2] [5, -10];
-    var sum := SumMinMax(a);
-    expect sum == -5;
-  }
-
-  // Test case for combination {1}/R3:
-  //   PRE:  a.Length > 0
-  //   POST: sum == Max(a[..]) + Min(a[..])
-  //   ENSURES: sum == Max(a[..]) + Min(a[..])
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
   {
     var a := new int[1] [-9];
     var sum := SumMinMax(a);
     expect sum == -18;
-  }
-
-  // Test case for combination {1}/R4:
-  //   PRE:  a.Length > 0
-  //   POST: sum == Max(a[..]) + Min(a[..])
-  //   ENSURES: sum == Max(a[..]) + Min(a[..])
-  {
-    var a := new int[1] [-8];
-    var sum := SumMinMax(a);
-    expect sum == -16;
   }
 
 }

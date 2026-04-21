@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-04-20 23:27:56
+// Generated: 2026-04-21 22:49:17
 
 // res.dfy
 
@@ -22,36 +22,29 @@ method TestsForabs()
 {
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: !(x > 0)
-  //   POST: x <= 0
-  //   POST: y == -x
-  //   ENSURES: x > 0 ==> y == x
-  //   ENSURES: x <= 0 ==> y == -x
+  //   POST Q1: x <= 0
+  //   POST Q2: y == -x
   {
     var x := -10;
     var y := abs(x);
+    // actual runtime state: y=-10
     // expect y == 10; // got -10
   }
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {2}:
-  //   POST: x > 0
-  //   POST: y == x
-  //   POST: !(x <= 0)
-  //   ENSURES: x > 0 ==> y == x
-  //   ENSURES: x <= 0 ==> y == -x
+  //   POST Q1: x > 0
+  //   POST Q2: y == x
   {
     var x := 10;
     var y := abs(x);
+    // actual runtime state: y=-10
     // expect y == 10; // got -10
   }
 
   // Test case for combination {1}/Ox=0:
-  //   POST: !(x > 0)
-  //   POST: x <= 0
-  //   POST: y == -x
-  //   ENSURES: x > 0 ==> y == x
-  //   ENSURES: x <= 0 ==> y == -x
+  //   POST Q1: x <= 0
+  //   POST Q2: y == -x
   {
     var x := 0;
     var y := abs(x);
@@ -60,14 +53,12 @@ method TestsForabs()
 
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/R3:
-  //   POST: !(x > 0)
-  //   POST: x <= 0
-  //   POST: y == -x
-  //   ENSURES: x > 0 ==> y == x
-  //   ENSURES: x <= 0 ==> y == -x
+  //   POST Q1: x <= 0
+  //   POST Q2: y == -x
   {
     var x := -9;
     var y := abs(x);
+    // actual runtime state: y=-9
     // expect y == 9; // got -9
   }
 

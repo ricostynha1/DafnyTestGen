@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-20 22:33:41
+// Generated: 2026-04-21 22:55:58
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -44,10 +44,8 @@ method TestsForReverseUptoK()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST Q1: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[2] [9, 9];
     var k := 2;
@@ -57,10 +55,8 @@ method TestsForReverseUptoK()
 
   // Test case for combination {1}/Bk=0:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST Q1: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [9];
     var k := 0;
@@ -70,10 +66,8 @@ method TestsForReverseUptoK()
 
   // Test case for combination {1}/Bk=1:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST Q1: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[1] [9];
     var k := 1;
@@ -83,10 +77,8 @@ method TestsForReverseUptoK()
 
   // Test case for combination {1}/O|s|=0:
   //   PRE:  0 <= k <= s.Length
-  //   POST: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
+  //   POST Q1: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
     var s := new int[0] [];
     var k := 0;

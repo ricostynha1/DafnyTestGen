@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-20 22:35:44
+// Generated: 2026-04-21 22:57:29
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -45,11 +45,9 @@ method TestsForSmallestListLength()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  |s| > 0
-  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: 0 <= (|s| - 1)
-  //   POST: v == |s[0]|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
+  //   POST Q1: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST Q2: 0 <= (|s| - 1)
+  //   POST Q3: v == |s[0]|
   {
     var s: seq<seq<int>> := [[4]];
     var v := SmallestListLength<int>(s);
@@ -58,22 +56,18 @@ method TestsForSmallestListLength()
 
   // Test case for combination {2}/Rel:
   //   PRE:  |s| > 0
-  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
+  //   POST Q1: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST Q2: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[9], [10, 32], [11, 37], [8, 42], [12, 47], [19], [18, 52]];
+    var s: seq<seq<int>> := [[10], [8, 25], [11, 24], [12, 34], [9, 41], [26], [28, 33]];
     var v := SmallestListLength<int>(s);
     expect v == 1;
   }
 
-  // Test case for combination {2}/Bv=0:
+  // Test case for combination {2}/V1:
   //   PRE:  |s| > 0
-  //   POST: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   POST: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
-  //   ENSURES: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
-  //   ENSURES: exists i: int :: 0 <= i < |s| && v == |s[i]|
+  //   POST Q1: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
   {
     var s: seq<seq<int>> := [[], [], [], [], [], [], [], []];
     var v := SmallestListLength<int>(s);

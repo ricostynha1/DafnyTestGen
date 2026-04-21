@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-04-20 22:32:08
+// Generated: 2026-04-21 22:54:41
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.
@@ -50,9 +50,8 @@ method IsSublistTest(){
 method TestsForIsSublist()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [11];
     var t: seq<int> := [11];
@@ -61,9 +60,8 @@ method TestsForIsSublist()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [2];
     var t: seq<int> := [];
@@ -72,9 +70,8 @@ method TestsForIsSublist()
   }
 
   // Test case for combination {1}/O|s|=0:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [];
     var t: seq<int> := [11];
@@ -83,9 +80,8 @@ method TestsForIsSublist()
   }
 
   // Test case for combination {1}/O|s|>=2:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [12, 13];
     var t: seq<int> := [12, 13];
