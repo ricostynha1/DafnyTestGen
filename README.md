@@ -176,7 +176,7 @@ Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or 
 
 ### Per-literal relevance check (disable with `--no-relevance`)
 
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (and so the spec is not really covered).
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (i.e., the literal does not constrain valid ouputs for the selected inputs), and so the spec is not really covered.
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
 

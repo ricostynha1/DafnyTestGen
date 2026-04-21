@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-21 23:13:39
+// Generated: 2026-04-21 23:39:17
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -45,9 +45,9 @@ method TestsForReplaceBlanksWithChar()
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
   {
     var s: seq<char> := [' '];
-    var ch := '~';
+    var ch := '}';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == ['~'];
+    expect v == ['}'];
   }
 
   // Test case for combination {1}/V2:

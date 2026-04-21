@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_145.dfy
 // Method: MaxDifference
-// Generated: 2026-04-21 23:13:24
+// Generated: 2026-04-21 23:38:56
 
 // Finds the maximum difference between any two elements in a non-empty array.
 method MaxDifference(a: array<int>) returns (diff: int)
@@ -53,9 +53,9 @@ method TestsForMaxDifference()
   //   POST Q1: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length && a[i] - a[j] == diff
   //   POST Q2: forall i: int, j: int :: 0 <= i < a.Length && 0 <= j < a.Length ==> a[i] - a[j] <= diff
   {
-    var a := new int[2] [-10, 10];
+    var a := new int[2] [-10, -5];
     var diff := MaxDifference(a);
-    expect diff == 20;
+    expect diff == 5;
   }
 
   // Test case for combination {1}/V2:

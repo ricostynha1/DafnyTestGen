@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-21 23:11:03
+// Generated: 2026-04-21 23:35:55
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -31,7 +31,7 @@ method TestsForFindMaxIndex()
   //   POST Q2: maxIndex < a.Length
   //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[2] [42466.0, 42466.5];
+    var a := new real[2] [53393.0, 53393.5];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 1;
   }
@@ -42,7 +42,7 @@ method TestsForFindMaxIndex()
   //   POST Q2: maxIndex < a.Length
   //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]  // VACUOUS (forced true by other literals for this ins)
   {
-    var a := new real[1] [0.0];
+    var a := new real[1] [17517.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 0;
   }
@@ -53,7 +53,7 @@ method TestsForFindMaxIndex()
   //   POST Q2: maxIndex < a.Length
   //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[3] [0.0, -10154.0, 27667.0];
+    var a := new real[3] [0.0, -29443.0, 17517.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 2;
   }
