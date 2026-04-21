@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-21 22:56:29
+// Generated: 2026-04-21 23:16:49
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -140,10 +140,10 @@ method TestsForrandom()
     var a := -10;
     var b := -9;
     var r := random(a, b);
-    expect r == -9 || r == -10;
+    expect r == -10 || r == -9;
   }
 
-  // Test case for combination {2}/Br=b-1:
+  // Test case for combination {2}/Br=a+1:
   //   POST Q1: a <= b
   //   POST Q2: a <= r
   //   POST Q3: r <= b
@@ -165,7 +165,7 @@ method TestsForswap()
   //   POST Q3: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST Q4: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[4] [57, 58, 10, 9];
+    var a := new int[4] [55, 56, 10, 9];
     var i := 2;
     var j := 3;
     var old_a_j := a[j];
@@ -207,7 +207,7 @@ method TestsForswap()
   //   POST Q3: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST Q4: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [9, 21, 9];
+    var a := new int[3] [10, 24, 9];
     var i := 0;
     var j := 2;
     var old_a_j := a[j];

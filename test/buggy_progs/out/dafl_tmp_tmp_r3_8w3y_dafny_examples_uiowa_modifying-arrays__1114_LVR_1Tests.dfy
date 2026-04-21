@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays__1114_LVR_1.dfy
 // Method: InitArray
-// Generated: 2026-04-21 22:56:21
+// Generated: 2026-04-21 23:16:43
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_modifying-arrays.dfy
 
@@ -119,8 +119,8 @@ method TestsForInitArray()
     var d := 0;
     InitArray<int>(a, d);
     // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6042
-    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6094
+    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_fi2zmsoo1e5\runner.cs:line 6042
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_fi2zmsoo1e5\runner.cs:line 6094
     // expect a[..] == [];
   }
 
@@ -153,8 +153,8 @@ method TestsForInitArray()
     var d := 1;
     InitArray<int>(a, d);
     // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6042
-    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_1qgocsbqazn\runner.cs:line 6163
+    // runtime error: at _module.__default.InitArray[__T](__T[] a, __T d) in C:\cygwin64\tmp\DafnyTestGen_fi2zmsoo1e5\runner.cs:line 6042
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_fi2zmsoo1e5\runner.cs:line 6163
     // expect a[..] == [];
   }
 
@@ -181,9 +181,9 @@ method TestsForIncrementArray()
   // Test case for combination {1}/O|a|>=2:
   //   POST Q1: forall i: int {:trigger old(a[i])} {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[i]) + 1
   {
-    var a := new int[2] [-9, -7];
+    var a := new int[2] [-9, -2];
     IncrementArray(a);
-    expect a[..] == [-8, -6];
+    expect a[..] == [-8, -1];
   }
 
   // Test case for combination {1}/R4:

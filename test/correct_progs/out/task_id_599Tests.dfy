@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-21 22:54:59
+// Generated: 2026-04-21 23:15:59
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)

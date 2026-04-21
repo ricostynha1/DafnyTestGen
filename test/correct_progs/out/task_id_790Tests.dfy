@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_790.dfy
 // Method: IsEvenAtIndexEven
-// Generated: 2026-04-21 22:57:02
+// Generated: 2026-04-21 23:17:41
 
 // Checks if all elements at even indices are even.
 method IsEvenAtIndexEven(s: seq<int>) returns (result: bool)
@@ -45,7 +45,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST Q1: result
   //   POST Q2: forall i: int :: 0 <= i < |s| && IsEven(i) ==> IsEven(s[i])
   {
-    var s: seq<int> := [-10];
+    var s: seq<int> := [8];
     var result := IsEvenAtIndexEven(s);
     expect result == true;
   }
@@ -64,7 +64,7 @@ method TestsForIsEvenAtIndexEven()
   //   POST Q1: !result
   //   POST Q2: exists i :: 1 <= i < (|s| - 1) && IsEven(i) && !IsEven(s[i])
   {
-    var s: seq<int> := [-5, -7, -1, 19, 21501];
+    var s: seq<int> := [-10, -3, -1, 19, 20873];
     var result := IsEvenAtIndexEven(s);
     expect result == false;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_784.dfy
 // Method: ProductFirstEvenOdd
-// Generated: 2026-04-21 22:57:00
+// Generated: 2026-04-21 23:17:40
 
 // Returns the product of the first even and first odd elements in the list.
 // The list must contain at least one even and one odd element.
@@ -97,9 +97,9 @@ method TestsForProductFirstEvenOdd()
   //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST Q1: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [10, -7];
+    var lst: seq<int> := [-10, 4, 7];
     var product := ProductFirstEvenOdd(lst);
-    expect product == -70;
+    expect product == 28 || product == -70;
   }
 
   // Test case for combination P{4}/{1}:
@@ -107,9 +107,9 @@ method TestsForProductFirstEvenOdd()
   //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST Q1: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [-1, 10, 2, -3];
+    var lst: seq<int> := [5, 2, -1];
     var product := ProductFirstEvenOdd(lst);
-    expect product == -10 || product == -2;
+    expect product == 10;
   }
 
   // Test case for combination P{5}/{1}:
@@ -127,9 +127,9 @@ method TestsForProductFirstEvenOdd()
   //   PRE:  exists i: int :: 0 <= i < |lst| && IsOdd(lst[i])
   //   POST Q1: exists i: int, j: int :: 0 <= i < |lst| && IsFirstEven(i, lst) && 0 <= j < |lst| && IsFirstOdd(j, lst) && product == lst[i] * lst[j]
   {
-    var lst: seq<int> := [3, -4];
+    var lst: seq<int> := [9, 2];
     var product := ProductFirstEvenOdd(lst);
-    expect product == -12;
+    expect product == 18;
   }
 
 }
@@ -148,7 +148,7 @@ method TestsForFirstEvenOddIndices()
   //   POST Q7: lst[oddIndex] % 2 != 0
   //   POST Q8: forall i: int {:trigger lst[i]} :: 0 <= i && i < oddIndex ==> lst[i] % 2 == 0
   {
-    var lst: seq<int> := [-10, -5, -9];
+    var lst: seq<int> := [-2, -1, -9];
     expect exists i: int :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i: int :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -168,7 +168,7 @@ method TestsForFirstEvenOddIndices()
   //   POST Q7: lst[oddIndex] % 2 != 0
   //   POST Q8: forall i: int {:trigger lst[i]} :: 0 <= i && i < oddIndex ==> lst[i] % 2 == 0
   {
-    var lst: seq<int> := [-7, 10, -1];
+    var lst: seq<int> := [-9, 4, -1];
     expect exists i: int :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i: int :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -188,7 +188,7 @@ method TestsForFirstEvenOddIndices()
   //   POST Q7: lst[oddIndex] % 2 != 0
   //   POST Q8: forall i: int {:trigger lst[i]} :: 0 <= i && i < oddIndex ==> lst[i] % 2 == 0
   {
-    var lst: seq<int> := [-1, 4, -3, -1];
+    var lst: seq<int> := [-1, 10, -9, 1];
     expect exists i: int :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i: int :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);
@@ -208,7 +208,7 @@ method TestsForFirstEvenOddIndices()
   //   POST Q7: lst[oddIndex] % 2 != 0
   //   POST Q8: forall i: int {:trigger lst[i]} :: 0 <= i && i < oddIndex ==> lst[i] % 2 == 0
   {
-    var lst: seq<int> := [-9, -1, 4];
+    var lst: seq<int> := [-9, -1, 2];
     expect exists i: int :: 0 <= i < |lst| && IsEven(lst[i]); // PRE-CHECK
     expect exists i: int :: 0 <= i < |lst| && IsOdd(lst[i]); // PRE-CHECK
     var evenIndex, oddIndex := FirstEvenOddIndices(lst);

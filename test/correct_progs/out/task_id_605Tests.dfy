@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-21 22:55:14
+// Generated: 2026-04-21 23:16:13
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -73,7 +73,7 @@ method TestsForIsPrime()
   //   POST Q1: result
   //   POST Q2: forall k: int :: 2 <= k < n ==> n % k != 0
   {
-    var n := 5;
+    var n := 7;
     var result := IsPrime(n);
     expect result == true;
   }

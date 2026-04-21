@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-21 22:55:54
+// Generated: 2026-04-21 23:16:47
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -111,7 +111,7 @@ method TestsForMoveZeroesToEnd()
   //   POST Q5: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1])
   //   POST Q6: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
-    var a := new int[4] [9, 7, 10, 0];
+    var a := new int[4] [-1, -8, -10, 0];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz;
@@ -129,7 +129,7 @@ method TestsForMoveZeroesToEnd()
   //   POST Q5: a[..nz] == FilterNZ(old(a[..])[..|old(a[..])| - 1]) + [old(a[..])[|old(a[..])| - 1]]
   //   POST Q6: forall k: int {:trigger a[k]} :: nz <= k && k < a.Length ==> a[k] == 0
   {
-    var a := new int[2] [-9, 9];
+    var a := new int[2] [-9, 6];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz;

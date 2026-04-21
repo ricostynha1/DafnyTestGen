@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_474.dfy
 // Method: ReplaceChars
-// Generated: 2026-04-21 22:54:11
+// Generated: 2026-04-21 23:15:17
 
 // Replace all occurrences of oldChar in string s by newChar 
 // and return the resulting string.
@@ -48,11 +48,11 @@ method TestsForReplaceChars()
   //   POST Q1: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   {
-    var s: seq<char> := ['f'];
-    var oldChar := 'f';
-    var newChar := 'g';
+    var s: seq<char> := ['U'];
+    var oldChar := 'U';
+    var newChar := 'V';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['g'];
+    expect v == ['V'];
   }
 
   // Test case for combination {1}/V2:
@@ -70,11 +70,11 @@ method TestsForReplaceChars()
   //   POST Q1: IsMapSeq(s, v, (c: char) => if c == oldChar then newChar else c)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == oldChar then newChar else s[i]
   {
-    var s: seq<char> := ['}', '}'];
-    var oldChar := '}';
-    var newChar := '~';
+    var s: seq<char> := ['~', '~'];
+    var oldChar := '~';
+    var newChar := 'r';
     var v := ReplaceChars(s, oldChar, newChar);
-    expect v == ['~', '~'];
+    expect v == ['r', 'r'];
   }
 
   // Test case for combination {1}/O|s|=0/R2:

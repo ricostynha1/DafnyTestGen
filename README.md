@@ -204,7 +204,7 @@ DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it c
 - **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
 
-For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the chosen index to actually hold `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
+For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least on value different from  `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
 var arr := new int[4] [-10, -10, -10, -9];
@@ -213,7 +213,7 @@ var pos := LastPosition(arr, elem);
 expect pos == 2;     // LAST occurrence of -10 (index 2), not the earlier ones at 0, 1
 ```
 
-Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis.
+Corner cases such as vacuously-true clauses are covered by per-literal vacuity check or by Boundary Value Analysis.
 
 **Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyTestGen classifies a literal `Qk` as safe iff:
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-04-21 22:55:57
+// Generated: 2026-04-21 23:16:20
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -315,9 +315,9 @@ method TestsForGetInsertIndex()
   //   POST Q5: a[idx - 1] < x
   //   POST Q6: idx >= limit
   {
-    var a := new int[2] [-10, 3];
+    var a := new int[2] [-10, 5];
     var limit := 2;
-    var x := 5;
+    var x := 7;
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 2;
   }
@@ -334,9 +334,9 @@ method TestsForGetInsertIndex()
   //   POST Q6: idx < limit
   //   POST Q7: x < a[idx]
   {
-    var a := new int[3] [-10, 2, 10];
+    var a := new int[3] [-8, -7, -5];
     var limit := 3;
-    var x := 3;
+    var x := -6;
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 2;
   }
@@ -351,9 +351,9 @@ method TestsForGetInsertIndex()
   //   POST Q4: idx <= 0
   //   POST Q5: idx >= limit
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [-10];
     var limit := 0;
-    var x := -10;
+    var x := -9;
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 0;
   }
@@ -369,9 +369,9 @@ method TestsForGetInsertIndex()
   //   POST Q5: idx < limit
   //   POST Q6: x < a[idx]
   {
-    var a := new int[2] [-7, -6];
+    var a := new int[2] [-3, 3];
     var limit := 2;
-    var x := -8;
+    var x := -4;
     var idx := GetInsertIndex(a, limit, x);
     expect idx == 0;
   }
@@ -394,19 +394,18 @@ method TestsForInsertIntoSorted()
   //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
   //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
   {
-    var a := new int[6] [7, 9, 10, 13, 0, 0];
-    var limit := 4;
-    var key := 2;
+    var a := new int[7] [5, 7, 10, 0, 0, 0, 0];
+    var limit := 3;
+    var key := 8;
     var b := InsertIntoSorted(a, limit, key);
-    // actual runtime state: b=[7, 9, 10, 13, 2, 0]
-    // expect b.Length == a.Length; // LHS=6, RHS=6
+    // actual runtime state: b=[5, 7, 10, 8, 0, 0, 0]
+    // expect b.Length == a.Length; // LHS=7, RHS=7
     // expect sorted(b[..limit + 1]); // got false
     // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
     // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
     // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
   }
 
-  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/V3:
   //   PRE:  key > 0
   //   PRE:  key !in a[..]
@@ -420,16 +419,16 @@ method TestsForInsertIntoSorted()
   //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
   //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
   {
-    var a := new int[4] [3, 4, 9, 0];
+    var a := new int[4] [3, 4, 6, 0];
     var limit := 3;
-    var key := 7;
+    var key := 10;
     var b := InsertIntoSorted(a, limit, key);
-    // actual runtime state: b=[3, 4, 9, 7]
-    // expect b.Length == a.Length; // LHS=4, RHS=4
-    // expect sorted(b[..limit + 1]); // got false
-    // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
-    // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
-    // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b[..] == [3, 4, 6, 10]; // observed from implementation
   }
 
   // Test case for combination {1}/Blimit=0:

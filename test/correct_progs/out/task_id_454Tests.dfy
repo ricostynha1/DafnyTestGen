@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_454.dfy
 // Method: ContainsZ
-// Generated: 2026-04-21 22:53:56
+// Generated: 2026-04-21 23:15:04
 
 // Checks if a string contains the letter 'z' or 'Z'
 method ContainsZ(s: string) returns (result: bool)
@@ -68,7 +68,7 @@ method TestsForContainsZ()
   //   POST Q1: result
   //   POST Q2: 'z' in s
   {
-    var s: seq<char> := ['~', 'z'];
+    var s: seq<char> := ['y', 'z'];
     var result := ContainsZ(s);
     expect result == true;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-04-21 22:56:28
+// Generated: 2026-04-21 23:17:12
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -72,7 +72,7 @@ method TestsForIsMinHeap()
   //   POST Q1: !result
   //   POST Q2: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[6] [-9, 4, -10, -14384, 3, -11];
+    var a := new int[6] [-9, 2, -10, 1, 1, -11];
     var result := IsMinHeap(a);
     expect result == false;
   }

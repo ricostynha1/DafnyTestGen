@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
 // Method: BubbleSort
-// Generated: 2026-04-21 22:56:17
+// Generated: 2026-04-21 23:16:40
 
 // CS494-final-project_tmp_tmp7nof55uq_bubblesort.dfy
 
@@ -66,9 +66,9 @@ method TestsForBubbleSort()
   //   POST Q1: sorted(a, 0, a.Length)
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [-7, -10, -7];
+    var a := new int[3] [-7, 10, -10];
     BubbleSort(a);
-    // expect a[..] == [-10, -7, -7]; // LHS=[-7, -10, -7], RHS=[-10, -7, -7]
+    // expect a[..] == [-10, -7, 10]; // LHS=[-7, 10, -10], RHS=[-10, -7, 10]
   }
 
   // Test case for combination {1}/V1:
@@ -76,9 +76,9 @@ method TestsForBubbleSort()
   //   POST Q1: sorted(a, 0, a.Length)  // VACUOUS (forced true by other literals for this ins)
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [-2];
+    var a := new int[1] [-9];
     BubbleSort(a);
-    expect a[..] == [-2];
+    expect a[..] == [-9];
   }
 
 }

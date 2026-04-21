@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-21 22:56:18
+// Generated: 2026-04-21 23:17:05
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -49,7 +49,7 @@ method TestsForFindFirstOccurrence()
   //   POST Q4: arr[index] == target
   //   POST Q5: target !in arr[..index]
   {
-    var arr := new int[4] [-10, -2, -1, -1];
+    var arr := new int[4] [-10, -10, -1, -1];
     var target := -1;
     var index := FindFirstOccurrence(arr, target);
     expect index == 2;
@@ -60,7 +60,7 @@ method TestsForFindFirstOccurrence()
   //   POST Q1: target !in arr[..]
   //   POST Q2: index == -1
   {
-    var arr := new int[1] [-2];
+    var arr := new int[1] [-3];
     var target := -10;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
@@ -88,8 +88,8 @@ method TestsForFindFirstOccurrence()
   //   POST Q4: arr[index] == target
   //   POST Q5: target !in arr[..index]
   {
-    var arr := new int[2] [3, 10];
-    var target := 10;
+    var arr := new int[2] [8, 9];
+    var target := 9;
     var index := FindFirstOccurrence(arr, target);
     expect index == 1;
   }
