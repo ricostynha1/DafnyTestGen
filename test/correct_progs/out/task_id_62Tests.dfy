@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_62.dfy
 // Method: FindSmallest
-// Generated: 2026-04-20 22:12:08
+// Generated: 2026-04-20 22:33:09
 
 // Find the smallest number (minimum) in a non-empty array of integers.
 method FindSmallest(s: array<int>) returns (min: int)
@@ -52,9 +52,9 @@ method TestsForFindSmallest()
   //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
-    var s := new int[2] [-4, -5];
+    var s := new int[2] [-7, -9];
     var min := FindSmallest(s);
-    expect min == -5;
+    expect min == -9;
   }
 
   // Test case for combination {1}/O|s|=1:
@@ -74,7 +74,7 @@ method TestsForFindSmallest()
   //   POST: forall k: int {:trigger s[..][k]} :: 0 <= k && k < |s[..]| ==> min <= s[..][k]
   //   ENSURES: isMin(s[..], min)
   {
-    var s := new int[4] [2, 9, 5, 0];
+    var s := new int[4] [2, 5, 9, 0];
     var min := FindSmallest(s);
     expect min == 0;
   }

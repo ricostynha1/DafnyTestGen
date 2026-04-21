@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-20 22:29:37
+// Generated: 2026-04-20 23:31:25
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -173,7 +173,7 @@ method TestsForswap()
   //   ENSURES: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[4] [56, 57, 10, 9];
+    var a := new int[4] [55, 56, 10, 9];
     var i := 2;
     var j := 3;
     var old_a_j := a[j];
@@ -185,7 +185,7 @@ method TestsForswap()
     expect a[j] == old_a_i;
     expect forall m: int  :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
     expect multiset(a[..]) == old_multiset_a;
-    expect old_multiset_a == multiset{9, 10, 56, 57}; // observed from implementation
+    expect old_multiset_a == multiset{9, 10, 55, 56}; // observed from implementation
   }
 
   // Test case for combination {1}/Bi=0:

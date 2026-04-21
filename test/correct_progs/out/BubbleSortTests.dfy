@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-04-20 22:05:58
+// Generated: 2026-04-21 10:56:32
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -66,7 +66,10 @@ method TestsForBubbleSort()
   {
     var a := new int[2] [10, 9];
     BubbleSort(a);
-    expect a[..] == [9, 10];
+    if (!(a[..] == [9, 10])) {
+      print "FAIL: expected a[..] == [9, 10]; got LHS=", a[..], ", RHS=", [9, 10], "\n";
+      expect false;
+    }
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -77,7 +80,10 @@ method TestsForBubbleSort()
   {
     var a := new int[0] [];
     BubbleSort(a);
-    expect a[..] == [];
+    if (!(a[..] == [])) {
+      print "FAIL: expected a[..] == []; got LHS=", a[..], ", RHS=", [], "\n";
+      expect false;
+    }
   }
 
   // Test case for combination {1}/O|a|=1:
@@ -86,9 +92,12 @@ method TestsForBubbleSort()
   //   ENSURES: IsSorted(a[..])
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [2];
     BubbleSort(a);
-    expect a[..] == [-1];
+    if (!(a[..] == [2])) {
+      print "FAIL: expected a[..] == [2]; got LHS=", a[..], ", RHS=", [2], "\n";
+      expect false;
+    }
   }
 
 }
@@ -98,3 +107,4 @@ method Main()
   TestsForBubbleSort();
   print "TestsForBubbleSort: all non-failing tests passed!\n";
 }
+

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-04-20 22:29:15
+// Generated: 2026-04-20 23:31:06
 
 // Clover_longest_prefix.dfy
 
@@ -37,10 +37,10 @@ method TestsForLongestCommonPrefix()
   //   ENSURES: |prefix| <= |str1| && prefix == str1[0 .. |prefix|] && |prefix| <= |str2| && prefix == str2[0 .. |prefix|]
   //   ENSURES: |prefix| == |str1| || |prefix| == |str2| || str1[|prefix|] != str2[|prefix|]
   {
-    var str1: seq<char> := ['q', '\U{005C}', '>', 'W', '~'];
-    var str2: seq<char> := ['q', '\U{005C}', '?', 'V', '}'];
+    var str1: seq<char> := ['j', ':', 'm', '>', '~'];
+    var str2: seq<char> := ['j', ':', 'n', '=', '}'];
     var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == ['q', '\U{005C}'];
+    expect prefix == ['j', ':'];
   }
 
   // Test case for combination {1}:

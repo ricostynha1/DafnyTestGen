@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-20 22:09:22
+// Generated: 2026-04-20 22:29:13
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -46,9 +46,9 @@ method TestsForReplaceBlanksWithChar()
   //   ENSURES: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
   {
     var s: seq<char> := [' '];
-    var ch := '~';
+    var ch := '}';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == ['~'];
+    expect v == ['}'];
   }
 
   // Test case for combination {1}/O|s|=0:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_728.dfy
 // Method: ElementWiseAddition
-// Generated: 2026-04-20 22:12:38
+// Generated: 2026-04-20 22:33:54
 
 // Adds two lists element wise and returns the resulting list.
 method ElementWiseAddition(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -40,10 +40,10 @@ method TestsForElementWiseAddition()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [2];
+    var a: seq<int> := [10];
     var b: seq<int> := [-1];
     var result := ElementWiseAddition(a, b);
-    expect result == [1];
+    expect result == [9];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -66,10 +66,10 @@ method TestsForElementWiseAddition()
   //   ENSURES: |result| == |a|
   //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [10, 3];
-    var b: seq<int> := [-1, 8];
+    var a: seq<int> := [10, -10];
+    var b: seq<int> := [9, 7];
     var result := ElementWiseAddition(a, b);
-    expect result == [9, 11];
+    expect result == [19, -3];
   }
 
 }

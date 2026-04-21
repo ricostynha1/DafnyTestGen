@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\ArrayTupleOps.dfy
 // Method: FirstPair
-// Generated: 2026-04-20 22:05:50
+// Generated: 2026-04-20 22:24:20
 
 // Simple methods with array<(int, int)> and seq<(int, int)> parameters
 
@@ -101,9 +101,9 @@ method TestsForMaxFirst()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[4] [(-30141, 30), (37468, 31), (37469, 32), (37467, 33)];
+    var a := new (int, int)[4] [(-19223, 30), (10198, 31), (10199, 32), (-3421, 33)];
     var r := MaxFirst(a);
-    expect r == 37469;
+    expect r == 10199;
   }
 
   // Test case for combination {1}/Or=0:
@@ -127,9 +127,9 @@ method TestsForMaxFirst()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[2] [(-15321, 14), (-15321, 15)];
+    var a := new (int, int)[2] [(-16949, 14), (-16949, 15)];
     var r := MaxFirst(a);
-    expect r == -15321;
+    expect r == -16949;
   }
 
   // Test case for combination {2}/Or=0:
@@ -139,7 +139,7 @@ method TestsForMaxFirst()
   //   ENSURES: exists i: int :: 0 <= i < a.Length && r == a[i].0
   //   ENSURES: forall i: int :: 0 <= i < a.Length ==> r >= a[i].0
   {
-    var a := new (int, int)[3] [(-15320, 21), (0, 22), (-2749, 23)];
+    var a := new (int, int)[3] [(-16948, 21), (0, 22), (-20927, 23)];
     var r := MaxFirst(a);
     expect r == 0;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BinarySearch.dfy
 // Method: BinarySearch
-// Generated: 2026-04-20 22:05:55
+// Generated: 2026-04-21 10:56:23
 
 /*  
 * Formal verification of the binary search algorithm in Dafny. 
@@ -50,7 +50,10 @@ method TestsForBinarySearch()
     var a := new T[0] [];
     var x := 8;
     var index := BinarySearch(a, x);
-    expect index == -1;
+    if (!(index == -1)) {
+      print "FAIL: expected index == -1; got LHS=", index, ", RHS=", -1, "\n";
+      expect false;
+    }
   }
 
   // Test case for combination {2}:
@@ -66,7 +69,10 @@ method TestsForBinarySearch()
     var a := new T[1] [17];
     var x := 17;
     var index := BinarySearch(a, x);
-    expect index == 0;
+    if (!(index == 0)) {
+      print "FAIL: expected index == 0; got LHS=", index, ", RHS=", 0, "\n";
+      expect false;
+    }
   }
 
   // Test case for combination {2}/Bindex=1:
@@ -79,10 +85,13 @@ method TestsForBinarySearch()
   //   ENSURES: index != -1 ==> 0 <= index < a.Length && a[index] == x
   //   ENSURES: index == -1 ==> x !in a[..]
   {
-    var a := new T[2] [-18873, 22868];
-    var x := 22868;
+    var a := new T[2] [-3299, 14822];
+    var x := 14822;
     var index := BinarySearch(a, x);
-    expect index == 1;
+    if (!(index == 1)) {
+      print "FAIL: expected index == 1; got LHS=", index, ", RHS=", 1, "\n";
+      expect false;
+    }
   }
 
   // Test case for combination {1}/O|a|=1:
@@ -96,7 +105,10 @@ method TestsForBinarySearch()
     var a := new T[1] [2];
     var x := 3;
     var index := BinarySearch(a, x);
-    expect index == -1;
+    if (!(index == -1)) {
+      print "FAIL: expected index == -1; got LHS=", index, ", RHS=", -1, "\n";
+      expect false;
+    }
   }
 
 }
@@ -106,3 +118,4 @@ method Main()
   TestsForBinarySearch();
   print "TestsForBinarySearch: all non-failing tests passed!\n";
 }
+

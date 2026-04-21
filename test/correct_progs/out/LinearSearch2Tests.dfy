@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LinearSearch2.dfy
 // Method: LinearSearch
-// Generated: 2026-04-20 22:06:53
+// Generated: 2026-04-20 22:25:59
 
 // Searches for a value 'x' in an array 'a' and returns an index 
 // where x occurs, or -1 if not found. 
@@ -33,7 +33,7 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[2] [-1, 10];
+    var a := new int[2] [-1, 7];
     var x := -1;
     var index := LinearSearch(a, x);
     expect index == 0;
@@ -46,8 +46,8 @@ method TestsForLinearSearch()
   //   POST: a[index] == x
   //   ENSURES: if exists k: int :: 0 <= k < a.Length && a[k] == x then 0 <= index < a.Length && a[index] == x else index == -1
   {
-    var a := new int[3] [-1, -9, -10];
-    var x := -9;
+    var a := new int[3] [5, 4, -10];
+    var x := 4;
     var index := LinearSearch(a, x);
     expect index == 1;
   }

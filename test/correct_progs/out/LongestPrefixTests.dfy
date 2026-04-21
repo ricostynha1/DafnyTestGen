@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-20 22:07:00
+// Generated: 2026-04-20 22:26:07
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 
@@ -33,8 +33,8 @@ method TestsForLongestPrefix()
   //   ENSURES: a[..i] == b[..i]
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
-    var a := new int[2] [-10, -5];
-    var b := new int[2] [-10, -4];
+    var a := new int[2] [-10, -2];
+    var b := new int[2] [-10, -1];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
@@ -48,8 +48,8 @@ method TestsForLongestPrefix()
   //   ENSURES: a[..i] == b[..i]
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
-    var a := new int[1] [9];
-    var b := new int[1] [9];
+    var a := new int[1] [-10];
+    var b := new int[1] [-10];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
@@ -64,8 +64,8 @@ method TestsForLongestPrefix()
   //   ENSURES: a[..i] == b[..i]
   //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
   {
-    var a := new int[2] [9, 8];
-    var b := new int[1] [9];
+    var a := new int[2] [8, 4];
+    var b := new int[1] [8];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }

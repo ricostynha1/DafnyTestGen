@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_424.dfy
 // Method: ExtractRearChars
-// Generated: 2026-04-20 22:10:32
+// Generated: 2026-04-20 22:30:30
 
 // Returns a sequence with the last character of each string in the input list.
 method ExtractRearChars(l: seq<string>) returns (r: seq<char>)
@@ -49,9 +49,9 @@ method TestsForExtractRearChars()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
-    var l: seq<string> := ["~"];
+    var l: seq<string> := ["|"];
     var r := ExtractRearChars(l);
-    expect r == ['~'];
+    expect r == ['|'];
   }
 
   // Test case for combination {1}/O|l|=0:
@@ -73,9 +73,9 @@ method TestsForExtractRearChars()
   //   ENSURES: |r| == |l|
   //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == Last(l[i])
   {
-    var l: seq<string> := ["~", "~"];
+    var l: seq<string> := ["d", "d"];
     var r := ExtractRearChars(l);
-    expect r == ['~', '~'];
+    expect r == ['d', 'd'];
   }
 
 }

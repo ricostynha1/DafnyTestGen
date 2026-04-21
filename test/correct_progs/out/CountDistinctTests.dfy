@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-04-20 22:06:12
+// Generated: 2026-04-20 22:24:53
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -70,7 +70,7 @@ method TestsForCountDistinct()
   //   POST: count == |AsSet(a)|
   //   ENSURES: count == |AsSet(a)|
   {
-    var a := new int[2] [-4, -4];
+    var a := new int[2] [-5, -5];
     var count := CountDistinct(a);
     expect count == 1;
   }

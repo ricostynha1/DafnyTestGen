@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_282.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-20 22:09:54
+// Generated: 2026-04-20 22:29:43
 
 // Obtains the element-wise subtraction of two arrays of integers of equal length.
 method ElementWiseSubtraction(a: array<int>, b: array<int>) returns (result: array<int>)
@@ -43,8 +43,8 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[1] [-1];
-    var b := new int[1] [-4];
+    var a := new int[1] [-5];
+    var b := new int[1] [-8];
     var result := ElementWiseSubtraction(a, b);
     expect result[..] == [3];
   }
@@ -69,10 +69,10 @@ method TestsForElementWiseSubtraction()
   //   ENSURES: result.Length == a.Length
   //   ENSURES: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] - b[i]
   {
-    var a := new int[2] [-1, -9];
-    var b := new int[2] [2, -4];
+    var a := new int[2] [-1, -7];
+    var b := new int[2] [8, 8];
     var result := ElementWiseSubtraction(a, b);
-    expect result[..] == [-3, -5];
+    expect result[..] == [-9, -15];
   }
 
 }

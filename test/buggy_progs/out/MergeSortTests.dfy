@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
-// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
+// Source: c:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-21 08:51:57
+// Generated: 2026-04-21 15:43:32
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
@@ -230,8 +230,11 @@ method TestsForMergeSort()
   //   POST: multiset(a[..]) == multiset(b[..])
   //   ENSURES: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
-    var a := new int[2] [2, 9];
+    var a := new int[2] [2, 10];
     var b := MergeSort(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\Users\jpf\AppData\Local\Temp\DafnyTestGen_nu5pgwumu0m\runner.cs:line 6208
+    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\Users\jpf\AppData\Local\Temp\DafnyTestGen_nu5pgwumu0m\runner.cs:line 6195
     // expect b.Length == a.Length;
     // expect Sorted(b[..]);
     // expect multiset(a[..]) == multiset(b[..]);
@@ -277,10 +280,13 @@ method TestsForMerge()
   //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[2] [-3, 8];
-    var c := new int[1] [-3];
-    var d := new int[1] [-2];
+    var b := new int[2] [2, 4];
+    var c := new int[1] [2];
+    var d := new int[1] [3];
     Merge(b, c, d);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\Users\jpf\AppData\Local\Temp\DafnyTestGen_nu5pgwumu0m\runner.cs:line 6208
+    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\Users\jpf\AppData\Local\Temp\DafnyTestGen_nu5pgwumu0m\runner.cs:line 6195
     // expect Sorted(b[..]);
     // expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
@@ -313,6 +319,7 @@ method TestsForMerge()
     Merge(b, c, d);
     expect Sorted(b[..]);
     expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    expect b[..] == [10]; // observed from implementation
   }
 
   // Test case for combination {1}/O|c|>=2:
@@ -322,12 +329,13 @@ method TestsForMerge()
   //   POST: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   //   ENSURES: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[3] [-1, -7, -8];
-    var c := new int[2] [-10, 10];
-    var d := new int[1] [-5];
+    var b := new int[3] [-3, -2, -10];
+    var c := new int[2] [-2, 10];
+    var d := new int[1] [-10];
     Merge(b, c, d);
     expect Sorted(b[..]);
     expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    expect b[..] == [-10, -2, 10]; // observed from implementation
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CS494-final-project_tmp_tmp7nof55uq_bubblesort__2124_ROR_Eq.dfy
 // Method: BubbleSort
-// Generated: 2026-04-20 22:29:24
+// Generated: 2026-04-20 23:31:14
 
 // CS494-final-project_tmp_tmp7nof55uq_bubblesort.dfy
 
@@ -68,9 +68,9 @@ method TestsForBubbleSort()
   //   ENSURES: sorted(a, 0, a.Length)
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [9, 5, 9];
+    var a := new int[3] [8, 10, 8];
     BubbleSort(a);
-    // expect a[..] == [5, 9, 9];
+    // expect a[..] == [8, 8, 10];
   }
 
   // Test case for combination {1}/O|a|=1:
@@ -80,9 +80,9 @@ method TestsForBubbleSort()
   //   ENSURES: sorted(a, 0, a.Length)
   //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [2];
     BubbleSort(a);
-    expect a[..] == [-1];
+    expect a[..] == [2];
   }
 
 }

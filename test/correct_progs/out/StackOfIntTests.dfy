@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-20 22:08:39
+// Generated: 2026-04-20 22:28:14
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -96,9 +96,9 @@ method TestsForpush()
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := -10;
-    obj.elems[1] := -2;
-    obj.elems[2] := -7;
-    var x := 2;
+    obj.elems[1] := -1;
+    obj.elems[2] := -6;
+    var x := -1;
     obj.push(x);
     expect obj.Valid();
   }
@@ -116,7 +116,7 @@ method TestsForpush()
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 0;
-    obj.elems[0] := 10;
+    obj.elems[0] := -1;
     obj.elems[1] := -10;
     var x := -10;
     obj.push(x);
@@ -138,7 +138,7 @@ method TestsForpush()
     obj.size := 1;
     obj.elems[0] := -10;
     obj.elems[1] := -1;
-    var x := -1;
+    var x := 2;
     obj.push(x);
     expect obj.Valid();
   }
@@ -176,8 +176,8 @@ method TestsFortop()
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
-    obj.elems[0] := -1;
-    obj.elems[1] := -10;
+    obj.elems[0] := 10;
+    obj.elems[1] := 6;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
   }
@@ -193,7 +193,7 @@ method TestsFortop()
     var obj := new StackOfInt(capacity);
     obj.size := 1;
     obj.elems[0] := -10;
-    obj.elems[1] := -5;
+    obj.elems[1] := -1;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
   }
@@ -224,7 +224,7 @@ method TestsFortop()
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := -9;
-    obj.elems[1] := -6;
+    obj.elems[1] := 7;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
   }
@@ -246,8 +246,8 @@ method TestsForpop()
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
-    obj.elems[0] := -1;
-    obj.elems[1] := -10;
+    obj.elems[0] := 4;
+    obj.elems[1] := 6;
     obj.pop();
     expect obj.Valid();
   }
@@ -266,7 +266,7 @@ method TestsForpop()
     var obj := new StackOfInt(capacity);
     obj.size := 1;
     obj.elems[0] := -10;
-    obj.elems[1] := 9;
+    obj.elems[1] := 6;
     obj.pop();
     expect obj.Valid();
   }
@@ -302,8 +302,8 @@ method TestsForpop()
     var capacity := 10;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
-    obj.elems[0] := -2;
-    obj.elems[1] := 8;
+    obj.elems[0] := -9;
+    obj.elems[1] := 7;
     obj.pop();
     expect obj.Valid();
   }

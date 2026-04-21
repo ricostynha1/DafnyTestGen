@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-04-20 22:13:07
+// Generated: 2026-04-20 22:34:35
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -40,7 +40,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST: forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[1] [-10];
+    var a := new int[1] [10];
     var result := IsOddAtIndexOdd(a);
     expect result == true;
   }
@@ -50,7 +50,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && IsOdd(i) && !IsOdd(a[i])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[3] [-7, -10, -3];
+    var a := new int[3] [-6, -10, -4];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }
@@ -61,7 +61,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST: IsOdd((a.Length - 1)) && !IsOdd(a[(a.Length - 1)])
   //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length && IsOdd(i) ==> IsOdd(a[i])
   {
-    var a := new int[2] [-10, 8];
+    var a := new int[2] [-2, 6];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }

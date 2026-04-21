@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-04-20 22:11:18
+// Generated: 2026-04-20 22:31:40
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -104,9 +104,9 @@ method TestsForSumCubes()
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
-    var n := 3;
+    var n := 10;
     var s := SumCubes(n);
-    expect s == 36;
+    expect s == 3025;
   }
 
   // Test case for combination {1}/Bn=0:
@@ -131,9 +131,9 @@ method TestsForSumCubes()
   //   POST: s == n * n * (n + 1) * (n + 1) / 4
   //   ENSURES: s == n * n * (n + 1) * (n + 1) / 4
   {
-    var n := 2;
+    var n := 9;
     var s := SumCubes(n);
-    expect s == 9;
+    expect s == 2025;
   }
 
 }

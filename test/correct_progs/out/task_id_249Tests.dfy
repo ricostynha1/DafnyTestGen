@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_249.dfy
 // Method: Intersection
-// Generated: 2026-04-20 22:09:30
+// Generated: 2026-04-20 22:29:20
 
 // Returns a sequence with elements that belong to both arrays, without duplicates.
 // The result follows the ordering of elements in the first array.
@@ -67,10 +67,10 @@ method TestsForIntersection()
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> res[p] != res[q]
   //   ENSURES: forall p: int, q: int :: 0 <= p < q < |res| ==> exists i: int, j: int :: 0 <= i < j < a.Length && a[i] == res[p] && a[j] == res[q]
   {
-    var a := new int[5] [42, 42, 67, 89, 66];
-    var b := new int[2] [42, 66];
+    var a := new int[6] [87, 33, 87, 134, 134, 74];
+    var b := new int[4] [74, 75, 91, 134];
     var res := Intersection<int>(a, b);
-    expect res == [42, 66];
+    expect res == [134, 74];
   }
 
   // Test case for combination {1}/O|a|=0:

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_804.dfy
 // Method: ContainsEvenNumber
-// Generated: 2026-04-20 22:13:40
+// Generated: 2026-04-20 22:35:26
 
 // Checks if an array contains an even number.
 method ContainsEvenNumber(a: array<int>) returns (result: bool)
@@ -58,7 +58,7 @@ method TestsForContainsEvenNumber()
   //   POST: exists i :: 1 <= i < (a.Length - 1) && IsEven(a[i])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[3] [-2, -10, -1];
+    var a := new int[3] [-10, -2, -1];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }
@@ -79,7 +79,7 @@ method TestsForContainsEvenNumber()
   //   POST: IsEven(a[(a.Length - 1)])
   //   ENSURES: result <==> exists i: int :: 0 <= i < a.Length && IsEven(a[i])
   {
-    var a := new int[2] [-6, -10];
+    var a := new int[2] [-5, -10];
     var result := ContainsEvenNumber(a);
     expect result == true;
   }
