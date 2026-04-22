@@ -645,6 +645,15 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 - **`iset<T>`, `imap<K,V>` as input parameters**. These types work fine as *return* types when inputs are supported — the postcondition is used as a runtime `expect`.
 - **Variable-indexed sequence slices in contracts** (e.g., `multiset(b[..i+j])`) — the tool falls back to **precondition-only test generation**: inputs are generated satisfying only preconditions (with boundary analysis for diversity), and the full postconditions are checked at runtime via `expect`.
 
+### Automatically skipped
+
+At method discovery time, DafnyTestGen skips:
+
+- **Ghost methods** (`ghost method …`) and **lemmas** — not intended to be compiled/executed.
+- **Methods without `ensures` clauses** — there's no postcondition to check at runtime. This also excludes `Main`, test drivers, and unspec'd helpers.
+- **Methods with `test`/`Test` in the name** — assumed to be existing test drivers.
+- **Verifier-style methods using havoc (`x := *`, `x, y := *, *`)** — these are proof encodings (typically havoc + `assume` invariant + one-iteration + `assume false` to replace a `while` loop during verification). Dafny's compiler treats `*` as a no-op at runtime, so the compiled code diverges from the spec and every test would be a false-positive failure. A message like `Skipping 1 verifier-style method(s) using havoc (:= *): bar` is printed during discovery. The fix in the source: rewrite the proof encoding as an actual `while` loop, or mark the method as `ghost method` / `lemma`.
+
 ### Supported with limitations
 
 - **Complex quantifier nesting** may cause Z3 timeouts (5-second limit per query); a per-method timeout (default 60s, `--timeout`) prevents indefinite hangs.
