@@ -198,11 +198,18 @@ pre(X)
 ∧ Q1(X, Y_k) ∧ ... ∧ ¬Qk(X, Y_k) ∧ ... ∧ Qm(X, Y_k)        // clause minus Qk, with ¬Qk
 ```
 
-DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space.
+DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a query involving shadow output blocks. Three modes are available (`--relevance-mode`):
 
-- **SAT** → every `Qk ∈ S` is simultaneously relevant at these inputs. Emit `Y` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
-- **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
+- **`combined`** — one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space simultaneously (strictest). On UNSAT, fall back to the single-literal formulation using only the last safe index.
+- **`group`** — a single shadow output block `Y_G` satisfying the non-safe literals and `¬(⋀_{k ∈ S} Qk)` (weakest). Z3 only needs *some* `Qk ∈ S` to fail on `Y_G`, so UNSAT here means the cluster `S` is collectively implied by the guards — i.e., the clause is genuinely redundant. More SAT-prone than `combined`.
+- **`ladder`** (default) — try `combined` first; on UNSAT fall back to `group`. This strictly dominates pure `group`: when `combined` is SAT the witness `X` is richer (every safe literal is individually cuttable), and when `combined` is UNSAT `group` still recovers a collectively-relevant witness instead of giving up.
+
+Regardless of mode:
+
+- **SAT** → emit `Y` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
+
+A concrete example where `ladder` matters: `LongestCommonPrefix(str1, str2)` has a DNF clause `|prefix|=|str1| ∧ prefix=str1[0..|prefix|] ∧ |prefix|≤|str2| ∧ prefix=str2[0..|prefix|]`. Under `combined`, the shadow block for `prefix=str2[0..|prefix|]` is UNSAT (given the other three literals, `prefix` is forced to equal `str2[0..|prefix|]` anyway), so pure combined falls through to the plain query which picks the degenerate `str1=[]`. Under `group`, the disjunction `¬(Q2 ∧ Q4)` is satisfiable when `str1=[a]` and `str2=[a]`, forcing a non-degenerate witness. `ladder` gets the non-degenerate witness for free.
 
 For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least on value different from  `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
@@ -724,6 +731,7 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
+| `--relevance-mode <m>` | | Phase 1r shadow-block strategy: `combined` (per-literal shadow blocks, strictest), `group` (single shadow block with ¬(⋀ safe Qk), weakest), or `ladder` (default: combined then fall back to group on UNSAT — strictly dominates group) |
 | `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v). For each safe clause literal `Qk`, CEGIS searches for ins where `Qk` is vacuously satisfied (other literals force it true). Emits `{clause}/V{k+1}` tests. Default OFF |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
