@@ -571,7 +571,7 @@ static class TestValidator
                     bool isArray = arrayLocals.Contains(name)
                         || (arrayOutputNames != null && arrayOutputNames.Contains(name));
                     if (stringOutputNames != null && stringOutputNames.Contains(name))
-                        outSb.AppendLine($"{indent}print \"OUT:{testId}:{name}=[\"; for i := 0 to |{name}| {{ if i > 0 {{ print \", \"; }} print \"'\", [{name}[i]], \"'\"; }} print \"]\\n\";");
+                        outSb.AppendLine($"{indent}print \"OUT:{testId}:{name}=[\"; for i := 0 to |{name}| {{ if i > 0 {{ print \", \"; }} if {name}[i] == '\\'' {{ print \"'\\\\''\"; }} else if {name}[i] == '\\\\' {{ print \"'\\\\\\\\'\"; }} else {{ print \"'\", [{name}[i]], \"'\"; }} }} print \"]\\n\";");
                     else if (isArray)
                         outSb.AppendLine($"{indent}print \"OUT:{testId}:{name}=\", {name}[..], \"\\n\";");
                     else
@@ -802,11 +802,13 @@ static class TestValidator
         return $"{indent}print \"EXV:{testId}:{expectIdx}:COND=\", ({expr}), \"\\n\";\n";
     }
 
-    /// <summary>True for Dafny collection literals whose type cannot be inferred without context.</summary>
+    /// <summary>True for Dafny collection literals whose type cannot be inferred without context.
+    /// Catches bare empty displays (`[]`, `{}`, `multiset{}`, `map[]`) and nested-empty wrappers
+    /// (`[[]]`, `[{}]`, `{[]}`, …) where no concrete value anywhere fixes the element type.</summary>
     static bool IsAmbiguousEmptyLit(string s)
     {
-        s = s.Trim();
-        return s == "[]" || s == "{}" || s == "multiset{}" || s == "map[]";
+        var stripped = Regex.Replace(s, @"\s|\[|\]|\{|\}|,|multiset|map", "");
+        return stripped.Length == 0;
     }
 
     /// <summary>
@@ -816,20 +818,49 @@ static class TestValidator
     static int FindTopLevelDoubleEquals(string s)
     {
         int depth = 0;
+        int firstEqPos = -1;
+        string[] compoundKeywords = { "if", "var", "match", "forall", "exists", "assert", "assume" };
         for (int i = 0; i + 1 < s.Length; i++)
         {
             char c = s[i];
-            if (c == '(' || c == '[' || c == '{') depth++;
-            else if (c == ')' || c == ']' || c == '}') depth--;
-            else if (depth == 0 && c == '=' && s[i + 1] == '=')
+            if (c == '(' || c == '[' || c == '{') { depth++; continue; }
+            if (c == ')' || c == ']' || c == '}') { depth--; continue; }
+            if (depth != 0) continue;
+
+            if (c == ':' && s[i + 1] == ':')
+                return -1; // entered quantifier/comprehension body — don't split
+
+            // Compound-expression keyword at word boundary → remainder is inside
+            // compound-expr body (if/then/else, let-binding, match, quantifier). Abort.
+            bool wordStart = i == 0 || (!char.IsLetterOrDigit(s[i - 1]) && s[i - 1] != '_' && s[i - 1] != '\'');
+            if (wordStart)
+            {
+                foreach (var kw in compoundKeywords)
+                {
+                    if (i + kw.Length <= s.Length && s.Substring(i, kw.Length) == kw
+                        && (i + kw.Length == s.Length
+                            || (!char.IsLetterOrDigit(s[i + kw.Length]) && s[i + kw.Length] != '_' && s[i + kw.Length] != '\'')))
+                        return -1;
+                }
+            }
+
+            // Top-level boolean connective → expression is a conjunction/disjunction
+            // whose precedence is lower than ==, so splitting on the first == would
+            // grab only the first sub-term's RHS. Must scan the whole string first
+            // before committing to a split — hence we record the == position but
+            // keep scanning.
+            if ((c == '|' && s[i + 1] == '|') || (c == '&' && s[i + 1] == '&'))
+                return -1;
+
+            if (c == '=' && s[i + 1] == '=' && firstEqPos < 0)
             {
                 char prev = i > 0 ? s[i - 1] : ' ';
                 char next = i + 2 < s.Length ? s[i + 2] : ' ';
                 if (prev == '<' || prev == '=' || next == '>' || next == '=') continue;
-                return i;
+                firstEqPos = i;
             }
         }
-        return -1;
+        return firstEqPos;
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -979,6 +1010,17 @@ static class TestValidator
                                      @"(?:\s*\[\.\.\])?\s*==.*//\s*observed";
                 if (Regex.IsMatch(body, coveredPattern, RegexOptions.Multiline)) continue;
 
+                // Already pinned by a plain spec-derived `expect X == val;` to the SAME value.
+                // Observed-from-impl comment only valuable when spec can't pin reliably.
+                var existingExpect = Regex.Match(body,
+                    @"^\s*expect\s+" + Regex.Escape(name) + @"(?:\s*\[\.\.\])?\s*==\s*([^;]+?)\s*;(?!\s*//\s*observed)",
+                    RegexOptions.Multiline);
+                if (existingExpect.Success)
+                {
+                    var pinnedVal = NormalizeSeqLiteral(existingExpect.Groups[1].Value);
+                    if (pinnedVal == NormalizeSeqLiteral(val)) continue;
+                }
+
                 // Unchanged from declaration: `var X := new T[N] [lit];` or `var X := lit;`
                 var arrDecl = Regex.Match(body,
                     @"^\s*var\s+" + Regex.Escape(name) + @"\s*:=\s*new\s+\w+(?:\[[^\]]*\])?\s*(\[[^\]]*\])\s*;",
@@ -1007,8 +1049,17 @@ static class TestValidator
             var comments = new List<string>();
             if (meaningful.Count > 0)
             {
-                var parts = meaningful.Select(kv => $"{kv.Key}={kv.Value}");
-                comments.Add($"// actual runtime state: {string.Join(", ", parts)}");
+                // Drop names already disclosed via "// expect ...; // got <val>" in
+                // commented expects below — the runtime state would duplicate that.
+                var kept = meaningful.Where(kv =>
+                    !Regex.IsMatch(body,
+                        @"//\s*expect\s+" + Regex.Escape(kv.Key) + @"\b[^\r\n]*//\s*got\s+" + Regex.Escape(kv.Value) + @"\b"))
+                    .ToList();
+                if (kept.Count > 0)
+                {
+                    var parts = kept.Select(kv => $"{kv.Key}={kv.Value}");
+                    comments.Add($"// actual runtime state: {string.Join(", ", parts)}");
+                }
             }
             if (meaningful.Count == 0 && !string.IsNullOrWhiteSpace(stderr))
             {

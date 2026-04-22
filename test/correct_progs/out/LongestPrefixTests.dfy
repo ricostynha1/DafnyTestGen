@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\LongestPrefix.dfy
 // Method: LongestPrefix
-// Generated: 2026-04-20 22:26:07
+// Generated: 2026-04-21 23:36:28
 
 // Computes the length (i) of the longest common prefix (initial subarray) 
 // of two arrays a and b. 
@@ -23,64 +23,54 @@ method LongestPrefix(a: array<int>, b: array <int>) returns (i: nat)
 method TestsForLongestPrefix()
 {
   // Test case for combination {3}/Rel:
-  //   POST: i <= a.Length
-  //   POST: i <= b.Length
-  //   POST: a[..i] == b[..i]
-  //   POST: i < a.Length
-  //   POST: i < b.Length
-  //   POST: a[i] != b[i]
-  //   ENSURES: i <= a.Length && i <= b.Length
-  //   ENSURES: a[..i] == b[..i]
-  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
+  //   POST Q1: i <= a.Length
+  //   POST Q2: i <= b.Length
+  //   POST Q3: a[..i] == b[..i]
+  //   POST Q4: i < a.Length
+  //   POST Q5: i < b.Length
+  //   POST Q6: a[i] != b[i]
   {
-    var a := new int[2] [-10, -2];
-    var b := new int[2] [-10, -1];
+    var a := new int[2] [-10, -8];
+    var b := new int[2] [-10, -7];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
 
   // Test case for combination {1}:
-  //   POST: i <= a.Length
-  //   POST: i <= b.Length
-  //   POST: a[..i] == b[..i]
-  //   POST: !(i < a.Length)
-  //   ENSURES: i <= a.Length && i <= b.Length
-  //   ENSURES: a[..i] == b[..i]
-  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
+  //   POST Q1: i <= a.Length
+  //   POST Q2: i <= b.Length
+  //   POST Q3: a[..i] == b[..i]
+  //   POST Q4: i >= a.Length
   {
-    var a := new int[1] [-10];
-    var b := new int[1] [-10];
+    var a := new int[1] [5];
+    var b := new int[1] [5];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
 
   // Test case for combination {2}:
-  //   POST: i <= a.Length
-  //   POST: i <= b.Length
-  //   POST: a[..i] == b[..i]
-  //   POST: i < a.Length
-  //   POST: !(i < b.Length)
-  //   ENSURES: i <= a.Length && i <= b.Length
-  //   ENSURES: a[..i] == b[..i]
-  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
+  //   POST Q1: i <= a.Length
+  //   POST Q2: i <= b.Length
+  //   POST Q3: a[..i] == b[..i]
+  //   POST Q4: i < a.Length
+  //   POST Q5: i >= b.Length
   {
-    var a := new int[2] [8, 4];
-    var b := new int[1] [8];
+    var a := new int[2] [-1, 7];
+    var b := new int[1] [-1];
     var i := LongestPrefix(a, b);
     expect i == 1;
   }
 
-  // Test case for combination {1}/Bi=0:
-  //   POST: i <= a.Length
-  //   POST: i <= b.Length
-  //   POST: a[..i] == b[..i]
-  //   POST: !(i < a.Length)
-  //   ENSURES: i <= a.Length && i <= b.Length
-  //   ENSURES: a[..i] == b[..i]
-  //   ENSURES: i < a.Length && i < b.Length ==> a[i] != b[i]
+  // Test case for combination {3}/V6:
+  //   POST Q1: i <= a.Length
+  //   POST Q2: i <= b.Length
+  //   POST Q3: a[..i] == b[..i]
+  //   POST Q4: i < a.Length
+  //   POST Q5: i < b.Length
+  //   POST Q6: a[i] != b[i]  // VACUOUS (forced true by other literals for this ins)
   {
-    var a := new int[0] [];
-    var b := new int[1] [-1];
+    var a := new int[1] [3];
+    var b := new int[1] [8];
     var i := LongestPrefix(a, b);
     expect i == 0;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_798.dfy
 // Method: CalcArraySum
-// Generated: 2026-04-20 22:35:11
+// Generated: 2026-04-21 23:17:46
 
 // Recursive definition of the sum of the elements of an array 'a',
 // from index 'i' (inclusive) to index 'j' (exclusive).
@@ -52,11 +52,10 @@ method TestsForCalcArraySum()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  //   POST: sum == 0
-  //   ENSURES: sum == ArraySum(a, 0, n)
+  //   POST Q1: sum == ArraySum(a, 0, n)
+  //   POST Q2: sum == 0
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [10];
     var n := 0;
     var sum := CalcArraySum(a, n);
     expect sum == 0;
@@ -64,9 +63,8 @@ method TestsForCalcArraySum()
 
   // Test case for combination {2}:
   //   PRE:  0 <= n <= a.Length
-  //   POST: !(n <= 0)
-  //   POST: sum == ArraySum(a, 0, n - 1) + a[n - 1]
-  //   ENSURES: sum == ArraySum(a, 0, n)
+  //   POST Q1: n > 0
+  //   POST Q2: sum == ArraySum(a, 0, n - 1) + a[n - 1]
   {
     var a := new int[2] [-1, 8];
     var n := 2;
@@ -76,9 +74,8 @@ method TestsForCalcArraySum()
 
   // Test case for combination {1}/O|a|=0:
   //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  //   POST: sum == 0
-  //   ENSURES: sum == ArraySum(a, 0, n)
+  //   POST Q1: sum == ArraySum(a, 0, n)
+  //   POST Q2: sum == 0
   {
     var a := new int[0] [];
     var n := 0;
@@ -88,11 +85,10 @@ method TestsForCalcArraySum()
 
   // Test case for combination {1}/O|a|>=2:
   //   PRE:  0 <= n <= a.Length
-  //   POST: sum == ArraySum(a, 0, n)
-  //   POST: sum == 0
-  //   ENSURES: sum == ArraySum(a, 0, n)
+  //   POST Q1: sum == ArraySum(a, 0, n)
+  //   POST Q2: sum == 0
   {
-    var a := new int[2] [2, -1];
+    var a := new int[2] [5, -1];
     var n := 0;
     var sum := CalcArraySum(a, n);
     expect sum == 0;

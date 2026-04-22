@@ -772,15 +772,21 @@ static class TestEmitter
             // Show the test condition as a comment (skip spec-only literals like fresh())
             foreach (var pre in preClauses)
                 sb.AppendLine($"  //   PRE:  {ApplyTypeParamMap(DnfEngine.ExprToString(pre), typeParamMap)}");
+            // Vacuity label "{C}/V{k}" → mark literal k (1-based) as vacuous
+            int vacuousIndex = -1;
+            var vMatch = System.Text.RegularExpressions.Regex.Match(label, @"/V(\d+)(?:/|$)");
+            if (vMatch.Success && int.TryParse(vMatch.Groups[1].Value, out var vNum))
+                vacuousIndex = vNum - 1;
+            int litIdx = 0;
             foreach (var lit in literals)
-                if (!TypeUtils.IsSpecOnlyLiteral(lit))
-                    sb.AppendLine($"  //   POST: {ApplyTypeParamMap(lit, typeParamMap)}");
-            // Full postconditions for check-mode fallback (ensures always hold, unlike per-clause POST literals)
-            foreach (var ens in method.Ens)
             {
-                var ensStr = DnfEngine.ExprToString(ens.E);
-                if (!TypeUtils.IsSpecOnlyLiteral(ensStr))
-                    sb.AppendLine($"  //   ENSURES: {ApplyTypeParamMap(ensStr, typeParamMap)}");
+                if (!TypeUtils.IsSpecOnlyLiteral(lit))
+                {
+                    var tag = litIdx == vacuousIndex ? "  // VACUOUS (forced true by other literals for this ins)" : "";
+                    var canonical = DnfEngine.CanonicalLiteralKey(lit);
+                    sb.AppendLine($"  //   POST Q{litIdx + 1}: {ApplyTypeParamMap(canonical, typeParamMap)}{tag}");
+                }
+                litIdx++;
             }
 
             sb.AppendLine("  {");
@@ -1730,7 +1736,35 @@ static class TestEmitter
 
                         var arrayLiteral = $"[{string.Join(", ", elems.Take(postLen))}]";
                         if (isUnique)
-                            sb.AppendLine($"    expect {inp.Name}[..] == {arrayLiteral};");
+                        {
+                            if (hasEnumeratedAlts)
+                            {
+                                var allArrayVals = new List<string> { arrayLiteral };
+                                for (int ai = 0; ai < altCount; ai++)
+                                {
+                                    if (values.TryGetValue($"__alt_{ai}_{inp.Name}_post_len", out var altLenStr)
+                                        && int.TryParse(altLenStr, out var altLen) && altLen >= 0)
+                                    {
+                                        string[] altElems;
+                                        if (values.TryGetValue($"__alt_{ai}_{inp.Name}_post_elems", out var altElemsStr))
+                                            altElems = altElemsStr.Split(',');
+                                        else
+                                            altElems = Enumerable.Range(0, altLen).Select(_ => "0").ToArray();
+                                        if (elemType == "real")
+                                            altElems = altElems.Select(e => e.Contains('.') ? e : e + ".0").ToArray();
+                                        if (elemType == "bool")
+                                            altElems = altElems.Select(e => e == "true" ? "true" : "false").ToArray();
+                                        allArrayVals.Add($"[{string.Join(", ", altElems.Take(altLen))}]");
+                                    }
+                                }
+                                if (allArrayVals.Count > 1)
+                                    sb.AppendLine($"    expect {string.Join(" || ", allArrayVals.Select(v => $"{inp.Name}[..] == {v}"))};");
+                                else
+                                    sb.AppendLine($"    expect {inp.Name}[..] == {arrayLiteral};");
+                            }
+                            else
+                                sb.AppendLine($"    expect {inp.Name}[..] == {arrayLiteral};");
+                        }
                         else
                             sb.AppendLine($"    // expect {inp.Name}[..] == {arrayLiteral}; // (one valid value — not uniquely determined by spec)");
                     }

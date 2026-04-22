@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BodylessFactorial.dfy
 // Method: CalcFact
-// Generated: 2026-04-20 22:24:33
+// Generated: 2026-04-21 23:35:09
 
 function Fact(n: nat): nat
 {
@@ -15,9 +15,8 @@ method CalcFact(n: nat) returns (f: nat)
 method TestsForCalcFact()
 {
   // Test case for combination {1}:
-  //   POST: f == Fact(n)
-  //   POST: f == 1
-  //   ENSURES: f == Fact(n)
+  //   POST Q1: f == Fact(n)
+  //   POST Q2: f == 1
   {
     var n := 0;
     // var f := CalcFact(n);
@@ -25,9 +24,8 @@ method TestsForCalcFact()
   }
 
   // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: f == n * Fact(n - 1)
-  //   ENSURES: f == Fact(n)
+  //   POST Q1: n != 0
+  //   POST Q2: f == n * Fact(n - 1)
   {
     var n := 10;
     // var f := CalcFact(n);
@@ -35,9 +33,8 @@ method TestsForCalcFact()
   }
 
   // Test case for combination {2}/Bn=1:
-  //   POST: !(n == 0)
-  //   POST: f == n * Fact(n - 1)
-  //   ENSURES: f == Fact(n)
+  //   POST Q1: n != 0
+  //   POST Q2: f == n * Fact(n - 1)
   {
     var n := 1;
     // var f := CalcFact(n);
@@ -45,9 +42,8 @@ method TestsForCalcFact()
   }
 
   // Test case for combination {2}/Bn=2:
-  //   POST: !(n == 0)
-  //   POST: f == n * Fact(n - 1)
-  //   ENSURES: f == Fact(n)
+  //   POST Q1: n != 0
+  //   POST Q2: f == n * Fact(n - 1)
   {
     var n := 2;
     // var f := CalcFact(n);

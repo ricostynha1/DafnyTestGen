@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_447.dfy
 // Method: CubeElements
-// Generated: 2026-04-20 22:31:06
+// Generated: 2026-04-21 23:15:02
 
 // Returns an array of the cubes of the elements of the input array.
 method CubeElements(a: array<int>) returns (cubed: array<int>)
@@ -36,10 +36,8 @@ method CubeElementsTest(){
 method TestsForCubeElements()
 {
   // Test case for combination {1}/Rel:
-  //   POST: cubed.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
-  //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST Q2: cubed.Length == a.Length
+  //   POST Q3: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[1] [5];
     var cubed := CubeElements(a);
@@ -47,10 +45,8 @@ method TestsForCubeElements()
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: cubed.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
-  //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST Q2: cubed.Length == a.Length
+  //   POST Q3: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
     var a := new int[0] [];
     var cubed := CubeElements(a);
@@ -58,14 +54,12 @@ method TestsForCubeElements()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: cubed.Length == a.Length
-  //   POST: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
-  //   ENSURES: cubed.Length == a.Length
-  //   ENSURES: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
+  //   POST Q2: cubed.Length == a.Length
+  //   POST Q3: forall i: int :: 0 <= i < a.Length ==> cubed[i] == cube(a[i])
   {
-    var a := new int[2] [6, -6];
+    var a := new int[2] [3, 4];
     var cubed := CubeElements(a);
-    expect cubed[..] == [216, -216];
+    expect cubed[..] == [27, 64];
   }
 
 }

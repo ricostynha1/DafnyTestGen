@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMaxIndex.dfy
 // Method: FindMaxIndex
-// Generated: 2026-04-20 22:25:26
+// Generated: 2026-04-21 23:35:55
 
 // Finds the index of a maximum value in a non-empty array.
 method FindMaxIndex(a: array<real>) returns (maxIndex: nat)
@@ -27,54 +27,46 @@ method TestsForFindMaxIndex()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST Q1: 0 <= maxIndex
+  //   POST Q2: maxIndex < a.Length
+  //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[2] [30202.0, 30201.5];
-    var maxIndex := FindMaxIndex(a);
-    expect maxIndex == 0;
-  }
-
-  // Test case for combination {1}/BmaxIndex=1:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  {
-    var a := new real[2] [-4466.0, 0.0];
+    var a := new real[2] [53393.0, 53393.5];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 1;
   }
 
-  // Test case for combination {1}/O|a|=1:
+  // Test case for combination {1}/V3:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST Q1: 0 <= maxIndex
+  //   POST Q2: maxIndex < a.Length
+  //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]  // VACUOUS (forced true by other literals for this ins)
   {
-    var a := new real[1] [0.0];
+    var a := new real[1] [17517.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 0;
   }
 
   // Test case for combination {1}/OmaxIndex>=2:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= maxIndex
-  //   POST: maxIndex < a.Length
-  //   POST: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
-  //   ENSURES: 0 <= maxIndex < a.Length
-  //   ENSURES: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  //   POST Q1: 0 <= maxIndex
+  //   POST Q2: maxIndex < a.Length
+  //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
   {
-    var a := new real[3] [-0.5, -4466.5, 0.0];
+    var a := new real[3] [0.0, -29443.0, 17517.0];
     var maxIndex := FindMaxIndex(a);
     expect maxIndex == 2;
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  a.Length > 0
+  //   POST Q1: 0 <= maxIndex
+  //   POST Q2: maxIndex < a.Length
+  //   POST Q3: forall k: int :: 0 <= k < a.Length ==> a[maxIndex] >= a[k]
+  {
+    var a := new real[1] [-0.5];
+    var maxIndex := FindMaxIndex(a);
+    expect maxIndex == 0;
   }
 
 }

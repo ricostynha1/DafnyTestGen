@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-20 22:24:49
+// Generated: 2026-04-21 23:35:21
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -51,9 +51,8 @@ method TestsForCalcComb()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  //   POST: res == 1
-  //   ENSURES: res == Comb(n, k)
+  //   POST Q1: res == Comb(n, k)
+  //   POST Q2: res == 1
   {
     var n := 10;
     var k := 0;
@@ -63,10 +62,9 @@ method TestsForCalcComb()
 
   // Test case for combination {2}:
   //   PRE:  0 <= k <= n
-  //   POST: !(k == 0)
-  //   POST: k == n
-  //   POST: res == 1
-  //   ENSURES: res == Comb(n, k)
+  //   POST Q1: k != 0
+  //   POST Q2: k == n
+  //   POST Q3: res == 1
   {
     var n := 10;
     var k := 10;
@@ -76,22 +74,20 @@ method TestsForCalcComb()
 
   // Test case for combination {3}:
   //   PRE:  0 <= k <= n
-  //   POST: !(k == 0)
-  //   POST: !(k == n)
-  //   POST: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
-  //   ENSURES: res == Comb(n, k)
+  //   POST Q1: k != 0
+  //   POST Q2: k != n
+  //   POST Q3: res == Comb(n - 1, k) + Comb(n - 1, k - 1)
   {
-    var n := 4;
-    var k := 3;
+    var n := 8;
+    var k := 7;
     var res := CalcComb(n, k);
-    expect res == 4;
+    expect res == 8;
   }
 
   // Test case for combination {1}/Bn=0:
   //   PRE:  0 <= k <= n
-  //   POST: res == Comb(n, k)
-  //   POST: res == 1
-  //   ENSURES: res == Comb(n, k)
+  //   POST Q1: res == Comb(n, k)
+  //   POST Q2: res == 1
   {
     var n := 0;
     var k := 0;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-04-20 22:30:40
+// Generated: 2026-04-21 23:14:43
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -52,9 +52,8 @@ method HasCommonElementTest(){
 method TestsForHasCommonElement()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
     var a := new int[1] [8];
     var b := new int[1] [8];
@@ -63,9 +62,8 @@ method TestsForHasCommonElement()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
     var a := new int[1] [18];
     var b := new int[1] [11];
@@ -74,9 +72,8 @@ method TestsForHasCommonElement()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
     var a := new int[2] [9, 14];
     var b := new int[1] [9];
@@ -85,9 +82,8 @@ method TestsForHasCommonElement()
   }
 
   // Test case for combination {1}/O|b|>=2:
-  //   POST: result
-  //   POST: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
-  //   ENSURES: result <==> exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
     var a := new int[1] [10];
     var b := new int[2] [10, 17];

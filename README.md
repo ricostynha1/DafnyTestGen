@@ -176,7 +176,7 @@ Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or 
 
 ### Per-literal relevance check (disable with `--no-relevance`)
 
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (and so the spec is not really covered).
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (i.e., the literal does not constrain valid ouputs for the selected inputs), and so the spec is not really covered.
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
 
@@ -190,22 +190,28 @@ elem in arr[..]                  // Q1
 
 Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q1`, `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
 
-**Formulation.** Each safe literal `Qk` is relevant iff there exist ins, outs, and outs_k such that
+**Formulation.** Let `X` be the tuple of input parameters and `Y` the tuple of output values. Each safe literal `Qk` is relevant iff there exist `X`, `Y`, and `Y_k` such that
 
 ```
-pre(ins)
-∧ Q1(ins, outs) ∧ ... ∧ Qm(ins, outs)                              // outs satisfies the full clause
-∧ Q1(ins, outs_k) ∧ ... ∧ ¬Qk(ins, outs_k) ∧ ... ∧ Qm(ins, outs_k) // clause minus Qk, with ¬Qk
-∧ outs ≠ outs_k
+pre(X)
+∧ Q1(X, Y) ∧ ... ∧ Qm(X, Y)                                // Y satisfies the full clause
+∧ Q1(X, Y_k) ∧ ... ∧ ¬Qk(X, Y_k) ∧ ... ∧ Qm(X, Y_k)        // clause minus Qk, with ¬Qk
 ```
 
-DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a single combined query that introduces one shadow output block `outs_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find ins for which *every* `Qk ∈ S` strictly prunes the output space.
+DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a query involving shadow output blocks. Three modes are available (`--relevance-mode`):
 
-- **SAT** → every `Qk ∈ S` is simultaneously relevant at these ins. Emit `outs` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
-- **UNSAT** with `|S| ≥ 2` → at least one `Qk` is redundant here; retry with just the last safe index (matches the single-literal formulation for `Q_last`).
+- **`combined`** — one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space simultaneously (strictest). On UNSAT, fall back to the single-literal formulation using only the last safe index.
+- **`group`** — a single shadow output block `Y_G` satisfying the non-safe literals and `¬(⋀_{k ∈ S} Qk)` (weakest). Z3 only needs *some* `Qk ∈ S` to fail on `Y_G`, so UNSAT here means the cluster `S` is collectively implied by the guards — i.e., the clause is genuinely redundant. More SAT-prone than `combined`.
+- **`ladder`** (default) — try `combined` first; on UNSAT fall back to `group`. This strictly dominates pure `group`: when `combined` is SAT the witness `X` is richer (every safe literal is individually cuttable), and when `combined` is UNSAT `group` still recovers a collectively-relevant witness instead of giving up.
+
+Regardless of mode:
+
+- **SAT** → emit `Y` as the clause's test case, labelled `{clause}/Rel`, and **skip** the plain clause query (one strong test per clause).
 - **UNSAT** / **unknown** / empty `S` → fall back to the plain Phase 1 clause query.
 
-For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the chosen index to actually hold `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
+A concrete example where `ladder` matters: `LongestCommonPrefix(str1, str2)` has a DNF clause `|prefix|=|str1| ∧ prefix=str1[0..|prefix|] ∧ |prefix|≤|str2| ∧ prefix=str2[0..|prefix|]`. Under `combined`, the shadow block for `prefix=str2[0..|prefix|]` is UNSAT (given the other three literals, `prefix` is forced to equal `str2[0..|prefix|]` anyway), so pure combined falls through to the plain query which picks the degenerate `str1=[]`. Under `group`, the disjunction `¬(Q2 ∧ Q4)` is satisfiable when `str1=[a]` and `str2=[a]`, forcing a non-degenerate witness. `ladder` gets the non-degenerate witness for free.
+
+For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least on value different from  `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
 var arr := new int[4] [-10, -10, -10, -9];
@@ -214,7 +220,7 @@ var pos := LastPosition(arr, elem);
 expect pos == 2;     // LAST occurrence of -10 (index 2), not the earlier ones at 0, 1
 ```
 
-Corner cases such as vacuously-true clauses (empty arrays, single-element inputs) are naturally covered by Boundary Value Analysis.
+Corner cases such as vacuously-true clauses are covered by per-literal vacuity check or by Boundary Value Analysis.
 
 **Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyTestGen classifies a literal `Qk` as safe iff:
 
@@ -224,9 +230,46 @@ Corner cases such as vacuously-true clauses (empty arrays, single-element inputs
 
 Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `outs_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
-Even when a relevance query yields a less-than-ideal choice of ins, the emitted test remains correct: `outs` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
+Even when a relevance query yields a less-than-ideal choice of `X`, the emitted test remains correct: `Y` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
 
 Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
+
+### Per-literal vacuity check (enable with `--vacuity`)
+
+Phase 1r (relevance) proves a literal `Qk` bites **somewhere** across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific input tuple `X` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
+
+Example — `LastPosition(arr, elem)`:
+
+- `Q5 = elem !in arr[pos+1..]` prunes whenever `arr` has duplicates of `elem` (Phase 1r SAT).
+- But whenever `elem` occurs **at most once** in `arr`, `Q3 ∧ Q4` (range + `arr[pos] == elem`) pin `pos` to the unique occurrence, so `arr[pos+1..]` cannot contain another copy — `Q5` is automatically satisfied. Minimal witness: `arr = [X], elem = X, pos = 0`.
+- Dually, whenever **every** element of `arr` equals `elem`, `Q4 = arr[pos] == elem` holds for any `pos`; the clause's remaining constraints force `pos = arr.Length - 1`. `Q4` is vacuous. Witness: `arr = [X, X, X], elem = X, pos = 2`.
+
+Both are worth exercising because they witness a qualitatively different regime than the "typical" Phase 1r test.
+
+**Formulation.** Let `X` be the tuple of inputs, `Y` the tuple of outputs, and `Y'` an alternate output tuple. `Qk` is **vacuous for `X`** iff
+
+```
+¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
+```
+
+and Phase 1v asks for
+
+```
+∃ (X, Y).  Pre(X) ∧ ⋀_j Qj(X, Y)
+        ∧ ¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
+```
+
+The outer `∃ X` quantifier-alternation is handled by **CEGIS**: Phase A asks Z3 for a candidate `X` (satisfying the full clause, excluding previously-tried inputs); Phase B pins that `X` and checks vacuity of `Qk` under it. Phase B UNSAT → vacuity witness found; Phase B SAT → exclude `X` and retry (up to 3 attempts per candidate).
+
+**Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal. Combining would require "find `X` such that *every* candidate literal is simultaneously vacuous", a strictly narrower requirement that misses most cases.
+
+**Subsumption pruning.** Phase 1v is conservative about emitting tests:
+- **Pre-CEGIS** — before entering the loop, for each prior test case from the same clause run a single Phase B query against that test's `X`. If any prior test's `X` already makes `Qk` vacuous, skip this candidate entirely.
+- **Post-CEGIS** — if CEGIS finds a witness but its `X` is structurally identical to a prior test's, drop the `/V{k}` registration.
+
+**Phase 1r UNSAT skip.** Candidates where Phase 1r returned UNSAT (universally redundant literals) are skipped: the Phase 1 baseline test already exhibits vacuity for those, so a `/V{k}` test would duplicate it.
+
+Tests are labelled `{clause}/V{k+1}` (1-based literal index). Default **OFF**; enable with `--vacuity` / `-v1v`. Expect one CEGIS round to cost up to 6 Z3 calls per candidate literal.
 
 
 ## Boundary Value Analysis
@@ -688,6 +731,8 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: true). When true, concrete values are emitted even when Z3 can't fully prove uniqueness but found no counter-example. Set to false to fall back to postcondition literals for undecidable cases |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized Z3 seed). By default, Z3 is nudged away from absorbing (0) and neutral (1) values so test inputs exercise real arithmetic for recursive specs (e.g. `Power`, `Factorial`) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
+| `--relevance-mode <m>` | | Phase 1r shadow-block strategy: `combined` (per-literal shadow blocks, strictest), `group` (single shadow block with ¬(⋀ safe Qk), weakest), or `ladder` (default: combined then fall back to group on UNSAT — strictly dominates group) |
+| `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v). For each safe clause literal `Qk`, CEGIS searches for ins where `Qk` is vacuously satisfied (other literals force it true). Emits `{clause}/V{k+1}` tests. Default OFF |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_572.dfy
 // Method: RemoveDuplicates
-// Generated: 2026-04-20 22:31:59
+// Generated: 2026-04-21 23:15:37
 
 // Returns a sequence with all the duplicates removed from the input array
 // (keeping the first occurrence of each element).
@@ -56,9 +56,8 @@ method RemoveDuplicatesTest(){
 method TestsForRemoveDuplicates()
 {
   // Test case for combination {1}:
-  //   POST: res == DeDup(a[..])
-  //   POST: res == a[..]
-  //   ENSURES: res == DeDup(a[..])
+  //   POST Q1: res == DeDup(a[..])
+  //   POST Q2: res == a[..]
   {
     var a := new int[0] [];
     var res := RemoveDuplicates<int>(a);
@@ -66,10 +65,9 @@ method TestsForRemoveDuplicates()
   }
 
   // Test case for combination {2}:
-  //   POST: !(|a[..]| <= 1)
-  //   POST: a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1]
-  //   POST: res == DeDup<int>(a[..][0 .. |a[..]| - 1])
-  //   ENSURES: res == DeDup(a[..])
+  //   POST Q1: |a[..]| > 1
+  //   POST Q2: a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1]
+  //   POST Q3: res == DeDup<int>(a[..][0 .. |a[..]| - 1])
   {
     var a := new int[2] [9, 9];
     var res := RemoveDuplicates<int>(a);
@@ -77,10 +75,9 @@ method TestsForRemoveDuplicates()
   }
 
   // Test case for combination {3}:
-  //   POST: !(|a[..]| <= 1)
-  //   POST: !(a[..][|a[..]| - 1] in a[..][0 .. |a[..]| - 1])
-  //   POST: res == DeDup<int>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
-  //   ENSURES: res == DeDup(a[..])
+  //   POST Q1: |a[..]| > 1
+  //   POST Q2: a[..][|a[..]| - 1] !in a[..][0 .. |a[..]| - 1]
+  //   POST Q3: res == DeDup<int>(a[..][0 .. |a[..]| - 1]) + [a[..][|a[..]| - 1]]
   {
     var a := new int[2] [9, 17];
     var res := RemoveDuplicates<int>(a);
@@ -88,9 +85,8 @@ method TestsForRemoveDuplicates()
   }
 
   // Test case for combination {1}/O|a|=1:
-  //   POST: res == DeDup(a[..])
-  //   POST: res == a[..]
-  //   ENSURES: res == DeDup(a[..])
+  //   POST Q1: res == DeDup(a[..])
+  //   POST Q2: res == a[..]
   {
     var a := new int[1] [2];
     var res := RemoveDuplicates<int>(a);

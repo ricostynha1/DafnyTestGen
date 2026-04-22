@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\BubbleSort.dfy
 // Method: BubbleSort
-// Generated: 2026-04-21 10:56:32
+// Generated: 2026-04-21 23:35:10
 
 /* 
 * Formal verification of the bubble sort algorithm with Dafny.
@@ -59,45 +59,30 @@ method BubbleSort(a: array<int>)
 method TestsForBubbleSort()
 {
   // Test case for combination {1}/Rel:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a[..])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [10, 9];
+    var a := new int[2] [3, 2];
     BubbleSort(a);
-    if (!(a[..] == [9, 10])) {
-      print "FAIL: expected a[..] == [9, 10]; got LHS=", a[..], ", RHS=", [9, 10], "\n";
-      expect false;
-    }
+    expect a[..] == [2, 3];
+  }
+
+  // Test case for combination {1}/V1:
+  //   POST Q1: IsSorted(a[..])  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[1] [-1];
+    BubbleSort(a);
+    expect a[..] == [-1];
   }
 
   // Test case for combination {1}/O|a|=0:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a[..])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
     BubbleSort(a);
-    if (!(a[..] == [])) {
-      print "FAIL: expected a[..] == []; got LHS=", a[..], ", RHS=", [], "\n";
-      expect false;
-    }
-  }
-
-  // Test case for combination {1}/O|a|=1:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[1] [2];
-    BubbleSort(a);
-    if (!(a[..] == [2])) {
-      print "FAIL: expected a[..] == [2]; got LHS=", a[..], ", RHS=", [2], "\n";
-      expect false;
-    }
+    expect a[..] == [];
   }
 
 }
@@ -107,4 +92,3 @@ method Main()
   TestsForBubbleSort();
   print "TestsForBubbleSort: all non-failing tests passed!\n";
 }
-

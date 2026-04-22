@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-20 22:28:47
+// Generated: 2026-04-21 23:38:52
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -43,9 +43,8 @@ method SumOfNegativesTest(){
 method TestsForCalcSumOfNegatives()
 {
   // Test case for combination {1}:
-  //   POST: result == SumOfNegatives(a)
-  //   POST: result == 0
-  //   ENSURES: result == SumOfNegatives(a)
+  //   POST Q1: result == SumOfNegatives(a)
+  //   POST Q2: result == 0
   {
     var a := new int[0] [];
     var result := CalcSumOfNegatives(a);
@@ -53,10 +52,9 @@ method TestsForCalcSumOfNegatives()
   }
 
   // Test case for combination {2}:
-  //   POST: !(a.Length == 0)
-  //   POST: a[a.Length - 1] < 0
-  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
-  //   ENSURES: result == SumOfNegatives(a)
+  //   POST Q1: a.Length != 0
+  //   POST Q2: a[a.Length - 1] < 0
+  //   POST Q3: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
   {
     var a := new int[1] [-10];
     var result := CalcSumOfNegatives(a);
@@ -64,23 +62,21 @@ method TestsForCalcSumOfNegatives()
   }
 
   // Test case for combination {3}:
-  //   POST: !(a.Length == 0)
-  //   POST: !(a[a.Length - 1] < 0)
-  //   POST: result == SumOfNegatives(a, a.Length - 1)
-  //   ENSURES: result == SumOfNegatives(a)
+  //   POST Q1: a.Length != 0
+  //   POST Q2: a[a.Length - 1] >= 0
+  //   POST Q3: result == SumOfNegatives(a, a.Length - 1)
   {
-    var a := new int[1] [7];
+    var a := new int[1] [10];
     var result := CalcSumOfNegatives(a);
     expect result == 0;
   }
 
   // Test case for combination {2}/O|a|>=2:
-  //   POST: !(a.Length == 0)
-  //   POST: a[a.Length - 1] < 0
-  //   POST: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
-  //   ENSURES: result == SumOfNegatives(a)
+  //   POST Q1: a.Length != 0
+  //   POST Q2: a[a.Length - 1] < 0
+  //   POST Q3: result == SumOfNegatives(a, a.Length - 1) + a[a.Length - 1]
   {
-    var a := new int[2] [3, -10];
+    var a := new int[2] [8, -10];
     var result := CalcSumOfNegatives(a);
     expect result == -10;
   }

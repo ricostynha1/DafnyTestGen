@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-20 22:34:10
+// Generated: 2026-04-21 23:17:10
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -35,10 +35,8 @@ method RotateRightTest(){
 method TestsForRotateRight()
 {
   // Test case for combination {1}/Rel:
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
     var l: seq<int> := [-10];
     var n := 2;
@@ -47,34 +45,28 @@ method TestsForRotateRight()
   }
 
   // Test case for combination {1}/Bn=0:
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-10];
+    var l: seq<int> := [-1];
     var n := 0;
     var r := RotateRight(l, n);
-    expect r == [-10];
+    expect r == [-1];
   }
 
   // Test case for combination {1}/Bn=1:
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-10];
+    var l: seq<int> := [-2];
     var n := 1;
     var r := RotateRight(l, n);
-    expect r == [-10];
+    expect r == [-2];
   }
 
   // Test case for combination {1}/O|l|=0:
-  //   POST: |r| == |l|
-  //   POST: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
-  //   ENSURES: |r| == |l|
-  //   ENSURES: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
     var l: seq<int> := [];
     var n := 10;

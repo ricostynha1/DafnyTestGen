@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-20 22:29:48
+// Generated: 2026-04-21 23:14:04
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -37,9 +37,8 @@ method AllElementsEqualTest(){
 method TestsForAllElementsEqualTo()
 {
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: forall i: int :: 0 <= i < a.Length ==> a[i] == x
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[0] [];
     var x := 0;
@@ -48,10 +47,9 @@ method TestsForAllElementsEqualTo()
   }
 
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: 0 <= (a.Length - 1)
-  //   POST: !(a[0] == x)
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   POST Q1: !result
+  //   POST Q2: 0 <= (a.Length - 1)
+  //   POST Q3: a[0] != x
   {
     var a := new int[1] [2];
     var x := 3;
@@ -60,9 +58,8 @@ method TestsForAllElementsEqualTo()
   }
 
   // Test case for combination {3}:
-  //   POST: !result
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   POST Q1: !result
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
   {
     var a := new int[3] [15, 7, 20];
     var x := 9;
@@ -71,9 +68,8 @@ method TestsForAllElementsEqualTo()
   }
 
   // Test case for combination {1}/O|a|=1:
-  //   POST: result
-  //   POST: forall i: int :: 0 <= i < a.Length ==> a[i] == x
-  //   ENSURES: result <==> forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 0 <= i < a.Length ==> a[i] == x
   {
     var a := new int[1] [2];
     var x := 2;

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\InsertionSort.dfy
 // Method: InsertionSort
-// Generated: 2026-04-20 22:25:30
+// Generated: 2026-04-21 23:35:59
 
 /* 
  * Formal verification of the insertion sort algorithm with Dafny. 
@@ -45,21 +45,17 @@ method InsertionSort(a: array<T>)
 method TestsForInsertionSort()
 {
   // Test case for combination {1}/Rel:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a[..])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [26177, 26178];
+    var a := new T[2] [287, 288];
     InsertionSort(a);
-    expect a[..] == [26177, 26178];
+    expect a[..] == [287, 288];
   }
 
-  // Test case for combination {1}/O|a|=0:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/V1:
+  //   POST Q1: IsSorted(a[..])  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[0] [];
     InsertionSort(a);
@@ -67,10 +63,8 @@ method TestsForInsertionSort()
   }
 
   // Test case for combination {1}/O|a|=1:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a[..])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new T[1] [2];
     InsertionSort(a);
@@ -78,14 +72,12 @@ method TestsForInsertionSort()
   }
 
   // Test case for combination {1}/Oa≠old:
-  //   POST: IsSorted(a[..])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: IsSorted(a[..])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: IsSorted(a[..])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [964, 963];
+    var a := new T[2] [20, -1999];
     InsertionSort(a);
-    expect a[..] == [963, 964];
+    expect a[..] == [-1999, 20];
   }
 
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-20 22:30:16
+// Generated: 2026-04-21 23:14:27
 
 // Performs the bitwise XOR operation on two sequences of bv32 values (with equal length).
 method BitwiseXOR(a: seq<bv32>, b: seq<bv32>) returns (result: seq<bv32>)
@@ -34,10 +34,8 @@ method TestsForBitwiseXOR()
 {
   // Test case for combination {1}:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [];
     var b: seq<bv32> := [];
@@ -47,10 +45,8 @@ method TestsForBitwiseXOR()
 
   // Test case for combination {1}/O|a|=1:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [4];
     var b: seq<bv32> := [3];
@@ -62,10 +58,8 @@ method TestsForBitwiseXOR()
 
   // Test case for combination {1}/O|a|>=2:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [8, 9];
     var b: seq<bv32> := [18, 19];
@@ -77,10 +71,8 @@ method TestsForBitwiseXOR()
 
   // Test case for combination {1}/R4:
   //   PRE:  |a| == |b|
-  //   POST: |result| == |a|
-  //   POST: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
-  //   ENSURES: |result| == |a|
-  //   ENSURES: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
   {
     var a: seq<bv32> := [13];
     var b: seq<bv32> := [11];

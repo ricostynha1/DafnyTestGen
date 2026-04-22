@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-04-20 22:28:27
+// Generated: 2026-04-21 23:38:36
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -47,9 +47,8 @@ method CountTrueTest(){
 method TestsForCalcCountTrue()
 {
   // Test case for combination {1}:
-  //   POST: count == countTrue(a[..])
-  //   POST: count == 0
-  //   ENSURES: count == countTrue(a[..])
+  //   POST Q1: count == countTrue(a[..])
+  //   POST Q2: count == 0
   {
     var a := new bool[0] [];
     var count := CalcCountTrue(a);
@@ -57,10 +56,9 @@ method TestsForCalcCountTrue()
   }
 
   // Test case for combination {2}:
-  //   POST: !(|a[..]| == 0)
-  //   POST: a[..][|a[..]| - 1]
-  //   POST: count == countTrue(a[..][..|a[..]| - 1]) + 1
-  //   ENSURES: count == countTrue(a[..])
+  //   POST Q1: |a[..]| != 0
+  //   POST Q2: a[..][|a[..]| - 1]
+  //   POST Q3: count == countTrue(a[..][..|a[..]| - 1]) + 1
   {
     var a := new bool[1] [true];
     var count := CalcCountTrue(a);
@@ -68,10 +66,9 @@ method TestsForCalcCountTrue()
   }
 
   // Test case for combination {3}:
-  //   POST: !(|a[..]| == 0)
-  //   POST: !(a[..][|a[..]| - 1])
-  //   POST: count == countTrue(a[..][..|a[..]| - 1])
-  //   ENSURES: count == countTrue(a[..])
+  //   POST Q1: |a[..]| != 0
+  //   POST Q2: !(a[..][|a[..]| - 1])
+  //   POST Q3: count == countTrue(a[..][..|a[..]| - 1])
   {
     var a := new bool[1] [false];
     var count := CalcCountTrue(a);
@@ -79,10 +76,9 @@ method TestsForCalcCountTrue()
   }
 
   // Test case for combination {2}/O|a|>=2:
-  //   POST: !(|a[..]| == 0)
-  //   POST: a[..][|a[..]| - 1]
-  //   POST: count == countTrue(a[..][..|a[..]| - 1]) + 1
-  //   ENSURES: count == countTrue(a[..])
+  //   POST Q1: |a[..]| != 0
+  //   POST Q2: a[..][|a[..]| - 1]
+  //   POST Q3: count == countTrue(a[..][..|a[..]| - 1]) + 1
   {
     var a := new bool[2] [false, true];
     var count := CalcCountTrue(a);

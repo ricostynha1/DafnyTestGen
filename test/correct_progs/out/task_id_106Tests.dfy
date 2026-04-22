@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_106.dfy
 // Method: AppendArrayToSeq
-// Generated: 2026-04-20 22:28:32
+// Generated: 2026-04-21 23:38:40
 
 // Appends an array to a sequence and returns the resulting sequence.
 method AppendArrayToSeq<T>(s: seq<T>, a: array<T>) returns (r: seq<T>)
@@ -35,8 +35,7 @@ method AppendArrayToSeqTest(){
 method TestsForAppendArrayToSeq()
 {
   // Test case for combination {1}:
-  //   POST: r == s + a[..]
-  //   ENSURES: r == s + a[..]
+  //   POST Q1: r == s + a[..]
   {
     var s: seq<int> := [];
     var a := new int[0] [];
@@ -45,8 +44,7 @@ method TestsForAppendArrayToSeq()
   }
 
   // Test case for combination {1}/O|s|=1:
-  //   POST: r == s + a[..]
-  //   ENSURES: r == s + a[..]
+  //   POST Q1: r == s + a[..]
   {
     var s: seq<int> := [2];
     var a := new int[0] [];
@@ -55,8 +53,7 @@ method TestsForAppendArrayToSeq()
   }
 
   // Test case for combination {1}/O|s|>=2:
-  //   POST: r == s + a[..]
-  //   ENSURES: r == s + a[..]
+  //   POST Q1: r == s + a[..]
   {
     var s: seq<int> := [4, 5];
     var a := new int[1] [11];
@@ -65,8 +62,7 @@ method TestsForAppendArrayToSeq()
   }
 
   // Test case for combination {1}/O|a|>=2:
-  //   POST: r == s + a[..]
-  //   ENSURES: r == s + a[..]
+  //   POST Q1: r == s + a[..]
   {
     var s: seq<int> := [];
     var a := new int[2] [3, 6];
