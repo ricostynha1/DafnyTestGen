@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Dafny_Learning_Experience_MVR_CountIndex.dfy
 // Method: FooCount
-// Generated: 2026-04-21 23:16:51
+// Generated: 2026-04-22 10:42:09
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
@@ -173,8 +173,8 @@ method TestsForFooCount()
   //   POST Q2: p == 0
   {
     var CountIndex := 0;
-    var a: seq<int> := [-8];
-    var b := new int[1] [-9];
+    var a: seq<int> := [-1];
+    var b := new int[1] [-10];
     var p := FooCount(CountIndex, a, b);
     expect p == 0;
   }
@@ -186,8 +186,8 @@ method TestsForFooCount()
   //   POST Q3: p == 1 + Count(CountIndex - 1, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [-6, -6];
-    var b := new int[2] [7, -7];
+    var a: seq<int> := [-10, -8];
+    var b := new int[2] [-1, -6];
     var p := FooCount(CountIndex, a, b);
     expect p == 2;
     expect b[..] == [1, 2]; // observed from implementation
@@ -200,8 +200,8 @@ method TestsForFooCount()
   //   POST Q3: p == Count(CountIndex - 1, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [-9, -9];
-    var b := new int[2] [-8, -10];
+    var a: seq<int> := [-1, -1];
+    var b := new int[2] [9, -10];
     var p := FooCount(CountIndex, a, b);
     expect p == 0;
     expect b[..] == [0, 0]; // observed from implementation
@@ -214,7 +214,7 @@ method TestsForFooCount()
   //   POST Q3: p == 1 + Count(CountIndex - 1, a)
   {
     var CountIndex := 1;
-    var a: seq<int> := [10];
+    var a: seq<int> := [8];
     var b := new int[1] [-1];
     var p := FooCount(CountIndex, a, b);
     expect p == 1;
@@ -231,7 +231,7 @@ method TestsForComputeCount()
   //   POST Q2: p == 0
   {
     var CountIndex := 0;
-    var a: seq<int> := [5];
+    var a: seq<int> := [10];
     var b := new int[1] [-10];
     var p := ComputeCount(CountIndex, a, b);
     expect p == 0;
@@ -244,11 +244,11 @@ method TestsForComputeCount()
   //   POST Q3: p == 1 + Count(CountIndex - 1, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [-3, -2];
-    var b := new int[2] [-1, 5];
+    var a: seq<int> := [-6, -6];
+    var b := new int[2] [5, -1];
     var p := ComputeCount(CountIndex, a, b);
-    expect p == 1;
-    expect b[..] == [0, 1]; // observed from implementation
+    expect p == 2;
+    expect b[..] == [1, 2]; // observed from implementation
   }
 
   // Test case for combination P{2}/{3}:
@@ -258,11 +258,11 @@ method TestsForComputeCount()
   //   POST Q3: p == Count(CountIndex - 1, a)
   {
     var CountIndex := 2;
-    var a: seq<int> := [-7, -7];
-    var b := new int[2] [-3, 2];
+    var a: seq<int> := [-10, 3];
+    var b := new int[2] [10, 4];
     var p := ComputeCount(CountIndex, a, b);
-    expect p == 0;
-    expect b[..] == [0, 0]; // observed from implementation
+    expect p == 1;
+    expect b[..] == [1, 1]; // observed from implementation
   }
 
   // Test case for combination P{2}/{2}/BCountIndex=1:
@@ -272,7 +272,7 @@ method TestsForComputeCount()
   //   POST Q3: p == 1 + Count(CountIndex - 1, a)
   {
     var CountIndex := 1;
-    var a: seq<int> := [8];
+    var a: seq<int> := [4];
     var b := new int[1] [-1];
     var p := ComputeCount(CountIndex, a, b);
     expect p == 1;
@@ -291,8 +291,8 @@ method TestsForPreCompute()
   //   POST Q4: b.Length <= a.Length
   //   POST Q5: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
   {
-    var a := new int[1] [-10];
-    var b := new int[1] [-9];
+    var a := new int[1] [-2];
+    var b := new int[1] [-1];
     var p := PreCompute(a, b);
     expect !(b.Length == 0);
     expect a.Length == b.Length;
@@ -311,16 +311,16 @@ method TestsForPreCompute()
   //   POST Q4: b.Length <= a.Length
   //   POST Q5: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
   {
-    var a := new int[2] [-9, 8];
-    var b := new int[2] [-8, 10];
+    var a := new int[2] [-3, 3];
+    var b := new int[2] [-2, 4];
     var p := PreCompute(a, b);
     expect !(b.Length == 0);
     expect a.Length == b.Length;
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-    expect p == 1; // observed from implementation
-    expect b[..] == [0, 1]; // observed from implementation
+    expect p == 0; // observed from implementation
+    expect b[..] == [0, 0]; // observed from implementation
   }
 
   // Test case for combination {2}/R3:
@@ -331,7 +331,7 @@ method TestsForPreCompute()
   //   POST Q4: b.Length <= a.Length
   //   POST Q5: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
   {
-    var a := new int[1] [-1];
+    var a := new int[1] [-4];
     var b := new int[1] [4];
     var p := PreCompute(a, b);
     expect !(b.Length == 0);
@@ -339,8 +339,8 @@ method TestsForPreCompute()
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-    expect p == 0; // observed from implementation
-    expect b[..] == [0]; // observed from implementation
+    expect p == 1; // observed from implementation
+    expect b[..] == [1]; // observed from implementation
   }
 
   // Test case for combination {2}/R4:
@@ -351,16 +351,16 @@ method TestsForPreCompute()
   //   POST Q4: b.Length <= a.Length
   //   POST Q5: forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..])
   {
-    var a := new int[1] [4];
-    var b := new int[1] [5];
+    var a := new int[1] [-5];
+    var b := new int[1] [3];
     var p := PreCompute(a, b);
     expect !(b.Length == 0);
     expect a.Length == b.Length;
     expect 1 <= b.Length;
     expect b.Length <= a.Length;
     expect forall p: int :: p == Count(b.Length, a[..]) ==> p == Count(b.Length, a[..]);
-    expect p == 1; // observed from implementation
-    expect b[..] == [1]; // observed from implementation
+    expect p == 0; // observed from implementation
+    expect b[..] == [0]; // observed from implementation
   }
 
 }

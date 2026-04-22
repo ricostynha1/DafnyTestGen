@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-21 23:17:10
+// Generated: 2026-04-21 23:44:24
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -48,20 +48,20 @@ method TestsForRotateRight()
   //   POST Q1: |r| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-1];
+    var l: seq<int> := [-10];
     var n := 0;
     var r := RotateRight(l, n);
-    expect r == [-1];
+    expect r == [-10];
   }
 
   // Test case for combination {1}/Bn=1:
   //   POST Q1: |r| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-2];
+    var l: seq<int> := [-10];
     var n := 1;
     var r := RotateRight(l, n);
-    expect r == [-2];
+    expect r == [-10];
   }
 
   // Test case for combination {1}/O|l|=0:

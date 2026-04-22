@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_775.dfy
 // Method: IsOddAtIndexOdd
-// Generated: 2026-04-21 23:17:26
+// Generated: 2026-04-21 23:44:46
 
 // Checks if all elements at odd indices are odd.
 method IsOddAtIndexOdd(a: array<int>) returns (result: bool)
@@ -48,7 +48,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST Q1: !result
   //   POST Q2: exists i :: 1 <= i < (a.Length - 1) && IsOdd(i) && !IsOdd(a[i])
   {
-    var a := new int[3] [-9, -10, -4];
+    var a := new int[3] [-4, -10, -2];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }
@@ -58,7 +58,7 @@ method TestsForIsOddAtIndexOdd()
   //   POST Q2: 0 <= (a.Length - 1)
   //   POST Q3: IsOdd((a.Length - 1)) && !IsOdd(a[(a.Length - 1)])
   {
-    var a := new int[2] [-10, 2];
+    var a := new int[2] [-1, -10];
     var result := IsOddAtIndexOdd(a);
     expect result == false;
   }

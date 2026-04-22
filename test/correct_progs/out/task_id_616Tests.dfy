@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_616.dfy
 // Method: ElementWiseModulo
-// Generated: 2026-04-21 23:16:20
+// Generated: 2026-04-21 23:43:18
 
 // Given two arrays of integers, a and b (without zeros), of the same length, 
 // return an array of the same length, where each element is the remainder 
@@ -44,10 +44,10 @@ method TestsForElementWiseModulo()
   //   POST Q2: result.Length == a.Length
   //   POST Q3: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
-    var a := new int[1] [-3];
-    var b := new int[1] [-2];
+    var a := new int[1] [-10];
+    var b := new int[1] [-6];
     var result := ElementWiseModulo(a, b);
-    expect result[..] == [1];
+    expect result[..] == [2];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -69,7 +69,7 @@ method TestsForElementWiseModulo()
   //   POST Q3: forall i: int :: 0 <= i < result.Length ==> result[i] == a[i] % b[i]
   {
     var a := new int[2] [2, -3];
-    var b := new int[2] [-3, -2];
+    var b := new int[2] [3, -2];
     var result := ElementWiseModulo(a, b);
     expect result[..] == [2, 1];
   }

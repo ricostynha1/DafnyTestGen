@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_273.dfy
 // Method: ElementWiseSubtraction
-// Generated: 2026-04-21 23:13:57
+// Generated: 2026-04-21 23:39:42
 
 // Sutracts two sequences of integers element by element.
 method ElementWiseSubtraction(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -42,10 +42,10 @@ method TestsForElementWiseSubtraction()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1];
-    var b: seq<int> := [-3];
+    var a: seq<int> := [-5];
+    var b: seq<int> := [-6];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [2];
+    expect result == [1];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -64,10 +64,10 @@ method TestsForElementWiseSubtraction()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] - b[i]
   {
-    var a: seq<int> := [-1, -5];
-    var b: seq<int> := [10, 9];
+    var a: seq<int> := [-1, -4];
+    var b: seq<int> := [2, 9];
     var result := ElementWiseSubtraction(a, b);
-    expect result == [-11, -14];
+    expect result == [-3, -13];
   }
 
 }

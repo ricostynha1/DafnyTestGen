@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-21 23:17:21
+// Generated: 2026-04-21 23:44:39
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.

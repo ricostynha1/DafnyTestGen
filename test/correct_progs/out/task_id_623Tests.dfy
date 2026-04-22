@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_623.dfy
 // Method: PowerOfListElements
-// Generated: 2026-04-21 23:16:26
+// Generated: 2026-04-21 23:43:26
 
 // Returns a list of the elements of the input list raised to the power of n (>=0).
 method PowerOfListElements(l: seq<int>, n: nat) returns (result: seq<int>)
@@ -43,11 +43,11 @@ method TestsForPowerOfListElements()
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
     var l: seq<int> := [-10];
-    var n := 2;
+    var n := 10;
     var result := PowerOfListElements(l, n);
     expect |result| == |l|;
     expect forall i: int :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
-    expect result == [100]; // observed from implementation
+    expect result == [10000000000]; // observed from implementation
   }
 
   // Test case for combination {1}/Bn=0:
@@ -55,7 +55,7 @@ method TestsForPowerOfListElements()
   //   POST Q1: |result| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
-    var l: seq<int> := [-10];
+    var l: seq<int> := [10];
     var n := 0;
     var result := PowerOfListElements(l, n);
     expect |result| == |l|;
@@ -68,12 +68,12 @@ method TestsForPowerOfListElements()
   //   POST Q1: |result| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> result[i] == Power(l[i], n)
   {
-    var l: seq<int> := [-3];
+    var l: seq<int> := [-1];
     var n := 1;
     var result := PowerOfListElements(l, n);
     expect |result| == |l|;
     expect forall i: int :: 0 <= i < |l| ==> result[i] == Power(l[i], n);
-    expect result == [-3]; // observed from implementation
+    expect result == [-1]; // observed from implementation
   }
 
   // Test case for combination {1}/O|l|=0:

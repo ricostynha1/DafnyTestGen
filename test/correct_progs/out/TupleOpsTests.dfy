@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-21 23:18:08
+// Generated: 2026-04-21 23:45:31
 
 // --- (int, int) tuples ---
 
@@ -70,9 +70,9 @@ method TestsForSwapTuple()
   //   POST Q1: r.0 == t.1
   //   POST Q2: r.1 == t.0
   {
-    var t := (4294966426, 191);
+    var t := (4294966581, 321);
     var r := SwapTuple(t);
-    expect r == (191, 4294966426);
+    expect r == (321, 4294966581);
   }
 
 }
@@ -131,10 +131,10 @@ method TestsForAddTuples()
   //   POST Q1: r.0 == a.0 + b.0
   //   POST Q2: r.1 == a.1 + b.1
   {
-    var a := (258, 4294966525);
+    var a := (927, 809);
     var b := (0, 0);
     var r := AddTuples(a, b);
-    expect r == (258, 4294966525);
+    expect r == (927, 809);
   }
 
 }
@@ -157,9 +157,9 @@ method TestsForTupleMax()
   //   POST Q3: r >= t.0
   //   POST Q4: r >= t.1
   {
-    var t := (826, 4294967213);
+    var t := (545, 546);
     var r := TupleMax(t);
-    expect r == 4294967213;
+    expect r == 546;
   }
 
   // Test case for combination {1}/Or>0:
@@ -167,9 +167,9 @@ method TestsForTupleMax()
   //   POST Q2: r >= t.0
   //   POST Q3: r >= t.1
   {
-    var t := (1, -1);
+    var t := (545, -1);
     var r := TupleMax(t);
-    expect r == 1;
+    expect r == 545;
   }
 
   // Test case for combination {1}/Or<0:
@@ -177,9 +177,9 @@ method TestsForTupleMax()
   //   POST Q2: r >= t.0
   //   POST Q3: r >= t.1
   {
-    var t := (-2, -2);
+    var t := (-1, -2);
     var r := TupleMax(t);
-    expect r == -2;
+    expect r == -1;
   }
 
 }
@@ -225,9 +225,9 @@ method TestsForMixedTuple()
   //   POST Q2: r.1 == y
   {
     var x := 0;
-    var y := -1.0;
+    var y := -221.0;
     var r := MixedTuple(x, y);
-    expect r == (0, -1.0);
+    expect r == (0, -221.0);
   }
 
 }
@@ -270,9 +270,9 @@ method TestsForSwap3First()
   //   POST Q2: r.1 == t.0
   //   POST Q3: r.2 == t.2
   {
-    var t := (4294966864, 623, 4294966733);
+    var t := (199, 4294967038, 528);
     var r := Swap3First(t);
-    expect r == (623, 4294966864, 4294966733);
+    expect r == (4294967038, 199, 528);
   }
 
 }

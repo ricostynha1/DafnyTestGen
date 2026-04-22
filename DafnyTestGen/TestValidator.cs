@@ -37,6 +37,16 @@ static class TestValidator
     ///   4. For tests that didn't complete (crash/timeout), re-run the same exe
     ///      with the test index as argument — no recompilation needed.
     /// </summary>
+    /// When true, tests that exit non-zero without emitting a FAIL marker (i.e., the
+    /// method under test threw an unhandled exception) are routed to SKIP instead of
+    /// FAIL. Useful when running DafnyTestGen against a corpus where some methods are
+    /// known to crash on boundary inputs and you want to separate those cases from
+    /// genuine postcondition violations.
+    public static bool SkipOnException = false;
+
+    /// Classification used when splitting test blocks after a --check run.
+    internal enum TestStatus { Passing, Failing, CrashSkipped }
+
     internal static async Task<string> CheckAndSplitTests(
         string generatedCode, string originalSource, string outputPath, string grouping = "by-method")
     {
@@ -153,6 +163,11 @@ static class TestValidator
             var stderrByTestId = new Dictionary<int, string>();
             var wrongValIds = new HashSet<int>();
             ParseWrongValMarkers(batchOut, wrongValIds);
+            // Tests that crashed (non-zero exit, no FAIL marker) during individual
+            // re-check. With --skip-on-exception, these are reported as SKIP rather
+            // than FAIL; without it, merged into failedIds for backwards-compatible
+            // failure reporting.
+            var exceptionIds = new HashSet<int>();
 
             // ── Phase 3: re-check incomplete tests individually ─────────────────
             var incompleteIds = new HashSet<int>();
@@ -187,8 +202,10 @@ static class TestValidator
                         skippedIds.UnionWith(reSkipped);
                         var reFailed = new HashSet<int>();
                         ParseFailMarkers(reOut, reFailed);
-                        if (reFailed.Count > 0 || reCode != 0)
-                            failedIds.Add(idx);
+                        if (reFailed.Count > 0)
+                            failedIds.Add(idx);  // genuine expect failure
+                        else if (reCode != 0)
+                            exceptionIds.Add(idx);  // crash without FAIL marker — impl threw
 
                         // Merge captured values and WRONGVAL markers from individual run
                         var reVals = ParseValMarkers(reOut);
@@ -230,8 +247,17 @@ static class TestValidator
 
             // ── Report and split ────────────────────────────────────────────────
             // Each classified block remembers its source method for by-method grouping.
-            var classified = new List<(string comment, string body, string sourceMethod, bool failing)>();
+            // When --skip-on-exception is off, merge exceptionIds into failedIds so the
+            // classification logic treats them as failures (legacy behavior). When on,
+            // route them to a new "skipped-exception" bucket.
+            if (!SkipOnException)
+            {
+                foreach (var idx in exceptionIds) failedIds.Add(idx);
+                exceptionIds.Clear();
+            }
+            var classified = new List<(string comment, string body, string sourceMethod, TestStatus status)>();
             int skippedCount = 0;
+            int skippedExceptionCount = 0;
             int passingCount = 0;
             int failingCount = 0;
 
@@ -242,6 +268,21 @@ static class TestValidator
                 {
                     skippedCount++;
                     Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: SKIP (precondition violated)");
+                }
+                else if (exceptionIds.Contains(i))
+                {
+                    // --skip-on-exception on: impl threw. Keep the block in the output
+                    // so the user can see what was attempted, but mark CrashSkipped so
+                    // EmitByMethodTests comments out EVERY line (including the method
+                    // call) — otherwise the crash would re-occur and abort later tests.
+                    var annotatedBody = InjectRuntimeInfo(
+                        body,
+                        capturedOuts.GetValueOrDefault(i),
+                        stderrByTestId.GetValueOrDefault(i),
+                        failing: true);
+                    classified.Add((comment, annotatedBody, src, TestStatus.CrashSkipped));
+                    skippedExceptionCount++;
+                    Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: SKIP (exception from implementation)");
                 }
                 else if (failedIds.Contains(i))
                 {
@@ -255,7 +296,7 @@ static class TestValidator
                         capturedOuts.GetValueOrDefault(i),
                         stderrByTestId.GetValueOrDefault(i),
                         failing: true);
-                    classified.Add((comment, annotatedBody, src, true));
+                    classified.Add((comment, annotatedBody, src, TestStatus.Failing));
                     failingCount++;
                     Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: FAIL");
                 }
@@ -263,7 +304,7 @@ static class TestValidator
                 {
                     var injected = InjectCapturedValues(body, i, capturedVals, arrayOutputNames, forceReplace: true);
                     injected = InjectRuntimeInfo(injected, capturedOuts.GetValueOrDefault(i), null, failing: false);
-                    classified.Add((comment, injected, src, false));
+                    classified.Add((comment, injected, src, TestStatus.Passing));
                     passingCount++;
                     Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: PASS (rescued — Z3 value corrected by runtime)");
                 }
@@ -271,7 +312,7 @@ static class TestValidator
                 {
                     var injected = InjectCapturedValues(body, i, capturedVals, arrayOutputNames);
                     injected = InjectRuntimeInfo(injected, capturedOuts.GetValueOrDefault(i), null, failing: false);
-                    classified.Add((comment, injected, src, false));
+                    classified.Add((comment, injected, src, TestStatus.Passing));
                     passingCount++;
                     Console.WriteLine($"  Test {i + 1}/{testBlocks.Count}: PASS");
                 }
@@ -279,12 +320,15 @@ static class TestValidator
 
             var resultMsg = $"[DafnyTestGen] Results: {passingCount} passing, {failingCount} failing";
             if (skippedCount > 0) resultMsg += $", {skippedCount} skipped (precondition violated)";
+            if (skippedExceptionCount > 0) resultMsg += $", {skippedExceptionCount} skipped (exception)";
             Console.WriteLine(resultMsg);
 
             if (grouping == "by-status")
             {
-                var passing = classified.Where(c => !c.failing).Select(c => (c.comment, c.body)).ToList();
-                var failing = classified.Where(c => c.failing).Select(c => (c.comment, c.body)).ToList();
+                var passing = classified.Where(c => c.status == TestStatus.Passing)
+                    .Select(c => (c.comment, c.body, c.status)).ToList();
+                var failing = classified.Where(c => c.status != TestStatus.Passing)
+                    .Select(c => (c.comment, c.body, c.status)).ToList();
                 return EmitSplitTests(sourceHeader, passing, failing);
             }
             return EmitByMethodTests(sourceHeader, classified, sourceMethodOrder);
@@ -548,6 +592,12 @@ static class TestValidator
             var arrayLocals = new HashSet<string>();
             foreach (Match m in Regex.Matches(result, @"^\s*var\s+(\w+)\s*:=\s*new\s+\w+\s*\[", RegexOptions.Multiline))
                 arrayLocals.Add(m.Groups[1].Value);
+            // Class instances (new T(...) — parens, not brackets) have no Dafny-literal
+            // representation: printing them yields runtime artifacts like "_module.T",
+            // which aren't valid in `expect`. Skip OUT capture for those entirely.
+            var classInstanceLocals = new HashSet<string>();
+            foreach (Match m in Regex.Matches(result, @"^\s*var\s+(\w+)\s*:=\s*new\s+[\w.<>]+\s*\(", RegexOptions.Multiline))
+                classInstanceLocals.Add(m.Groups[1].Value);
 
             var declaredVars = new List<string>();
             var seen = new HashSet<string>();
@@ -568,6 +618,7 @@ static class TestValidator
                 const string indent = "    ";
                 foreach (var name in declaredVars)
                 {
+                    if (classInstanceLocals.Contains(name)) continue; // skip: no literal form
                     bool isArray = arrayLocals.Contains(name)
                         || (arrayOutputNames != null && arrayOutputNames.Contains(name));
                     if (stringOutputNames != null && stringOutputNames.Contains(name))
@@ -738,6 +789,10 @@ static class TestValidator
         // Don't emit VAL for simple scalar literals — the expect is already concrete
         if (IsSimpleScalarLiteral(rhs)) return null;
 
+        // Skip when rhs contains a top-level ==>, <==>, &&, or || — those bind weaker than ==,
+        // so the expect is really "(varName == x) OP ..." and `(rhs)` is not a bool expression.
+        if (Program.ContainsTopLevelLooserOp(rhs)) return null;
+
         string valLine;
         string rhsValLine;
 
@@ -844,12 +899,16 @@ static class TestValidator
                 }
             }
 
-            // Top-level boolean connective → expression is a conjunction/disjunction
-            // whose precedence is lower than ==, so splitting on the first == would
-            // grab only the first sub-term's RHS. Must scan the whole string first
-            // before committing to a split — hence we record the == position but
-            // keep scanning.
+            // Top-level boolean connective → expression is a conjunction/disjunction/
+            // implication whose precedence is lower than ==, so splitting on the first
+            // top-level == would grab only the first sub-term's RHS. Abort entirely.
             if ((c == '|' && s[i + 1] == '|') || (c == '&' && s[i + 1] == '&'))
+                return -1;
+            // ==>  — implication binds looser than ==
+            if (c == '=' && i + 2 < s.Length && s[i + 1] == '=' && s[i + 2] == '>')
+                return -1;
+            // <==> — equivalence binds looser than ==
+            if (c == '<' && i + 3 < s.Length && s[i + 1] == '=' && s[i + 2] == '=' && s[i + 3] == '>')
                 return -1;
 
             if (c == '=' && s[i + 1] == '=' && firstEqPos < 0)
@@ -1049,11 +1108,14 @@ static class TestValidator
             var comments = new List<string>();
             if (meaningful.Count > 0)
             {
-                // Drop names already disclosed via "// expect ...; // got <val>" in
-                // commented expects below — the runtime state would duplicate that.
+                // Drop names already disclosed via "expect ...; // got <val>" in
+                // expect lines (either still bare or already commented) below — the
+                // runtime state would duplicate that. At this point expects haven't
+                // been commented yet (that happens later in EmitByMethodTests), so
+                // match both "expect ..." and "// expect ..." prefixes.
                 var kept = meaningful.Where(kv =>
                     !Regex.IsMatch(body,
-                        @"//\s*expect\s+" + Regex.Escape(kv.Key) + @"\b[^\r\n]*//\s*got\s+" + Regex.Escape(kv.Value) + @"\b"))
+                        @"(?://\s*)?expect\s+" + Regex.Escape(kv.Key) + @"\b[^\r\n]*//\s*got\s+" + Regex.Escape(kv.Value) + @"\b"))
                     .ToList();
                 if (kept.Count > 0)
                 {
@@ -1087,9 +1149,13 @@ static class TestValidator
         {
             var name = kv.Key;
             var val = kv.Value;
-            // Array if value starts with '[' or var decl used `new`
+            // Skip runtime artifacts that can't be expressed as Dafny literals
+            // (e.g. "_module.T" from printing a class instance).
+            if (val.StartsWith("_module.") || val.Contains("@_")) continue;
+            // Array if value starts with '[' OR var was declared with `new T[...]` (square brackets).
+            // Class instances (`new T(...)` — parens) are excluded: they have no seq-slice semantics.
             bool isArr = val.TrimStart().StartsWith("[")
-                         || Regex.IsMatch(body, @"^\s*var\s+" + Regex.Escape(name) + @"\s*:=\s*new\s", RegexOptions.Multiline);
+                         || Regex.IsMatch(body, @"^\s*var\s+" + Regex.Escape(name) + @"\s*:=\s*new\s+[\w.<>]+\s*\[", RegexOptions.Multiline);
             var lhs = isArr ? $"{name}[..]" : name;
             lines.Add($"{ind}expect {lhs} == {val}; // observed from implementation");
         }
@@ -1410,8 +1476,8 @@ static class TestValidator
 
     static string EmitSplitTests(
         string sourceHeader,
-        List<(string comment, string body)> passingBlocks,
-        List<(string comment, string body)> failingBlocks)
+        List<(string comment, string body, TestStatus status)> passingBlocks,
+        List<(string comment, string body, TestStatus status)> failingBlocks)
     {
         var sb = new StringBuilder();
         sb.Append(sourceHeader);
@@ -1420,7 +1486,7 @@ static class TestValidator
         sb.AppendLine("{");
         if (passingBlocks.Count == 0)
             sb.AppendLine("  // (no passing tests)");
-        foreach (var (comment, body) in passingBlocks)
+        foreach (var (comment, body, _) in passingBlocks)
         {
             sb.AppendLine(comment);
             sb.AppendLine("  {");
@@ -1436,15 +1502,25 @@ static class TestValidator
         sb.AppendLine("{");
         if (failingBlocks.Count == 0)
             sb.AppendLine("  // (no failing tests)");
-        foreach (var (comment, body) in failingBlocks)
+        foreach (var (comment, body, status) in failingBlocks)
         {
+            if (status == TestStatus.CrashSkipped)
+                sb.AppendLine("  // SKIPPED (exception from implementation): body commented out so the crash doesn't abort subsequent tests");
             sb.AppendLine(comment);
             sb.AppendLine("  {");
             foreach (var line in body.Split('\n').Select(l => l.TrimEnd()))
             {
                 if (line.Length == 0) continue;
                 var trimmed = line.TrimStart();
-                if (trimmed.StartsWith("expect "))
+                if (status == TestStatus.CrashSkipped)
+                {
+                    // Comment every non-comment line so the crashing call doesn't run.
+                    if (trimmed.StartsWith("//"))
+                        sb.AppendLine(line);
+                    else
+                        sb.AppendLine(line.Replace(trimmed, "// " + trimmed));
+                }
+                else if (trimmed.StartsWith("expect "))
                     sb.AppendLine(line.Replace("expect ", "// expect "));
                 else
                     sb.AppendLine(line);
@@ -1484,17 +1560,17 @@ static class TestValidator
             @"(  // Test case[^\r\n]*\r?\n(?:  //[^\r\n]*\r?\n)*)  \{\r?\n(.*?)  \}",
             RegexOptions.Singleline);
 
-        var passing = new List<(string comment, string body)>();
+        var passing = new List<(string comment, string body, TestStatus status)>();
         foreach (Match w in wrapperPattern.Matches(generatedCode))
             foreach (Match m in blockPattern.Matches(w.Groups[1].Value))
-                passing.Add((m.Groups[1].Value.TrimEnd(), m.Groups[2].Value));
+                passing.Add((m.Groups[1].Value.TrimEnd(), m.Groups[2].Value, TestStatus.Passing));
 
-        return EmitSplitTests(sourceHeader, passing, new List<(string, string)>());
+        return EmitSplitTests(sourceHeader, passing, new List<(string, string, TestStatus)>());
     }
 
     static string EmitByMethodTests(
         string sourceHeader,
-        List<(string comment, string body, string sourceMethod, bool failing)> classified,
+        List<(string comment, string body, string sourceMethod, TestStatus status)> classified,
         List<string> sourceMethodOrder)
     {
         var sb = new StringBuilder();
@@ -1516,15 +1592,29 @@ static class TestValidator
             sb.AppendLine("{");
             if (blocks.Count == 0)
                 sb.AppendLine("  // (no tests)");
-            foreach (var (comment, body, _, failing) in blocks)
+            foreach (var (comment, body, _, status) in blocks)
             {
-                if (failing)
+                bool failing = status == TestStatus.Failing;
+                bool crashSkipped = status == TestStatus.CrashSkipped;
+                if (crashSkipped)
+                    sb.AppendLine("  // SKIPPED (exception from implementation): body commented out so the crash doesn't abort subsequent tests");
+                else if (failing)
                     sb.AppendLine("  // FAILING: expects commented out; see VAL/RHS annotations below");
                 sb.AppendLine(comment);
                 sb.AppendLine("  {");
                 foreach (var line in body.Split('\n').Select(l => l.TrimEnd()))
                 {
                     if (line.Length == 0) continue;
+                    if (crashSkipped)
+                    {
+                        // Comment every non-comment line so the crashing call doesn't run.
+                        var trimmed = line.TrimStart();
+                        if (trimmed.StartsWith("//"))
+                            sb.AppendLine(line);
+                        else
+                            sb.AppendLine(line.Replace(trimmed, "// " + trimmed));
+                        continue;
+                    }
                     if (failing)
                     {
                         var trimmed = line.TrimStart();

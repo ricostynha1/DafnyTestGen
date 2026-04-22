@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-21 23:15:22
+// Generated: 2026-04-21 23:41:45
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -64,33 +64,33 @@ method TestsForToLowercase()
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   {
-    var s: seq<char> := ['l'];
+    var s: seq<char> := ['~'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['l']; // observed from implementation
+    expect v == ['~']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   {
-    var s: seq<char> := ['W', '~'];
+    var s: seq<char> := ['V', ' '];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['w', '~']; // observed from implementation
+    expect v == ['v', ' ']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i])
   {
-    var s: seq<char> := ['k'];
+    var s: seq<char> := ['}'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == CharToLower(s[i]);
-    expect v == ['k']; // observed from implementation
+    expect v == ['}']; // observed from implementation
   }
 
 }

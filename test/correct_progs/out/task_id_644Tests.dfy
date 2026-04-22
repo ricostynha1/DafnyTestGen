@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_644.dfy
 // Method: ReverseUptoK
-// Generated: 2026-04-21 23:16:50
+// Generated: 2026-04-21 23:43:57
 
 // Reverses the array up to index k (exclusive).
 method ReverseUptoK<T>(s: array<T>, k: nat := s.Length)
@@ -47,10 +47,10 @@ method TestsForReverseUptoK()
   //   POST Q1: forall i: int :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
   //   POST Q2: forall i: int :: k <= i < s.Length ==> s[i] == old(s[i])
   {
-    var s := new int[2] [11, 11];
+    var s := new int[2] [9, 9];
     var k := 2;
     ReverseUptoK<int>(s, k);
-    expect s[..] == [11, 11];
+    expect s[..] == [9, 9];
   }
 
   // Test case for combination {1}/Bk=0:
