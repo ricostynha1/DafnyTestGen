@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-04-21 23:17:07
+// Generated: 2026-04-21 23:44:20
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).
@@ -48,7 +48,7 @@ method TestsForAllCharactersSame()
   //   POST Q1: !result
   //   POST Q2: !forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
-    var s: seq<char> := ['}', '~'];
+    var s: seq<char> := ['~', '}'];
     var result := AllCharactersSame(s);
     expect result == false;
   }

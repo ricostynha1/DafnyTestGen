@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-04-21 23:14:33
+// Generated: 2026-04-21 23:40:32
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -74,7 +74,7 @@ method TestsForAnyValueExists()
   //   POST Q2: exists x: int :: x in seq1 && x in seq2
   {
     var seq1: seq<int> := [27, 12];
-    var seq2: seq<int> := [12, 28];
+    var seq2: seq<int> := [12, 34];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == true;
   }

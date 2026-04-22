@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_579.dfy
 // Method: DissimilarElements
-// Generated: 2026-04-21 23:15:50
+// Generated: 2026-04-21 23:42:35
 
 // Takes two arrays and returns the set of elements that are in one array 
 // but not in the other.
@@ -97,10 +97,10 @@ method TestsForDissimilarElements()
   // Test case for combination {1}/O|b|>=2:
   //   POST Q1: res == (set x: int {:trigger x in b[..]} {:trigger x in a[..]} | x in a[..] && x !in b[..]) + set x: int {:trigger x in a[..]} {:trigger x in b[..]} | x in b[..] && x !in a[..]
   {
-    var a := new int[2] [13, 12];
+    var a := new int[0] [];
     var b := new int[2] [5, 6];
     var res := DissimilarElements<int>(a, b);
-    expect res == {5, 6, 12, 13};
+    expect res == {5, 6};
   }
 
 }

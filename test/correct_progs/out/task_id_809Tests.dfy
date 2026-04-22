@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_809.dfy
 // Method: IsSmaller
-// Generated: 2026-04-21 23:18:03
+// Generated: 2026-04-21 23:45:24
 
 // Given two sequences of integers of equal length, checks if the 
 // elements in the first sequence are smaller than the elements in the
@@ -58,8 +58,8 @@ method TestsForIsSmaller()
   //   POST Q2: 0 <= (|a| - 1)
   //   POST Q3: a[0] >= b[0]
   {
-    var a: seq<int> := [-7];
-    var b: seq<int> := [-7];
+    var a: seq<int> := [-9];
+    var b: seq<int> := [-9];
     var result := IsSmaller(a, b);
     expect result == false;
   }
@@ -69,8 +69,8 @@ method TestsForIsSmaller()
   //   POST Q1: !result
   //   POST Q2: exists i :: 1 <= i < (|a| - 1) && !(a[i] < b[i])
   {
-    var a: seq<int> := [-8, 10, -1, 25571];
-    var b: seq<int> := [9, 4, -10, 25572];
+    var a: seq<int> := [-8, 10, 8, 27011];
+    var b: seq<int> := [10, -1, -10, 27012];
     var result := IsSmaller(a, b);
     expect result == false;
   }

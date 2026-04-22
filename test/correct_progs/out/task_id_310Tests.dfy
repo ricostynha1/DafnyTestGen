@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_310.dfy
 // Method: ToCharArray
-// Generated: 2026-04-21 23:14:18
+// Generated: 2026-04-21 23:40:09
 
 // Converts a string (sequence of characters) to an array of characters.
 method ToCharArray(s: string) returns (a: array<char>)
@@ -52,10 +52,10 @@ method TestsForToCharArray()
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: a[..] == s
   {
-    var s: seq<char> := ['~', '%'];
+    var s: seq<char> := ['~', '?'];
     var a := ToCharArray(s);
-    expect a[..] == ['~', '%'];
-    expect a == ~%; // observed from implementation
+    expect a[..] == ['~', '?'];
+    expect a == ~?; // observed from implementation
   }
 
   // Test case for combination {1}/R4:

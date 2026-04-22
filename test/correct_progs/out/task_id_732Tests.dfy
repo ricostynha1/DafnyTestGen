@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-21 23:17:02
+// Generated: 2026-04-21 23:44:13
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -56,33 +56,33 @@ method TestsForReplaceWithColon()
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['I'];
+    var s: seq<char> := ['~'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['I']; // observed from implementation
+    expect v == ['~']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['~', ';'];
+    var s: seq<char> := ['o', 'i'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['~', ';']; // observed from implementation
+    expect v == ['o', 'i']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i])
   {
-    var s: seq<char> := ['H'];
+    var s: seq<char> := ['}'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == ReplaceCharWithColon(s[i]);
-    expect v == ['H']; // observed from implementation
+    expect v == ['}']; // observed from implementation
   }
 
 }

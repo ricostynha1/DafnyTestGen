@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-21 23:16:56
+// Generated: 2026-04-21 23:44:05
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -52,7 +52,7 @@ method TestsForAllSequencesEqualLength()
   //   POST Q1: !result
   //   POST Q2: !forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
-    var list: seq<seq<int>> := [[], [], [], [], [], [13], [26], [14]];
+    var list: seq<seq<int>> := [[], [13], [14], [15], [], [16], [], [24]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == false;
   }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-04-21 23:15:25
+// Generated: 2026-04-21 23:41:50
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -99,9 +99,9 @@ method TestsForSumCubes()
   // Test case for combination {1}:
   //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
   {
-    var n := 10;
+    var n := 2;
     var s := SumCubes(n);
-    expect s == 3025;
+    expect s == 9;
   }
 
   // Test case for combination {1}/Bn=0:
@@ -121,11 +121,14 @@ method TestsForSumCubes()
   }
 
   // Test case for combination {1}/R4:
+  //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
+  //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
+  //         Expected output values may be spurious — Dafny static check will flag if so.
   //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
   {
-    var n := 9;
+    var n := 10;
     var s := SumCubes(n);
-    expect s == 2025;
+    expect s == 3025;
   }
 
 }

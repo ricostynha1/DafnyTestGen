@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-21 23:17:44
+// Generated: 2026-04-22 10:30:09
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -64,7 +64,7 @@ method TestsForLastPosition()
   //   POST Q1: elem !in arr[..]
   //   POST Q2: pos == -1
   {
-    var arr := new int[1] [-3];
+    var arr := new int[1] [-5];
     var elem := -10;
     var pos := LastPosition(arr, elem);
     expect pos == -1;
@@ -78,8 +78,8 @@ method TestsForLastPosition()
   //   POST Q4: arr[pos] == elem  // VACUOUS (forced true by other literals for this ins)
   //   POST Q5: elem !in arr[pos + 1..]
   {
-    var arr := new int[1] [-1];
-    var elem := -1;
+    var arr := new int[1] [38];
+    var elem := 38;
     var pos := LastPosition(arr, elem);
     expect pos == 0;
   }
