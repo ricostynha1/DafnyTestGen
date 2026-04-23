@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15__684_VER_n.dfy
 // Method: SelectionSort
-// Generated: 2026-04-08 16:21:00
+// Generated: 2026-04-22 21:52:30
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_ProgramProofs_ch15.dfy
 
@@ -117,118 +117,97 @@ method Partition(a: array<int>, lo: int, hi: int)
 }
 
 
-method Passing()
+method TestsForSelectionSort()
 {
-  // Test case for combination {1}:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
+  {
+    var a := new int[2] [-7, 3];
+    var old_multiset_a := multiset(a[..]);
+    SelectionSort(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.SelectionSort(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_jclpowpepu2\runner.cs:line 5961
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_jclpowpepu2\runner.cs:line 6060
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect a[..] == [];
-  }
-
-  // Test case for combination {1}:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[0] [];
-    var old_multiset_a := multiset(a[..]);
-    QuickSort(a);
-    expect a[..] == [];
-  }
-
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[1] [2];
-    var old_multiset_a := multiset(a[..]);
-    QuickSort(a);
     expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     expect multiset(a[..]) == old_multiset_a;
+    expect old_multiset_a == multiset{}; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|=1:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [6, 5];
+    var a := new int[1] [-10];
     var old_multiset_a := multiset(a[..]);
-    QuickSort(a);
-    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[3] [8, 7, 9];
-    var old_multiset_a := multiset(a[..]);
-    QuickSort(a);
-    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    expect multiset(a[..]) == old_multiset_a;
+    SelectionSort(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.SelectionSort(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_jclpowpepu2\runner.cs:line 5961
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_jclpowpepu2\runner.cs:line 6139
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
   }
 
 }
 
-method Failing()
+method TestsForQuickSort()
 {
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // Test case for combination {1}/Rel:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [2];
+    var a := new int[2] [3, -1];
     var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    // expect multiset(a[..]) == old_multiset_a;
+    QuickSort(a);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect multiset(a[..]) == old_multiset_a;
+    expect old_multiset_a == multiset{-1, 3}; // observed from implementation
+    expect a[..] == [-1, 3]; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[2] [6, 5];
+    var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    // expect multiset(a[..]) == old_multiset_a;
+    QuickSort(a);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect multiset(a[..]) == old_multiset_a;
+    expect old_multiset_a == multiset{}; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // Test case for combination {1}/O|a|=1:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [8, 7, 9];
+    var a := new int[1] [-10];
     var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    // expect multiset(a[..]) == old_multiset_a;
+    QuickSort(a);
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect multiset(a[..]) == old_multiset_a;
+    expect old_multiset_a == multiset{-10}; // observed from implementation
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSelectionSort();
+  print "TestsForSelectionSort: all non-failing tests passed!\n";
+  TestsForQuickSort();
+  print "TestsForQuickSort: all non-failing tests passed!\n";
 }

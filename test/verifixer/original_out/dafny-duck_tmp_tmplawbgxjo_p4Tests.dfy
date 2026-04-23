@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-duck_tmp_tmplawbgxjo_p4.dfy
 // Method: single
-// Generated: 2026-04-08 19:06:58
+// Generated: 2026-04-22 21:29:47
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -48,65 +48,56 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForsingle()
 {
   // Test case for combination {1}:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [3];
+    var x := new int[1] [5];
     var y := new int[1] [7];
     var b := single(x, y);
-    expect b[..] == [3, 7];
+    expect b[..] == [5, 7];
   }
 
-  // Test case for combination {1}/Bx=1,y=2:
+  // Test case for combination {1}/O|x|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [9];
-    var y := new int[2] [4, 3];
+    var x := new int[2] [-10, -7];
+    var y := new int[1] [-1];
     var b := single(x, y);
-    expect b[..] == [9, 4, 3];
+    expect b[..] == [-10, -7, -1];
   }
 
-  // Test case for combination {1}/Bx=1,y=3:
+  // Test case for combination {1}/O|y|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [14];
-    var y := new int[3] [5, 4, 6];
+    var x := new int[1] [-1];
+    var y := new int[2] [-10, -7];
     var b := single(x, y);
-    expect b[..] == [14, 5, 4, 6];
+    expect b[..] == [-1, -10, -7];
   }
 
-  // Test case for combination {1}/Bx=2,y=1:
+  // Test case for combination {1}/R4:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[2] [4, 3];
-    var y := new int[1] [9];
+    var x := new int[1] [3];
+    var y := new int[1] [6];
     var b := single(x, y);
-    expect b[..] == [4, 3, 9];
+    expect b[..] == [3, 6];
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsingle();
+  print "TestsForsingle: all non-failing tests passed!\n";
 }

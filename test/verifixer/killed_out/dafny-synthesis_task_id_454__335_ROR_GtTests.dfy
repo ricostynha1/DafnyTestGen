@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_454__335_ROR_Gt.dfy
 // Method: ContainsZ
-// Generated: 2026-04-08 16:55:39
+// Generated: 2026-04-22 21:44:22
 
 // dafny-synthesis_task_id_454.dfy
 
@@ -22,52 +22,51 @@ method ContainsZ(s: string) returns (result: bool)
 }
 
 
-method GeneratedTests_ContainsZ()
+method TestsForContainsZ()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: result
-  //   POST: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  //   ENSURES: result <==> exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
+  //   POST Q1: result
+  //   POST Q2: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
   {
     var s: seq<char> := ['Z'];
     var result := ContainsZ(s);
-    expect result == true;
+    // expect result == true; // got false
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {2}:
-  //   POST: !result
-  //   POST: !exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  //   ENSURES: result <==> exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['o'];
+    var result := ContainsZ(s);
+    // expect result == false; // got true
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|s|>=2:
+  //   POST Q1: result
+  //   POST Q2: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
+  {
+    var s: seq<char> := ['Z', 'Y'];
+    var result := ContainsZ(s);
+    // expect result == true; // got false
+  }
+
+  // Test case for combination {2}/O|s|=0:
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
+  {
+    var s: seq<char> := [];
     var result := ContainsZ(s);
     expect result == false;
-  }
-
-  // Test case for combination {1}/Bs=2:
-  //   POST: result
-  //   POST: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  //   ENSURES: result <==> exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  {
-    var s: seq<char> := ['z', '{'];
-    var result := ContainsZ(s);
-    expect result == true;
-  }
-
-  // Test case for combination {1}/Bs=3:
-  //   POST: result
-  //   POST: exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  //   ENSURES: result <==> exists i: int {:trigger s[i]} :: (0 <= i < |s| && s[i] == 'z') || (0 <= i < |s| && s[i] == 'Z')
-  {
-    var s: seq<char> := ['z', '{', '|'];
-    var result := ContainsZ(s);
-    expect result == true;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_ContainsZ();
-  print "GeneratedTests_ContainsZ: all tests passed!\n";
+  TestsForContainsZ();
+  print "TestsForContainsZ: all non-failing tests passed!\n";
 }

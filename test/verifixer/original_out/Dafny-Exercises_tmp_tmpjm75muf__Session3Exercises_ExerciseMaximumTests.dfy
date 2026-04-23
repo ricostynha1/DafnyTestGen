@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session3Exercises_ExerciseMaximum.dfy
 // Method: mmaximum1
-// Generated: 2026-04-08 19:08:48
+// Generated: 2026-04-22 21:30:44
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session3Exercises_ExerciseMaximum.dfy
 
@@ -114,397 +114,307 @@ method mmaxvalue2(v: array<int>) returns (m: int)
 }
 
 
-method Passing()
+method TestsFormmaximum1()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
-    var v := new int[1] [-38];
-    var i := mmaximum1(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  {
-    var v := new int[2] [7719, 7720];
+    var v := new int[2] [-10, 3];
     var i := mmaximum1(v);
     expect i == 1;
   }
 
-  // Test case for combination {1}/Bv=3:
+  // Test case for combination {1}/Bi=0:
   //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
-    var v := new int[3] [-12385, -12384, -12383];
+    var v := new int[1] [10];
     var i := mmaximum1(v);
-    expect i == 2;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  {
-    var v := new int[1] [-38];
-    var i := mmaximum2(v);
     expect i == 0;
   }
 
-  // Test case for combination {1}/Bv=2:
+  // Test case for combination {1}/R2:
   //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
-    var v := new int[2] [7719, 7720];
-    var i := mmaximum2(v);
-    expect i == 1;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  {
-    var v := new int[3] [-12385, -12384, -12383];
-    var i := mmaximum2(v);
-    expect i == 2;
-  }
-
-  // Test case for combination {1}/Oi>0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  {
-    var v := new int[4] [-38, -21238, -2437, 7719];
-    var i := mmaximum2(v);
-    expect i == 3;
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  {
-    var v := new int[5] [7719, -38, -21238, -2437, -8855];
-    var i := mmaximum2(v);
+    var v := new int[1] [4];
+    var i := mmaximum1(v);
     expect i == 0;
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/R3:
   //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
   {
-    var v := new int[1] [0];
-    var i := mfirstMaximum(v);
+    var v := new int[1] [-6];
+    var i := mmaximum1(v);
     expect i == 0;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  {
-    var v := new int[2] [57702, 57703];
-    var i := mfirstMaximum(v);
-    expect i == 1;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  {
-    var v := new int[3] [7717, 7718, 7719];
-    var i := mfirstMaximum(v);
-    expect i == 2;
-  }
-
-  // Test case for combination {1}/Oi>0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  {
-    var v := new int[4] [7719, 0, 0, 7720];
-    var i := mfirstMaximum(v);
-    expect i == 3;
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
-  {
-    var v := new int[5] [7719, -38, -21238, -2437, -8855];
-    var i := mfirstMaximum(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  {
-    var v := new int[1] [-38];
-    var i := mlastMaximum(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  {
-    var v := new int[2] [7719, 7718];
-    var i := mlastMaximum(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  {
-    var v := new int[3] [23676, 23674, 23675];
-    var i := mlastMaximum(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}/Oi>0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  {
-    var v := new int[4] [-38, 7719, 7718, 5281];
-    var i := mlastMaximum(v);
-    expect i == 1;
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   PRE:  v.Length > 0
-  //   POST: 0 <= i < v.Length
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   POST: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  //   ENSURES: 0 <= i < v.Length
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
-  //   ENSURES: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
-  {
-    var v := new int[8] [23676, 15956, 23675, 23675, 23675, -8855, -11797, -8365];
-    var i := mlastMaximum(v);
-    expect i == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[1] [0];
-    var m := mmaxvalue1(v);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[2] [-1, 0];
-    var m := mmaxvalue1(v);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[3] [28955, 28956, 28957];
-    var m := mmaxvalue1(v);
-    expect m == 28957;
-  }
-
-  // Test case for combination {1}/Om>0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[4] [-38, -21238, -2437, 7720];
-    var m := mmaxvalue1(v);
-    expect m == 7720;
-  }
-
-  // Test case for combination {1}/Om<0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[5] [-39, -39, -39, -39, -39];
-    var m := mmaxvalue1(v);
-    expect m == -39;
-  }
-
-  // Test case for combination {1}/Om=0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[6] [-38, -7719, -21238, -2437, -8855, 0];
-    var m := mmaxvalue1(v);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[1] [0];
-    var m := mmaxvalue2(v);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[2] [-1, 0];
-    var m := mmaxvalue2(v);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[3] [28955, 28956, 28957];
-    var m := mmaxvalue2(v);
-    expect m == 28957;
-  }
-
-  // Test case for combination {1}/Om>0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[4] [-38, -21238, -2437, 7720];
-    var m := mmaxvalue2(v);
-    expect m == 7720;
-  }
-
-  // Test case for combination {1}/Om<0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[5] [-39, -39, -39, -39, -39];
-    var m := mmaxvalue2(v);
-    expect m == -39;
-  }
-
-  // Test case for combination {1}/Om=0:
-  //   PRE:  v.Length > 0
-  //   POST: m in v[..]
-  //   POST: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  //   ENSURES: m in v[..]
-  //   ENSURES: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
-  {
-    var v := new int[6] [-38, -7719, -21238, -2437, -8855, 0];
-    var m := mmaxvalue2(v);
-    expect m == 0;
   }
 
 }
 
-method Failing()
+method TestsFormmaximum2()
 {
-  // (no failing tests)
+  // Test case for combination {1}/Rel:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  {
+    var v := new int[2] [10, 4];
+    var i := mmaximum2(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/Bi=1:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  {
+    var v := new int[2] [-10, -10];
+    var i := mmaximum2(v);
+    expect i == 1 || i == 0;
+    expect i == 1; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|v|=1:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  {
+    var v := new int[1] [-10];
+    var i := mmaximum2(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  {
+    var v := new int[1] [10];
+    var i := mmaximum2(v);
+    expect i == 0;
+  }
+
+}
+
+method TestsFormfirstMaximum()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
+  {
+    var v := new int[3] [-6, -3, -3];
+    var i := mfirstMaximum(v);
+    expect i == 1;
+  }
+
+  // Test case for combination {1}/Bi=0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
+  {
+    var v := new int[1] [10];
+    var i := mfirstMaximum(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
+  {
+    var v := new int[1] [-10];
+    var i := mfirstMaximum(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: 0 <= l < i ==> v[i] > v[l]
+  {
+    var v := new int[1] [9];
+    var i := mfirstMaximum(v);
+    expect i == 0;
+  }
+
+}
+
+method TestsFormlastMaximum()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
+  {
+    var v := new int[4] [-1, -1, -7, -8];
+    var i := mlastMaximum(v);
+    expect i == 1;
+  }
+
+  // Test case for combination {1}/Bi=0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
+  {
+    var v := new int[1] [-10];
+    var i := mlastMaximum(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
+  {
+    var v := new int[1] [-9];
+    var i := mlastMaximum(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  v.Length > 0
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> v[i] >= v[k]
+  //   POST Q4: forall l: int {:trigger v[l]} :: i < l < v.Length ==> v[i] > v[l]
+  {
+    var v := new int[1] [10];
+    var i := mlastMaximum(v);
+    expect i == 0;
+  }
+
+}
+
+method TestsFormmaxvalue1()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[2] [-10, -9];
+    var m := mmaxvalue1(v);
+    expect m == -9;
+  }
+
+  // Test case for combination {1}/O|v|=1:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[1] [-10];
+    var m := mmaxvalue1(v);
+    expect m == -10;
+  }
+
+  // Test case for combination {1}/Om=0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[4] [-1, -10, -9, 0];
+    var m := mmaxvalue1(v);
+    expect m == 0;
+  }
+
+  // Test case for combination {1}/Om>0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[1] [10];
+    var m := mmaxvalue1(v);
+    expect m == 10;
+  }
+
+}
+
+method TestsFormmaxvalue2()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[2] [-10, -9];
+    var m := mmaxvalue2(v);
+    expect m == -9;
+  }
+
+  // Test case for combination {1}/O|v|=1:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[1] [-10];
+    var m := mmaxvalue2(v);
+    expect m == -10;
+  }
+
+  // Test case for combination {1}/Om=0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[4] [-1, -10, -9, 0];
+    var m := mmaxvalue2(v);
+    expect m == 0;
+  }
+
+  // Test case for combination {1}/Om>0:
+  //   PRE:  v.Length > 0
+  //   POST Q1: m in v[..]
+  //   POST Q2: forall k: int {:trigger v[k]} :: 0 <= k < v.Length ==> m >= v[k]
+  {
+    var v := new int[1] [10];
+    var m := mmaxvalue2(v);
+    expect m == 10;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormmaximum1();
+  print "TestsFormmaximum1: all non-failing tests passed!\n";
+  TestsFormmaximum2();
+  print "TestsFormmaximum2: all non-failing tests passed!\n";
+  TestsFormfirstMaximum();
+  print "TestsFormfirstMaximum: all non-failing tests passed!\n";
+  TestsFormlastMaximum();
+  print "TestsFormlastMaximum: all non-failing tests passed!\n";
+  TestsFormmaxvalue1();
+  print "TestsFormmaxvalue1: all non-failing tests passed!\n";
+  TestsFormmaxvalue2();
+  print "TestsFormmaxvalue2: all non-failing tests passed!\n";
 }

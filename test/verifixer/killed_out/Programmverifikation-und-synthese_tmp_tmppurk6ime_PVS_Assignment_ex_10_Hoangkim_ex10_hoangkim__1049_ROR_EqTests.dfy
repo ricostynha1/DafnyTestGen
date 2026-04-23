@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim__1049_ROR_Eq.dfy
 // Method: square0
-// Generated: 2026-04-08 16:23:02
+// Generated: 2026-04-22 21:56:04
 
 // Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim.dfy
 
@@ -57,11 +57,18 @@ method test0()
 }
 
 
-method GeneratedTests_square0()
+method TestsForsquare0()
 {
   // Test case for combination {1}:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  //   POST Q1: sqn == n * n
+  {
+    var n := 10;
+    var sqn := square0(n);
+    expect sqn == 100;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST Q1: sqn == n * n
   {
     var n := 0;
     var sqn := square0(n);
@@ -69,30 +76,35 @@ method GeneratedTests_square0()
   }
 
   // Test case for combination {1}/Bn=1:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  //   POST Q1: sqn == n * n
   {
     var n := 1;
     var sqn := square0(n);
     expect sqn == 1;
   }
 
-  // Test case for combination {1}/Osqn>=2:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  // Test case for combination {1}/R4:
+  //   POST Q1: sqn == n * n
   {
-    var n := 2;
+    var n := 9;
     var sqn := square0(n);
-    expect sqn == 4;
+    expect sqn == 81;
   }
 
 }
 
-method GeneratedTests_square1()
+method TestsForsquare1()
 {
   // Test case for combination {1}:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  //   POST Q1: sqn == n * n
+  {
+    var n := 10;
+    var sqn := square1(n);
+    expect sqn == 100;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST Q1: sqn == n * n
   {
     var n := 0;
     var sqn := square1(n);
@@ -100,29 +112,77 @@ method GeneratedTests_square1()
   }
 
   // Test case for combination {1}/Bn=1:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  //   POST Q1: sqn == n * n
   {
     var n := 1;
     var sqn := square1(n);
     expect sqn == 1;
   }
 
-  // Test case for combination {1}/Osqn>=2:
-  //   POST: sqn == n * n
-  //   ENSURES: sqn == n * n
+  // Test case for combination {1}/R4:
+  //   POST Q1: sqn == n * n
   {
-    var n := 2;
+    var n := 9;
     var sqn := square1(n);
-    expect sqn == 4;
+    expect sqn == 81;
+  }
+
+}
+
+method TestsForq()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 3;
+    var y := 6;
+    // var z := q(x, y);
+    // expect z == 2;
+  }
+
+  // Test case for combination {1}/Bx=4:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 4;
+    var y := 10;
+    // var z := q(x, y);
+    // expect z == 3;
+  }
+
+  // Test case for combination {1}/Bz=1:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 0;
+    var y := 10;
+    // var z := q(x, y);
+    // expect z == 1 || z == 2 || z == 3;
+  }
+
+  // Test case for combination {1}/Ox=1:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 1;
+    var y := 10;
+    // var z := q(x, y);
+    // expect z == 2 || z == 3;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_square0();
-  print "GeneratedTests_square0: all tests passed!\n";
-  GeneratedTests_square1();
-  print "GeneratedTests_square1: all tests passed!\n";
+  TestsForsquare0();
+  print "TestsForsquare0: all tests passed!\n";
+  TestsForsquare1();
+  print "TestsForsquare1: all tests passed!\n";
+  TestsForq();
+  print "TestsForq: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Insertion_Sorted_Standard__775-775_EVR_int.dfy
 // Method: sorting
-// Generated: 2026-04-08 16:17:26
+// Generated: 2026-04-22 21:47:23
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Insertion_Sorted_Standard.dfy
 
@@ -40,47 +40,48 @@ method sorting(Array: array<int>)
 }
 
 
-method Passing()
+method TestsForsorting()
 {
   // Test case for combination {1}:
   //   PRE:  Array.Length > 1
-  //   POST: InsertionSorted(Array, 0, Array.Length)
-  //   ENSURES: InsertionSorted(Array, 0, Array.Length)
+  //   POST Q1: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[2] [10, 11];
+    var Array := new int[2] [-10, -10];
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }
 
-  // Test case for combination {1}/BArray=3:
+  // Test case for combination {1}/R2:
   //   PRE:  Array.Length > 1
-  //   POST: InsertionSorted(Array, 0, Array.Length)
-  //   ENSURES: InsertionSorted(Array, 0, Array.Length)
+  //   POST Q1: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[3] [5, 4, 6];
+    var Array := new int[2] [-9, -9];
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }
 
   // Test case for combination {1}/R3:
   //   PRE:  Array.Length > 1
-  //   POST: InsertionSorted(Array, 0, Array.Length)
-  //   ENSURES: InsertionSorted(Array, 0, Array.Length)
+  //   POST Q1: InsertionSorted(Array, 0, Array.Length)
   {
-    var Array := new int[4] [21, 22, 23, 24];
+    var Array := new int[2] [-8, -8];
+    sorting(Array);
+    expect InsertionSorted(Array, 0, Array.Length);
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  Array.Length > 1
+  //   POST Q1: InsertionSorted(Array, 0, Array.Length)
+  {
+    var Array := new int[2] [-5, -1];
     sorting(Array);
     expect InsertionSorted(Array, 0, Array.Length);
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsorting();
+  print "TestsForsorting: all non-failing tests passed!\n";
 }

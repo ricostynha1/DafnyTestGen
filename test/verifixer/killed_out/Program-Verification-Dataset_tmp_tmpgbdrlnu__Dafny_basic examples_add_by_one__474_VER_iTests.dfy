@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one__474_VER_i.dfy
 // Method: add_by_one
-// Generated: 2026-04-08 16:21:04
+// Generated: 2026-04-22 21:52:33
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one.dfy
 
@@ -48,170 +48,52 @@ method bar(x: int, y: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForadd_by_one()
 {
   // Test case for combination {1}:
   //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
+  //   POST Q1: r == x + y
   {
-    var x := 0;
-    var y := 0;
+    var x := -10;
+    var y := 10;
     var r := add_by_one(x, y);
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bx=0,y=1:
+  // Test case for combination {1}/By=0:
   //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
+  //   POST Q1: r == x + y
   {
-    var x := 0;
-    var y := 1;
-    var r := add_by_one(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {1}/Bx=1,y=0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := 1;
+    var x := -10;
     var y := 0;
     var r := add_by_one(x, y);
-    expect r == 1;
+    expect r == -10;
   }
 
-  // Test case for combination {1}/Bx=1,y=1:
+  // Test case for combination {1}/By=1:
   //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
+  //   POST Q1: r == x + y
   {
-    var x := 1;
+    var x := -10;
     var y := 1;
     var r := add_by_one(x, y);
-    expect r == 2;
+    expect r == -9;
   }
 
-  // Test case for combination {1}/Or>0:
+  // Test case for combination {1}/Ox=0:
   //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -1;
-    var y := 2;
-    var r := add_by_one(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -2;
-    var y := 1;
-    var r := add_by_one(x, y);
-    expect r == -1;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -1;
-    var y := 1;
-    var r := add_by_one(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
+  //   POST Q1: r == x + y
   {
     var x := 0;
-    var y := 0;
-    var r := bar(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=0,y=1:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := 0;
-    var y := 1;
-    var r := bar(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -1;
-    var y := 2;
-    var r := bar(x, y);
-    expect r == 1;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Bx=1,y=0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := 1;
-    var y := 0;
-    var r := bar(x, y);
-    // expect r == 1;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := 1;
-    var y := 1;
-    var r := bar(x, y);
-    // expect r == 2;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -2;
-    var y := 1;
-    var r := bar(x, y);
-    // expect r == -1;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   PRE:  y >= 0
-  //   POST: r == x + y
-  //   ENSURES: r == x + y
-  {
-    var x := -1;
-    var y := 1;
-    var r := bar(x, y);
-    // expect r == 0;
+    var y := 10;
+    var r := add_by_one(x, y);
+    expect r == 10;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForadd_by_one();
+  print "TestsForadd_by_one: all non-failing tests passed!\n";
 }

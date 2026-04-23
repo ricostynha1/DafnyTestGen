@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square__222-232_SDL.dfy
 // Method: square
-// Generated: 2026-04-08 16:47:00
+// Generated: 2026-04-22 21:32:51
 
 // Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
 
@@ -27,46 +27,51 @@ method square(n: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForsquare()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
+  {
+    var n := 10;
+    var r := square(n);
+    // expect r == 100; // got 0
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  0 <= n
+  //   POST Q1: r == n * n
   {
     var n := 0;
     var r := square(n);
     expect r == 0;
   }
 
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Bn=1:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
   {
     var n := 1;
     var r := square(n);
-    // expect r == 1;
+    // expect r == 1; // got 0
   }
 
-  // Test case for combination {1}/Or>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R4:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
   {
-    var n := 3;
+    var n := 9;
     var r := square(n);
-    // expect r == 9;
+    // expect r == 81; // got 0
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsquare();
+  print "TestsForsquare: all non-failing tests passed!\n";
 }

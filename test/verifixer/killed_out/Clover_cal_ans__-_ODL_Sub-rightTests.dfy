@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_cal_ans__-_ODL_Sub-right.dfy
 // Method: CalDiv
-// Generated: 2026-04-08 16:42:07
+// Generated: 2026-04-22 21:27:04
 
 // Clover_cal_ans.dfy
 
@@ -20,18 +20,12 @@ method CalDiv() returns (x: int, y: int)
 }
 
 
-method Passing()
+method TestsForCalDiv()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: x == 191 / 7
-  //   POST: y == 191 % 7
-  //   ENSURES: x == 191 / 7
-  //   ENSURES: y == 191 % 7
+  //   POST Q1: x == 191 / 7
+  //   POST Q2: y == 191 % 7
   {
     var x, y := CalDiv();
     // expect x == 27;
@@ -42,6 +36,6 @@ method Failing()
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalDiv();
+  print "TestsForCalDiv: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Programs_tmp_tmp99966ew4_binary_search__642-642_AOI.dfy
 // Method: BinarySearch
-// Generated: 2026-04-08 16:45:58
+// Generated: 2026-04-22 21:31:51
 
 // Dafny_Programs_tmp_tmp99966ew4_binary_search.dfy
 
@@ -40,120 +40,71 @@ method BinarySearch(a: array<int>, value: int) returns (index: int)
 }
 
 
-method Passing()
+method TestsForBinarySearch()
 {
-  // Test case for combination {6}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Rel:
   //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: 0 < a.Length
-  //   POST: !(a[0] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
+  //   POST Q1: 0 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: a[index] == value
+  //   POST Q4: index >= 0
   {
-    var a := new int[1] [4];
-    var value := 4;
+    var a := new int[2] [-10, 4];
+    var value := -10;
     var index := BinarySearch(a, value);
-    expect index == 0;
-  }
-
-  // Test case for combination {6}/Ba=1,value=0:
-  //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: 0 < a.Length
-  //   POST: !(a[0] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
-  {
-    var a := new int[1] [0];
-    var value := 0;
-    var index := BinarySearch(a, value);
-    expect index == 0;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {7}:
-  //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && !(a[k] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
-  {
-    var a := new int[3] [17, 10, 25];
-    var value := 10;
-    var index := BinarySearch(a, value);
-    // expect index == 1;
-  }
-
-  // Test case for combination {6}/Oindex=0:
-  //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: 0 < a.Length
-  //   POST: !(a[0] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
-  {
-    var a := new int[2] [15, 13];
-    var value := 15;
-    var index := BinarySearch(a, value);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.BinarySearch(BigInteger[] a, BigInteger value) in C:\cygwin64\tmp\DafnyTestGen_33n5eqk2n31\runner.cs:line 5844
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_33n5eqk2n31\runner.cs:line 5884
     // expect index == 0;
   }
 
-  // Test case for combination {7}/Oindex>0:
+  // Test case for combination {1}:
   //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && !(a[k] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
+  //   POST Q1: 0 <= index ==> index < a.Length && a[index] == value
+  //   POST Q2: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[4] [19, 18, 18, 16];
-    var value := 18;
+    var a := new int[1] [-8];
+    var value := -10;
     var index := BinarySearch(a, value);
-    // expect 0 <= index;
-    // expect a[index] == value;
-    // expect !(index < 0);
-    // expect !(index < 0);
-    // expect exists k :: 1 <= k < (a.Length - 1) && !(a[k] != value);
+    expect 0 <= index ==> index < a.Length && a[index] == value;
+    expect index < 0 ==> forall k: int :: 0 <= k < a.Length ==> a[k] != value;
+    expect index == -1; // observed from implementation
   }
 
-  // Test case for combination {8}/Oindex>0:
+  // Test case for combination {1}/O|a|=0:
   //   PRE:  a != null && 0 <= a.Length && sorted(a)
-  //   POST: 0 <= index
-  //   POST: a[index] == value
-  //   POST: !(index < 0)
-  //   POST: !(index < 0)
-  //   POST: 0 < a.Length
-  //   POST: !(a[(a.Length - 1)] != value)
-  //   ENSURES: 0 <= index ==> index < a.Length && a[index] == value
-  //   ENSURES: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
+  //   POST Q1: 0 <= index ==> index < a.Length && a[index] == value
+  //   POST Q2: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
   {
-    var a := new int[2] [18, 10];
-    var value := 10;
+    var a := new int[0] [];
+    var value := -10;
     var index := BinarySearch(a, value);
-    // expect index == 1;
+    expect 0 <= index ==> index < a.Length && a[index] == value;
+    expect index < 0 ==> forall k: int :: 0 <= k < a.Length ==> a[k] != value;
+    expect index == -1; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  a != null && 0 <= a.Length && sorted(a)
+  //   POST Q1: 0 <= index ==> index < a.Length && a[index] == value
+  //   POST Q2: index < 0 ==> forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] != value
+  {
+    var a := new int[2] [-3, -3];
+    var value := -9;
+    var index := BinarySearch(a, value);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.BinarySearch(BigInteger[] a, BigInteger value) in C:\cygwin64\tmp\DafnyTestGen_33n5eqk2n31\runner.cs:line 5844
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_33n5eqk2n31\runner.cs:line 5997
+    // expect 0 <= index ==> index < a.Length && a[index] == value;
+    // expect index < 0 ==> forall k: int :: 0 <= k < a.Length ==> a[k] != value;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForBinarySearch();
+  print "TestsForBinarySearch: all non-failing tests passed!\n";
 }

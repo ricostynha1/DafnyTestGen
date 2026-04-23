@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1__1436-1438_EVR_int.dfy
 // Method: query
-// Generated: 2026-04-05 23:59:51
+// Generated: 2026-04-22 21:58:39
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_handout1.dfy
 
@@ -92,61 +92,56 @@ function mem<T(==)>(x: T, l: List<T>): bool
 datatype List<T> = Nil | Cons(head: T, tail: List<T>)
 
 
-method Passing()
+method TestsForquery()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= i <= j <= a.Length
-  //   POST: res == sum(a, i, j)
+  //   POST Q1: res == sum(a, i, j)
   {
-    var a := new int[0] [];
+    var a := new int[2] [-10, 7];
+    var i := 2;
+    var j := 2;
+    var res := query(a, i, j);
+    expect res == 0;
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   POST Q1: res == sum(a, i, j)
+  {
+    var a := new int[3] [-10, 9, 10];
+    var i := 2;
+    var j := 3;
+    var res := query(a, i, j);
+    expect res == 10;
+  }
+
+  // Test case for combination {2}/Bi=0:
+  //   PRE:  0 <= i <= j <= a.Length
+  //   POST Q1: res == sum(a, i, j)
+  {
+    var a := new int[2] [-1, -10];
     var i := 0;
-    var j := 0;
+    var j := 2;
     var res := query(a, i, j);
-    expect res == 0;
+    expect res == -11;
   }
 
-  // Test case for combination {1}/Ba=2,i=0,j==a:
+  // Test case for combination {2}/Bi=1:
   //   PRE:  0 <= i <= j <= a.Length
-  //   POST: res == sum(a, i, j)
+  //   POST Q1: res == sum(a, i, j)
   {
-    var a := new int[2] [4, 3];
-    var i := 0;
-    var j := 0;
-    var res := query(a, i, j);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,i=1,j=1:
-  //   PRE:  0 <= i <= j <= a.Length
-  //   POST: res == sum(a, i, j)
-  {
-    var a := new int[2] [4, 3];
-    var i := 1;
-    var j := 1;
-    var res := query(a, i, j);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,i=1,j==a:
-  //   PRE:  0 <= i <= j <= a.Length
-  //   POST: res == sum(a, i, j)
-  {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-1, -10];
     var i := 1;
     var j := 2;
     var res := query(a, i, j);
-    expect res == 3;
+    expect res == -10;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForquery();
+  print "TestsForquery: all non-failing tests passed!\n";
 }

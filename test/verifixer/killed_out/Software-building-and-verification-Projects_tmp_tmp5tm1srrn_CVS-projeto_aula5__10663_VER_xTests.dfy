@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula5__10663_VER_x.dfy
 // Method: contains
-// Generated: 2026-04-05 23:59:28
+// Generated: 2026-04-22 21:58:06
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula5.dfy
 
@@ -448,624 +448,1008 @@ class GrowingSet {
 }
 
 
-method Passing()
+method TestsForcontains()
 {
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [25];
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=0:
+  // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[2] [3, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == false || b == true;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [24];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
+  // Test case for combination {1}/Bnelems=1:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 2;
     var obj := new Set(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[1] [-2];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 1;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [25];
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=0:
+  // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[2] [3, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == false || b == true;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [24];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
+  // Test case for combination {1}/Bnelems=1:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 2;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[1] [-2];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 1;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    expect obj.size() < obj.maxSize(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   PRE:  amount > 0
   //   PRE:  RepInv()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.PositiveChecking(); // PRE-CHECK
-    expect obj.RepInv(); // PRE-CHECK
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.PositiveChecking(); // PRE-CHECK
-    expect obj.RepInv(); // PRE-CHECK
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.PositiveChecking(); // PRE-CHECK
-    expect obj.RepInv(); // PRE-CHECK
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.PositiveChecking(); // PRE-CHECK
-    expect obj.RepInv(); // PRE-CHECK
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := -1;
+    var b := obj.contains(v);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.GrowingSet.contains(BigInteger v) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9279
+    // expect b == true || b == false;
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
   {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [24];
+    var tmp_store := new int[2] [3, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.GrowingSet.contains(BigInteger v) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9279
+    // expect b == false || b == true;
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [18];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    expect obj.RepInv(); // PRE-CHECK
-    obj.add(v);
-    expect obj.RepInv();
+    var v := 2;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    var b := obj.contains(v);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.GrowingSet.contains(BigInteger v) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9279
+    // expect b == true || b == false;
   }
 
 }
 
-method Failing()
+method TestsForadd()
 {
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // Test case for combination {1}/Rel:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [-2, 2, -1];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
+    var v := 2;
+    obj.add(v);
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 1;
     var obj := new Set(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [3, -2, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [3, -2, 2]; // observed from implementation
   }
 
-  // Test case for combination {2}/Bx=1,nelems=0,n=0,elems=1:
+  // Test case for combination {1}/Bn=2:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 2;
     var obj := new Set(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [3, -2, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var x := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [3, -2, 2]; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // Test case for combination {1}/Ov=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[3] [-2, 2, -3];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+    expect tmp_store[..] == [-2, 2, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [-2, 2, -1];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
+    var v := 2;
+    obj.add(v);
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
+  // Test case for combination {1}/Bn=1:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 1;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [3, -2, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [3, -2, 2]; // observed from implementation
   }
 
-  // Test case for combination {2}/Bx=1,nelems=0,n=0,elems=1:
+  // Test case for combination {1}/Bn=2:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
   {
-    var n := 0;
+    var n := 2;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [15];
+    var tmp_store := new int[3] [3, -2, 3];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var x := 1;
-    // expect obj.RepInv(); // PRE-CHECK
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [3, -2, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[3] [-2, 2, -3];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    obj.add(v);
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 1;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [2, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    obj.add(v);
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=2:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [2, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [2, -2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+  }
+
+}
+
+method TestsForfind()
+{
+  // Test case for combination {1}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
     var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=2:
+  // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [15];
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=1,nelems=0,n=0,elems=3:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [15];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 1;
-    // expect obj.RepInv(); // PRE-CHECK
-    var b := obj.contains(v);
-    // expect b == true;
-  }
-
-  // Test case for combination {2}/Bx=1,nelems=0,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [15];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var x := 1;
-    // expect obj.RepInv(); // PRE-CHECK
+    var x := -1;
     var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[1] [-1];
+    obj.store := tmp_store;
+    obj.nelems := 0;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new Set(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var x := -1;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[1] [-1];
+    obj.store := tmp_store;
+    obj.nelems := 0;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.__default.TestCase__48() in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 8674
+    // expect r < 0 ==> x !in obj.elems;
+    // expect r >= 0 ==> x in obj.elems;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var x := -1;
+    var r := obj.find(x);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.__default.TestCase__49() in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 8718
+    // expect r < 0 ==> x !in obj.elems;
+    // expect r >= 0 ==> x in obj.elems;
+  }
+
+  // Test case for combination {1}/Bnelems=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-1];
+    obj.store := tmp_store;
+    obj.nelems := 0;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.GrowingSet.find(BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 9318
+    // runtime error: at _module.__default.TestCase__51() in C:\cygwin64\tmp\DafnyTestGen_y5p3hvjtruv\runner.cs:line 8804
+    // expect r < 0 ==> x !in obj.elems;
+    // expect r >= 0 ==> x in obj.elems;
+  }
+
+}
+
+method TestsFordeposit()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.deposit(amount);
+  }
+
+}
+
+method TestsForwithdraw()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.withdraw(amount);
+  }
+
+}
+
+method TestsForsave()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Osbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := 0;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.save(amount);
+  }
+
+}
+
+method TestsForrescue()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.rescue(amount);
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForcontains();
+  print "TestsForcontains: all non-failing tests passed!\n";
+  TestsForadd();
+  print "TestsForadd: all non-failing tests passed!\n";
+  TestsForfind();
+  print "TestsForfind: all non-failing tests passed!\n";
+  TestsFordeposit();
+  print "TestsFordeposit: all non-failing tests passed!\n";
+  TestsForwithdraw();
+  print "TestsForwithdraw: all non-failing tests passed!\n";
+  TestsForsave();
+  print "TestsForsave: all non-failing tests passed!\n";
+  TestsForrescue();
+  print "TestsForrescue: all non-failing tests passed!\n";
 }

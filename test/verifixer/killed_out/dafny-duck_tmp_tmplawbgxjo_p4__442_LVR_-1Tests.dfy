@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p4__442_LVR_-1.dfy
 // Method: single
-// Generated: 2026-04-08 16:48:20
+// Generated: 2026-04-22 21:34:48
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -48,65 +48,72 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForsingle()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
     var x := new int[1] [3];
-    var y := new int[1] [7];
+    var y := new int[1] [4];
     var b := single(x, y);
-    // expect b[..] == [3, 7];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.single(BigInteger[] x, BigInteger[] y) in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5840
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5902
+    // expect b[..] == [3, 4];
   }
 
-  // Test case for combination {1}/Bx=1,y=2:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|x|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [9];
-    var y := new int[2] [4, 3];
+    var x := new int[2] [-10, -3];
+    var y := new int[1] [2];
     var b := single(x, y);
-    // expect b[..] == [9, 4, 3];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.single(BigInteger[] x, BigInteger[] y) in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5840
+    // runtime error: at _module.__default.TestCase__1() in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5938
+    // expect b[..] == [-10, -3, 2];
   }
 
-  // Test case for combination {1}/Bx=1,y=3:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|y|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [14];
-    var y := new int[3] [5, 4, 6];
+    var x := new int[1] [-1];
+    var y := new int[2] [3, -10];
     var b := single(x, y);
-    // expect b[..] == [14, 5, 4, 6];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.single(BigInteger[] x, BigInteger[] y) in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5840
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5974
+    // expect b[..] == [-1, 3, -10];
   }
 
-  // Test case for combination {1}/Bx=2,y=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R4:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[2] [4, 3];
-    var y := new int[1] [9];
+    var x := new int[1] [4];
+    var y := new int[1] [5];
     var b := single(x, y);
-    // expect b[..] == [4, 3, 9];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.single(BigInteger[] x, BigInteger[] y) in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 5840
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_0l2imwc3siu\runner.cs:line 6009
+    // expect b[..] == [4, 5];
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsingle();
+  print "TestsForsingle: all non-failing tests passed!\n";
 }

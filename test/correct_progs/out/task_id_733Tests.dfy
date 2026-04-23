@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_733.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-21 23:44:17
+// Generated: 2026-04-22 21:36:02
 
 // Finds the index of the first occurrence of a target in a sorted array.
 // If the target is not in the array, returns -1.
@@ -49,8 +49,8 @@ method TestsForFindFirstOccurrence()
   //   POST Q4: arr[index] == target
   //   POST Q5: target !in arr[..index]
   {
-    var arr := new int[4] [-10, -2, -1, -1];
-    var target := -1;
+    var arr := new int[4] [-9, -4, -3, -3];
+    var target := -3;
     var index := FindFirstOccurrence(arr, target);
     expect index == 2;
   }
@@ -60,22 +60,22 @@ method TestsForFindFirstOccurrence()
   //   POST Q1: target !in arr[..]
   //   POST Q2: index == -1
   {
-    var arr := new int[1] [-10];
-    var target := -9;
+    var arr := new int[1] [-4];
+    var target := -10;
     var index := FindFirstOccurrence(arr, target);
     expect index == -1;
   }
 
-  // Test case for combination {2}/V4:
+  // Test case for combination {2}/Bindex=0:
   //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST Q1: target in arr[..]
   //   POST Q2: 0 <= index
   //   POST Q3: index < arr.Length
-  //   POST Q4: arr[index] == target  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q4: arr[index] == target
   //   POST Q5: target !in arr[..index]
   {
-    var arr := new int[1] [-1];
-    var target := -1;
+    var arr := new int[1] [-10];
+    var target := -10;
     var index := FindFirstOccurrence(arr, target);
     expect index == 0;
   }
@@ -88,8 +88,8 @@ method TestsForFindFirstOccurrence()
   //   POST Q4: arr[index] == target
   //   POST Q5: target !in arr[..index]
   {
-    var arr := new int[2] [8, 10];
-    var target := 10;
+    var arr := new int[2] [-1, 9];
+    var target := 9;
     var index := FindFirstOccurrence(arr, target);
     expect index == 1;
   }

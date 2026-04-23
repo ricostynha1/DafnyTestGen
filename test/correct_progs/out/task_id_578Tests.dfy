@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_578.dfy
 // Method: Interleave
-// Generated: 2026-04-21 23:42:30
+// Generated: 2026-04-22 21:34:11
 
 // Interleaves the elements of three sequences (of equal length) into a single sequence.
 // The result will have s1[0], s2[0], s3[0], s1[1], s2[1], s3[1], ...
@@ -44,10 +44,10 @@ method TestsForInterleave()
     expect r == [88, 30, 30];
   }
 
-  // Test case for combination {1}/V2:
+  // Test case for combination {1}/O|s1|=0:
   //   PRE:  |s1| == |s2| == |s3|
   //   POST Q1: |r| == 3 * |s1|
-  //   POST Q2: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: forall i: int :: 0 <= i < |s1| ==> r[3 * i] == s1[i] && r[3 * i + 1] == s2[i] && r[3 * i + 2] == s3[i]
   {
     var s1: seq<int> := [];
     var s2: seq<int> := [];

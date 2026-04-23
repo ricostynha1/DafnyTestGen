@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\AssertivePrograming_tmp_tmpwf43uz0e_Find_Substring.dfy
 // Method: FindFirstOccurrence
-// Generated: 2026-04-08 19:03:21
+// Generated: 2026-04-22 21:25:41
 
 // AssertivePrograming_tmp_tmpwf43uz0e_Find_Substring.dfy
 
@@ -307,107 +307,34 @@ lemma Lemma3(str1: string, str2: string, i: nat)
 }
 
 
-method Passing()
+method TestsForFindFirstOccurrence()
 {
-  // Test case for combination {1}:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
+  // Test case for combination {2}/Rel:
+  //   POST Q1: Post(str1, str2, found, i)
+  {
+    var str1: seq<char> := ['~'];
+    var str2: seq<char> := [];
+    var found, i := FindFirstOccurrence(str1, str2);
+    expect Post(str1, str2, found, i);
+    expect found == true; // observed from implementation
+    expect i == 0; // observed from implementation
+  }
+
+  // Test case for combination {7}/Rel:
+  //   POST Q1: Post(str1, str2, found, i)
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [];
     var found, i := FindFirstOccurrence(str1, str2);
     expect Post(str1, str2, found, i);
+    expect found == true; // observed from implementation
+    expect i == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bstr1=0,str2=1:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' '];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Bstr1=0,str2=2:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' ', '!'];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Bstr1=0,str2=3:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' ', '!', '"'];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Ofound=true:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := ['U'];
-    var str2: seq<char> := ['U'];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Ofound=false:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := [' '];
-    var str2: seq<char> := [];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Oi>=2:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := ['Z', '"'];
-    var str2: seq<char> := ['Z', '"'];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Oi=1:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := ['4', '%'];
-    var str2: seq<char> := [];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   POST: Post(str1, str2, found, i)
-  //   ENSURES: Post(str1, str2, found, i)
-  {
-    var str1: seq<char> := ['4', '%'];
-    var str2: seq<char> := [' '];
-    var found, i := FindFirstOccurrence(str1, str2);
-    expect Post(str1, str2, found, i);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindFirstOccurrence();
+  print "TestsForFindFirstOccurrence: all non-failing tests passed!\n";
 }

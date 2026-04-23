@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote__8235-8235_AOI.dfy
 // Method: FindWinner
-// Generated: 2026-04-08 16:21:39
+// Generated: 2026-04-22 21:53:03
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_MajorityVote.dfy
 
@@ -22,7 +22,7 @@ predicate HasMajority<T>(a: seq<T>, s: int, t: int, x: T)
   2 * Count(a, s, t, x) > t - s
 }
 
-method FindWinner<Candidate(==)>(a: seq<Candidate>, ghost K: Candidate) returns (k: Candidate)
+method FindWinner<Candidate(==)>(a: seq<Candidate>, K: Candidate) returns (k: Candidate)
   requires HasMajority(a, 0, |a|, K)
   ensures k == K
   decreases a
@@ -64,7 +64,7 @@ method DetermineElection<Candidate(==,0,!new)>(a: seq<Candidate>) returns (resul
   return if 2 * Count(a, 0, |a|, cand) > |a| then Winner(cand) else NoWinner;
 }
 
-method SearchForWinner<Candidate(==)>(a: seq<Candidate>, ghost hasWinner: bool, ghost K: Candidate)
+method SearchForWinner<Candidate(==)>(a: seq<Candidate>, hasWinner: bool, K: Candidate)
     returns (k: Candidate)
   requires |a| != 0
   requires hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|
@@ -111,7 +111,7 @@ lemma /*{:_inductionTrigger Count(a, s, t, y)}*/ /*{:_inductionTrigger Count(a, 
 {
 }
 
-method FindWinner'<Candidate(==)>(a: seq<Candidate>, ghost K: Candidate) returns (k: Candidate)
+method FindWinner'<Candidate(==)>(a: seq<Candidate>, K: Candidate) returns (k: Candidate)
   requires HasMajority(a, 0, |a|, K)
   ensures k == K
   decreases a
@@ -204,7 +204,7 @@ method FindWinner'<Candidate(==)>(a: seq<Candidate>, ghost K: Candidate) returns
   Lemma_Unique(a, lo, |a|, K, k);
 }
 
-method FindWinner''<Candidate(==)>(a: seq<Candidate>, ghost K: Candidate) returns (k: Candidate)
+method FindWinner''<Candidate(==)>(a: seq<Candidate>, K: Candidate) returns (k: Candidate)
   requires HasMajority(a, 0, |a|, K)
   ensures k == K
   decreases a
@@ -302,190 +302,214 @@ method FindWinner''<Candidate(==)>(a: seq<Candidate>, ghost K: Candidate) return
 datatype Result<Candidate> = NoWinner | Winner(cand: Candidate)
 
 
-method GeneratedTests_FindWinner()
+method TestsForFindWinner()
 {
   // Test case for combination {1}:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
-  {
-    var a: seq<int> := [];
-    var K := 1;
-    var k := FindWinner<int>(a, K);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Ba=1:
-  //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [2];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
-    var a: seq<int> := [4, 3];
-    var K := 0;
+    var a: seq<int> := [3, 4];
+    var K := 1;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner<int>(a, K);
-    expect k == 0;
+    expect k == K;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  HasMajority(a, 0, |a|, K)
+  //   POST Q1: k == K
+  {
+    var a: seq<int> := [];
+    var K := 5;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
+    var k := FindWinner<int>(a, K);
+    expect k == K;
   }
 
 }
 
-method GeneratedTests_SearchForWinner()
+method TestsForSearchForWinner()
 {
   // Test case for combination P{1}/{1}:
   //   PRE:  |a| != 0
   //   PRE:  hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|
-  //   POST: k == K
-  //   POST: k == K
-  //   ENSURES: hasWinner ==> k == K
+  //   POST Q1: hasWinner ==> k == K
   {
     var a: seq<int> := [2];
     var hasWinner := false;
     var K := 0;
+    expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
     var k := SearchForWinner<int>(a, hasWinner, K);
-    expect k == 0;
+    expect hasWinner ==> k == K;
   }
 
-  // Test case for combination P{2}/{3}:
+  // Test case for combination P{2}/{2}:
   //   PRE:  |a| != 0
   //   PRE:  hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|
-  //   POST: hasWinner
-  //   POST: k == K
-  //   ENSURES: hasWinner ==> k == K
+  //   POST Q1: hasWinner ==> k == K
   {
     var a: seq<int> := [2];
     var hasWinner := true;
     var K := 0;
+    expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
     var k := SearchForWinner<int>(a, hasWinner, K);
-    expect k == 0;
+    expect hasWinner ==> k == K;
+  }
+
+  // Test case for combination P{1}/{1}/O|a|>=2:
+  //   PRE:  |a| != 0
+  //   PRE:  hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|
+  //   POST Q1: hasWinner ==> k == K
+  {
+    var a: seq<int> := [3, 4];
+    var hasWinner := false;
+    var K := 1;
+    expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
+    var k := SearchForWinner<int>(a, hasWinner, K);
+    expect hasWinner ==> k == K;
+  }
+
+  // Test case for combination P{2}/{2}/O|a|>=2:
+  //   PRE:  |a| != 0
+  //   PRE:  hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|
+  //   POST Q1: hasWinner ==> k == K
+  {
+    var a: seq<int> := [3, 4];
+    var hasWinner := true;
+    var K := 1;
+    expect hasWinner ==> 2 * Count(a, 0, |a|, K) > |a|; // PRE-CHECK
+    var k := SearchForWinner<int>(a, hasWinner, K);
+    expect hasWinner ==> k == K;
   }
 
 }
 
-method GeneratedTests_FindWinner'()
+method TestsForFindWinner'()
 {
   // Test case for combination {1}:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner'<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
-  {
-    var a: seq<int> := [];
-    var K := 1;
-    var k := FindWinner'<int>(a, K);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Ba=1:
-  //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [2];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner'<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
-    var a: seq<int> := [4, 3];
-    var K := 0;
+    var a: seq<int> := [3, 4];
+    var K := 1;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner'<int>(a, K);
-    expect k == 0;
+    expect k == K;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  HasMajority(a, 0, |a|, K)
+  //   POST Q1: k == K
+  {
+    var a: seq<int> := [];
+    var K := 5;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
+    var k := FindWinner'<int>(a, K);
+    expect k == K;
   }
 
 }
 
-method GeneratedTests_FindWinner''()
+method TestsForFindWinner''()
 {
   // Test case for combination {1}:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner''<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=0:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
-  {
-    var a: seq<int> := [];
-    var K := 1;
-    var k := FindWinner''<int>(a, K);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Ba=1:
-  //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
     var a: seq<int> := [2];
     var K := 0;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner''<int>(a, K);
-    expect k == 0;
+    expect k == K;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  HasMajority(a, 0, |a|, K)
-  //   POST: k == K
-  //   ENSURES: k == K
+  //   POST Q1: k == K
   {
-    var a: seq<int> := [4, 3];
-    var K := 0;
+    var a: seq<int> := [3, 4];
+    var K := 1;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
     var k := FindWinner''<int>(a, K);
-    expect k == 0;
+    expect k == K;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  HasMajority(a, 0, |a|, K)
+  //   POST Q1: k == K
+  {
+    var a: seq<int> := [];
+    var K := 5;
+    expect HasMajority(a, 0, |a|, K); // PRE-CHECK
+    var k := FindWinner''<int>(a, K);
+    expect k == K;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_FindWinner();
-  print "GeneratedTests_FindWinner: all tests passed!\n";
-  GeneratedTests_SearchForWinner();
-  print "GeneratedTests_SearchForWinner: all tests passed!\n";
-  GeneratedTests_FindWinner'();
-  print "GeneratedTests_FindWinner': all tests passed!\n";
-  GeneratedTests_FindWinner''();
-  print "GeneratedTests_FindWinner'': all tests passed!\n";
+  TestsForFindWinner();
+  print "TestsForFindWinner: all tests passed!\n";
+  TestsForSearchForWinner();
+  print "TestsForSearchForWinner: all tests passed!\n";
+  TestsForFindWinner'();
+  print "TestsForFindWinner': all tests passed!\n";
+  TestsForFindWinner''();
+  print "TestsForFindWinner'': all tests passed!\n";
 }

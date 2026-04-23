@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-21 23:39:04
+// Generated: 2026-04-22 21:30:36
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -45,9 +45,8 @@ method TestsForCalcSumRange()
   // Test case for combination {1}:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST Q1: sum == SumSeq(a[start .. end])
-  //   POST Q2: sum == 0
   {
-    var a := new int[2] [-10, 6];
+    var a := new int[2] [10, -10];
     var start := 2;
     var end := 2;
     var sum := CalcSumRange(a, start, end);
@@ -56,22 +55,20 @@ method TestsForCalcSumRange()
 
   // Test case for combination {2}:
   //   PRE:  0 <= start <= end <= a.Length
-  //   POST Q1: |a[start .. end]| != 0
-  //   POST Q2: sum == a[start .. end][|a[start .. end]| - 1] + SumSeq(a[start .. end][..|a[start .. end]| - 1])
+  //   POST Q1: sum == SumSeq(a[start .. end])
   {
-    var a := new int[3] [-10, 6, -5];
+    var a := new int[3] [-10, 9, 7];
     var start := 2;
     var end := 3;
     var sum := CalcSumRange(a, start, end);
-    expect sum == -5;
+    expect sum == 7;
   }
 
   // Test case for combination {1}/Bstart=0:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST Q1: sum == SumSeq(a[start .. end])
-  //   POST Q2: sum == 0
   {
-    var a := new int[1] [10];
+    var a := new int[1] [-1];
     var start := 0;
     var end := 0;
     var sum := CalcSumRange(a, start, end);
@@ -81,7 +78,6 @@ method TestsForCalcSumRange()
   // Test case for combination {1}/Bstart=1:
   //   PRE:  0 <= start <= end <= a.Length
   //   POST Q1: sum == SumSeq(a[start .. end])
-  //   POST Q2: sum == 0
   {
     var a := new int[1] [-1];
     var start := 1;

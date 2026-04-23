@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 // Method: longest_increasing_subsequence
-// Generated: 2026-04-08 19:18:54
+// Generated: 2026-04-22 21:38:16
 
 // Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 
@@ -49,61 +49,56 @@ function find_max(x: int, y: int): int
 }
 
 
-method Passing()
+method TestsForlongest_increasing_subsequence()
 {
   // Test case for combination {1}:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
-  //   ENSURES: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[1] [-9962];
+    var nums := new int[1] [-10];
     var max := longest_increasing_subsequence(nums);
     expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Bnums=2:
+  // Test case for combination {1}/Bmax=2:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
-  //   ENSURES: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[2] [-2281, -2280];
+    var nums := new int[1] [10];
     var max := longest_increasing_subsequence(nums);
     expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Bnums=3:
+  // Test case for combination {1}/O|nums|>=2:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
-  //   ENSURES: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[3] [-2281, -2280, -2279];
+    var nums := new int[2] [-9, -10];
     var max := longest_increasing_subsequence(nums);
     expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Omax>0:
+  // Test case for combination {1}/R4:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
-  //   ENSURES: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[4] [-9962, -2281, -8763, -7563];
+    var nums := new int[1] [9];
     var max := longest_increasing_subsequence(nums);
     expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForlongest_increasing_subsequence();
+  print "TestsForlongest_increasing_subsequence: all non-failing tests passed!\n";
 }

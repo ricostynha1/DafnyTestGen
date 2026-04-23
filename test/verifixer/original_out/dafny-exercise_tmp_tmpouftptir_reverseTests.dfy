@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_reverse.dfy
 // Method: Reverse
-// Generated: 2026-04-08 19:07:10
+// Generated: 2026-04-22 21:30:06
 
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
@@ -37,62 +37,40 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForReverse()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: a == old(a)
-  //   POST: b.Length == a.Length
-  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
-  //   ENSURES: a == old(a)
-  //   ENSURES: b.Length == a.Length
-  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
+  //   POST Q1: a == old(a)
+  //   POST Q2: b.Length == a.Length
+  //   POST Q3: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
-    var a := new char[1] [' '];
+    var a := new char[1] [':'];
     var old_a := a;
     var b := Reverse(a);
-    expect b[..] == [' '];
+    expect b[..] == [':'];
+    expect a[..] == :; // observed from implementation
+    expect b == :; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a.Length > 0
-  //   POST: a == old(a)
-  //   POST: b.Length == a.Length
-  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
-  //   ENSURES: a == old(a)
-  //   ENSURES: b.Length == a.Length
-  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
+  //   POST Q1: a == old(a)
+  //   POST Q2: b.Length == a.Length
+  //   POST Q3: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
   {
-    var a := new char[2] [' ', '!'];
+    var a := new char[2] ['O', 'O'];
     var old_a := a;
     var b := Reverse(a);
-    expect b[..] == ['!', ' '];
+    expect b[..] == ['O', 'O'];
+    expect a[..] == OO; // observed from implementation
+    expect b == OO; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a.Length > 0
-  //   POST: a == old(a)
-  //   POST: b.Length == a.Length
-  //   POST: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
-  //   ENSURES: a == old(a)
-  //   ENSURES: b.Length == a.Length
-  //   ENSURES: forall i: int {:trigger b[i]} :: 0 <= i < a.Length ==> b[i] == a[a.Length - i - 1]
-  {
-    var a := new char[3] [' ', '!', '"'];
-    var old_a := a;
-    var b := Reverse(a);
-    expect b[..] == ['"', '!', ' '];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForReverse();
+  print "TestsForReverse: all non-failing tests passed!\n";
 }

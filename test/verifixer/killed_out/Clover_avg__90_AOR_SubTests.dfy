@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_avg__90_AOR_Sub.dfy
 // Method: ComputeAvg
-// Generated: 2026-04-08 16:41:52
+// Generated: 2026-04-22 21:26:55
 
 // Clover_avg.dfy
 
@@ -13,86 +13,51 @@ method ComputeAvg(a: int, b: int) returns (avg: int)
 }
 
 
-method Passing()
+method TestsForComputeAvg()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
+  //   POST Q1: avg == (a + b) / 2
+  {
+    var a := -10;
+    var b := -10;
+    var avg := ComputeAvg(a, b);
+    // expect avg == -10; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Oa=0:
+  //   POST Q1: avg == (a + b) / 2
   {
     var a := 0;
+    var b := -10;
+    var avg := ComputeAvg(a, b);
+    // expect avg == -5; // got 5
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Oa>0:
+  //   POST Q1: avg == (a + b) / 2
+  {
+    var a := 10;
+    var b := -10;
+    var avg := ComputeAvg(a, b);
+    // expect avg == 0; // got 10
+  }
+
+  // Test case for combination {1}/Ob=0:
+  //   POST Q1: avg == (a + b) / 2
+  {
+    var a := -10;
     var b := 0;
     var avg := ComputeAvg(a, b);
-    expect avg == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,b=0:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 1;
-    var b := 0;
-    var avg := ComputeAvg(a, b);
-    expect avg == 0;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=0,b=1:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 0;
-    var b := 1;
-    var avg := ComputeAvg(a, b);
-    // expect avg == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,b=1:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 1;
-    var b := 1;
-    var avg := ComputeAvg(a, b);
-    // expect avg == 1;
-  }
-
-  // Test case for combination {1}/Oavg>0:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 0;
-    var b := 2;
-    var avg := ComputeAvg(a, b);
-    // expect avg == 1;
-  }
-
-  // Test case for combination {1}/Oavg<0:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 0;
-    var b := -1;
-    var avg := ComputeAvg(a, b);
-    // expect avg == -1;
-  }
-
-  // Test case for combination {1}/Oavg=0:
-  //   POST: avg == (a + b) / 2
-  //   ENSURES: avg == (a + b) / 2
-  {
-    var a := 2;
-    var b := -2;
-    var avg := ComputeAvg(a, b);
-    // expect avg == 0;
+    expect avg == -5;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForComputeAvg();
+  print "TestsForComputeAvg: all non-failing tests passed!\n";
 }

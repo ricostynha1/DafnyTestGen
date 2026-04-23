@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\stuck\in\CO3408-Advanced-Software-Modelling-Assignment-2022-23-Part-2-A-Specification-Spectacular_tmp_tmp4pj4p2zx_car_park__5857_ROR_Eq.dfy
 // Method: leaveCarPark
-// Generated: 2026-04-22 19:36:29
+// Generated: 2026-04-22 21:26:04
 
 // CO3408-Advanced-Software-Modelling-Assignment-2022-23-Part-2-A-Specification-Spectacular_tmp_tmp4pj4p2zx_car_park.dfy
 
@@ -286,101 +286,92 @@ method TestsForleaveCarPark()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {};
-    obj.reservedCarPark := {};
-    obj.Repr := {obj};
-    var car: seq<char> := ['g'];
-    var old_carPark := obj.carPark;
-    var old_reservedCarPark := obj.reservedCarPark;
-    var old_subscriptions := obj.subscriptions;
-    var success := obj.leaveCarPark(car);
-    // actual runtime state: success=false
-    // expect obj.Valid(); // got true
-    // expect success == false || success == true; // got true
-    // expect obj.weekend == false; // LHS=false, RHS=false
-    // expect obj.carPark == old_carPark - {car}; // LHS={}, RHS={}
-    // expect !(obj.reservedCarPark == old_reservedCarPark); // got false
-    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={}, RHS={}
-    // expect obj.subscriptions == old_subscriptions; // LHS={}, RHS={}
-  }
-
-  // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {2}/BnormalSpaces=1:
-  //   PRE:  Valid()
-  //   PRE:  Valid()
-  //   PRE:  true
-  //   PRE:  true
-  //   POST Q1: Valid()
-  //   POST Q3: success
-  //   POST Q4: car in old(carPark)
-  //   POST Q5: carPark == old(carPark) - {car}
-  //   POST Q6: reservedCarPark != old(reservedCarPark)
-  //   POST Q7: car in old(reservedCarPark)
-  //   POST Q8: weekend == old(weekend)
-  //   POST Q9: reservedCarPark == old(reservedCarPark)
-  //   POST Q10: car !in old(carPark)
-  //   POST Q11: car !in old(reservedCarPark)
-  //   POST Q12: subscriptions == old(subscriptions)
-  {
-    var obj := new CarPark();
-    obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {};
-    obj.reservedCarPark := {};
-    obj.Repr := {obj};
-    var car: seq<char> := ['a'];
-    var old_carPark := obj.carPark;
-    var old_reservedCarPark := obj.reservedCarPark;
-    var old_subscriptions := obj.subscriptions;
-    var success := obj.leaveCarPark(car);
-    // actual runtime state: success=false
-    // expect obj.Valid(); // got true
-    // expect success == false || success == true; // got true
-    // expect obj.weekend == false; // LHS=false, RHS=false
-    // expect obj.carPark == old_carPark - {car}; // LHS={}, RHS={}
-    // expect !(obj.reservedCarPark == old_reservedCarPark); // got false
-    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={}, RHS={}
-    // expect obj.subscriptions == old_subscriptions; // LHS={}, RHS={}
-  }
-
-  // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {2}/BreservedSpaces=0:
-  //   PRE:  Valid()
-  //   PRE:  Valid()
-  //   PRE:  true
-  //   PRE:  true
-  //   POST Q1: Valid()
-  //   POST Q3: success
-  //   POST Q4: car in old(carPark)
-  //   POST Q5: carPark == old(carPark) - {car}
-  //   POST Q6: reservedCarPark != old(reservedCarPark)
-  //   POST Q7: car in old(reservedCarPark)
-  //   POST Q8: weekend == old(weekend)
-  //   POST Q9: reservedCarPark == old(reservedCarPark)
-  //   POST Q10: car !in old(carPark)
-  //   POST Q11: car !in old(reservedCarPark)
-  //   POST Q12: subscriptions == old(subscriptions)
-  {
-    var obj := new CarPark();
-    obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {};
-    obj.reservedCarPark := {};
+    obj.subscriptions := {"c"};
+    obj.carPark := {"c"};
+    obj.reservedCarPark := {"c"};
     obj.Repr := {obj};
     var car: seq<char> := ['c'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_subscriptions := obj.subscriptions;
     var success := obj.leaveCarPark(car);
-    // actual runtime state: success=false
     // expect obj.Valid(); // got true
     // expect success == false || success == true; // got true
     // expect obj.weekend == false; // LHS=false, RHS=false
     // expect obj.carPark == old_carPark - {car}; // LHS={}, RHS={}
     // expect !(obj.reservedCarPark == old_reservedCarPark); // got false
-    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={}, RHS={}
-    // expect obj.subscriptions == old_subscriptions; // LHS={}, RHS={}
+    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={['c']}, RHS={['c']}
+    // expect obj.subscriptions == old_subscriptions; // LHS={['c']}, RHS={['c']}
+  }
+
+  // Test case for combination {7}/O|car|=0:
+  //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
+  //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
+  //         Expected output values may be spurious — Dafny static check will flag if so.
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  true
+  //   PRE:  true
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  //   POST Q5: success ==> (car in old(carPark) && carPark == old(carPark) - {car} && reservedCarPark == old(reservedCarPark)) || (car in old(reservedCarPark) && reservedCarPark == old(reservedCarPark) - {car} && carPark == old(carPark))
+  //   POST Q6: success ==> car !in carPark && car !in reservedCarPark
+  //   POST Q7: !success ==> carPark == old(carPark) && reservedCarPark == old(reservedCarPark) && car !in old(carPark) && car !in old(reservedCarPark)
+  //   POST Q8: subscriptions == old(subscriptions) && weekend == old(weekend)
+  {
+    var obj := new CarPark();
+    obj.weekend := false;
+    obj.subscriptions := {};
+    obj.carPark := {};
+    obj.reservedCarPark := {};
+    obj.Repr := {obj};
+    var car: seq<char> := [];
+    var old_carPark := obj.carPark;
+    var old_reservedCarPark := obj.reservedCarPark;
+    var old_subscriptions := obj.subscriptions;
+    var old_weekend := obj.weekend;
+    var success := obj.leaveCarPark(car);
+    expect obj.Valid();
+    expect success ==> (car in old_carPark && obj.carPark == old_carPark - {car} && obj.reservedCarPark == old_reservedCarPark) || (car in old_reservedCarPark && obj.reservedCarPark == old_reservedCarPark - {car} && obj.carPark == old_carPark);
+    expect success ==> car !in obj.carPark && car !in obj.reservedCarPark;
+    expect !success ==> obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark && car !in old_carPark && car !in old_reservedCarPark;
+    expect obj.subscriptions == old_subscriptions && obj.weekend == old_weekend;
+    expect success == false; // observed from implementation
+  }
+
+  // Test case for combination {7}/Oweekend=true:
+  //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
+  //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
+  //         Expected output values may be spurious — Dafny static check will flag if so.
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  true
+  //   PRE:  true
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  //   POST Q5: success ==> (car in old(carPark) && carPark == old(carPark) - {car} && reservedCarPark == old(reservedCarPark)) || (car in old(reservedCarPark) && reservedCarPark == old(reservedCarPark) - {car} && carPark == old(carPark))
+  //   POST Q6: success ==> car !in carPark && car !in reservedCarPark
+  //   POST Q7: !success ==> carPark == old(carPark) && reservedCarPark == old(reservedCarPark) && car !in old(carPark) && car !in old(reservedCarPark)
+  //   POST Q8: subscriptions == old(subscriptions) && weekend == old(weekend)
+  {
+    var obj := new CarPark();
+    obj.weekend := true;
+    obj.subscriptions := {};
+    obj.carPark := {};
+    obj.reservedCarPark := {};
+    obj.Repr := {obj};
+    var car: seq<char> := ['f'];
+    var old_carPark := obj.carPark;
+    var old_reservedCarPark := obj.reservedCarPark;
+    var old_subscriptions := obj.subscriptions;
+    var old_weekend := obj.weekend;
+    var success := obj.leaveCarPark(car);
+    expect obj.Valid();
+    expect success ==> (car in old_carPark && obj.carPark == old_carPark - {car} && obj.reservedCarPark == old_reservedCarPark) || (car in old_reservedCarPark && obj.reservedCarPark == old_reservedCarPark - {car} && obj.carPark == old_carPark);
+    expect success ==> car !in obj.carPark && car !in obj.reservedCarPark;
+    expect !success ==> obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark && car !in old_carPark && car !in old_reservedCarPark;
+    expect obj.subscriptions == old_subscriptions && obj.weekend == old_weekend;
+    expect success == false; // observed from implementation
   }
 
 }
@@ -536,7 +527,7 @@ method TestsFormakeSubscription()
     obj.carPark := {};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := [];
+    var car: seq<char> := ['d'];
     var old_subscriptions := |obj.subscriptions|;
     var old_subscriptions2 := obj.subscriptions;
     var old_carPark := obj.carPark;
@@ -570,26 +561,26 @@ method TestsFormakeSubscription()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {"", "f", "g"};
-    obj.carPark := {"f"};
-    obj.reservedCarPark := {"d"};
+    obj.subscriptions := {"", "a", "b", "d", "f", "g"};
+    obj.carPark := {"e"};
+    obj.reservedCarPark := {"e"};
     obj.Repr := {obj};
-    var car: seq<char> := ['a'];
+    var car: seq<char> := ['c'];
     var old_subscriptions := |obj.subscriptions|;
     var old_subscriptions2 := obj.subscriptions;
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var success := obj.makeSubscription(car);
     // actual runtime state: success=false
-    // expect obj.Valid(); // got true
+    // expect obj.Valid(); // got false
     // expect success == false || success == true; // got true
     // expect obj.weekend == false; // LHS=false, RHS=false
-    // expect obj.subscriptions == old_subscriptions2 + {car}; // LHS={[], ['f'], ['g']}, RHS={[], ['a'], ['f'], ['g']}
-    // expect obj.carPark == old_carPark; // LHS={['f']}, RHS={['f']}
-    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={['d']}, RHS={['d']}
+    // expect obj.subscriptions == old_subscriptions2 + {car}; // LHS={[], ['a'], ['b'], ['d'], ['f'], ['g']}, RHS={[], ['a'], ['b'], ['c'], ['d'], ['f'], ['g']}
+    // expect obj.carPark == old_carPark; // LHS={['e']}, RHS={['e']}
+    // expect obj.reservedCarPark == old_reservedCarPark; // LHS={['e']}, RHS={['e']}
   }
 
-  // Test case for combination {3}/O|subscriptions|=0:
+  // Test case for combination {3}/BnormalSpaces=0:
   //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
   //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
   //         Expected output values may be spurious — Dafny static check will flag if so.
@@ -609,7 +600,7 @@ method TestsFormakeSubscription()
     obj.carPark := {};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := ['d'];
+    var car: seq<char> := ['f'];
     var old_subscriptions := |obj.subscriptions|;
     var old_subscriptions2 := obj.subscriptions;
     var old_carPark := obj.carPark;
@@ -623,7 +614,8 @@ method TestsFormakeSubscription()
     expect success == true; // observed from implementation
   }
 
-  // Test case for combination {3}/O|subscriptions|=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {3}/O|reservedCarPark|=1:
   //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
   //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
   //         Expected output values may be spurious — Dafny static check will flag if so.
@@ -639,22 +631,21 @@ method TestsFormakeSubscription()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {""};
-    obj.reservedCarPark := {};
+    obj.subscriptions := {"g"};
+    obj.carPark := {"g"};
+    obj.reservedCarPark := {"g"};
     obj.Repr := {obj};
-    var car: seq<char> := ['f'];
+    var car: seq<char> := ['d'];
     var old_subscriptions := |obj.subscriptions|;
     var old_subscriptions2 := obj.subscriptions;
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_weekend := obj.weekend;
     var success := obj.makeSubscription(car);
-    expect obj.Valid();
-    expect success ==> old_subscriptions < obj.reservedSpaces && car !in old_subscriptions2 && obj.subscriptions == old_subscriptions2 + {car};
-    expect !success ==> obj.subscriptions == old_subscriptions2 && (car in old_subscriptions2 || old_subscriptions >= obj.reservedSpaces);
-    expect obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark && obj.weekend == old_weekend;
-    expect success == true; // observed from implementation
+    // expect obj.Valid(); // got false
+    // expect success ==> old_subscriptions < obj.reservedSpaces && car !in old_subscriptions2 && obj.subscriptions == old_subscriptions2 + {car}; // got true
+    // expect !success ==> obj.subscriptions == old_subscriptions2 && (car in old_subscriptions2 || old_subscriptions >= obj.reservedSpaces); // got true
+    // expect obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark && obj.weekend == old_weekend; // got true
   }
 
 }
@@ -758,8 +749,8 @@ method TestsForopenReservedArea()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {""};
-    obj.carPark := {""};
+    obj.subscriptions := {};
+    obj.carPark := {"e", "f", "g"};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
     var old_carPark := obj.carPark;
@@ -865,9 +856,9 @@ method TestsForcloseCarPark()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {};
-    obj.reservedCarPark := {};
+    obj.subscriptions := {"", "a", "c", "d", "e", "f"};
+    obj.carPark := {"", "a", "c", "d", "e", "f"};
+    obj.reservedCarPark := {"", "a", "c", "d", "e", "f"};
     obj.Repr := {obj};
     obj.closeCarPark();
     expect obj.Valid();
@@ -902,7 +893,7 @@ method TestsForenterCarPark()
     obj.carPark := {};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := ['b'];
+    var car: seq<char> := ['f'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_carPark2 := |obj.carPark|;
@@ -916,7 +907,7 @@ method TestsForenterCarPark()
     expect success == true; // observed from implementation
   }
 
-  // Test case for combination {5}:
+  // Test case for combination {7}:
   //   PRE:  Valid()
   //   PRE:  Valid()
   //   PRE:  true
@@ -927,30 +918,67 @@ method TestsForenterCarPark()
   //   POST Q5: car !in old(reservedCarPark)
   //   POST Q6: old(|carPark|) < normalSpaces - badParkingBuffer
   //   POST Q7: carPark == old(carPark) + {car}
-  //   POST Q8: weekend == old(weekend)
-  //   POST Q9: subscriptions == old(subscriptions)
-  //   POST Q10: car !in old(carPark)
-  //   POST Q11: car !in old(reservedCarPark)
-  //   POST Q12: old(|carPark|) >= normalSpaces - badParkingBuffer
+  //   POST Q8: subscriptions == old(subscriptions)
+  //   POST Q9: reservedCarPark == old(reservedCarPark)
+  //   POST Q10: weekend == old(weekend)
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {"d"};
-    obj.carPark := {"d"};
+    obj.subscriptions := {};
+    obj.carPark := {""};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := ['d'];
+    var car: seq<char> := ['b'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_carPark2 := |obj.carPark|;
     var old_subscriptions := obj.subscriptions;
     var success := obj.enterCarPark(car);
     expect obj.Valid();
-    expect success == false || success == true;
+    expect success == true || success == false;
     expect obj.weekend == false;
     expect obj.carPark == old_carPark + {car};
     expect obj.subscriptions == old_subscriptions;
-    expect success == false; // observed from implementation
+    expect obj.reservedCarPark == old_reservedCarPark;
+    expect success == true; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {7}/O|carPark|=1:
+  //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
+  //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
+  //         Expected output values may be spurious — Dafny static check will flag if so.
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  true
+  //   PRE:  true
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  //   POST Q5: success ==> car !in old(carPark) && car !in old(reservedCarPark) && old(|carPark|) < normalSpaces - badParkingBuffer
+  //   POST Q6: success ==> carPark == old(carPark) + {car}
+  //   POST Q7: !success ==> carPark == old(carPark) && reservedCarPark == old(reservedCarPark)
+  //   POST Q8: !success ==> car in old(carPark) || car in old(reservedCarPark) || old(|carPark|) >= normalSpaces - badParkingBuffer
+  //   POST Q9: subscriptions == old(subscriptions) && reservedCarPark == old(reservedCarPark) && weekend == old(weekend)
+  {
+    var obj := new CarPark();
+    obj.weekend := false;
+    obj.subscriptions := {"g"};
+    obj.carPark := {"g"};
+    obj.reservedCarPark := {"g"};
+    obj.Repr := {obj};
+    var car: seq<char> := ['c'];
+    var old_carPark := obj.carPark;
+    var old_reservedCarPark := obj.reservedCarPark;
+    var old_carPark2 := |obj.carPark|;
+    var old_subscriptions := obj.subscriptions;
+    var old_weekend := obj.weekend;
+    var success := obj.enterCarPark(car);
+    // expect obj.Valid(); // got false
+    // expect success ==> car !in old_carPark && car !in old_reservedCarPark && old_carPark2 < obj.normalSpaces - obj.badParkingBuffer; // got true
+    // expect success ==> obj.carPark == old_carPark + {car}; // got true
+    // expect !success ==> obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark; // got true
+    // expect !success ==> car in old_carPark || car in old_reservedCarPark || old_carPark2 >= obj.normalSpaces - obj.badParkingBuffer; // got true
+    // expect obj.subscriptions == old_subscriptions && obj.reservedCarPark == old_reservedCarPark && obj.weekend == old_weekend; // got true
   }
 
   // Test case for combination {3}/R2:
@@ -975,41 +1003,6 @@ method TestsForenterCarPark()
     obj.reservedCarPark := {};
     obj.Repr := {obj};
     var car: seq<char> := [];
-    var old_carPark := obj.carPark;
-    var old_reservedCarPark := obj.reservedCarPark;
-    var old_carPark2 := |obj.carPark|;
-    var old_subscriptions := obj.subscriptions;
-    var success := obj.enterCarPark(car);
-    expect obj.Valid();
-    expect success == false || success == true;
-    expect obj.weekend == false;
-    expect obj.carPark == old_carPark + {car};
-    expect obj.subscriptions == old_subscriptions;
-    expect success == true; // observed from implementation
-  }
-
-  // Test case for combination {3}/R3:
-  //   PRE:  Valid()
-  //   PRE:  Valid()
-  //   PRE:  true
-  //   PRE:  true
-  //   POST Q1: Valid()
-  //   POST Q3: success
-  //   POST Q4: car !in old(carPark)
-  //   POST Q5: car !in old(reservedCarPark)
-  //   POST Q6: old(|carPark|) < normalSpaces - badParkingBuffer
-  //   POST Q7: carPark == old(carPark) + {car}
-  //   POST Q8: weekend == old(weekend)
-  //   POST Q9: subscriptions == old(subscriptions)
-  //   POST Q10: car in old(carPark)
-  {
-    var obj := new CarPark();
-    obj.weekend := false;
-    obj.subscriptions := {};
-    obj.carPark := {};
-    obj.reservedCarPark := {};
-    obj.Repr := {obj};
-    var car: seq<char> := ['c'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_carPark2 := |obj.carPark|;
@@ -1050,7 +1043,7 @@ method TestsForenterReservedCarPark()
     obj.carPark := {};
     obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := ['g'];
+    var car: seq<char> := ['f'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_reservedCarPark2 := |obj.reservedCarPark|;
@@ -1065,7 +1058,6 @@ method TestsForenterReservedCarPark()
     expect success == false; // observed from implementation
   }
 
-  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {5}:
   //   PRE:  Valid()
   //   PRE:  Valid()
@@ -1085,27 +1077,26 @@ method TestsForenterReservedCarPark()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {"", "a", "b", "d", "f", "g"};
-    obj.carPark := {"f", "g"};
-    obj.reservedCarPark := {"", "a", "b", "d", "f", "g"};
+    obj.subscriptions := {"", "b"};
+    obj.carPark := {"", "b"};
+    obj.reservedCarPark := {"c", "e"};
     obj.Repr := {obj};
-    var car: seq<char> := ['g'];
+    var car: seq<char> := ['c'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_reservedCarPark2 := |obj.reservedCarPark|;
     var old_subscriptions := obj.subscriptions;
     var success := obj.enterReservedCarPark(car);
-    // actual runtime state: success=false
-    // expect obj.Valid(); // got false
-    // expect success == false || success == true; // got true
-    // expect obj.weekend == false; // LHS=false, RHS=false
-    // expect !(car in obj.subscriptions); // got false
-    // expect car !in obj.subscriptions; // got false
-    // expect obj.subscriptions == old_subscriptions; // LHS={[], ['a'], ['b'], ['d'], ['f'], ['g']}, RHS={[], ['a'], ['b'], ['d'], ['f'], ['g']}
+    expect obj.Valid();
+    expect success == false || success == true;
+    expect obj.weekend == false;
+    expect !(car in obj.subscriptions);
+    expect car !in obj.subscriptions;
+    expect obj.subscriptions == old_subscriptions;
+    expect success == false; // observed from implementation
   }
 
-  // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {8}/O|subscriptions|>=2:
+  // Test case for combination {8}/BreservedSpaces=1:
   //   NOTE: Z3 returned UNKNOWN on full query (likely quantifier incompleteness).
   //         Inputs chosen from preconditions-only fallback; postconditions NOT verified by Z3.
   //         Expected output values may be spurious — Dafny static check will flag if so.
@@ -1124,25 +1115,25 @@ method TestsForenterReservedCarPark()
   {
     var obj := new CarPark();
     obj.weekend := false;
-    obj.subscriptions := {"", "c", "e", "f"};
-    obj.carPark := {"", "c", "e", "f"};
-    obj.reservedCarPark := {"", "c", "e", "f"};
+    obj.subscriptions := {};
+    obj.carPark := {};
+    obj.reservedCarPark := {};
     obj.Repr := {obj};
-    var car: seq<char> := ['e'];
+    var car: seq<char> := ['a'];
     var old_carPark := obj.carPark;
     var old_reservedCarPark := obj.reservedCarPark;
     var old_reservedCarPark2 := |obj.reservedCarPark|;
     var old_subscriptions := obj.subscriptions;
     var old_weekend := obj.weekend;
     var success := obj.enterReservedCarPark(car);
-    // actual runtime state: success=false
-    // expect obj.Valid(); // got false
-    // expect success ==> car !in old_carPark && car !in old_reservedCarPark && old_reservedCarPark2 < obj.reservedSpaces && (car in obj.subscriptions || obj.weekend == true); // got true
-    // expect success ==> obj.reservedCarPark == old_reservedCarPark + {car}; // got true
-    // expect !success ==> obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark; // got true
-    // expect !success ==> car in old_carPark || car in old_reservedCarPark || old_reservedCarPark2 >= obj.reservedSpaces || (car !in obj.subscriptions && obj.weekend == false); // got true
-    // expect obj.subscriptions == old_subscriptions && obj.carPark == old_carPark && obj.weekend == old_weekend; // got true
-    // expect obj.weekend == old_weekend && obj.subscriptions == old_subscriptions; // got true
+    expect obj.Valid();
+    expect success ==> car !in old_carPark && car !in old_reservedCarPark && old_reservedCarPark2 < obj.reservedSpaces && (car in obj.subscriptions || obj.weekend == true);
+    expect success ==> obj.reservedCarPark == old_reservedCarPark + {car};
+    expect !success ==> obj.carPark == old_carPark && obj.reservedCarPark == old_reservedCarPark;
+    expect !success ==> car in old_carPark || car in old_reservedCarPark || old_reservedCarPark2 >= obj.reservedSpaces || (car !in obj.subscriptions && obj.weekend == false);
+    expect obj.subscriptions == old_subscriptions && obj.carPark == old_carPark && obj.weekend == old_weekend;
+    expect obj.weekend == old_weekend && obj.subscriptions == old_subscriptions;
+    expect success == false; // observed from implementation
   }
 
 }

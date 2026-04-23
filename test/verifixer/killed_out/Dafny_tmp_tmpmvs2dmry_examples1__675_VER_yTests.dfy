@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmpmvs2dmry_examples1__675_VER_y.dfy
 // Method: Abs
-// Generated: 2026-04-08 16:46:20
+// Generated: 2026-04-22 21:32:16
 
 // Dafny_tmp_tmpmvs2dmry_examples1.dfy
 
@@ -59,333 +59,150 @@ method Max(x: int, y: int) returns (a: int)
 }
 
 
-method Passing()
+method TestsForAbs()
 {
-  // Test case for combination {2}:
-  //   POST: y >= 0
-  //   POST: !(x >= 0)
-  //   POST: -x == y
-  //   POST: y == abs(x)
-  //   POST: -x == y
-  //   POST: !(x > 0)
-  //   POST: y == -x
-  //   ENSURES: y >= 0
-  //   ENSURES: x >= 0 ==> x == y
-  //   ENSURES: x < 0 ==> -x == y
-  //   ENSURES: y == abs(x)
+  // Test case for combination {1}/Rel:
+  //   POST Q1: y >= 0
+  //   POST Q2: x < 0
+  //   POST Q3: -x == y
+  //   POST Q4: y == abs(x)
   {
-    var x := -1;
+    var x := -10;
     var y := Abs(x);
-    expect y == 1;
+    expect y == 10;
   }
 
-  // Test case for combination {4}:
-  //   POST: y >= 0
-  //   POST: x == y
-  //   POST: -x == y
-  //   POST: y == abs(x)
-  //   POST: -x == y
-  //   POST: !(x > 0)
-  //   POST: y == -x
-  //   ENSURES: y >= 0
-  //   ENSURES: x >= 0 ==> x == y
-  //   ENSURES: x < 0 ==> -x == y
-  //   ENSURES: y == abs(x)
+  // Test case for combination {2}/Rel:
+  //   POST Q1: y >= 0
+  //   POST Q2: x >= 0
+  //   POST Q3: x == y
+  //   POST Q4: y == abs(x)
+  {
+    var x := 10;
+    var y := Abs(x);
+    expect y == 10;
+  }
+
+  // Test case for combination {3}/Rel:
+  //   POST Q1: y >= 0
+  //   POST Q2: x >= 0
+  //   POST Q3: x == y
+  //   POST Q4: x <= 0
+  //   POST Q5: y == abs(x)
   {
     var x := 0;
     var y := Abs(x);
     expect y == 0;
   }
 
-  // Test case for combination {5}:
-  //   POST: y >= 0
-  //   POST: x == y
-  //   POST: -x == y
-  //   POST: y == abs(x)
-  //   POST: !(-x == y)
-  //   POST: x > 0
-  //   POST: y == x
-  //   ENSURES: y >= 0
-  //   ENSURES: x >= 0 ==> x == y
-  //   ENSURES: x < 0 ==> -x == y
-  //   ENSURES: y == abs(x)
-  {
-    var x := 1;
-    var y := Abs(x);
-    expect y == 1;
-  }
+}
 
+method TestsForMultiReturn()
+{
   // Test case for combination {1}:
   //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
+  //   POST Q1: less <= x <= more
   {
-    var x := 0;
+    var x := -10;
+    var y := 10;
+    var more, less := MultiReturn(x, y);
+    expect less <= x <= more;
+    expect more == 0; // observed from implementation
+    expect less == -20; // observed from implementation
+  }
+
+  // Test case for combination {1}/By=0:
+  //   PRE:  y >= 0
+  //   POST Q1: less <= x <= more
+  {
+    var x := -10;
     var y := 0;
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
+    expect more == -10; // observed from implementation
+    expect less == -10; // observed from implementation
   }
 
-  // Test case for combination {1}/Bx=0,y=1:
+  // Test case for combination {1}/By=1:
   //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
+  //   POST Q1: less <= x <= more
   {
-    var x := 0;
+    var x := -10;
     var y := 1;
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
+    expect more == -9; // observed from implementation
+    expect less == -11; // observed from implementation
   }
 
-  // Test case for combination {1}/Bx=1,y=0:
+  // Test case for combination {1}/Bmore=x+1:
   //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
+  //   POST Q1: less <= x <= more
   {
-    var x := 1;
-    var y := 0;
+    var x := -9;
+    var y := 10;
     var more, less := MultiReturn(x, y);
     expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := 1;
-    var y := 1;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Omore>0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := -1;
-    var y := 0;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Omore<0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := -2;
-    var y := 0;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Omore=0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := -3;
-    var y := 2;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Oless>0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := 2;
-    var y := 0;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Oless<0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := -4;
-    var y := 0;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}/Oless=0:
-  //   PRE:  y >= 0
-  //   POST: less <= x <= more
-  //   ENSURES: less <= x <= more
-  {
-    var x := 1;
-    var y := 2;
-    var more, less := MultiReturn(x, y);
-    expect less <= x <= more;
-  }
-
-  // Test case for combination {1}:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := 0;
-    var y := 0;
-    var a := Max(x, y);
-    expect a == 0;
-  }
-
-  // Test case for combination {4}:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := 0;
-    var y := 1;
-    var a := Max(x, y);
-    expect a == 1;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := 1;
-    var y := 1;
-    var a := Max(x, y);
-    expect a == 1;
-  }
-
-  // Test case for combination {1}/Oa<0:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := -1;
-    var y := -1;
-    var a := Max(x, y);
-    expect a == -1;
-  }
-
-  // Test case for combination {4}/Oa<0:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := -2;
-    var y := -1;
-    var a := Max(x, y);
-    expect a == -1;
-  }
-
-  // Test case for combination {4}/Oa=0:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: a == y
-  //   POST: a == x
-  //   POST: x <= y
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := -1;
-    var y := 0;
-    var a := Max(x, y);
-    expect a == 0;
+    expect more == 1; // observed from implementation
+    expect less == -19; // observed from implementation
   }
 
 }
 
-method Failing()
+method TestsForMax()
 {
-  // Test case for combination {3}:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
+  // Test case for combination {1}/Rel:
+  //   POST Q1: a == x
+  //   POST Q2: x <= y
+  //   POST Q3: a == y
+  {
+    var x := 2;
+    var y := 2;
+    var a := Max(x, y);
+    expect a == 2;
+  }
+
+  // Test case for combination {3}/Rel:
+  //   POST Q1: a != x
+  //   POST Q2: a == y
+  //   POST Q3: x <= y
+  {
+    var x := -10;
+    var y := -9;
+    var a := Max(x, y);
+    expect a == -9;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}:
+  //   POST Q1: a == x
+  //   POST Q2: x > y
+  {
+    var x := -9;
+    var y := -10;
+    var a := Max(x, y);
+    // expect a == -9; // got -10
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: a == x
+  //   POST Q2: x <= y
+  //   POST Q3: a == y
   {
     var x := 0;
-    var y := -1;
-    var a := Max(x, y);
-    // expect a == 0;
-  }
-
-  // Test case for combination {3}/Oa>0:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := 1;
     var y := 0;
     var a := Max(x, y);
-    // expect a == 1;
-  }
-
-  // Test case for combination {3}/Oa<0:
-  //   POST: a == x
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   POST: !(x <= y)
-  //   POST: a == x
-  //   ENSURES: a == x || a == y
-  //   ENSURES: x > y ==> a == x
-  //   ENSURES: x <= y ==> a == y
-  {
-    var x := -1;
-    var y := -2;
-    var a := Max(x, y);
-    // expect a == -1;
+    expect a == 0;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAbs();
+  print "TestsForAbs: all non-failing tests passed!\n";
+  TestsForMultiReturn();
+  print "TestsForMultiReturn: all non-failing tests passed!\n";
+  TestsForMax();
+  print "TestsForMax: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_587.dfy
 // Method: ArrayToSeq
-// Generated: 2026-04-21 23:42:40
+// Generated: 2026-04-22 21:34:20
 
 // Converts an array to a sequence
 method ArrayToSeq<T>(a: array<T>) returns (s: seq<T>)

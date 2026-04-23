@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_591__270-284_AOI.dfy
 // Method: SwapFirstAndLast
-// Generated: 2026-04-08 16:55:48
+// Generated: 2026-04-22 21:44:30
 
 // dafny-synthesis_task_id_591.dfy
 
@@ -18,55 +18,36 @@ method SwapFirstAndLast(a: array<int>)
 }
 
 
-method Passing()
+method TestsForSwapFirstAndLast()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a != null && a.Length > 0
-  //   POST: a[0] == old(a[a.Length - 1])
-  //   POST: a[a.Length - 1] == old(a[0])
-  //   POST: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
-  //   ENSURES: a[0] == old(a[a.Length - 1]) && a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
+  //   POST Q1: a[0] == old(a[a.Length - 1])
+  //   POST Q2: a[a.Length - 1] == old(a[0])
+  //   POST Q3: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
   {
-    var a := new int[1] [8];
+    var a := new int[1] [-3];
     SwapFirstAndLast(a);
-    expect a[..] == [8];
+    expect a[..] == [-3];
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=2:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a != null && a.Length > 0
-  //   POST: a[0] == old(a[a.Length - 1])
-  //   POST: a[a.Length - 1] == old(a[0])
-  //   POST: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
-  //   ENSURES: a[0] == old(a[a.Length - 1]) && a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
+  //   POST Q1: a[0] == old(a[a.Length - 1])
+  //   POST Q2: a[a.Length - 1] == old(a[0])
+  //   POST Q3: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-9, -8];
     SwapFirstAndLast(a);
-    // expect a[..] == [3, 4];
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: a[0] == old(a[a.Length - 1])
-  //   POST: a[a.Length - 1] == old(a[0])
-  //   POST: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
-  //   ENSURES: a[0] == old(a[a.Length - 1]) && a[a.Length - 1] == old(a[0])
-  //   ENSURES: forall k: int {:trigger old(a[k])} {:trigger a[k]} :: 1 <= k < a.Length - 1 ==> a[k] == old(a[k])
-  {
-    var a := new int[3] [5, 6, 4];
-    SwapFirstAndLast(a);
-    // expect a[..] == [4, 6, 5];
+    // actual runtime state: a=[8, -9]
+    // expect a[..] == [-8, -9]; // LHS=[8, -9], RHS=[-8, -9]
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSwapFirstAndLast();
+  print "TestsForSwapFirstAndLast: all non-failing tests passed!\n";
 }

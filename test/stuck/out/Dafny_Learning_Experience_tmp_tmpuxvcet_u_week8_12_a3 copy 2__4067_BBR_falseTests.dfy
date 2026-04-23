@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\stuck\in\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2__4067_BBR_false.dfy
 // Method: push1
-// Generated: 2026-04-22 19:27:51
+// Generated: 2026-04-22 21:29:35
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2.dfy
 
@@ -241,7 +241,7 @@ class TwoStacks<T(==,0)> {
 }
 
 
-method Passing()
+method TestsForpush1()
 {
   // Test case for combination {3}/Rel:
   //   PRE:  Valid()
@@ -265,7 +265,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -291,7 +290,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -303,12 +301,12 @@ method Passing()
   {
     var N := 4;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [13, 51, 51, 13];
+    var tmp_data := new int[4] [13, 41, 41, 13];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [13, 51];
-    obj.s2 := [13, 51];
+    obj.s1 := [13, 41];
+    obj.s2 := [13, 41];
     obj.Repr := {obj, obj.data};
     var element := 0;
     var old_s1 := |obj.s1|;
@@ -317,7 +315,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -343,7 +340,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [0, 12]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -370,7 +366,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [0, 33, 12]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -397,7 +392,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [12, 26, 0]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -424,7 +418,6 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [14, 46, 0, 46, 14]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -451,62 +444,13 @@ method Passing()
     var FullStatus := obj.push1(element);
     expect old_s1 == obj.N ==> FullStatus == false;
     expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Oelement=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != N && old(|s1|) + old(|s2|) != N ==> s1 == old(s1) + [element]
-  //   POST Q2: old(|s1|) == N ==> FullStatus == false
-  //   POST Q3: old(|s1|) != N && old(|s1|) + old(|s2|) == N ==> FullStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var element := 1;
-    var old_s1 := |obj.s1|;
-    var old_s2 := |obj.s2|;
-    var old_s12 := obj.s1;
-    var FullStatus := obj.push1(element);
-    expect old_s1 == obj.N ==> FullStatus == false;
-    expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect FullStatus == false; // observed from implementation
-  }
+}
 
-  // Test case for combination {1}/Oelement>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != N && old(|s1|) + old(|s2|) != N ==> s1 == old(s1) + [element]
-  //   POST Q2: old(|s1|) == N ==> FullStatus == false
-  //   POST Q3: old(|s1|) != N && old(|s1|) + old(|s2|) == N ==> FullStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var element := 2;
-    var old_s1 := |obj.s1|;
-    var old_s2 := |obj.s2|;
-    var old_s12 := obj.s1;
-    var FullStatus := obj.push1(element);
-    expect old_s1 == obj.N ==> FullStatus == false;
-    expect old_s1 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect FullStatus == false; // observed from implementation
-  }
-
+method TestsForpush2()
+{
   // Test case for combination {2}/Rel:
   //   PRE:  Valid()
   //   POST Q1: old(|s2|) != N && old(|s1|) + old(|s2|) != N ==> s2 == old(s2) + [element]
@@ -515,12 +459,12 @@ method Passing()
   {
     var N := 2;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [9, 9];
+    var tmp_data := new int[2] [11, 11];
     obj.data := tmp_data;
     obj.n1 := 0;
     obj.n2 := 2;
     obj.s1 := [];
-    obj.s2 := [9, 9];
+    obj.s2 := [11, 11];
     obj.Repr := {obj, obj.data};
     var element := 0;
     var old_s2 := |obj.s2|;
@@ -529,7 +473,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -555,7 +498,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -567,12 +509,12 @@ method Passing()
   {
     var N := 4;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [13, 51, 51, 13];
+    var tmp_data := new int[4] [13, 42, 42, 13];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [13, 51];
-    obj.s2 := [13, 51];
+    obj.s1 := [13, 42];
+    obj.s2 := [13, 42];
     obj.Repr := {obj, obj.data};
     var element := 0;
     var old_s2 := |obj.s2|;
@@ -581,7 +523,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
@@ -607,7 +548,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [8, 0]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -634,7 +574,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [0, 33, 12]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -661,7 +600,6 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect tmp_data[..] == [25, 26, 0]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
@@ -674,12 +612,12 @@ method Passing()
   {
     var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[5] [14, 46, 37, 46, 14];
+    var tmp_data := new int[5] [14, 48, 39, 48, 14];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [14, 46];
-    obj.s2 := [14, 46];
+    obj.s1 := [14, 48];
+    obj.s2 := [14, 48];
     obj.Repr := {obj, obj.data};
     var element := 0;
     var old_s2 := |obj.s2|;
@@ -688,8 +626,7 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect tmp_data[..] == [14, 46, 0, 46, 14]; // observed from implementation
+    expect tmp_data[..] == [14, 48, 0, 48, 14]; // observed from implementation
     expect FullStatus == true; // observed from implementation
   }
 
@@ -715,628 +652,13 @@ method Passing()
     var FullStatus := obj.push2(element);
     expect old_s2 == obj.N ==> FullStatus == false;
     expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect FullStatus == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Oelement=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != N && old(|s1|) + old(|s2|) != N ==> s2 == old(s2) + [element]
-  //   POST Q2: old(|s2|) == N ==> FullStatus == false
-  //   POST Q3: old(|s2|) != N && old(|s1|) + old(|s2|) == N ==> FullStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var element := 1;
-    var old_s2 := |obj.s2|;
-    var old_s1 := |obj.s1|;
-    var old_s22 := obj.s2;
-    var FullStatus := obj.push2(element);
-    expect old_s2 == obj.N ==> FullStatus == false;
-    expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect FullStatus == false; // observed from implementation
-  }
+}
 
-  // Test case for combination {1}/Oelement>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != N && old(|s1|) + old(|s2|) != N ==> s2 == old(s2) + [element]
-  //   POST Q2: old(|s2|) == N ==> FullStatus == false
-  //   POST Q3: old(|s2|) != N && old(|s1|) + old(|s2|) == N ==> FullStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var element := 2;
-    var old_s2 := |obj.s2|;
-    var old_s1 := |obj.s1|;
-    var old_s22 := obj.s2;
-    var FullStatus := obj.push2(element);
-    expect old_s2 == obj.N ==> FullStatus == false;
-    expect old_s2 != obj.N && old_s1 + old_s2 == obj.N ==> FullStatus == false;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect FullStatus == false; // observed from implementation
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| == 0
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [12, 19];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [12, 19];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 19;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| != 0
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 4;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [13, 39, 39, 13];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 2;
-    obj.s1 := [13, 39];
-    obj.s2 := [13, 39];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 39;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| == 0
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [16];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 0;
-    obj.s1 := [16];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 16;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}/OTopItem=0:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| == 0
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [13, 0];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [13, 0];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 0;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}/OTopItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| == 0
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [14, 1];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [14, 1];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/On1=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| != 0
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 3;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[3] [11, 34, 33];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 2;
-    obj.s1 := [11];
-    obj.s2 := [33, 34];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 11;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/On2=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| != 0
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 3;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[3] [26, 27, 13];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 1;
-    obj.s1 := [26, 27];
-    obj.s2 := [13];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 27;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/OTopItem=0:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty1()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s1[|s1| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q13: |s2| != 0
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 4;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [15, 0, 0, 15];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 2;
-    obj.s1 := [15, 0];
-    obj.s2 := [15, 0];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    expect TopItem == 0;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| == 0
-  //   POST Q13: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [14, 12];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [12, 14];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 14;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| != 0
-  //   POST Q13: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 4;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [13, 48, 48, 13];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 2;
-    obj.s1 := [13, 48];
-    obj.s2 := [13, 48];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 48;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {5}:
-  //   PRE:  Valid()
-  //   POST Q1: Empty2() ==> EmptyStatus == false
-  //   POST Q2: !Empty2() ==> EmptyStatus == true && TopItem == s2[|s2| - 1]
-  //   POST Q3: Valid()
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [3, 6];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect obj.Empty2() ==> EmptyStatus == false;
-    expect !obj.Empty2() ==> EmptyStatus == true && TopItem == obj.s2[|obj.s2| - 1];
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == false; // observed from implementation
-    expect TopItem == 0; // observed from implementation
-  }
-
-  // Test case for combination {6}:
-  //   PRE:  Valid()
-  //   POST Q1: Empty2() ==> EmptyStatus == false
-  //   POST Q2: !Empty2() ==> EmptyStatus == true && TopItem == s2[|s2| - 1]
-  //   POST Q3: Valid()
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [12, 19];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [12, 19];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect obj.Empty2() ==> EmptyStatus == false;
-    expect !obj.Empty2() ==> EmptyStatus == true && TopItem == obj.s2[|obj.s2| - 1];
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == false; // observed from implementation
-    expect TopItem == 0; // observed from implementation
-  }
-
-  // Test case for combination {1}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| == 0
-  //   POST Q13: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [22];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 1;
-    obj.s1 := [];
-    obj.s2 := [22];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 22;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}/OTopItem=0:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| == 0
-  //   POST Q13: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [0, 13];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [13, 0];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 0;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {1}/OTopItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| == 0
-  //   POST Q13: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q14: n1 == |s1|
-  //   POST Q15: n2 == |s2|
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [1, 1];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [1, 1];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/On1=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| != 0
-  //   POST Q13: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 3;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[3] [11, 33, 32];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 2;
-    obj.s1 := [11];
-    obj.s2 := [32, 33];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 33;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/On2=1:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| != 0
-  //   POST Q13: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 3;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[3] [26, 27, 13];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 1;
-    obj.s1 := [26, 27];
-    obj.s2 := [13];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 13;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
-  // Test case for combination {2}/OTopItem=0:
-  //   PRE:  Valid()
-  //   POST Q1: !Empty2()
-  //   POST Q2: Valid()
-  //   POST Q3: TopItem == s2[|s2| - 1]
-  //   POST Q5: data.Length == N
-  //   POST Q6: 0 <= |s1| + |s2|
-  //   POST Q7: |s1| + |s2| <= N
-  //   POST Q8: 0 <= |s1|
-  //   POST Q9: |s1| <= N
-  //   POST Q10: 0 <= |s2|
-  //   POST Q11: |s2| <= N
-  //   POST Q12: |s1| != 0
-  //   POST Q13: forall i: int {:trigger data[i]} {:trigger s1[i]} :: 0 <= i && i < |s1| ==> s1[i] == data[i]
-  //   POST Q14: forall i: int {:trigger s2[i]} :: 0 <= i && i < |s2| ==> s2[i] == data[data.Length - 1 - i]
-  //   POST Q15: n1 == |s1|
-  //   POST Q16: n2 == |s2|
-  {
-    var N := 5;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[5] [15, 0, 43, 0, 15];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 2;
-    obj.s1 := [15, 0];
-    obj.s2 := [15, 0];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek2();
-    expect TopItem == 0;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
-    expect EmptyStatus == true; // observed from implementation
-  }
-
+method TestsForsearch1()
+{
   // Test case for combination {1}/Rel:
   //   PRE:  Valid()
   //   POST Q1: position != -1
@@ -1368,7 +690,6 @@ method Passing()
     var Element := 0;
     var position := obj.search1(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {2}/Rel:
@@ -1403,7 +724,6 @@ method Passing()
     var Element := 0;
     var position := obj.search1(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {3}/Rel:
@@ -1438,7 +758,6 @@ method Passing()
     var Element := 10;
     var position := obj.search1(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {4}/Rel:
@@ -1462,19 +781,18 @@ method Passing()
   //   POST Q17: n1 == |s1|
   //   POST Q18: n2 == |s2|
   {
-    var N := 6;
+    var N := 4;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[6] [19, 42, 43, 44, 42, 19];
+    var tmp_data := new int[4] [19, 44, 44, 19];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [19, 42];
-    obj.s2 := [19, 42];
+    obj.s1 := [19, 44];
+    obj.s2 := [19, 44];
     obj.Repr := {obj, obj.data};
     var Element := 10;
     var position := obj.search1(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {7}/Rel:
@@ -1498,7 +816,6 @@ method Passing()
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1509,21 +826,20 @@ method Passing()
   //   POST Q3: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
   //   POST Q4: Valid()
   {
-    var N := 4;
+    var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [36, 47, 47, 36];
+    var tmp_data := new int[5] [36, 37, 39, 37, 36];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [36, 47];
-    obj.s2 := [36, 47];
+    obj.s1 := [36, 37];
+    obj.s2 := [36, 37];
     obj.Repr := {obj, obj.data};
     var Element := 36;
     var position := obj.search1(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1548,7 +864,6 @@ method Passing()
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1561,19 +876,18 @@ method Passing()
   {
     var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[5] [18, 50, 51, 56, 21];
+    var tmp_data := new int[5] [18, 49, 50, 55, 20];
     obj.data := tmp_data;
     obj.n1 := 3;
     obj.n2 := 2;
-    obj.s1 := [18, 50, 51];
-    obj.s2 := [21, 56];
+    obj.s1 := [18, 49, 50];
+    obj.s2 := [20, 55];
     obj.Repr := {obj, obj.data};
-    var Element := 50;
+    var Element := 49;
     var position := obj.search1(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1598,7 +912,6 @@ method Passing()
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 1; // observed from implementation
   }
 
@@ -1609,24 +922,27 @@ method Passing()
   //   POST Q3: position == -1 ==> forall i: int {:trigger s1[i]} :: 0 <= i < |s1| ==> s1[i] != Element || Empty1()
   //   POST Q4: Valid()
   {
-    var N := 4;
+    var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [36, 47, 47, 36];
+    var tmp_data := new int[5] [36, 37, 39, 37, 36];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [36, 47];
-    obj.s2 := [36, 47];
+    obj.s1 := [36, 37];
+    obj.s2 := [36, 37];
     obj.Repr := {obj, obj.data};
-    var Element := 47;
+    var Element := 37;
     var position := obj.search1(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s1| && obj.s1[i] == Element && !obj.Empty1();
     expect position == -1 ==> forall i: int :: 0 <= i < |obj.s1| ==> obj.s1[i] != Element || obj.Empty1();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 1; // observed from implementation
   }
 
+}
+
+method TestsForsearch3()
+{
   // Test case for combination {1}/Rel:
   //   PRE:  Valid()
   //   POST Q1: position != -1
@@ -1657,7 +973,6 @@ method Passing()
     var Element := 0;
     var position := obj.search3(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {2}/Rel:
@@ -1691,7 +1006,6 @@ method Passing()
     var Element := 0;
     var position := obj.search3(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {3}/Rel:
@@ -1725,7 +1039,6 @@ method Passing()
     var Element := 0;
     var position := obj.search3(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {4}/Rel:
@@ -1760,7 +1073,6 @@ method Passing()
     var Element := 0;
     var position := obj.search3(Element);
     expect position == -1;
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
   }
 
   // Test case for combination {6}/Rel:
@@ -1782,7 +1094,6 @@ method Passing()
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1792,20 +1103,19 @@ method Passing()
   //   POST Q2: position >= 1 ==> exists i: int {:trigger s2[i]} :: 0 <= i < |s2| && s2[i] == Element && !Empty2()
   //   POST Q3: Valid()
   {
-    var N := 4;
+    var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [37, 38, 38, 37];
+    var tmp_data := new int[5] [13, 37, 103, 37, 13];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [37, 38];
-    obj.s2 := [37, 38];
+    obj.s1 := [13, 37];
+    obj.s2 := [13, 37];
     obj.Repr := {obj, obj.data};
-    var Element := 37;
+    var Element := 13;
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1828,7 +1138,6 @@ method Passing()
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1851,7 +1160,6 @@ method Passing()
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 2; // observed from implementation
   }
 
@@ -1874,7 +1182,6 @@ method Passing()
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 1; // observed from implementation
   }
 
@@ -1884,527 +1191,32 @@ method Passing()
   //   POST Q2: position >= 1 ==> exists i: int {:trigger s2[i]} :: 0 <= i < |s2| && s2[i] == Element && !Empty2()
   //   POST Q3: Valid()
   {
-    var N := 4;
+    var N := 5;
     var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[4] [37, 38, 38, 37];
+    var tmp_data := new int[5] [13, 37, 103, 37, 13];
     obj.data := tmp_data;
     obj.n1 := 2;
     obj.n2 := 2;
-    obj.s1 := [37, 38];
-    obj.s2 := [37, 38];
+    obj.s1 := [13, 37];
+    obj.s2 := [13, 37];
     obj.Repr := {obj, obj.data};
-    var Element := 38;
+    var Element := 37;
     var position := obj.search3(Element);
     expect position == -1 || position >= 1;
     expect position >= 1 ==> exists i: int :: 0 <= i < |obj.s2| && obj.s2[i] == Element && !obj.Empty2();
-    expect obj[..] == _module.TwoStacks`1[System.Numerics.BigInteger]; // observed from implementation
     expect position == 1; // observed from implementation
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [5, 9];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [12, 12];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [12, 12];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/O|data|=0:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [3];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/OPopedItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [7, 8];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/OPopedItem>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [10, 11];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {2}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [22];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 1;
-    obj.s1 := [];
-    obj.s2 := [22];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {2}/OPopedItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [14, 14];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [14, 14];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {2}/OPopedItem>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s1|) != 0 ==> s1 == old(s1[0 .. |s1| - 1]) && EmptyStatus == true && PopedItem == old(s1[|s1| - 1])
-  //   POST Q2: old(|s1|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [15, 15];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [15, 15];
-    obj.Repr := {obj, obj.data};
-    var old_s1 := |obj.s1|;
-    var old_s1_0_s1_1 := obj.s1[0 .. |obj.s1| - 1];
-    var old_s1_s1_1 := obj.s1[|obj.s1| - 1];
-    var EmptyStatus, PopedItem := obj.pop1();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s1 != 0 ==> obj.s1 == old_s1_0_s1_1 && EmptyStatus == true && PopedItem == old_s1_s1_1;
-    // expect old_s1 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [5, 9];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {3}:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [12, 20];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [12, 20];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/O|data|=0:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 0;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[0] [];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [3];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/OPopedItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [7, 8];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {1}/OPopedItem>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [10, 11];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {3}/O|data|=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 1;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[1] [16];
-    obj.data := tmp_data;
-    obj.n1 := 1;
-    obj.n2 := 0;
-    obj.s1 := [16];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {3}/OPopedItem=1:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [13, 23];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [13, 23];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {3}/OPopedItem>=2:
-  //   PRE:  Valid()
-  //   POST Q1: old(|s2|) != 0 ==> s2 == old(s2[0 .. |s2| - 1]) && EmptyStatus == true && PopedItem == old(s2[|s2| - 1])
-  //   POST Q2: old(|s2|) == 0 ==> EmptyStatus == false
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [14, 15];
-    obj.data := tmp_data;
-    obj.n1 := 2;
-    obj.n2 := 0;
-    obj.s1 := [14, 15];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var old_s2 := |obj.s2|;
-    var old_s2_0_s2_1 := obj.s2[0 .. |obj.s2| - 1];
-    var old_s2_s2_1 := obj.s2[|obj.s2| - 1];
-    var EmptyStatus, PopedItem := obj.pop2();
-    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'length')
-    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
-    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
-    // expect old_s2 != 0 ==> obj.s2 == old_s2_0_s2_1 && EmptyStatus == true && PopedItem == old_s2_s2_1;
-    // expect old_s2 == 0 ==> EmptyStatus == false;
-  }
-
-  // Test case for combination {5}:
-  //   PRE:  Valid()
-  //   POST Q1: Empty1() ==> EmptyStatus == false
-  //   POST Q2: !Empty1() ==> EmptyStatus == true && TopItem == s1[|s1| - 1]
-  //   POST Q3: Valid()
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [3, 6];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 0;
-    obj.s1 := [];
-    obj.s2 := [];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.TwoStacks`1.peek1(Boolean& EmptyStatus, T& TopItem) in C:\cygwin64\tmp\DafnyTestGen_dlbhn3ifipz\runner.cs:line 12879
-    // runtime error: at _module.__default.TestCase__40() in C:\cygwin64\tmp\DafnyTestGen_dlbhn3ifipz\runner.cs:line 10478
-    // expect obj.Empty1() ==> EmptyStatus == false;
-    // expect !obj.Empty1() ==> EmptyStatus == true && TopItem == obj.s1[|obj.s1| - 1];
-  }
-
-  // Test case for combination {6}:
-  //   PRE:  Valid()
-  //   POST Q1: Empty1() ==> EmptyStatus == false
-  //   POST Q2: !Empty1() ==> EmptyStatus == true && TopItem == s1[|s1| - 1]
-  //   POST Q3: Valid()
-  {
-    var N := 2;
-    var obj := new TwoStacks<int>(N);
-    var tmp_data := new int[2] [14, 12];
-    obj.data := tmp_data;
-    obj.n1 := 0;
-    obj.n2 := 2;
-    obj.s1 := [];
-    obj.s2 := [12, 14];
-    obj.Repr := {obj, obj.data};
-    var EmptyStatus, TopItem := obj.peek1();
-    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.TwoStacks`1.peek1(Boolean& EmptyStatus, T& TopItem) in C:\cygwin64\tmp\DafnyTestGen_dlbhn3ifipz\runner.cs:line 12879
-    // runtime error: at _module.__default.TestCase__41() in C:\cygwin64\tmp\DafnyTestGen_dlbhn3ifipz\runner.cs:line 10529
-    // expect obj.Empty1() ==> EmptyStatus == false;
-    // expect !obj.Empty1() ==> EmptyStatus == true && TopItem == obj.s1[|obj.s1| - 1];
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForpush1();
+  print "TestsForpush1: all non-failing tests passed!\n";
+  TestsForpush2();
+  print "TestsForpush2: all non-failing tests passed!\n";
+  TestsForsearch1();
+  print "TestsForsearch1: all non-failing tests passed!\n";
+  TestsForsearch3();
+  print "TestsForsearch3: all non-failing tests passed!\n";
 }

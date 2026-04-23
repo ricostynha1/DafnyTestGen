@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 // Method: copyArr
-// Generated: 2026-04-08 19:17:48
+// Generated: 2026-04-22 21:37:28
 
 // QS_BoilerPlate1_tmp_tmpa29vtz9__Ex2.dfy
 
@@ -107,70 +107,67 @@ method sortAux(a: array<int>, l: int, r: int)
 }
 
 
-method Passing()
+method TestsForcopyArr()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: ret[..] == a[l .. r]
-  //   ENSURES: ret[..] == a[l .. r]
+  //   POST Q1: ret[..] == a[l .. r]
   {
-    var a := new int[1] [12];
-    var l := 0;
-    var r := 1;
+    var a := new int[4] [-1, 9, -10, 27];
+    var l := 2;
+    var r := 3;
     var ret := copyArr(a, l, r);
-    expect ret[..] == [12];
+    expect ret[..] == [-10];
   }
 
-  // Test case for combination {1}/Ba=2,l=0,r==a_len:
+  // Test case for combination {1}/Bl=0:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: ret[..] == a[l .. r]
-  //   ENSURES: ret[..] == a[l .. r]
+  //   POST Q1: ret[..] == a[l .. r]
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-10, 10];
     var l := 0;
     var r := 2;
     var ret := copyArr(a, l, r);
-    expect ret[..] == [4, 3];
+    expect ret[..] == [-10, 10];
   }
 
-  // Test case for combination {1}/Ba=2,l=0,r=1:
+  // Test case for combination {1}/Bl=1:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: ret[..] == a[l .. r]
-  //   ENSURES: ret[..] == a[l .. r]
+  //   POST Q1: ret[..] == a[l .. r]
   {
-    var a := new int[2] [4, 3];
-    var l := 0;
-    var r := 1;
-    var ret := copyArr(a, l, r);
-    expect ret[..] == [4];
-  }
-
-  // Test case for combination {1}/Ba=2,l=1,r==a_len:
-  //   PRE:  0 <= l < r <= a.Length
-  //   POST: ret[..] == a[l .. r]
-  //   ENSURES: ret[..] == a[l .. r]
-  {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-10, -2];
     var l := 1;
     var r := 2;
     var ret := copyArr(a, l, r);
-    expect ret[..] == [3];
+    expect ret[..] == [-2];
   }
 
-  // Test case for combination {1}:
+  // Test case for combination {1}/O|a|=1:
+  //   PRE:  0 <= l < r <= a.Length
+  //   POST Q1: ret[..] == a[l .. r]
+  {
+    var a := new int[1] [2];
+    var l := 0;
+    var r := 1;
+    var ret := copyArr(a, l, r);
+    expect ret[..] == [2];
+  }
+
+}
+
+method TestsFormergeArr()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= l < m < r <= a.Length
   //   PRE:  sorted(a[l .. m]) && sorted(a[m .. r])
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[2] [23, 24];
-    var l := 0;
-    var m := 1;
-    var r := 2;
+    var a := new int[4] [-10, -1, -1, -1];
+    var l := 2;
+    var m := 3;
+    var r := 4;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
     mergeArr(a, l, m, r);
@@ -179,19 +176,36 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=3,l=0,m=1,r==a_pre_len:
+  // Test case for combination {1}/Bl=0:
   //   PRE:  0 <= l < m < r <= a.Length
   //   PRE:  sorted(a[l .. m]) && sorted(a[m .. r])
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[3] [5, 4, 6];
+    var a := new int[3] [-7, -5, -7];
     var l := 0;
-    var m := 1;
+    var m := 2;
+    var r := 3;
+    var old_a_l := a[..l];
+    var old_a_r := a[r..];
+    mergeArr(a, l, m, r);
+    expect sorted(a[l .. r]);
+    expect a[..l] == old_a_l;
+    expect a[r..] == old_a_r;
+    expect a[..] == [-7, -7, -5]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bl=1:
+  //   PRE:  0 <= l < m < r <= a.Length
+  //   PRE:  sorted(a[l .. m]) && sorted(a[m .. r])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
+  {
+    var a := new int[4] [2, -1, 2, 94];
+    var l := 1;
+    var m := 2;
     var r := 3;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
@@ -204,73 +218,72 @@ method Passing()
   // Test case for combination {1}/R3:
   //   PRE:  0 <= l < m < r <= a.Length
   //   PRE:  sorted(a[l .. m]) && sorted(a[m .. r])
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[3] [22, 23, 24];
-    var l := 1;
-    var m := 2;
-    var r := 3;
+    var a := new int[5] [-6, -6, -6, -6, -14621];
+    var l := 2;
+    var m := 4;
+    var r := 5;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
     mergeArr(a, l, m, r);
     expect sorted(a[l .. r]);
     expect a[..l] == old_a_l;
     expect a[r..] == old_a_r;
+    expect a[..] == [-6, -6, -14621, -6, -6]; // observed from implementation
   }
 
+}
+
+method TestsForsort()
+{
   // Test case for combination {1}:
-  //   POST: sorted(a[..])
-  //   ENSURES: sorted(a[..])
+  //   POST Q1: sorted(a[..])
+  {
+    var a := new int[1] [10];
+    sort(a);
+    expect sorted(a[..]);
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: sorted(a[..])
   {
     var a := new int[0] [];
     sort(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: sorted(a[..])
-  //   ENSURES: sorted(a[..])
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: sorted(a[..])
   {
-    var a := new int[1] [3];
+    var a := new int[2] [-8, -1];
     sort(a);
     expect sorted(a[..]);
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: sorted(a[..])
-  //   ENSURES: sorted(a[..])
+  // Test case for combination {1}/R4:
+  //   POST Q1: sorted(a[..])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [-7];
     sort(a);
     expect sorted(a[..]);
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: sorted(a[..])
-  //   ENSURES: sorted(a[..])
-  {
-    var a := new int[3] [5, 4, 6];
-    sort(a);
-    expect sorted(a[..]);
-  }
+}
 
-  // Test case for combination {1}:
+method TestsForsortAux()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[1] [17];
-    var l := 0;
-    var r := 1;
+    var a := new int[8] [10, -1, -7, 280, 281, 282, 149, 279];
+    var l := 2;
+    var r := 6;
     var old_a_l := a[..l];
     var old_a_r := a[r..];
     sortAux(a, l, r);
@@ -279,16 +292,13 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=2,l=0,r==a_pre_len:
+  // Test case for combination {1}/Bl=0:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-10, -10];
     var l := 0;
     var r := 2;
     var old_a_l := a[..l];
@@ -299,36 +309,13 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-  // Test case for combination {1}/Ba=2,l=0,r=1:
+  // Test case for combination {1}/Bl=1:
   //   PRE:  0 <= l < r <= a.Length
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
   {
-    var a := new int[2] [4, 3];
-    var l := 0;
-    var r := 1;
-    var old_a_l := a[..l];
-    var old_a_r := a[r..];
-    sortAux(a, l, r);
-    expect sorted(a[l .. r]);
-    expect a[..l] == old_a_l;
-    expect a[r..] == old_a_r;
-  }
-
-  // Test case for combination {1}/Ba=2,l=1,r==a_pre_len:
-  //   PRE:  0 <= l < r <= a.Length
-  //   POST: sorted(a[l .. r])
-  //   POST: a[..l] == old(a[..l])
-  //   POST: a[r..] == old(a[r..])
-  //   ENSURES: sorted(a[l .. r])
-  //   ENSURES: a[..l] == old(a[..l])
-  //   ENSURES: a[r..] == old(a[r..])
-  {
-    var a := new int[2] [4, 3];
+    var a := new int[2] [-10, -4];
     var l := 1;
     var r := 2;
     var old_a_l := a[..l];
@@ -339,15 +326,33 @@ method Passing()
     expect a[r..] == old_a_r;
   }
 
-}
+  // Test case for combination {1}/Br=a_pre_len-1:
+  //   PRE:  0 <= l < r <= a.Length
+  //   POST Q1: sorted(a[l .. r])
+  //   POST Q2: a[..l] == old(a[..l])
+  //   POST Q3: a[r..] == old(a[r..])
+  {
+    var a := new int[4] [-1, -3, -10, 49];
+    var l := 2;
+    var r := 3;
+    var old_a_l := a[..l];
+    var old_a_r := a[r..];
+    sortAux(a, l, r);
+    expect sorted(a[l .. r]);
+    expect a[..l] == old_a_l;
+    expect a[r..] == old_a_r;
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForcopyArr();
+  print "TestsForcopyArr: all non-failing tests passed!\n";
+  TestsFormergeArr();
+  print "TestsFormergeArr: all non-failing tests passed!\n";
+  TestsForsort();
+  print "TestsForsort: all non-failing tests passed!\n";
+  TestsForsortAux();
+  print "TestsForsortAux: all non-failing tests passed!\n";
 }

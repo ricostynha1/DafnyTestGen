@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4__261-407_SWS.dfy
 // Method: Somatorio
-// Generated: 2026-04-06 00:00:05
+// Generated: 2026-04-22 21:58:55
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_colecoes_arrays_ex4.dfy
 
@@ -33,48 +33,47 @@ method Somatorio(a: array<nat>) returns (s: nat)
 }
 
 
-method Passing()
+method TestsForSomatorio()
 {
   // Test case for combination {1}:
-  //   POST: s == SomaAte(a, a.Length)
+  //   POST Q1: s == SomaAte(a, a.Length)
   {
     var a := new nat[0] [];
     var s := Somatorio(a);
     expect s == 0;
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=1:
-  //   POST: s == SomaAte(a, a.Length)
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}:
+  //   POST Q1: s == SomaAte(a, a.Length)
   {
-    var a := new nat[1] [38];
+    var a := new nat[1] [10];
     var s := Somatorio(a);
-    // expect s == 38;
+    // expect s == 10; // got 0
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: s == SomaAte(a, a.Length)
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/O|a|>=2:
+  //   POST Q1: s == SomaAte(a, a.Length)
   {
-    var a := new nat[2] [28957, 28958];
+    var a := new nat[2] [8, 10];
     var s := Somatorio(a);
-    // expect s == 57915;
+    // expect s == 18; // got 0
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: s == SomaAte(a, a.Length)
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R3:
+  //   POST Q1: s == SomaAte(a, a.Length)
   {
-    var a := new nat[3] [28956, 28957, 28958];
+    var a := new nat[1] [9];
     var s := Somatorio(a);
-    // expect s == 86871;
+    // expect s == 9; // got 0
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSomatorio();
+  print "TestsForSomatorio: all non-failing tests passed!\n";
 }

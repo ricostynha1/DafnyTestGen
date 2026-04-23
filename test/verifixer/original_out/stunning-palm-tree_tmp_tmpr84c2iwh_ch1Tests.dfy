@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\stunning-palm-tree_tmp_tmpr84c2iwh_ch1.dfy
 // Method: Triple
-// Generated: 2026-04-08 19:18:59
+// Generated: 2026-04-22 21:38:20
 
 // stunning-palm-tree_tmp_tmpr84c2iwh_ch1.dfy
 
@@ -90,538 +90,266 @@ method Triple'(x: int) returns (r: int)
 }
 
 
-method GeneratedTests_Triple()
+method TestsForTriple()
 {
   // Test case for combination {1}:
-  //   POST: r == 3 * x
-  //   ENSURES: r == 3 * x
+  //   POST Q1: r == 3 * x
+  {
+    var x := -10;
+    var r := Triple(x);
+    expect r == -30;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: r == 3 * x
   {
     var x := 0;
     var r := Triple(x);
     expect r == 0;
-  }
-
-  // Test case for combination {1}/Bx=1:
-  //   POST: r == 3 * x
-  //   ENSURES: r == 3 * x
-  {
-    var x := 1;
-    var r := Triple(x);
-    expect r == 3;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   POST: r == 3 * x
-  //   ENSURES: r == 3 * x
-  {
-    var x := 2;
-    var r := Triple(x);
-    expect r == 6;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   POST: r == 3 * x
-  //   ENSURES: r == 3 * x
-  {
-    var x := -1;
-    var r := Triple(x);
-    expect r == -3;
-  }
-
-}
-
-method GeneratedTests_MinUnderSpec()
-{
-  // Test case for combination {1}:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 0;
-    var y := 0;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Bx=0,y=1:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 0;
-    var y := 1;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Bx=1,y=0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 1;
-    var y := 0;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 1;
-    var y := 1;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 2;
-    var y := 2;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := -1;
-    var y := -1;
-    var r := MinUnderSpec(x, y);
-    expect r <= x;
-    expect r <= y;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   ENSURES: r <= x && r <= y
-  {
-    var x := 2;
-    var y := 0;
-    var r := MinUnderSpec(x, y);
-    expect r == 0;
-  }
-
-}
-
-method GeneratedTests_Min()
-{
-  // Test case for combination {1}:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 0;
-    var y := 0;
-    var r := Min(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {2}:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: !(r == y)
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 0;
-    var y := 1;
-    var r := Min(x, y);
-    expect r == 0;
-  }
-
-  // Test case for combination {3}:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: !(r == x)
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 0;
-    var y := -1;
-    var r := Min(x, y);
-    expect r == -1;
-  }
-
-  // Test case for combination {1}/Bx=1,y=1:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 1;
-    var y := 1;
-    var r := Min(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := -1;
-    var y := -1;
-    var r := Min(x, y);
-    expect r == -1;
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: !(r == y)
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 1;
-    var y := 2;
-    var r := Min(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {2}/Or<0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: r == y
-  //   POST: !(r == y)
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := -1;
-    var y := 0;
-    var r := Min(x, y);
-    expect r == -1;
-  }
-
-  // Test case for combination {3}/Or>0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: !(r == x)
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 2;
-    var y := 1;
-    var r := Min(x, y);
-    expect r == 1;
-  }
-
-  // Test case for combination {3}/Or=0:
-  //   POST: r <= x
-  //   POST: r <= y
-  //   POST: !(r == x)
-  //   POST: r == y
-  //   ENSURES: r <= x && r <= y
-  //   ENSURES: r == x || r == y
-  {
-    var x := 1;
-    var y := 0;
-    var r := Min(x, y);
-    expect r == 0;
-  }
-
-}
-
-method GeneratedTests_ReconstructFromMaxSum()
-{
-  // Test case for combination {1}:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 0;
-    var m := 0;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 0;
-    expect y == 0;
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 0;
-    var m := 1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -1;
-    expect y == 1;
-  }
-
-  // Test case for combination {2}/Bs=1,m=1:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 1;
-    var m := 1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 0;
-    expect y == 1;
   }
 
   // Test case for combination {1}/Ox>0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
+  //   POST Q1: r == 3 * x
   {
-    var s := 2;
-    var m := 1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 1;
-    expect y == 1;
+    var x := 10;
+    var r := Triple(x);
+    expect r == 30;
   }
 
-  // Test case for combination {1}/Ox<0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
+  // Test case for combination {1}/R4:
+  //   POST Q1: r == 3 * x
   {
-    var s := -2;
-    var m := -1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -1;
-    expect y == -1;
-  }
-
-  // Test case for combination {1}/Oy>0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 4;
-    var m := 2;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 2;
-    expect y == 2;
-  }
-
-  // Test case for combination {1}/Oy<0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := -4;
-    var m := -2;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -2;
-    expect y == -2;
-  }
-
-  // Test case for combination {2}/Ox>0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 3;
-    var m := 2;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 1;
-    expect y == 2;
-  }
-
-  // Test case for combination {2}/Ox=0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := 4;
-    var m := 4;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == 0;
-    expect y == 4;
-  }
-
-  // Test case for combination {2}/Oy>0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := -1;
-    var m := 1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -2;
-    expect y == 1;
-  }
-
-  // Test case for combination {2}/Oy<0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := -3;
-    var m := -1;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -2;
-    expect y == -1;
-  }
-
-  // Test case for combination {2}/Oy=0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: m == x
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := -1;
-    var m := 0;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -1;
-    expect y == 0;
-  }
-
-  // Test case for combination {3}/Oy<0:
-  //   PRE:  s - m <= m
-  //   POST: s == x + y
-  //   POST: !(m == y)
-  //   POST: x <= m
-  //   POST: y <= m
-  //   POST: y <= m
-  //   ENSURES: s == x + y
-  //   ENSURES: (m == y || m == x) && x <= m && y <= m
-  {
-    var s := -5;
-    var m := -2;
-    var x, y := ReconstructFromMaxSum(s, m);
-    expect x == -2;
-    expect y == -3;
+    var x := -9;
+    var r := Triple(x);
+    expect r == -27;
   }
 
 }
 
-method GeneratedTests_Triple'()
+method TestsForMinUnderSpec()
+{
+  // Test case for combination {1}/Rel:
+  //   POST Q1: r <= x && r <= y
+  {
+    var x := -9;
+    var y := -10;
+    var r := MinUnderSpec(x, y);
+    expect r <= x && r <= y;
+  }
+
+  // Test case for combination {1}/Br=x:
+  //   POST Q1: r <= x && r <= y
+  {
+    var x := -10;
+    var y := -10;
+    var r := MinUnderSpec(x, y);
+    expect r <= x && r <= y;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: r <= x && r <= y
+  {
+    var x := 0;
+    var y := -10;
+    var r := MinUnderSpec(x, y);
+    expect r <= x && r <= y;
+  }
+
+}
+
+method TestsForMin()
+{
+  // Test case for combination {1}/Rel:
+  //   POST Q1: r == x
+  //   POST Q2: r <= y
+  {
+    var x := -10;
+    var y := -10;
+    var r := Min(x, y);
+    expect r == -10;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   POST Q1: r < x
+  //   POST Q2: r == y
+  {
+    var x := -9;
+    var y := -10;
+    var r := Min(x, y);
+    expect r == -10;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: r == x
+  //   POST Q2: r <= y
+  {
+    var x := 0;
+    var y := 10;
+    var r := Min(x, y);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Ox>0:
+  //   POST Q1: r == x
+  //   POST Q2: r <= y
+  {
+    var x := 10;
+    var y := 10;
+    var r := Min(x, y);
+    expect r == 10;
+  }
+
+}
+
+method TestsForMaxSum()
+{
+  // Test case for combination {1}/Rel:
+  //   POST Q1: s == x + y
+  //   POST Q2: x <= m
+  //   POST Q3: y <= m
+  //   POST Q4: m == x
+  {
+    var x := -10;
+    var y := -10;
+    // var s, m := MaxSum(x, y);
+    // expect s == -20;
+    // expect m == -10;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   POST Q1: s == x + y
+  //   POST Q2: x <= m
+  //   POST Q3: y <= m
+  //   POST Q4: m != x
+  //   POST Q5: m == y
+  {
+    var x := -10;
+    var y := -9;
+    // var s, m := MaxSum(x, y);
+    // expect s == -19;
+    // expect m == -9;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: s == x + y
+  //   POST Q2: x <= m
+  //   POST Q3: y <= m
+  //   POST Q4: m == x
+  {
+    var x := 0;
+    var y := -10;
+    // var s, m := MaxSum(x, y);
+    // expect s == -10;
+    // expect m == 0;
+  }
+
+  // Test case for combination {1}/Ox>0:
+  //   POST Q1: s == x + y
+  //   POST Q2: x <= m
+  //   POST Q3: y <= m
+  //   POST Q4: m == x
+  {
+    var x := 10;
+    var y := -10;
+    // var s, m := MaxSum(x, y);
+    // expect s == 0;
+    // expect m == 10;
+  }
+
+}
+
+method TestsForReconstructFromMaxSum()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  s - m <= m
+  //   POST Q1: s == x + y
+  //   POST Q2: m == y
+  //   POST Q3: x <= m
+  //   POST Q4: y <= m
+  {
+    var s := -10;
+    var m := -5;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -5;
+    expect y == -5;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   PRE:  s - m <= m
+  //   POST Q1: s == x + y
+  //   POST Q2: (m == y || m == x) && x <= m && y <= m
+  {
+    var s := -10;
+    var m := -4;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect (m == y || m == x) && x <= m && y <= m;
+  }
+
+  // Test case for combination {2}/By=m-1:
+  //   PRE:  s - m <= m
+  //   POST Q1: s == x + y
+  //   POST Q2: m != y
+  //   POST Q3: m == x
+  //   POST Q4: x <= m
+  //   POST Q5: y <= m
+  {
+    var s := -9;
+    var m := -4;
+    var x, y := ReconstructFromMaxSum(s, m);
+    expect x == -4 || x == -5;
+    expect y == -5 || y == -4;
+  }
+
+}
+
+method TestsForTriple'()
 {
   // Test case for combination {1}:
-  //   POST: Average(2 * r, 6 * x) == 6 * x
-  //   ENSURES: Average(2 * r, 6 * x) == 6 * x
+  //   POST Q1: Average(2 * r, 6 * x) == 6 * x
+  {
+    var x := -10;
+    var r := Triple'(x);
+    expect r == -30;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: Average(2 * r, 6 * x) == 6 * x
   {
     var x := 0;
     var r := Triple'(x);
     expect r == 0;
   }
 
-  // Test case for combination {1}/Bx=1:
-  //   POST: Average(2 * r, 6 * x) == 6 * x
-  //   ENSURES: Average(2 * r, 6 * x) == 6 * x
+  // Test case for combination {1}/Ox>0:
+  //   POST Q1: Average(2 * r, 6 * x) == 6 * x
   {
-    var x := 1;
+    var x := 10;
     var r := Triple'(x);
-    expect r == 3;
+    expect r == 30;
   }
 
-  // Test case for combination {1}/Or>0:
-  //   POST: Average(2 * r, 6 * x) == 6 * x
-  //   ENSURES: Average(2 * r, 6 * x) == 6 * x
+  // Test case for combination {1}/R4:
+  //   POST Q1: Average(2 * r, 6 * x) == 6 * x
   {
-    var x := 2;
+    var x := -9;
     var r := Triple'(x);
-    expect r == 6;
-  }
-
-  // Test case for combination {1}/Or<0:
-  //   POST: Average(2 * r, 6 * x) == 6 * x
-  //   ENSURES: Average(2 * r, 6 * x) == 6 * x
-  {
-    var x := -1;
-    var r := Triple'(x);
-    expect r == -3;
+    expect r == -27;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_Triple();
-  print "GeneratedTests_Triple: all tests passed!\n";
-  GeneratedTests_MinUnderSpec();
-  print "GeneratedTests_MinUnderSpec: all tests passed!\n";
-  GeneratedTests_Min();
-  print "GeneratedTests_Min: all tests passed!\n";
-  GeneratedTests_ReconstructFromMaxSum();
-  print "GeneratedTests_ReconstructFromMaxSum: all tests passed!\n";
-  GeneratedTests_Triple'();
-  print "GeneratedTests_Triple': all tests passed!\n";
+  TestsForTriple();
+  print "TestsForTriple: all tests passed!\n";
+  TestsForMinUnderSpec();
+  print "TestsForMinUnderSpec: all tests passed!\n";
+  TestsForMin();
+  print "TestsForMin: all tests passed!\n";
+  TestsForMaxSum();
+  print "TestsForMaxSum: all tests passed!\n";
+  TestsForReconstructFromMaxSum();
+  print "TestsForReconstructFromMaxSum: all tests passed!\n";
+  TestsForTriple'();
+  print "TestsForTriple': all tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search__842_ROR_Neq.dfy
 // Method: binarySearch
-// Generated: 2026-04-08 16:20:36
+// Generated: 2026-04-22 21:52:03
 
 // MIEIC_mfes_tmp_tmpq3ho7nve_TP3_binary_search.dfy
 
@@ -53,86 +53,72 @@ method testBinarySearch()
 }
 
 
-method Passing()
+method TestsForbinarySearch()
 {
-  // Test case for combination {2}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  isSorted(a)
-  //   POST: -1 <= index < a.Length
-  //   POST: !(index != -1)
-  //   POST: x !in a[..]
-  //   ENSURES: -1 <= index < a.Length
-  //   ENSURES: if index != -1 then a[index] == x else x !in a[..]
+  //   POST Q1: -1 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: index != -1
+  //   POST Q4: a[index] == x
   {
-    var a := new int[1] [9];
-    var x := 8;
+    var a := new int[2] [-10, -9];
+    var x := -10;
+    var index := binarySearch(a, x);
+    // runtime error: Unhandled exception. System.Exception: unreachable alternative
+    // runtime error: at _module.__default.binarySearch(BigInteger[] a, BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_0mcil4wcdsz\runner.cs:line 5862
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_0mcil4wcdsz\runner.cs:line 5919
+    // expect index == 0;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   PRE:  isSorted(a)
+  //   POST Q1: -1 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: index == -1
+  //   POST Q4: x !in a[..]
+  {
+    var a := new int[1] [-4];
+    var x := -10;
+    var index := binarySearch(a, x);
+    expect index == -1;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bindex=1:
+  //   PRE:  isSorted(a)
+  //   POST Q1: -1 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: index != -1
+  //   POST Q4: a[index] == x
+  {
+    var a := new int[2] [-10, 10];
+    var x := 10;
+    var index := binarySearch(a, x);
+    // runtime error: Unhandled exception. System.Exception: unreachable alternative
+    // runtime error: at _module.__default.binarySearch(BigInteger[] a, BigInteger x) in C:\cygwin64\tmp\DafnyTestGen_0mcil4wcdsz\runner.cs:line 5862
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_0mcil4wcdsz\runner.cs:line 5986
+    // expect index == 1;
+  }
+
+  // Test case for combination {2}/Bx=a_len:
+  //   PRE:  isSorted(a)
+  //   POST Q1: -1 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: index == -1
+  //   POST Q4: x !in a[..]
+  {
+    var a := new int[2] [10, 10];
+    var x := 2;
     var index := binarySearch(a, x);
     expect index == -1;
   }
 
 }
 
-method Failing()
-{
-  // Test case for combination {1}:
-  //   PRE:  isSorted(a)
-  //   POST: -1 <= index < a.Length
-  //   POST: index != -1
-  //   POST: a[index] == x
-  //   ENSURES: -1 <= index < a.Length
-  //   ENSURES: if index != -1 then a[index] == x else x !in a[..]
-  {
-    var a := new int[1] [3];
-    var x := 3;
-    var index := binarySearch(a, x);
-    // expect index == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,x=0:
-  //   PRE:  isSorted(a)
-  //   POST: -1 <= index < a.Length
-  //   POST: index != -1
-  //   POST: a[index] == x
-  //   ENSURES: -1 <= index < a.Length
-  //   ENSURES: if index != -1 then a[index] == x else x !in a[..]
-  {
-    var a := new int[1] [0];
-    var x := 0;
-    var index := binarySearch(a, x);
-    // expect index == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,x=1:
-  //   PRE:  isSorted(a)
-  //   POST: -1 <= index < a.Length
-  //   POST: index != -1
-  //   POST: a[index] == x
-  //   ENSURES: -1 <= index < a.Length
-  //   ENSURES: if index != -1 then a[index] == x else x !in a[..]
-  {
-    var a := new int[1] [1];
-    var x := 1;
-    var index := binarySearch(a, x);
-    // expect index == 0;
-  }
-
-  // Test case for combination {1}/Oindex>0:
-  //   PRE:  isSorted(a)
-  //   POST: -1 <= index < a.Length
-  //   POST: index != -1
-  //   POST: a[index] == x
-  //   ENSURES: -1 <= index < a.Length
-  //   ENSURES: if index != -1 then a[index] == x else x !in a[..]
-  {
-    var a := new int[2] [6, 7];
-    var x := 7;
-    var index := binarySearch(a, x);
-    // expect index == 1;
-  }
-
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForbinarySearch();
+  print "TestsForbinarySearch: all non-failing tests passed!\n";
 }

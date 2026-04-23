@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search__689_ROR_Eq.dfy
 // Method: binSearch
-// Generated: 2026-04-08 16:43:50
+// Generated: 2026-04-22 21:29:35
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_binary-search.dfy
 
@@ -46,82 +46,55 @@ method binSearch(a: array<int>, K: int) returns (b: bool)
 }
 
 
-method Passing()
+method TestsForbinSearch()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
+  //   POST Q1: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
+  {
+    var a := new int[1] [-10];
+    var K := -10;
+    var b := binSearch(a, K);
+    // expect b == true; // got false
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  isSorted(a)
+  //   POST Q1: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
   {
     var a := new int[0] [];
+    var K := 2;
+    var b := binSearch(a, K);
+    expect b == false;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  isSorted(a)
+  //   POST Q1: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
+  {
+    var a := new int[2] [-10, -10];
+    var K := -9;
+    var b := binSearch(a, K);
+    // expect b == false; // got true
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/OK=0:
+  //   PRE:  isSorted(a)
+  //   POST Q1: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
+  {
+    var a := new int[1] [-10];
     var K := 0;
     var b := binSearch(a, K);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/Ba=0,K=1:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[0] [];
-    var K := 1;
-    var b := binSearch(a, K);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/Ba=1,K=0:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[1] [2];
-    var K := 0;
-    var b := binSearch(a, K);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/Ba=1,K=1:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[1] [2];
-    var K := 1;
-    var b := binSearch(a, K);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/Ob=false:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[1] [11];
-    var K := 9;
-    var b := binSearch(a, K);
-    expect b == false;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ob=true:
-  //   PRE:  isSorted(a)
-  //   POST: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  //   ENSURES: b == exists i: nat {:trigger a[i]} :: i < a.Length && a[i] == K
-  {
-    var a := new int[1] [8];
-    var K := 8;
-    var b := binSearch(a, K);
-    // expect b == true;
+    // expect b == false; // got true
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForbinSearch();
+  print "TestsForbinSearch: all non-failing tests passed!\n";
 }

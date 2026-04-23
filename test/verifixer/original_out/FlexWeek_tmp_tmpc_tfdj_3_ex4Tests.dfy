@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\FlexWeek_tmp_tmpc_tfdj_3_ex4.dfy
 // Method: join
-// Generated: 2026-04-08 19:12:11
+// Generated: 2026-04-22 21:34:27
 
 // FlexWeek_tmp_tmpc_tfdj_3_ex4.dfy
 
@@ -63,97 +63,92 @@ method Check()
 }
 
 
-method Passing()
+method TestsForjoin()
 {
-  // Test case for combination {1}:
-  //   POST: a[..] + b[..] == c[..]
-  //   POST: multiset(a[..] + b[..]) == multiset(c[..])
-  //   POST: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   POST: a.Length + b.Length == c.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   POST: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  //   ENSURES: a[..] + b[..] == c[..]
-  //   ENSURES: multiset(a[..] + b[..]) == multiset(c[..])
-  //   ENSURES: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   ENSURES: a.Length + b.Length == c.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   ENSURES: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
+  // Test case for combination {1}/Rel:
+  //   POST Q1: a[..] + b[..] == c[..]
+  //   POST Q2: multiset(a[..] + b[..]) == multiset(c[..])
+  //   POST Q3: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
+  //   POST Q4: a.Length + b.Length == c.Length
+  //   POST Q5: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
+  //   POST Q6: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
+  {
+    var a := new int[1] [-1];
+    var b := new int[1] [8];
+    var c := join(a, b);
+    expect a[..] + b[..] == c[..];
+    expect multiset(a[..] + b[..]) == multiset(c[..]);
+    expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
+    expect a.Length + b.Length == c.Length;
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect c[..] == [-1, 8]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: a[..] + b[..] == c[..]
+  //   POST Q2: multiset(a[..] + b[..]) == multiset(c[..])
+  //   POST Q3: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
+  //   POST Q4: a.Length + b.Length == c.Length
+  //   POST Q5: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
+  //   POST Q6: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
   {
     var a := new int[0] [];
+    var b := new int[1] [5];
+    var c := join(a, b);
+    expect a[..] + b[..] == c[..];
+    expect multiset(a[..] + b[..]) == multiset(c[..]);
+    expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
+    expect a.Length + b.Length == c.Length;
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect c[..] == [5]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: a[..] + b[..] == c[..]
+  //   POST Q2: multiset(a[..] + b[..]) == multiset(c[..])
+  //   POST Q3: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
+  //   POST Q4: a.Length + b.Length == c.Length
+  //   POST Q5: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
+  //   POST Q6: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
+  {
+    var a := new int[2] [-4, -9];
+    var b := new int[1] [-2];
+    var c := join(a, b);
+    expect a[..] + b[..] == c[..];
+    expect multiset(a[..] + b[..]) == multiset(c[..]);
+    expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
+    expect a.Length + b.Length == c.Length;
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect c[..] == [-4, -9, -2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|b|=0:
+  //   POST Q1: a[..] + b[..] == c[..]
+  //   POST Q2: multiset(a[..] + b[..]) == multiset(c[..])
+  //   POST Q3: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
+  //   POST Q4: a.Length + b.Length == c.Length
+  //   POST Q5: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
+  //   POST Q6: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
+  {
+    var a := new int[1] [5];
     var b := new int[0] [];
     var c := join(a, b);
-    expect c[..] == [];
+    expect a[..] + b[..] == c[..];
+    expect multiset(a[..] + b[..]) == multiset(c[..]);
+    expect multiset(a[..]) + multiset(b[..]) == multiset(c[..]);
+    expect a.Length + b.Length == c.Length;
+    expect forall i: int  :: 0 <= i < a.Length ==> c[i] == a[i];
+    expect forall i_2: int, j_2: int :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2];
+    expect c[..] == [5]; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=0,b=1:
-  //   POST: a[..] + b[..] == c[..]
-  //   POST: multiset(a[..] + b[..]) == multiset(c[..])
-  //   POST: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   POST: a.Length + b.Length == c.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   POST: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  //   ENSURES: a[..] + b[..] == c[..]
-  //   ENSURES: multiset(a[..] + b[..]) == multiset(c[..])
-  //   ENSURES: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   ENSURES: a.Length + b.Length == c.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   ENSURES: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  {
-    var a := new int[0] [];
-    var b := new int[1] [2];
-    var c := join(a, b);
-    expect c[..] == [2];
-  }
-
-  // Test case for combination {1}/Ba=0,b=2:
-  //   POST: a[..] + b[..] == c[..]
-  //   POST: multiset(a[..] + b[..]) == multiset(c[..])
-  //   POST: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   POST: a.Length + b.Length == c.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   POST: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  //   ENSURES: a[..] + b[..] == c[..]
-  //   ENSURES: multiset(a[..] + b[..]) == multiset(c[..])
-  //   ENSURES: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   ENSURES: a.Length + b.Length == c.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   ENSURES: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  {
-    var a := new int[0] [];
-    var b := new int[2] [3, 4];
-    var c := join(a, b);
-    expect c[..] == [3, 4];
-  }
-
-  // Test case for combination {1}/Ba=0,b=3:
-  //   POST: a[..] + b[..] == c[..]
-  //   POST: multiset(a[..] + b[..]) == multiset(c[..])
-  //   POST: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   POST: a.Length + b.Length == c.Length
-  //   POST: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   POST: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  //   ENSURES: a[..] + b[..] == c[..]
-  //   ENSURES: multiset(a[..] + b[..]) == multiset(c[..])
-  //   ENSURES: multiset(a[..]) + multiset(b[..]) == multiset(c[..])
-  //   ENSURES: a.Length + b.Length == c.Length
-  //   ENSURES: forall i: int {:trigger a[i]} {:trigger c[i]} :: 0 <= i < a.Length ==> c[i] == a[i]
-  //   ENSURES: forall i_2: int, j_2: int {:trigger b[j_2], c[i_2]} :: a.Length <= i_2 < c.Length && 0 <= j_2 < b.Length && i_2 - j_2 == a.Length ==> c[i_2] == b[j_2]
-  {
-    var a := new int[0] [];
-    var b := new int[3] [4, 5, 6];
-    var c := join(a, b);
-    expect c[..] == [4, 5, 6];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForjoin();
+  print "TestsForjoin: all non-failing tests passed!\n";
 }

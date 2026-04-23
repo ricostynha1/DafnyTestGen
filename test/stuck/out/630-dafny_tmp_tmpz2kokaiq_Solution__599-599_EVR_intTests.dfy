@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\stuck\in\630-dafny_tmp_tmpz2kokaiq_Solution__599-599_EVR_int.dfy
 // Method: BinarySearch
-// Generated: 2026-04-22 19:22:52
+// Generated: 2026-04-22 21:25:22
 
 // 630-dafny_tmp_tmpz2kokaiq_Solution.dfy
 
@@ -41,96 +41,9 @@ method BinarySearch(a: array<int>, x: int) returns (index: int)
 }
 
 
-method Passing()
+method TestsForBinarySearch()
 {
-  // Test case for combination {2}/Rel:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[1] [-4];
-    var x := -10;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == -1;
-  }
-
-  // Test case for combination {3}/Bx=a_len:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[2] [2, 10];
-    var x := 2;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == 0;
-  }
-
-  // Test case for combination {3}/Bx=a_len-1:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[3] [10, 10, 10];
-    var x := 2;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == -1;
-  }
-
-  // Test case for combination {3}/Bindex=0:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[0] [];
-    var x := -9;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == -1;
-  }
-
-  // Test case for combination {4}/Bindex=1:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[2] [-10, 10];
-    var x := 10;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == 1;
-  }
-
-  // Test case for combination {1}/O|a|=0:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[0] [];
-    var x := -10;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == -1;
-  }
-
-  // Test case for combination {1}/O|a|>=2:
-  //   PRE:  sorted(a)
-  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
-  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
-  {
-    var a := new int[2] [-10, -10];
-    var x := -9;
-    var index := BinarySearch(a, x);
-    expect 0 <= index < a.Length ==> a[index] == x;
-    expect index == -1;
-  }
-
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Rel:
   //   PRE:  sorted(a)
   //   POST Q1: 0 <= index < a.Length ==> a[index] == x
@@ -143,6 +56,19 @@ method Failing()
     // expect index == -1 ==> forall i: int :: 0 <= i < a.Length ==> a[i] != x; // got -1
   }
 
+  // Test case for combination {2}/Rel:
+  //   PRE:  sorted(a)
+  //   POST Q1: 0 <= index < a.Length ==> a[index] == x
+  //   POST Q2: index == -1 ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != x
+  {
+    var a := new int[1] [-2];
+    var x := -10;
+    var index := BinarySearch(a, x);
+    expect 0 <= index < a.Length ==> a[index] == x;
+    expect index == -1;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {4}/Rel:
   //   PRE:  sorted(a)
   //   POST Q1: 0 <= index < a.Length ==> a[index] == x
@@ -159,6 +85,6 @@ method Failing()
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForBinarySearch();
+  print "TestsForBinarySearch: all non-failing tests passed!\n";
 }

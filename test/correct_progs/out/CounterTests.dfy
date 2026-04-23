@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Counter.dfy
 // Method: Increment
-// Generated: 2026-04-21 23:35:29
+// Generated: 2026-04-22 21:26:01
 
 class Counter {
     var count: int
@@ -33,7 +33,6 @@ method TestsForIncrement()
     obj.count := 10;
     obj.Increment();
     expect obj.count == 11;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/Ocount=0:
@@ -44,7 +43,6 @@ method TestsForIncrement()
     obj.count := 0;
     obj.Increment();
     expect obj.count == 1;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/R3:
@@ -55,7 +53,6 @@ method TestsForIncrement()
     obj.count := 9;
     obj.Increment();
     expect obj.count == 10;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
@@ -66,7 +63,6 @@ method TestsForIncrement()
     obj.count := 8;
     obj.Increment();
     expect obj.count == 9;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
 }
@@ -80,7 +76,6 @@ method TestsForReset()
     obj.count := -10;
     obj.Reset();
     expect obj.count == 0;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/Ocount>0:
@@ -90,7 +85,6 @@ method TestsForReset()
     obj.count := 10;
     obj.Reset();
     expect obj.count == 0;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/R3:
@@ -100,7 +94,6 @@ method TestsForReset()
     obj.count := -9;
     obj.Reset();
     expect obj.count == 0;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
@@ -110,7 +103,6 @@ method TestsForReset()
     obj.count := -8;
     obj.Reset();
     expect obj.count == 0;
-    expect obj[..] == _module.Counter; // observed from implementation
   }
 
 }

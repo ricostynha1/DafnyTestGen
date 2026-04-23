@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_755__1419-1432_SDL.dfy
 // Method: SecondSmallest
-// Generated: 2026-04-08 16:56:27
+// Generated: 2026-04-22 21:44:58
 
 // dafny-synthesis_task_id_755.dfy
 
@@ -59,82 +59,64 @@ method SecondSmallest(s: array<int>) returns (secondSmallest: int)
 }
 
 
-method Passing()
+method TestsForSecondSmallest()
 {
   // Test case for combination {1}:
   //   PRE:  s.Length >= 2
   //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  //   ENSURES: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
+  //   POST Q1: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
+  //   POST Q2: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
-    var s := new int[2] [7718, 7719];
+    var s := new int[2] [-10, -9];
     var secondSmallest := SecondSmallest(s);
-    expect secondSmallest == 7719;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect secondSmallest == -9; // observed from implementation
   }
 
-  // Test case for combination {1}/Bs=3:
+  // Test case for combination {1}/R2:
   //   PRE:  s.Length >= 2
   //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  //   ENSURES: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
+  //   POST Q1: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
+  //   POST Q2: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
-    var s := new int[3] [28957, 28958, 28959];
+    var s := new int[2] [-9, -10];
     var secondSmallest := SecondSmallest(s);
-    expect secondSmallest == 28958;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect secondSmallest == -9; // observed from implementation
   }
 
-  // Test case for combination {1}/OsecondSmallest>0:
+  // Test case for combination {1}/R3:
   //   PRE:  s.Length >= 2
   //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  //   ENSURES: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
+  //   POST Q1: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
+  //   POST Q2: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
-    var s := new int[4] [7758, 7759, 7760, 7761];
+    var s := new int[2] [-8, -7];
     var secondSmallest := SecondSmallest(s);
-    expect secondSmallest == 7759;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect secondSmallest == -7; // observed from implementation
   }
 
-  // Test case for combination {1}/OsecondSmallest<0:
+  // Test case for combination {1}/R4:
   //   PRE:  s.Length >= 2
   //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  //   ENSURES: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
+  //   POST Q1: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
+  //   POST Q2: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
   {
-    var s := new int[8] [-7720, -7719, -7718, -7717, -7716, -7715, -7714, -7713];
+    var s := new int[2] [-2, -8];
     var secondSmallest := SecondSmallest(s);
-    expect secondSmallest == -7719;
+    expect exists i: int, j: int :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest;
+    expect forall k: int :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest;
+    expect secondSmallest == -2; // observed from implementation
   }
 
-  // Test case for combination {1}/OsecondSmallest=0:
-  //   PRE:  s.Length >= 2
-  //   PRE:  exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] != s[i]
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   POST: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  //   ENSURES: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < s.Length && 0 <= j < s.Length && i != j && s[i] == min(s[..]) && s[j] == secondSmallest
-  //   ENSURES: forall k: int {:trigger s[k]} :: 0 <= k < s.Length && s[k] != min(s[..]) ==> s[k] >= secondSmallest
-  {
-    var s := new int[7] [7762, 0, 7720, 7721, 7722, 7723, 7763];
-    var secondSmallest := SecondSmallest(s);
-    expect secondSmallest == 7720;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSecondSmallest();
+  print "TestsForSecondSmallest: all non-failing tests passed!\n";
 }

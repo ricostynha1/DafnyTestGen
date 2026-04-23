@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Formal-methods-of-software-development_tmp_tmppryvbyty_Bloque 1_Lab3__2107_LVR_2.dfy
-// Method: ComputeFact
-// Generated: 2026-04-08 16:18:47
+// Method: multipleReturns
+// Generated: 2026-04-22 21:49:32
 
 // Formal-methods-of-software-development_tmp_tmppryvbyty_Bloque 1_Lab3.dfy
 
@@ -157,120 +157,232 @@ method Sqare2(a: int) returns (x: int)
 }
 
 
-method GeneratedTests_ComputeFact()
+method TestsFormultipleReturns()
+{
+  // Test case for combination {1}:
+  //   PRE:  y > 0
+  //   POST Q1: less < x < more
+  {
+    var x := -10;
+    var y := 10;
+    // var more, less := multipleReturns(x, y);
+    // expect less < x < more;
+  }
+
+  // Test case for combination {1}/By=1:
+  //   PRE:  y > 0
+  //   POST Q1: less < x < more
+  {
+    var x := -10;
+    var y := 1;
+    // var more, less := multipleReturns(x, y);
+    // expect less < x < more;
+  }
+
+  // Test case for combination {1}/By=2:
+  //   PRE:  y > 0
+  //   POST Q1: less < x < more
+  {
+    var x := -10;
+    var y := 2;
+    // var more, less := multipleReturns(x, y);
+    // expect less < x < more;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   PRE:  y > 0
+  //   POST Q1: less < x < more
+  {
+    var x := 0;
+    var y := 10;
+    // var more, less := multipleReturns(x, y);
+    // expect less < x < more;
+  }
+
+}
+
+method TestsFormultipleReturns2()
+{
+  // Test case for combination {1}:
+  //   PRE:  y > 0
+  //   POST Q1: more + less == 2 * x
+  {
+    var x := -10;
+    var y := 10;
+    // var more, less := multipleReturns2(x, y);
+    // expect more + less == 2 * x;
+  }
+
+  // Test case for combination {1}/By=1:
+  //   PRE:  y > 0
+  //   POST Q1: more + less == 2 * x
+  {
+    var x := -10;
+    var y := 1;
+    // var more, less := multipleReturns2(x, y);
+    // expect more + less == 2 * x;
+  }
+
+  // Test case for combination {1}/By=2:
+  //   PRE:  y > 0
+  //   POST Q1: more + less == 2 * x
+  {
+    var x := -10;
+    var y := 2;
+    // var more, less := multipleReturns2(x, y);
+    // expect more + less == 2 * x;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   PRE:  y > 0
+  //   POST Q1: more + less == 2 * x
+  {
+    var x := 0;
+    var y := 10;
+    // var more, less := multipleReturns2(x, y);
+    // expect more + less == 2 * x;
+  }
+
+}
+
+method TestsFormultipleReturns3()
+{
+  // Test case for combination {1}:
+  //   PRE:  y > 0
+  //   POST Q1: more - less == 2 * y
+  {
+    var x := -10;
+    var y := 10;
+    // var more, less := multipleReturns3(x, y);
+    // expect more - less == 2 * y;
+  }
+
+  // Test case for combination {1}/By=1:
+  //   PRE:  y > 0
+  //   POST Q1: more - less == 2 * y
+  {
+    var x := -10;
+    var y := 1;
+    // var more, less := multipleReturns3(x, y);
+    // expect more - less == 2 * y;
+  }
+
+  // Test case for combination {1}/By=2:
+  //   PRE:  y > 0
+  //   POST Q1: more - less == 2 * y
+  {
+    var x := -10;
+    var y := 2;
+    // var more, less := multipleReturns3(x, y);
+    // expect more - less == 2 * y;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   PRE:  y > 0
+  //   POST Q1: more - less == 2 * y
+  {
+    var x := 0;
+    var y := 10;
+    // var more, less := multipleReturns3(x, y);
+    // expect more - less == 2 * y;
+  }
+
+}
+
+method TestsForComputeFact()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
+  //   POST Q1: f == factorial(n)
   {
     var n := 0;
     var f := ComputeFact(n);
-    expect f == 1;
+    expect f == factorial(n);
   }
 
   // Test case for combination {2}:
   //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
+  //   POST Q1: f == factorial(n)
+  {
+    var n := 1;
+    var f := ComputeFact(n);
+    expect f == factorial(n);
+  }
+
+  // Test case for combination {3}:
+  //   PRE:  n >= 0
+  //   POST Q1: f == factorial(n)
+  {
+    var n := 10;
+    var f := ComputeFact(n);
+    expect f == factorial(n);
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   PRE:  n >= 0
+  //   POST Q1: f == factorial(n)
   {
     var n := 2;
     var f := ComputeFact(n);
     expect f == factorial(n);
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 1;
-    var f := ComputeFact(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of<0:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 3;
-    var f := ComputeFact(n);
-    expect f == factorial(n);
-  }
-
-  // Test case for combination {2}/Of=0:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 4;
-    var f := ComputeFact(n);
-    expect f == 0;
-  }
-
 }
 
-method GeneratedTests_ComputeFact2()
+method TestsForComputeFact2()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
+  //   POST Q1: f == factorial(n)
   {
     var n := 0;
     var f := ComputeFact2(n);
-    expect f == 1;
+    expect f == factorial(n);
   }
 
   // Test case for combination {2}:
   //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
+  //   POST Q1: f == factorial(n)
+  {
+    var n := 1;
+    var f := ComputeFact2(n);
+    expect f == factorial(n);
+  }
+
+  // Test case for combination {3}:
+  //   PRE:  n >= 0
+  //   POST Q1: f == factorial(n)
+  {
+    var n := 10;
+    var f := ComputeFact2(n);
+    expect f == factorial(n);
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   PRE:  n >= 0
+  //   POST Q1: f == factorial(n)
   {
     var n := 2;
     var f := ComputeFact2(n);
     expect f == factorial(n);
   }
 
-  // Test case for combination {1}/Bn=1:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 1;
-    var f := ComputeFact2(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of<0:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 3;
-    var f := ComputeFact2(n);
-    expect f == factorial(n);
-  }
-
-  // Test case for combination {2}/Of=0:
-  //   PRE:  n >= 0
-  //   POST: f == factorial(n)
-  //   ENSURES: f == factorial(n)
-  {
-    var n := 4;
-    var f := ComputeFact2(n);
-    expect f == 0;
-  }
-
 }
 
-method GeneratedTests_Sqare()
+method TestsForSqare()
 {
   // Test case for combination {1}:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
+  {
+    var a := 10;
+    var x := Sqare(a);
+    expect x == 100;
+  }
+
+  // Test case for combination {1}/Ba=1:
+  //   PRE:  a >= 1
+  //   POST Q1: x == a * a
   {
     var a := 1;
     var x := Sqare(a);
@@ -279,32 +391,38 @@ method GeneratedTests_Sqare()
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
   {
     var a := 2;
     var x := Sqare(a);
     expect x == 4;
   }
 
-  // Test case for combination {1}/Ox>0:
+  // Test case for combination {1}/R4:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
   {
-    var a := 3;
+    var a := 9;
     var x := Sqare(a);
-    expect x == 9;
+    expect x == 81;
   }
 
 }
 
-method GeneratedTests_Sqare2()
+method TestsForSqare2()
 {
   // Test case for combination {1}:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
+  {
+    var a := 10;
+    var x := Sqare2(a);
+    expect x == 100;
+  }
+
+  // Test case for combination {1}/Ba=1:
+  //   PRE:  a >= 1
+  //   POST Q1: x == a * a
   {
     var a := 1;
     var x := Sqare2(a);
@@ -313,34 +431,38 @@ method GeneratedTests_Sqare2()
 
   // Test case for combination {1}/Ba=2:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
   {
     var a := 2;
     var x := Sqare2(a);
     expect x == 4;
   }
 
-  // Test case for combination {1}/Ox>0:
+  // Test case for combination {1}/R4:
   //   PRE:  a >= 1
-  //   POST: x == a * a
-  //   ENSURES: x == a * a
+  //   POST Q1: x == a * a
   {
-    var a := 3;
+    var a := 9;
     var x := Sqare2(a);
-    expect x == 9;
+    expect x == 81;
   }
 
 }
 
 method Main()
 {
-  GeneratedTests_ComputeFact();
-  print "GeneratedTests_ComputeFact: all tests passed!\n";
-  GeneratedTests_ComputeFact2();
-  print "GeneratedTests_ComputeFact2: all tests passed!\n";
-  GeneratedTests_Sqare();
-  print "GeneratedTests_Sqare: all tests passed!\n";
-  GeneratedTests_Sqare2();
-  print "GeneratedTests_Sqare2: all tests passed!\n";
+  TestsFormultipleReturns();
+  print "TestsFormultipleReturns: all tests passed!\n";
+  TestsFormultipleReturns2();
+  print "TestsFormultipleReturns2: all tests passed!\n";
+  TestsFormultipleReturns3();
+  print "TestsFormultipleReturns3: all tests passed!\n";
+  TestsForComputeFact();
+  print "TestsForComputeFact: all tests passed!\n";
+  TestsForComputeFact2();
+  print "TestsForComputeFact2: all tests passed!\n";
+  TestsForSqare();
+  print "TestsForSqare: all tests passed!\n";
+  TestsForSqare2();
+  print "TestsForSqare2: all tests passed!\n";
 }

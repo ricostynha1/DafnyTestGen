@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
 // Method: square
-// Generated: 2026-04-08 19:06:22
+// Generated: 2026-04-22 21:29:00
 
 // Dafny_Verify_tmp_tmphq7j0row_dataset_bql_exampls_Square.dfy
 
@@ -28,12 +28,20 @@ method square(n: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForsquare()
 {
   // Test case for combination {1}:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
+  {
+    var n := 10;
+    var r := square(n);
+    expect r == 100;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  0 <= n
+  //   POST Q1: r == n * n
   {
     var n := 0;
     var r := square(n);
@@ -42,33 +50,26 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
   {
     var n := 1;
     var r := square(n);
     expect r == 1;
   }
 
-  // Test case for combination {1}/Or>0:
+  // Test case for combination {1}/R4:
   //   PRE:  0 <= n
-  //   POST: r == n * n
-  //   ENSURES: r == n * n
+  //   POST Q1: r == n * n
   {
-    var n := 3;
+    var n := 9;
     var r := square(n);
-    expect r == 9;
+    expect r == 81;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsquare();
+  print "TestsForsquare: all non-failing tests passed!\n";
 }

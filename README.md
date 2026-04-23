@@ -1,10 +1,10 @@
-# DafnyTestGen
+# DafnyCBT
 
-Automatic specification-based test generation for [Dafny](https://dafny.org/) programs based on method contracts (preconditions and postconditions). 
+Automatic contract-based test generation for [Dafny](https://dafny.org/) programs based on method preconditions and postconditions. 
 
-DafnyTestGen analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs and expected outputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis. 
+DafnyCBT analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs and expected outputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis. 
 
-DafnyTestGen can be used in different scenarios, including:
+DafnyCBT can be used in different scenarios, including:
 - **Complement the verifier** — find and localize bugs in the implementation (or the specification) when Dafny cannot prove (or disprove) correctness or cannot provide adequate diagnosis information or counter-examples.
 - **Specification-based (black-box) testing** — generate tests purely from contracts, reusable in Dafny or translatable to a target implementation language.
 - **Test-driven development** — generate test scaffolding from contracts before any implementation exists, to clarify requirements (not possible with white-box test generators).
@@ -12,7 +12,7 @@ DafnyTestGen can be used in different scenarios, including:
 
 ## Key Differentiators
 
-Most automated test generators for contract-equipped languages — such as Pex/IntelliTest (C#), AutoTest (Eiffel), and DART/CUTE — derive test diversity from *implementation paths* via dynamic symbolic execution (DSE) or random testing, using contracts only as runtime oracles. DafnyTestGen takes a fundamentally different approach:
+Most automated test generators for contract-equipped languages — such as Pex/IntelliTest (C#), AutoTest (Eiffel), and DART/CUTE — derive test diversity from *implementation paths* via dynamic symbolic execution (DSE) or random testing, using contracts only as runtime oracles. DafnyCBT takes a fundamentally different approach:
 
 1. **Specification-driven partitioning, not code coverage.** Test scenarios are derived by decomposing *preconditions* and *postconditions* into Disjunctive Normal Form (DNF), treating each clause as a distinct equivalence class. A method with `ensures (if C then A else B)` produces two test scenarios regardless of implementation complexity. This is closer in spirit to the category-partition method, but fully automated via logical decomposition of formal contracts.
 
@@ -35,7 +35,7 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 
 ## Equivalence Class Partitioning via DNF Analysis
 
-Disjunctive postconditions and preconditions naturally originate multiple test scenarios. DafnyTestGen converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a` option), producing a set of clauses that partition the input/output space as **equivalence classes**.
+Disjunctive postconditions and preconditions naturally originate multiple test scenarios. DafnyCBT converts all contract clauses to **Disjunctive Normal Form (DNF)** (or Full DNF (FDNF) with `-a` option), producing a set of clauses that partition the input/output space as **equivalence classes**.
 
 
 ### DNF decomposition rules
@@ -160,7 +160,7 @@ Z3 can freely assign values to the residual `filter(...)` calls, and the structu
 
 Z3 minimizes model size by default, so it may pick special values that trivially satisfy the specification. E.g., without bias, tests for `PowerOfListElements([1,2,3,4], 2)` degenerate to `l = []` or `l = [0, 0]` — correct under the spec but useless as regression fixtures.
 
-DafnyTestGen adds two Z3-native nudges per query:
+DafnyCBT adds two Z3-native nudges per query:
 
 1. **Soft constraints** (`assert-soft`): for each primitive-typed input `v`, emit `(assert-soft (not (= v 0)) :weight 2)` and `(assert-soft (not (= v 1)) :weight 1)`. For sequences/arrays, also bias their length away from `{0, 1}` and their first few elements away from `{0, 1}`. Soft asserts are satisfied-when-possible: if the hard constraints force `v = 0`, Z3 picks `v = 0` and simply pays the weight. **Zero cost on correctness.**
 
@@ -170,7 +170,7 @@ DafnyTestGen adds two Z3-native nudges per query:
 
 Bias applies to every SMT query — Phase 1 (DNF), Phase 2/2b (BVA), the relevance query, and Phase 3 repeats — so even variables not pinned by a BVA tier still get nudged away from trivial values and into bounded magnitudes. It is skipped only in the uniqueness alt-enum query (where we *want* Z3 to freely enumerate all valid outputs, including zeros).
 
-**Quantifier caveat**: Z3's optimize module does not fully support quantified constraints (`forall` / `exists`). When a clause contains a quantifier and the full query returns `unknown` under bias, DafnyTestGen automatically retries the same query with bias off before falling through to the input-only fallback. This rescues cases like `IsPrime(n)`'s prime-witness clause, where bias + `forall k :: 2 ≤ k < n ==> n % k ≠ 0` made Z3 give up.
+**Quantifier caveat**: Z3's optimize module does not fully support quantified constraints (`forall` / `exists`). When a clause contains a quantifier and the full query returns `unknown` under bias, DafnyCBT automatically retries the same query with bias off before falling through to the input-only fallback. This rescues cases like `IsPrime(n)`'s prime-witness clause, where bias + `forall k :: 2 ≤ k < n ==> n % k ≠ 0` made Z3 give up.
 
 Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or for reproducing an upstream Z3 baseline.
 
@@ -198,7 +198,7 @@ pre(X)
 ∧ Q1(X, Y_k) ∧ ... ∧ ¬Qk(X, Y_k) ∧ ... ∧ Qm(X, Y_k)        // clause minus Qk, with ¬Qk
 ```
 
-DafnyTestGen **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a query involving shadow output blocks. Three modes are available (`--relevance-mode`):
+DafnyCBT **embeds the relevance check inside Phase 1**: for each clause it collects the set `S` of **safe literals** (see below) and asks Z3 a query involving shadow output blocks. Three modes are available (`--relevance-mode`):
 
 - **`combined`** — one shadow output block `Y_k` per `k ∈ S`, each with literal `Qk` negated. Z3 must find `X` for which *every* `Qk ∈ S` strictly prunes the output space simultaneously (strictest). On UNSAT, fall back to the single-literal formulation using only the last safe index.
 - **`group`** — a single shadow output block `Y_G` satisfying the non-safe literals and `¬(⋀_{k ∈ S} Qk)` (weakest). Z3 only needs *some* `Qk ∈ S` to fail on `Y_G`, so UNSAT here means the cluster `S` is collectively implied by the guards — i.e., the clause is genuinely redundant. More SAT-prone than `combined`.
@@ -222,7 +222,7 @@ expect pos == 2;     // LAST occurrence of -10 (index 2), not the earlier ones a
 
 Corner cases such as vacuously-true clauses are covered by per-literal vacuity check or by Boundary Value Analysis.
 
-**Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyTestGen classifies a literal `Qk` as safe iff:
+**Safety — which literals are "safe" to negate.** Negating a literal that acts as a guard can leave later literals undefined (e.g., negating `0 ≤ pos` makes `arr[pos]` out of bounds), and Z3 is free to pick arbitrary values on undefined terms — producing spurious SAT. DafnyCBT classifies a literal `Qk` as safe iff:
 
 1. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`.
 2. `Qk` references at least one output variable.
@@ -274,7 +274,7 @@ Tests are labelled `{clause}/V{k+1}` (1-based literal index). Default **OFF**; e
 
 ## Boundary Value Analysis
 
-BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyTestGen applies the **single-fault principle**: each BVA query pins exactly **one** variable to a boundary value; all other variables remain free for Z3 to choose. This avoids combinatorial explosion, prevents combining potentially conflicting constraints, and may facilitate fault localization.
+BVA complements equivalence class partitioning by testing at the **edges** and other structurally interesting cases of each equivalence class. DafnyCBT applies the **single-fault principle**: each BVA query pins exactly **one** variable to a boundary value; all other variables remain free for Z3 to choose. This avoids combinatorial explosion, prevents combining potentially conflicting constraints, and may facilitate fault localization.
 
 Each DNF clause produced by Phase 1 already defines an equivalence class as the conjunction of precondition literals and clause (post) literals (`classLiterals`). BVA attaches at most one extra pin per query on top of those class literals.
 
@@ -344,7 +344,7 @@ The `--repeat <n>` option generates **N distinct test cases** per scenario. Afte
 
 ## Progressive Auto Strategy (default)
 
-When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen uses a **progressive strategy** that escalates until enough tests are generated per method (controlled by `--min-tests`, default 4):
+When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyCBT uses a **progressive strategy** that escalates until enough tests are generated per method (controlled by `--min-tests`, default 4):
 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition (including the existential and universal quantifier decompositions described above). Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 
@@ -359,7 +359,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyTestGen u
 
 ## Class Support
 
-DafnyTestGen generates tests for methods defined inside classes. Classes with trait parents or unsupported field types are auto-skipped.
+DafnyCBT generates tests for methods defined inside classes. Classes with trait parents or unsupported field types are auto-skipped.
 
 Fields are treated as synthetic mutable parameters with separate pre- and post-state SMT variables (suffixes `_pre` and `_post`). Generated test code constructs a fresh object, assigns Z3-derived values to its fields, captures any `old()` state needed by postconditions, calls the method, and asserts postconditions using `obj.field` references.
 
@@ -380,7 +380,7 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
 ## Test Emission
 
-For each processed source file (e.g., `FindMax.dfy`), DafnyTestGen writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
+For each processed source file (e.g., `FindMax.dfy`), DafnyCBT writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
 
 ### Grouping (`--grouping` / `-g`)
 
@@ -418,7 +418,7 @@ method Main()
 
 ### Output uniqueness check
 
-When postconditions constrain outputs implicitly (via predicates on outputs rather than explicit `result == expression` clauses), Z3's first model is only *one* valid assignment — other valid outputs may exist. DafnyTestGen issues a second Z3 call that pins the concrete inputs and asks whether a *different* output satisfies the original contract. If the second call returns UNSAT the output is unique and the concrete value is used in the `expect`; otherwise the assertion falls back to the postcondition literals that mention the output.
+When postconditions constrain outputs implicitly (via predicates on outputs rather than explicit `result == expression` clauses), Z3's first model is only *one* valid assignment — other valid outputs may exist. DafnyCBT issues a second Z3 call that pins the concrete inputs and asks whether a *different* output satisfies the original contract. If the second call returns UNSAT the output is unique and the concrete value is used in the `expect`; otherwise the assertion falls back to the postcondition literals that mention the output.
 
 The uniqueness query is built from the **original ensures conjunction only** — tier/boundary literals used during test generation (e.g., an `index == 0` boundary forcing one branch) are excluded, so the check reflects the spec's real ambiguity rather than the tier's artificial pinning.
 
@@ -465,7 +465,7 @@ This is more precise than postcondition literals (it pins the exact set of valid
 
 The same fallback applies when postconditions cannot be fully translated to SMT (e.g., they contain recursive functions with uninterpreted calls remaining after inlining, higher-order ghost functions, or bitvector operators): Z3's concrete outputs cannot be trusted and the original postcondition literals are used as `expect` assertions instead.
 
-**Limitation — residual uninterpreted functions.** When the spec references user-defined functions that remain uninterpreted after 2-pass inlining (typically recursive functions like `Count`, `Power`, `R`), the uniqueness enumeration is **skipped entirely**. Z3 is free to assign arbitrary values to uninterpreted-function calls, so a "different output satisfying the spec" query would fabricate phantom alternatives that do not reflect real semantics. For example, in `Mode([-6, -1, -1, 0])` the true mode is `-1`, but without this skip Z3 happily reports `m = 0` as an alternative (by picking `Count(0) = 2, Count(-1) = 1`). DafnyTestGen detects such cases (any `declare-fun` with non-empty arity remaining in the SMT query) and emits a single observed-value `expect` derived from the check-mode runtime instead of a disjunctive enumeration. The original postcondition literals are still emitted as `expect` assertions. The **per-literal relevance check** applies the same skip rule for the same reason.
+**Limitation — residual uninterpreted functions.** When the spec references user-defined functions that remain uninterpreted after 2-pass inlining (typically recursive functions like `Count`, `Power`, `R`), the uniqueness enumeration is **skipped entirely**. Z3 is free to assign arbitrary values to uninterpreted-function calls, so a "different output satisfying the spec" query would fabricate phantom alternatives that do not reflect real semantics. For example, in `Mode([-6, -1, -1, 0])` the true mode is `-1`, but without this skip Z3 happily reports `m = 0` as an alternative (by picking `Count(0) = 2, Count(-1) = 1`). DafnyCBT detects such cases (any `declare-fun` with non-empty arity remaining in the SMT query) and emits a single observed-value `expect` derived from the check-mode runtime instead of a disjunctive enumeration. The original postcondition literals are still emitted as `expect` assertions. The **per-literal relevance check** applies the same skip rule for the same reason.
 
 ### Test emission for mutable objects and class fields
 
@@ -543,7 +543,7 @@ This supports **test-driven development with Dafny**: write the contracts first,
 
 ### Check Mode (`--check` / `-c`, default on; disable with `--no-check`)
 
-Check mode is **on by default**. DafnyTestGen compiles the generated tests into a single Dafny file with `dafny build --no-verify` and runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `DONE:N` / `FAIL:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (infinite loop), the remaining tests are automatically re-run individually against the same binary with a test-index argument — no recompilation needed. Each test case is then classified as passing or failing:
+Check mode is **on by default**. DafnyCBT compiles the generated tests into a single Dafny file with `dafny build --no-verify` and runs the compiled binary. Each `expect` is replaced with a `CheckExpect` helper that prints `DONE:N` / `FAIL:N` markers instead of aborting, so all tests run to completion. If a test crashes (e.g., `IndexOutOfRangeException`) or times out (infinite loop), the remaining tests are automatically re-run individually against the same binary with a test-index argument — no recompilation needed. Each test case is then classified as passing or failing:
 
 - Passing tests keep their `expect`s active.
 - Failing tests have their `expect`s commented out (with captured expected/actual annotations) so the file still compiles. A `// FAILING:` header flags them in `by-method` grouping; in `by-status` they land in a separate `Failing()` method.
@@ -647,7 +647,7 @@ Set, multiset, and map boundary analysis generates cardinality tiers (0–3 elem
 
 ### Automatically skipped
 
-At method discovery time, DafnyTestGen skips:
+At method discovery time, DafnyCBT skips:
 
 - **Ghost methods** (`ghost method …`) and **lemmas** — not intended to be compiled/executed.
 - **Methods without `ensures` clauses** — there's no postcondition to check at runtime. This also excludes `Main`, test drivers, and unspec'd helpers.
@@ -671,7 +671,7 @@ At method discovery time, DafnyTestGen skips:
 ## Build
 
 ```bash
-cd DafnyTestGen
+cd DafnyCBT
 dotnet build
 ```
 
@@ -681,7 +681,7 @@ Or publish a self-contained standalone executable to the `publish/` folder:
 dotnet publish -c Release -o ../publish
 ```
 
-This produces `publish/DafnyTestGen.exe` (Windows) or `publish/DafnyTestGen` (Linux/macOS), which can be run directly without .NET installed on the target machine.
+This produces `publish/DafnyCBT.exe` (Windows) or `publish/DafnyCBT` (Linux/macOS), which can be run directly without .NET installed on the target machine.
 
 ## Usage
 
@@ -711,11 +711,11 @@ Using the published standalone executable:
 
 ```bash
 # Windows
-publish\DafnyTestGen.exe test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
-publish\DafnyTestGen.exe test/correct_progs/in/ -o test/correct_progs/out/
+publish\DafnyCBT.exe test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
+publish\DafnyCBT.exe test/correct_progs/in/ -o test/correct_progs/out/
 
 # Linux / macOS
-publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
+publish/DafnyCBT test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 ```
 
 ### Command-line options
@@ -752,8 +752,8 @@ publish/DafnyTestGen test/correct_progs/in/Factorial.dfy -o test/correct_progs/o
 ## Project Structure
 
 ```
-DafnyTestGen/
-  DafnyTestGen.csproj    # C# project file (.NET 8.0)
+DafnyCBT/
+  DafnyCBT.csproj    # C# project file (.NET 8.0)
   Program.cs             # CLI, orchestration, test generation loop (~800 lines)
   DafnyParser.cs         # Dafny AST parsing, method discovery
   DnfEngine.cs           # DNF decomposition, quantifier boundary decomposition
@@ -763,7 +763,7 @@ DafnyTestGen/
   TestValidator.cs       # --check mode: run tests, split into Passing/Failing
   TypeUtils.cs           # Type checks, Z3 model parsing, value normalization
   Z3Runner.cs            # Z3 process execution
-DafnyTestGen.sln         # Solution file
+DafnyCBT.sln         # Solution file
 test/
   correct_progs/         # Correct Dafny programs
     in/                  #   Source files

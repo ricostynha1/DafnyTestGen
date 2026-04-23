@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort__1086_LVR_7.dfy
 // Method: insertionSort
-// Generated: 2026-04-08 16:20:27
+// Generated: 2026-04-22 21:51:56
 
 // MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort.dfy
 
@@ -51,65 +51,48 @@ method testInsertionSort()
 }
 
 
-method Passing()
+method TestsForinsertionSort()
 {
-  // Test case for combination {1}:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/Rel:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new int[2] [2, 8];
+    insertionSort(a);
+    expect a[..] == [2, 8];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[0] [];
     insertionSort(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/O|a|=1:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new int[1] [2];
     insertionSort(a);
     expect a[..] == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/Oa≠old:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [7, 3];
-    var old_a := a[..];
+    var a := new int[2] [8, -1];
     insertionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [-1, 8];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[3] [12, 4, 11];
-    var old_a := a[..];
-    insertionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForinsertionSort();
+  print "TestsForinsertionSort: all non-failing tests passed!\n";
 }

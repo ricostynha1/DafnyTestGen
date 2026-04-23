@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search__693-693_AOI.dfy
 // Method: binarySearch
-// Generated: 2026-04-08 16:17:24
+// Generated: 2026-04-22 21:47:19
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Exercise6_Binary_Search.dfy
 
@@ -38,115 +38,54 @@ method binarySearch(a: array<int>, val: int) returns (pos: int)
 }
 
 
-method Passing()
+method TestsForbinarySearch()
 {
-  // Test case for combination {16}:
+  // Test case for combination {3}/Rel:
   //   PRE:  a.Length > 0
   //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: 0 <= pos < a.Length
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
-  //   POST: 0 < a.Length
-  //   POST: !(a[0] != val)
-  //   ENSURES: 0 <= pos < a.Length ==> a[pos] == val
-  //   ENSURES: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
+  //   POST Q1: 0 <= pos
+  //   POST Q2: pos < a.Length
+  //   POST Q3: a[pos] == val
+  //   POST Q4: pos >= 0
   {
-    var a := new int[1] [38];
-    var val := 38;
-    var pos := binarySearch(a, val);
-    expect pos == 0;
-  }
-
-  // Test case for combination {17}:
-  //   PRE:  a.Length > 0
-  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: 0 <= pos < a.Length
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] != val)
-  //   ENSURES: 0 <= pos < a.Length ==> a[pos] == val
-  //   ENSURES: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
-  {
-    var a := new int[3] [-38, -38, 7719];
-    var val := -38;
-    var pos := binarySearch(a, val);
-    expect pos == 1;
-    expect 0 <= pos < a.Length;
-    expect a[pos] == val;
-    expect !(pos < 0);
-    expect !(pos >= a.Length);
-    expect exists i :: 1 <= i < (a.Length - 1) && !(a[i] != val);
-  }
-
-  // Test case for combination {16}/Opos=0:
-  //   PRE:  a.Length > 0
-  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: 0 <= pos < a.Length
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
-  //   POST: 0 < a.Length
-  //   POST: !(a[0] != val)
-  //   ENSURES: 0 <= pos < a.Length ==> a[pos] == val
-  //   ENSURES: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
-  {
-    var a := new int[2] [7757, 7758];
-    var val := 7757;
-    var pos := binarySearch(a, val);
-    expect pos == 0;
-  }
-
-  // Test case for combination {17}/Opos>0:
-  //   PRE:  a.Length > 0
-  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: 0 <= pos < a.Length
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
-  //   POST: exists i :: 1 <= i < (a.Length - 1) && !(a[i] != val)
-  //   ENSURES: 0 <= pos < a.Length ==> a[pos] == val
-  //   ENSURES: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
-  {
-    var a := new int[4] [7719, 7720, 7720, 7721];
-    var val := 7720;
-    var pos := binarySearch(a, val);
-    expect pos == 2;
-    expect 0 <= pos < a.Length;
-    expect a[pos] == val;
-    expect !(pos < 0);
-    expect !(pos >= a.Length);
-    expect exists i :: 1 <= i < (a.Length - 1) && !(a[i] != val);
-  }
-
-  // Test case for combination {18}/Opos>0:
-  //   PRE:  a.Length > 0
-  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: 0 <= pos < a.Length
-  //   POST: a[pos] == val
-  //   POST: !(pos < 0)
-  //   POST: !(pos >= a.Length)
-  //   POST: 0 < a.Length
-  //   POST: !(a[(a.Length - 1)] != val)
-  //   ENSURES: 0 <= pos < a.Length ==> a[pos] == val
-  //   ENSURES: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
-  {
-    var a := new int[2] [7757, 7758];
-    var val := 7758;
+    var a := new int[2] [-10, -9];
+    var val := -9;
     var pos := binarySearch(a, val);
     expect pos == 1;
   }
 
-}
+  // Test case for combination {1}:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q1: 0 <= pos < a.Length ==> a[pos] == val
+  //   POST Q2: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
+  {
+    var a := new int[1] [10];
+    var val := -10;
+    var pos := binarySearch(a, val);
+    expect 0 <= pos < a.Length ==> a[pos] == val;
+    expect pos < 0 || pos >= a.Length ==> forall i: int :: 0 <= i < a.Length ==> a[i] != val;
+    expect pos == -1; // observed from implementation
+  }
 
-method Failing()
-{
-  // (no failing tests)
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q1: 0 <= pos < a.Length ==> a[pos] == val
+  //   POST Q2: pos < 0 || pos >= a.Length ==> forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] != val
+  {
+    var a := new int[2] [-3, 6];
+    var val := -9;
+    var pos := binarySearch(a, val);
+    expect 0 <= pos < a.Length ==> a[pos] == val;
+    expect pos < 0 || pos >= a.Length ==> forall i: int :: 0 <= i < a.Length ==> a[i] != val;
+    expect pos == -1; // observed from implementation
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForbinarySearch();
+  print "TestsForbinarySearch: all non-failing tests passed!\n";
 }

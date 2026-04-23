@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\tangent-finder_tmp_tmpgyzf44ve_circles.dfy
 // Method: Tangent
-// Generated: 2026-04-08 19:19:18
+// Generated: 2026-04-22 21:38:30
 
 // tangent-finder_tmp_tmpgyzf44ve_circles.dfy
 
@@ -42,81 +42,60 @@ method Tangent(r: array<int>, x: array<int>) returns (b: bool)
 }
 
 
-method Passing()
+method TestsForTangent()
 {
-  // Test case for combination {6}:
+  // Test case for combination {1}:
   //   PRE:  forall i: int, j: int {:trigger x[j], x[i]} :: 0 <= i <= j < x.Length ==> x[i] <= x[j]
   //   PRE:  forall i: int, j: int {:trigger x[j], r[i]} :: (0 <= i < r.Length && 0 <= j < x.Length ==> r[i] >= 0) && (0 <= i < r.Length && 0 <= j < x.Length ==> x[j] >= 0)
-  //   POST: b
-  //   POST: !forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   POST: b
-  //   POST: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
-  //   ENSURES: !b ==> forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   ENSURES: b ==> exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
+  //   POST Q1: b
+  //   POST Q2: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
   {
-    var r := new int[1] [0];
-    var x := new int[1] [0];
+    var r := new int[1] [4];
+    var x := new int[1] [4];
     var b := Tangent(r, x);
     expect b == true;
   }
 
-  // Test case for combination {8}:
+  // Test case for combination {2}:
   //   PRE:  forall i: int, j: int {:trigger x[j], x[i]} :: 0 <= i <= j < x.Length ==> x[i] <= x[j]
   //   PRE:  forall i: int, j: int {:trigger x[j], r[i]} :: (0 <= i < r.Length && 0 <= j < x.Length ==> r[i] >= 0) && (0 <= i < r.Length && 0 <= j < x.Length ==> x[j] >= 0)
-  //   POST: !b
-  //   POST: forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   POST: !b
-  //   POST: !exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
-  //   ENSURES: !b ==> forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   ENSURES: b ==> exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
+  //   POST Q1: !b
+  //   POST Q2: forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
   {
-    var r := new int[1] [27];
-    var x := new int[0] [];
+    var r := new int[1] [2];
+    var x := new int[1] [3];
     var b := Tangent(r, x);
     expect b == false;
   }
 
-  // Test case for combination {6}/Br=1,x=2:
+  // Test case for combination {1}/O|r|>=2:
   //   PRE:  forall i: int, j: int {:trigger x[j], x[i]} :: 0 <= i <= j < x.Length ==> x[i] <= x[j]
   //   PRE:  forall i: int, j: int {:trigger x[j], r[i]} :: (0 <= i < r.Length && 0 <= j < x.Length ==> r[i] >= 0) && (0 <= i < r.Length && 0 <= j < x.Length ==> x[j] >= 0)
-  //   POST: b
-  //   POST: !forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   POST: b
-  //   POST: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
-  //   ENSURES: !b ==> forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   ENSURES: b ==> exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
+  //   POST Q1: b
+  //   POST Q2: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
   {
-    var r := new int[1] [0];
-    var x := new int[2] [0, 39];
+    var r := new int[2] [9, 9];
+    var x := new int[1] [9];
     var b := Tangent(r, x);
     expect b == true;
   }
 
-  // Test case for combination {6}/Br=1,x=3:
+  // Test case for combination {1}/O|x|>=2:
   //   PRE:  forall i: int, j: int {:trigger x[j], x[i]} :: 0 <= i <= j < x.Length ==> x[i] <= x[j]
   //   PRE:  forall i: int, j: int {:trigger x[j], r[i]} :: (0 <= i < r.Length && 0 <= j < x.Length ==> r[i] >= 0) && (0 <= i < r.Length && 0 <= j < x.Length ==> x[j] >= 0)
-  //   POST: b
-  //   POST: !forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   POST: b
-  //   POST: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
-  //   ENSURES: !b ==> forall i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length ==> r[i] != x[j]
-  //   ENSURES: b ==> exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
+  //   POST Q1: b
+  //   POST Q2: exists i: int, j: int {:trigger x[j], r[i]} :: 0 <= i < r.Length && 0 <= j < x.Length && r[i] == x[j]
   {
-    var r := new int[1] [7759];
-    var x := new int[3] [7757, 7758, 7759];
+    var r := new int[3] [6, 10, 9];
+    var x := new int[2] [5, 10];
     var b := Tangent(r, x);
     expect b == true;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForTangent();
+  print "TestsForTangent: all non-failing tests passed!\n";
 }

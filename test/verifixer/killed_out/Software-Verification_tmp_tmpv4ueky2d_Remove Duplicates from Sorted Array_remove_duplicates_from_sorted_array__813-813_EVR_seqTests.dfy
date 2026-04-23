@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-Verification_tmp_tmpv4ueky2d_Remove Duplicates from Sorted Array_remove_duplicates_from_sorted_array__813-813_EVR_seq.dfy
 // Method: remove_duplicates_from_sorted_array
-// Generated: 2026-04-06 00:00:00
+// Generated: 2026-04-22 21:58:46
 
 // Software-Verification_tmp_tmpv4ueky2d_Remove Duplicates from Sorted Array_remove_duplicates_from_sorted_array.dfy
 
@@ -50,45 +50,42 @@ predicate is_sorted_and_distinct(nums: seq<int>)
 }
 
 
-method GeneratedTests_remove_duplicates_from_sorted_array()
+method TestsForremove_duplicates_from_sorted_array()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  is_sorted(nums)
   //   PRE:  1 <= |nums| <= 30000
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100)
-  //   POST: is_sorted_and_distinct(result)
-  //   POST: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
+  //   POST Q1: is_sorted_and_distinct(result)
+  //   POST Q2: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
   {
-    var nums: seq<int> := [-62];
-    expect is_sorted(nums); // PRE-CHECK
+    var nums: seq<int> := [-4];
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
     expect forall i: int  :: i in nums <==> i in result;
   }
 
-  // Test case for combination {1}/Bnums=2:
+  // Test case for combination {1}/O|nums|>=2:
   //   PRE:  is_sorted(nums)
   //   PRE:  1 <= |nums| <= 30000
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100)
-  //   POST: is_sorted_and_distinct(result)
-  //   POST: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
+  //   POST Q1: is_sorted_and_distinct(result)
+  //   POST Q2: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
   {
-    var nums: seq<int> := [19, 20];
-    expect is_sorted(nums); // PRE-CHECK
+    var nums: seq<int> := [-10, -10];
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
     expect forall i: int  :: i in nums <==> i in result;
   }
 
-  // Test case for combination {1}/Bnums=3:
+  // Test case for combination {1}/O|result|=1:
   //   PRE:  is_sorted(nums)
   //   PRE:  1 <= |nums| <= 30000
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < |nums| ==> -100 <= nums[i]) && (0 <= i < |nums| ==> nums[i] <= 100)
-  //   POST: is_sorted_and_distinct(result)
-  //   POST: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
+  //   POST Q1: is_sorted_and_distinct(result)
+  //   POST Q2: forall i: int {:trigger i in result} {:trigger i in nums} :: i in nums <==> i in result
   {
-    var nums: seq<int> := [57, 58, 59];
-    expect is_sorted(nums); // PRE-CHECK
+    var nums: seq<int> := [-9];
     var result := remove_duplicates_from_sorted_array(nums);
     expect is_sorted_and_distinct(result);
     expect forall i: int  :: i in nums <==> i in result;
@@ -98,6 +95,6 @@ method GeneratedTests_remove_duplicates_from_sorted_array()
 
 method Main()
 {
-  GeneratedTests_remove_duplicates_from_sorted_array();
-  print "GeneratedTests_remove_duplicates_from_sorted_array: all tests passed!\n";
+  TestsForremove_duplicates_from_sorted_array();
+  print "TestsForremove_duplicates_from_sorted_array: all tests passed!\n";
 }

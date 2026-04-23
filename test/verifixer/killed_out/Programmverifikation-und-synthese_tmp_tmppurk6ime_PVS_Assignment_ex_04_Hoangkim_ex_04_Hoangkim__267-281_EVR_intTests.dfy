@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_04_Hoangkim_ex_04_Hoangkim__267-281_EVR_int.dfy
 // Method: sumOdds
-// Generated: 2026-04-08 16:21:54
+// Generated: 2026-04-22 21:53:14
 
 // Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_04_Hoangkim_ex_04_Hoangkim.dfy
 
@@ -50,12 +50,20 @@ method intDivImpl(n: int, d: int)
 }
 
 
-method GeneratedTests_sumOdds()
+method TestsForsumOdds()
 {
   // Test case for combination {1}:
   //   PRE:  n > 0
-  //   POST: sum == n * n
-  //   ENSURES: sum == n * n
+  //   POST Q1: sum == n * n
+  {
+    var n := 10;
+    var sum := sumOdds(n);
+    expect sum == 100;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * n
   {
     var n := 1;
     var sum := sumOdds(n);
@@ -64,81 +72,147 @@ method GeneratedTests_sumOdds()
 
   // Test case for combination {1}/Bn=2:
   //   PRE:  n > 0
-  //   POST: sum == n * n
-  //   ENSURES: sum == n * n
+  //   POST Q1: sum == n * n
   {
     var n := 2;
     var sum := sumOdds(n);
     expect sum == 4;
   }
 
-  // Test case for combination {1}/Osum>=2:
+  // Test case for combination {1}/R4:
   //   PRE:  n > 0
-  //   POST: sum == n * n
-  //   ENSURES: sum == n * n
+  //   POST Q1: sum == n * n
   {
-    var n := 4;
+    var n := 9;
     var sum := sumOdds(n);
-    expect sum == 16;
+    expect sum == 81;
   }
 
 }
 
-method GeneratedTests_intDivImpl()
+method TestsForintDiv()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  n >= d && n >= 0 && d > 0
-  //   POST: d * q + r == n
-  //   POST: 0 <= q <= n / 2
-  //   POST: 0 <= r < d
-  //   ENSURES: d * q + r == n && 0 <= q <= n / 2 && 0 <= r < d
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 5;
+    var d := 2;
+    // var q, r := intDiv(n, d);
+    // expect q == 2;
+    // expect r == 1;
+  }
+
+  // Test case for combination {1}/Bd=n:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 10;
+    var d := 10;
+    // var q, r := intDiv(n, d);
+    // expect q == 1;
+    // expect r == 0;
+  }
+
+  // Test case for combination {1}/Bd=n-1:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 10;
+    var d := 9;
+    // var q, r := intDiv(n, d);
+    // expect q == 1;
+    // expect r == 1;
+  }
+
+  // Test case for combination {1}/Bq=n-1:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 2;
+    var d := 2;
+    // var q, r := intDiv(n, d);
+    // expect q == 1;
+    // expect r == 0;
+  }
+
+}
+
+method TestsForintDivImpl()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 10;
+    var d := 2;
+    var q, r := intDivImpl(n, d);
+    expect q == 5;
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bd=n:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 10;
+    var d := 10;
+    var q, r := intDivImpl(n, d);
+    expect q == 1;
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bd=n-1:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
+  {
+    var n := 10;
+    var d := 9;
+    var q, r := intDivImpl(n, d);
+    expect q == 1;
+    expect r == 1;
+  }
+
+  // Test case for combination {1}/Bq=n-1:
+  //   PRE:  n >= d && n >= 0 && d > 0
+  //   POST Q1: d * q + r == n
+  //   POST Q2: 0 <= q
+  //   POST Q3: q <= n / 2
+  //   POST Q4: 0 <= r
+  //   POST Q5: r < d
   {
     var n := 2;
     var d := 2;
     var q, r := intDivImpl(n, d);
     expect q == 1;
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Oq>0:
-  //   PRE:  n >= d && n >= 0 && d > 0
-  //   POST: d * q + r == n
-  //   POST: 0 <= q <= n / 2
-  //   POST: 0 <= r < d
-  //   ENSURES: d * q + r == n && 0 <= q <= n / 2 && 0 <= r < d
-  {
-    var n := 3;
-    var d := 3;
-    var q, r := intDivImpl(n, d);
-    expect q == 1;
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   PRE:  n >= d && n >= 0 && d > 0
-  //   POST: d * q + r == n
-  //   POST: 0 <= q <= n / 2
-  //   POST: 0 <= r < d
-  //   ENSURES: d * q + r == n && 0 <= q <= n / 2 && 0 <= r < d
-  {
-    var n := 5;
-    var d := 2;
-    var q, r := intDivImpl(n, d);
-    expect q == 2;
-    expect r == 1;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   PRE:  n >= d && n >= 0 && d > 0
-  //   POST: d * q + r == n
-  //   POST: 0 <= q <= n / 2
-  //   POST: 0 <= r < d
-  //   ENSURES: d * q + r == n && 0 <= q <= n / 2 && 0 <= r < d
-  {
-    var n := 8;
-    var d := 4;
-    var q, r := intDivImpl(n, d);
-    expect q == 2;
     expect r == 0;
   }
 
@@ -146,8 +220,10 @@ method GeneratedTests_intDivImpl()
 
 method Main()
 {
-  GeneratedTests_sumOdds();
-  print "GeneratedTests_sumOdds: all tests passed!\n";
-  GeneratedTests_intDivImpl();
-  print "GeneratedTests_intDivImpl: all tests passed!\n";
+  TestsForsumOdds();
+  print "TestsForsumOdds: all tests passed!\n";
+  TestsForintDiv();
+  print "TestsForintDiv: all tests passed!\n";
+  TestsForintDivImpl();
+  print "TestsForintDivImpl: all tests passed!\n";
 }

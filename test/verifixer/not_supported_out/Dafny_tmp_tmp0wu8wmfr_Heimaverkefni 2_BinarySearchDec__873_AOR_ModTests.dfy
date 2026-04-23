@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 2_BinarySearchDec__873_AOR_Mod.dfy
 // Method: SearchRecursive
-// Generated: 2026-04-08 21:53:43
+// Generated: 2026-04-22 21:30:45
 
 // Dafny_tmp_tmp0wu8wmfr_Heimaverkefni 2_BinarySearchDec.dfy
 
@@ -68,161 +68,154 @@ method Test(a: seq<real>, x: real)
 }
 
 
-method Passing()
+method TestsForSearchRecursive()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= i <= j <= |a|
   //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := 0.5;
+    var a: seq<real> := [11713.875, 11714.0, 11714.0];
+    var i := 2;
+    var j := 3;
+    var x := 11714.0;
     var k := SearchRecursive(a, i, j, x);
-    expect k == 1;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at System.Collections.Immutable.ImmutableArray`1.get_Item(Int32 index)
+    // runtime error: at Dafny.Sequence`1.Select(BigInteger index) in C:\cygwin64\tmp\DafnyTestGen_3xthgorlzbj\runner.cs:line 1404
+    // expect k == 3;
   }
 
-  // Test case for combination {1}/Bi==j,j==a_len,x=0.0:
+  // Test case for combination {1}/Bi=0:
   //   PRE:  0 <= i <= j <= |a|
   //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := 0.0;
+    var a: seq<real> := [18368.25, 18368.25];
+    var i := 0;
+    var j := 2;
+    var x := 18369.125;
     var k := SearchRecursive(a, i, j, x);
-    expect k == 1;
+    expect k == 0;
   }
 
-  // Test case for combination {1}/Bi==j,j==a_len,x=1.0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bi=1:
   //   PRE:  0 <= i <= j <= |a|
   //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [11.0];
+    var a: seq<real> := [-18369.0, -0.25];
     var i := 1;
-    var j := 1;
-    var x := 1.0;
+    var j := 2;
+    var x := 0.625;
     var k := SearchRecursive(a, i, j, x);
-    expect k == 1;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at System.Collections.Immutable.ImmutableArray`1.get_Item(Int32 index)
+    // runtime error: at Dafny.Sequence`1.Select(BigInteger index) in C:\cygwin64\tmp\DafnyTestGen_3xthgorlzbj\runner.cs:line 1404
+    // expect k == 1;
   }
 
-  // Test case for combination {1}/Bi==j,j==a_len,x=-1.0:
+  // Test case for combination {1}/Bi=j:
   //   PRE:  0 <= i <= j <= |a|
   //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
   {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := -1.0;
+    var a: seq<real> := [-18369.089285714286, -0.3392857142857143];
+    var i := 2;
+    var j := 2;
+    var x := 0.5357142857142857;
     var k := SearchRecursive(a, i, j, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  0 <= i <= j <= |a|
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := 0.5;
-    var k := SearchLoop(a, i, j, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Bi==j,j==a_len,x=0.0:
-  //   PRE:  0 <= i <= j <= |a|
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := 0.0;
-    var k := SearchLoop(a, i, j, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Bi==j,j==a_len,x=1.0:
-  //   PRE:  0 <= i <= j <= |a|
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := 1.0;
-    var k := SearchLoop(a, i, j, x);
-    expect k == 1;
-  }
-
-  // Test case for combination {1}/Bi==j,j==a_len,x=-1.0:
-  //   PRE:  0 <= i <= j <= |a|
-  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
-  //   POST: i <= k <= j
-  //   POST: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   POST: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  //   ENSURES: i <= k <= j
-  //   ENSURES: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
-  //   ENSURES: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
-  {
-    var a: seq<real> := [11.0];
-    var i := 1;
-    var j := 1;
-    var x := -1.0;
-    var k := SearchLoop(a, i, j, x);
-    expect k == 1;
+    expect k == 2;
   }
 
 }
 
-method Failing()
+method TestsForSearchLoop()
 {
-  // (no failing tests)
+  // Test case for combination {1}/Rel:
+  //   PRE:  0 <= i <= j <= |a|
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  {
+    var a: seq<real> := [0.0, -25995.25, -25995.0, -25995.0];
+    var i := 2;
+    var j := 4;
+    var x := -25995.25;
+    var k := SearchLoop(a, i, j, x);
+    expect k == 4;
+  }
+
+  // Test case for combination {1}/Bi=0:
+  //   PRE:  0 <= i <= j <= |a|
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  {
+    var a: seq<real> := [28332.0, 28332.0];
+    var i := 0;
+    var j := 2;
+    var x := 28332.0;
+    var k := SearchLoop(a, i, j, x);
+    expect k == 2;
+  }
+
+  // Test case for combination {1}/Bi=1:
+  //   PRE:  0 <= i <= j <= |a|
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  {
+    var a: seq<real> := [-28332.0, -0.5];
+    var i := 1;
+    var j := 2;
+    var x := 0.375;
+    var k := SearchLoop(a, i, j, x);
+    expect k == 1;
+  }
+
+  // Test case for combination {1}/Bi=j:
+  //   PRE:  0 <= i <= j <= |a|
+  //   PRE:  forall p: int, q: int {:trigger a[q], a[p]} :: i <= p < q < j ==> a[p] >= a[q]
+  //   POST Q1: i <= k
+  //   POST Q2: k <= j
+  //   POST Q3: forall r: int {:trigger a[r]} | i <= r < k :: a[r] >= x
+  //   POST Q4: forall r: int {:trigger a[r]} | k <= r < j :: a[r] < x
+  {
+    var a: seq<real> := [-28332.05, -0.55];
+    var i := 2;
+    var j := 2;
+    var x := 0.05;
+    var k := SearchLoop(a, i, j, x);
+    expect k == 2;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSearchRecursive();
+  print "TestsForSearchRecursive: all non-failing tests passed!\n";
+  TestsForSearchLoop();
+  print "TestsForSearchLoop: all non-failing tests passed!\n";
 }

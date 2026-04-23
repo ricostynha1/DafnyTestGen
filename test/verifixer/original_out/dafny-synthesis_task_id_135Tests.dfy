@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_135.dfy
 // Method: NthHexagonalNumber
-// Generated: 2026-04-08 19:09:37
+// Generated: 2026-04-22 21:31:52
 
 // dafny-synthesis_task_id_135.dfy
 
@@ -14,12 +14,20 @@ method NthHexagonalNumber(n: int) returns (hexNum: int)
 }
 
 
-method Passing()
+method TestsForNthHexagonalNumber()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: hexNum == n * (2 * n - 1)
-  //   ENSURES: hexNum == n * (2 * n - 1)
+  //   POST Q1: hexNum == n * (2 * n - 1)
+  {
+    var n := 10;
+    var hexNum := NthHexagonalNumber(n);
+    expect hexNum == 190;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: hexNum == n * (2 * n - 1)
   {
     var n := 0;
     var hexNum := NthHexagonalNumber(n);
@@ -28,33 +36,26 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: hexNum == n * (2 * n - 1)
-  //   ENSURES: hexNum == n * (2 * n - 1)
+  //   POST Q1: hexNum == n * (2 * n - 1)
   {
     var n := 1;
     var hexNum := NthHexagonalNumber(n);
     expect hexNum == 1;
   }
 
-  // Test case for combination {1}/OhexNum>0:
+  // Test case for combination {1}/R4:
   //   PRE:  n >= 0
-  //   POST: hexNum == n * (2 * n - 1)
-  //   ENSURES: hexNum == n * (2 * n - 1)
+  //   POST Q1: hexNum == n * (2 * n - 1)
   {
-    var n := 3;
+    var n := 9;
     var hexNum := NthHexagonalNumber(n);
-    expect hexNum == 15;
+    expect hexNum == 153;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForNthHexagonalNumber();
+  print "TestsForNthHexagonalNumber: all non-failing tests passed!\n";
 }

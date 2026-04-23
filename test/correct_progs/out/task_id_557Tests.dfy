@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-21 23:42:03
+// Generated: 2026-04-22 21:33:44
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -41,45 +41,37 @@ method TestsForToggleCase()
 {
   // Test case for combination {1}:
   //   POST Q1: IsMapSeq(s, v, Toggle)
-  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   {
     var s: seq<char> := [];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
     expect v == []; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|=1:
   //   POST Q1: IsMapSeq(s, v, Toggle)
-  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   {
-    var s: seq<char> := ['K'];
+    var s: seq<char> := ['{'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
-    expect v == ['k']; // observed from implementation
+    expect v == ['{']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, Toggle)
-  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   {
-    var s: seq<char> := ['g', 'C'];
+    var s: seq<char> := ['~', 'w'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
-    expect v == ['G', 'c']; // observed from implementation
+    expect v == ['~', 'W']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: IsMapSeq(s, v, Toggle)
-  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i])
   {
     var s: seq<char> := ['~'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect forall i: int  :: 0 <= i && i < |s| ==> v[i] == Toggle(s[i]);
     expect v == ['~']; // observed from implementation
   }
 

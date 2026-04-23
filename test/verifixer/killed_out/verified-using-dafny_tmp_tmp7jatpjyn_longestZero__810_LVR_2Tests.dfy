@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\verified-using-dafny_tmp_tmp7jatpjyn_longestZero__810_LVR_2.dfy
 // Method: longestZero
-// Generated: 2026-04-06 00:02:08
+// Generated: 2026-04-22 22:00:11
 
 // verified-using-dafny_tmp_tmp7jatpjyn_longestZero.dfy
 
@@ -76,65 +76,80 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForlongestZero()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  1 <= a.Length
-  //   POST: 0 <= sz <= a.Length
-  //   POST: 0 <= pos < a.Length
-  //   POST: pos + sz <= a.Length
-  //   POST: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
-  //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
+  //   POST Q1: 0 <= sz
+  //   POST Q2: sz <= a.Length
+  //   POST Q3: 0 <= pos
+  //   POST Q4: pos < a.Length
+  //   POST Q5: pos + sz <= a.Length
+  //   POST Q6: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
+  //   POST Q7: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
-    var a := new int[1] [19];
+    var a := new int[6] [-1, 6, -10, 0, 0, 0];
+    var sz, pos := longestZero(a);
+    // actual runtime state: sz=2
+    // expect sz == 3; // LHS=2, RHS=3
+    // expect pos == 3; // LHS=3, RHS=3
+  }
+
+  // Test case for combination {1}/Bpos=0:
+  //   PRE:  1 <= a.Length
+  //   POST Q1: 0 <= sz
+  //   POST Q2: sz <= a.Length
+  //   POST Q3: 0 <= pos
+  //   POST Q4: pos < a.Length
+  //   POST Q5: pos + sz <= a.Length
+  //   POST Q6: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
+  //   POST Q7: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
+  {
+    var a := new int[1] [-10];
     var sz, pos := longestZero(a);
     expect sz == 0;
     expect pos == 0;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/Bpos=1:
   //   PRE:  1 <= a.Length
-  //   POST: 0 <= sz <= a.Length
-  //   POST: 0 <= pos < a.Length
-  //   POST: pos + sz <= a.Length
-  //   POST: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
-  //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
+  //   POST Q1: 0 <= sz
+  //   POST Q2: sz <= a.Length
+  //   POST Q3: 0 <= pos
+  //   POST Q4: pos < a.Length
+  //   POST Q5: pos + sz <= a.Length
+  //   POST Q6: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
+  //   POST Q7: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
-    var a := new int[2] [14, 13];
+    var a := new int[2] [-9, 6];
     var sz, pos := longestZero(a);
-    expect 0 <= sz <= a.Length;
-    expect 0 <= pos < a.Length;
-    expect pos + sz <= a.Length;
-    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
+    expect sz == 0 || sz == 0;
+    expect pos == 1 || pos == 0;
+    expect sz == 0; // observed from implementation
+    expect pos == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/R3:
   //   PRE:  1 <= a.Length
-  //   POST: 0 <= sz <= a.Length
-  //   POST: 0 <= pos < a.Length
-  //   POST: pos + sz <= a.Length
-  //   POST: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
-  //   POST: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
+  //   POST Q1: 0 <= sz
+  //   POST Q2: sz <= a.Length
+  //   POST Q3: 0 <= pos
+  //   POST Q4: pos < a.Length
+  //   POST Q5: pos + sz <= a.Length
+  //   POST Q6: forall i: int {:trigger a[i]} :: pos <= i < pos + sz ==> a[i] == 0
+  //   POST Q7: forall i: int, j: int {:trigger getSize(i, j)} :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int {:trigger a[k]} :: i <= k <= j && a[k] != 0
   {
-    var a := new int[3] [13, 12, 14];
+    var a := new int[1] [7];
     var sz, pos := longestZero(a);
-    expect 0 <= sz <= a.Length;
-    expect 0 <= pos < a.Length;
-    expect pos + sz <= a.Length;
-    expect forall i: int :: pos <= i < pos + sz ==> a[i] == 0;
-    expect forall i: int, j: int :: 0 <= i < j < a.Length && getSize(i, j) > sz ==> exists k: int :: i <= k <= j && a[k] != 0;
+    expect sz == 0;
+    expect pos == 0;
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForlongestZero();
+  print "TestsForlongestZero: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates.dfy
 // Method: Search
-// Generated: 2026-04-08 19:17:18
+// Generated: 2026-04-22 21:37:01
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates.dfy
 
@@ -65,77 +65,54 @@ method Search(a: array<int>) returns (p: int, q: int)
 }
 
 
-method Passing()
+method TestsForSearch()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
-    var a := new int[4] [0, 1, 0, 1];
+    var a := new int[8] [4, 4, 4, 5, 4, 4, 5, 4];
     var p, q := Search(a);
-    expect p != q;
-  }
-
-  // Test case for combination {1}/Op>0:
-  //   PRE:  4 <= a.Length
-  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  {
-    var a := new int[5] [2, 0, 1, 1, 2];
-    var p, q := Search(a);
-    expect p != q;
-  }
-
-  // Test case for combination {1}/Op<0:
-  //   PRE:  4 <= a.Length
-  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  {
-    var a := new int[6] [2, 3, 2, 1, 3, 1];
-    var p, q := Search(a);
-    expect p != q;
+    expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+    expect p == 4; // observed from implementation
+    expect q == 5; // observed from implementation
   }
 
   // Test case for combination {1}/Op=0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
-    var a := new int[7] [3, 4, 3, 2, 0, 2, 0];
+    var a := new int[7] [2, 4, 2, 3, 0, 4, 0];
     var p, q := Search(a);
-    expect p != q;
+    expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
+    expect p == 2; // observed from implementation
+    expect q == 4; // observed from implementation
   }
 
-  // Test case for combination {1}/Oq>0:
+  // Test case for combination {1}/Oq=0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q
+  //   POST Q2: IsDuplicate(a, p)
+  //   POST Q3: IsDuplicate(a, q)
   {
-    var a := new int[8] [2, 3, 4, 1, 5, 1, 1, 5];
+    var a := new int[6] [3, 2, 3, 1, 0, 0];
     var p, q := Search(a);
-    expect p != q;
+    expect p == 3 || p == 0;
+    expect q == 0 || q == 3;
+    expect p == 3; // observed from implementation
+    expect q == 0; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSearch();
+  print "TestsForSearch: all non-failing tests passed!\n";
 }

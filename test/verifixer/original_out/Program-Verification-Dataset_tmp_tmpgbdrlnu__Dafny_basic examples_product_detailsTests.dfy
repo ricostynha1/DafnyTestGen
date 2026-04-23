@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details.dfy
 // Method: CalcProduct
-// Generated: 2026-04-08 19:17:08
+// Generated: 2026-04-22 20:11:49
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_product_details.dfy
 
@@ -35,86 +35,50 @@ method CalcProduct(m: nat, n: nat) returns (res: nat)
 }
 
 
-method Passing()
+method TestsForCalcProduct()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  //   POST Q1: res == m * n
   {
-    var m := 11;
-    var n := 0;
+    var m := 10;
+    var n := 10;
     var res := CalcProduct(m, n);
-    expect res == 0;
+    // expect res == 100; // got 1
   }
 
-  // Test case for combination {1}/Bm=0,n=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  // Test case for combination {1}/Bm=0:
+  //   POST Q1: res == m * n
   {
     var m := 0;
-    var n := 0;
+    var n := 10;
     var res := CalcProduct(m, n);
     expect res == 0;
   }
 
-  // Test case for combination {1}/Bm=0,n=1:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 0;
-    var n := 1;
-    var res := CalcProduct(m, n);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Bm=1,n=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bm=1:
+  //   POST Q1: res == m * n
   {
     var m := 1;
+    var n := 10;
+    var res := CalcProduct(m, n);
+    // expect res == 10; // got 1
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST Q1: res == m * n
+  {
+    var m := 10;
     var n := 0;
     var res := CalcProduct(m, n);
     expect res == 0;
-  }
-
-  // Test case for combination {1}/Ores=1:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 1;
-    var n := 1;
-    var res := CalcProduct(m, n);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 0;
-    var n := 5;
-    var res := CalcProduct(m, n);
-    expect res == 0;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ores>=2:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 2;
-    var n := 16;
-    var res := CalcProduct(m, n);
-    // expect res == 32;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcProduct();
+  print "TestsForCalcProduct: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence__852-852_AOI.dfy
 // Method: longest_increasing_subsequence
-// Generated: 2026-04-05 23:59:56
+// Generated: 2026-04-22 21:58:43
 
 // Software-Verification_tmp_tmpv4ueky2d_Longest Increasing Subsequence_longest_increasing_subsequence.dfy
 
@@ -49,47 +49,59 @@ function find_max(x: int, y: int): int
 }
 
 
-method Passing()
+method TestsForlongest_increasing_subsequence()
 {
   // Test case for combination {1}:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[1] [-9962];
+    var nums := new int[1] [-10];
     var max := longest_increasing_subsequence(nums);
-    // expect max == 1; // (actual runtime value — not uniquely determined by spec)
     expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Bnums=2:
+  // Test case for combination {1}/Bmax=2:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[2] [-2281, -2280];
+    var nums := new int[1] [10];
     var max := longest_increasing_subsequence(nums);
+    expect max >= 1;
+    expect max == 1; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|nums|>=2:
+  //   PRE:  1 <= nums.Length <= 2500
+  //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
+  //   POST Q1: max >= 1
+  {
+    var nums := new int[2] [-10, -9];
+    var max := longest_increasing_subsequence(nums);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.longest__increasing__subsequence(BigInteger[] nums) in C:\cygwin64\tmp\DafnyTestGen_iloa1lv10zs\runner.cs:line 5850
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_iloa1lv10zs\runner.cs:line 5938
     // expect max >= 1;
   }
 
-  // Test case for combination {1}/Bnums=3:
+  // Test case for combination {1}/R4:
   //   PRE:  1 <= nums.Length <= 2500
   //   PRE:  forall i: int {:trigger nums[i]} :: (0 <= i < nums.Length ==> -10000 <= nums[i]) && (0 <= i < nums.Length ==> nums[i] <= 10000)
-  //   POST: max >= 1
+  //   POST Q1: max >= 1
   {
-    var nums := new int[3] [-2281, -2280, -2279];
+    var nums := new int[1] [-9];
     var max := longest_increasing_subsequence(nums);
-    // expect max >= 1;
+    expect max >= 1;
+    expect max == 1; // observed from implementation
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForlongest_increasing_subsequence();
+  print "TestsForlongest_increasing_subsequence: all non-failing tests passed!\n";
 }

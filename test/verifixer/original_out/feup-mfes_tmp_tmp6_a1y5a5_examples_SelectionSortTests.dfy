@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 // Method: selectionSort
-// Generated: 2026-04-08 19:11:41
+// Generated: 2026-04-22 21:34:00
 
 // feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 
@@ -73,64 +73,88 @@ method testFindMin()
 }
 
 
-method Passing()
+method TestsForselectionSort()
 {
-  // Test case for combination {1}:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/Rel:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new real[1] [27.0];
+    var old_a := a[..];
+    selectionSort(a);
+    expect isSorted(a, 0, a.Length);
+    expect multiset(a[..]) == multiset(old_a);
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new real[0] [];
     selectionSort(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: isSorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new real[1] [3.0];
+    var a := new real[2] [11.0, 12.0];
     var old_a := a[..];
     selectionSort(a);
     expect isSorted(a, 0, a.Length);
     expect multiset(a[..]) == multiset(old_a);
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new real[2] [3.0, 2.0];
-    var old_a := a[..];
-    selectionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
-  }
+}
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: isSorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: isSorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new real[3] [3.0, 2.0, 4.0];
-    var old_a := a[..];
-    selectionSort(a);
-    expect isSorted(a, 0, a.Length);
-    expect multiset(a[..]) == multiset(old_a);
-  }
-
-  // Test case for combination {1}:
+method TestsForfindMin()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
+  //   POST Q1: from <= index
+  //   POST Q2: index < to
+  //   POST Q3: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
+  {
+    var a := new real[4] [-13635.25, -13635.5, -13635.0, -13634.75];
+    var from := 2;
+    var to := 4;
+    var index := findMin(a, from, to);
+    expect index == 2;
+  }
+
+  // Test case for combination {1}/Bfrom=0:
+  //   PRE:  0 <= from < to <= a.Length
+  //   POST Q1: from <= index
+  //   POST Q2: index < to
+  //   POST Q3: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
+  {
+    var a := new real[2] [22837.0, 22837.0];
+    var from := 0;
+    var to := 2;
+    var index := findMin(a, from, to);
+    expect index == 0 || index == 1;
+    expect index == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bfrom=1:
+  //   PRE:  0 <= from < to <= a.Length
+  //   POST Q1: from <= index
+  //   POST Q2: index < to
+  //   POST Q3: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
+  {
+    var a := new real[2] [11.0, -54209.0];
+    var from := 1;
+    var to := 2;
+    var index := findMin(a, from, to);
+    expect index == 1;
+  }
+
+  // Test case for combination {1}/Bto=1:
+  //   PRE:  0 <= from < to <= a.Length
+  //   POST Q1: from <= index
+  //   POST Q2: index < to
+  //   POST Q3: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
   {
     var a := new real[1] [0.0];
     var from := 0;
@@ -139,99 +163,12 @@ method Passing()
     expect index == 0;
   }
 
-  // Test case for combination {1}/Ba=2,from=0,to==a_len:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[2] [7719.0, 7720.0];
-    var from := 0;
-    var to := 2;
-    var index := findMin(a, from, to);
-    expect index == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,from=0,to=1:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[2] [0.0, 4.0];
-    var from := 0;
-    var to := 1;
-    var index := findMin(a, from, to);
-    expect index == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,from=1,to==a_len:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[2] [4.0, 0.0];
-    var from := 1;
-    var to := 2;
-    var index := findMin(a, from, to);
-    expect index == 1;
-  }
-
-  // Test case for combination {1}/Oindex>=2:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[3] [12.0, 13.0, 0.0];
-    var from := 2;
-    var to := 3;
-    var index := findMin(a, from, to);
-    expect index == 2;
-  }
-
-  // Test case for combination {1}/Oindex=1:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[3] [10.0, 0.0, 11.0];
-    var from := 1;
-    var to := 2;
-    var index := findMin(a, from, to);
-    expect index == 1;
-  }
-
-  // Test case for combination {1}/Oindex=0:
-  //   PRE:  0 <= from < to <= a.Length
-  //   POST: from <= index < to
-  //   POST: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  //   ENSURES: from <= index < to
-  //   ENSURES: forall k: int {:trigger a[k]} :: from <= k < to ==> a[k] >= a[index]
-  {
-    var a := new real[4] [-7719.0, 0.0, 21238.0, 2437.0];
-    var from := 0;
-    var to := 4;
-    var index := findMin(a, from, to);
-    expect index == 0;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForselectionSort();
+  print "TestsForselectionSort: all non-failing tests passed!\n";
+  TestsForfindMin();
+  print "TestsForfindMin: all non-failing tests passed!\n";
 }

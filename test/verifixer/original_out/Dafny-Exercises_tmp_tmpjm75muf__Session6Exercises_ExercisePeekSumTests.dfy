@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 // Method: mPeekSum
-// Generated: 2026-04-08 19:09:03
+// Generated: 2026-04-22 21:31:03
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session6Exercises_ExercisePeekSum.dfy
 
@@ -52,77 +52,48 @@ method mPeekSum(v: array<int>) returns (sum: int)
 }
 
 
-method Passing()
+method TestsFormPeekSum()
 {
   // Test case for combination {1}:
   //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
+  //   POST Q1: sum == peekSum(v, v.Length)
   {
-    var v := new int[1] [2];
+    var v := new int[1] [-10];
     var sum := mPeekSum(v);
-    expect sum == 2;
+    expect sum == -10;
   }
 
-  // Test case for combination {1}/Bv=2:
+  // Test case for combination {2}:
   //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
+  //   POST Q1: sum == peekSum(v, v.Length)
   {
-    var v := new int[2] [4, 3];
+    var v := new int[2] [-9, -10];
     var sum := mPeekSum(v);
-    expect sum == 4;
+    expect sum == -9;
   }
 
-  // Test case for combination {1}/Bv=3:
+  // Test case for combination {1}/O|v|>=2:
   //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
+  //   POST Q1: sum == peekSum(v, v.Length)
   {
-    var v := new int[3] [5, 4, 6];
+    var v := new int[2] [-9, -4];
     var sum := mPeekSum(v);
-    expect sum == 11;
+    expect sum == -13;
   }
 
-  // Test case for combination {1}/Osum>0:
+  // Test case for combination {1}/R3:
   //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
+  //   POST Q1: sum == peekSum(v, v.Length)
   {
-    var v := new int[4] [5, 6, 7, 8];
+    var v := new int[1] [10];
     var sum := mPeekSum(v);
-    expect sum == 26;
+    expect sum == 10;
   }
 
-  // Test case for combination {1}/Osum<0:
-  //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
-  {
-    var v := new int[5] [6, 7, 8, 9, 10];
-    var sum := mPeekSum(v);
-    expect sum == 40;
-  }
-
-  // Test case for combination {1}/Osum=0:
-  //   PRE:  v.Length > 0
-  //   POST: sum == peekSum(v, v.Length)
-  //   ENSURES: sum == peekSum(v, v.Length)
-  {
-    var v := new int[6] [7, 8, 9, 10, 11, 12];
-    var sum := mPeekSum(v);
-    expect sum == 57;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormPeekSum();
+  print "TestsFormPeekSum: all non-failing tests passed!\n";
 }

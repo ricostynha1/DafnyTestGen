@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_tmp_tmpmvs2dmry_examples2.dfy
 // Method: add_by_inc
-// Generated: 2026-04-08 19:05:57
+// Generated: 2026-04-22 21:28:30
 
 // Dafny_tmp_tmpmvs2dmry_examples2.dfy
 
@@ -126,165 +126,121 @@ function exp(x: real, n: nat): real
 }
 
 
-method Passing()
+method TestsForadd_by_inc()
 {
   // Test case for combination {1}:
-  //   POST: z == x + y
-  //   ENSURES: z == x + y
+  //   POST Q1: z == x + y
+  {
+    var x := 10;
+    var y := 10;
+    var z := add_by_inc(x, y);
+    expect z == 20;
+  }
+
+  // Test case for combination {1}/Bx=0:
+  //   POST Q1: z == x + y
   {
     var x := 0;
-    var y := 0;
+    var y := 10;
     var z := add_by_inc(x, y);
-    expect z == 0;
+    expect z == 10;
   }
 
-  // Test case for combination {1}/Bx=0,y=1:
-  //   POST: z == x + y
-  //   ENSURES: z == x + y
-  {
-    var x := 0;
-    var y := 1;
-    var z := add_by_inc(x, y);
-    expect z == 1;
-  }
-
-  // Test case for combination {1}/Bx=1,y=0:
-  //   POST: z == x + y
-  //   ENSURES: z == x + y
+  // Test case for combination {1}/Bx=1:
+  //   POST Q1: z == x + y
   {
     var x := 1;
+    var y := 10;
+    var z := add_by_inc(x, y);
+    expect z == 11;
+  }
+
+  // Test case for combination {1}/By=0:
+  //   POST Q1: z == x + y
+  {
+    var x := 10;
     var y := 0;
     var z := add_by_inc(x, y);
-    expect z == 1;
+    expect z == 10;
   }
 
-  // Test case for combination {1}/Bx=1,y=1:
-  //   POST: z == x + y
-  //   ENSURES: z == x + y
-  {
-    var x := 1;
-    var y := 1;
-    var z := add_by_inc(x, y);
-    expect z == 2;
-  }
+}
 
-  // Test case for combination {1}/Oz>=2:
-  //   POST: z == x + y
-  //   ENSURES: z == x + y
-  {
-    var x := 2;
-    var y := 0;
-    var z := add_by_inc(x, y);
-    expect z == 2;
-  }
-
+method TestsForProduct()
+{
   // Test case for combination {1}:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  //   POST Q1: res == m * n
   {
-    var m := 11;
-    var n := 0;
+    var m := 10;
+    var n := 10;
     var res := Product(m, n);
-    expect res == 0;
+    expect res == 100;
   }
 
-  // Test case for combination {1}/Bm=0,n=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  // Test case for combination {1}/Bm=0:
+  //   POST Q1: res == m * n
   {
     var m := 0;
-    var n := 0;
+    var n := 10;
     var res := Product(m, n);
     expect res == 0;
   }
 
-  // Test case for combination {1}/Bm=0,n=1:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 0;
-    var n := 1;
-    var res := Product(m, n);
-    expect res == 0;
-  }
-
-  // Test case for combination {1}/Bm=1,n=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
+  // Test case for combination {1}/Bm=1:
+  //   POST Q1: res == m * n
   {
     var m := 1;
+    var n := 10;
+    var res := Product(m, n);
+    expect res == 10;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST Q1: res == m * n
+  {
+    var m := 10;
     var n := 0;
     var res := Product(m, n);
     expect res == 0;
   }
 
-  // Test case for combination {1}/Ores>=2:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 2;
-    var n := 16;
-    var res := Product(m, n);
-    expect res == 32;
-  }
+}
 
-  // Test case for combination {1}/Ores=1:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 1;
-    var n := 1;
-    var res := Product(m, n);
-    expect res == 1;
-  }
-
-  // Test case for combination {1}/Ores=0:
-  //   POST: res == m * n
-  //   ENSURES: res == m * n
-  {
-    var m := 0;
-    var n := 5;
-    var res := Product(m, n);
-    expect res == 0;
-  }
-
+method TestsForgcdCalc()
+{
   // Test case for combination {1}:
   //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  //   ENSURES: res == gcd(m, n)
+  //   POST Q1: res == gcd(m, n)
   {
-    var m := 1;
-    var n := 1;
+    var m := 10;
+    var n := 10;
     var res := gcdCalc(m, n);
-    expect res == 1;
+    expect res == 10;
   }
 
   // Test case for combination {2}:
   //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  //   ENSURES: res == gcd(m, n)
+  //   POST Q1: res == gcd(m, n)
   {
-    var m := 1;
-    var n := 2;
+    var m := 10;
+    var n := 9;
     var res := gcdCalc(m, n);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Bm=2,n=2:
+  // Test case for combination {3}:
   //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  //   ENSURES: res == gcd(m, n)
+  //   POST Q1: res == gcd(m, n)
   {
-    var m := 2;
-    var n := 2;
+    var m := 9;
+    var n := 10;
     var res := gcdCalc(m, n);
-    expect res == 2;
+    expect res == 1;
   }
 
-  // Test case for combination {2}/Bm=2,n=1:
+  // Test case for combination {2}/Bm=2:
   //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  //   ENSURES: res == gcd(m, n)
+  //   POST Q1: res == gcd(m, n)
   {
     var m := 2;
     var n := 1;
@@ -292,21 +248,13 @@ method Passing()
     expect res == 1;
   }
 
-  // Test case for combination {2}/Ores=0:
-  //   PRE:  m > 0 && n > 0
-  //   POST: res == gcd(m, n)
-  //   ENSURES: res == gcd(m, n)
-  {
-    var m := 1;
-    var n := 3;
-    var res := gcdCalc(m, n);
-    expect res == 1;
-  }
+}
 
+method TestsForexp_by_sqr()
+{
   // Test case for combination {1}:
   //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
+  //   POST Q1: r == exp(x0, n0)
   {
     var x0 := 0.0;
     var n0 := 0;
@@ -316,8 +264,17 @@ method Passing()
 
   // Test case for combination {2}:
   //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
+  //   POST Q1: r == exp(x0, n0)
+  {
+    var x0 := 0.0;
+    var n0 := 10;
+    var r := exp_by_sqr(x0, n0);
+    expect r == 0.0;
+  }
+
+  // Test case for combination {2}/Bn0=1:
+  //   PRE:  x0 >= 0.0
+  //   POST Q1: r == exp(x0, n0)
   {
     var x0 := 0.0;
     var n0 := 1;
@@ -325,59 +282,26 @@ method Passing()
     expect r == 0.0;
   }
 
-  // Test case for combination {1}/Bx0=1.0,n0=0:
+  // Test case for combination {2}/Bn0=2:
   //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
+  //   POST Q1: r == exp(x0, n0)
   {
-    var x0 := 1.0;
-    var n0 := 0;
-    var r := exp_by_sqr(x0, n0);
-    expect r == 1.0;
-  }
-
-  // Test case for combination {1}/Bx0=-1.0,n0=0:
-  //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
-  {
-    var x0 := -1.0;
-    var n0 := 0;
-    var r := exp_by_sqr(x0, n0);
-    expect r == 1.0;
-  }
-
-  // Test case for combination {2}/Or<0:
-  //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
-  {
-    var x0 := 1.0;
+    var x0 := 0.0;
     var n0 := 2;
     var r := exp_by_sqr(x0, n0);
-    expect r == 1.0;
+    expect r == 0.0;
   }
 
-  // Test case for combination {2}/Or=0:
-  //   PRE:  x0 >= 0.0
-  //   POST: r == exp(x0, n0)
-  //   ENSURES: r == exp(x0, n0)
-  {
-    var x0 := 2.0;
-    var n0 := 1;
-    var r := exp_by_sqr(x0, n0);
-    expect r == 2.0;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForadd_by_inc();
+  print "TestsForadd_by_inc: all non-failing tests passed!\n";
+  TestsForProduct();
+  print "TestsForProduct: all non-failing tests passed!\n";
+  TestsForgcdCalc();
+  print "TestsForgcdCalc: all non-failing tests passed!\n";
+  TestsForexp_by_sqr();
+  print "TestsForexp_by_sqr: all non-failing tests passed!\n";
 }

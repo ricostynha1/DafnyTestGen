@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-04-21 23:40:42
+// Generated: 2026-04-22 21:32:26
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -52,7 +52,6 @@ method TestsForFilterOddNumbers()
 {
   // Test case for combination {1}:
   //   POST Q1: oddList == FilterOdd(arr[..])
-  //   POST Q2: oddList == []
   {
     var arr := new int[0] [];
     var oddList := FilterOddNumbers(arr);
@@ -60,19 +59,15 @@ method TestsForFilterOddNumbers()
   }
 
   // Test case for combination {2}:
-  //   POST Q1: |arr[..]| != 0
-  //   POST Q2: arr[..][|arr[..]| - 1] % 2 != 0
-  //   POST Q3: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
+  //   POST Q1: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[1] [-1];
+    var arr := new int[1] [-9];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == [-1];
+    expect oddList == [-9];
   }
 
   // Test case for combination {3}:
-  //   POST Q1: |arr[..]| != 0
-  //   POST Q2: arr[..][|arr[..]| - 1] % 2 == 0
-  //   POST Q3: oddList == FilterOdd(arr[..][..|arr[..]| - 1])
+  //   POST Q1: oddList == FilterOdd(arr[..])
   {
     var arr := new int[1] [-10];
     var oddList := FilterOddNumbers(arr);
@@ -80,11 +75,9 @@ method TestsForFilterOddNumbers()
   }
 
   // Test case for combination {2}/O|arr|>=2:
-  //   POST Q1: |arr[..]| != 0
-  //   POST Q2: arr[..][|arr[..]| - 1] % 2 != 0
-  //   POST Q3: oddList == FilterOdd(arr[..][..|arr[..]| - 1]) + [arr[..][|arr[..]| - 1]]
+  //   POST Q1: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[2] [-10, -1];
+    var arr := new int[2] [-8, -1];
     var oddList := FilterOddNumbers(arr);
     expect oddList == [-1];
   }

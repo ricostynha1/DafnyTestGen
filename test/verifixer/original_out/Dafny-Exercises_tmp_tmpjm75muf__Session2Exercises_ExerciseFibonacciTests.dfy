@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci.dfy
 // Method: fibonacci1
-// Generated: 2026-04-08 19:07:18
+// Generated: 2026-04-22 21:30:22
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseFibonacci.dfy
 
@@ -74,11 +74,10 @@ method fibonacci3(n: nat) returns (f: nat)
 }
 
 
-method Passing()
+method TestsForfibonacci1()
 {
   // Test case for combination {1}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  //   POST Q1: f == fib(n)
   {
     var n := 0;
     var f := fibonacci1(n);
@@ -86,113 +85,109 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  //   POST Q1: f == fib(n)
   {
     var n := 1;
     var f := fibonacci1(n);
     expect f == 1;
   }
 
-  // Test case for combination {2}/Of=1:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  // Test case for combination {3}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 10;
+    var f := fibonacci1(n);
+    expect f == 55;
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   POST Q1: f == fib(n)
   {
     var n := 2;
     var f := fibonacci1(n);
     expect f == 1;
-  }
-
-  // Test case for combination {2}/Of=0:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 3;
-    var f := fibonacci1(n);
-    expect f == 2;
-  }
-
-  // Test case for combination {1}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 0;
-    var f := fibonacci2(n);
-    expect f == 0;
-  }
-
-  // Test case for combination {2}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 1;
-    var f := fibonacci2(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of=1:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 2;
-    var f := fibonacci2(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of=0:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 3;
-    var f := fibonacci2(n);
-    expect f == 2;
-  }
-
-  // Test case for combination {1}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 0;
-    var f := fibonacci3(n);
-    expect f == 0;
-  }
-
-  // Test case for combination {2}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 1;
-    var f := fibonacci3(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of=1:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 2;
-    var f := fibonacci3(n);
-    expect f == 1;
-  }
-
-  // Test case for combination {2}/Of=0:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 3;
-    var f := fibonacci3(n);
-    expect f == 2;
   }
 
 }
 
-method Failing()
+method TestsForfibonacci2()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 0;
+    var f := fibonacci2(n);
+    expect f == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 1;
+    var f := fibonacci2(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {3}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 10;
+    var f := fibonacci2(n);
+    expect f == 55;
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 2;
+    var f := fibonacci2(n);
+    expect f == 1;
+  }
+
+}
+
+method TestsForfibonacci3()
+{
+  // Test case for combination {1}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 0;
+    var f := fibonacci3(n);
+    expect f == 0;
+  }
+
+  // Test case for combination {2}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 1;
+    var f := fibonacci3(n);
+    expect f == 1;
+  }
+
+  // Test case for combination {3}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 10;
+    var f := fibonacci3(n);
+    expect f == 55;
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 2;
+    var f := fibonacci3(n);
+    expect f == 1;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForfibonacci1();
+  print "TestsForfibonacci1: all non-failing tests passed!\n";
+  TestsForfibonacci2();
+  print "TestsForfibonacci2: all non-failing tests passed!\n";
+  TestsForfibonacci3();
+  print "TestsForfibonacci3: all non-failing tests passed!\n";
 }

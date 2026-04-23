@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\dafny-synthesis_task_id_290__227-233_EVR_int.dfy
 // Method: MaxLengthList
-// Generated: 2026-04-08 21:54:21
+// Generated: 2026-04-22 21:31:51
 
 // dafny-synthesis_task_id_290.dfy
 
@@ -24,66 +24,46 @@ method MaxLengthList(lists: seq<seq<int>>) returns (maxList: seq<int>)
 }
 
 
-method Passing()
+method TestsForMaxLengthList()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  |lists| > 0
-  //   POST: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   POST: maxList in lists
-  //   ENSURES: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   ENSURES: maxList in lists
+  //   POST Q1: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
+  //   POST Q2: maxList in lists
   {
-    var lists: seq<seq<int>> := [[], [], [], [], [], [], [], []];
+    var lists: seq<seq<int>> := [[], [8]];
+    var maxList := MaxLengthList(lists);
+    // actual runtime state: maxList=[]
+    // expect maxList == [8]; // got []
+  }
+
+  // Test case for combination {1}/O|lists|=1:
+  //   PRE:  |lists| > 0
+  //   POST Q1: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
+  //   POST Q2: maxList in lists
+  {
+    var lists: seq<seq<int>> := [[]];
     var maxList := MaxLengthList(lists);
     expect maxList == [];
   }
 
-  // Test case for combination {1}/Blists=inner>=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|maxList|>=2:
   //   PRE:  |lists| > 0
-  //   POST: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   POST: maxList in lists
-  //   ENSURES: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   ENSURES: maxList in lists
+  //   POST Q1: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
+  //   POST Q2: maxList in lists
   {
-    var lists: seq<seq<int>> := [[4]];
+    var lists: seq<seq<int>> := [[], [], [], [], [], [], [], [6, 5]];
     var maxList := MaxLengthList(lists);
-    expect maxList == [4];
-  }
-
-  // Test case for combination {1}/Blists=inner>=2:
-  //   PRE:  |lists| > 0
-  //   POST: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   POST: maxList in lists
-  //   ENSURES: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   ENSURES: maxList in lists
-  {
-    var lists: seq<seq<int>> := [[6, 5], [12, 13]];
-    var maxList := MaxLengthList(lists);
-    expect maxList == [6, 5];
-    expect forall l: seq<int>  :: l in lists ==> |l| <= |maxList|;
-    expect maxList in lists;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Blists=3:
-  //   PRE:  |lists| > 0
-  //   POST: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   POST: maxList in lists
-  //   ENSURES: forall l: seq<int> {:trigger |l|} {:trigger l in lists} :: l in lists ==> |l| <= |maxList|
-  //   ENSURES: maxList in lists
-  {
-    var lists: seq<seq<int>> := [[], [7], [9, 11]];
-    var maxList := MaxLengthList(lists);
-    // expect maxList == [9, 11];
+    // actual runtime state: maxList=[]
+    // expect maxList == [6, 5]; // got []
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMaxLengthList();
+  print "TestsForMaxLengthList: all non-failing tests passed!\n";
 }

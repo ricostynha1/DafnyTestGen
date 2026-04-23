@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny_examples_tmp_tmp8qotd4ez_test_shuffle__1670-1680_SDL.dfy
 // Method: random
-// Generated: 2026-04-22 10:40:54
+// Generated: 2026-04-22 21:35:29
 
 // dafny_examples_tmp_tmp8qotd4ez_test_shuffle.dfy
 
@@ -125,11 +125,12 @@ method TestsForrandom()
   }
 
   // Test case for combination {1}:
-  //   POST Q1: a > b
+  //   POST Q1: a <= b ==> a <= r <= b
   {
     var a := -9;
     var b := -10;
     var r := random(a, b);
+    expect a <= b ==> a <= r <= b;
     expect r == -9; // observed from implementation
   }
 
@@ -168,7 +169,7 @@ method TestsForswap()
   //   POST Q3: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST Q4: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[4] [57, 58, 10, 9];
+    var a := new int[4] [56, 57, 10, 9];
     var i := 2;
     var j := 3;
     var old_a_j := a[j];
@@ -180,20 +181,20 @@ method TestsForswap()
     expect a[j] == old_a_i;
     expect forall m: int  :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
     expect multiset(a[..]) == old_multiset_a;
-    expect old_multiset_a == multiset{9, 10, 57, 58}; // observed from implementation
-    expect a[..] == [57, 58, 9, 10]; // observed from implementation
+    expect old_multiset_a == multiset{9, 10, 56, 57}; // observed from implementation
+    expect a[..] == [56, 57, 9, 10]; // observed from implementation
   }
 
-  // Test case for combination {1}/V1:
+  // Test case for combination {1}/Bi=0:
   //   PRE:  0 <= i < a.Length && 0 <= j < a.Length
-  //   POST Q1: a[i] == old(a[j])  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q1: a[i] == old(a[j])
   //   POST Q2: a[j] == old(a[i])
   //   POST Q3: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST Q4: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [8];
+    var a := new int[3] [10, 24, 9];
     var i := 0;
-    var j := 0;
+    var j := 2;
     var old_a_j := a[j];
     var old_a_i := a[i];
     var old_a := a[..];
@@ -203,7 +204,8 @@ method TestsForswap()
     expect a[j] == old_a_i;
     expect forall m: int  :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
     expect multiset(a[..]) == old_multiset_a;
-    expect old_multiset_a == multiset{8}; // observed from implementation
+    expect old_multiset_a == multiset{9, 10, 24}; // observed from implementation
+    expect a[..] == [9, 24, 10]; // observed from implementation
   }
 
   // Test case for combination {1}/Bi=1:
@@ -228,16 +230,16 @@ method TestsForswap()
     expect old_multiset_a == multiset{19, 20, 20}; // observed from implementation
   }
 
-  // Test case for combination {1}/Bj=1:
+  // Test case for combination {1}/Bi=a_pre_len-1:
   //   PRE:  0 <= i < a.Length && 0 <= j < a.Length
   //   POST Q1: a[i] == old(a[j])
   //   POST Q2: a[j] == old(a[i])
   //   POST Q3: forall m: int {:trigger old(a[m])} {:trigger a[m]} :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old(a[m])
   //   POST Q4: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[3] [19, 20, 20];
+    var a := new int[3] [27, 28, 12];
     var i := 2;
-    var j := 1;
+    var j := 2;
     var old_a_j := a[j];
     var old_a_i := a[i];
     var old_a := a[..];
@@ -247,7 +249,7 @@ method TestsForswap()
     expect a[j] == old_a_i;
     expect forall m: int  :: 0 <= m < a.Length && m != i && m != j ==> a[m] == old_a[m];
     expect multiset(a[..]) == old_multiset_a;
-    expect old_multiset_a == multiset{19, 20, 20}; // observed from implementation
+    expect old_multiset_a == multiset{12, 27, 28}; // observed from implementation
   }
 
 }

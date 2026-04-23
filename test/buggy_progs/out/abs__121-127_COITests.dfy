@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\abs__121-127_COI.dfy
 // Method: abs
-// Generated: 2026-04-22 10:33:45
+// Generated: 2026-04-22 21:25:24
 
 // res.dfy
 
@@ -27,7 +27,6 @@ method TestsForabs()
   {
     var x := -10;
     var y := abs(x);
-    // actual runtime state: y=-10
     // expect y == 10; // got -10
   }
 
@@ -38,7 +37,6 @@ method TestsForabs()
   {
     var x := 10;
     var y := abs(x);
-    // actual runtime state: y=-10
     // expect y == 10; // got -10
   }
 
@@ -58,7 +56,6 @@ method TestsForabs()
   {
     var x := -9;
     var y := abs(x);
-    // actual runtime state: y=-9
     // expect y == 9; // got -9
   }
 

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2.dfy
 // Method: max
-// Generated: 2026-04-08 19:06:39
+// Generated: 2026-04-22 21:29:20
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_normal_data_completion_MaxPerdV2.dfy
 
@@ -54,94 +54,59 @@ method max(a: array<int>, n: int) returns (max: int)
 }
 
 
-method Passing()
+method TestsFormax()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
+  //   POST Q1: is_max(max, a, n)
+  //   POST Q2: a[0] == max
+  //   POST Q3: forall j: int {:trigger a[j]} :: 0 <= j && j < n ==> a[j] <= max
   {
-    var a := new int[1] [0];
-    var n := 1;
-    var max := max(a, n);
-    expect max == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,n==a_len:
-  //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
-  {
-    var a := new int[2] [-1, 0];
+    var a := new int[2] [4, -10];
     var n := 2;
-    var max := max(a, n);
-    expect max == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,n=1:
-  //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
-  {
-    var a := new int[2] [4, 3];
-    var n := 1;
     var max := max(a, n);
     expect max == 4;
   }
 
-  // Test case for combination {1}/Ba=3,n==a_len:
+  // Test case for combination {2}/Rel:
   //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
+  //   POST Q1: exists j :: 1 <= j < (n - 1) && a[j] == max
+  //   POST Q2: forall j: int {:trigger a[j]} :: 0 <= j && j < n ==> a[j] <= max
   {
-    var a := new int[3] [28955, 28956, 28957];
-    var n := 3;
-    var max := max(a, n);
-    expect max == 28957;
-  }
-
-  // Test case for combination {1}/Omax>0:
-  //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
-  {
-    var a := new int[4] [-7719, 21239, 26, 25];
-    var n := 2;
-    var max := max(a, n);
-    expect max == 21239;
-  }
-
-  // Test case for combination {1}/Omax<0:
-  //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
-  {
-    var a := new int[3] [-7721, -7720, 25];
-    var n := 2;
-    var max := max(a, n);
-    expect max == -7720;
-  }
-
-  // Test case for combination {1}/Omax=0:
-  //   PRE:  0 < n <= a.Length
-  //   POST: is_max(max, a, n)
-  //   ENSURES: is_max(max, a, n)
-  {
-    var a := new int[4] [-7719, -21238, -2437, 0];
+    var a := new int[4] [-2, -4, -2, -3];
     var n := 4;
     var max := max(a, n);
-    expect max == 0;
+    expect max == -2;
   }
 
-}
+  // Test case for combination {3}/Rel:
+  //   PRE:  0 < n <= a.Length
+  //   POST Q1: is_max(max, a, n)
+  //   POST Q2: a[(n - 1)] == max
+  //   POST Q3: forall j: int {:trigger a[j]} :: 0 <= j && j < n ==> a[j] <= max
+  {
+    var a := new int[2] [2, 2];
+    var n := 2;
+    var max := max(a, n);
+    expect max == 2;
+  }
 
-method Failing()
-{
-  // (no failing tests)
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  0 < n <= a.Length
+  //   POST Q1: is_max(max, a, n)
+  //   POST Q2: a[0] == max
+  //   POST Q3: forall j: int {:trigger a[j]} :: 0 <= j && j < n ==> a[j] <= max
+  {
+    var a := new int[1] [-1];
+    var n := 1;
+    var max := max(a, n);
+    expect max == -1;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormax();
+  print "TestsFormax: all non-failing tests passed!\n";
 }

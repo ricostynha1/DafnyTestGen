@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_COST-verif-comp-2011-1-MaxArray.dfy
 // Method: max
-// Generated: 2026-04-08 19:09:14
+// Generated: 2026-04-22 21:31:23
 
 // dafny-language-server_tmp_tmpkir0kenl_Test_dafny2_COST-verif-comp-2011-1-MaxArray.dfy
 
@@ -33,77 +33,57 @@ method max(a: array<int>) returns (x: int)
 }
 
 
-method Passing()
+method TestsFormax()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length != 0
-  //   POST: 0 <= x < a.Length
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  //   ENSURES: 0 <= x < a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
+  //   POST Q1: 0 <= x
+  //   POST Q2: x < a.Length
+  //   POST Q3: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
-    var a := new int[1] [38];
+    var a := new int[2] [-4, -5];
     var x := max(a);
     expect x == 0;
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/Bx=1:
   //   PRE:  a.Length != 0
-  //   POST: 0 <= x < a.Length
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  //   ENSURES: 0 <= x < a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
+  //   POST Q1: 0 <= x
+  //   POST Q2: x < a.Length
+  //   POST Q3: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
-    var a := new int[2] [35472, 35473];
+    var a := new int[2] [-10, -10];
     var x := max(a);
-    expect x == 1;
+    expect x == 1 || x == 0;
+    expect x == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  a.Length != 0
-  //   POST: 0 <= x < a.Length
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  //   ENSURES: 0 <= x < a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
+  //   POST Q1: 0 <= x
+  //   POST Q2: x < a.Length
+  //   POST Q3: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
   {
-    var a := new int[3] [23675, 23674, 23676];
-    var x := max(a);
-    expect x == 2;
-  }
-
-  // Test case for combination {1}/Ox>0:
-  //   PRE:  a.Length != 0
-  //   POST: 0 <= x < a.Length
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  //   ENSURES: 0 <= x < a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  {
-    var a := new int[4] [-7719, -21238, -2437, 38];
-    var x := max(a);
-    expect x == 3;
-  }
-
-  // Test case for combination {1}/Ox=0:
-  //   PRE:  a.Length != 0
-  //   POST: 0 <= x < a.Length
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  //   ENSURES: 0 <= x < a.Length
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
-  {
-    var a := new int[5] [7719, -38, -21238, -2437, -8855];
+    var a := new int[1] [-10];
     var x := max(a);
     expect x == 0;
   }
 
-}
+  // Test case for combination {1}/R3:
+  //   PRE:  a.Length != 0
+  //   POST Q1: 0 <= x
+  //   POST Q2: x < a.Length
+  //   POST Q3: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] <= a[x]
+  {
+    var a := new int[1] [-2];
+    var x := max(a);
+    expect x == 0;
+  }
 
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormax();
+  print "TestsFormax: all non-failing tests passed!\n";
 }

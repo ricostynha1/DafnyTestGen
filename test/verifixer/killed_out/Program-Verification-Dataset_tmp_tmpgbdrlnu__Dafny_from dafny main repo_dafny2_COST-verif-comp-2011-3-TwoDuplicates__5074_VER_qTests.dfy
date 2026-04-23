@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates__5074_VER_q.dfy
 // Method: Search
-// Generated: 2026-04-08 16:21:37
+// Generated: 2026-04-22 21:53:00
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_COST-verif-comp-2011-3-TwoDuplicates.dfy
 
@@ -65,76 +65,61 @@ method Search(a: array<int>) returns (p: int, q: int)
 }
 
 
-method Passing()
+method TestsForSearch()
 {
-  // Test case for combination {1}/Op>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   {
-    var a := new int[5] [2, 0, 1, 1, 2];
+    var a := new int[8] [3, 3, 4, 3, 3, 3, 4, 3];
     var p, q := Search(a);
-    expect p != q;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.Search(BigInteger[] a, BigInteger& p, BigInteger& q) in C:\cygwin64\tmp\DafnyTestGen_mwn2jpfzahq\runner.cs:line 5867
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_mwn2jpfzahq\runner.cs:line 5919
+    // expect p != q && IsDuplicate(a, p) && IsDuplicate(a, q);
   }
 
   // Test case for combination {1}/Op=0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q
+  //   POST Q2: IsDuplicate(a, p)
+  //   POST Q3: IsDuplicate(a, q)
   {
-    var a := new int[7] [3, 4, 3, 2, 0, 2, 0];
+    var a := new int[8] [2, 5, 5, 3, 0, 0, 0, 0];
     var p, q := Search(a);
-    expect p != q;
+    expect p == 0 || p == 5;
+    expect q == 5 || q == 0;
+    expect p == 5; // observed from implementation
+    expect q == 0; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Oq=0:
   //   PRE:  4 <= a.Length
   //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
   //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
+  //   POST Q1: p != q
+  //   POST Q2: IsDuplicate(a, p)
+  //   POST Q3: IsDuplicate(a, q)
   {
-    var a := new int[4] [0, 1, 0, 1];
+    var a := new int[8] [4, 2, 2, 5, 2, 3, 0, 0];
     var p, q := Search(a);
-    // expect p != q;
-  }
-
-  // Test case for combination {1}/Op<0:
-  //   PRE:  4 <= a.Length
-  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  {
-    var a := new int[6] [2, 3, 2, 1, 3, 1];
-    var p, q := Search(a);
-    // expect p != q;
-  }
-
-  // Test case for combination {1}/Oq>0:
-  //   PRE:  4 <= a.Length
-  //   PRE:  exists p: int, q: int {:trigger IsDuplicate(a, q), IsDuplicate(a, p)} :: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  //   PRE:  forall i: int {:trigger a[i]} :: (0 <= i < a.Length ==> 0 <= a[i]) && (0 <= i < a.Length ==> a[i] < a.Length - 2)
-  //   POST: p != q
-  //   ENSURES: p != q && IsDuplicate(a, p) && IsDuplicate(a, q)
-  {
-    var a := new int[8] [2, 3, 4, 1, 5, 1, 1, 5];
-    var p, q := Search(a);
-    // expect p != q;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.Search(BigInteger[] a, BigInteger& p, BigInteger& q) in C:\cygwin64\tmp\DafnyTestGen_mwn2jpfzahq\runner.cs:line 5867
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_mwn2jpfzahq\runner.cs:line 5993
+    // expect p == 2 || p == 0;
+    // expect q == 0 || q == 2;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSearch();
+  print "TestsForSearch: all non-failing tests passed!\n";
 }

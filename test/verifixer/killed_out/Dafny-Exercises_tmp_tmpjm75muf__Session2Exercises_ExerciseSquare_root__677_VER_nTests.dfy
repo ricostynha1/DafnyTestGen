@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseSquare_root__677_VER_n.dfy
 // Method: mroot1
-// Generated: 2026-04-08 16:49:13
+// Generated: 2026-04-22 21:35:48
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExerciseSquare_root.dfy
 
@@ -57,24 +57,24 @@ method mroot3(n: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsFormroot1()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
-    var n := 15;
+    var n := 9;
     var r := mroot1(n);
     expect r == 3;
   }
 
   // Test case for combination {1}/Bn=0:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
     var n := 0;
     var r := mroot1(n);
@@ -83,122 +83,133 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
     var n := 1;
     var r := mroot1(n);
     expect r == 1;
   }
 
-  // Test case for combination {1}/Or>0:
+  // Test case for combination {1}/Br=n-1:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
-    var n := 9;
+    var n := 2;
     var r := mroot1(n);
-    expect r == 3;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 15;
-    var r := mroot2(n);
-    expect r == 3;
-  }
-
-  // Test case for combination {1}/Bn=0:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 0;
-    var r := mroot2(n);
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Bn=1:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 1;
-    var r := mroot2(n);
     expect r == 1;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
-  {
-    var n := 9;
-    var r := mroot2(n);
-    expect r == 3;
   }
 
 }
 
-method Failing()
+method TestsFormroot2()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
-    var n := 15;
-    var r := mroot3(n);
-    // expect r == 3;
+    var n := 10;
+    var r := mroot2(n);
+    expect r == 3;
   }
 
   // Test case for combination {1}/Bn=0:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
+  {
+    var n := 0;
+    var r := mroot2(n);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  n >= 0
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
+  {
+    var n := 1;
+    var r := mroot2(n);
+    expect r == 1;
+  }
+
+  // Test case for combination {1}/Br=n-1:
+  //   PRE:  n >= 0
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
+  {
+    var n := 2;
+    var r := mroot2(n);
+    expect r == 1;
+  }
+
+}
+
+method TestsFormroot3()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  n >= 0
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
+  {
+    var n := 2;
+    var r := mroot3(n);
+    expect r == 1;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
     var n := 0;
     var r := mroot3(n);
     // expect r == 0;
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
     var n := 1;
     var r := mroot3(n);
-    // expect r == 1;
+    // expect r == 1; // got 0
   }
 
-  // Test case for combination {1}/Or>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R3:
   //   PRE:  n >= 0
-  //   POST: r >= 0
-  //   POST: r * r <= n < (r + 1) * (r + 1)
-  //   ENSURES: r >= 0 && r * r <= n < (r + 1) * (r + 1)
+  //   POST Q1: r >= 0
+  //   POST Q2: r * r <= n
+  //   POST Q3: n < (r + 1) * (r + 1)
   {
-    var n := 9;
+    var n := 3;
     var r := mroot3(n);
-    // expect r == 3;
+    // expect r == 1;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormroot1();
+  print "TestsFormroot1: all non-failing tests passed!\n";
+  TestsFormroot2();
+  print "TestsFormroot2: all non-failing tests passed!\n";
+  TestsFormroot3();
+  print "TestsFormroot3: all non-failing tests passed!\n";
 }

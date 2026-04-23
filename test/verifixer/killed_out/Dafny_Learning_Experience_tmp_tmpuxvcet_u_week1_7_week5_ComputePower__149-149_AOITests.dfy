@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower__149-149_AOI.dfy
 // Method: CalcPower
-// Generated: 2026-04-08 16:45:49
+// Generated: 2026-04-22 21:31:45
 
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_week5_ComputePower.dfy
 
@@ -38,31 +38,74 @@ method ComputePower(n: nat) returns (p: nat)
 }
 
 
-method Passing()
+method TestsForCalcPower()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
-  //   POST: p == 2 * n
-  //   ENSURES: p == 2 * n
+  //   POST Q1: p == 2 * n
+  {
+    var n := 10;
+    var p := CalcPower(n);
+    // expect p == 20; // got -20
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   POST Q1: p == 2 * n
   {
     var n := 0;
     var p := CalcPower(n);
     expect p == 0;
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=1:
+  //   POST Q1: p == 2 * n
+  {
+    var n := 1;
+    var p := CalcPower(n);
+    // expect p == 2; // got -2
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R4:
+  //   POST Q1: p == 2 * n
+  {
+    var n := 9;
+    var p := CalcPower(n);
+    // expect p == 18; // got -18
+  }
+
+}
+
+method TestsForComputePower()
+{
   // Test case for combination {1}:
-  //   POST: n == 0
-  //   POST: p == 1
-  //   ENSURES: p == Power(n)
+  //   POST Q1: p == Power(n)
   {
     var n := 0;
     var p := ComputePower(n);
     expect p == 1;
   }
 
-  // Test case for combination {2}/Op=1:
-  //   POST: !(n == 0)
-  //   POST: p == 2 * Power(n - 1)
-  //   ENSURES: p == Power(n)
+  // Test case for combination {2}:
+  //   POST Q1: p == Power(n)
+  {
+    var n := 10;
+    var p := ComputePower(n);
+    expect p == 1024;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Bn=1:
+  //   POST Q1: p == Power(n)
+  {
+    var n := 1;
+    var p := ComputePower(n);
+    // expect p == 2; // got -2
+  }
+
+  // Test case for combination {2}/Bn=2:
+  //   POST Q1: p == Power(n)
   {
     var n := 2;
     var p := ComputePower(n);
@@ -71,51 +114,10 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // Test case for combination {1}/Bn=1:
-  //   POST: p == 2 * n
-  //   ENSURES: p == 2 * n
-  {
-    var n := 1;
-    var p := CalcPower(n);
-    // expect p == 2;
-  }
-
-  // Test case for combination {1}/Op>=2:
-  //   POST: p == 2 * n
-  //   ENSURES: p == 2 * n
-  {
-    var n := 2;
-    var p := CalcPower(n);
-    // expect p == 4;
-  }
-
-  // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: p == 2 * Power(n - 1)
-  //   ENSURES: p == Power(n)
-  {
-    var n := 1;
-    var p := ComputePower(n);
-    // expect !(n == 0);
-    // expect p == 2 * Power(n - 1);
-  }
-
-  // Test case for combination {2}/Op=0:
-  //   POST: !(n == 0)
-  //   POST: p == 2 * Power(n - 1)
-  //   ENSURES: p == Power(n)
-  {
-    var n := 3;
-    var p := ComputePower(n);
-    // expect p == 0;
-  }
-
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForCalcPower();
+  print "TestsForCalcPower: all non-failing tests passed!\n";
+  TestsForComputePower();
+  print "TestsForComputePower: all non-failing tests passed!\n";
 }

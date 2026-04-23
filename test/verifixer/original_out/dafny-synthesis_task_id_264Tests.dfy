@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_264.dfy
 // Method: DogYears
-// Generated: 2026-04-08 19:09:51
+// Generated: 2026-04-22 21:32:07
 
 // dafny-synthesis_task_id_264.dfy
 
@@ -14,12 +14,20 @@ method DogYears(humanYears: int) returns (dogYears: int)
 }
 
 
-method Passing()
+method TestsForDogYears()
 {
   // Test case for combination {1}:
   //   PRE:  humanYears >= 0
-  //   POST: dogYears == 7 * humanYears
-  //   ENSURES: dogYears == 7 * humanYears
+  //   POST Q1: dogYears == 7 * humanYears
+  {
+    var humanYears := 10;
+    var dogYears := DogYears(humanYears);
+    expect dogYears == 70;
+  }
+
+  // Test case for combination {1}/BhumanYears=0:
+  //   PRE:  humanYears >= 0
+  //   POST Q1: dogYears == 7 * humanYears
   {
     var humanYears := 0;
     var dogYears := DogYears(humanYears);
@@ -28,33 +36,26 @@ method Passing()
 
   // Test case for combination {1}/BhumanYears=1:
   //   PRE:  humanYears >= 0
-  //   POST: dogYears == 7 * humanYears
-  //   ENSURES: dogYears == 7 * humanYears
+  //   POST Q1: dogYears == 7 * humanYears
   {
     var humanYears := 1;
     var dogYears := DogYears(humanYears);
     expect dogYears == 7;
   }
 
-  // Test case for combination {1}/OdogYears>0:
+  // Test case for combination {1}/R4:
   //   PRE:  humanYears >= 0
-  //   POST: dogYears == 7 * humanYears
-  //   ENSURES: dogYears == 7 * humanYears
+  //   POST Q1: dogYears == 7 * humanYears
   {
-    var humanYears := 2;
+    var humanYears := 9;
     var dogYears := DogYears(humanYears);
-    expect dogYears == 14;
+    expect dogYears == 63;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDogYears();
+  print "TestsForDogYears: all non-failing tests passed!\n";
 }

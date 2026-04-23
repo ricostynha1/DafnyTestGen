@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmpv_d3qi10_2_min__340-340_EVR_int.dfy
 // Method: minMethod
-// Generated: 2026-04-08 16:46:43
+// Generated: 2026-04-22 21:32:36
 
 // Dafny_tmp_tmpv_d3qi10_2_min.dfy
 
@@ -68,241 +68,103 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForminMethod()
 {
-  // Test case for combination {2}:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   POST Q1: c < a
+  //   POST Q2: c <= b
+  //   POST Q3: c == min(a, b)
   {
-    var a := 0;
-    var b := 0;
+    var a := -10;
+    var b := -9;
     var c := minMethod(a, b);
-    expect c == 0;
+    // expect c == -10; // got 0
   }
 
-  // Test case for combination {3}:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: !(c == b)
-  //   POST: a < b
-  //   POST: c == b
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
-  {
-    var a := 0;
-    var b := 1;
-    var c := minMethod(a, b);
-    expect c == 0;
-  }
-
-  // Test case for combination {4}:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: !(c == a)
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
-  {
-    var a := 0;
-    var b := -1;
-    var c := minMethod(a, b);
-    expect c == -1;
-  }
-
-  // Test case for combination {2}/Ba=1,b=1:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
-  {
-    var a := 1;
-    var b := 1;
-    var c := minMethod(a, b);
-    expect c == 1;
-  }
-
-  // Test case for combination {2}/Oc<0:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
-  {
-    var a := -1;
-    var b := -1;
-    var c := minMethod(a, b);
-    expect c == -1;
-  }
-
-  // Test case for combination {4}/Oc>0:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: !(c == a)
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
+  // Test case for combination {2}/Rel:
+  //   POST Q1: c < a
+  //   POST Q2: c == b
+  //   POST Q3: c == min(a, b)
   {
     var a := 2;
-    var b := 1;
+    var b := 2;
     var c := minMethod(a, b);
-    expect c == 1;
+    expect c == 2;
   }
 
-  // Test case for combination {4}/Oc=0:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: !(c == a)
-  //   POST: c == min(a, b)
-  //   POST: !(a < b)
-  //   POST: c == min(a, b)
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
+  // Test case for combination {3}/Rel:
+  //   POST Q1: c < a
+  //   POST Q2: c == b
+  //   POST Q3: c == min(a, b)
   {
-    var a := 1;
-    var b := 0;
+    var a := -9;
+    var b := -10;
+    var c := minMethod(a, b);
+    expect c == -10;
+  }
+
+  // Test case for combination {1}/Oa=0:
+  //   POST Q1: c < a
+  //   POST Q2: c <= b
+  //   POST Q3: c == min(a, b)
+  {
+    var a := 0;
+    var b := 10;
     var c := minMethod(a, b);
     expect c == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[1] [0];
-    var m := minArray(a);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[2] [0, 39];
-    var m := minArray(a);
-    expect m == 0;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[3] [7718, 7719, 7720];
-    var m := minArray(a);
-    expect m == 7718;
-  }
-
-  // Test case for combination {1}/Om>0:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[4] [40, 39, 39, 39];
-    var m := minArray(a);
-    expect m == 39;
-  }
-
-  // Test case for combination {1}/Om<0:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[8] [38, -1, -1, -1, -1, -1, -1, -1];
-    var m := minArray(a);
-    expect m == -1;
-  }
-
-  // Test case for combination {1}/Om=0:
-  //   PRE:  a != null && a.Length > 0
-  //   POST: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   POST: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  //   ENSURES: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
-  //   ENSURES: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
-  {
-    var a := new int[7] [39, 7720, 0, 0, 0, 0, 0];
-    var m := minArray(a);
-    expect m == 0;
   }
 
 }
 
-method Failing()
+method TestsForminArray()
 {
-  // Test case for combination {3}/Oc>0:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: !(c == b)
-  //   POST: a < b
-  //   POST: c == b
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
+  // Test case for combination {1}/Rel:
+  //   PRE:  a != null && a.Length > 0
+  //   POST Q1: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
+  //   POST Q2: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
-    var a := 1;
-    var b := 2;
-    var c := minMethod(a, b);
-    // expect c == 1;
+    var a := new int[2] [-10, -9];
+    var m := minArray(a);
+    expect m == -10;
   }
 
-  // Test case for combination {3}/Oc<0:
-  //   POST: c <= a
-  //   POST: c <= b
-  //   POST: c == b
-  //   POST: !(c == b)
-  //   POST: a < b
-  //   POST: c == b
-  //   ENSURES: c <= a && c <= b
-  //   ENSURES: c == a || c == b
-  //   ENSURES: c == min(a, b)
+  // Test case for combination {1}/O|a|=1:
+  //   PRE:  a != null && a.Length > 0
+  //   POST Q1: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
+  //   POST Q2: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
   {
-    var a := -1;
-    var b := 0;
-    var c := minMethod(a, b);
-    // expect c == -1;
+    var a := new int[1] [-10];
+    var m := minArray(a);
+    expect m == -10;
+  }
+
+  // Test case for combination {1}/Om=0:
+  //   PRE:  a != null && a.Length > 0
+  //   POST Q1: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
+  //   POST Q2: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
+  {
+    var a := new int[4] [6, 9, 4, 0];
+    var m := minArray(a);
+    expect m == 0;
+  }
+
+  // Test case for combination {1}/Om>0:
+  //   PRE:  a != null && a.Length > 0
+  //   POST Q1: forall k: int {:trigger a[k]} | 0 <= k < a.Length :: m <= a[k]
+  //   POST Q2: exists k: int {:trigger a[k]} | 0 <= k < a.Length :: m == a[k]
+  {
+    var a := new int[1] [10];
+    var m := minArray(a);
+    expect m == 10;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForminMethod();
+  print "TestsForminMethod: all non-failing tests passed!\n";
+  TestsForminArray();
+  print "TestsForminArray: all non-failing tests passed!\n";
 }

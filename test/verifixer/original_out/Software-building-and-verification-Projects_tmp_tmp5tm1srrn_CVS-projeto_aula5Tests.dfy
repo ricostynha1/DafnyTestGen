@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula5.dfy
 // Method: contains
-// Generated: 2026-04-08 19:18:25
+// Generated: 2026-04-22 21:37:54
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula5.dfy
 
@@ -448,1144 +448,985 @@ class GrowingSet {
 }
 
 
-method Passing()
+method TestsForcontains()
 {
-  // Test case for combination {2}:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !b
-  //   POST: !(v in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [2];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 15;
-    var b := obj.contains(v);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    var b := obj.contains(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    var b := obj.contains(v);
-    expect b == true;
-  }
-
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [25];
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 0;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=0:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [18];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [24];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [24];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
   // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !b
-  //   POST: !(v in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
   {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [2];
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[2] [3, 3];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == false || b == true;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[1] [-10];
+    obj.store := tmp_store;
+    obj.nelems := 0;
+    obj.Repr := {obj, obj.store};
+    var v := -10;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 2;
+    var obj := new Set(n);
+    var tmp_store := new int[1] [-2];
     obj.store := tmp_store;
     obj.nelems := 1;
     obj.Repr := {obj, obj.store};
-    var v := 15;
+    var v := -1;
     var b := obj.contains(v);
-    expect b == false;
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=1:
+  // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [0];
+    var tmp_store := new int[2] [5, 5];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 0;
+    var v := -1;
     var b := obj.contains(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    var b := obj.contains(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [25];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=0:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [18];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [24];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems=0,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   PRE:  size() < maxSize()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [24];
-    obj.store := tmp_store;
-    obj.nelems := 0;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.deposit(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.withdraw(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  PositiveChecking()
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.save(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=0,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 0;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=0:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 0;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.rescue(amount);
-    expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bamount=1,cbalance=1,sbalance=1:
-  //   PRE:  amount > 0
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var obj := new SavingsAccount();
-    obj.cbalance := 1;
-    obj.sbalance := 1;
-    obj.Repr := {obj};
-    var amount := 1;
-    obj.rescue(amount);
-    expect obj.RepInv();
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
   // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !b
-  //   POST: !(v in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
   {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [2];
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[2] [3, 3];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 15;
+    var v := -1;
     var b := obj.contains(v);
-    expect b == false;
+    expect b == false || b == true;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=1:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [0];
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[1] [-10];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var v := 0;
+    var v := -10;
     var b := obj.contains(v);
-    expect b == true;
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bv=0,nelems==store_len,n=0,elems=2:
+  // Test case for combination {1}/Bnelems=1:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
   {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [0];
+    var n := 2;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[1] [-2];
     obj.store := tmp_store;
     obj.nelems := 1;
     obj.Repr := {obj, obj.store};
-    var v := 0;
+    var v := -1;
     var b := obj.contains(v);
-    expect b == true;
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {1}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 5];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {2}:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [3, 3];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == false || b == true;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-10];
+    obj.store := tmp_store;
+    obj.nelems := 0;
+    obj.Repr := {obj, obj.store};
+    var v := -10;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: !b
+  //   POST Q3: v !in elems
+  //   POST Q4: 0 <= nelems
+  //   POST Q5: nelems <= store.Length
+  //   POST Q6: forall i: int {:trigger store[i]} :: 0 <= i && i < nelems ==> store[i] in elems
+  //   POST Q7: forall x: int {:trigger x in elems} :: x in elems ==> exists i: int {:trigger store[i]} :: 0 <= i && i < nelems && store[i] == x
+  //   POST Q8: b
+  //   POST Q9: v in elems
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var v := -1;
+    var b := obj.contains(v);
+    expect b == true || b == false;
+    expect b == false; // observed from implementation
   }
 
 }
 
-method Failing()
+method TestsForadd()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[3] [-2, -1, -8];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [-2, -1, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 1;
+    var obj := new Set(n);
+    var tmp_store := new int[3] [2, 4, 10];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Bn=2:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 2;
+    var obj := new Set(n);
+    var tmp_store := new int[3] [2, 4, 10];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new Set(n);
+    var tmp_store := new int[3] [-2, -2, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+    expect tmp_store[..] == [-2, -2, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[3] [-2, -1, -8];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+    expect tmp_store[..] == [-2, -1, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 1;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[3] [2, 4, 10];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Bn=2:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 2;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[3] [2, 4, 10];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   PRE:  RepInv()
+  //   PRE:  size() < maxSize()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[3] [-2, -2, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Rel:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 3];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 1;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [-2, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 2;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 10;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [5, 2];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := 0;
+    obj.add(v);
+  }
+
+  // Test case for combination {1}/Ov<0:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[2] [-1, -1];
+    obj.store := tmp_store;
+    obj.nelems := 2;
+    obj.Repr := {obj, obj.store};
+    var v := -10;
+    obj.add(v);
+  }
+
+}
+
+method TestsForfind()
 {
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [2];
+    var tmp_store := new int[2] [2, 2];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 5;
-    var b := obj.contains(v);
-    // expect b == true;
+    var x := -1;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
   // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [0];
+    var tmp_store := new int[2] [4, 4];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: x !in elems
-  //   POST: x in elems
-  //   POST: !(r >= 0)
-  //   POST: !(x in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new Set(n);
-    var tmp_store := new int[1] [2];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 16;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect x !in obj.elems;
-    // expect x in obj.elems;
-    // expect !(r >= 0);
-    // expect !(x in obj.elems);
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [4];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := -2;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or=0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 1;
-    var obj := new Set(n);
-    var tmp_store := new int[1] [16];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect r == 0;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new Set(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [2];
+    var tmp_store := new int[2] [2, 2];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 5;
-    var b := obj.contains(v);
-    // expect b == true;
+    var x := -1;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
   // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [0];
+    var tmp_store := new int[2] [4, 4];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: x !in elems
-  //   POST: x in elems
-  //   POST: !(r >= 0)
-  //   POST: !(x in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [2];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 16;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect x !in obj.elems;
-    // expect x in obj.elems;
-    // expect !(r >= 0);
-    // expect !(x in obj.elems);
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [4];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := -2;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or=0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 1;
-    var obj := new PositiveSet(n);
-    var tmp_store := new int[1] [16];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect r == 0;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new PositiveSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
   // Test case for combination {1}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: b
-  //   POST: v in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: b <==> v in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [2];
+    var tmp_store := new int[2] [2, 2];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var v := 5;
-    var b := obj.contains(v);
-    // expect b == true;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [2];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    // expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_pre_len,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [4];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    // expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_pre_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [1];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    // expect obj.RepInv();
-  }
-
-  // Test case for combination {1}/Bv=0,nelems==store_pre_len,n=0,elems=3:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   ENSURES: RepInv()
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [5];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var v := 0;
-    obj.add(v);
-    // expect obj.RepInv();
+    var x := -1;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
   // Test case for combination {2}:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [0];
+    var tmp_store := new int[2] [4, 4];
     obj.store := tmp_store;
-    obj.nelems := 1;
+    obj.nelems := 2;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {1}/Bnelems=0:
   //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: x !in elems
-  //   POST: x in elems
-  //   POST: !(r >= 0)
-  //   POST: !(x in elems)
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
   {
-    var n := 0;
+    var n := 10;
     var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [2];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 16;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect x !in obj.elems;
-    // expect x in obj.elems;
-    // expect !(r >= 0);
-    // expect !(x in obj.elems);
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=1:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Bx=0,nelems==store_len,n=0,elems=2:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [4];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := 0;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or>0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 0;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [0];
-    obj.store := tmp_store;
-    obj.nelems := 1;
-    obj.Repr := {obj, obj.store};
-    var x := -2;
-    var r := obj.find(x);
-    // expect obj.RepInv();
-    // expect !(r < 0);
-    // expect x in obj.elems;
-    // expect r >= 0;
-    // expect x in obj.elems;
-  }
-
-  // Test case for combination {2}/Or=0:
-  //   PRE:  RepInv()
-  //   POST: RepInv()
-  //   POST: !(r < 0)
-  //   POST: x in elems
-  //   POST: r >= 0
-  //   POST: x in elems
-  //   ENSURES: RepInv()
-  //   ENSURES: r < 0 ==> x !in elems
-  //   ENSURES: r >= 0 ==> x in elems
-  {
-    var n := 1;
-    var obj := new GrowingSet(n);
-    var tmp_store := new int[1] [16];
+    var tmp_store := new int[1] [6];
     obj.store := tmp_store;
     obj.nelems := 0;
     obj.Repr := {obj, obj.store};
-    var x := 4;
+    var x := -1;
     var r := obj.find(x);
-    // expect r == 0;
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bnelems=1:
+  //   PRE:  RepInv()
+  //   PRE:  0 < n
+  //   POST Q1: RepInv()
+  //   POST Q2: r < 0 ==> x !in elems
+  //   POST Q3: r >= 0 ==> x in elems
+  {
+    var n := 2;
+    var obj := new GrowingSet(n);
+    var tmp_store := new int[1] [-2];
+    obj.store := tmp_store;
+    obj.nelems := 1;
+    obj.Repr := {obj, obj.store};
+    var x := 2;
+    var r := obj.find(x);
+    expect r < 0 ==> x !in obj.elems;
+    expect r >= 0 ==> x in obj.elems;
+    expect r == -1; // observed from implementation
+  }
+
+}
+
+method TestsFordeposit()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.deposit(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.deposit(amount);
+  }
+
+}
+
+method TestsForwithdraw()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.withdraw(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.withdraw(amount);
+  }
+
+}
+
+method TestsForsave()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.save(amount);
+  }
+
+  // Test case for combination {1}/Osbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  PositiveChecking()
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 10;
+    obj.sbalance := 0;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.save(amount);
+  }
+
+}
+
+method TestsForrescue()
+{
+  // Test case for combination {1}:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Bamount=1:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 1;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Bamount=2:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := -10;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 2;
+    obj.rescue(amount);
+  }
+
+  // Test case for combination {1}/Ocbalance=0:
+  //   PRE:  amount > 0
+  //   PRE:  RepInv()
+  //   POST Q1: RepInv()
+  {
+    var obj := new SavingsAccount();
+    obj.cbalance := 0;
+    obj.sbalance := -10;
+    obj.Repr := {obj};
+    var amount := 10;
+    obj.rescue(amount);
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForcontains();
+  print "TestsForcontains: all non-failing tests passed!\n";
+  TestsForadd();
+  print "TestsForadd: all non-failing tests passed!\n";
+  TestsForfind();
+  print "TestsForfind: all non-failing tests passed!\n";
+  TestsFordeposit();
+  print "TestsFordeposit: all non-failing tests passed!\n";
+  TestsForwithdraw();
+  print "TestsForwithdraw: all non-failing tests passed!\n";
+  TestsForsave();
+  print "TestsForsave: all non-failing tests passed!\n";
+  TestsForrescue();
+  print "TestsForrescue: all non-failing tests passed!\n";
 }

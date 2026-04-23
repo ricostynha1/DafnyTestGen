@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38__307_AOR_Add.dfy
 // Method: main
-// Generated: 2026-04-08 16:47:13
+// Generated: 2026-04-22 21:33:01
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_50_examples_38.dfy
 
@@ -30,125 +30,47 @@ method main(n: int)
 }
 
 
-method Passing()
+method TestsFormain()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
+  //   POST Q1: i % 2 != 0 || x == 2 * y
+  {
+    var n := 10;
+    var i, x, y := main(n);
+    // actual runtime state: i=10, x=10, y=0
+    // expect i % 2 != 0 || x == 2 * y; // got false
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: i % 2 != 0 || x == 2 * y
   {
     var n := 0;
     var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
+    expect i % 2 != 0 || x == 2 * y;
+    expect i == 0; // observed from implementation
+    expect x == 0; // observed from implementation
+    expect y == 0; // observed from implementation
   }
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
+  //   POST Q1: i % 2 != 0 || x == 2 * y
   {
     var n := 1;
     var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Ox>0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 2;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Ox<0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 3;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Ox=0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 4;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Oy>0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 5;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Oy<0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 6;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {1}/Oy=0:
-  //   PRE:  n >= 0
-  //   POST: i % 2 != 0
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 7;
-    var i, x, y := main(n);
-    // expect i % 2 != 0;
-    // expect x == 2 * y;
-  }
-
-  // Test case for combination {3}/Oy=0:
-  //   PRE:  n >= 0
-  //   POST: !(i % 2 != 0)
-  //   POST: x == 2 * y
-  //   ENSURES: i % 2 != 0 || x == 2 * y
-  {
-    var n := 8;
-    var i, x, y := main(n);
-    // expect !(i % 2 != 0);
-    // expect x == 2 * y;
+    expect i % 2 != 0 || x == 2 * y;
+    expect i == 1; // observed from implementation
+    expect x == 1; // observed from implementation
+    expect y == 0; // observed from implementation
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormain();
+  print "TestsFormain: all non-failing tests passed!\n";
 }

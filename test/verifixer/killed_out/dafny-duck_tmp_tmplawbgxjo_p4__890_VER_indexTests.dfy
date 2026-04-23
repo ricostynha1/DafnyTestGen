@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-duck_tmp_tmplawbgxjo_p4__890_VER_index.dfy
 // Method: single
-// Generated: 2026-04-08 16:48:30
+// Generated: 2026-04-22 21:34:58
 
 // dafny-duck_tmp_tmplawbgxjo_p4.dfy
 
@@ -48,65 +48,64 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForsingle()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
     var x := new int[1] [3];
-    var y := new int[1] [7];
+    var y := new int[1] [4];
     var b := single(x, y);
-    // expect b[..] == [3, 7];
+    // actual runtime state: b=[3, 0]
+    // expect b[..] == [3, 4]; // LHS=[3, 0], RHS=[3, 4]
   }
 
-  // Test case for combination {1}/Bx=1,y=2:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|x|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [9];
-    var y := new int[2] [4, 3];
+    var x := new int[2] [-10, -3];
+    var y := new int[1] [2];
     var b := single(x, y);
-    // expect b[..] == [9, 4, 3];
+    // actual runtime state: b=[-10, -3, 0]
+    // expect b[..] == [-10, -3, 2]; // LHS=[-10, -3, 0], RHS=[-10, -3, 2]
   }
 
-  // Test case for combination {1}/Bx=1,y=3:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|y|>=2:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[1] [14];
-    var y := new int[3] [5, 4, 6];
+    var x := new int[1] [-1];
+    var y := new int[2] [3, -10];
     var b := single(x, y);
-    // expect b[..] == [14, 5, 4, 6];
+    // actual runtime state: b=[-1, 0, 0]
+    // expect b[..] == [-1, 3, -10]; // LHS=[-1, 0, 0], RHS=[-1, 3, -10]
   }
 
-  // Test case for combination {1}/Bx=2,y=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R4:
   //   PRE:  x.Length > 0
   //   PRE:  y.Length > 0
-  //   POST: b[..] == x[..] + y[..]
-  //   ENSURES: b[..] == x[..] + y[..]
+  //   POST Q1: b[..] == x[..] + y[..]
   {
-    var x := new int[2] [4, 3];
-    var y := new int[1] [9];
+    var x := new int[1] [4];
+    var y := new int[1] [5];
     var b := single(x, y);
-    // expect b[..] == [4, 3, 9];
+    // actual runtime state: b=[4, 0]
+    // expect b[..] == [4, 5]; // LHS=[4, 0], RHS=[4, 5]
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsingle();
+  print "TestsForsingle: all non-failing tests passed!\n";
 }

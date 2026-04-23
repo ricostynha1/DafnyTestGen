@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\MFS_tmp_tmpmmnu354t_Testes anteriores_T2_ex5_2020_2.dfy
 // Method: leq
-// Generated: 2026-04-08 19:13:22
+// Generated: 2026-04-22 21:35:59
 
 // MFS_tmp_tmpmmnu354t_Testes anteriores_T2_ex5_2020_2.dfy
 
@@ -50,192 +50,94 @@ method testLeq()
 }
 
 
-method Passing()
+method TestsForleq()
 {
-  // Test case for combination {4}:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: a[..] == b[..a.Length]
-  //   POST: !exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  // Test case for combination {1}:
+  //   POST Q1: result
+  //   POST Q2: a.Length <= b.Length
+  //   POST Q3: a[..] == b[..a.Length]
   {
-    var a := new int[0] [];
-    var b := new int[0] [];
+    var a := new int[1] [-10];
+    var b := new int[1] [-10];
+    var result := leq(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {2}:
+  //   POST Q1: result
+  //   POST Q2: a.Length > b.Length
+  //   POST Q3: 0 <= (a.Length - 1)
+  //   POST Q4: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
+  {
+    var a := new int[2] [-10, 7];
+    var b := new int[1] [10];
+    var result := leq(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {3}:
+  //   POST Q1: result
+  //   POST Q2: a.Length > b.Length
+  //   POST Q3: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  {
+    var a := new int[4] [2, 10, -10, 12862];
+    var b := new int[3] [2, 10, -9];
     var result := leq(a, b);
     expect result == true;
   }
 
   // Test case for combination {5}:
-  //   POST: result
-  //   POST: !(a.Length <= b.Length)
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  //   POST Q1: result
+  //   POST Q2: a.Length <= b.Length
+  //   POST Q3: a[..] != b[..a.Length]
+  //   POST Q4: 0 <= (a.Length - 1)
+  //   POST Q5: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
   {
-    var a := new int[2] [7718, 11];
-    var b := new int[1] [7719];
+    var a := new int[1] [-10];
+    var b := new int[1] [5];
     var result := leq(a, b);
     expect result == true;
   }
 
   // Test case for combination {6}:
-  //   POST: result
-  //   POST: !(a.Length <= b.Length)
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  //   POST Q1: result
+  //   POST Q2: a.Length <= b.Length
+  //   POST Q3: a[..] != b[..a.Length]
+  //   POST Q4: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
   {
-    var a := new int[3] [0, 11796, 30612];
-    var b := new int[2] [0, 11797];
+    var a := new int[3] [-6, -1, 8];
+    var b := new int[3] [-6, 10, -10];
     var result := leq(a, b);
     expect result == true;
   }
 
-  // Test case for combination {11}:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  // Test case for combination {8}:
+  //   POST Q1: !result
+  //   POST Q2: a.Length > b.Length
+  //   POST Q3: !exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
   {
-    var a := new int[1] [7718];
-    var b := new int[1] [7719];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {12}:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[3] [0, 40650, 10449];
-    var b := new int[3] [0, 40651, 10450];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {13}:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: (a.Length - 1) < b.Length && a[..(a.Length - 1)] == b[..(a.Length - 1)] && a[(a.Length - 1)] < b[(a.Length - 1)]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[1] [42734];
-    var b := new int[1] [42735];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {14}:
-  //   POST: !result
-  //   POST: !(a.Length <= b.Length)
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: !exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[1] [2437];
-    var b := new int[0] [];
+    var a := new int[2] [-9, 10];
+    var b := new int[1] [-10];
     var result := leq(a, b);
     expect result == false;
   }
 
-  // Test case for combination {16}:
-  //   POST: !result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: !exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
+  // Test case for combination {9}:
+  //   POST Q1: !result
+  //   POST Q2: a.Length <= b.Length
+  //   POST Q3: a[..] != b[..a.Length]
+  //   POST Q4: !exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
   {
-    var a := new int[1] [11797];
-    var b := new int[1] [8855];
+    var a := new int[1] [10];
+    var b := new int[1] [-10];
     var result := leq(a, b);
     expect result == false;
   }
 
-  // Test case for combination {5}/Oresult=true:
-  //   POST: result
-  //   POST: !(a.Length <= b.Length)
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[2] [11796, 30612];
-    var b := new int[1] [11797];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {6}/Oresult=true:
-  //   POST: result
-  //   POST: !(a.Length <= b.Length)
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[3] [0, 8364, 0];
-    var b := new int[2] [0, 8365];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {11}/Oresult=true:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: 0 < b.Length && a[..0] == b[..0] && a[0] < b[0]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[2] [1139, 1141];
-    var b := new int[2] [1140, 1140];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {12}/Oresult=true:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: exists k :: 1 <= k < (a.Length - 1) && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[3] [0, -1, 0];
-    var b := new int[3] [0, 0, 282];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-  // Test case for combination {13}/Oresult=true:
-  //   POST: result
-  //   POST: a.Length <= b.Length
-  //   POST: !(a[..] == b[..a.Length])
-  //   POST: 0 < a.Length
-  //   POST: (a.Length - 1) < b.Length && a[..(a.Length - 1)] == b[..(a.Length - 1)] && a[(a.Length - 1)] < b[(a.Length - 1)]
-  //   ENSURES: result <==> (a.Length <= b.Length && a[..] == b[..a.Length]) || exists k: int {:trigger b[k]} {:trigger a[k]} {:trigger b[..k]} {:trigger a[..k]} :: 0 <= k < a.Length && k < b.Length && a[..k] == b[..k] && a[k] < b[k]
-  {
-    var a := new int[2] [0, 42734];
-    var b := new int[2] [0, 42735];
-    var result := leq(a, b);
-    expect result == true;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForleq();
+  print "TestsForleq: all non-failing tests passed!\n";
 }

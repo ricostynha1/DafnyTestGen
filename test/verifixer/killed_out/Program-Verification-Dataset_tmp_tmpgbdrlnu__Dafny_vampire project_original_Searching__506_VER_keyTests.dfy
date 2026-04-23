@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_vampire project_original_Searching__506_VER_key.dfy
 // Method: Find
-// Generated: 2026-04-08 16:21:44
+// Generated: 2026-04-22 21:53:06
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_vampire project_original_Searching.dfy
 
@@ -26,120 +26,70 @@ method Find(blood: array<int>, key: int) returns (index: int)
 }
 
 
-method Passing()
+method TestsForFind()
 {
-  // Test case for combination {6}:
+  // Test case for combination {2}/Rel:
   //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: 0 < blood.Length
-  //   POST: !(blood[0] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
+  //   POST Q1: 0 <= index
+  //   POST Q2: index < blood.Length
+  //   POST Q3: blood[index] == key
+  //   POST Q4: index >= 0
   {
-    var blood := new int[1] [4];
-    var key := 4;
+    var blood := new int[2] [-10, -1];
+    var key := -10;
     var index := Find(blood, key);
     expect index == 0;
   }
 
-  // Test case for combination {6}/Bblood=1,key=0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}:
   //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: 0 < blood.Length
-  //   POST: !(blood[0] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
+  //   POST Q1: 0 <= index ==> index < blood.Length && blood[index] == key
+  //   POST Q2: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
   {
-    var blood := new int[1] [0];
-    var key := 0;
+    var blood := new int[1] [-10];
+    var key := -9;
     var index := Find(blood, key);
-    expect index == 0;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.Find(BigInteger[] blood, BigInteger key) in C:\cygwin64\tmp\DafnyTestGen_lp4c2wc2cqw\runner.cs:line 5814
+    // runtime error: at _module.__default.TestCase__1() in C:\cygwin64\tmp\DafnyTestGen_lp4c2wc2cqw\runner.cs:line 5882
+    // expect 0 <= index ==> index < blood.Length && blood[index] == key;
+    // expect index < 0 ==> forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
   }
 
-  // Test case for combination {6}/Oindex=0:
+  // Test case for combination {1}/O|blood|=0:
   //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: 0 < blood.Length
-  //   POST: !(blood[0] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
+  //   POST Q1: 0 <= index ==> index < blood.Length && blood[index] == key
+  //   POST Q2: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
   {
-    var blood := new int[2] [15, 13];
-    var key := 15;
+    var blood := new int[0] [];
+    var key := -10;
     var index := Find(blood, key);
-    expect index == 0;
+    expect 0 <= index ==> index < blood.Length && blood[index] == key;
+    expect index < 0 ==> forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
+    expect index == -1; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {7}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|blood|>=2:
   //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: exists k :: 1 <= k < (blood.Length - 1) && !(blood[k] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
+  //   POST Q1: 0 <= index ==> index < blood.Length && blood[index] == key
+  //   POST Q2: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
   {
-    var blood := new int[3] [17, 10, 24];
-    var key := 10;
+    var blood := new int[2] [-5, -1];
+    var key := -6;
     var index := Find(blood, key);
-    // expect index == 1;
-  }
-
-  // Test case for combination {7}/Oindex>0:
-  //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: exists k :: 1 <= k < (blood.Length - 1) && !(blood[k] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
-  {
-    var blood := new int[4] [19, 18, 18, 16];
-    var key := 18;
-    var index := Find(blood, key);
-    // expect 0 <= index;
-    // expect index < blood.Length;
-    // expect blood[index] == key;
-    // expect !(index < 0);
-    // expect exists k :: 1 <= k < (blood.Length - 1) && !(blood[k] != key);
-  }
-
-  // Test case for combination {8}/Oindex>0:
-  //   PRE:  blood != null
-  //   POST: 0 <= index
-  //   POST: index < blood.Length
-  //   POST: blood[index] == key
-  //   POST: !(index < 0)
-  //   POST: 0 < blood.Length
-  //   POST: !(blood[(blood.Length - 1)] != key)
-  //   ENSURES: 0 <= index ==> index < blood.Length && blood[index] == key
-  //   ENSURES: index < 0 ==> forall k: int {:trigger blood[k]} :: 0 <= k < blood.Length ==> blood[k] != key
-  {
-    var blood := new int[2] [18, 10];
-    var key := 10;
-    var index := Find(blood, key);
-    // expect index == 1;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.Find(BigInteger[] blood, BigInteger key) in C:\cygwin64\tmp\DafnyTestGen_lp4c2wc2cqw\runner.cs:line 5814
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_lp4c2wc2cqw\runner.cs:line 5962
+    // expect 0 <= index ==> index < blood.Length && blood[index] == key;
+    // expect index < 0 ==> forall k: int :: 0 <= k < blood.Length ==> blood[k] != key;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFind();
+  print "TestsForFind: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny-Exercises_tmp_tmpjm75muf__Session4Exercises_ExercisefirstZero__156-295_SWS.dfy
 // Method: mfirstCero
-// Generated: 2026-04-08 16:50:50
+// Generated: 2026-04-22 21:38:03
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session4Exercises_ExercisefirstZero.dfy
 
@@ -22,72 +22,56 @@ method mfirstCero(v: array<int>) returns (i: int)
 }
 
 
-method Passing()
+method TestsFormfirstCero()
 {
-  // Test case for combination {3}:
-  //   POST: 0 <= i <= v.Length
-  //   POST: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   POST: i != v.Length
-  //   POST: v[i] == 0
-  //   ENSURES: 0 <= i <= v.Length
-  //   ENSURES: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   ENSURES: i != v.Length ==> v[i] == 0
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   POST Q1: 0 <= i
+  //   POST Q2: i == v.Length
+  //   POST Q3: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
+  {
+    var v := new int[1] [-10];
+    var i := mfirstCero(v);
+    // expect i == 1; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Rel:
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
+  //   POST Q4: v[i] == 0
+  {
+    var v := new int[8] [-1, 4, -10, 0, 0, 0, 0, 0];
+    var i := mfirstCero(v);
+    // expect i == 3; // got 0
+  }
+
+  // Test case for combination {1}/Bi=0:
+  //   POST Q1: 0 <= i
+  //   POST Q2: i == v.Length
+  //   POST Q3: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
+  {
+    var v := new int[0] [];
+    var i := mfirstCero(v);
+    expect i == 0;
+  }
+
+  // Test case for combination {2}/Bi=0:
+  //   POST Q1: 0 <= i
+  //   POST Q2: i < v.Length
+  //   POST Q3: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
+  //   POST Q4: v[i] == 0
   {
     var v := new int[1] [0];
     var i := mfirstCero(v);
     expect i == 0;
   }
 
-  // Test case for combination {3}/Bv=2:
-  //   POST: 0 <= i <= v.Length
-  //   POST: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   POST: i != v.Length
-  //   POST: v[i] == 0
-  //   ENSURES: 0 <= i <= v.Length
-  //   ENSURES: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   ENSURES: i != v.Length ==> v[i] == 0
-  {
-    var v := new int[2] [0, 15];
-    var i := mfirstCero(v);
-    expect i == 0;
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {3}/Bv=3:
-  //   POST: 0 <= i <= v.Length
-  //   POST: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   POST: i != v.Length
-  //   POST: v[i] == 0
-  //   ENSURES: 0 <= i <= v.Length
-  //   ENSURES: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   ENSURES: i != v.Length ==> v[i] == 0
-  {
-    var v := new int[3] [14, 0, 15];
-    var i := mfirstCero(v);
-    // expect i == 1;
-  }
-
-  // Test case for combination {3}/Oi>0:
-  //   POST: 0 <= i <= v.Length
-  //   POST: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   POST: i != v.Length
-  //   POST: v[i] == 0
-  //   ENSURES: 0 <= i <= v.Length
-  //   ENSURES: forall j: int {:trigger v[j]} :: 0 <= j < i ==> v[j] != 0
-  //   ENSURES: i != v.Length ==> v[i] == 0
-  {
-    var v := new int[2] [10, 0];
-    var i := mfirstCero(v);
-    // expect i == 1;
-  }
-
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormfirstCero();
+  print "TestsFormfirstCero: all non-failing tests passed!\n";
 }

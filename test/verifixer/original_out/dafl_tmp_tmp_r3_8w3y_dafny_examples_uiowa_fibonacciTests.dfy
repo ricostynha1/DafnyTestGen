@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 // Method: ComputeFib
-// Generated: 2026-04-08 19:04:39
+// Generated: 2026-04-22 21:27:14
 
 // dafl_tmp_tmp_r3_8w3y_dafny_examples_uiowa_fibonacci.dfy
 
@@ -42,11 +42,10 @@ method ComputeFib(n: nat) returns (f: nat)
 }
 
 
-method Passing()
+method TestsForComputeFib()
 {
   // Test case for combination {1}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  //   POST Q1: f == fib(n)
   {
     var n := 0;
     var f := ComputeFib(n);
@@ -54,41 +53,33 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  //   POST Q1: f == fib(n)
   {
     var n := 1;
     var f := ComputeFib(n);
     expect f == 1;
   }
 
-  // Test case for combination {2}/Of=1:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
+  // Test case for combination {3}:
+  //   POST Q1: f == fib(n)
+  {
+    var n := 10;
+    var f := ComputeFib(n);
+    expect f == 55;
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   POST Q1: f == fib(n)
   {
     var n := 2;
     var f := ComputeFib(n);
     expect f == 1;
   }
 
-  // Test case for combination {2}/Of=0:
-  //   POST: f == fib(n)
-  //   ENSURES: f == fib(n)
-  {
-    var n := 3;
-    var f := ComputeFib(n);
-    expect f == 2;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForComputeFib();
+  print "TestsForComputeFib: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Sort Array_sort_array__1867_ROR_Eq.dfy
 // Method: sortArray
-// Generated: 2026-04-08 16:18:49
+// Generated: 2026-04-22 21:49:36
 
 // HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Sort Array_sort_array.dfy
 
@@ -64,14 +64,25 @@ predicate pivot(arr: array<int>, pivot: int)
 }
 
 
-method Passing()
+method TestsForsortArray()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= arr.Length < 10000
-  //   POST: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
-  //   ENSURES: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   ENSURES: multiset(arr[..]) == multiset(arr_sorted[..])
+  //   POST Q1: sorted(arr_sorted, 0, arr_sorted.Length)
+  //   POST Q2: multiset(arr[..]) == multiset(arr_sorted[..])
+  {
+    var arr := new int[2] [10, 6];
+    var arr_sorted := sortArray(arr);
+    expect sorted(arr_sorted, 0, arr_sorted.Length);
+    expect multiset(arr[..]) == multiset(arr_sorted[..]);
+    expect arr_sorted[..] == [6, 10]; // observed from implementation
+    expect arr[..] == [6, 10]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|arr|=0:
+  //   PRE:  0 <= arr.Length < 10000
+  //   POST Q1: sorted(arr_sorted, 0, arr_sorted.Length)
+  //   POST Q2: multiset(arr[..]) == multiset(arr_sorted[..])
   {
     var arr := new int[0] [];
     var arr_sorted := sortArray(arr);
@@ -79,57 +90,22 @@ method Passing()
     expect arr[..] == [];
   }
 
-  // Test case for combination {1}/Barr=1:
+  // Test case for combination {1}/O|arr|=1:
   //   PRE:  0 <= arr.Length < 10000
-  //   POST: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
-  //   ENSURES: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   ENSURES: multiset(arr[..]) == multiset(arr_sorted[..])
+  //   POST Q1: sorted(arr_sorted, 0, arr_sorted.Length)
+  //   POST Q2: multiset(arr[..]) == multiset(arr_sorted[..])
   {
-    var arr := new int[1] [9];
+    var arr := new int[1] [2];
     var arr_sorted := sortArray(arr);
-    expect arr_sorted[..] == [9];
     expect sorted(arr_sorted, 0, arr_sorted.Length);
     expect multiset(arr[..]) == multiset(arr_sorted[..]);
+    expect arr_sorted[..] == [2]; // observed from implementation
   }
 
-  // Test case for combination {1}/Barr=2:
-  //   PRE:  0 <= arr.Length < 10000
-  //   POST: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
-  //   ENSURES: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   ENSURES: multiset(arr[..]) == multiset(arr_sorted[..])
-  {
-    var arr := new int[2] [9, 8];
-    var arr_sorted := sortArray(arr);
-    expect arr_sorted[..] == [8, 9];
-    expect sorted(arr_sorted, 0, arr_sorted.Length);
-    expect multiset(arr[..]) == multiset(arr_sorted[..]);
-  }
-
-  // Test case for combination {1}/Barr=3:
-  //   PRE:  0 <= arr.Length < 10000
-  //   POST: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   POST: multiset(arr[..]) == multiset(arr_sorted[..])
-  //   ENSURES: sorted(arr_sorted, 0, arr_sorted.Length)
-  //   ENSURES: multiset(arr[..]) == multiset(arr_sorted[..])
-  {
-    var arr := new int[3] [9, 8, 10];
-    var arr_sorted := sortArray(arr);
-    expect arr_sorted[..] == [8, 9, 10];
-    expect sorted(arr_sorted, 0, arr_sorted.Length);
-    expect multiset(arr[..]) == multiset(arr_sorted[..]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsortArray();
+  print "TestsForsortArray: all non-failing tests passed!\n";
 }

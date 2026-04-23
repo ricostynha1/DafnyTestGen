@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Selection_Sort_Standard.dfy
 // Method: selectionSorted
-// Generated: 2026-04-08 19:12:07
+// Generated: 2026-04-22 21:34:23
 
 // Final-Project-Dafny_tmp_tmpmcywuqox_Attempts_Selection_Sort_Standard.dfy
 
@@ -37,55 +37,45 @@ method selectionSorted(Array: array<int>)
 }
 
 
-method Passing()
+method TestsForselectionSorted()
 {
   // Test case for combination {1}:
-  //   POST: multiset(old(Array[..])) == multiset(Array[..])
-  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
+  //   POST Q1: multiset(old(Array[..])) == multiset(Array[..])
+  {
+    var Array := new int[1] [9];
+    selectionSorted(Array);
+    expect Array[..] == [9];
+  }
+
+  // Test case for combination {1}/O|Array|=0:
+  //   POST Q1: multiset(old(Array[..])) == multiset(Array[..])
   {
     var Array := new int[0] [];
     selectionSorted(Array);
     expect Array[..] == [];
   }
 
-  // Test case for combination {1}/BArray=1:
-  //   POST: multiset(old(Array[..])) == multiset(Array[..])
-  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
+  // Test case for combination {1}/O|Array|>=2:
+  //   POST Q1: multiset(old(Array[..])) == multiset(Array[..])
   {
-    var Array := new int[1] [2];
+    var Array := new int[2] [3, 3];
     selectionSorted(Array);
-    expect Array[..] == [2];
+    expect Array[..] == [3, 3];
   }
 
-  // Test case for combination {1}/BArray=2:
-  //   POST: multiset(old(Array[..])) == multiset(Array[..])
-  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
+  // Test case for combination {1}/OArray≠old:
+  //   POST Q1: multiset(old(Array[..])) == multiset(Array[..])
   {
-    var Array := new int[2] [4, 3];
-    var old_Array := Array[..];
+    var Array := new int[2] [-9, -10];
     selectionSorted(Array);
-    expect multiset(old_Array) == multiset(Array[..]);
+    expect Array[..] == [-10, -9] || Array[..] == [-9, -10];
+    expect Array[..] == [-10, -9]; // observed from implementation
   }
 
-  // Test case for combination {1}/BArray=3:
-  //   POST: multiset(old(Array[..])) == multiset(Array[..])
-  //   ENSURES: multiset(old(Array[..])) == multiset(Array[..])
-  {
-    var Array := new int[3] [12, 4, 5];
-    var old_Array := Array[..];
-    selectionSorted(Array);
-    expect multiset(old_Array) == multiset(Array[..]);
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForselectionSorted();
+  print "TestsForselectionSorted: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-duck_tmp_tmplawbgxjo_p6.dfy
 // Method: FilterVowelsArray
-// Generated: 2026-04-08 19:07:02
+// Generated: 2026-04-22 21:29:55
 
 // dafny-duck_tmp_tmplawbgxjo_p6.dfy
 
@@ -59,53 +59,47 @@ method FilterVowelsArray(xs: array<char>) returns (ys: array<char>)
 }
 
 
-method Passing()
+method TestsForFilterVowelsArray()
 {
-  // Test case for combination {1}:
-  //   POST: FilterVowels(xs[..]) == ys[..]
-  //   ENSURES: FilterVowels(xs[..]) == ys[..]
+  // Test case for combination {1}/Rel:
+  //   POST Q2: FilterVowels(xs[..]) == ys[..]
   {
     var xs := new char[0] [];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
   }
 
-  // Test case for combination {1}/Bxs=1:
-  //   POST: FilterVowels(xs[..]) == ys[..]
-  //   ENSURES: FilterVowels(xs[..]) == ys[..]
+  // Test case for combination {2}:
+  //   POST Q2: FilterVowels(xs[..]) == ys[..]
   {
-    var xs := new char[1] [' '];
+    var xs := new char[1] ['~'];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
+    expect xs[..] == ~; // observed from implementation
   }
 
-  // Test case for combination {1}/Bxs=2:
-  //   POST: FilterVowels(xs[..]) == ys[..]
-  //   ENSURES: FilterVowels(xs[..]) == ys[..]
+  // Test case for combination {2}/O|xs|>=2:
+  //   POST Q2: FilterVowels(xs[..]) == ys[..]
   {
-    var xs := new char[2] [' ', '!'];
+    var xs := new char[2] ['~', 'H'];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
+    expect xs[..] == ~H; // observed from implementation
   }
 
-  // Test case for combination {1}/Bxs=3:
-  //   POST: FilterVowels(xs[..]) == ys[..]
-  //   ENSURES: FilterVowels(xs[..]) == ys[..]
+  // Test case for combination {2}/R3:
+  //   POST Q2: FilterVowels(xs[..]) == ys[..]
   {
-    var xs := new char[3] [' ', '"', '!'];
+    var xs := new char[1] ['}'];
     var ys := FilterVowelsArray(xs);
     expect FilterVowels(xs[..]) == ys[..];
+    expect xs[..] == }; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFilterVowelsArray();
+  print "TestsForFilterVowelsArray: all non-failing tests passed!\n";
 }

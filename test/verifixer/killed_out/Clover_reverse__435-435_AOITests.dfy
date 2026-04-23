@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Clover_reverse__435-435_AOI.dfy
 // Method: reverse
-// Generated: 2026-04-08 16:42:56
+// Generated: 2026-04-22 21:28:17
 
 // Clover_reverse.dfy
 
@@ -23,53 +23,44 @@ method reverse(a: array<int>)
 }
 
 
-method Passing()
+method TestsForreverse()
 {
   // Test case for combination {1}:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  {
+    var a := new int[1] [-10];
+    reverse(a);
+    expect a[..] == [-10];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
     var a := new int[0] [];
     reverse(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[1] [2];
+    var a := new int[2] [-9, -10];
     reverse(a);
-    expect a[..] == [2];
+    expect a[..] == [-10, -9];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
+  // Test case for combination {1}/R4:
+  //   POST Q1: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [-8];
     reverse(a);
-    expect a[..] == [3, 4];
+    expect a[..] == [-8];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  //   ENSURES: forall i: int {:trigger a[i]} :: 0 <= i < a.Length ==> a[i] == old(a[a.Length - 1 - i])
-  {
-    var a := new int[3] [6, 5, 4];
-    reverse(a);
-    expect a[..] == [4, 5, 6];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForreverse();
+  print "TestsForreverse: all non-failing tests passed!\n";
 }

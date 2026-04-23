@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Classify.dfy
 // Method: Classify
-// Generated: 2026-04-21 23:35:19
+// Generated: 2026-04-22 21:25:44
 
 // Classifies a number within a bounded range.
 method Classify(x: int) returns (r: int)
@@ -22,50 +22,42 @@ method Classify(x: int) returns (r: int)
 
 method TestsForClassify()
 {
-  // Test case for combination {2}:
+  // Test case for combination {1}:
   //   PRE:  -100 <= x <= 100
-  //   POST Q1: x >= 0
-  //   POST Q2: x != 0
-  //   POST Q3: x > 0
-  //   POST Q4: r == 1
+  //   POST Q1: x > 0
+  //   POST Q2: r == 1
   {
     var x := 10;
     var r := Classify(x);
     expect r == 1;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {2}:
   //   PRE:  -100 <= x <= 100
-  //   POST Q1: x >= 0
-  //   POST Q2: x == 0
-  //   POST Q3: r == 0
-  //   POST Q4: x <= 0
+  //   POST Q1: x == 0
+  //   POST Q2: r == 0
   {
     var x := 0;
     var r := Classify(x);
     expect r == 0;
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {3}:
   //   PRE:  -100 <= x <= 100
   //   POST Q1: x < 0
   //   POST Q2: r == -1
-  //   POST Q3: x != 0
-  //   POST Q4: x <= 0
   {
     var x := -10;
     var r := Classify(x);
     expect r == -1;
   }
 
-  // Test case for combination {2}/R2:
+  // Test case for combination {1}/Bx=1:
   //   PRE:  -100 <= x <= 100
-  //   POST Q1: x >= 0
-  //   POST Q2: x != 0
-  //   POST Q3: x > 0
-  //   POST Q4: r == 1
+  //   POST Q1: x > 0
+  //   POST Q2: r == 1
   {
-    var x := 9;
+    var x := 1;
     var r := Classify(x);
     expect r == 1;
   }

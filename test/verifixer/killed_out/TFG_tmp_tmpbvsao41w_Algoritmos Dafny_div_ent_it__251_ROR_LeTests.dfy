@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\TFG_tmp_tmpbvsao41w_Algoritmos Dafny_div_ent_it__251_ROR_Le.dfy
 // Method: div_ent_it
-// Generated: 2026-04-06 00:00:18
+// Generated: 2026-04-22 21:59:03
 
 // TFG_tmp_tmpbvsao41w_Algoritmos Dafny_div_ent_it.dfy
 
@@ -29,69 +29,71 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsFordiv_ent_it()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  a >= 0 && b > 0
-  //   POST: a == b * c + r
-  //   POST: 0 <= r < b
+  //   POST Q1: a == b * c + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
   {
-    var a := 0;
-    var b := 8;
-    // expect a >= 0 && b > 0; // PRE-CHECK
-    var c, r := div_ent_it(a, b);
-    // expect c == 0;
-    // expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=0,b=1:
-  //   PRE:  a >= 0 && b > 0
-  //   POST: a == b * c + r
-  //   POST: 0 <= r < b
-  {
-    var a := 0;
-    var b := 1;
-    // expect a >= 0 && b > 0; // PRE-CHECK
-    var c, r := div_ent_it(a, b);
-    // expect c == 0;
-    // expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=0,b=2:
-  //   PRE:  a >= 0 && b > 0
-  //   POST: a == b * c + r
-  //   POST: 0 <= r < b
-  {
-    var a := 0;
-    var b := 2;
-    // expect a >= 0 && b > 0; // PRE-CHECK
-    var c, r := div_ent_it(a, b);
-    // expect c == 0;
-    // expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=1,b=1:
-  //   PRE:  a >= 0 && b > 0
-  //   POST: a == b * c + r
-  //   POST: 0 <= r < b
-  {
-    var a := 1;
-    var b := 1;
-    // expect a >= 0 && b > 0; // PRE-CHECK
+    var a := 10;
+    var b := 10;
     var c, r := div_ent_it(a, b);
     // expect c == 1;
     // expect r == 0;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bb=1:
+  //   PRE:  a >= 0 && b > 0
+  //   POST Q1: a == b * c + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
+  {
+    var a := 10;
+    var b := 1;
+    var c, r := div_ent_it(a, b);
+    // actual runtime state: c=0, r=10
+    // expect c == 10; // LHS=0, RHS=10
+    // expect r == 0; // LHS=10, RHS=0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  a >= 0 && b > 0
+  //   POST Q1: a == b * c + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
+  {
+    var a := 10;
+    var b := 2;
+    var c, r := div_ent_it(a, b);
+    // actual runtime state: c=0, r=10
+    // expect c == 5; // LHS=0, RHS=5
+    // expect r == 0; // LHS=10, RHS=0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Br=1:
+  //   PRE:  a >= 0 && b > 0
+  //   POST Q1: a == b * c + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
+  {
+    var a := 10;
+    var b := 9;
+    var c, r := div_ent_it(a, b);
+    // actual runtime state: c=0, r=10
+    // expect c == 1; // LHS=0, RHS=1
+    // expect r == 1; // LHS=10, RHS=1
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFordiv_ent_it();
+  print "TestsFordiv_ent_it: all non-failing tests passed!\n";
 }

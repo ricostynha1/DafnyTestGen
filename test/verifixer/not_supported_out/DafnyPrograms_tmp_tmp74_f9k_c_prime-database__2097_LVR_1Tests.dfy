@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\DafnyPrograms_tmp_tmp74_f9k_c_prime-database__2097_LVR_1.dfy
 // Method: InsertPrime
-// Generated: 2026-04-08 21:54:29
+// Generated: 2026-04-22 21:32:53
 
 // DafnyPrograms_tmp_tmp74_f9k_c_prime-database.dfy
 
@@ -134,175 +134,64 @@ class {:autocontracts} PrimeMap {
 }
 
 
-method Passing()
+method TestsForInsertPrime()
 {
   // Test case for combination {1}:
   //   PRE:  Valid()
+  //   PRE:  Valid()
   //   PRE:  prime(n)
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys) + {n}
-  //   POST: database == database[n := true]
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys) + {n}
-  //   ENSURES: database == database[n := true]
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  //   POST Q5: database.Keys == old(database.Keys) + {n}
+  //   POST Q6: database == database[n := true]
   {
     var obj := new PrimeMap();
     obj.database := map[];
     obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
+    expect obj.Valid(); // PRE-CHECK
+    expect obj.Valid(); // PRE-CHECK
+    expect prime(n); // PRE-CHECK
     obj.InsertPrime(n);
     expect obj.Valid();
     expect obj.database.Keys == old_database_Keys + {n};
     expect obj.database == obj.database[n := true];
   }
 
-  // Test case for combination {1}/Bn=2,database=0:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys) + {n}
-  //   POST: prime(n)
-  //   POST: database == database[n := true]
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys) + {n}
-  //   ENSURES: prime(n) <==> database == database[n := true]
-  //   ENSURES: !prime(n) <==> database == database[n := false]
-  {
-    var obj := new PrimeMap();
-    obj.database := map[];
-    obj.Repr := {obj};
-    var n := 2;
-    var old_database_Keys := obj.database.Keys;
-    obj.InsertNumber(n);
-    expect obj.Valid();
-    expect obj.database.Keys == old_database_Keys + {n};
-    expect prime(n);
-    expect obj.database == obj.database[n := true];
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys)
-  //   POST: n in database
-  //   POST: prime(n)
-  //   POST: answer == Yes
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys)
-  //   ENSURES: n in database && prime(n) <==> answer == Yes
-  //   ENSURES: n in database && !prime(n) <==> answer == No
-  //   ENSURES: !(n in database) <==> answer == Unknown
-  {
-    var obj := new PrimeMap();
-    obj.database := map[];
-    obj.Repr := {obj};
-    var n := 8;
-    var old_database_Keys := obj.database.Keys;
-    var answer := obj.IsPrime?(n);
-    expect obj.Valid();
-    expect answer == Unknown;
-  }
-
-  // Test case for combination {1}/Bn=2,database=0:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys)
-  //   POST: n in database
-  //   POST: prime(n)
-  //   POST: answer == Yes
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys)
-  //   ENSURES: n in database && prime(n) <==> answer == Yes
-  //   ENSURES: n in database && !prime(n) <==> answer == No
-  //   ENSURES: !(n in database) <==> answer == Unknown
-  {
-    var obj := new PrimeMap();
-    obj.database := map[];
-    obj.Repr := {obj};
-    var n := 2;
-    var old_database_Keys := obj.database.Keys;
-    var answer := obj.IsPrime?(n);
-    expect obj.Valid();
-    expect answer == Unknown;
-  }
-
-  // Test case for combination {1}/Bn=2,database=1:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys)
-  //   POST: n in database
-  //   POST: prime(n)
-  //   POST: answer == Yes
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys)
-  //   ENSURES: n in database && prime(n) <==> answer == Yes
-  //   ENSURES: n in database && !prime(n) <==> answer == No
-  //   ENSURES: !(n in database) <==> answer == Unknown
-  {
-    var obj := new PrimeMap();
-    obj.database := map[4 := false];
-    obj.Repr := {obj};
-    var n := 2;
-    var old_database_Keys := obj.database.Keys;
-    var answer := obj.IsPrime?(n);
-    expect obj.Valid();
-    expect answer == Unknown;
-  }
-
 }
 
-method Failing()
+method TestsForInsertNumber()
 {
   // Test case for combination {1}:
   //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys) + {n}
-  //   POST: prime(n)
-  //   POST: database == database[n := true]
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys) + {n}
-  //   ENSURES: prime(n) <==> database == database[n := true]
-  //   ENSURES: !prime(n) <==> database == database[n := false]
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  //   POST Q5: database.Keys == old(database.Keys) + {n}
+  //   POST Q6: prime(n) <==> database == database[n := true]
+  //   POST Q7: !prime(n) <==> database == database[n := false]
   {
     var obj := new PrimeMap();
     obj.database := map[];
     obj.Repr := {obj};
-    var n := 0;
-    var old_database_Keys := obj.database.Keys;
-    obj.InsertNumber(n);
-    // expect obj.Valid();
-    // expect obj.database.Keys == old_database_Keys + {n};
-    // expect prime(n);
-    // expect obj.database == obj.database[n := true];
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   POST: database.Keys == old(database.Keys)
-  //   POST: n in database
-  //   POST: prime(n)
-  //   POST: answer == Yes
-  //   ENSURES: Valid()
-  //   ENSURES: database.Keys == old(database.Keys)
-  //   ENSURES: n in database && prime(n) <==> answer == Yes
-  //   ENSURES: n in database && !prime(n) <==> answer == No
-  //   ENSURES: !(n in database) <==> answer == Unknown
-  {
-    var obj := new PrimeMap();
-    obj.database := map[2 := false];
-    obj.Repr := {obj};
     var n := 2;
     var old_database_Keys := obj.database.Keys;
-    var answer := obj.IsPrime?(n);
-    // expect obj.Valid();
-    // expect answer == Yes;
+    expect obj.Valid(); // PRE-CHECK
+    expect obj.Valid(); // PRE-CHECK
+    obj.InsertNumber(n);
+    expect obj.Valid();
+    expect obj.database.Keys == old_database_Keys + {n};
+    expect prime(n) <==> obj.database == obj.database[n := true];
+    expect !prime(n) <==> obj.database == obj.database[n := false];
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForInsertPrime();
+  print "TestsForInsertPrime: all non-failing tests passed!\n";
+  TestsForInsertNumber();
+  print "TestsForInsertNumber: all non-failing tests passed!\n";
 }

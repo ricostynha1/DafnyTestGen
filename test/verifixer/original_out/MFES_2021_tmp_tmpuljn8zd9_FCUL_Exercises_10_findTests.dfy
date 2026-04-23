@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 // Method: find
-// Generated: 2026-04-08 19:13:12
+// Generated: 2026-04-22 21:35:49
 
 // MFES_2021_tmp_tmpuljn8zd9_FCUL_Exercises_10_find.dfy
 
@@ -22,101 +22,62 @@ method find(a: array<int>, key: int) returns (index: int)
 }
 
 
-method Passing()
+method TestsForfind()
 {
-  // Test case for combination {3}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
+  //   POST Q1: 0 <= index
+  //   POST Q2: index <= a.Length
+  //   POST Q3: index >= a.Length
   {
-    var a := new int[1] [4];
-    var key := 4;
-    var index := find(a, key);
-    expect index == 0;
-  }
-
-  // Test case for combination {3}/Ba=1,key=0:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
-  {
-    var a := new int[1] [0];
-    var key := 0;
-    var index := find(a, key);
-    expect index == 0;
-  }
-
-  // Test case for combination {3}/Ba=1,key=1:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
-  {
-    var a := new int[1] [1];
-    var key := 1;
-    var index := find(a, key);
-    expect index == 0;
-  }
-
-  // Test case for combination {3}/Ba=2,key=0:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
-  {
-    var a := new int[2] [0, 5];
-    var key := 0;
-    var index := find(a, key);
-    expect index == 0;
-  }
-
-  // Test case for combination {3}/Oindex>0:
-  //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
-  {
-    var a := new int[2] [5, 8];
-    var key := 8;
+    var a := new int[1] [2];
+    var key := -10;
     var index := find(a, key);
     expect index == 1;
   }
 
-  // Test case for combination {3}/Oindex=0:
+  // Test case for combination {2}/Rel:
   //   PRE:  a.Length > 0
-  //   POST: 0 <= index <= a.Length
-  //   POST: index < a.Length
-  //   POST: a[index] == key
-  //   ENSURES: 0 <= index <= a.Length
-  //   ENSURES: index < a.Length ==> a[index] == key
+  //   POST Q1: 0 <= index <= a.Length
+  //   POST Q2: index < a.Length ==> a[index] == key
   {
-    var a := new int[1] [3];
-    var key := 3;
+    var a := new int[2] [-8, -9];
+    var key := -9;
     var index := find(a, key);
-    expect index == 0;
+    expect 0 <= index <= a.Length;
+    expect index < a.Length ==> a[index] == key;
+    expect index == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/Bindex=0:
+  //   PRE:  a.Length > 0
+  //   POST Q1: 0 <= index
+  //   POST Q2: index < a.Length
+  //   POST Q3: a[index] == key
+  {
+    var a := new int[1] [-10];
+    var key := -10;
+    var index := find(a, key);
+    expect index == 0 || index == 1;
+    expect index == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  a.Length > 0
+  //   POST Q1: 0 <= index
+  //   POST Q2: index <= a.Length
+  //   POST Q3: index >= a.Length
+  {
+    var a := new int[2] [8, -1];
+    var key := -10;
+    var index := find(a, key);
+    expect index == 2;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForfind();
+  print "TestsForfind: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details.dfy
 // Method: plus_one
-// Generated: 2026-04-08 19:16:52
+// Generated: 2026-04-22 21:36:41
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_add_by_one_details.dfy
 
@@ -41,12 +41,20 @@ method add_by_one(x: int, y: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForplus_one()
 {
   // Test case for combination {1}:
   //   PRE:  x >= 0
-  //   POST: r == x + 1
-  //   ENSURES: r == x + 1
+  //   POST Q1: r == x + 1
+  {
+    var x := 10;
+    var r := plus_one(x);
+    expect r == 11;
+  }
+
+  // Test case for combination {1}/Bx=0:
+  //   PRE:  x >= 0
+  //   POST Q1: r == x + 1
   {
     var x := 0;
     var r := plus_one(x);
@@ -55,33 +63,26 @@ method Passing()
 
   // Test case for combination {1}/Bx=1:
   //   PRE:  x >= 0
-  //   POST: r == x + 1
-  //   ENSURES: r == x + 1
+  //   POST Q1: r == x + 1
   {
     var x := 1;
     var r := plus_one(x);
     expect r == 2;
   }
 
-  // Test case for combination {1}/Or>0:
+  // Test case for combination {1}/R4:
   //   PRE:  x >= 0
-  //   POST: r == x + 1
-  //   ENSURES: r == x + 1
+  //   POST Q1: r == x + 1
   {
-    var x := 2;
+    var x := 9;
     var r := plus_one(x);
-    expect r == 3;
+    expect r == 10;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForplus_one();
+  print "TestsForplus_one: all non-failing tests passed!\n";
 }

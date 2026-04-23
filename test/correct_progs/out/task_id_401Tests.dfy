@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_401.dfy
 // Method: DeepElementWiseAddition
-// Generated: 2026-04-21 23:40:26
+// Generated: 2026-04-22 21:32:08
 
 method DeepElementWiseAddition(a: seq<seq<int>>, b: seq<seq<int>>) returns (result: seq<seq<int>>)
   requires |a| == |b| 
@@ -141,10 +141,10 @@ method TestsForElementWiseAddition()
   //   POST Q2: |a| == |b|
   //   POST Q3: forall i: int {:trigger b[i]} {:trigger a[i]} {:trigger result[i]} :: 0 <= i && i < |a| ==> result[i] == a[i] + b[i]
   {
-    var a: seq<int> := [-1, -9];
-    var b: seq<int> := [4, 10];
+    var a: seq<int> := [3, 5];
+    var b: seq<int> := [8, -1];
     var result := ElementWiseAddition(a, b);
-    expect result == [3, 1];
+    expect result == [11, 4];
   }
 
 }

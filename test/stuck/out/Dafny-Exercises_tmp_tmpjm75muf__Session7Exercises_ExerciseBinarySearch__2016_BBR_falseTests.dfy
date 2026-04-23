@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\stuck\in\Dafny-Exercises_tmp_tmpjm75muf__Session7Exercises_ExerciseBinarySearch__2016_BBR_false.dfy
 // Method: binarySearch
-// Generated: 2026-04-22 19:33:46
+// Generated: 2026-04-22 21:31:12
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session7Exercises_ExerciseBinarySearch.dfy
 
@@ -90,7 +90,7 @@ method otherbSearch(v: array<int>, elem: int)
 }
 
 
-method Passing()
+method TestsForbinarySearch()
 {
   // Test case for combination {1}/Rel:
   //   PRE:  sorted(v[0 .. v.Length])
@@ -138,90 +138,16 @@ method Passing()
   //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
   //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
   {
-    var v := new int[2] [-7, -4];
+    var v := new int[2] [-7, -6];
     var elem := -10;
     var p := binarySearch(v, elem);
     expect p == -1;
   }
 
-  // Test case for combination {1}/Oelem=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [10];
-    var elem := 0;
-    var p := binarySearch(v, elem);
-    expect p == -1;
-  }
+}
 
-  // Test case for combination {1}/Op>0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[2] [-8, -8];
-    var elem := -8;
-    var p := binarySearch(v, elem);
-    expect p == 1;
-  }
-
-  // Test case for combination {1}/R6:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [9];
-    var elem := -9;
-    var p := binarySearch(v, elem);
-    expect p == -1;
-  }
-
-  // Test case for combination {1}/R7:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [-1];
-    var elem := -10;
-    var p := binarySearch(v, elem);
-    expect p == -1;
-  }
-
-  // Test case for combination {1}/R8:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [8];
-    var elem := 7;
-    var p := binarySearch(v, elem);
-    expect p == -1;
-  }
-
-  // Test case for combination {1}/R9:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [-1];
-    var elem := -9;
-    var p := binarySearch(v, elem);
-    expect p == -1;
-  }
-
+method TestsForsearch()
+{
   // Test case for combination {1}:
   //   PRE:  sorted(v[0 .. v.Length])
   //   POST Q1: b == (elem in v[0 .. v.Length])
@@ -246,7 +172,7 @@ method Passing()
   //   PRE:  sorted(v[0 .. v.Length])
   //   POST Q1: b == (elem in v[0 .. v.Length])
   {
-    var v := new int[2] [-6, -6];
+    var v := new int[2] [-10, -10];
     var elem := -9;
     var b := search(v, elem);
     expect b == false;
@@ -262,66 +188,10 @@ method Passing()
     expect b == false;
   }
 
-  // Test case for combination {1}/Oelem>0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [10];
-    var elem := 10;
-    var b := search(v, elem);
-    expect b == true;
-  }
+}
 
-  // Test case for combination {1}/R6:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [-10];
-    var elem := -8;
-    var b := search(v, elem);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/R7:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [10];
-    var elem := -7;
-    var b := search(v, elem);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/R8:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [9];
-    var elem := -10;
-    var b := search(v, elem);
-    expect b == false;
-  }
-
-  // Test case for combination {1}/R9:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [-9];
-    var elem := -9;
-    var b := search(v, elem);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/R10:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: b == (elem in v[0 .. v.Length])
-  {
-    var v := new int[1] [10];
-    var elem := -10;
-    var b := search(v, elem);
-    expect b == false;
-  }
-
+method TestsForbinarySearchRec()
+{
   // Test case for combination {1}/Rel:
   //   PRE:  sorted(v[0 .. v.Length])
   //   PRE:  0 <= c <= f + 1 <= v.Length
@@ -332,8 +202,8 @@ method Passing()
   //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
   //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
   {
-    var v := new int[4] [-6, -6, -6, -6];
-    var elem := -6;
+    var v := new int[4] [-4, -4, -4, -4];
+    var elem := -4;
     var c := 4;
     var f := 3;
     var p := binarySearchRec(v, elem, c, f);
@@ -350,7 +220,7 @@ method Passing()
   //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
   //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
   {
-    var v := new int[1] [-4];
+    var v := new int[1] [-5];
     var elem := -10;
     var c := 0;
     var f := -1;
@@ -368,12 +238,12 @@ method Passing()
   //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
   //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
   {
-    var v := new int[3] [-7, -7, -7];
-    var elem := -7;
+    var v := new int[3] [-10, -2, -2];
+    var elem := -10;
     var c := 1;
     var f := 2;
     var p := binarySearchRec(v, elem, c, f);
-    expect p == 2;
+    expect p == 0;
   }
 
   // Test case for combination {1}/Bc=f:
@@ -386,122 +256,18 @@ method Passing()
   //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
   //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
   {
-    var v := new int[3] [-8, 4, 5];
-    var elem := 4;
+    var v := new int[3] [-4, -4, -1];
+    var elem := -4;
     var c := 2;
     var f := 2;
     var p := binarySearchRec(v, elem, c, f);
     expect p == 1;
   }
 
-  // Test case for combination {1}/Bp=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[3] [-10, -3, -3];
-    var elem := -10;
-    var c := 1;
-    var f := 2;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == 0;
-  }
+}
 
-  // Test case for combination {1}/O|v|=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[0] [];
-    var elem := -10;
-    var c := 0;
-    var f := -1;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == -1;
-  }
-
-  // Test case for combination {1}/Oelem=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[3] [-1, -1, 3];
-    var elem := 0;
-    var c := 2;
-    var f := 2;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == 1;
-  }
-
-  // Test case for combination {1}/Of=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [-10];
-    var elem := -10;
-    var c := 1;
-    var f := 0;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == 0;
-  }
-
-  // Test case for combination {1}/R8:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[3] [-10, -8, -8];
-    var elem := -8;
-    var c := 3;
-    var f := 2;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == 2;
-  }
-
-  // Test case for combination {1}/R9:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   PRE:  0 <= c <= f + 1 <= v.Length
-  //   PRE:  forall k: int {:trigger v[k]} :: 0 <= k < c ==> v[k] <= elem
-  //   PRE:  forall k: int {:trigger v[k]} :: f < k < v.Length ==> v[k] > elem
-  //   POST Q1: -1 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: forall u: int {:trigger v[u]} :: 0 <= u <= p ==> v[u] <= elem
-  //   POST Q4: forall w: int {:trigger v[w]} :: p < w < v.Length ==> v[w] > elem
-  {
-    var v := new int[3] [-10, -10, -10];
-    var elem := -9;
-    var c := 3;
-    var f := 2;
-    var p := binarySearchRec(v, elem, c, f);
-    expect p == 2;
-  }
-
+method TestsForotherbSearch()
+{
   // Test case for combination {2}/Rel:
   //   PRE:  sorted(v[0 .. v.Length])
   //   POST Q1: 0 <= p
@@ -527,110 +293,13 @@ method Passing()
   //   POST Q5: v[p] == elem
   {
     var v := new int[2] [-10, -9];
-    var elem := -10;
+    var elem := -9;
     var b, p := otherbSearch(v, elem);
     expect b == true;
-    expect p == 0;
-  }
-
-  // Test case for combination {3}/Bp=1:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: b
-  //   POST Q5: v[p] == elem
-  {
-    var v := new int[2] [-10, -10];
-    var elem := -10;
-    var b, p := otherbSearch(v, elem);
-    expect b == true || b == true;
-    expect p == 1 || p == 0;
-    expect b == true; // observed from implementation
-    expect p == 1; // observed from implementation
-  }
-
-  // Test case for combination {2}/O|v|>=2:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p <= v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: !b
-  //   POST Q5: forall u: int {:trigger v[u]} :: 0 <= u < p ==> v[u] < elem
-  //   POST Q6: forall w: int {:trigger v[w]} :: p <= w < v.Length ==> v[w] > elem
-  {
-    var v := new int[2] [-10, -9];
-    var elem := 10;
-    var b, p := otherbSearch(v, elem);
-    expect b == false;
-    expect p == 2;
-  }
-
-  // Test case for combination {2}/Oelem=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p <= v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: !b
-  //   POST Q5: forall u: int {:trigger v[u]} :: 0 <= u < p ==> v[u] < elem
-  //   POST Q6: forall w: int {:trigger v[w]} :: p <= w < v.Length ==> v[w] > elem
-  {
-    var v := new int[1] [-10];
-    var elem := 0;
-    var b, p := otherbSearch(v, elem);
-    expect b == false;
     expect p == 1;
   }
 
-  // Test case for combination {3}/O|v|=1:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: b
-  //   POST Q5: v[p] == elem
-  {
-    var v := new int[1] [-10];
-    var elem := -10;
-    var b, p := otherbSearch(v, elem);
-    expect b == true;
-    expect p == 0;
-  }
-
-  // Test case for combination {3}/Oelem=0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: b
-  //   POST Q5: v[p] == elem
-  {
-    var v := new int[4] [-5, -4, -3, 0];
-    var elem := 0;
-    var b, p := otherbSearch(v, elem);
-    expect b == true;
-    expect p == 3;
-  }
-
-  // Test case for combination {3}/Oelem>0:
-  //   PRE:  sorted(v[0 .. v.Length])
-  //   POST Q1: 0 <= p
-  //   POST Q2: p < v.Length
-  //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: b
-  //   POST Q5: v[p] == elem
-  {
-    var v := new int[1] [10];
-    var elem := 10;
-    var b, p := otherbSearch(v, elem);
-    expect b == true;
-    expect p == 0;
-  }
-
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {2}/Bp=0:
   //   PRE:  sorted(v[0 .. v.Length])
   //   POST Q1: 0 <= p
@@ -644,35 +313,37 @@ method Failing()
     var elem := -10;
     var b, p := otherbSearch(v, elem);
     // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.otherbSearch(BigInteger[] v, BigInteger elem, Boolean& b, BigInteger& p) in C:\cygwin64\tmp\DafnyTestGen_r1kdzphfcwf\runner.cs:line 6661
-    // runtime error: at _module.__default.TestCase__32() in C:\cygwin64\tmp\DafnyTestGen_r1kdzphfcwf\runner.cs:line 7885
+    // runtime error: at _module.__default.otherbSearch(BigInteger[] v, BigInteger elem, Boolean& b, BigInteger& p) in C:\cygwin64\tmp\DafnyTestGen_zxkvocmd4ie\runner.cs:line 6189
+    // runtime error: at _module.__default.TestCase__14() in C:\cygwin64\tmp\DafnyTestGen_zxkvocmd4ie\runner.cs:line 6751
     // expect b == false;
     // expect p == 0;
   }
 
-  // Test case for combination {2}/O|v|=0:
+  // Test case for combination {3}/Bp=0:
   //   PRE:  sorted(v[0 .. v.Length])
   //   POST Q1: 0 <= p
-  //   POST Q2: p <= v.Length
+  //   POST Q2: p < v.Length
   //   POST Q3: b == (elem in v[0 .. v.Length])
-  //   POST Q4: !b
-  //   POST Q5: forall u: int {:trigger v[u]} :: 0 <= u < p ==> v[u] < elem
-  //   POST Q6: forall w: int {:trigger v[w]} :: p <= w < v.Length ==> v[w] > elem
+  //   POST Q4: b
+  //   POST Q5: v[p] == elem
   {
-    var v := new int[0] [];
+    var v := new int[1] [-10];
     var elem := -10;
     var b, p := otherbSearch(v, elem);
-    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.otherbSearch(BigInteger[] v, BigInteger elem, Boolean& b, BigInteger& p) in C:\cygwin64\tmp\DafnyTestGen_r1kdzphfcwf\runner.cs:line 6661
-    // runtime error: at _module.__default.TestCase__34() in C:\cygwin64\tmp\DafnyTestGen_r1kdzphfcwf\runner.cs:line 7965
-    // expect b == false;
-    // expect p == 0;
+    expect b == true;
+    expect p == 0;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForbinarySearch();
+  print "TestsForbinarySearch: all non-failing tests passed!\n";
+  TestsForsearch();
+  print "TestsForsearch: all non-failing tests passed!\n";
+  TestsForbinarySearchRec();
+  print "TestsForbinarySearchRec: all non-failing tests passed!\n";
+  TestsForotherbSearch();
+  print "TestsForotherbSearch: all non-failing tests passed!\n";
 }

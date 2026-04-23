@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\not_supported\Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1__1656_LVR_-1.dfy
 // Method: isPrefix
-// Generated: 2026-04-08 21:56:03
+// Generated: 2026-04-22 21:36:14
 
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings1.dfy
 
@@ -130,92 +130,114 @@ method maxCommonSubstringLength(str1: string, str2: string) returns (len: nat)
 }
 
 
-method Passing()
+method TestsForisPrefix()
 {
-  // Test case for combination {1}:
-  //   POST: !res
-  //   POST: res == isPrefixPredicate(pre, str)
-  //   POST: res == (|str| >= |pre| && pre <= str)
-  //   ENSURES: |pre| > |str| ==> !res
-  //   ENSURES: res == isPrefixPredicate(pre, str)
+  // Test case for combination {2}/Rel:
+  //   POST Q1: |pre| > |str|
+  //   POST Q2: !res
+  //   POST Q3: res == isPrefixPredicate(pre, str)
   {
-    var pre: seq<char> := [];
-    var str: seq<char> := [];
-    var res := isPrefix(pre, str);
-    expect res == true;
-  }
-
-  // Test case for combination {3}:
-  //   POST: |pre| > |str|
-  //   POST: res == isPrefixPredicate(pre, str)
-  //   POST: res == (|str| >= |pre| && pre <= str)
-  //   ENSURES: |pre| > |str| ==> !res
-  //   ENSURES: res == isPrefixPredicate(pre, str)
-  {
-    var pre: seq<char> := [' '];
+    var pre: seq<char> := ['4'];
     var str: seq<char> := [];
     var res := isPrefix(pre, str);
     expect res == false;
   }
 
-  // Test case for combination {1}/Bpre=0,str=1:
-  //   POST: !res
-  //   POST: res == isPrefixPredicate(pre, str)
-  //   POST: res == (|str| >= |pre| && pre <= str)
-  //   ENSURES: |pre| > |str| ==> !res
-  //   ENSURES: res == isPrefixPredicate(pre, str)
+  // Test case for combination {1}:
+  //   POST Q1: |pre| <= |str|
+  //   POST Q2: res == isPrefixPredicate(pre, str)
   {
     var pre: seq<char> := [];
-    var str: seq<char> := [' '];
+    var str: seq<char> := [];
     var res := isPrefix(pre, str);
-    expect res == true;
+    expect res == false || res == true;
+    expect res == true; // observed from implementation
   }
 
+  // Test case for combination {1}/O|pre|=1:
+  //   POST Q1: |pre| <= |str|
+  //   POST Q2: res == isPrefixPredicate(pre, str)
+  {
+    var pre: seq<char> := ['~'];
+    var str: seq<char> := ['v'];
+    var res := isPrefix(pre, str);
+    expect res == false || res == true;
+    expect res == false; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|pre|>=2:
+  //   POST Q1: |pre| <= |str|
+  //   POST Q2: res == isPrefixPredicate(pre, str)
+  {
+    var pre: seq<char> := ['~', '$'];
+    var str: seq<char> := ['~', '$'];
+    var res := isPrefix(pre, str);
+    expect res == false || res == true;
+    expect res == true; // observed from implementation
+  }
+
+}
+
+method TestsForisSubstring()
+{
   // Test case for combination {1}:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
+  //   POST Q1: res == isSubstringPredicate(sub, str)
   {
     var sub: seq<char> := [];
     var str: seq<char> := [];
     var res := isSubstring(sub, str);
-    expect res == true;
+    expect res == false || res == true;
+    expect res == true; // observed from implementation
   }
 
-  // Test case for combination {1}/Bsub=0,str=1:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
+  // Test case for combination {1}/O|sub|=1:
+  //   POST Q1: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := [];
-    var str: seq<char> := [' '];
+    var sub: seq<char> := ['~'];
+    var str: seq<char> := [];
     var res := isSubstring(sub, str);
-    expect res == true;
+    expect res == false || res == true;
+    expect res == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bsub=0,str=2:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
+  // Test case for combination {1}/O|sub|>=2:
+  //   POST Q1: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := [];
-    var str: seq<char> := [' ', '!'];
+    var sub: seq<char> := ['~', 'D'];
+    var str: seq<char> := ['>'];
     var res := isSubstring(sub, str);
-    expect res == true;
+    expect res == false || res == true;
+    expect res == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bsub=0,str=3:
-  //   POST: res == isSubstringPredicate(sub, str)
-  //   ENSURES: res == isSubstringPredicate(sub, str)
+  // Test case for combination {1}/O|str|>=2:
+  //   POST Q1: res == isSubstringPredicate(sub, str)
   {
-    var sub: seq<char> := [];
-    var str: seq<char> := [' ', '"', '!'];
+    var sub: seq<char> := ['.'];
+    var str: seq<char> := ['~', 'n'];
     var res := isSubstring(sub, str);
-    expect res == true;
+    expect res == false || res == true;
+    expect res == false; // observed from implementation
   }
 
+}
+
+method TestsForhaveCommonKSubstring()
+{
   // Test case for combination {1}:
-  //   POST: |str1| < k || |str2| < k ==> !found
-  //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
-  //   ENSURES: |str1| < k || |str2| < k ==> !found
-  //   ENSURES: haveCommonKSubstringPredicate(k, str1, str2) == found
+  //   POST Q1: |str1| < k || |str2| < k ==> !found
+  //   POST Q2: haveCommonKSubstringPredicate(k, str1, str2) == found
+  {
+    var k := 2;
+    var str1: seq<char> := [];
+    var str2: seq<char> := [];
+    var found := haveCommonKSubstring(k, str1, str2);
+    expect found == false;
+  }
+
+  // Test case for combination {1}/Bk=0:
+  //   POST Q1: |str1| < k || |str2| < k ==> !found
+  //   POST Q2: haveCommonKSubstringPredicate(k, str1, str2) == found
   {
     var k := 0;
     var str1: seq<char> := [];
@@ -224,11 +246,9 @@ method Passing()
     expect found == true;
   }
 
-  // Test case for combination {3}:
-  //   POST: |str1| < k || |str2| < k ==> !found
-  //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
-  //   ENSURES: |str1| < k || |str2| < k ==> !found
-  //   ENSURES: haveCommonKSubstringPredicate(k, str1, str2) == found
+  // Test case for combination {1}/Bk=1:
+  //   POST Q1: |str1| < k || |str2| < k ==> !found
+  //   POST Q2: haveCommonKSubstringPredicate(k, str1, str2) == found
   {
     var k := 1;
     var str1: seq<char> := [];
@@ -237,97 +257,83 @@ method Passing()
     expect found == false;
   }
 
-  // Test case for combination {4}:
-  //   POST: |str1| < k || |str2| < k ==> !found
-  //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
-  //   ENSURES: |str1| < k || |str2| < k ==> !found
-  //   ENSURES: haveCommonKSubstringPredicate(k, str1, str2) == found
+  // Test case for combination {1}/O|str1|=1:
+  //   POST Q1: |str1| < k || |str2| < k ==> !found
+  //   POST Q2: haveCommonKSubstringPredicate(k, str1, str2) == found
   {
-    var k := 1;
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' '];
-    var found := haveCommonKSubstring(k, str1, str2);
-    expect found == false;
-  }
-
-  // Test case for combination {5}:
-  //   POST: |str1| < k || |str2| < k ==> !found
-  //   POST: haveCommonKSubstringPredicate(k, str1, str2) == found
-  //   ENSURES: |str1| < k || |str2| < k ==> !found
-  //   ENSURES: haveCommonKSubstringPredicate(k, str1, str2) == found
-  {
-    var k := 1;
-    var str1: seq<char> := [' '];
+    var k := 2;
+    var str1: seq<char> := ['['];
     var str2: seq<char> := [];
     var found := haveCommonKSubstring(k, str1, str2);
     expect found == false;
-  }
-
-  // Test case for combination {1}:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
-  }
-
-  // Test case for combination {1}/Bstr1=0,str2=1:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' '];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
-  }
-
-  // Test case for combination {1}/Bstr1=0,str2=2:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' ', '!'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
-  }
-
-  // Test case for combination {1}/Bstr1=0,str2=3:
-  //   POST: len <= |str1| && len <= |str2|
-  //   POST: len >= 0
-  //   POST: maxCommonSubstringPredicate(str1, str2, len)
-  //   ENSURES: len <= |str1| && len <= |str2|
-  //   ENSURES: len >= 0
-  //   ENSURES: maxCommonSubstringPredicate(str1, str2, len)
-  {
-    var str1: seq<char> := [];
-    var str2: seq<char> := [' ', '"', '!'];
-    var len := maxCommonSubstringLength(str1, str2);
-    expect len == 0;
   }
 
 }
 
-method Failing()
+method TestsFormaxCommonSubstringLength()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   POST Q1: len <= |str1| && len <= |str2|
+  //   POST Q2: len >= 0
+  //   POST Q3: maxCommonSubstringPredicate(str1, str2, len)
+  {
+    var str1: seq<char> := [];
+    var str2: seq<char> := [];
+    var len := maxCommonSubstringLength(str1, str2);
+    expect len == 0;
+  }
+
+  // Test case for combination {1}/O|str1|=1:
+  //   POST Q1: len <= |str1| && len <= |str2|
+  //   POST Q2: len >= 0
+  //   POST Q3: maxCommonSubstringPredicate(str1, str2, len)
+  {
+    var str1: seq<char> := ['~'];
+    var str2: seq<char> := [];
+    var len := maxCommonSubstringLength(str1, str2);
+    expect len == 0;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|str1|>=2:
+  //   POST Q1: len <= |str1| && len <= |str2|
+  //   POST Q2: len >= 0
+  //   POST Q3: maxCommonSubstringPredicate(str1, str2, len)
+  {
+    var str1: seq<char> := ['~', '/'];
+    var str2: seq<char> := ['U'];
+    var len := maxCommonSubstringLength(str1, str2);
+    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'start')
+    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
+    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
+    // expect len == 0 || len == 1;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|str2|>=2:
+  //   POST Q1: len <= |str1| && len <= |str2|
+  //   POST Q2: len >= 0
+  //   POST Q3: maxCommonSubstringPredicate(str1, str2, len)
+  {
+    var str1: seq<char> := ['}'];
+    var str2: seq<char> := ['~', '%'];
+    var len := maxCommonSubstringLength(str1, str2);
+    // runtime error: Unhandled exception. System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'start')
+    // runtime error: at System.Collections.Immutable.Requires.FailRange(String parameterName, String message)
+    // runtime error: at System.Collections.Immutable.Requires.Range(Boolean condition, String parameterName, String message)
+    // expect len == 0 || len == 1;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForisPrefix();
+  print "TestsForisPrefix: all non-failing tests passed!\n";
+  TestsForisSubstring();
+  print "TestsForisSubstring: all non-failing tests passed!\n";
+  TestsForhaveCommonKSubstring();
+  print "TestsForhaveCommonKSubstring: all non-failing tests passed!\n";
+  TestsFormaxCommonSubstringLength();
+  print "TestsFormaxCommonSubstringLength: all non-failing tests passed!\n";
 }

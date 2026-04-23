@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-04-21 23:43:12
+// Generated: 2026-04-22 21:34:53
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -44,10 +44,10 @@ method TestsForRemoveElementAt()
   //   PRE:  0 <= k < s.Length
   //   POST Q2: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-1, -10, -2];
+    var s := new int[3] [-1, -5, -10];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-1, -10];
+    expect v[..] == [-1, -5];
   }
 
   // Test case for combination {1}/Bk=0:
@@ -74,10 +74,10 @@ method TestsForRemoveElementAt()
   //   PRE:  0 <= k < s.Length
   //   POST Q2: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-10, -1, 8];
+    var s := new int[3] [-10, 2, 7];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-10, -1];
+    expect v[..] == [-10, 2];
   }
 
 }

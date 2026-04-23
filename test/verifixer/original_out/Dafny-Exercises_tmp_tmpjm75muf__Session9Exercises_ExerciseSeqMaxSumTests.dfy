@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session9Exercises_ExerciseSeqMaxSum.dfy
 // Method: segMaxSum
-// Generated: 2026-04-08 19:09:09
+// Generated: 2026-04-22 21:31:12
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session9Exercises_ExerciseSeqMaxSum.dfy
 
@@ -103,195 +103,114 @@ method segSumaMaxima2(v: array<int>, i: int)
 }
 
 
-method Passing()
+method TestsForsegMaxSum()
 {
   // Test case for combination {2}:
   //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
+  //   POST Q1: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
   {
-    var v := new int[1] [4];
-    var i := 0;
-    var s, k := segMaxSum(v, i);
-    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
-  }
-
-  // Test case for combination {2}/Bv=2,i=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[2] [4, 3];
-    var i := 0;
-    var s, k := segMaxSum(v, i);
-    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
-  }
-
-  // Test case for combination {2}/Bv=2,i=1:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[2] [4, 3];
-    var i := 1;
-    var s, k := segMaxSum(v, i);
-    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
-  }
-
-  // Test case for combination {2}/Bv=3,i=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[3] [5, 4, 6];
-    var i := 0;
-    var s, k := segMaxSum(v, i);
-    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
-  }
-
-  // Test case for combination {2}/Os<0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[2] [5, 8];
-    var i := 1;
-    var s, k := segMaxSum(v, i);
-    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
-  }
-
-  // Test case for combination {2}/Os=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[2] [5, 8];
-    var i := 0;
-    var s, k := segMaxSum(v, i);
-    expect s == 5;
-    expect k == 0;
-  }
-
-  // Test case for combination {2}/Ok>0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  {
-    var v := new int[3] [6, 7, 12];
+    var v := new int[3] [-10, -7, -7];
     var i := 2;
     var s, k := segMaxSum(v, i);
     expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
+    expect s == -7; // observed from implementation
+    expect k == 2; // observed from implementation
   }
 
-  // Test case for combination {2}/Ok=0:
+  // Test case for combination {2}/Bi=0:
   //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
+  //   POST Q1: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
   {
-    var v := new int[4] [6, 9, 13, 17];
-    var i := 3;
+    var v := new int[1] [10];
+    var i := 0;
     var s, k := segMaxSum(v, i);
     expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
+    expect s == 10; // observed from implementation
+    expect k == 0; // observed from implementation
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Bi=1:
   //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  //   POST Q1: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
   {
-    var v := new int[1] [5];
-    var i := 0;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
-  }
-
-  // Test case for combination {2}/Bv=2,i=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[2] [4, 3];
-    var i := 0;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
-  }
-
-  // Test case for combination {2}/Bv=2,i=1:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[2] [4, 3];
+    var v := new int[2] [-2, -10];
     var i := 1;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    var s, k := segMaxSum(v, i);
+    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
+    expect s == -10; // observed from implementation
+    expect k == 1; // observed from implementation
   }
 
-  // Test case for combination {2}/Bv=3,i=0:
+  // Test case for combination {2}/R4:
   //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  //   POST Q1: 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s)
   {
-    var v := new int[3] [5, 4, 6];
-    var i := 0;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
-  }
-
-  // Test case for combination {2}/Os<0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[2] [6, 9];
-    var i := 1;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
-  }
-
-  // Test case for combination {2}/Os=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[2] [6, 9];
-    var i := 0;
-    var s, k := segSumaMaxima2(v, i);
-    expect s == 6;
-    expect k == 0;
-  }
-
-  // Test case for combination {2}/Ok>0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[3] [7, 8, 13];
+    var v := new int[3] [-10, 7, -9];
     var i := 2;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
-  }
-
-  // Test case for combination {2}/Ok=0:
-  //   PRE:  v.Length > 0 && 0 <= i < v.Length
-  //   POST: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  //   ENSURES: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
-  {
-    var v := new int[4] [6, 9, 13, 17];
-    var i := 3;
-    var s, k := segSumaMaxima2(v, i);
-    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    var s, k := segMaxSum(v, i);
+    expect 0 <= k <= i && s == Sum(v, k, i + 1) && SumMaxToRight(v, i, s);
+    expect s == -2; // observed from implementation
+    expect k == 1; // observed from implementation
   }
 
 }
 
-method Failing()
+method TestsForsegSumaMaxima2()
 {
-  // (no failing tests)
+  // Test case for combination {2}/Rel:
+  //   PRE:  v.Length > 0 && 0 <= i < v.Length
+  //   POST Q1: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  {
+    var v := new int[4] [-6, -5, -10, -88782];
+    var i := 2;
+    var s, k := segSumaMaxima2(v, i);
+    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    expect s == -10; // observed from implementation
+    expect k == 2; // observed from implementation
+  }
+
+  // Test case for combination {2}/Bi=0:
+  //   PRE:  v.Length > 0 && 0 <= i < v.Length
+  //   POST Q1: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  {
+    var v := new int[1] [-10];
+    var i := 0;
+    var s, k := segSumaMaxima2(v, i);
+    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    expect s == -10; // observed from implementation
+    expect k == 0; // observed from implementation
+  }
+
+  // Test case for combination {2}/Bi=1:
+  //   PRE:  v.Length > 0 && 0 <= i < v.Length
+  //   POST Q1: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  {
+    var v := new int[2] [-7, 2];
+    var i := 1;
+    var s, k := segSumaMaxima2(v, i);
+    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    expect s == 2; // observed from implementation
+    expect k == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R3:
+  //   PRE:  v.Length > 0 && 0 <= i < v.Length
+  //   POST Q1: 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s)
+  {
+    var v := new int[3] [-8, -3, -9];
+    var i := 2;
+    var s, k := segSumaMaxima2(v, i);
+    expect 0 <= k <= i && s == Sum2(v, k, i + 1) && SumMaxToRight2(v, 0, i, s);
+    expect s == -9; // observed from implementation
+    expect k == 2; // observed from implementation
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForsegMaxSum();
+  print "TestsForsegMaxSum: all non-failing tests passed!\n";
+  TestsForsegSumaMaxima2();
+  print "TestsForsegSumaMaxima2: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2__4039_AOR_Mul.dfy
 // Method: HoareTripleReqEns
-// Generated: 2026-04-08 16:17:58
+// Generated: 2026-04-22 21:47:58
 
 // formal-methods-in-software-engineering_tmp_tmpe7fjnek6_Labs4_gr2.dfy
 
@@ -146,68 +146,51 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsForHoareTripleReqEns()
 {
   // Test case for combination {1}:
   //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  //   ENSURES: k' == (i + 1) * (i + 1)
-  {
-    var i := 0;
-    var k := 0;
-    var k' := HoareTripleReqEns(i, k);
-    expect k' == (i + 1) * (i + 1);
-  }
-
-  // Test case for combination {1}/Bi=1,k=1:
-  //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  //   ENSURES: k' == (i + 1) * (i + 1)
-  {
-    var i := 1;
-    var k := 1;
-    var k' := HoareTripleReqEns(i, k);
-    expect k' == (i + 1) * (i + 1);
-  }
-
-  // Test case for combination {1}/Ok'>0:
-  //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  //   ENSURES: k' == (i + 1) * (i + 1)
-  {
-    var i := -2;
-    var k := 4;
-    var k' := HoareTripleReqEns(i, k);
-    expect k' == (i + 1) * (i + 1);
-  }
-
-  // Test case for combination {1}/Ok'<0:
-  //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  //   ENSURES: k' == (i + 1) * (i + 1)
+  //   POST Q1: k' == (i + 1) * (i + 1)
   {
     var i := 2;
     var k := 4;
     var k' := HoareTripleReqEns(i, k);
-    expect k' == (i + 1) * (i + 1);
   }
 
-  // Test case for combination {1}/Ok'=0:
+  // Test case for combination {1}/Oi=0:
   //   PRE:  k == i * i
-  //   POST: k' == (i + 1) * (i + 1)
-  //   ENSURES: k' == (i + 1) * (i + 1)
+  //   POST Q1: k' == (i + 1) * (i + 1)
   {
-    var i := -1;
-    var k := 1;
+    var i := 0;
+    var k := 0;
     var k' := HoareTripleReqEns(i, k);
-    expect k' == (i + 1) * (i + 1);
   }
 
+  // Test case for combination {1}/Oi<0:
+  //   PRE:  k == i * i
+  //   POST Q1: k' == (i + 1) * (i + 1)
+  {
+    var i := -3;
+    var k := 9;
+    var k' := HoareTripleReqEns(i, k);
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  k == i * i
+  //   POST Q1: k' == (i + 1) * (i + 1)
+  {
+    var i := -2;
+    var k := 4;
+    var k' := HoareTripleReqEns(i, k);
+  }
+
+}
+
+method TestsForSqrSum1()
+{
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: n == 0
-  //   POST: s == 0
-  //   ENSURES: s == SqrSumRec(n)
+  //   POST Q1: s == SqrSumRec(n)
   {
     var n := 0;
     var s := SqrSum1(n);
@@ -216,151 +199,98 @@ method Passing()
 
   // Test case for combination {2}:
   //   PRE:  n >= 0
-  //   POST: !(n == 0)
-  //   POST: s == n * n + SqrSumRec(n - 1)
-  //   ENSURES: s == SqrSumRec(n)
+  //   POST Q1: s == SqrSumRec(n)
+  {
+    var n := 10;
+    var s := SqrSum1(n);
+    expect s == 385;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   PRE:  n >= 0
+  //   POST Q1: s == SqrSumRec(n)
   {
     var n := 1;
     var s := SqrSum1(n);
-    expect !(n == 0);
     expect s == 1;
   }
 
-  // Test case for combination {2}/Os<0:
+  // Test case for combination {2}/Bn=2:
   //   PRE:  n >= 0
-  //   POST: !(n == 0)
-  //   POST: s == n * n + SqrSumRec(n - 1)
-  //   ENSURES: s == SqrSumRec(n)
+  //   POST Q1: s == SqrSumRec(n)
   {
     var n := 2;
     var s := SqrSum1(n);
-    expect !(n == 0);
     expect s == 5;
-  }
-
-  // Test case for combination {2}/Os=0:
-  //   PRE:  n >= 0
-  //   POST: !(n == 0)
-  //   POST: s == n * n + SqrSumRec(n - 1)
-  //   ENSURES: s == SqrSumRec(n)
-  {
-    var n := 3;
-    var s := SqrSum1(n);
-    expect s == 14;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
-  {
-    var a := 0;
-    var b := 8;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=0,b=1:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
-  {
-    var a := 0;
-    var b := 1;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=0,b=2:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
-  {
-    var a := 0;
-    var b := 2;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 0;
-  }
-
-  // Test case for combination {1}/Oq=0:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
-  {
-    var a := 4;
-    var b := 20;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 4;
-  }
-
-  // Test case for combination {1}/Or=0:
-  //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
-  {
-    var a := 0;
-    var b := 128;
-    var q, r := DivMod1(a, b);
-    expect q == 0;
-    expect r == 0;
   }
 
 }
 
-method Failing()
+method TestsForDivMod1()
 {
-  // Test case for combination {1}/Ba=1,b=1:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
+  //   POST Q1: a == b * q + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
   {
-    var a := 1;
+    var a := 10;
+    var b := 2;
+    var q, r := DivMod1(a, b);
+    // expect q == 5;
+    // expect r == 0;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bb=1:
+  //   PRE:  b > 0 && a >= 0
+  //   POST Q1: a == b * q + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
+  {
+    var a := 10;
     var b := 1;
     var q, r := DivMod1(a, b);
-    // expect q == 1;
+    // expect q == 10;
     // expect r == 0;
   }
 
-  // Test case for combination {1}/Oq>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Br=1:
   //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
+  //   POST Q1: a == b * q + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
   {
-    var a := 15;
-    var b := 15;
+    var a := 10;
+    var b := 9;
     var q, r := DivMod1(a, b);
     // expect q == 1;
-    // expect r == 0;
+    // expect r == 1;
   }
 
-  // Test case for combination {1}/Or>0:
+  // Test case for combination {1}/Oa=0:
   //   PRE:  b > 0 && a >= 0
-  //   POST: a == b * q + r
-  //   POST: 0 <= r < b
-  //   ENSURES: a == b * q + r && 0 <= r < b
+  //   POST Q1: a == b * q + r
+  //   POST Q2: 0 <= r
+  //   POST Q3: r < b
   {
-    var a := 55;
-    var b := 7;
+    var a := 0;
+    var b := 10;
     var q, r := DivMod1(a, b);
-    // expect q == 7;
-    // expect r == 6;
+    expect q == 0;
+    expect r == 0;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForHoareTripleReqEns();
+  print "TestsForHoareTripleReqEns: all non-failing tests passed!\n";
+  TestsForSqrSum1();
+  print "TestsForSqrSum1: all non-failing tests passed!\n";
+  TestsForDivMod1();
+  print "TestsForDivMod1: all non-failing tests passed!\n";
 }

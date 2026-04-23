@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\stuck\in\dafny_examples_tmp_tmp8qotd4ez_leetcode_0001-two-sum__753_ROR_Gt.dfy
 // Method: TwoSum
-// Generated: 2026-04-22 19:27:43
+// Generated: 2026-04-22 21:29:23
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0001-two-sum.dfy
 
@@ -38,18 +38,44 @@ method TwoSum(nums: array<int>, target: int) returns (r: (int, int))
 }
 
 
-method Passing()
+method TestsForTwoSum()
 {
   // Test case for combination {1}/Rel:
   //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
   //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
   {
     var nums := new int[1] [-10];
-    var target := -10;
+    var target := -9;
     var r := TwoSum(nums, target);
     expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target;
     expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target;
     expect r == (-1, -1); // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Rel:
+  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
+  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
+  {
+    var nums := new int[2] [-1, -9];
+    var target := -10;
+    var r := TwoSum(nums, target);
+    // actual runtime state: r=(-1, -1)
+    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
+    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {3}/Rel:
+  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
+  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
+  {
+    var nums := new int[2] [-2, -7];
+    var target := -9;
+    var r := TwoSum(nums, target);
+    // actual runtime state: r=(-1, -1)
+    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
+    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
   }
 
   // Test case for combination {1}/O|nums|=0:
@@ -64,98 +90,10 @@ method Passing()
     expect r == (-1, -1); // observed from implementation
   }
 
-  // Test case for combination {1}/O|nums|>=2:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[2] [-8, -6];
-    var target := -10;
-    var r := TwoSum(nums, target);
-    expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target;
-    expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target;
-    expect r == (-1, -1); // observed from implementation
-  }
-
-  // Test case for combination {1}/Otarget=0:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[1] [-9];
-    var target := 0;
-    var r := TwoSum(nums, target);
-    expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target;
-    expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target;
-    expect r == (-1, -1); // observed from implementation
-  }
-
-  // Test case for combination {1}/Otarget>0:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[1] [-10];
-    var target := 10;
-    var r := TwoSum(nums, target);
-    expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target;
-    expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target;
-    expect r == (-1, -1); // observed from implementation
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {2}/Rel:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[2] [2, -10];
-    var target := -8;
-    var r := TwoSum(nums, target);
-    // actual runtime state: r=(-1, -1)
-    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
-    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
-  }
-
-  // Test case for combination {3}/Rel:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[2] [-9, -1];
-    var target := -10;
-    var r := TwoSum(nums, target);
-    // actual runtime state: r=(-1, -1)
-    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
-    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
-  }
-
-  // Test case for combination {2}/Otarget=0:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[2] [10, -10];
-    var target := 0;
-    var r := TwoSum(nums, target);
-    // actual runtime state: r=(-1, -1)
-    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
-    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
-  }
-
-  // Test case for combination {2}/Otarget>0:
-  //   POST Q1: 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target
-  //   POST Q2: r.0 == -1 <==> forall i: int, j: int {:trigger nums[j], nums[i]} :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target
-  {
-    var nums := new int[2] [9, -7];
-    var target := 2;
-    var r := TwoSum(nums, target);
-    // actual runtime state: r=(-1, -1)
-    // expect 0 <= r.0 ==> 0 <= r.0 < r.1 < nums.Length && nums[r.0] + nums[r.1] == target && forall i: int, j: int :: 0 <= i < j < r.1 ==> nums[i] + nums[j] != target; // got true
-    // expect r.0 == -1 <==> forall i: int, j: int :: 0 <= i < j < nums.Length ==> nums[i] + nums[j] != target; // got false
-  }
-
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForTwoSum();
+  print "TestsForTwoSum: all non-failing tests passed!\n";
 }

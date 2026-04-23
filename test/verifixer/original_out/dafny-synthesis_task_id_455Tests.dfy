@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_455.dfy
 // Method: MonthHas31Days
-// Generated: 2026-04-08 19:10:14
+// Generated: 2026-04-22 21:32:42
 
 // dafny-synthesis_task_id_455.dfy
 
@@ -14,50 +14,45 @@ method MonthHas31Days(month: int) returns (result: bool)
 }
 
 
-method Passing()
+method TestsForMonthHas31Days()
 {
   // Test case for combination {1}:
   //   PRE:  1 <= month <= 12
-  //   POST: result
-  //   POST: month in {1, 3, 5, 7, 8, 10, 12}
-  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
+  //   POST Q1: result
+  //   POST Q2: month in {1, 3, 5, 7, 8, 10, 12}
+  {
+    var month := 10;
+    var result := MonthHas31Days(month);
+    expect result == true || result == false;
+    expect result == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bmonth=1:
+  //   PRE:  1 <= month <= 12
+  //   POST Q1: result
+  //   POST Q2: month in {1, 3, 5, 7, 8, 10, 12}
   {
     var month := 1;
     var result := MonthHas31Days(month);
-    expect result == true;
+    expect result == true || result == false;
+    expect result == true; // observed from implementation
   }
 
   // Test case for combination {1}/Bmonth=2:
   //   PRE:  1 <= month <= 12
-  //   POST: result
-  //   POST: month in {1, 3, 5, 7, 8, 10, 12}
-  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
+  //   POST Q1: result
+  //   POST Q2: month in {1, 3, 5, 7, 8, 10, 12}
   {
     var month := 2;
     var result := MonthHas31Days(month);
-    expect result == false;
+    expect result == true || result == false;
+    expect result == false; // observed from implementation
   }
 
-  // Test case for combination {1}/Bmonth=11:
-  //   PRE:  1 <= month <= 12
-  //   POST: result
-  //   POST: month in {1, 3, 5, 7, 8, 10, 12}
-  //   ENSURES: result <==> month in {1, 3, 5, 7, 8, 10, 12}
-  {
-    var month := 11;
-    var result := MonthHas31Days(month);
-    expect result == false;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForMonthHas31Days();
+  print "TestsForMonthHas31Days: all non-failing tests passed!\n";
 }

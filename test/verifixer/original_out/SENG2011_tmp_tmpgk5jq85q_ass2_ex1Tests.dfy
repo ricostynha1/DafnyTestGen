@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\SENG2011_tmp_tmpgk5jq85q_ass2_ex1.dfy
 // Method: StringSwap
-// Generated: 2026-04-08 19:18:09
+// Generated: 2026-04-22 21:37:43
 
 // SENG2011_tmp_tmpgk5jq85q_ass2_ex1.dfy
 
@@ -35,167 +35,74 @@ method check()
 }
 
 
-method Passing()
+method TestsForStringSwap()
 {
-  // Test case for combination P{2}/{25}:
+  // Test case for combination P{2}/{3}/Rel:
   //   PRE:  i >= 0 && j >= 0 && |s| >= 0
   //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: t == s
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
+  //   POST Q1: multiset(s[..]) == multiset(t[..])
+  //   POST Q2: |s| == |t|
+  //   POST Q3: |s| > 0
+  //   POST Q4: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
+  //   POST Q5: t[i] == s[j]
+  //   POST Q6: t[j] == s[i]
   {
-    var s: seq<char> := [' '];
-    var i := 0;
-    var j := 0;
+    var s: seq<char> := ['B', 'K', ']', 'K', 'C'];
+    var i := 3;
+    var j := 4;
     var t := StringSwap(s, i, j);
-    expect t == [' '];
+    expect t == ['B', 'K', ']', 'C', 'K'];
   }
 
-  // Test case for combination P{2}/{26}:
+  // Test case for combination P{1}/{2}:
   //   PRE:  i >= 0 && j >= 0 && |s| >= 0
   //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: !(t == s)
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
+  //   POST Q1: multiset(s[..]) == multiset(t[..])
+  //   POST Q2: |s| == |t|
+  //   POST Q3: |s| == 0
+  //   POST Q4: t == s
   {
-    var s: seq<char> := [' ', 'G'];
-    var i := 0;
-    var j := 1;
+    var s: seq<char> := [];
+    var i := 10;
+    var j := 10;
     var t := StringSwap(s, i, j);
-    expect t == ['G', ' '];
+    expect t == [];
   }
 
-  // Test case for combination P{2}/{25}/O|t|>=3:
+  // Test case for combination P{1}/{2}/Bi=0:
   //   PRE:  i >= 0 && j >= 0 && |s| >= 0
   //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: t == s
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
+  //   POST Q1: multiset(s[..]) == multiset(t[..])
+  //   POST Q2: |s| == |t|
+  //   POST Q3: |s| == 0
+  //   POST Q4: t == s
   {
-    var s: seq<char> := [' ', '1', ' '];
+    var s: seq<char> := [];
     var i := 0;
-    var j := 2;
+    var j := 10;
     var t := StringSwap(s, i, j);
-    expect t == [' ', '1', ' '];
+    expect t == [];
   }
 
-  // Test case for combination P{2}/{25}/O|t|>=2:
+  // Test case for combination P{1}/{2}/Bi=1:
   //   PRE:  i >= 0 && j >= 0 && |s| >= 0
   //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: t == s
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
+  //   POST Q1: multiset(s[..]) == multiset(t[..])
+  //   POST Q2: |s| == |t|
+  //   POST Q3: |s| == 0
+  //   POST Q4: t == s
   {
-    var s: seq<char> := [' ', ' '];
+    var s: seq<char> := [];
     var i := 1;
-    var j := 0;
+    var j := 10;
     var t := StringSwap(s, i, j);
-    expect t == [' ', ' '];
+    expect t == [];
   }
 
-  // Test case for combination P{2}/{26}/O|t|>=3:
-  //   PRE:  i >= 0 && j >= 0 && |s| >= 0
-  //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: !(t == s)
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
-  {
-    var s: seq<char> := [' ', 'z', '!'];
-    var i := 2;
-    var j := 1;
-    var t := StringSwap(s, i, j);
-    expect t == [' ', '!', 'z'];
-  }
-
-  // Test case for combination P{2}/{26}/O|t|>=2:
-  //   PRE:  i >= 0 && j >= 0 && |s| >= 0
-  //   PRE:  |s| > 0 ==> i < |s| && j < |s|
-  //   POST: multiset(s[..]) == multiset(t[..])
-  //   POST: |s| == |t|
-  //   POST: |s| > 0
-  //   POST: forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   POST: |s| > 0
-  //   POST: t[i] == s[j]
-  //   POST: t[j] == s[i]
-  //   POST: !(|s| == 0)
-  //   POST: !(t == s)
-  //   ENSURES: multiset(s[..]) == multiset(t[..])
-  //   ENSURES: |s| == |t|
-  //   ENSURES: |s| > 0 ==> forall k: nat {:trigger s[k]} {:trigger t[k]} :: k != i && k != j && k < |s| ==> t[k] == s[k]
-  //   ENSURES: |s| > 0 ==> t[i] == s[j] && t[j] == s[i]
-  //   ENSURES: |s| == 0 ==> t == s
-  {
-    var s: seq<char> := [' ', '!'];
-    var i := 1;
-    var j := 0;
-    var t := StringSwap(s, i, j);
-    expect t == ['!', ' '];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForStringSwap();
+  print "TestsForStringSwap: all non-failing tests passed!\n";
 }

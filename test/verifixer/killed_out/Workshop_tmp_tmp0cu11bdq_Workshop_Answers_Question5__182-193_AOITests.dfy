@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5__182-193_AOI.dfy
 // Method: rev
-// Generated: 2026-04-06 00:02:12
+// Generated: 2026-04-22 22:00:13
 
 // Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5.dfy
 
@@ -24,56 +24,53 @@ method rev(a: array<int>)
 }
 
 
-method Passing()
-{
-  // Test case for combination {1}/Ba=1:
-  //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  {
-    var a := new int[1] [2];
-    var old_a := a[..];
-    rev(a);
-    expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
-  }
-
-}
-
-method Failing()
+method TestsForrev()
 {
   // Test case for combination {1}:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  {
+    var a := new int[1] [-9];
+    rev(a);
+    expect a[..] == [-9];
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  a != null
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
     var a := new int[0] [];
-    var old_a := a[..];
     rev(a);
-    // expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.rev(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_qwhqzmla21v\runner.cs:line 5793
+    // runtime error: at _module.__default.TestCase__1() in C:\cygwin64\tmp\DafnyTestGen_qwhqzmla21v\runner.cs:line 5844
+    // expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[2] [4, 3];
-    var old_a := a[..];
+    var a := new int[2] [-8, -10];
     rev(a);
-    // expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    // expect a[..] == [-10, -8]; // LHS=[-8, -10], RHS=[-10, -8]
   }
 
-  // Test case for combination {1}/Ba=3:
+  // Test case for combination {1}/R4:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[3] [6, 5, 4];
-    var old_a := a[..];
+    var a := new int[1] [-10];
     rev(a);
-    // expect forall k: int :: 0 <= k < a.Length ==> a[k] == old_a[a.Length - 1 - k];
+    expect a[..] == [-10];
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForrev();
+  print "TestsForrev: all non-failing tests passed!\n";
 }

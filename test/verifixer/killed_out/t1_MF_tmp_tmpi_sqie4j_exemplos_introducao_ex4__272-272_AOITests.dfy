@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4__272-272_AOI.dfy
 // Method: Fatorial
-// Generated: 2026-04-06 00:00:09
+// Generated: 2026-04-22 21:58:58
 
 // t1_MF_tmp_tmpi_sqie4j_exemplos_introducao_ex4.dfy
 
@@ -31,18 +31,35 @@ method Fatorial(n: nat) returns (r: nat)
 }
 
 
-method Passing()
+method TestsForFatorial()
 {
   // Test case for combination {1}:
-  //   POST: r == Fat(n)
+  //   POST Q1: r == Fat(n)
   {
     var n := 0;
     var r := Fatorial(n);
     expect r == 1;
   }
 
-  // Test case for combination {1}/R3:
-  //   POST: r == Fat(n)
+  // Test case for combination {2}:
+  //   POST Q1: r == Fat(n)
+  {
+    var n := 10;
+    var r := Fatorial(n);
+    expect r == 3628800;
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Bn=1:
+  //   POST Q1: r == Fat(n)
+  {
+    var n := 1;
+    var r := Fatorial(n);
+    // expect r == 1; // got -1
+  }
+
+  // Test case for combination {2}/Bn=2:
+  //   POST Q1: r == Fat(n)
   {
     var n := 2;
     var r := Fatorial(n);
@@ -51,20 +68,8 @@ method Passing()
 
 }
 
-method Failing()
-{
-  // Test case for combination {1}/Bn=1:
-  //   POST: r == Fat(n)
-  {
-    var n := 1;
-    var r := Fatorial(n);
-    // expect r == 1;
-  }
-
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFatorial();
+  print "TestsForFatorial: all non-failing tests passed!\n";
 }

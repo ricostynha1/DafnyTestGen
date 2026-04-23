@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 // Method: Fib
-// Generated: 2026-04-08 19:18:17
+// Generated: 2026-04-22 21:37:49
 
 // Software-building-and-verification-Projects_tmp_tmp5tm1srrn_CVS-projeto_aula3.dfy
 
@@ -137,11 +137,10 @@ method sumBackwards(n: nat) returns (r: nat)
 datatype List<T> = Nil | Cons(head: T, tail: List<T>)
 
 
-method Passing()
+method TestsForFib()
 {
   // Test case for combination {1}:
-  //   POST: r == fib(n)
-  //   ENSURES: r == fib(n)
+  //   POST Q1: r == fib(n)
   {
     var n := 0;
     var r := Fib(n);
@@ -149,366 +148,127 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: r == fib(n)
-  //   ENSURES: r == fib(n)
+  //   POST Q1: r == fib(n)
   {
     var n := 1;
     var r := Fib(n);
     expect r == 1;
   }
 
-  // Test case for combination {2}/Or=1:
-  //   POST: r == fib(n)
-  //   ENSURES: r == fib(n)
+  // Test case for combination {3}:
+  //   POST Q1: r == fib(n)
+  {
+    var n := 10;
+    var r := Fib(n);
+    expect r == 89;
+  }
+
+  // Test case for combination {3}/Bn=2:
+  //   POST Q1: r == fib(n)
   {
     var n := 2;
     var r := Fib(n);
     expect r == 2;
   }
 
-  // Test case for combination {2}/Or=0:
-  //   POST: r == fib(n)
-  //   ENSURES: r == fib(n)
-  {
-    var n := 3;
-    var r := Fib(n);
-    expect r == 3;
-  }
+}
 
-  // Test case for combination {1}:
+method TestsFormaxArray()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: 0 <= (arr.Length - 1)
+  //   POST Q3: arr[0] == max
   {
-    var arr := new int[1] [38];
+    var arr := new int[1] [10];
     var max := maxArray(arr);
-    expect max == 38;
+    expect max == 10;
   }
 
-  // Test case for combination {2}:
+  // Test case for combination {2}/Rel:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
   {
-    var arr := new int[4] [-1, 0, 0, 0];
+    var arr := new int[4] [-8, -9, -8, -10];
     var max := maxArray(arr);
-    expect max == 0;
+    expect max == -8;
   }
 
-  // Test case for combination {3}:
+  // Test case for combination {1}/Omax=0:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: 0 <= (arr.Length - 1)
+  //   POST Q3: arr[0] == max
   {
     var arr := new int[1] [0];
     var max := maxArray(arr);
     expect max == 0;
   }
 
-  // Test case for combination {1}/Barr=2:
+  // Test case for combination {2}/Omax=0:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
   {
-    var arr := new int[2] [7719, 7718];
+    var arr := new int[5] [-10, -1, -6, 0, -12949];
     var max := maxArray(arr);
-    expect max == 7719;
+    expect max == 0;
   }
 
-  // Test case for combination {1}/Omax>0:
+}
+
+method TestsFormaxArrayReverse()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: 0 <= (arr.Length - 1)
+  //   POST Q3: arr[0] == max
   {
-    var arr := new int[2] [7720, -38];
-    var max := maxArray(arr);
-    expect max == 7720;
+    var arr := new int[1] [10];
+    var max := maxArrayReverse(arr);
+    expect max == 10;
   }
 
-  // Test case for combination {1}/Omax<0:
+  // Test case for combination {2}/Rel:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
   {
-    var arr := new int[3] [-39, -40, -40];
-    var max := maxArray(arr);
-    expect max == -39;
+    var arr := new int[4] [-5, -10, -5, -11];
+    var max := maxArrayReverse(arr);
+    expect max == -5;
   }
 
   // Test case for combination {1}/Omax=0:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [0, -1, -39, -7720];
-    var max := maxArray(arr);
-    expect max == 0;
-  }
-
-  // Test case for combination {2}/Omax>0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [-38, 7720, -21238, -2437];
-    var max := maxArray(arr);
-    expect max == 7720;
-  }
-
-  // Test case for combination {2}/Omax<0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[3] [-40, -39, -40];
-    var max := maxArray(arr);
-    expect max == -39;
-  }
-
-  // Test case for combination {2}/Omax=0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[6] [-1, 0, 0, 0, 0, -39];
-    var max := maxArray(arr);
-    expect max == 0;
-  }
-
-  // Test case for combination {3}/Omax>0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[2] [-7719, 39];
-    var max := maxArray(arr);
-    expect max == 39;
-  }
-
-  // Test case for combination {3}/Omax<0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[3] [-40, -40, -39];
-    var max := maxArray(arr);
-    expect max == -39;
-  }
-
-  // Test case for combination {3}/Omax=0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [-1, -39, -7720, 0];
-    var max := maxArray(arr);
-    expect max == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[1] [38];
-    var max := maxArrayReverse(arr);
-    expect max == 38;
-  }
-
-  // Test case for combination {2}:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [-1, 0, 0, 0];
-    var max := maxArrayReverse(arr);
-    expect max == 0;
-  }
-
-  // Test case for combination {3}:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: 0 <= (arr.Length - 1)
+  //   POST Q3: arr[0] == max
   {
     var arr := new int[1] [0];
     var max := maxArrayReverse(arr);
     expect max == 0;
   }
 
-  // Test case for combination {1}/Barr=2:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[2] [7719, 7718];
-    var max := maxArrayReverse(arr);
-    expect max == 7719;
-  }
-
-  // Test case for combination {1}/Omax>0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[2] [7720, -38];
-    var max := maxArrayReverse(arr);
-    expect max == 7720;
-  }
-
-  // Test case for combination {1}/Omax<0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[3] [-39, -40, -40];
-    var max := maxArrayReverse(arr);
-    expect max == -39;
-  }
-
-  // Test case for combination {1}/Omax=0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[0] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [0, -1, -39, -7720];
-    var max := maxArrayReverse(arr);
-    expect max == 0;
-  }
-
-  // Test case for combination {2}/Omax>0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [-38, 7720, -21238, -2437];
-    var max := maxArrayReverse(arr);
-    expect max == 7720;
-  }
-
-  // Test case for combination {2}/Omax<0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[3] [-40, -39, -40];
-    var max := maxArrayReverse(arr);
-    expect max == -39;
-  }
-
   // Test case for combination {2}/Omax=0:
   //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
+  //   POST Q1: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
+  //   POST Q2: exists x :: 1 <= x < (arr.Length - 1) && arr[x] == max
   {
-    var arr := new int[6] [-1, 0, 0, 0, 0, -39];
+    var arr := new int[5] [-10, -1, -7, 0, -17113];
     var max := maxArrayReverse(arr);
     expect max == 0;
   }
 
-  // Test case for combination {3}/Omax>0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[2] [-7719, 39];
-    var max := maxArrayReverse(arr);
-    expect max == 39;
-  }
+}
 
-  // Test case for combination {3}/Omax<0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[3] [-40, -40, -39];
-    var max := maxArrayReverse(arr);
-    expect max == -39;
-  }
-
-  // Test case for combination {3}/Omax=0:
-  //   PRE:  arr.Length > 0
-  //   POST: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   POST: 0 < arr.Length
-  //   POST: arr[(arr.Length - 1)] == max
-  //   ENSURES: forall i: int {:trigger arr[i]} :: 0 <= i < arr.Length ==> arr[i] <= max
-  //   ENSURES: exists x: int {:trigger arr[x]} :: 0 <= x < arr.Length && arr[x] == max
-  {
-    var arr := new int[4] [-1, -39, -7720, 0];
-    var max := maxArrayReverse(arr);
-    expect max == 0;
-  }
-
+method TestsForsumBackwards()
+{
   // Test case for combination {1}:
-  //   POST: n == 0
-  //   POST: r == 0
-  //   ENSURES: r == sum(n)
+  //   POST Q1: r == sum(n)
   {
     var n := 0;
     var r := sumBackwards(n);
@@ -516,45 +276,39 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: r == n + sum(n - 1)
-  //   ENSURES: r == sum(n)
+  //   POST Q1: r == sum(n)
+  {
+    var n := 10;
+    var r := sumBackwards(n);
+    expect r == 55;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST Q1: r == sum(n)
   {
     var n := 1;
     var r := sumBackwards(n);
-    expect !(n == 0);
     expect r == 1;
   }
 
-  // Test case for combination {2}/Or=1:
-  //   POST: !(n == 0)
-  //   POST: r == n + sum(n - 1)
-  //   ENSURES: r == sum(n)
+  // Test case for combination {2}/Bn=2:
+  //   POST Q1: r == sum(n)
   {
     var n := 2;
     var r := sumBackwards(n);
     expect r == 3;
   }
 
-  // Test case for combination {2}/Or=0:
-  //   POST: !(n == 0)
-  //   POST: r == n + sum(n - 1)
-  //   ENSURES: r == sum(n)
-  {
-    var n := 3;
-    var r := sumBackwards(n);
-    expect r == 6;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFib();
+  print "TestsForFib: all non-failing tests passed!\n";
+  TestsFormaxArray();
+  print "TestsFormaxArray: all non-failing tests passed!\n";
+  TestsFormaxArrayReverse();
+  print "TestsFormaxArrayReverse: all non-failing tests passed!\n";
+  TestsForsumBackwards();
+  print "TestsForsumBackwards: all non-failing tests passed!\n";
 }

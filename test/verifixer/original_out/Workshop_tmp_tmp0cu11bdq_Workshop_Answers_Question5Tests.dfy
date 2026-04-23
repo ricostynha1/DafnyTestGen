@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5.dfy
 // Method: rev
-// Generated: 2026-04-08 19:19:57
+// Generated: 2026-04-22 21:38:51
 
 // Workshop_tmp_tmp0cu11bdq_Workshop_Answers_Question5.dfy
 
@@ -24,57 +24,48 @@ method rev(a: array<int>)
 }
 
 
-method Passing()
+method TestsForrev()
 {
   // Test case for combination {1}:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  {
+    var a := new int[1] [-9];
+    rev(a);
+    expect a[..] == [-9];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  a != null
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
     var a := new int[0] [];
     rev(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=1:
+  // Test case for combination {1}/O|a|>=2:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[1] [2];
+    var a := new int[2] [-5, -1];
     rev(a);
-    expect a[..] == [2];
+    expect a[..] == [-1, -5];
   }
 
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/R4:
   //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[1] [-10];
     rev(a);
-    expect a[..] == [3, 4];
+    expect a[..] == [-10];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   PRE:  a != null
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  {
-    var a := new int[3] [6, 5, 4];
-    rev(a);
-    expect a[..] == [4, 5, 6];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForrev();
+  print "TestsForrev: all non-failing tests passed!\n";
 }

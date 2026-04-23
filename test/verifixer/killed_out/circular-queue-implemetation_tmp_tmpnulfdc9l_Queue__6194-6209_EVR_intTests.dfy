@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\circular-queue-implemetation_tmp_tmpnulfdc9l_Queue__6194-6209_EVR_int.dfy
 // Method: insert
-// Generated: 2026-04-08 16:41:34
+// Generated: 2026-04-22 21:26:37
 
 // circular-queue-implemetation_tmp_tmpnulfdc9l_Queue.dfy
 
@@ -241,286 +241,491 @@ class {:autocontracts} Queue {
 }
 
 
-method GeneratedTests_insert()
+method TestsForinsert()
 {
   // Test case for combination {1}:
   //   PRE:  Valid()
-  //   POST: Valid()
-  //   ENSURES: Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[0] [];
+    var tmp_circularQueue := new int[2] [-10, -5];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [];
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-3];
     obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
+    var item := 2;
     obj.insert(item);
     expect obj.Valid();
   }
 
-  // Test case for combination {1}/Bitem=0,rear=0,front=0,counter==circularQueue_len:
+  // Test case for combination {1}/Brear=0:
   //   PRE:  Valid()
-  //   POST: Valid()
-  //   ENSURES: Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[1] [2];
+    var tmp_circularQueue := new int[2] [-10, 9];
     obj.circularQueue := tmp_circularQueue;
     obj.rear := 0;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-3];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := -1;
+    obj.insert(item);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {1}/Brear=1:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-1, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := 2;
+    obj.insert(item);
+    expect obj.Valid();
+  }
+
+  // Test case for combination {1}/Bfront=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [9, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
     obj.front := 0;
-    obj.counter := 1;
+    obj.counter := 2;
     obj.Content := [6];
     obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
-    obj.insert(item);
-    expect obj.Valid();
-  }
-
-  // Test case for combination {1}/Bitem=0,rear=0,front=0,counter=0:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   ENSURES: Valid()
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[1] [2];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [6];
-    obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
-    obj.insert(item);
-    expect obj.Valid();
-  }
-
-  // Test case for combination {1}/Bitem=0,rear=0,front=0,counter=1:
-  //   PRE:  Valid()
-  //   POST: Valid()
-  //   ENSURES: Valid()
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[0] [];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 1;
-    obj.Content := [];
-    obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
+    var item := -10;
     obj.insert(item);
     expect obj.Valid();
   }
 
 }
 
-method GeneratedTests_size()
+method TestsForauxInsertInitQueue()
 {
   // Test case for combination {1}:
   //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[0] [];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [];
-    obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 0;
-  }
-
-  // Test case for combination {1}/Brear=0,front=0,counter==circularQueue_len,Content=1:
   //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[1] [2];
+    var tmp_circularQueue := new int[2] [10, 10];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 1;
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
     obj.Content := [2];
     obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 1;
+    var item := 2;
+    // obj.auxInsertInitQueue(item);
   }
 
-  // Test case for combination {1}/Brear=0,front=0,counter==circularQueue_len,Content=2:
+  // Test case for combination {1}/Brear=0:
   //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[2] [4, 3];
+    var tmp_circularQueue := new int[2] [-1, 10];
     obj.circularQueue := tmp_circularQueue;
     obj.rear := 0;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [2];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := -1;
+    // obj.auxInsertInitQueue(item);
+  }
+
+  // Test case for combination {1}/Brear=1:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-1, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := -1;
+    // obj.auxInsertInitQueue(item);
+  }
+
+  // Test case for combination {1}/Bfront=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [10, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
     obj.front := 0;
     obj.counter := 2;
-    obj.Content := [4, 3];
+    obj.Content := [-10];
     obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 2;
-  }
-
-  // Test case for combination {1}/Brear=0,front=0,counter==circularQueue_len,Content=3:
-  //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[3] [5, 4, 6];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 3;
-    obj.Content := [5, 4, 6];
-    obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 3;
-  }
-
-  // Test case for combination {1}/Osize>=2:
-  //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[2] [6, 7];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 1;
-    obj.front := 1;
-    obj.counter := 2;
-    obj.Content := [6, 7];
-    obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 2;
-  }
-
-  // Test case for combination {1}/Osize=1:
-  //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[1] [2];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 1;
-    obj.front := 1;
-    obj.counter := 1;
-    obj.Content := [2];
-    obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 1;
-  }
-
-  // Test case for combination {1}/Osize=0:
-  //   PRE:  Valid()
-  //   POST: size == counter
-  //   ENSURES: size == counter
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[1] [2];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 1;
-    obj.front := 1;
-    obj.counter := 0;
-    obj.Content := [2];
-    obj.Repr := {obj, obj.circularQueue};
-    var size := obj.size();
-    expect size == 0;
+    var item := -10;
+    // obj.auxInsertInitQueue(item);
   }
 
 }
 
-method GeneratedTests_isEmpty()
+method TestsForauxInsertBetweenQueue()
 {
+  // Test case for combination {1}:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-10, -6];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-1];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := -1;
+    // obj.auxInsertBetweenQueue(item);
+  }
+
+  // Test case for combination {1}/Brear=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [10, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 0;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := 2;
+    // obj.auxInsertBetweenQueue(item);
+  }
+
+  // Test case for combination {1}/Brear=1:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [7, 10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [2];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := 2;
+    // obj.auxInsertBetweenQueue(item);
+  }
+
+  // Test case for combination {1}/Bfront=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: Valid()
+  //   POST Q3: Valid()
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [7, -10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
+    obj.front := 0;
+    obj.counter := 2;
+    obj.Content := [10];
+    obj.Repr := {obj, obj.circularQueue};
+    var item := -10;
+    // obj.auxInsertBetweenQueue(item);
+  }
+
+}
+
+method TestsForremove()
+{
+  // Test case for combination {1}:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  front < circularQueue.Length
+  //   PRE:  circularQueue.Length > 0
+  //   POST Q1: Valid()
+  //   POST Q3: rear <= |old(Content)|
+  //   POST Q4: circularQueue.Length > 0
+  //   POST Q5: item == old(Content)[old(front)]
+  //   POST Q6: front == (old(front) + 1) % circularQueue.Length
+  //   POST Q7: old(front) < rear
+  //   POST Q8: Content == old(Content)[old(front) .. rear]
+  //   POST Q9: old(front) >= rear
+  //   POST Q10: old(front) <= rear
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[1] [-1];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 0;
+    obj.front := 0;
+    obj.counter := 1;
+    obj.Content := [2];
+    obj.Repr := {obj, obj.circularQueue};
+    // var item := obj.remove();
+    // expect item == 2;
+  }
+
   // Test case for combination {3}:
   //   PRE:  Valid()
-  //   POST: counter == 0
-  //   POST: !(isEmpty == false)
-  //   POST: isEmpty == false
-  //   POST: counter != 0
-  //   ENSURES: isEmpty == true ==> counter == 0
-  //   ENSURES: isEmpty == false ==> counter != 0
+  //   PRE:  Valid()
+  //   PRE:  front < circularQueue.Length
+  //   PRE:  circularQueue.Length > 0
+  //   POST Q1: Valid()
+  //   POST Q3: rear <= |old(Content)|
+  //   POST Q4: circularQueue.Length > 0
+  //   POST Q5: item == old(Content)[old(front)]
+  //   POST Q6: front == (old(front) + 1) % circularQueue.Length
+  //   POST Q7: old(front) < rear
+  //   POST Q8: Content == old(Content)[old(front) .. rear]
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[1] [4];
+    var tmp_circularQueue := new int[1] [-10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 2;
+    obj.front := 0;
+    obj.counter := 1;
+    obj.Content := [-10, -1];
+    obj.Repr := {obj, obj.circularQueue};
+    // var item := obj.remove();
+    // expect item == -10;
+  }
+
+  // Test case for combination {1}/Bcounter=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  front < circularQueue.Length
+  //   PRE:  circularQueue.Length > 0
+  //   POST Q1: Valid()
+  //   POST Q3: rear <= |old(Content)|
+  //   POST Q4: circularQueue.Length > 0
+  //   POST Q5: item == old(Content)[old(front)]
+  //   POST Q6: front == (old(front) + 1) % circularQueue.Length
+  //   POST Q7: old(front) < rear
+  //   POST Q8: Content == old(Content)[old(front) .. rear]
+  //   POST Q9: old(front) >= rear
+  //   POST Q10: old(front) <= rear
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[1] [-1];
     obj.circularQueue := tmp_circularQueue;
     obj.rear := 0;
     obj.front := 0;
+    obj.counter := 0;
+    obj.Content := [2];
+    obj.Repr := {obj, obj.circularQueue};
+    // var item := obj.remove();
+    // expect item == 2;
+  }
+
+  // Test case for combination {3}/Brear=1:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   PRE:  front < circularQueue.Length
+  //   PRE:  circularQueue.Length > 0
+  //   POST Q1: Valid()
+  //   POST Q3: rear <= |old(Content)|
+  //   POST Q4: circularQueue.Length > 0
+  //   POST Q5: item == old(Content)[old(front)]
+  //   POST Q6: front == (old(front) + 1) % circularQueue.Length
+  //   POST Q7: old(front) < rear
+  //   POST Q8: Content == old(Content)[old(front) .. rear]
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[1] [-10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 1;
+    obj.front := 0;
     obj.counter := 1;
-    obj.Content := [4];
+    obj.Content := [-9];
+    obj.Repr := {obj, obj.circularQueue};
+    // var item := obj.remove();
+    // expect item == -9;
+  }
+
+}
+
+method TestsForsize()
+{
+  // Test case for combination {1}:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: size == counter
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [6, 5];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [6, 5];
+    obj.Repr := {obj, obj.circularQueue};
+    var size := obj.size();
+    expect size == 2;
+  }
+
+  // Test case for combination {1}/Brear=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: size == counter
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-10, -10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 0;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, -10];
+    obj.Repr := {obj, obj.circularQueue};
+    var size := obj.size();
+    expect size == 2;
+  }
+
+  // Test case for combination {1}/Brear=1:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: size == counter
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-10, -10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, -10];
+    obj.Repr := {obj, obj.circularQueue};
+    var size := obj.size();
+    expect size == 2;
+  }
+
+  // Test case for combination {1}/Bfront=0:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: size == counter
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [6, -10];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
+    obj.front := 0;
+    obj.counter := 2;
+    obj.Content := [6, -10];
+    obj.Repr := {obj, obj.circularQueue};
+    var size := obj.size();
+    expect size == 2;
+  }
+
+}
+
+method TestsForisEmpty()
+{
+  // Test case for combination {2}/Rel:
+  //   PRE:  Valid()
+  //   PRE:  Valid()
+  //   POST Q1: isEmpty != true
+  //   POST Q2: isEmpty == false
+  //   POST Q3: counter != 0
+  {
+    var obj := new Queue();
+    var tmp_circularQueue := new int[2] [-10, -2];
+    obj.circularQueue := tmp_circularQueue;
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, -2];
     obj.Repr := {obj, obj.circularQueue};
     var isEmpty := obj.isEmpty();
     expect isEmpty == false;
   }
 
-  // Test case for combination {4}:
+  // Test case for combination {3}/Rel:
   //   PRE:  Valid()
-  //   POST: counter == 0
-  //   POST: counter != 0
-  //   POST: !(isEmpty == false)
-  //   POST: !(counter != 0)
-  //   ENSURES: isEmpty == true ==> counter == 0
-  //   ENSURES: isEmpty == false ==> counter != 0
+  //   PRE:  Valid()
+  //   POST Q1: isEmpty == true
+  //   POST Q2: counter == 0
+  //   POST Q3: isEmpty != false
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[0] [];
+    var tmp_circularQueue := new int[1] [3];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
+    obj.rear := 10;
+    obj.front := 10;
     obj.counter := 0;
-    obj.Content := [];
+    obj.Content := [3];
     obj.Repr := {obj, obj.circularQueue};
     var isEmpty := obj.isEmpty();
     expect isEmpty == true;
   }
 
-  // Test case for combination {3}/Brear=0,front=0,counter==circularQueue_len,Content=2:
+  // Test case for combination {2}/Brear=0:
   //   PRE:  Valid()
-  //   POST: counter == 0
-  //   POST: !(isEmpty == false)
-  //   POST: isEmpty == false
-  //   POST: counter != 0
-  //   ENSURES: isEmpty == true ==> counter == 0
-  //   ENSURES: isEmpty == false ==> counter != 0
+  //   PRE:  Valid()
+  //   POST Q1: isEmpty != true
+  //   POST Q2: isEmpty == false
+  //   POST Q3: counter != 0
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[2] [4, 3];
+    var tmp_circularQueue := new int[2] [-10, 9];
     obj.circularQueue := tmp_circularQueue;
     obj.rear := 0;
-    obj.front := 0;
+    obj.front := 10;
     obj.counter := 2;
-    obj.Content := [4, 3];
+    obj.Content := [-10, 9];
     obj.Repr := {obj, obj.circularQueue};
     var isEmpty := obj.isEmpty();
     expect isEmpty == false;
   }
 
-  // Test case for combination {3}/Brear=0,front=0,counter==circularQueue_len,Content=3:
+  // Test case for combination {2}/Brear=1:
   //   PRE:  Valid()
-  //   POST: counter == 0
-  //   POST: !(isEmpty == false)
-  //   POST: isEmpty == false
-  //   POST: counter != 0
-  //   ENSURES: isEmpty == true ==> counter == 0
-  //   ENSURES: isEmpty == false ==> counter != 0
+  //   PRE:  Valid()
+  //   POST Q1: isEmpty != true
+  //   POST Q2: isEmpty == false
+  //   POST Q3: counter != 0
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[3] [5, 4, 6];
+    var tmp_circularQueue := new int[2] [-10, 9];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 3;
-    obj.Content := [5, 4, 6];
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, 9];
     obj.Repr := {obj, obj.circularQueue};
     var isEmpty := obj.isEmpty();
     expect isEmpty == false;
@@ -528,94 +733,66 @@ method GeneratedTests_isEmpty()
 
 }
 
-method GeneratedTests_contains()
+method TestsForcontains()
 {
-  // Test case for combination {6}:
+  // Test case for combination {2}/Rel:
   //   PRE:  Valid()
-  //   POST: item in circularQueue[..]
-  //   POST: item !in circularQueue[..]
-  //   POST: contains == false
-  //   POST: item !in circularQueue[..]
-  //   ENSURES: contains == true ==> item in circularQueue[..]
-  //   ENSURES: contains == false ==> item !in circularQueue[..]
+  //   PRE:  Valid()
+  //   POST Q1: contains == true ==> item in circularQueue[..]
+  //   POST Q2: contains == false ==> item !in circularQueue[..]
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[0] [];
+    var tmp_circularQueue := new int[2] [-10, 9];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [];
+    obj.rear := 10;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, 9];
     obj.Repr := {obj, obj.circularQueue};
-    var item := 8;
+    var item := -10;
     var contains := obj.contains(item);
-    expect contains == false;
+    expect contains == true ==> item in obj.circularQueue[..];
+    expect contains == false ==> item !in obj.circularQueue[..];
   }
 
-  // Test case for combination {8}:
+  // Test case for combination {2}/Brear=0:
   //   PRE:  Valid()
-  //   POST: contains == true
-  //   POST: !(contains == false)
-  //   POST: !(contains == false)
-  //   POST: !(item !in circularQueue[..])
-  //   ENSURES: contains == true ==> item in circularQueue[..]
-  //   ENSURES: contains == false ==> item !in circularQueue[..]
+  //   PRE:  Valid()
+  //   POST Q1: contains != true
+  //   POST Q2: contains == false
+  //   POST Q3: item !in circularQueue[..]
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[1] [8];
+    var tmp_circularQueue := new int[2] [-10, -8];
     obj.circularQueue := tmp_circularQueue;
     obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [8];
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [-10, -8];
     obj.Repr := {obj, obj.circularQueue};
-    var item := 8;
+    var item := -10;
     var contains := obj.contains(item);
-    expect contains == true;
+    expect contains == false || contains == true;
   }
 
-  // Test case for combination {6}/Bitem=0,rear=0,front=0,counter==circularQueue_len:
+  // Test case for combination {2}/Brear=1:
   //   PRE:  Valid()
-  //   POST: item in circularQueue[..]
-  //   POST: item !in circularQueue[..]
-  //   POST: contains == false
-  //   POST: item !in circularQueue[..]
-  //   ENSURES: contains == true ==> item in circularQueue[..]
-  //   ENSURES: contains == false ==> item !in circularQueue[..]
+  //   PRE:  Valid()
+  //   POST Q1: contains != true
+  //   POST Q2: contains == false
+  //   POST Q3: item !in circularQueue[..]
   {
     var obj := new Queue();
-    var tmp_circularQueue := new int[1] [8];
+    var tmp_circularQueue := new int[2] [9, -10];
     obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 1;
-    obj.Content := [8];
+    obj.rear := 1;
+    obj.front := 10;
+    obj.counter := 2;
+    obj.Content := [9, -10];
     obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
+    var item := -10;
     var contains := obj.contains(item);
-    expect contains == false;
-  }
-
-  // Test case for combination {6}/Bitem=0,rear=0,front=0,counter=0:
-  //   PRE:  Valid()
-  //   POST: item in circularQueue[..]
-  //   POST: item !in circularQueue[..]
-  //   POST: contains == false
-  //   POST: item !in circularQueue[..]
-  //   ENSURES: contains == true ==> item in circularQueue[..]
-  //   ENSURES: contains == false ==> item !in circularQueue[..]
-  {
-    var obj := new Queue();
-    var tmp_circularQueue := new int[1] [8];
-    obj.circularQueue := tmp_circularQueue;
-    obj.rear := 0;
-    obj.front := 0;
-    obj.counter := 0;
-    obj.Content := [8];
-    obj.Repr := {obj, obj.circularQueue};
-    var item := 0;
-    var contains := obj.contains(item);
-    expect contains == false;
+    expect contains == false || contains == true;
   }
 
 }

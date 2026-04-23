@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 // Method: mySqrt
-// Generated: 2026-04-08 19:05:09
+// Generated: 2026-04-22 21:27:35
 
 // dafny_examples_tmp_tmp8qotd4ez_leetcode_0069-sqrt.dfy
 
@@ -44,22 +44,22 @@ method mySqrt(x: int) returns (res: int)
 }
 
 
-method Passing()
+method TestsFormySqrt()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  0 <= x
-  //   POST: sqrt(x, res)
-  //   ENSURES: sqrt(x, res)
+  //   POST Q1: sqrt(x, res)
+  //   POST Q2: (res + 1) * (res + 1) > x
   {
-    var x := 7;
+    var x := 9;
     var res := mySqrt(x);
-    expect res == 2;
+    expect res == 3;
   }
 
   // Test case for combination {1}/Bx=0:
   //   PRE:  0 <= x
-  //   POST: sqrt(x, res)
-  //   ENSURES: sqrt(x, res)
+  //   POST Q1: sqrt(x, res)
+  //   POST Q2: (res + 1) * (res + 1) > x
   {
     var x := 0;
     var res := mySqrt(x);
@@ -68,33 +68,28 @@ method Passing()
 
   // Test case for combination {1}/Bx=1:
   //   PRE:  0 <= x
-  //   POST: sqrt(x, res)
-  //   ENSURES: sqrt(x, res)
+  //   POST Q1: sqrt(x, res)
+  //   POST Q2: (res + 1) * (res + 1) > x
   {
     var x := 1;
     var res := mySqrt(x);
     expect res == 1;
   }
 
-  // Test case for combination {1}/Ores>0:
+  // Test case for combination {1}/Bres=x-1:
   //   PRE:  0 <= x
-  //   POST: sqrt(x, res)
-  //   ENSURES: sqrt(x, res)
+  //   POST Q1: sqrt(x, res)
+  //   POST Q2: (res + 1) * (res + 1) > x
   {
-    var x := 3;
+    var x := 2;
     var res := mySqrt(x);
     expect res == 1;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormySqrt();
+  print "TestsFormySqrt: all non-failing tests passed!\n";
 }

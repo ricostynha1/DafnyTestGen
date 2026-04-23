@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 // Method: AdditiveFactorial
-// Generated: 2026-04-08 19:17:12
+// Generated: 2026-04-22 21:36:55
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_from dafny main repo_dafny2_Classics.dfy
 
@@ -105,12 +105,10 @@ method FIND(A: array<int>, N: int, f: int)
 }
 
 
-method Passing()
+method TestsForAdditiveFactorial()
 {
   // Test case for combination {1}:
-  //   POST: n == 0
-  //   POST: u == 1
-  //   ENSURES: u == Factorial(n)
+  //   POST Q1: u == Factorial(n)
   {
     var n := 0;
     var u := AdditiveFactorial(n);
@@ -118,97 +116,88 @@ method Passing()
   }
 
   // Test case for combination {2}:
-  //   POST: !(n == 0)
-  //   POST: u == n * Factorial(n - 1)
-  //   ENSURES: u == Factorial(n)
+  //   POST Q1: u == Factorial(n)
+  {
+    var n := 10;
+    var u := AdditiveFactorial(n);
+    expect u == 3628800;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST Q1: u == Factorial(n)
   {
     var n := 1;
     var u := AdditiveFactorial(n);
-    expect !(n == 0);
     expect u == 1;
   }
 
-  // Test case for combination {2}/Ou=1:
-  //   POST: !(n == 0)
-  //   POST: u == n * Factorial(n - 1)
-  //   ENSURES: u == Factorial(n)
+  // Test case for combination {2}/Bn=2:
+  //   POST Q1: u == Factorial(n)
   {
     var n := 2;
     var u := AdditiveFactorial(n);
     expect u == 2;
   }
 
-  // Test case for combination {2}/Ou=0:
-  //   POST: !(n == 0)
-  //   POST: u == n * Factorial(n - 1)
-  //   ENSURES: u == Factorial(n)
-  {
-    var n := 3;
-    var u := AdditiveFactorial(n);
-    expect u == 6;
-  }
+}
 
+method TestsForFIND()
+{
   // Test case for combination {1}:
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
-  //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
-  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   POST Q1: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[1] [24];
-    var N := 1;
-    var f := 0;
+    var A := new int[3] [-1, 7, 8];
+    var N := 3;
+    var f := 2;
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
-  // Test case for combination {1}/R2:
+  // Test case for combination {1}/Bf=0:
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
-  //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
-  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   POST Q1: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[2] [24, 23];
+    var A := new int[2] [7, -2];
+    var N := 2;
+    var f := 0;
+    FIND(A, N, f);
+    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
+    expect A[..] == [-2, 7]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bf=1:
+  //   PRE:  A.Length == N
+  //   PRE:  0 <= f < N
+  //   POST Q1: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  {
+    var A := new int[2] [-7, -1];
     var N := 2;
     var f := 1;
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
-  // Test case for combination {1}/R3:
+  // Test case for combination {1}/O|A|=1:
   //   PRE:  A.Length == N
   //   PRE:  0 <= f < N
-  //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
-  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
+  //   POST Q1: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
   {
-    var A := new int[2] [24, 23];
-    var N := 2;
+    var A := new int[1] [-10];
+    var N := 1;
     var f := 0;
     FIND(A, N, f);
     expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
   }
 
-  // Test case for combination {1}/R4:
-  //   PRE:  A.Length == N
-  //   PRE:  0 <= f < N
-  //   POST: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
-  //   ENSURES: forall p: int, q: int {:trigger A[q], A[p]} :: 0 <= p <= f <= q < N ==> A[p] <= A[q]
-  {
-    var A := new int[4] [27, 28, 30, 29];
-    var N := 4;
-    var f := 3;
-    FIND(A, N, f);
-    expect forall p: int, q: int :: 0 <= p <= f <= q < N ==> A[p] <= A[q];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAdditiveFactorial();
+  print "TestsForAdditiveFactorial: all non-failing tests passed!\n";
+  TestsForFIND();
+  print "TestsForFIND: all non-failing tests passed!\n";
 }

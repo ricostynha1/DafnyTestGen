@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\StackOfInt.dfy
 // Method: push
-// Generated: 2026-04-21 23:38:22
+// Generated: 2026-04-22 21:29:46
 
 /* 
 * Formal specification and verification of a Stack with limited capacity.
@@ -88,18 +88,16 @@ method TestsForpush()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size]) + [x]
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 3;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := -10;
-    obj.elems[1] := -1;
-    obj.elems[2] := 3;
+    obj.elems[1] := 9;
+    obj.elems[2] := 5;
     var x := 2;
     obj.push(x);
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/Bsize=0:
@@ -108,17 +106,15 @@ method TestsForpush()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size]) + [x]
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 0;
-    obj.elems[0] := 5;
-    obj.elems[1] := -10;
+    obj.elems[0] := -1;
+    obj.elems[1] := 9;
     var x := -10;
     obj.push(x);
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/Bsize=1:
@@ -127,7 +123,6 @@ method TestsForpush()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size]) + [x]
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
@@ -137,7 +132,6 @@ method TestsForpush()
     var x := 2;
     obj.push(x);
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/Bcapacity=1:
@@ -146,7 +140,6 @@ method TestsForpush()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size]) + [x]
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -155,7 +148,6 @@ method TestsForpush()
     var x := -1;
     obj.push(x);
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
 }
@@ -171,12 +163,11 @@ method TestsFortop()
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
-    obj.elems[0] := -1;
-    obj.elems[1] := -10;
+    obj.elems[0] := 5;
+    obj.elems[1] := 4;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
-    expect obj[..] == _module.StackOfInt; // observed from implementation
-    expect res == -10; // observed from implementation
+    expect res == 4; // observed from implementation
   }
 
   // Test case for combination {1}/Bsize=1:
@@ -189,10 +180,9 @@ method TestsFortop()
     var obj := new StackOfInt(capacity);
     obj.size := 1;
     obj.elems[0] := -10;
-    obj.elems[1] := 5;
+    obj.elems[1] := -3;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
-    expect obj[..] == _module.StackOfInt; // observed from implementation
     expect res == -10; // observed from implementation
   }
 
@@ -208,7 +198,6 @@ method TestsFortop()
     obj.elems[0] := 2;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
-    expect obj[..] == _module.StackOfInt; // observed from implementation
     expect res == 2; // observed from implementation
   }
 
@@ -222,11 +211,10 @@ method TestsFortop()
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := -9;
-    obj.elems[1] := -6;
+    obj.elems[1] := 3;
     var res := obj.top();
     expect res == obj.elems[obj.size - 1];
-    expect obj[..] == _module.StackOfInt; // observed from implementation
-    expect res == -6; // observed from implementation
+    expect res == 3; // observed from implementation
   }
 
 }
@@ -239,16 +227,14 @@ method TestsForpop()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size - 1])
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
-    obj.elems[0] := 7;
+    obj.elems[0] := 3;
     obj.elems[1] := -10;
     obj.pop();
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/Bsize=1:
@@ -257,16 +243,14 @@ method TestsForpop()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size - 1])
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 2;
     var obj := new StackOfInt(capacity);
     obj.size := 1;
     obj.elems[0] := -10;
-    obj.elems[1] := -7;
+    obj.elems[1] := 2;
     obj.pop();
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/Bcapacity=1:
@@ -275,7 +259,6 @@ method TestsForpop()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size - 1])
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 1;
     var obj := new StackOfInt(capacity);
@@ -283,7 +266,6 @@ method TestsForpop()
     obj.elems[0] := 2;
     obj.pop();
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
@@ -292,16 +274,14 @@ method TestsForpop()
   //   PRE:  capacity > 0
   //   POST Q1: Valid()
   //   POST Q3: elems[..size] == old(elems[..size - 1])
-  //   POST Q4: size <= elems.Length
   {
     var capacity := 10;
     var obj := new StackOfInt(capacity);
     obj.size := 2;
     obj.elems[0] := -1;
-    obj.elems[1] := 7;
+    obj.elems[1] := 3;
     obj.pop();
     expect obj.Valid();
-    expect obj[..] == _module.StackOfInt; // observed from implementation
   }
 
 }

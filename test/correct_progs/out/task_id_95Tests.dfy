@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_95.dfy
 // Method: SmallestListLength
-// Generated: 2026-04-21 23:45:27
+// Generated: 2026-04-22 21:37:27
 
 // Finds the length of the shortest list in a non-empty list of lists.
 method SmallestListLength<T>(s: seq<seq<T>>) returns (v: nat)
@@ -59,9 +59,19 @@ method TestsForSmallestListLength()
   //   POST Q1: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
   //   POST Q2: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
   {
-    var s: seq<seq<int>> := [[11], [7, 33], [9, 38], [12, 44], [10, 49], [19], [22, 54], [18]];
+    var s: seq<seq<int>> := [[9], [8], [10, 33], [11, 38], [12, 43]];
     var v := SmallestListLength<int>(s);
     expect v == 1;
+  }
+
+  // Test case for combination {2}/Bv=0:
+  //   PRE:  |s| > 0
+  //   POST Q1: forall i: int :: 0 <= i < |s| ==> v <= |s[i]|
+  //   POST Q2: exists i :: 1 <= i < (|s| - 1) && v == |s[i]|
+  {
+    var s: seq<seq<int>> := [[], [], [], [], [], [], [], []];
+    var v := SmallestListLength<int>(s);
+    expect v == 0;
   }
 
 }

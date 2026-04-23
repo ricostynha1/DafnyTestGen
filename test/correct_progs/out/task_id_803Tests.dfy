@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-21 23:45:11
+// Generated: 2026-04-22 21:37:10
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -67,12 +67,11 @@ method TestsForIsPerfectSquare()
   // Test case for combination {4}:
   //   NOTE: Z3 returned UNKNOWN on full query; retry dropped 1 exists-quantified postcondition(s).
   //         Remaining literals still checked; dropped literal(s) not verified by Z3.
-  //   POST Q1: !result
-  //   POST Q2: !exists i: int :: 0 <= i <= n && i * i == n
+  //   POST Q1: result <==> exists i: int :: 0 <= i <= n && i * i == n
   {
     var n := 10;
     var result := IsPerfectSquare(n);
-    expect !result;
+    expect result <==> exists i: int :: 0 <= i <= n && i * i == n;
     expect result == false; // observed from implementation
   }
 

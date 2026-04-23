@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort__913_ROR_Le.dfy
 // Method: bubbleSort
-// Generated: 2026-04-08 16:21:16
+// Generated: 2026-04-22 21:52:44
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_basic examples_BubbleSort.dfy
 
@@ -61,56 +61,45 @@ method bubbleSort(a: array<int>)
 }
 
 
-method Passing()
+method TestsForbubbleSort()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  a != null && a.Length > 0
-  //   POST: sorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: sorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: sorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [18];
+    var a := new int[3] [2, 2, 8];
     bubbleSort(a);
-    expect a[..] == [18];
+    // actual runtime state: a=[8, 2, 2]
+    // expect a[..] == [2, 2, 8]; // LHS=[8, 2, 2], RHS=[2, 2, 8]
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=2:
+  // Test case for combination {1}/O|a|=1:
   //   PRE:  a != null && a.Length > 0
-  //   POST: sorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: sorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: sorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[2] [4, 3];
-    var old_a := a[..];
+    var a := new int[1] [-1];
     bubbleSort(a);
-    // expect sorted(a, 0, a.Length);
-    // expect multiset(a[..]) == multiset(old_a);
+    expect a[..] == [-1];
   }
 
-  // Test case for combination {1}/Ba=3:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Oa≠old:
   //   PRE:  a != null && a.Length > 0
-  //   POST: sorted(a, 0, a.Length)
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: sorted(a, 0, a.Length)
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: sorted(a, 0, a.Length)
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [12, 4, 5];
-    var old_a := a[..];
+    var a := new int[2] [8, -1];
     bubbleSort(a);
-    // expect sorted(a, 0, a.Length);
-    // expect multiset(a[..]) == multiset(old_a);
+    // expect a[..] == [-1, 8]; // LHS=[8, -1], RHS=[-1, 8]
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForbubbleSort();
+  print "TestsForbubbleSort: all non-failing tests passed!\n";
 }

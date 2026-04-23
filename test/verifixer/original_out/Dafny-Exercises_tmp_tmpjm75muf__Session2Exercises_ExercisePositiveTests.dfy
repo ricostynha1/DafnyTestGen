@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive.dfy
 // Method: mpositive
-// Generated: 2026-04-08 19:07:23
+// Generated: 2026-04-22 21:30:28
 
 // Dafny-Exercises_tmp_tmpjm75muf__Session2Exercises_ExercisePositive.dfy
 
@@ -78,233 +78,158 @@ method mpositivertl(v: array<int>) returns (b: bool)
 }
 
 
-method Passing()
+method TestsFormpositive()
 {
   // Test case for combination {1}:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
+  //   POST Q1: b == positive(v[0 .. v.Length])
   {
-    var v := new int[0] [];
-    var b := mpositive(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=1:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[1] [2];
-    var b := mpositive(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[2] [4, 3];
-    var b := mpositive(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[3] [5, 4, 6];
-    var b := mpositive(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=true:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[4] [38, 7719, 21238, 2437];
-    var b := mpositive(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=false:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[5] [-1, -39, 7718, 21238, 2436];
+    var v := new int[1] [-10];
     var b := mpositive(v);
     expect b == false;
   }
 
-  // Test case for combination {1}:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
+  // Test case for combination {1}/O|v|=0:
+  //   POST Q1: b == positive(v[0 .. v.Length])
   {
     var v := new int[0] [];
-    var b := mpositive3(v);
+    var b := mpositive(v);
     expect b == true;
   }
 
-  // Test case for combination {1}/Bv=1:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
+  // Test case for combination {1}/O|v|>=2:
+  //   POST Q1: b == positive(v[0 .. v.Length])
   {
-    var v := new int[1] [2];
-    var b := mpositive3(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[2] [4, 3];
-    var b := mpositive3(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[3] [5, 4, 6];
-    var b := mpositive3(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=true:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[4] [38, 7719, 21238, 2437];
-    var b := mpositive3(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=false:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[5] [-1, -39, 7718, 21238, 2436];
-    var b := mpositive3(v);
+    var v := new int[2] [7, -3];
+    var b := mpositive(v);
     expect b == false;
   }
 
-  // Test case for combination {1}:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
+  // Test case for combination {1}/R4:
+  //   POST Q1: b == positive(v[0 .. v.Length])
   {
-    var v := new int[0] [];
-    var b := mpositive4(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=1:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[1] [2];
-    var b := mpositive4(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[2] [4, 3];
-    var b := mpositive4(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[3] [5, 4, 6];
-    var b := mpositive4(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=true:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[4] [38, 7719, 21238, 2437];
-    var b := mpositive4(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=false:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[5] [-1, -39, 7718, 21238, 2436];
-    var b := mpositive4(v);
-    expect b == false;
-  }
-
-  // Test case for combination {1}:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[0] [];
-    var b := mpositivertl(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=1:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[1] [2];
-    var b := mpositivertl(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=2:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[2] [4, 3];
-    var b := mpositivertl(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Bv=3:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[3] [5, 4, 6];
-    var b := mpositivertl(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=true:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[4] [38, 7719, 21238, 2437];
-    var b := mpositivertl(v);
-    expect b == true;
-  }
-
-  // Test case for combination {1}/Ob=false:
-  //   POST: b == positive(v[0 .. v.Length])
-  //   ENSURES: b == positive(v[0 .. v.Length])
-  {
-    var v := new int[5] [-1, -39, 7718, 21238, 2436];
-    var b := mpositivertl(v);
+    var v := new int[1] [-9];
+    var b := mpositive(v);
     expect b == false;
   }
 
 }
 
-method Failing()
+method TestsFormpositive3()
 {
-  // (no failing tests)
+  // Test case for combination {1}:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [-10];
+    var b := mpositive3(v);
+    expect b == false;
+  }
+
+  // Test case for combination {1}/O|v|=0:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[0] [];
+    var b := mpositive3(v);
+    expect b == true;
+  }
+
+  // Test case for combination {1}/O|v|>=2:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[2] [-1, -10];
+    var b := mpositive3(v);
+    expect b == false;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [-9];
+    var b := mpositive3(v);
+    expect b == false;
+  }
+
+}
+
+method TestsFormpositive4()
+{
+  // Test case for combination {1}:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [7];
+    var b := mpositive4(v);
+    expect b == true;
+  }
+
+  // Test case for combination {1}/O|v|=0:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[0] [];
+    var b := mpositive4(v);
+    expect b == true;
+  }
+
+  // Test case for combination {1}/O|v|>=2:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[2] [-1, -5];
+    var b := mpositive4(v);
+    expect b == false;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [-10];
+    var b := mpositive4(v);
+    expect b == false;
+  }
+
+}
+
+method TestsFormpositivertl()
+{
+  // Test case for combination {1}:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [2];
+    var b := mpositivertl(v);
+    expect b == true;
+  }
+
+  // Test case for combination {1}/O|v|=0:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[0] [];
+    var b := mpositivertl(v);
+    expect b == true;
+  }
+
+  // Test case for combination {1}/O|v|>=2:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[2] [-1, -9];
+    var b := mpositivertl(v);
+    expect b == false;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: b == positive(v[0 .. v.Length])
+  {
+    var v := new int[1] [-10];
+    var b := mpositivertl(v);
+    expect b == false;
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormpositive();
+  print "TestsFormpositive: all non-failing tests passed!\n";
+  TestsFormpositive3();
+  print "TestsFormpositive3: all non-failing tests passed!\n";
+  TestsFormpositive4();
+  print "TestsFormpositive4: all non-failing tests passed!\n";
+  TestsFormpositivertl();
+  print "TestsFormpositivertl: all non-failing tests passed!\n";
 }

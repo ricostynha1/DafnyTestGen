@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_605__165_LVR_0.dfy
 // Method: IsPrime
-// Generated: 2026-04-08 16:56:10
+// Generated: 2026-04-22 21:44:49
 
 // dafny-synthesis_task_id_605.dfy
 
@@ -26,73 +26,67 @@ method IsPrime(n: int) returns (result: bool)
 }
 
 
-method Passing()
+method TestsForIsPrime()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  n >= 2
-  //   POST: result
-  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST Q1: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 2;
     var result := IsPrime(n);
-    // expect result == true;
+    // runtime error: Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+    // runtime error: at System.Numerics.BigInteger.op_Modulus(BigInteger dividend, BigInteger divisor)
+    // runtime error: at Dafny.Helpers.EuclideanModulus(BigInteger a, BigInteger b) in C:\cygwin64\tmp\DafnyTestGen_y553v2i1gw3\runner.cs:line 1730
+    // expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
   }
 
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {2}:
   //   PRE:  n >= 2
-  //   POST: !result
-  //   POST: 2 < n
-  //   POST: !(n % 2 != 0)
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST Q1: !result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
   {
-    var n := 4;
+    var n := 10;
     var result := IsPrime(n);
+    // runtime error: Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+    // runtime error: at System.Numerics.BigInteger.op_Modulus(BigInteger dividend, BigInteger divisor)
+    // runtime error: at Dafny.Helpers.EuclideanModulus(BigInteger a, BigInteger b) in C:\cygwin64\tmp\DafnyTestGen_y553v2i1gw3\runner.cs:line 1730
     // expect result == false;
   }
 
-  // Test case for combination {3}:
-  //   PRE:  n >= 2
-  //   POST: !result
-  //   POST: exists k :: 3 <= k < (n - 1) && !(n % k != 0)
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
-  {
-    var n := 6;
-    var result := IsPrime(n);
-    // expect result == false;
-  }
-
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Bn=3:
   //   PRE:  n >= 2
-  //   POST: result
-  //   POST: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST Q1: result
+  //   POST Q2: forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
     var n := 3;
     var result := IsPrime(n);
+    // runtime error: Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+    // runtime error: at System.Numerics.BigInteger.op_Modulus(BigInteger dividend, BigInteger divisor)
+    // runtime error: at Dafny.Helpers.EuclideanModulus(BigInteger a, BigInteger b) in C:\cygwin64\tmp\DafnyTestGen_y553v2i1gw3\runner.cs:line 1730
     // expect result == true;
   }
 
-  // Test case for combination {3}/Oresult=false:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R3:
   //   PRE:  n >= 2
-  //   POST: !result
-  //   POST: exists k :: 3 <= k < (n - 1) && !(n % k != 0)
-  //   ENSURES: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
+  //   POST Q1: result <==> forall k: int {:trigger n % k} :: 2 <= k < n ==> n % k != 0
   {
-    var n := 15;
+    var n := 5;
     var result := IsPrime(n);
-    // expect result == false;
+    // runtime error: Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+    // runtime error: at System.Numerics.BigInteger.op_Modulus(BigInteger dividend, BigInteger divisor)
+    // runtime error: at Dafny.Helpers.EuclideanModulus(BigInteger a, BigInteger b) in C:\cygwin64\tmp\DafnyTestGen_y553v2i1gw3\runner.cs:line 1730
+    // expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForIsPrime();
+  print "TestsForIsPrime: all non-failing tests passed!\n";
 }

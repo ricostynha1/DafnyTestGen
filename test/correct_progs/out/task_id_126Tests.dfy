@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_126.dfy
 // Method: SumOfCommonDivisors
-// Generated: 2026-04-21 23:38:47
+// Generated: 2026-04-22 21:30:15
 
 // Returns the sum of the common divisors of two positive integers.
 method SumOfCommonDivisors(a: nat, b: nat) returns (sum: nat)
@@ -74,7 +74,6 @@ method TestsForSumOfCommonDivisors()
   // Test case for combination {1}:
   //   PRE:  a > 0 && b > 0
   //   POST Q1: sum == sumSeq(commonDivisors(a, b))
-  //   POST Q2: sum == 0
   {
     var a := 10;
     var b := 10;
@@ -85,7 +84,6 @@ method TestsForSumOfCommonDivisors()
   // Test case for combination {1}/Ba=1:
   //   PRE:  a > 0 && b > 0
   //   POST Q1: sum == sumSeq(commonDivisors(a, b))
-  //   POST Q2: sum == 0
   {
     var a := 1;
     var b := 10;
@@ -96,7 +94,6 @@ method TestsForSumOfCommonDivisors()
   // Test case for combination {1}/Ba=2:
   //   PRE:  a > 0 && b > 0
   //   POST Q1: sum == sumSeq(commonDivisors(a, b))
-  //   POST Q2: sum == 0
   {
     var a := 2;
     var b := 10;
@@ -107,7 +104,6 @@ method TestsForSumOfCommonDivisors()
   // Test case for combination {1}/Bb=1:
   //   PRE:  a > 0 && b > 0
   //   POST Q1: sum == sumSeq(commonDivisors(a, b))
-  //   POST Q2: sum == 0
   {
     var a := 10;
     var b := 1;

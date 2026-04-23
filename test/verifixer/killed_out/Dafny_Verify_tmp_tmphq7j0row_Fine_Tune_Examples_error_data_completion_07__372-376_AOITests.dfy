@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_error_data_completion_07__372-376_AOI.dfy
 // Method: main
-// Generated: 2026-04-08 16:47:18
+// Generated: 2026-04-22 21:33:06
 
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_error_data_completion_07.dfy
 
@@ -30,99 +30,56 @@ method main(n: int) returns (a: int, b: int)
 }
 
 
-method Passing()
+method TestsFormain()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
+  //   POST Q1: a + b == 3 * n
+  {
+    var n := 10;
+    var a, b := main(n);
+    expect a + b == 3 * n;
+    expect a == 10; // observed from implementation
+    expect b == 20; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: a + b == 3 * n
   {
     var n := 0;
     var a, b := main(n);
     expect a + b == 3 * n;
+    expect a == 0; // observed from implementation
+    expect b == 0; // observed from implementation
   }
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
+  //   POST Q1: a + b == 3 * n
   {
     var n := 1;
     var a, b := main(n);
     expect a + b == 3 * n;
-  }
-
-  // Test case for combination {1}/Oa>0:
-  //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
-  {
-    var n := 2;
-    var a, b := main(n);
-    expect a + b == 3 * n;
+    expect a == 1; // observed from implementation
+    expect b == 2; // observed from implementation
   }
 
   // Test case for combination {1}/Oa<0:
   //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
+  //   POST Q1: a + b == 3 * n
   {
-    var n := 3;
+    var n := 9;
     var a, b := main(n);
     expect a + b == 3 * n;
+    expect a == 9; // observed from implementation
+    expect b == 18; // observed from implementation
   }
 
-  // Test case for combination {1}/Oa=0:
-  //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
-  {
-    var n := 4;
-    var a, b := main(n);
-    expect a == 4;
-    expect b == 8;
-  }
-
-  // Test case for combination {1}/Ob>0:
-  //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
-  {
-    var n := 5;
-    var a, b := main(n);
-    expect a + b == 3 * n;
-  }
-
-  // Test case for combination {1}/Ob<0:
-  //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
-  {
-    var n := 6;
-    var a, b := main(n);
-    expect a + b == 3 * n;
-  }
-
-  // Test case for combination {1}/Ob=0:
-  //   PRE:  n >= 0
-  //   POST: a + b == 3 * n
-  //   ENSURES: a + b == 3 * n
-  {
-    var n := 7;
-    var a, b := main(n);
-    expect a == 7;
-    expect b == 14;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFormain();
+  print "TestsFormain: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\TupleOps.dfy
 // Method: SwapTuple
-// Generated: 2026-04-21 23:45:31
+// Generated: 2026-04-22 21:37:31
 
 // --- (int, int) tuples ---
 
@@ -70,9 +70,9 @@ method TestsForSwapTuple()
   //   POST Q1: r.0 == t.1
   //   POST Q2: r.1 == t.0
   {
-    var t := (4294966581, 321);
+    var t := (4294966586, 966);
     var r := SwapTuple(t);
-    expect r == (321, 4294966581);
+    expect r == (966, 4294966586);
   }
 
 }
@@ -131,53 +131,48 @@ method TestsForAddTuples()
   //   POST Q1: r.0 == a.0 + b.0
   //   POST Q2: r.1 == a.1 + b.1
   {
-    var a := (927, 809);
+    var a := (472, 295);
     var b := (0, 0);
     var r := AddTuples(a, b);
-    expect r == (927, 809);
+    expect r == (472, 295);
   }
 
 }
 
 method TestsForTupleMax()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   POST Q1: r == t.0
-  //   POST Q2: r >= t.0
-  //   POST Q3: r >= t.1
+  //   POST Q2: r >= t.1
+  {
+    var t := (387, 387);
+    var r := TupleMax(t);
+    expect r == 387;
+  }
+
+  // Test case for combination {2}/Rel:
+  //   POST Q1: r > t.0
+  //   POST Q2: r == t.1
+  {
+    var t := (387, 388);
+    var r := TupleMax(t);
+    expect r == 388;
+  }
+
+  // Test case for combination {1}/Or=0:
+  //   POST Q1: r == t.0
+  //   POST Q2: r >= t.1
   {
     var t := (0, 0);
     var r := TupleMax(t);
     expect r == 0;
   }
 
-  // Test case for combination {2}:
-  //   POST Q1: r != t.0
-  //   POST Q2: r == t.1
-  //   POST Q3: r >= t.0
-  //   POST Q4: r >= t.1
-  {
-    var t := (545, 546);
-    var r := TupleMax(t);
-    expect r == 546;
-  }
-
-  // Test case for combination {1}/Or>0:
-  //   POST Q1: r == t.0
-  //   POST Q2: r >= t.0
-  //   POST Q3: r >= t.1
-  {
-    var t := (545, -1);
-    var r := TupleMax(t);
-    expect r == 545;
-  }
-
   // Test case for combination {1}/Or<0:
   //   POST Q1: r == t.0
-  //   POST Q2: r >= t.0
-  //   POST Q3: r >= t.1
+  //   POST Q2: r >= t.1
   {
-    var t := (-1, -2);
+    var t := (-1, -1);
     var r := TupleMax(t);
     expect r == -1;
   }
@@ -225,9 +220,9 @@ method TestsForMixedTuple()
   //   POST Q2: r.1 == y
   {
     var x := 0;
-    var y := -221.0;
+    var y := -1.0;
     var r := MixedTuple(x, y);
-    expect r == (0, -221.0);
+    expect r == (0, -1.0);
   }
 
 }
@@ -270,9 +265,9 @@ method TestsForSwap3First()
   //   POST Q2: r.1 == t.0
   //   POST Q3: r.2 == t.2
   {
-    var t := (199, 4294967038, 528);
+    var t := (528, 531, 610);
     var r := Swap3First(t);
-    expect r == (4294967038, 199, 528);
+    expect r == (531, 528, 610);
   }
 
 }

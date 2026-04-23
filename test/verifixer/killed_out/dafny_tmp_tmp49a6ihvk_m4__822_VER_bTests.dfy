@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny_tmp_tmp49a6ihvk_m4__822_VER_b.dfy
 // Method: DutchFlag
-// Generated: 2026-04-08 16:46:14
+// Generated: 2026-04-22 21:32:08
 
 // dafny_tmp_tmp49a6ihvk_m4.dfy
 
@@ -41,60 +41,57 @@ method DutchFlag(a: array<Color>)
 datatype Color = Red | White | Blue
 
 
-method Passing()
+method TestsForDutchFlag()
 {
-  // Test case for combination {1}:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new Color[2] [White, Blue];
+    DutchFlag(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.DutchFlag(_IColor[] a) in C:\cygwin64\tmp\DafnyTestGen_xa2wlqyb5jo\runner.cs:line 5849
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_xa2wlqyb5jo\runner.cs:line 5885
+    // expect a[..] == [White, Blue];
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new Color[0] [];
     DutchFlag(a);
     expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|=1:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
+  {
+    var a := new Color[1] [Blue];
+    DutchFlag(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.DutchFlag(_IColor[] a) in C:\cygwin64\tmp\DafnyTestGen_xa2wlqyb5jo\runner.cs:line 5849
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_xa2wlqyb5jo\runner.cs:line 5919
+    // expect a[..] == [Blue];
+  }
+
+  // Test case for combination {1}/Oa≠old:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
+  //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
     var a := new Color[2] [White, Red];
     DutchFlag(a);
     expect a[..] == [Red, White];
-  }
-
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new Color[1] [Blue];
-    DutchFlag(a);
-    // expect a[..] == [Blue];
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> Below(a[i], a[j])
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new Color[3] [Red, White, Blue];
-    DutchFlag(a);
-    // expect a[..] == [Red, White, Blue];
+    expect a[..] == [Color.Red, Color.White]; // observed from implementation
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForDutchFlag();
+  print "TestsForDutchFlag: all non-failing tests passed!\n";
 }

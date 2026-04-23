@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_06_Hoangkim_ex_06_hoangkim.dfy
 // Method: gcdI
-// Generated: 2026-04-08 19:17:38
+// Generated: 2026-04-22 21:37:17
 
 // Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_06_Hoangkim_ex_06_hoangkim.dfy
 
@@ -52,45 +52,41 @@ function gcd'(x: int, y: int): int
 }
 
 
-method Passing()
+method TestsForgcdI()
 {
   // Test case for combination {1}:
   //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
-  //   ENSURES: d == gcd(m, n)
+  //   POST Q1: d == gcd(m, n)
   {
-    var m := 1;
-    var n := 1;
+    var m := 10;
+    var n := 10;
     var d := gcdI(m, n);
-    expect d == 1;
+    expect d == 10;
   }
 
   // Test case for combination {2}:
   //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
-  //   ENSURES: d == gcd(m, n)
+  //   POST Q1: d == gcd(m, n)
   {
-    var m := 1;
-    var n := 2;
+    var m := 10;
+    var n := 9;
     var d := gcdI(m, n);
     expect d == 1;
   }
 
-  // Test case for combination {1}/Bm=2,n=2:
+  // Test case for combination {3}:
   //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
-  //   ENSURES: d == gcd(m, n)
+  //   POST Q1: d == gcd(m, n)
   {
-    var m := 2;
-    var n := 2;
+    var m := 9;
+    var n := 10;
     var d := gcdI(m, n);
-    expect d == 2;
+    expect d == 1;
   }
 
-  // Test case for combination {2}/Bm=2,n=1:
+  // Test case for combination {2}/Bm=2:
   //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
-  //   ENSURES: d == gcd(m, n)
+  //   POST Q1: d == gcd(m, n)
   {
     var m := 2;
     var n := 1;
@@ -98,26 +94,10 @@ method Passing()
     expect d == 1;
   }
 
-  // Test case for combination {2}/Od=0:
-  //   PRE:  m > 0 && n > 0
-  //   POST: d == gcd(m, n)
-  //   ENSURES: d == gcd(m, n)
-  {
-    var m := 1;
-    var n := 3;
-    var d := gcdI(m, n);
-    expect d == 1;
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForgcdI();
+  print "TestsForgcdI: all non-failing tests passed!\n";
 }

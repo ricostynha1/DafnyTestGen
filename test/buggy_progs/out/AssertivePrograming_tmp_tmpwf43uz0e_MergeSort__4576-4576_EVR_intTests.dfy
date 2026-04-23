@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\AssertivePrograming_tmp_tmpwf43uz0e_MergeSort__4576-4576_EVR_int.dfy
 // Method: MergeSort
-// Generated: 2026-04-22 10:33:49
+// Generated: 2026-04-22 21:25:30
 
 // AssertivePrograming_tmp_tmpwf43uz0e_MergeSort.dfy
 
@@ -225,43 +225,31 @@ method TestsForMergeSort()
 {
   // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}/Rel:
-  //   POST Q1: b.Length == a.Length
-  //   POST Q2: Sorted(b[..])
-  //   POST Q3: multiset(a[..]) == multiset(b[..])
+  //   POST Q1: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[2] [2, 10];
     var b := MergeSort(a);
     // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\cygwin64\tmp\DafnyTestGen_y5gejytilvr\runner.cs:line 6208
-    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\cygwin64\tmp\DafnyTestGen_y5gejytilvr\runner.cs:line 6195
-    // expect b.Length == a.Length;
-    // expect Sorted(b[..]);
-    // expect multiset(a[..]) == multiset(b[..]);
+    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\cygwin64\tmp\DafnyTestGen_vimrt4o4zh5\runner.cs:line 6178
+    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\cygwin64\tmp\DafnyTestGen_vimrt4o4zh5\runner.cs:line 6165
+    // expect b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..]);
   }
 
-  // Test case for combination {1}/V2:
-  //   POST Q1: b.Length == a.Length
-  //   POST Q2: Sorted(b[..])  // VACUOUS (forced true by other literals for this ins)
-  //   POST Q3: multiset(a[..]) == multiset(b[..])
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[0] [];
     var b := MergeSort(a);
-    expect b.Length == a.Length;
-    expect Sorted(b[..]);
-    expect multiset(a[..]) == multiset(b[..]);
+    expect b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..]);
     expect b[..] == []; // observed from implementation
   }
 
   // Test case for combination {1}/O|a|=1:
-  //   POST Q1: b.Length == a.Length
-  //   POST Q2: Sorted(b[..])
-  //   POST Q3: multiset(a[..]) == multiset(b[..])
+  //   POST Q1: b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..])
   {
     var a := new int[1] [-10];
     var b := MergeSort(a);
-    expect b.Length == a.Length;
-    expect Sorted(b[..]);
-    expect multiset(a[..]) == multiset(b[..]);
+    expect b.Length == a.Length && Sorted(b[..]) && multiset(a[..]) == multiset(b[..]);
     expect b[..] == [-10]; // observed from implementation
   }
 
@@ -273,62 +261,54 @@ method TestsForMerge()
   // Test case for combination {1}/Rel:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   POST Q1: Sorted(b[..])
-  //   POST Q2: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
+  //   POST Q1: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[2] [-3, -3];
-    var c := new int[1] [-3];
-    var d := new int[1] [-3];
+    var b := new int[2] [-9, -10];
+    var c := new int[1] [-9];
+    var d := new int[1] [-8];
     Merge(b, c, d);
     // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\cygwin64\tmp\DafnyTestGen_y5gejytilvr\runner.cs:line 6208
-    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\cygwin64\tmp\DafnyTestGen_y5gejytilvr\runner.cs:line 6195
-    // expect Sorted(b[..]);
-    // expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    // runtime error: at _module.__default.MergeLoop(BigInteger[] b, BigInteger[] c, BigInteger[] d, BigInteger i0, BigInteger j0, BigInteger& i, BigInteger& j) in C:\cygwin64\tmp\DafnyTestGen_vimrt4o4zh5\runner.cs:line 6178
+    // runtime error: at _module.__default.Merge(BigInteger[] b, BigInteger[] c, BigInteger[] d) in C:\cygwin64\tmp\DafnyTestGen_vimrt4o4zh5\runner.cs:line 6165
+    // expect Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
   // Test case for combination {1}/O|b|=0:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   POST Q1: Sorted(b[..])
-  //   POST Q2: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
+  //   POST Q1: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
     var b := new int[0] [];
     var c := new int[0] [];
     var d := new int[0] [];
     Merge(b, c, d);
-    expect Sorted(b[..]);
-    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    expect Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
   }
 
   // Test case for combination {1}/O|b|=1:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   POST Q1: Sorted(b[..])
-  //   POST Q2: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
+  //   POST Q1: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[1] [-7];
+    var b := new int[1] [-4];
     var c := new int[1] [-10];
     var d := new int[0] [];
     Merge(b, c, d);
-    expect Sorted(b[..]);
-    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    expect Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
     expect b[..] == [-10]; // observed from implementation
   }
 
   // Test case for combination {1}/O|c|>=2:
   //   PRE:  b != c && b != d && b.Length == c.Length + d.Length
   //   PRE:  Sorted(c[..]) && Sorted(d[..])
-  //   POST Q1: Sorted(b[..])
-  //   POST Q2: multiset(b[..]) == multiset(c[..]) + multiset(d[..])
+  //   POST Q1: Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..])
   {
-    var b := new int[3] [-8, -1, -5];
-    var c := new int[2] [-9, 8];
-    var d := new int[1] [-2];
+    var b := new int[3] [4, -10, 10];
+    var c := new int[2] [-1, 8];
+    var d := new int[1] [-10];
     Merge(b, c, d);
-    expect Sorted(b[..]);
-    expect multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
-    expect b[..] == [-9, -2, 8]; // observed from implementation
+    expect Sorted(b[..]) && multiset(b[..]) == multiset(c[..]) + multiset(d[..]);
+    expect b[..] == [-10, -1, 8]; // observed from implementation
   }
 
 }

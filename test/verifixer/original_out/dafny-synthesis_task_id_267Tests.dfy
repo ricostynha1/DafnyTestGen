@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_267.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-08 19:09:55
+// Generated: 2026-04-22 21:32:12
 
 // dafny-synthesis_task_id_267.dfy
 
@@ -23,12 +23,20 @@ method SumOfSquaresOfFirstNOddNumbers(n: int) returns (sum: int)
 }
 
 
-method Passing()
+method TestsForSumOfSquaresOfFirstNOddNumbers()
 {
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 10;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 1330;
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 0;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
@@ -37,33 +45,26 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 1;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 1;
   }
 
-  // Test case for combination {1}/Osum>0:
+  // Test case for combination {1}/R4:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
-    var n := 3;
+    var n := 9;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
-    expect sum == 35;
+    expect sum == 969;
   }
 
 }
 
-method Failing()
-{
-  // (no failing tests)
-}
-
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSumOfSquaresOfFirstNOddNumbers();
+  print "TestsForSumOfSquaresOfFirstNOddNumbers: all non-failing tests passed!\n";
 }

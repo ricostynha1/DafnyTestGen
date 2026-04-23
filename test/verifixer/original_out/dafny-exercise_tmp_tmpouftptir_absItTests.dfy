@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-exercise_tmp_tmpouftptir_absIt.dfy
 // Method: AbsIt
-// Generated: 2026-04-08 19:07:07
+// Generated: 2026-04-22 21:30:00
 
 // dafny-exercise_tmp_tmpouftptir_absIt.dfy
 
@@ -53,61 +53,39 @@ method Tester()
 }
 
 
-method Passing()
+method TestsForAbsIt()
 {
-  // Test case for combination {1}:
-  //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   POST: s.Length == old(s).Length
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   ENSURES: s.Length == old(s).Length
+  // Test case for combination {1}/Rel:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-10];
+    AbsIt(s);
+    expect s[..] == [10];
+  }
+
+  // Test case for combination {1}/O|s|=0:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
   {
     var s := new int[0] [];
     AbsIt(s);
     expect s[..] == [];
   }
 
-  // Test case for combination {1}/Bs=1:
-  //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   POST: s.Length == old(s).Length
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   ENSURES: s.Length == old(s).Length
+  // Test case for combination {1}/O|s|>=2:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
   {
-    var s := new int[1] [0];
+    var s := new int[2] [-10, -6];
     AbsIt(s);
-    expect s[..] == [0];
+    expect s[..] == [10, 6];
   }
 
-  // Test case for combination {1}/Bs=2:
-  //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   POST: s.Length == old(s).Length
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   ENSURES: s.Length == old(s).Length
-  {
-    var s := new int[2] [0, 7720];
-    AbsIt(s);
-    expect s[..] == [0, 7720];
-  }
-
-  // Test case for combination {1}/Bs=3:
-  //   POST: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   POST: s.Length == old(s).Length
-  //   ENSURES: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
-  //   ENSURES: s.Length == old(s).Length
-  {
-    var s := new int[3] [0, 7720, 7721];
-    AbsIt(s);
-    expect s[..] == [0, 7720, 7721];
-  }
-
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForAbsIt();
+  print "TestsForAbsIt: all non-failing tests passed!\n";
 }

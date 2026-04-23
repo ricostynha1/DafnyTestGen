@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_644.dfy
 // Method: Reverse
-// Generated: 2026-04-08 19:10:48
+// Generated: 2026-04-22 21:33:19
 
 // dafny-synthesis_task_id_644.dfy
 
@@ -45,92 +45,94 @@ method ReverseUptoK(s: array<int>, k: int)
 }
 
 
-method Passing()
+method TestsForReverse()
 {
   // Test case for combination {1}:
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  {
-    var a := new int[0] [];
-    Reverse(a);
-    expect a[..] == [];
-  }
-
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
     var a := new int[1] [2];
     Reverse(a);
     expect a[..] == [2];
   }
 
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[2] [4, 3];
+    var a := new int[0] [];
     Reverse(a);
-    expect a[..] == [3, 4];
+    expect a[..] == [];
   }
 
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var a := new int[3] [6, 5, 4];
+    var a := new int[2] [3, 3];
     Reverse(a);
-    expect a[..] == [4, 5, 6];
+    expect a[..] == [3, 3];
   }
 
-  // Test case for combination {1}:
-  //   PRE:  2 <= k <= s.Length
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  // Test case for combination {1}/Oa≠old:
+  //   POST Q1: forall k: int {:trigger a[k]} :: 0 <= k < a.Length ==> a[k] == old(a[a.Length - 1 - k])
   {
-    var s := new int[2] [13, 9];
-    var k := 2;
-    ReverseUptoK(s, k);
-    expect s[..] == [9, 13];
-  }
-
-  // Test case for combination {1}/Bs=3,k==s_pre_len:
-  //   PRE:  2 <= k <= s.Length
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  {
-    var s := new int[3] [6, 5, 4];
-    var k := 3;
-    ReverseUptoK(s, k);
-    expect s[..] == [4, 5, 6];
-  }
-
-  // Test case for combination {1}/Bs=3,k=2:
-  //   PRE:  2 <= k <= s.Length
-  //   POST: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   POST: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  //   ENSURES: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
-  //   ENSURES: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
-  {
-    var s := new int[3] [5, 4, 6];
-    var k := 2;
-    ReverseUptoK(s, k);
-    expect s[..] == [4, 5, 6];
+    var a := new int[2] [-3, -4];
+    Reverse(a);
+    expect a[..] == [-4, -3];
   }
 
 }
 
-method Failing()
+method TestsForReverseUptoK()
 {
-  // (no failing tests)
+  // Test case for combination {1}/Rel:
+  //   PRE:  2 <= k <= s.Length
+  //   POST Q1: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[2] [9, -10];
+    var k := 2;
+    ReverseUptoK(s, k);
+    expect s[..] == [-10, 9];
+  }
+
+  // Test case for combination {1}/Bk=3:
+  //   PRE:  2 <= k <= s.Length
+  //   POST Q1: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[4] [-2, -10, -1, 16];
+    var k := 3;
+    ReverseUptoK(s, k);
+    expect s[..] == [-1, -10, -2, 16];
+  }
+
+  // Test case for combination {1}/Os=old:
+  //   PRE:  2 <= k <= s.Length
+  //   POST Q1: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[2] [-5, -5];
+    var k := 2;
+    ReverseUptoK(s, k);
+    expect s[..] == [-5, -5];
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  2 <= k <= s.Length
+  //   POST Q1: forall i: int {:trigger s[i]} :: 0 <= i < k ==> s[i] == old(s[k - 1 - i])
+  //   POST Q2: forall i: int {:trigger old(s[i])} {:trigger s[i]} :: k <= i < s.Length ==> s[i] == old(s[i])
+  {
+    var s := new int[2] [-1, 8];
+    var k := 2;
+    ReverseUptoK(s, k);
+    expect s[..] == [8, -1];
+  }
+
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForReverse();
+  print "TestsForReverse: all non-failing tests passed!\n";
+  TestsForReverseUptoK();
+  print "TestsForReverseUptoK: all non-failing tests passed!\n";
 }

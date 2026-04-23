@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\dafny-synthesis_task_id_267__359-363_EVR_int.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-08 16:54:04
+// Generated: 2026-04-22 21:42:23
 
 // dafny-synthesis_task_id_267.dfy
 
@@ -23,12 +23,21 @@ method SumOfSquaresOfFirstNOddNumbers(n: int) returns (sum: int)
 }
 
 
-method Passing()
+method TestsForSumOfSquaresOfFirstNOddNumbers()
 {
+  // FAILING: expects commented out; see VAL/RHS annotations below
   // Test case for combination {1}:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 10;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    // expect sum == 1330; // got 1
+  }
+
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  n >= 0
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 0;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
@@ -37,32 +46,27 @@ method Passing()
 
   // Test case for combination {1}/Bn=1:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
     var n := 1;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 1;
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Osum>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R4:
   //   PRE:  n >= 0
-  //   POST: sum == n * (2 * n - 1) * (2 * n + 1) / 3
-  //   ENSURES: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
   {
-    var n := 3;
+    var n := 9;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
-    // expect sum == 35;
+    // expect sum == 969; // got 1
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSumOfSquaresOfFirstNOddNumbers();
+  print "TestsForSumOfSquaresOfFirstNOddNumbers: all non-failing tests passed!\n";
 }

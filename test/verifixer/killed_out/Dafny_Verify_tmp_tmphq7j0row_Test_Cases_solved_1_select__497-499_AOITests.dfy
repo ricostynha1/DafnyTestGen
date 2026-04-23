@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select__497-499_AOI.dfy
 // Method: SelectionSort
-// Generated: 2026-04-08 16:48:14
+// Generated: 2026-04-22 21:34:42
 
 // Dafny_Verify_tmp_tmphq7j0row_Test_Cases_solved_1_select.dfy
 
@@ -40,59 +40,46 @@ method SelectionSort(a: array<int>)
 }
 
 
-method Passing()
+method TestsForSelectionSort()
 {
-  // Test case for combination {1}:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
+  {
+    var a := new int[2] [-7, 3];
+    var old_multiset_a := multiset(a[..]);
+    SelectionSort(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.SelectionSort(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_3tpiwkx112y\runner.cs:line 5814
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_3tpiwkx112y\runner.cs:line 5860
+    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    // expect multiset(a[..]) == old_multiset_a;
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
     var a := new int[0] [];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    expect a[..] == [];
+    expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
+    expect multiset(a[..]) == old_multiset_a;
+    expect old_multiset_a == multiset{}; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // Test case for combination {1}/Ba=1:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|a|=1:
+  //   POST Q1: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
+  //   POST Q2: multiset(a[..]) == old(multiset(a[..]))
   {
-    var a := new int[1] [2];
+    var a := new int[1] [-10];
     var old_multiset_a := multiset(a[..]);
     SelectionSort(a);
-    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    // expect multiset(a[..]) == old_multiset_a;
-  }
-
-  // Test case for combination {1}/Ba=2:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[2] [6, 5];
-    var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
-    // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
-    // expect multiset(a[..]) == old_multiset_a;
-  }
-
-  // Test case for combination {1}/Ba=3:
-  //   POST: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   POST: multiset(a[..]) == old(multiset(a[..]))
-  //   ENSURES: forall i: int, j: int {:trigger a[j], a[i]} :: 0 <= i < j < a.Length ==> a[i] <= a[j]
-  //   ENSURES: multiset(a[..]) == old(multiset(a[..]))
-  {
-    var a := new int[3] [8, 7, 9];
-    var old_multiset_a := multiset(a[..]);
-    SelectionSort(a);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.SelectionSort(BigInteger[] a) in C:\cygwin64\tmp\DafnyTestGen_3tpiwkx112y\runner.cs:line 5814
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_3tpiwkx112y\runner.cs:line 5939
     // expect forall i: int, j: int :: 0 <= i < j < a.Length ==> a[i] <= a[j];
     // expect multiset(a[..]) == old_multiset_a;
   }
@@ -101,6 +88,6 @@ method Failing()
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForSelectionSort();
+  print "TestsForSelectionSort: all non-failing tests passed!\n";
 }

@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\cs686_tmp_tmpdhuh5dza_classNotes_notes-9-8-21__1967-1983_SWS.dfy
 // Method: Init
-// Generated: 2026-04-08 16:43:43
+// Generated: 2026-04-22 21:29:29
 
 // cs686_tmp_tmpdhuh5dza_classNotes_notes-9-8-21.dfy
 
@@ -71,101 +71,18 @@ class Secret {
 }
 
 
-method Passing()
+method TestsForInit()
 {
   // Test case for combination {1}:
   //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
+  //   POST Q1: secret == x
+  //   POST Q2: known == false
+  //   POST Q3: count == 0
   {
     var obj := new Secret;
-    obj.secret := 0;
+    obj.secret := -10;
     obj.known := false;
-    obj.count := 0;
-    var x := 1;
-    obj.Init(x);
-    expect obj.secret == 1;
-    expect obj.known == false;
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,secret=0,count=0:
-  //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := true;
-    obj.count := 0;
-    var x := 1;
-    obj.Init(x);
-    expect obj.secret == 1;
-    expect obj.known == false;
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,secret=0,count=1:
-  //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := false;
-    obj.count := 1;
-    var x := 1;
-    obj.Init(x);
-    expect obj.secret == 1;
-    expect obj.known == false;
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Bx=1,secret=1,count=0:
-  //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
-  {
-    var obj := new Secret;
-    obj.secret := 1;
-    obj.known := false;
-    obj.count := 0;
-    var x := 1;
-    obj.Init(x);
-    expect obj.secret == 1;
-    expect obj.known == false;
-    expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Osecret>0:
-  //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
-  {
-    var obj := new Secret;
-    obj.secret := -1;
-    obj.known := false;
-    obj.count := -1;
+    obj.count := -10;
     var x := 2;
     obj.Init(x);
     expect obj.secret == 2;
@@ -173,428 +90,155 @@ method Passing()
     expect obj.count == 0;
   }
 
-  // Test case for combination {1}/Oknown=false:
+  // Test case for combination {1}/Osecret=0:
   //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
+  //   POST Q1: secret == x
+  //   POST Q2: known == false
+  //   POST Q3: count == 0
   {
     var obj := new Secret;
-    obj.secret := 2;
+    obj.secret := 0;
     obj.known := false;
-    obj.count := -2;
-    var x := 1;
+    obj.count := -10;
+    var x := 2;
     obj.Init(x);
-    expect obj.secret == 1;
+    expect obj.secret == 2;
     expect obj.known == false;
     expect obj.count == 0;
   }
 
-  // Test case for combination {1}/Ocount=0:
+  // Test case for combination {1}/Osecret>0:
   //   PRE:  1 <= x <= 10
-  //   POST: secret == x
-  //   POST: known == false
-  //   POST: count == 0
-  //   ENSURES: secret == x
-  //   ENSURES: known == false
-  //   ENSURES: count == 0
+  //   POST Q1: secret == x
+  //   POST Q2: known == false
+  //   POST Q3: count == 0
   {
     var obj := new Secret;
-    obj.secret := -2;
+    obj.secret := 10;
     obj.known := false;
-    obj.count := -3;
-    var x := 1;
+    obj.count := -10;
+    var x := 2;
     obj.Init(x);
-    expect obj.secret == 1;
+    expect obj.secret == 2;
+    expect obj.known == false;
+    expect obj.count == 0;
+  }
+
+  // Test case for combination {1}/Oknown=true:
+  //   PRE:  1 <= x <= 10
+  //   POST Q1: secret == x
+  //   POST Q2: known == false
+  //   POST Q3: count == 0
+  {
+    var obj := new Secret;
+    obj.secret := -10;
+    obj.known := true;
+    obj.count := -10;
+    var x := 2;
+    obj.Init(x);
+    expect obj.secret == 2;
     expect obj.known == false;
     expect obj.count == 0;
   }
 
 }
 
-method Failing()
+method TestsForGuess()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   POST Q1: g == secret
+  //   POST Q2: result == true
+  //   POST Q3: known == true
+  //   POST Q4: count == old(count) + 1
+  //   POST Q5: guesses == count
+  {
+    var obj := new Secret;
+    obj.secret := -10;
+    obj.known := false;
+    obj.count := -10;
+    var g := -10;
+    var result, guesses := obj.Guess(g);
+    // actual runtime state: obj=_module.Secret, guesses=-10
+    // expect result == true; // LHS=true, RHS=true
+    // expect guesses == -9; // LHS=-10, RHS=-9
+    // expect obj.known == true; // LHS=true, RHS=true
+    // expect obj.count == -9; // LHS=-9, RHS=-9
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/Rel:
+  //   PRE:  known == false
+  //   POST Q1: g != secret
+  //   POST Q2: result == false
+  //   POST Q3: known == false
+  //   POST Q4: count == old(count) + 1
+  //   POST Q5: guesses == count
+  {
+    var obj := new Secret;
+    obj.secret := -9;
+    obj.known := false;
+    obj.count := -10;
+    var g := -10;
+    var result, guesses := obj.Guess(g);
+    // actual runtime state: obj=_module.Secret, guesses=-10
+    // expect result == false; // LHS=false, RHS=false
+    // expect guesses == -9; // LHS=-10, RHS=-9
+    // expect obj.known == false; // LHS=false, RHS=false
+    // expect obj.count == -9; // LHS=-9, RHS=-9
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Og=0:
+  //   PRE:  known == false
+  //   POST Q1: g == secret
+  //   POST Q2: result == true
+  //   POST Q3: known == true
+  //   POST Q4: count == old(count) + 1
+  //   POST Q5: guesses == count
   {
     var obj := new Secret;
     obj.secret := 0;
     obj.known := false;
-    obj.count := -1;
+    obj.count := -10;
     var g := 0;
     var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 0;
-    // expect obj.known == true;
-    // expect obj.count == 0;
+    // actual runtime state: obj=_module.Secret, guesses=-10
+    // expect result == true; // LHS=true, RHS=true
+    // expect guesses == -9; // LHS=-10, RHS=-9
+    // expect obj.known == true; // LHS=true, RHS=true
+    // expect obj.count == -9; // LHS=-9, RHS=-9
   }
 
-  // Test case for combination {2}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Og>0:
   //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
+  //   POST Q1: g == secret
+  //   POST Q2: result == true
+  //   POST Q3: known == true
+  //   POST Q4: count == old(count) + 1
+  //   POST Q5: guesses == count
   {
     var obj := new Secret;
-    obj.secret := 0;
+    obj.secret := 10;
     obj.known := false;
-    obj.count := -1;
-    var g := 1;
+    obj.count := -10;
+    var g := 10;
     var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == 0;
-    // expect obj.known == false;
-    // expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Bg=0,secret=0,count=0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := false;
-    obj.count := 0;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 1;
-    // expect obj.known == true;
-    // expect obj.count == 1;
-  }
-
-  // Test case for combination {1}/Bg=0,secret=0,count=1:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := false;
-    obj.count := 1;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 2;
-    // expect obj.known == true;
-    // expect obj.count == 2;
-  }
-
-  // Test case for combination {1}/Oguesses<0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 0;
-    obj.known := false;
-    obj.count := -2;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == -1;
-    // expect obj.known == true;
-    // expect obj.count == -1;
-  }
-
-  // Test case for combination {1}/Oguesses=0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 1;
-    obj.known := false;
-    obj.count := -1;
-    var g := 1;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 0;
-    // expect obj.known == true;
-    // expect obj.count == 0;
-  }
-
-  // Test case for combination {1}/Oknown=true:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -1;
-    obj.known := false;
-    obj.count := -3;
-    var g := -1;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == -2;
-    // expect obj.known == true;
-    // expect obj.count == -2;
-  }
-
-  // Test case for combination {1}/Ocount>0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 2;
-    obj.known := false;
-    obj.count := 1;
-    var g := 2;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 2;
-    // expect obj.known == true;
-    // expect obj.count == 2;
-  }
-
-  // Test case for combination {1}/Ocount<0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -2;
-    obj.known := false;
-    obj.count := -4;
-    var g := -2;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == -3;
-    // expect obj.known == true;
-    // expect obj.count == -3;
-  }
-
-  // Test case for combination {1}/Ocount=0:
-  //   PRE:  known == false
-  //   POST: g == secret
-  //   POST: result == true
-  //   POST: known == true
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -1;
-    obj.known := false;
-    obj.count := -1;
-    var g := -1;
-    var result, guesses := obj.Guess(g);
-    // expect result == true;
-    // expect guesses == 0;
-    // expect obj.known == true;
-    // expect obj.count == 0;
-  }
-
-  // Test case for combination {2}/Oguesses>0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 1;
-    obj.known := false;
-    obj.count := 0;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == 1;
-    // expect obj.known == false;
-    // expect obj.count == 1;
-  }
-
-  // Test case for combination {2}/Oguesses<0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -1;
-    obj.known := false;
-    obj.count := -2;
-    var g := 2;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == -1;
-    // expect obj.known == false;
-    // expect obj.count == -1;
-  }
-
-  // Test case for combination {2}/Oguesses=0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := 1;
-    obj.known := false;
-    obj.count := -1;
-    var g := 0;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == 0;
-    // expect obj.known == false;
-    // expect obj.count == 0;
-  }
-
-  // Test case for combination {2}/Oknown=false:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -2;
-    obj.known := false;
-    obj.count := -3;
-    var g := -3;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == -2;
-    // expect obj.known == false;
-    // expect obj.count == -2;
-  }
-
-  // Test case for combination {2}/Ocount>0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -3;
-    obj.known := false;
-    obj.count := 1;
-    var g := -4;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == 2;
-    // expect obj.known == false;
-    // expect obj.count == 2;
-  }
-
-  // Test case for combination {2}/Ocount<0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -4;
-    obj.known := false;
-    obj.count := -4;
-    var g := -5;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == -3;
-    // expect obj.known == false;
-    // expect obj.count == -3;
-  }
-
-  // Test case for combination {2}/Ocount=0:
-  //   PRE:  known == false
-  //   POST: !(g == secret)
-  //   POST: result == false
-  //   POST: known == false
-  //   POST: count == old(count) + 1
-  //   POST: guesses == count
-  //   ENSURES: if g == secret then result == true && known == true else result == false && known == false
-  //   ENSURES: count == old(count) + 1 && guesses == count
-  {
-    var obj := new Secret;
-    obj.secret := -1;
-    obj.known := false;
-    obj.count := -1;
-    var g := -2;
-    var result, guesses := obj.Guess(g);
-    // expect result == false;
-    // expect guesses == 0;
-    // expect obj.known == false;
-    // expect obj.count == 0;
+    // actual runtime state: obj=_module.Secret, guesses=-10
+    // expect result == true; // LHS=true, RHS=true
+    // expect guesses == -9; // LHS=-10, RHS=-9
+    // expect obj.known == true; // LHS=true, RHS=true
+    // expect obj.count == -9; // LHS=-9, RHS=-9
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForInit();
+  print "TestsForInit: all non-failing tests passed!\n";
+  TestsForGuess();
+  print "TestsForGuess: all non-failing tests passed!\n";
 }

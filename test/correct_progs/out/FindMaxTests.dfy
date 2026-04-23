@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FindMax.dfy
 // Method: FindMax
-// Generated: 2026-04-21 23:35:51
+// Generated: 2026-04-22 21:26:33
 
 // Finds the maximum value in a non-empty array.
 method FindMax(a: array<real>) returns (max: real)
@@ -24,20 +24,10 @@ method FindMax(a: array<real>) returns (max: real)
 
 method TestsForFindMax()
 {
-  // Test case for combination {2}/Rel:
-  //   PRE:  a.Length > 0
-  //   POST Q1: exists k :: 1 <= k < (a.Length - 1) && max == a[k]
-  //   POST Q2: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
-  {
-    var a := new real[4] [14497.75, 14497.25, 14497.75, 14497.5];
-    var max := FindMax(a);
-    expect max == 14497.75;
-  }
-
-  // Test case for combination {3}:
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
   //   POST Q1: 0 <= (a.Length - 1)
-  //   POST Q2: max == a[(a.Length - 1)]
+  //   POST Q2: max == a[0]
   //   POST Q3: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
     var a := new real[1] [0.0];
@@ -45,14 +35,25 @@ method TestsForFindMax()
     expect max == 0.0;
   }
 
-  // Test case for combination {2}/V2:
+  // Test case for combination {2}/Rel:
   //   PRE:  a.Length > 0
   //   POST Q1: exists k :: 1 <= k < (a.Length - 1) && max == a[k]
-  //   POST Q2: forall k: int :: 0 <= k < a.Length ==> max >= a[k]  // VACUOUS (forced true by other literals for this ins)
+  //   POST Q2: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
   {
-    var a := new real[3] [0.0, 0.0, -16497.0];
+    var a := new real[4] [0.0, 30273.5, 30274.0, 21455.5];
     var max := FindMax(a);
-    expect max == 0.0;
+    expect max == 30274.0;
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   PRE:  a.Length > 0
+  //   POST Q1: 0 <= (a.Length - 1)
+  //   POST Q2: max == a[0]
+  //   POST Q3: forall k: int :: 0 <= k < a.Length ==> max >= a[k]
+  {
+    var a := new real[2] [14508.0, 0.0];
+    var max := FindMax(a);
+    expect max == 14508.0;
   }
 
   // Test case for combination {1}/Omax<0:

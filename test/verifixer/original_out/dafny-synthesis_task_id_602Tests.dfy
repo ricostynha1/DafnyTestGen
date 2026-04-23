@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\original\dafny-synthesis_task_id_602.dfy
 // Method: FindFirstRepeatedChar
-// Generated: 2026-04-08 19:10:35
+// Generated: 2026-04-22 21:32:57
 
 // dafny-synthesis_task_id_602.dfy
 
@@ -40,79 +40,58 @@ method FindFirstRepeatedChar(s: string) returns (found: bool, c: char)
 }
 
 
-method Passing()
+method TestsForFindFirstRepeatedChar()
 {
-  // Test case for combination {6}:
-  //   POST: !found
-  //   POST: !exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   POST: !found
-  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
-  //   ENSURES: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   ENSURES: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
+  // Test case for combination {2}:
+  //   POST Q1: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
+  //   POST Q2: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
     var s: seq<char> := [];
     var found, c := FindFirstRepeatedChar(s);
-    expect !found;
-    expect !exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
-    expect !found;
-    expect forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found ==> exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
+    expect !found ==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found == false; // observed from implementation
+    expect c == ' '; // observed from implementation
   }
 
-  // Test case for combination {8}:
-  //   POST: found
-  //   POST: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   POST: found
-  //   POST: !forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
-  //   ENSURES: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   ENSURES: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
+  // Test case for combination {3}:
+  //   POST Q1: found
+  //   POST Q2: exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
   {
-    var s: seq<char> := [' ', ' '];
+    var s: seq<char> := ['~', '~'];
     var found, c := FindFirstRepeatedChar(s);
     expect found == true;
-    expect c == ' ';
+    expect c == '~';
   }
 
-  // Test case for combination {6}/Bs=1:
-  //   POST: !found
-  //   POST: !exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   POST: !found
-  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
-  //   ENSURES: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   ENSURES: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
+  // Test case for combination {2}/O|s|=1:
+  //   POST Q1: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
+  //   POST Q2: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
-    var s: seq<char> := [' '];
+    var s: seq<char> := ['~'];
     var found, c := FindFirstRepeatedChar(s);
-    expect !found;
-    expect !exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
-    expect !found;
-    expect forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found ==> exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
+    expect !found ==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found == false; // observed from implementation
+    expect c == ' '; // observed from implementation
   }
 
-  // Test case for combination {6}/Bs=2:
-  //   POST: !found
-  //   POST: !exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   POST: !found
-  //   POST: forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
-  //   ENSURES: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
-  //   ENSURES: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
+  // Test case for combination {2}/O|s|>=2:
+  //   POST Q1: found ==> exists i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int {:trigger s[l], s[k]} :: 0 <= k < l < j && s[k] == s[l] ==> k >= i
+  //   POST Q2: !found ==> forall i: int, j: int {:trigger s[j], s[i]} :: 0 <= i < j < |s| ==> s[i] != s[j]
   {
-    var s: seq<char> := [' ', '!'];
+    var s: seq<char> := ['}', '~'];
     var found, c := FindFirstRepeatedChar(s);
-    expect !found;
-    expect !exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
-    expect !found;
-    expect forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found ==> exists i: int, j: int :: 0 <= i < j < |s| && s[i] == s[j] && s[i] == c && forall k: int, l: int :: 0 <= k < l < j && s[k] == s[l] ==> k >= i;
+    expect !found ==> forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] != s[j];
+    expect found == false; // observed from implementation
+    expect c == ' '; // observed from implementation
   }
 
-}
-
-method Failing()
-{
-  // (no failing tests)
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForFindFirstRepeatedChar();
+  print "TestsForFindFirstRepeatedChar: all non-failing tests passed!\n";
 }

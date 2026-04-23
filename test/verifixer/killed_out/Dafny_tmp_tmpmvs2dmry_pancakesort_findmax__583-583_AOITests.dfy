@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Dafny_tmp_tmpmvs2dmry_pancakesort_findmax__583-583_AOI.dfy
 // Method: findMax
-// Generated: 2026-04-08 16:46:36
+// Generated: 2026-04-22 21:32:31
 
 // Dafny_tmp_tmpmvs2dmry_pancakesort_findmax.dfy
 
@@ -32,119 +32,92 @@ method findMax(a: array<int>, n: int) returns (r: int)
 }
 
 
-method Passing()
+method TestsForfindMax()
 {
-  // (no passing tests)
-}
-
-method Failing()
-{
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  a.Length > 0
   //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: 0 <= r
+  //   POST Q2: r < n
+  //   POST Q3: n <= a.Length
+  //   POST Q4: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
+  //   POST Q5: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[1] [7719];
-    var n := 1;
-    var old_a := a[..];
-    var r := findMax(a, n);
-    // expect r == 0;
-  }
-
-  // Test case for combination {1}/Ba=2,n==a_len:
-  //   PRE:  a.Length > 0
-  //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[2] [7719, 7720];
+    var a := new int[2] [10, -10];
     var n := 2;
     var old_a := a[..];
     var r := findMax(a, n);
-    // expect r == 1;
-  }
-
-  // Test case for combination {1}/Ba=2,n=1:
-  //   PRE:  a.Length > 0
-  //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
-  {
-    var a := new int[2] [0, 6];
-    var n := 1;
-    var old_a := a[..];
-    var r := findMax(a, n);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.findMax(BigInteger[] a, BigInteger n) in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5823
+    // runtime error: at _module.__default.TestCase__0() in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5861
     // expect r == 0;
   }
 
-  // Test case for combination {1}/Ba=3,n==a_len:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=1:
   //   PRE:  a.Length > 0
   //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: 0 <= r
+  //   POST Q2: r < n
+  //   POST Q3: n <= a.Length
+  //   POST Q4: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
+  //   POST Q5: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [-12385, -12384, -12383];
-    var n := 3;
+    var a := new int[1] [-10];
+    var n := 1;
     var old_a := a[..];
     var r := findMax(a, n);
-    // expect r == 2;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.findMax(BigInteger[] a, BigInteger n) in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5823
+    // runtime error: at _module.__default.TestCase__1() in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5896
+    // expect r == 0;
   }
 
-  // Test case for combination {1}/Or>0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=a_len-1:
   //   PRE:  a.Length > 0
   //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: 0 <= r
+  //   POST Q2: r < n
+  //   POST Q3: n <= a.Length
+  //   POST Q4: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
+  //   POST Q5: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[4] [-38, 7719, 30, 29];
+    var a := new int[3] [-10, -6, -7];
     var n := 2;
     var old_a := a[..];
     var r := findMax(a, n);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.findMax(BigInteger[] a, BigInteger n) in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5823
+    // runtime error: at _module.__default.TestCase__2() in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5933
     // expect r == 1;
   }
 
-  // Test case for combination {1}/Or=0:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R3:
   //   PRE:  a.Length > 0
   //   PRE:  0 < n <= a.Length
-  //   POST: 0 <= r < n <= a.Length
-  //   POST: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   POST: multiset(a[..]) == multiset(old(a[..]))
-  //   ENSURES: 0 <= r < n <= a.Length
-  //   ENSURES: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
-  //   ENSURES: multiset(a[..]) == multiset(old(a[..]))
+  //   POST Q1: 0 <= r
+  //   POST Q2: r < n
+  //   POST Q3: n <= a.Length
+  //   POST Q4: forall k: int {:trigger a[k]} :: 0 <= k < n <= a.Length ==> a[r] >= a[k]
+  //   POST Q5: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new int[3] [7719, 17, 18];
-    var n := 1;
+    var a := new int[2] [9, 9];
+    var n := 2;
     var old_a := a[..];
     var r := findMax(a, n);
-    // expect r == 0;
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.findMax(BigInteger[] a, BigInteger n) in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5823
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_hl4ej3dcpft\runner.cs:line 5969
+    // expect r == 1 || r == 0;
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForfindMax();
+  print "TestsForfindMax: all non-failing tests passed!\n";
 }

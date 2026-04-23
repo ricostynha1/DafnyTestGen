@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element__257_ROR_Neq.dfy
 // Method: removeElement
-// Generated: 2026-04-08 16:20:55
+// Generated: 2026-04-22 21:52:24
 
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_lc-remove-element.dfy
 
@@ -40,88 +40,55 @@ method OriginalMain()
 }
 
 
-method Passing()
-{
-  // Test case for combination {1}/Bnums=1,val=0:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  {
-    var nums := new int[1] [16];
-    var val := 0;
-    var i := removeElement(nums, val);
-    expect i == 0;
-    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
-  }
-
-}
-
-method Failing()
+method TestsForremoveElement()
 {
   // Test case for combination {1}:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  //   POST Q1: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
-    var nums := new int[0] [];
-    var val := 9;
+    var nums := new int[1] [5];
+    var val := -10;
     var i := removeElement(nums, val);
-    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect i == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bnums=0,val=0:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  // Test case for combination {1}/Bi=nums_pre_len:
+  //   POST Q1: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
-    var nums := new int[0] [];
-    var val := 0;
+    var nums := new int[1] [6];
+    var val := -9;
     var i := removeElement(nums, val);
-    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect i == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bnums=0,val=1:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  // Test case for combination {1}/Bi=nums_pre_len-1:
+  //   POST Q1: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
-    var nums := new int[0] [];
-    var val := 1;
+    var nums := new int[1] [7];
+    var val := -8;
     var i := removeElement(nums, val);
-    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
+    expect i == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Oi>0:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/O|nums|=0:
+  //   POST Q1: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
   {
     var nums := new int[0] [];
-    var val := 10;
+    var val := -10;
     var i := removeElement(nums, val);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at _module.__default.removeElement(BigInteger[] nums, BigInteger val) in C:\cygwin64\tmp\DafnyTestGen_jbr2ll3xrnr\runner.cs:line 5823
+    // runtime error: at _module.__default.TestCase__3() in C:\cygwin64\tmp\DafnyTestGen_jbr2ll3xrnr\runner.cs:line 5995
     // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
-  }
-
-  // Test case for combination {1}/Oi<0:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  {
-    var nums := new int[0] [];
-    var val := 11;
-    var i := removeElement(nums, val);
-    // expect forall k: int :: 0 < k < i < nums.Length ==> nums[k] != val;
-  }
-
-  // Test case for combination {1}/Oi=0:
-  //   POST: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  //   ENSURES: forall k: int {:trigger nums[k]} :: 0 < k < i < nums.Length ==> nums[k] != val
-  {
-    var nums := new int[0] [];
-    var val := 2;
-    var i := removeElement(nums, val);
-    // expect i == 0;
-    // expect nums[..] == [];
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsForremoveElement();
+  print "TestsForremoveElement: all non-failing tests passed!\n";
 }

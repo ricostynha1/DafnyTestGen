@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\SwapTuple.dfy
 // Method: SwapTuple
-// Generated: 2026-04-21 23:38:31
+// Generated: 2026-04-22 21:29:55
 
 method SwapTuple(t: (int, int)) returns (r: (int, int))
   ensures r.0 == t.1
@@ -17,9 +17,9 @@ method TestsForSwapTuple()
   //   POST Q1: r.0 == t.1
   //   POST Q2: r.1 == t.0
   {
-    var t := (4294966581, 321);
+    var t := (4294966586, 966);
     var r := SwapTuple(t);
-    expect r == (321, 4294966581);
+    expect r == (966, 4294966586);
   }
 
 }

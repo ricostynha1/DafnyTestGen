@@ -1,7 +1,7 @@
 // Auto-generated test cases by DafnyTestGen
 // Source: C:\Dados\Dafny\DafnyTestGen\test\verifixer\killed\nitwit_tmp_tmplm098gxz_nit__3142_AOR_Mul.dfy
 // Method: nit_increment
-// Generated: 2026-04-08 16:20:39
+// Generated: 2026-04-22 21:52:06
 
 // nitwit_tmp_tmplm098gxz_nit.dfy
 
@@ -186,14 +186,90 @@ method OriginalMain()
 }
 
 
-method Passing()
+method TestsFornit_increment()
 {
-  // Test case for combination {1}:
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Rel:
   //   PRE:  valid_base(b)
-  //   POST: nitness(b, nmax)
-  //   POST: is_max_nit(b, nmax)
-  //   ENSURES: nitness(b, nmax)
-  //   ENSURES: is_max_nit(b, nmax)
+  //   PRE:  nitness(b, n)
+  //   POST Q1: nitness(b, sum)
+  //   POST Q2: nitness(b, carry)
+  {
+    var b := 10;
+    var n := 9;
+    var sum, carry := nit_increment(b, n);
+    // actual runtime state: sum=0, carry=100
+    // expect nitness(b, sum); // got true
+    // expect nitness(b, carry); // got false
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  nitness(b, n)
+  //   POST Q1: nitness(b, sum)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: 0 <= carry
+  //   POST Q4: carry < b
+  {
+    var b := 2;
+    var n := 1;
+    var sum, carry := nit_increment(b, n);
+    // actual runtime state: sum=0, carry=4
+    // expect sum == 1 || sum == 0 || sum == 1 || sum == 0; // got true
+    // expect carry == 1 || carry == 0 || carry == 0 || carry == 1; // got false
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bb=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  nitness(b, n)
+  //   POST Q1: nitness(b, sum)
+  //   POST Q2: nitness(b, carry)
+  {
+    var b := 3;
+    var n := 2;
+    var sum, carry := nit_increment(b, n);
+    // actual runtime state: sum=0, carry=9
+    // expect nitness(b, sum); // got true
+    // expect nitness(b, carry); // got false
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bn=0:
+  //   PRE:  valid_base(b)
+  //   PRE:  nitness(b, n)
+  //   POST Q1: nitness(b, sum)
+  //   POST Q2: nitness(b, carry)
+  {
+    var b := 10;
+    var n := 0;
+    var sum, carry := nit_increment(b, n);
+    // actual runtime state: sum=1, carry=10
+    // expect nitness(b, sum); // got true
+    // expect nitness(b, carry); // got false
+  }
+
+}
+
+method TestsFormax_nit()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  valid_base(b)
+  //   POST Q1: nitness(b, nmax)
+  //   POST Q2: is_max_nit(b, nmax)
+  //   POST Q3: nmax == b - 1
+  {
+    var b := 10;
+    var nmax := max_nit(b);
+    expect nmax == 9;
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   POST Q1: nitness(b, nmax)
+  //   POST Q2: is_max_nit(b, nmax)
+  //   POST Q3: nmax == b - 1
   {
     var b := 2;
     var nmax := max_nit(b);
@@ -202,813 +278,413 @@ method Passing()
 
   // Test case for combination {1}/Bb=3:
   //   PRE:  valid_base(b)
-  //   POST: nitness(b, nmax)
-  //   POST: is_max_nit(b, nmax)
-  //   ENSURES: nitness(b, nmax)
-  //   ENSURES: is_max_nit(b, nmax)
+  //   POST Q1: nitness(b, nmax)
+  //   POST Q2: is_max_nit(b, nmax)
+  //   POST Q3: nmax == b - 1
   {
     var b := 3;
     var nmax := max_nit(b);
     expect nmax == 2;
   }
 
-  // Test case for combination {1}/Onmax>=2:
-  //   PRE:  valid_base(b)
-  //   POST: nitness(b, nmax)
-  //   POST: is_max_nit(b, nmax)
-  //   ENSURES: nitness(b, nmax)
-  //   ENSURES: is_max_nit(b, nmax)
-  {
-    var b := 4;
-    var nmax := max_nit(b);
-    expect nmax == 3;
-  }
+}
 
-  // Test case for combination {1}:
+method TestsFornit_flip()
+{
+  // Test case for combination {1}/Rel:
   //   PRE:  valid_base(b)
   //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
+  //   POST Q1: nitness(b, nf)
   {
-    var b := 2;
-    var n := 0;
+    var b := 10;
+    var n := 9;
     var nf := nit_flip(b, n);
-    expect nf == 1;
     expect nitness(b, nf);
+    expect nf == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bb=2,n=1:
+  // Test case for combination {1}/Bb=2:
   //   PRE:  valid_base(b)
   //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
+  //   POST Q1: nitness(b, nf)
+  //   POST Q2: nf < b
   {
     var b := 2;
     var n := 1;
     var nf := nit_flip(b, n);
-    expect nf == 0;
-    expect nitness(b, nf);
+    expect nf == 1 || nf == 0;
+    expect nf == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Bb=3,n=0:
+  // Test case for combination {1}/Bb=3:
   //   PRE:  valid_base(b)
   //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
-  {
-    var b := 3;
-    var n := 0;
-    var nf := nit_flip(b, n);
-    expect nf == 2;
-    expect nitness(b, nf);
-  }
-
-  // Test case for combination {1}/Bb=3,n=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
-  {
-    var b := 3;
-    var n := 1;
-    var nf := nit_flip(b, n);
-    expect nf == 1;
-    expect nitness(b, nf);
-  }
-
-  // Test case for combination {1}/Onf>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
-  {
-    var b := 4;
-    var n := 0;
-    var nf := nit_flip(b, n);
-    expect nf == 3;
-    expect nitness(b, nf);
-  }
-
-  // Test case for combination {1}/Onf=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
+  //   POST Q1: nitness(b, nf)
+  //   POST Q2: nf < b
   {
     var b := 3;
     var n := 2;
     var nf := nit_flip(b, n);
-    expect nf == 0;
+    expect nf == 2 || nf == 0 || nf == 1;
+    expect nf == 0; // observed from implementation
   }
 
-  // Test case for combination {1}/Onf=0:
+  // Test case for combination {1}/Bn=0:
   //   PRE:  valid_base(b)
   //   PRE:  nitness(b, n)
-  //   POST: nitness(b, nf)
-  //   ENSURES: nitness(b, nf)
+  //   POST Q1: nitness(b, nf)
   {
-    var b := 5;
-    var n := 1;
+    var b := 10;
+    var n := 0;
     var nf := nit_flip(b, n);
-    expect nf == 3;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add(b, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination {1}/Bb=2,x=0,y=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var x := 0;
-    var y := 1;
-    var z, carry := nit_add(b, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination {1}/Bb=2,x=1,y=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var x := 1;
-    var y := 0;
-    var z, carry := nit_add(b, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination {1}/Oz>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 3;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add(b, x, y);
-    expect z == 0;
-    expect carry == 0;
-  }
-
-  // Test case for combination {1}/Oz=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var x := 1;
-    var y := 1;
-    var z, carry := nit_add(b, x, y);
-    expect z == 0;
-    expect carry == 1;
-  }
-
-  // Test case for combination {1}/Oz=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 4;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add(b, x, y);
-    expect z == 0;
-    expect carry == 0;
-  }
-
-  // Test case for combination {1}/Ocarry=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 3;
-    var x := 2;
-    var y := 0;
-    var z, carry := nit_add(b, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination P{1}/{1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var c := 0;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination P{2}/{1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var c := 1;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination P{1}/{1}/Oz>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 3;
-    var c := 0;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 0;
-    expect carry == 0;
-  }
-
-  // Test case for combination P{1}/{1}/Oz=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var c := 0;
-    var x := 1;
-    var y := 1;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 0;
-    expect carry == 1;
-  }
-
-  // Test case for combination P{1}/{1}/Oz=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 4;
-    var c := 0;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 0;
-    expect carry == 0;
-  }
-
-  // Test case for combination P{1}/{1}/Ocarry=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 3;
-    var c := 0;
-    var x := 2;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect nitness(b, z);
-    expect nitness(b, carry);
-    expect carry == 0;
-    expect !(carry == 1);
-  }
-
-  // Test case for combination P{2}/{1}/Oz>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 3;
-    var c := 1;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 1;
-    expect carry == 0;
-  }
-
-  // Test case for combination P{2}/{1}/Oz=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 2;
-    var c := 1;
-    var x := 1;
-    var y := 1;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 1;
-    expect carry == 1;
-  }
-
-  // Test case for combination P{2}/{1}/Oz=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  c == 0 || c == 1
-  //   PRE:  nitness(b, x)
-  //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
-  {
-    var b := 4;
-    var c := 1;
-    var x := 0;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    expect z == 1;
-    expect carry == 0;
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   PRE:  bibble(b, q)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 2;
-    var p: seq<nat> := [1, 1, 1, 1];
-    var q: seq<nat> := [0, 0, 1, 0];
-    var r := bibble_add(b, p, q);
-    expect r == [0, 0, 0, 1];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}/O|r|>=3:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   PRE:  bibble(b, q)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 3;
-    var p: seq<nat> := [2, 1, 1, 2];
-    var q: seq<nat> := [1, 0, 0, 2];
-    var r := bibble_add(b, p, q);
-    expect r == [0, 1, 2, 1];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}/O|r|>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   PRE:  bibble(b, q)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 4;
-    var p: seq<nat> := [3, 1, 1, 1];
-    var q: seq<nat> := [2, 0, 1, 0];
-    var r := bibble_add(b, p, q);
-    expect r == [1, 1, 2, 1];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 2;
-    var p: seq<nat> := [1, 1, 1, 1];
-    var r := bibble_increment(b, p);
-    expect r == [0, 0, 0, 0];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}/O|r|>=3:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 3;
-    var p: seq<nat> := [2, 1, 1, 2];
-    var r := bibble_increment(b, p);
-    expect r == [2, 1, 2, 0];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}/O|r|>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, r)
-  //   ENSURES: bibble(b, r)
-  {
-    var b := 4;
-    var p: seq<nat> := [3, 1, 1, 1];
-    var r := bibble_increment(b, p);
-    expect r == [3, 1, 1, 2];
-    expect bibble(b, r);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, fp)
-  //   ENSURES: bibble(b, fp)
-  {
-    var b := 2;
-    var p: seq<nat> := [1, 1, 1, 1];
-    var fp := bibble_flip(b, p);
-    expect fp == [0, 0, 0, 0];
-    expect bibble(b, fp);
-  }
-
-  // Test case for combination {1}/O|fp|>=3:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, fp)
-  //   ENSURES: bibble(b, fp)
-  {
-    var b := 3;
-    var p: seq<nat> := [2, 1, 1, 2];
-    var fp := bibble_flip(b, p);
-    expect fp == [0, 1, 1, 0];
-    expect bibble(b, fp);
-  }
-
-  // Test case for combination {1}/O|fp|>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, fp)
-  //   ENSURES: bibble(b, fp)
-  {
-    var b := 4;
-    var p: seq<nat> := [3, 1, 1, 1];
-    var fp := bibble_flip(b, p);
-    expect fp == [0, 2, 2, 2];
-    expect bibble(b, fp);
-  }
-
-  // Test case for combination {1}:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, com)
-  //   ENSURES: bibble(b, com)
-  {
-    var b := 2;
-    var p: seq<nat> := [1, 1, 1, 1];
-    var com := n_complement(b, p);
-    expect com == [0, 0, 0, 1];
-    expect bibble(b, com);
-  }
-
-  // Test case for combination {1}/O|com|>=3:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, com)
-  //   ENSURES: bibble(b, com)
-  {
-    var b := 3;
-    var p: seq<nat> := [2, 1, 1, 2];
-    var com := n_complement(b, p);
-    expect com == [0, 1, 1, 1];
-    expect bibble(b, com);
-  }
-
-  // Test case for combination {1}/O|com|>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  bibble(b, p)
-  //   POST: bibble(b, com)
-  //   ENSURES: bibble(b, com)
-  {
-    var b := 4;
-    var p: seq<nat> := [3, 1, 1, 1];
-    var com := n_complement(b, p);
-    expect com == [0, 2, 2, 3];
-    expect bibble(b, com);
+    expect nitness(b, nf);
+    expect nf == 9; // observed from implementation
   }
 
 }
 
-method Failing()
+method TestsFornit_add()
 {
-  // Test case for combination {1}:
+  // Test case for combination {1}/Rel:
   //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
+  //   PRE:  nitness(b, x)
+  //   PRE:  nitness(b, y)
+  //   POST Q1: nitness(b, z)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: carry == 0 || carry == 1
+  {
+    var b := 10;
+    var x := 9;
+    var y := 9;
+    var z, carry := nit_add(b, x, y);
+    expect nitness(b, z);
+    expect nitness(b, carry);
+    expect carry == 0 || carry == 1;
+    expect z == 8; // observed from implementation
+    expect carry == 1; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  nitness(b, x)
+  //   PRE:  nitness(b, y)
+  //   POST Q1: nitness(b, z)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: carry != 0
+  //   POST Q4: carry == 1
+  //   POST Q5: carry == 0
   {
     var b := 2;
-    var n := 0;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
+    var x := 1;
+    var y := 1;
+    var z, carry := nit_add(b, x, y);
+    expect z == 1 || z == 0 || z == 0 || z == 1;
+    expect carry == 0 || carry == 0 || carry == 1 || carry == 1;
+    expect z == 0; // observed from implementation
+    expect carry == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Bb=2,n=1:
+  // Test case for combination {1}/Bb=3:
   //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 2;
-    var n := 1;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Bb=3,n=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
+  //   PRE:  nitness(b, x)
+  //   PRE:  nitness(b, y)
+  //   POST Q1: nitness(b, z)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: carry == 0 || carry == 1
   {
     var b := 3;
-    var n := 0;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
+    var x := 2;
+    var y := 2;
+    var z, carry := nit_add(b, x, y);
+    expect nitness(b, z);
+    expect nitness(b, carry);
+    expect carry == 0 || carry == 1;
+    expect z == 1; // observed from implementation
+    expect carry == 1; // observed from implementation
   }
 
-  // Test case for combination {1}/Bb=3,n=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 3;
-    var n := 1;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
+}
 
-  // Test case for combination {1}/Osum>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 4;
-    var n := 0;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Osum=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 3;
-    var n := 2;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Osum=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 4;
-    var n := 2;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Ocarry>=2:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 5;
-    var n := 0;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Ocarry=1:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 4;
-    var n := 1;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination {1}/Ocarry=0:
-  //   PRE:  valid_base(b)
-  //   PRE:  nitness(b, n)
-  //   POST: nitness(b, sum)
-  //   POST: nitness(b, carry)
-  //   ENSURES: nitness(b, sum)
-  //   ENSURES: nitness(b, carry)
-  {
-    var b := 4;
-    var n := 3;
-    var sum, carry := nit_increment(b, n);
-    // expect nitness(b, sum);
-    // expect nitness(b, carry);
-  }
-
-  // Test case for combination P{2}/{1}/Ocarry=0:
+method TestsFornit_add_three()
+{
+  // Test case for combination P{1}/{1}/Rel:
   //   PRE:  valid_base(b)
   //   PRE:  c == 0 || c == 1
   //   PRE:  nitness(b, x)
   //   PRE:  nitness(b, y)
-  //   POST: nitness(b, z)
-  //   POST: nitness(b, carry)
-  //   POST: carry == 0
-  //   POST: !(carry == 1)
-  //   ENSURES: nitness(b, z)
-  //   ENSURES: nitness(b, carry)
-  //   ENSURES: carry == 0 || carry == 1
+  //   POST Q1: nitness(b, z)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: carry == 0 || carry == 1
+  {
+    var b := 10;
+    var c := 0;
+    var x := 9;
+    var y := 9;
+    var z, carry := nit_add_three(b, c, x, y);
+    expect nitness(b, z);
+    expect nitness(b, carry);
+    expect carry == 0 || carry == 1;
+    expect z == 8; // observed from implementation
+    expect carry == 1; // observed from implementation
+  }
+
+  // Test case for combination P{2}/{1}/Rel:
+  //   PRE:  valid_base(b)
+  //   PRE:  c == 0 || c == 1
+  //   PRE:  nitness(b, x)
+  //   PRE:  nitness(b, y)
+  //   POST Q1: nitness(b, z)
+  //   POST Q2: nitness(b, carry)
+  //   POST Q3: carry == 0 || carry == 1
+  {
+    var b := 10;
+    var c := 1;
+    var x := 9;
+    var y := 9;
+    var z, carry := nit_add_three(b, c, x, y);
+    expect nitness(b, z);
+    expect nitness(b, carry);
+    expect carry == 0 || carry == 1;
+    expect z == 9; // observed from implementation
+    expect carry == 1; // observed from implementation
+  }
+
+}
+
+method TestsForbibble_add()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 10;
+    var p: seq<nat> := [2, 9, 7, 9];
+    var q: seq<nat> := [9, 6, 5, 9];
+    var r := bibble_add(b, p, q);
+    expect bibble(b, r);
+    expect r == [2, 6, 3, 8]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [1, 1, 1, 0];
+    var q: seq<nat> := [1, 1, 1, 1];
+    var r := bibble_add(b, p, q);
+    expect bibble(b, r);
+    expect r == [1, 1, 0, 1]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST Q1: bibble(b, r)
   {
     var b := 3;
-    var c := 1;
-    var x := 2;
-    var y := 0;
-    var z, carry := nit_add_three(b, c, x, y);
-    // expect nitness(b, z);
-    // expect nitness(b, carry);
-    // expect carry == 0;
-    // expect !(carry == 1);
+    var p: seq<nat> := [2, 2, 2, 0];
+    var q: seq<nat> := [2, 2, 2, 2];
+    var r := bibble_add(b, p, q);
+    expect bibble(b, r);
+    expect r == [2, 2, 1, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   PRE:  bibble(b, q)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 9;
+    var p: seq<nat> := [6, 3, 4, 8];
+    var q: seq<nat> := [5, 4, 6, 4];
+    var r := bibble_add(b, p, q);
+    expect bibble(b, r);
+    expect r == [2, 8, 2, 3]; // observed from implementation
+  }
+
+}
+
+method TestsForbibble_increment()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 7;
+    var p: seq<nat> := [6, 6, 6, 6];
+    var r := bibble_increment(b, p);
+    expect bibble(b, r);
+    expect r == [0, 0, 0, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 2;
+    var p: seq<nat> := [1, 1, 1, 1];
+    var r := bibble_increment(b, p);
+    expect bibble(b, r);
+    expect r == [0, 0, 0, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 3;
+    var p: seq<nat> := [2, 2, 2, 1];
+    var r := bibble_increment(b, p);
+    expect bibble(b, r);
+    expect r == [2, 2, 2, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, r)
+  {
+    var b := 5;
+    var p: seq<nat> := [4, 3, 4, 0];
+    var r := bibble_increment(b, p);
+    expect bibble(b, r);
+    expect r == [4, 3, 4, 1]; // observed from implementation
+  }
+
+}
+
+method TestsForbibble_flip()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, fp)
+  {
+    var b := 9;
+    var p: seq<nat> := [3, 5, 5, 8];
+    var fp := bibble_flip(b, p);
+    expect bibble(b, fp);
+    expect fp == [5, 3, 3, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, fp)
+  {
+    var b := 2;
+    var p: seq<nat> := [1, 1, 1, 1];
+    var fp := bibble_flip(b, p);
+    expect bibble(b, fp);
+    expect fp == [0, 0, 0, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, fp)
+  {
+    var b := 3;
+    var p: seq<nat> := [2, 2, 2, 2];
+    var fp := bibble_flip(b, p);
+    expect bibble(b, fp);
+    expect fp == [0, 0, 0, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, fp)
+  {
+    var b := 8;
+    var p: seq<nat> := [7, 6, 4, 0];
+    var fp := bibble_flip(b, p);
+    expect bibble(b, fp);
+    expect fp == [0, 1, 3, 7]; // observed from implementation
+  }
+
+}
+
+method TestsForn_complement()
+{
+  // Test case for combination {1}/Rel:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, com)
+  {
+    var b := 10;
+    var p: seq<nat> := [9, 4, 4, 9];
+    var com := n_complement(b, p);
+    expect bibble(b, com);
+    expect com == [0, 5, 5, 1]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=2:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, com)
+  {
+    var b := 2;
+    var p: seq<nat> := [1, 1, 1, 0];
+    var com := n_complement(b, p);
+    expect bibble(b, com);
+    expect com == [0, 0, 1, 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Bb=3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, com)
+  {
+    var b := 3;
+    var p: seq<nat> := [2, 2, 2, 2];
+    var com := n_complement(b, p);
+    expect bibble(b, com);
+    expect com == [0, 0, 0, 1]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  valid_base(b)
+  //   PRE:  bibble(b, p)
+  //   POST Q1: bibble(b, com)
+  {
+    var b := 8;
+    var p: seq<nat> := [3, 4, 6, 4];
+    var com := n_complement(b, p);
+    expect bibble(b, com);
+    expect com == [4, 3, 1, 4]; // observed from implementation
   }
 
 }
 
 method Main()
 {
-  Passing();
-  Failing();
+  TestsFornit_increment();
+  print "TestsFornit_increment: all non-failing tests passed!\n";
+  TestsFormax_nit();
+  print "TestsFormax_nit: all non-failing tests passed!\n";
+  TestsFornit_flip();
+  print "TestsFornit_flip: all non-failing tests passed!\n";
+  TestsFornit_add();
+  print "TestsFornit_add: all non-failing tests passed!\n";
+  TestsFornit_add_three();
+  print "TestsFornit_add_three: all non-failing tests passed!\n";
+  TestsForbibble_add();
+  print "TestsForbibble_add: all non-failing tests passed!\n";
+  TestsForbibble_increment();
+  print "TestsForbibble_increment: all non-failing tests passed!\n";
+  TestsForbibble_flip();
+  print "TestsForbibble_flip: all non-failing tests passed!\n";
+  TestsForn_complement();
+  print "TestsForn_complement: all non-failing tests passed!\n";
 }
