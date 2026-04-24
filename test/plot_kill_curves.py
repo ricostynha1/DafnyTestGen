@@ -267,13 +267,16 @@ def main() -> int:
     max_kill = max(
         (sum(1 for _t, fk in s.values() if fk is not None) for _, s in strategies),
         default=0)
-    ax.set_ylim(-0.3, max(max_kill * 1.12, max_kill + 6))
+    y_top = int(max(max_kill * 1.12, max_kill + 6))
     # Leave a small right margin when capped, to host the "→N" final labels.
     ax.set_xlim(1, plot_x + (1.0 if capped else 0))
     ax.set_xticks(range(1, plot_x + 1))
-    # Integer y-ticks only.
-    import math
-    ax.set_yticks(range(0, denom + 1, max(1, denom // 10)))
+    # Integer y-ticks up to y_top only; setting ticks BEFORE set_ylim
+    # (and bounding ticks within y_top) keeps matplotlib from silently
+    # extending the ylim to include ticks further up.
+    tick_step = max(1, y_top // 10)
+    ax.set_yticks(range(0, y_top + 1, tick_step))
+    ax.set_ylim(-0.3, y_top)
     # Combine auto-legend entries with the generic dashed-line proxy
     # (only when sample-size curves were drawn).
     handles, labels = ax.get_legend_handles_labels()
