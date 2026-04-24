@@ -91,20 +91,25 @@ def per_method_summary(tests, count_crash: bool = True):
 
 
 def per_program_summary(tests, count_crash: bool = True):
-    """Collapse methods: use the GLOBAL (per-program) index. A program is
-    killed at global_idx x iff any test at global_idx <= x failed, regardless
-    of which method it was for. total_tests is the total number of tests
-    emitted for the program."""
-    # Gather all tests per program as (global_idx, status).
-    by_prog: dict[str, list[tuple[int, str]]] = defaultdict(list)
+    """Collapse methods using each method's LOCAL (per-method) index.
+    A program is killed at budget x iff any of its methods has a first-kill
+    at local_idx <= x. total_tests at program level = max method budget
+    across the program's methods, which keeps the x-axis semantics aligned
+    with the per-method view: x=k means 'give each method a k-test budget
+    and see if any of them kills'."""
+    by_prog_first_kills: dict[str, list[int]] = defaultdict(list)
+    by_prog_total: dict[str, int] = defaultdict(int)
     for (prog, _method), ts in tests.items():
-        for g, _local, s in ts:
-            by_prog[prog].append((g, s))
+        method_total = len(ts)
+        method_first_kill = next((local for _g, local, s in ts
+                                  if is_kill(s, count_crash)), None)
+        by_prog_total[prog] = max(by_prog_total[prog], method_total)
+        if method_first_kill is not None:
+            by_prog_first_kills[prog].append(method_first_kill)
     out = {}
-    for prog, items in by_prog.items():
-        total = max(g for g, _ in items) if items else 0
-        kills = sorted(g for g, s in items if is_kill(s, count_crash))
-        first_kill = kills[0] if kills else None
+    for prog, total in by_prog_total.items():
+        kills = by_prog_first_kills.get(prog, [])
+        first_kill = min(kills) if kills else None
         out[(prog, '<any>')] = (total, first_kill)
     return out
 
