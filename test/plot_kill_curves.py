@@ -257,9 +257,17 @@ def main() -> int:
         ax.set_ylabel(f'# {unit}s  (solid: killed;  dashed: with ≥ x tests)')
     ax.set_title(
         f'Mutation kill curves — {denom} {unit}s tested '
-        f'(crashes {"counted" if count_crash else "excluded"})')
+        f'(not all necessarily faulty/killable; '
+        f'crashes {"counted" if count_crash else "excluded"} as kills)')
     ax.grid(True, alpha=0.3)
-    ax.set_ylim(-0.3, denom + 0.5)
+    # Y-axis upper bound: actual max kill across strategies + padding,
+    # not the corpus size. Not every tested method is killable (the
+    # corpus contains equivalent and unreachable mutants), so topping
+    # at `denom` wastes space and misleads readers about the ceiling.
+    max_kill = max(
+        (sum(1 for _t, fk in s.values() if fk is not None) for _, s in strategies),
+        default=0)
+    ax.set_ylim(-0.3, max(max_kill * 1.12, max_kill + 6))
     # Leave a small right margin when capped, to host the "→N" final labels.
     ax.set_xlim(1, plot_x + (1.0 if capped else 0))
     ax.set_xticks(range(1, plot_x + 1))
