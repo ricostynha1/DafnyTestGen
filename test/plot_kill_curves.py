@@ -134,6 +134,10 @@ def main() -> int:
     ap.add_argument('--no-crash', action='store_true',
                     help='exclude SKIP (exception) from kills')
     ap.add_argument('--csv', help='write per-method CSV dump')
+    ap.add_argument('--max-x', type=int, default=0,
+                    help='cap the x-axis at this value (e.g. match the '
+                         '-n budget used in the run). Horizontal dashed '
+                         'lines mark each strategy final kill count beyond.')
     args = ap.parse_args()
 
     count_crash = not args.no_crash
@@ -152,25 +156,27 @@ def main() -> int:
         print('No strategies parsed.', file=sys.stderr)
         return 1
 
-    # Common x-axis
-    max_x = max(
+    # Full range (for final kill counts) vs. plot range (chart x-axis cap).
+    full_x = max(
         (max((t for t, _ in s.values()), default=0) for _, s in strategies),
         default=0)
-    if max_x == 0:
+    if full_x == 0:
         print('No test data found. Check the log format.', file=sys.stderr)
         return 1
+    plot_x = args.max_x if args.max_x > 0 else full_x
+    max_x = plot_x  # keep the name used later in this function
 
     unit = 'program' if args.per_program else 'method'
     # Denominator: union of keys across strategies (usually identical).
     all_keys = set().union(*(s.keys() for _, s in strategies))
     denom = len(all_keys)
 
-    print(f'Strategies: {len(strategies)}   Total {unit}s: {denom}   max_x={max_x}')
+    print(f'Strategies: {len(strategies)}   Total {unit}s: {denom}   full_x={full_x}   plot_x={plot_x}')
     print(f'{"strategy":<20} {"tested":>7} {"killed":>7} {"kill@1":>7} {"AUC":>6}')
     for label, summary in strategies:
         killed = sum(1 for _t, fk in summary.values() if fk is not None)
         kill_at_1 = sum(1 for _t, fk in summary.values() if fk == 1)
-        a = auc(kill_curve(summary, max_x))
+        a = auc(kill_curve(summary, full_x))
         print(f'{label:<20} {len(summary):>7} {killed:>7} {kill_at_1:>7} {a:>6}')
 
     if args.csv:
@@ -200,24 +206,42 @@ def main() -> int:
     # Offsets are ±0.06, chosen small enough not to misread the integer counts.
     n_strat = len(strategies)
 
+    capped = plot_x < full_x
     for i, (label, summary) in enumerate(strategies):
-        ys = kill_curve(summary, max_x)
+        ys = kill_curve(summary, plot_x)
         killed = sum(1 for _t, fk in summary.values() if fk is not None)
         kill_at_1 = sum(1 for _t, fk in summary.values() if fk == 1)
-        pretty = f'{label} (kill@1={kill_at_1}, killed={killed}/{denom})'
+        pretty = (f'{label} (kill@1={kill_at_1}, killed@{plot_x}={ys[-1]},'
+                  f' killed={killed}/{denom})'
+                  if capped else
+                  f'{label} (kill@1={kill_at_1}, killed={killed}/{denom})')
         c = colors[i % len(colors)]
         m = markers[i % len(markers)]
         # Center offsets around 0: for n=4 → [-0.09, -0.03, 0.03, 0.09].
         dy = 0.06 * (i - (n_strat - 1) / 2.0)
         ys_off = [y + dy for y in ys]
-        ax.step(xs, ys_off, where='post', label=pretty, color=c, linewidth=2)
-        ax.plot(xs, ys_off, marker=m, markersize=5, color=c,
-                linestyle='', markerfacecolor='white', markeredgewidth=1.4)
-        # Sample-size: fainter, no markers, no jitter.
-        sizes = sample_sizes(summary, max_x)
+        ax.plot(xs, ys_off, drawstyle='steps-post', label=pretty,
+                color=c, linewidth=2, marker=m, markersize=5,
+                markerfacecolor='white', markeredgewidth=1.4)
+        # Sample-size: fainter, no markers, no jitter. No label — explained
+        # by a single generic legend entry added below.
+        sizes = sample_sizes(summary, plot_x)
         ax.step(xs, sizes, where='post', color=c, linestyle='--',
-                alpha=0.35, linewidth=1.0,
-                label=f'  └ # {unit}s with ≥ x tests ({label})')
+                alpha=0.35, linewidth=1.0, label='_nolegend_')
+        # When the x-axis is capped below the full data range, mark each
+        # strategy's eventual kill count as a horizontal dashed line at the
+        # right edge of the chart so readers see the "final number".
+        if capped:
+            ax.axhline(killed + dy, xmin=0.96, xmax=1.0,
+                       color=c, linestyle=':', linewidth=1.5, alpha=0.9)
+            ax.text(plot_x + 0.25, killed + dy, f'→{killed}',
+                    color=c, fontsize=8, va='center')
+    # Single generic legend entry for dashed lines (gray proxy line, not tied
+    # to any strategy colour).
+    from matplotlib.lines import Line2D
+    legend_proxy = Line2D([0], [0], color='gray', linestyle='--',
+                          alpha=0.55, linewidth=1.2,
+                          label=f'dashed: # {unit}s with ≥ x tests (per strategy)')
 
     ax.set_xlabel(f'Test budget per {unit} (cumulative)')
     ax.set_ylabel(f'# {unit}s  (solid: killed;  dashed: with ≥ x tests)')
@@ -225,12 +249,17 @@ def main() -> int:
         f'Mutation kill curves (per {unit}; crashes {"counted" if count_crash else "excluded"})')
     ax.grid(True, alpha=0.3)
     ax.set_ylim(-0.3, denom + 0.5)
-    ax.set_xlim(1, max_x)
-    ax.set_xticks(range(1, max_x + 1))
+    # Leave a small right margin when capped, to host the "→N" final labels.
+    ax.set_xlim(1, plot_x + (1.0 if capped else 0))
+    ax.set_xticks(range(1, plot_x + 1))
     # Integer y-ticks only.
     import math
     ax.set_yticks(range(0, denom + 1, max(1, denom // 10)))
-    ax.legend(loc='lower right', fontsize=8)
+    # Combine auto-legend entries with the generic dashed-line proxy.
+    handles, labels = ax.get_legend_handles_labels()
+    handles.append(legend_proxy)
+    labels.append(legend_proxy.get_label())
+    ax.legend(handles, labels, loc='lower right', fontsize=8)
     plt.tight_layout()
     plt.savefig(args.output, dpi=150)
     print(f'Saved: {args.output}')
