@@ -245,7 +245,7 @@ Regardless of mode:
 
 A concrete example where `ladder` matters: `LongestCommonPrefix(str1, str2)` has a DNF clause `|prefix|=|str1| ∧ prefix=str1[0..|prefix|] ∧ |prefix|≤|str2| ∧ prefix=str2[0..|prefix|]`. Under `combined`, the shadow block for `prefix=str2[0..|prefix|]` is UNSAT (given the other three literals, `prefix` is forced to equal `str2[0..|prefix|]` anyway), so pure combined falls through to the plain query which picks the degenerate `str1=[]`. Under `group`, the disjunction `¬(Q2 ∧ Q4)` is satisfiable when `str1=[a]` and `str2=[a]`, forcing a non-degenerate witness. `ladder` gets the non-degenerate witness for free.
 
-For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals are **simultaneously non-vacuous**: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least one value different from `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
+For `LastPosition`, `S = {Q4, Q5}` (guards `Q2`, `Q3` excluded, as well as `Q1`, as it refers only to inputs). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all literals are **simultaneously non-vacuous**: `Q4` (`arr[pos] == elem`) needs the existence of at least one value different from `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
 var arr := new int[4] [-10, -10, -10, -9];
