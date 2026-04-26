@@ -78,7 +78,7 @@ With multiple `requires` and/or `ensures` clauses, their cross-product forms the
    - **Numeric range with no overlap**: `x op1 a ∧ x op2 b` where both RHSs parse as numeric constants. Each relational literal defines an admissible interval for `x` (`x > 5` ↦ `(5, ∞)`, `x <= 10` ↦ `(-∞, 10]`, `x == k` ↦ `[k, k]`, etc.); the rule fires when the intersection of the two intervals is empty. Catches `x > 5 ∧ x < 3`, `x >= 10 ∧ x <= 5`, `x == 0 ∧ x > 0`, `x == 1 ∧ x == 2` (empty intersection of `[1,1]` and `[2,2]`), etc.
 
 2. **Implied-literal pruning and strengthening** — simplifies surviving clauses by collapsing redundant relational pairs.
-   - **Same LHS string, same RHS string, overlapping operators** (RHS may be any expression matched by string equality), 
+   - **Same LHS string, same RHS string, overlapping operators** - dual of the incompatible operators rule: 
      - Drop the weaker literal when a stronger one is present:
        - `a <= b` is dropped if `a == b` or `a < b` is present.
        - `a >= b` is dropped if `a == b` or `a > b` is present.
