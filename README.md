@@ -64,6 +64,7 @@ The following table summarises the branching rules.
 | `!(A && B)` | `!A`,  `A ∧ !B` | 
 | `if C then A else B` | `C ∧ A`, `!C ∧ B` | 
 | `x == (if C then U else V)` | `C ∧ (x == U)`, `!C ∧ (x == V)` | 
+
 (a) With FDNF, the brances would be: `A ∧ B`, `A ∧ !B`, `!A ∧ B`.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
