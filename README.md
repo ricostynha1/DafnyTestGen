@@ -56,14 +56,15 @@ With standard (unsafe) DNF, the branch `result == a[0]` alone would lack the `a.
 
 The following table summarises the branching rules.
 
-| Expression | DNF Branches | FDNF Branches |
-|---|---|---|
-| `A \|\| B` | `A`, `!A ∧ B` | `A ∧ B`, `A ∧ !B`, `!A ∧ B` |
-| `A ==> B` | same as `!A \|\| B`  | idem |
-| `A <==> B` | `A ∧ B`, `!A ∧ !B` | idem |
-| `!(A && B)` | same as `!A \|\| !B` | idem |
-| `if C then A else B` | `C ∧ A`, `!C ∧ B` | idem (a) |
-| `x == (if C then U else V)` | same as `if C then x == U else x == V` | idem |
+| Expression | DNF Branches | 
+|---|---|
+| `A \|\| B` | `A`, `!A ∧ B` | 
+| `A ==> B` | `!A`, `A ∧ B`  | 
+| `A <==> B` | `A ∧ B`, `!A ∧ !B` | 
+| `!(A && B)` | `!A`,  `A ∧ !B` | 
+| `if C then A else B` | `C ∧ A`, `!C ∧ B` | 
+| `x == (if C then U else V)` | `C ∧ (x == U)`, `!C ∧ (x == V)` | 
+(a) With FDNF, the brances would be: `A ∧ B`, `A ∧ !B`, `!A ∧ B`.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
