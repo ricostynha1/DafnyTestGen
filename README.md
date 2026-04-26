@@ -69,7 +69,7 @@ The following table summarises the branching rules.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously. 
 
-### Cross-product and incremental pruning 
+### Cross-product and incremental pruning and simplification
 
 With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. After each pairwise merge, two passes are applied before the clause reaches Z3:
 
