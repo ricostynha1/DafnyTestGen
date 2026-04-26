@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CombNK.dfy
 // Method: CalcComb
-// Generated: 2026-04-22 21:25:49
+// Generated: 2026-04-23 20:23:00
 
 /* 
 * Formal specification and verification of a dynamic programming algorithm for calculating
@@ -73,10 +73,10 @@ method TestsForCalcComb()
   //   PRE:  0 <= k <= n
   //   POST Q1: res == Comb(n, k)
   {
-    var n := 10;
-    var k := 9;
+    var n := 3;
+    var k := 2;
     var res := CalcComb(n, k);
-    expect res == 10;
+    expect res == 3;
   }
 
   // Test case for combination {1}/Bn=0:
@@ -84,6 +84,66 @@ method TestsForCalcComb()
   //   POST Q1: res == Comb(n, k)
   {
     var n := 0;
+    var k := 0;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 1;
+    var k := 0;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {3}/Bk=1:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 10;
+    var k := 1;
+    var res := CalcComb(n, k);
+    expect res == 10;
+  }
+
+  // Test case for combination {2}/On=1:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 1;
+    var k := 1;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 9;
+    var k := 0;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 8;
+    var k := 0;
+    var res := CalcComb(n, k);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  0 <= k <= n
+  //   POST Q1: res == Comb(n, k)
+  {
+    var n := 7;
     var k := 0;
     var res := CalcComb(n, k);
     expect res == 1;

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_414.dfy
 // Method: AnyValueExists
-// Generated: 2026-04-22 21:32:15
+// Generated: 2026-04-23 20:38:02
 
 // Checks if two sequences have at least one element in common.
 method AnyValueExists<T(==)>(seq1: seq<T>, seq2: seq<T>) returns (result: bool)
@@ -75,6 +75,66 @@ method TestsForAnyValueExists()
   {
     var seq1: seq<int> := [27, 12];
     var seq2: seq<int> := [12, 34];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/O|seq1|=0:
+  //   POST Q1: !result
+  //   POST Q2: !exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [];
+    var seq2: seq<int> := [];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/O|seq1|>=2:
+  //   POST Q1: !result
+  //   POST Q2: !exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [27, 19];
+    var seq2: seq<int> := [10];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/O|seq2|>=2:
+  //   POST Q1: !result
+  //   POST Q2: !exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [];
+    var seq2: seq<int> := [29, 11];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == false;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [11];
+    var seq2: seq<int> := [11];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [13];
+    var seq2: seq<int> := [13];
+    var result := AnyValueExists<int>(seq1, seq2);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: exists x: int :: x in seq1 && x in seq2
+  {
+    var seq1: seq<int> := [14];
+    var seq2: seq<int> := [14];
     var result := AnyValueExists<int>(seq1, seq2);
     expect result == true;
   }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\PrimeFactors.dfy
 // Method: PrimeFactors
-// Generated: 2026-04-22 21:28:29
+// Generated: 2026-04-23 20:30:11
 
 // Returns a list with the prime factors of a natural number n greater than 1 
 // by non-descending order in time O(n).
@@ -282,7 +282,7 @@ function BezoutCoefficients(a: nat, b: nat): (r: (int, int))
 
 method TestsForPrimeFactors()
 {
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}:
   //   PRE:  n > 1
   //   POST Q1: AllPrime(f)
   //   POST Q2: IsSorted(f)
@@ -294,6 +294,132 @@ method TestsForPrimeFactors()
     expect IsSorted(f);
     expect ProdF(f) == n;
     expect f == [2, 5]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 9;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [3, 3]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 8;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [2, 2, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 7;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [7]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 6;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [2, 3]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 5;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [5]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 4;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [2, 2]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 3;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [3]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 2;
+    var f := PrimeFactors(n);
+    expect AllPrime(f);
+    expect IsSorted(f);
+    expect ProdF(f) == n;
+    expect f == [2]; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R10:
+  //   PRE:  n > 1
+  //   POST Q1: AllPrime(f)
+  //   POST Q2: IsSorted(f)
+  //   POST Q3: ProdF(f) == n
+  {
+    var n := 4294967089;
+    var f := PrimeFactors(n);
+    // expect AllPrime(f);
+    // expect IsSorted(f);
+    // expect ProdF(f) == n;
   }
 
 }

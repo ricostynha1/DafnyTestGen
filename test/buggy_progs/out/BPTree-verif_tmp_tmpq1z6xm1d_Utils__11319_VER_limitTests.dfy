@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\BPTree-verif_tmp_tmpq1z6xm1d_Utils__11319_VER_limit.dfy
 // Method: GetInsertIndex
-// Generated: 2026-04-22 21:34:50
+// Generated: 2026-04-23 21:28:52
 
 // BPTree-verif_tmp_tmpq1z6xm1d_Utils.dfy
 
@@ -304,42 +304,6 @@ method InsertIntoSorted(a: array<int>, limit: int, key: int)
 
 method TestsForGetInsertIndex()
 {
-  // Test case for combination {3}/Rel:
-  //   PRE:  x !in a[..]
-  //   PRE:  0 <= limit <= a.Length
-  //   PRE:  SortedSeq(a[..limit])
-  //   POST Q1: 0 <= idx
-  //   POST Q2: idx <= limit
-  //   POST Q3: SortedSeq(a[..limit])
-  //   POST Q4: idx > 0
-  //   POST Q5: a[idx - 1] < x
-  //   POST Q6: idx >= limit
-  {
-    var a := new int[2] [-8, -7];
-    var limit := 2;
-    var x := -4;
-    var idx := GetInsertIndex(a, limit, x);
-    expect idx == 2;
-  }
-
-  // Test case for combination {4}/Rel:
-  //   PRE:  x !in a[..]
-  //   PRE:  0 <= limit <= a.Length
-  //   PRE:  SortedSeq(a[..limit])
-  //   POST Q1: 0 <= idx
-  //   POST Q2: idx < limit
-  //   POST Q3: SortedSeq(a[..limit])
-  //   POST Q4: idx > 0
-  //   POST Q5: a[idx - 1] < x
-  //   POST Q6: x < a[idx]
-  {
-    var a := new int[5] [-10, -9, -5, -4, -2];
-    var limit := 4;
-    var x := -6;
-    var idx := GetInsertIndex(a, limit, x);
-    expect idx == 2;
-  }
-
   // Test case for combination {1}:
   //   PRE:  x !in a[..]
   //   PRE:  0 <= limit <= a.Length
@@ -374,12 +338,150 @@ method TestsForGetInsertIndex()
     expect idx == 0;
   }
 
+  // Test case for combination {3}:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx > 0
+  //   POST Q5: a[idx - 1] < x
+  //   POST Q6: idx >= limit
+  {
+    var a := new int[2] [-10, 8];
+    var limit := 2;
+    var x := 9;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 2;
+  }
+
+  // Test case for combination {4}:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx < limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx > 0
+  //   POST Q5: a[idx - 1] < x
+  //   POST Q6: x < a[idx]
+  {
+    var a := new int[2] [-10, -8];
+    var limit := 2;
+    var x := -9;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 1;
+  }
+
+  // Test case for combination {1}/Blimit=a_len:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: idx >= limit
+  {
+    var a := new int[0] [];
+    var limit := 0;
+    var x := -10;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
+  // Test case for combination {1}/Bx=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: idx >= limit
+  {
+    var a := new int[1] [-10];
+    var limit := 0;
+    var x := 1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
+  // Test case for combination {1}/Bx=2:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: idx >= limit
+  {
+    var a := new int[1] [-10];
+    var limit := 0;
+    var x := 2;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
+  // Test case for combination {1}/Bx=limit:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: idx >= limit
+  {
+    var a := new int[1] [8];
+    var limit := 0;
+    var x := 0;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
+  // Test case for combination {1}/Bx=limit-1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx <= limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: idx >= limit
+  {
+    var a := new int[1] [-2];
+    var limit := 0;
+    var x := -1;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
+  // Test case for combination {2}/Blimit=1:
+  //   PRE:  x !in a[..]
+  //   PRE:  0 <= limit <= a.Length
+  //   PRE:  SortedSeq(a[..limit])
+  //   POST Q1: 0 <= idx
+  //   POST Q2: idx < limit
+  //   POST Q3: SortedSeq(a[..limit])
+  //   POST Q4: idx <= 0
+  //   POST Q5: x < a[idx]
+  {
+    var a := new int[1] [-9];
+    var limit := 1;
+    var x := -10;
+    var idx := GetInsertIndex(a, limit, x);
+    expect idx == 0;
+  }
+
 }
 
 method TestsForInsertIntoSorted()
 {
   // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}:
   //   PRE:  key > 0
   //   PRE:  key !in a[..]
   //   PRE:  0 <= limit < a.Length
@@ -392,12 +494,12 @@ method TestsForInsertIntoSorted()
   //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
   //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
   {
-    var a := new int[7] [8, 9, 10, 0, 0, 0, 0];
+    var a := new int[4] [2, 6, 10, 0];
     var limit := 3;
-    var key := 7;
+    var key := 3;
     var b := InsertIntoSorted(a, limit, key);
-    // actual runtime state: b=[8, 9, 10, 7, 0, 0, 0]
-    // expect b.Length == a.Length; // LHS=7, RHS=7
+    // actual runtime state: b=[2, 6, 10, 3]
+    // expect b.Length == a.Length; // LHS=4, RHS=4
     // expect sorted(b[..limit + 1]); // got false
     // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
     // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
@@ -468,16 +570,169 @@ method TestsForInsertIntoSorted()
   //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
   //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
   {
-    var a := new int[4] [8, 9, 10, 0];
+    var a := new int[4] [5, 7, 9, 0];
     var limit := 3;
     var key := 1;
     var b := InsertIntoSorted(a, limit, key);
-    // actual runtime state: b=[8, 9, 10, 1]
+    // actual runtime state: b=[5, 7, 9, 1]
     // expect b.Length == a.Length; // LHS=4, RHS=4
     // expect sorted(b[..limit + 1]); // got false
     // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
     // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
     // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/Bkey=2:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [8, 9, 10, 0];
+    var limit := 3;
+    var key := 2;
+    var b := InsertIntoSorted(a, limit, key);
+    // actual runtime state: b=[8, 9, 10, 2]
+    // expect b.Length == a.Length; // LHS=4, RHS=4
+    // expect sorted(b[..limit + 1]); // got false
+    // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
+    // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
+    // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [2, 3, 5, 0];
+    var limit := 3;
+    var key := 9;
+    var b := InsertIntoSorted(a, limit, key);
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b[..] == [2, 3, 5, 9]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [2, 3, 4, 0];
+    var limit := 3;
+    var key := 8;
+    var b := InsertIntoSorted(a, limit, key);
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b[..] == [2, 3, 4, 8]; // observed from implementation
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R8:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [2, 7, 8, 0];
+    var limit := 3;
+    var key := 3;
+    var b := InsertIntoSorted(a, limit, key);
+    // actual runtime state: b=[2, 7, 8, 3]
+    // expect b.Length == a.Length; // LHS=4, RHS=4
+    // expect sorted(b[..limit + 1]); // got false
+    // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
+    // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
+    // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {1}/R9:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [2, 9, 10, 0];
+    var limit := 3;
+    var key := 7;
+    var b := InsertIntoSorted(a, limit, key);
+    // actual runtime state: b=[2, 9, 10, 7]
+    // expect b.Length == a.Length; // LHS=4, RHS=4
+    // expect sorted(b[..limit + 1]); // got false
+    // expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0; // got true
+    // expect forall i: int :: 0 <= i < limit ==> a[i] in b[..]; // got true
+    // expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0; // got true
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  key > 0
+  //   PRE:  key !in a[..]
+  //   PRE:  0 <= limit < a.Length
+  //   PRE:  forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] > 0
+  //   PRE:  forall i: int {:trigger a[i]} :: limit <= i < a.Length ==> a[i] == 0
+  //   PRE:  sorted(a[..limit])
+  //   POST Q1: b.Length == a.Length
+  //   POST Q2: sorted(b[..limit + 1])
+  //   POST Q3: forall i: int {:trigger b[i]} :: limit + 1 <= i < b.Length ==> b[i] == 0
+  //   POST Q4: forall i: int {:trigger a[i]} :: 0 <= i < limit ==> a[i] in b[..]
+  //   POST Q5: forall i: int {:trigger b[i]} :: 0 <= i < limit + 1 ==> b[i] > 0
+  {
+    var a := new int[4] [2, 4, 5, 0];
+    var limit := 3;
+    var key := 9;
+    var b := InsertIntoSorted(a, limit, key);
+    expect b.Length == a.Length;
+    expect sorted(b[..limit + 1]);
+    expect forall i: int :: limit + 1 <= i < b.Length ==> b[i] == 0;
+    expect forall i: int :: 0 <= i < limit ==> a[i] in b[..];
+    expect forall i: int :: 0 <= i < limit + 1 ==> b[i] > 0;
+    expect b[..] == [2, 4, 5, 9]; // observed from implementation
   }
 
 }

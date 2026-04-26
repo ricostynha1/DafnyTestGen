@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_769.dfy
 // Method: Difference
-// Generated: 2026-04-22 21:36:26
+// Generated: 2026-04-23 20:45:11
 
 // Returns the subsequence of elements of sequence 'a' that do not exist
 // in a sequence 'b'.
@@ -80,6 +80,60 @@ method TestsForDifference()
   {
     var a: seq<int> := [];
     var b: seq<int> := [2];
+    var diff := Difference<int>(a, b);
+    expect diff == [];
+  }
+
+  // Test case for combination {1}/O|b|>=2:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [];
+    var b: seq<int> := [3, 4];
+    var diff := Difference<int>(a, b);
+    expect diff == [];
+  }
+
+  // Test case for combination {2}/O|a|>=2:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [25, 12];
+    var b: seq<int> := [25, 12];
+    var diff := Difference<int>(a, b);
+    expect diff == [];
+  }
+
+  // Test case for combination {3}/O|a|>=2:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [26, 9];
+    var b: seq<int> := [12];
+    var diff := Difference<int>(a, b);
+    expect diff == [26, 9];
+  }
+
+  // Test case for combination {3}/O|b|>=2:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [10];
+    var b: seq<int> := [14, 16];
+    var diff := Difference<int>(a, b);
+    expect diff == [10];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [];
+    var b: seq<int> := [6];
+    var diff := Difference<int>(a, b);
+    expect diff == [];
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: diff == filter(a, b)
+  {
+    var a: seq<int> := [];
+    var b: seq<int> := [5];
     var diff := Difference<int>(a, b);
     expect diff == [];
   }

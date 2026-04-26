@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_70.dfy
 // Method: AllSequencesEqualLength
-// Generated: 2026-04-22 21:35:49
+// Generated: 2026-04-23 20:44:06
 
 // Checks if all sequences in a list of sequences have the same length.
 method AllSequencesEqualLength<T>(list: seq<seq<T>>) returns (result: bool)
@@ -52,7 +52,7 @@ method TestsForAllSequencesEqualLength()
   //   POST Q1: !result
   //   POST Q2: !forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
-    var list: seq<seq<int>> := [[20], [22], [24], [26], [], [12], [], [13]];
+    var list: seq<seq<int>> := [[13], [], [], [], [], [12], [], [20]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == false;
   }
@@ -71,6 +71,33 @@ method TestsForAllSequencesEqualLength()
   //   POST Q2: forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
   {
     var list: seq<seq<int>> := [[], []];
+    var result := AllSequencesEqualLength<int>(list);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  {
+    var list: seq<seq<int>> := [[], [], []];
+    var result := AllSequencesEqualLength<int>(list);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  {
+    var list: seq<seq<int>> := [[], [], [], []];
+    var result := AllSequencesEqualLength<int>(list);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |list| ==> |list[i]| == |list[j]|
+  {
+    var list: seq<seq<int>> := [[20], [16], [19], [18], [21]];
     var result := AllSequencesEqualLength<int>(list);
     expect result == true;
   }

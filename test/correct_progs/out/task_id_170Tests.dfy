@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_170.dfy
 // Method: CalcSumRange
-// Generated: 2026-04-22 21:30:36
+// Generated: 2026-04-23 20:35:42
 
 // Calculates the sum of elements in an array from a 'start' index
 // (inclusive) to an 'end' index (exclusive).
@@ -46,7 +46,7 @@ method TestsForCalcSumRange()
   //   PRE:  0 <= start <= end <= a.Length
   //   POST Q1: sum == SumSeq(a[start .. end])
   {
-    var a := new int[2] [10, -10];
+    var a := new int[2] [-1, 3];
     var start := 2;
     var end := 2;
     var sum := CalcSumRange(a, start, end);
@@ -57,11 +57,11 @@ method TestsForCalcSumRange()
   //   PRE:  0 <= start <= end <= a.Length
   //   POST Q1: sum == SumSeq(a[start .. end])
   {
-    var a := new int[3] [-10, 9, 7];
+    var a := new int[3] [-10, 10, -2];
     var start := 2;
     var end := 3;
     var sum := CalcSumRange(a, start, end);
-    expect sum == 7;
+    expect sum == -2;
   }
 
   // Test case for combination {1}/Bstart=0:
@@ -82,6 +82,72 @@ method TestsForCalcSumRange()
     var a := new int[1] [-1];
     var start := 1;
     var end := 1;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 0;
+  }
+
+  // Test case for combination {2}/Bstart=0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [-1, 6];
+    var start := 0;
+    var end := 2;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 5;
+  }
+
+  // Test case for combination {2}/Bstart=1:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [-1, -10];
+    var start := 1;
+    var end := 2;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == -10;
+  }
+
+  // Test case for combination {2}/Bend=1:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[1] [-1];
+    var start := 0;
+    var end := 1;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == -1;
+  }
+
+  // Test case for combination {2}/Bend=a_len-1:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[6] [-9, -1, 10, 37, 25, 26];
+    var start := 4;
+    var end := 5;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 25;
+  }
+
+  // Test case for combination {1}/O|a|=0:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[0] [];
+    var start := 0;
+    var end := 0;
+    var sum := CalcSumRange(a, start, end);
+    expect sum == 0;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  0 <= start <= end <= a.Length
+  //   POST Q1: sum == SumSeq(a[start .. end])
+  {
+    var a := new int[2] [-2, 4];
+    var start := 2;
+    var end := 2;
     var sum := CalcSumRange(a, start, end);
     expect sum == 0;
   }

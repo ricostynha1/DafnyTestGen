@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_610.dfy
 // Method: RemoveElementAt
-// Generated: 2026-04-22 21:34:53
+// Generated: 2026-04-23 20:42:52
 
 // Removes the k-th element from the array s and returns a new array with the result.
 method RemoveElementAt(s: array<int>, k: nat) returns (v: array<int>)
@@ -44,10 +44,10 @@ method TestsForRemoveElementAt()
   //   PRE:  0 <= k < s.Length
   //   POST Q2: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-1, -5, -10];
+    var s := new int[3] [-1, -10, -4];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-1, -5];
+    expect v[..] == [-1, -10];
   }
 
   // Test case for combination {1}/Bk=0:
@@ -64,20 +64,80 @@ method TestsForRemoveElementAt()
   //   PRE:  0 <= k < s.Length
   //   POST Q2: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[2] [-1, -10];
+    var s := new int[2] [9, -10];
     var k := 1;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-1];
+    expect v[..] == [9];
   }
 
   // Test case for combination {1}/R3:
   //   PRE:  0 <= k < s.Length
   //   POST Q2: v[..] == s[..k] + s[k + 1..]
   {
-    var s := new int[3] [-10, 2, 7];
+    var s := new int[3] [-10, -1, 10];
     var k := 2;
     var v := RemoveElementAt(s, k);
-    expect v[..] == [-10, 2];
+    expect v[..] == [-10, -1];
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[4] [-9, -2, -10, 22];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-9, -2, 22];
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[3] [-8, -9, -1];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-8, -9];
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[3] [-10, 10, -9];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-10, 10];
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[3] [-2, 8, 3];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-2, 8];
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[3] [-10, 9, 4];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-10, 9];
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  0 <= k < s.Length
+  //   POST Q2: v[..] == s[..k] + s[k + 1..]
+  {
+    var s := new int[3] [-7, -3, -8];
+    var k := 2;
+    var v := RemoveElementAt(s, k);
+    expect v[..] == [-7, -3];
   }
 
 }

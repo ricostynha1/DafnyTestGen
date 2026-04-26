@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_105.dfy
 // Method: CalcCountTrue
-// Generated: 2026-04-22 21:30:00
+// Generated: 2026-04-23 20:34:25
 
 // Counts the number of true values in a boolean array 'a'.
 method CalcCountTrue(a: array<bool>) returns (count: nat)
@@ -76,6 +76,54 @@ method TestsForCalcCountTrue()
     var a := new bool[2] [false, true];
     var count := CalcCountTrue(a);
     expect count == 1;
+  }
+
+  // Test case for combination {3}/O|a|>=2:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[2] [false, false];
+    var count := CalcCountTrue(a);
+    expect count == 0;
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[2] [true, true];
+    var count := CalcCountTrue(a);
+    expect count == 2;
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[3] [false, false, true];
+    var count := CalcCountTrue(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[4] [false, false, false, true];
+    var count := CalcCountTrue(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[4] [false, false, true, true];
+    var count := CalcCountTrue(a);
+    expect count == 2;
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: count == countTrue(a[..])
+  {
+    var a := new bool[4] [false, true, false, true];
+    var count := CalcCountTrue(a);
+    expect count == 2;
   }
 
 }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_605.dfy
 // Method: IsPrime
-// Generated: 2026-04-22 21:34:48
+// Generated: 2026-04-23 20:42:46
 
 // Checks if a number greater than 1 is prime.
 method IsPrime(n: nat) returns (result: bool)
@@ -72,9 +72,59 @@ method TestsForIsPrime()
   //   POST Q1: result
   //   POST Q2: forall k: int :: 2 <= k < n ==> n % k != 0
   {
+    var n := 5;
+    var result := IsPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: forall k: int :: 2 <= k < n ==> n % k != 0
+  {
     var n := 7;
     var result := IsPrime(n);
     expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  n > 1
+  //   POST Q1: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
+  {
+    var n := 13;
+    var result := IsPrime(n);
+    expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
+    expect result == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  n > 1
+  //   POST Q1: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
+  {
+    var n := 19;
+    var result := IsPrime(n);
+    expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
+    expect result == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  n > 1
+  //   POST Q1: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
+  {
+    var n := 23;
+    var result := IsPrime(n);
+    expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
+    expect result == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  n > 1
+  //   POST Q1: result <==> forall k: int :: 2 <= k < n ==> n % k != 0
+  {
+    var n := 17;
+    var result := IsPrime(n);
+    expect result <==> forall k: int :: 2 <= k < n ==> n % k != 0;
+    expect result == true; // observed from implementation
   }
 
 }

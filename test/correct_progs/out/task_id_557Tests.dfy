@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_557.dfy
 // Method: ToggleCase
-// Generated: 2026-04-22 21:33:44
+// Generated: 2026-04-23 20:40:20
 
 // Returns a new string with the case of each character in the input string toggled.
 method ToggleCase(s: string) returns (v: string)
@@ -51,19 +51,19 @@ method TestsForToggleCase()
   // Test case for combination {1}/O|s|=1:
   //   POST Q1: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['{'];
+    var s: seq<char> := ['-'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect v == ['{']; // observed from implementation
+    expect v == ['-']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, Toggle)
   {
-    var s: seq<char> := ['~', 'w'];
+    var s: seq<char> := ['~', '`'];
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
-    expect v == ['~', 'W']; // observed from implementation
+    expect v == ['~', '`']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
@@ -73,6 +73,60 @@ method TestsForToggleCase()
     var v := ToggleCase(s);
     expect IsMapSeq(s, v, Toggle);
     expect v == ['~']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['}'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == ['}']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := [','];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == [',']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['|'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == ['|']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['{'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == ['{']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['+'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == ['+']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: IsMapSeq(s, v, Toggle)
+  {
+    var s: seq<char> := ['*'];
+    var v := ToggleCase(s);
+    expect IsMapSeq(s, v, Toggle);
+    expect v == ['*']; // observed from implementation
   }
 
 }

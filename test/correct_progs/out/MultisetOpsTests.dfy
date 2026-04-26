@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MultisetOps.dfy
 // Method: MultisetContains
-// Generated: 2026-04-22 21:28:01
+// Generated: 2026-04-23 20:29:01
 
 method MultisetContains(M: multiset<int>, x: int) returns (r: bool)
   requires |M| > 0
@@ -70,8 +70,8 @@ method TestsForMultisetContains()
   //   PRE:  |M| > 0
   //   POST Q1: r == (x in M)
   {
-    var M: multiset<int> := multiset{-1, -1, -1, 0, 0, 0, 0, 0, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5};
-    var x := -1;
+    var M: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5};
+    var x := 4;
     var r := MultisetContains(M, x);
     expect r == true || r == false;
     expect r == true; // observed from implementation
@@ -92,18 +92,84 @@ method TestsForMultisetContains()
   //   PRE:  |M| > 0
   //   POST Q1: r == (x in M)
   {
-    var M: multiset<int> := multiset{5};
+    var M: multiset<int> := multiset{3};
     var x := 0;
     var r := MultisetContains(M, x);
     expect r == false || r == true;
     expect r == false; // observed from implementation
   }
 
-  // Test case for combination {1}/R4:
+  // Test case for combination {1}/Ox<0:
   //   PRE:  |M| > 0
   //   POST Q1: r == (x in M)
   {
-    var M: multiset<int> := multiset{-1, -1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 5, 5, 5, 5, 5};
+    var M: multiset<int> := multiset{-2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5};
+    var x := -2;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{-1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4};
+    var x := -1;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{3, 4};
+    var x := 3;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{3};
+    var x := 3;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{-1, -1, -1, -1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3};
+    var x := 3;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{2};
+    var x := 2;
+    var r := MultisetContains(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<int> := multiset{5};
     var x := -10;
     var r := MultisetContains(M, x);
     expect r == false;
@@ -116,37 +182,91 @@ method TestsForMultisetUnion()
   // Test case for combination {1}:
   //   POST Q1: C == A + B
   {
-    var A: multiset<int> := multiset{4, 4};
-    var B: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
-    var C := MultisetUnion(A, B);
-    expect C == multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
-  }
-
-  // Test case for combination {1}/O|A|=0:
-  //   POST Q1: C == A + B
-  {
     var A: multiset<int> := multiset{};
-    var B: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
+    var B: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -1, 0, 2, 3};
     var C := MultisetUnion(A, B);
-    expect C == multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
+    expect C == multiset{-2, -2, -2, -2, -2, -2, -2, -1, 0, 2, 3};
   }
 
   // Test case for combination {1}/O|A|=1:
   //   POST Q1: C == A + B
   {
-    var A: multiset<int> := multiset{2};
-    var B: multiset<int> := multiset{2, 4, 4, 4, 4, 4, 4, 4, 4};
+    var A: multiset<int> := multiset{-1};
+    var B: multiset<int> := multiset{-2, -2, -2, -2, -1, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5};
     var C := MultisetUnion(A, B);
-    expect C == multiset{2, 2, 4, 4, 4, 4, 4, 4, 4, 4};
+    expect C == multiset{-2, -2, -2, -2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5};
+  }
+
+  // Test case for combination {1}/O|A|>=2:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{-2, 0, 0, 2, 2};
+    var B: multiset<int> := multiset{-2, -2, -2, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{-2, -2, -2, -2, 0, 0, 1, 1, 1, 2, 2, 4, 4, 4, 4, 4, 4, 4};
   }
 
   // Test case for combination {1}/O|B|=0:
   //   POST Q1: C == A + B
   {
-    var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
+    var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -2, 0, 1, 1, 1, 2, 3};
     var B: multiset<int> := multiset{};
     var C := MultisetUnion(A, B);
-    expect C == multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
+    expect C == multiset{-2, -2, -2, -2, -2, -2, -2, -2, 0, 1, 1, 1, 2, 3};
+  }
+
+  // Test case for combination {1}/O|B|=1:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{-2, -2, -1, 0, 1, 3, 3, 3, 3, 3, 4, 5, 5, 5};
+    var B: multiset<int> := multiset{2};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{-2, -2, -1, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5};
+  }
+
+  // Test case for combination {1}/O|C|=0:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{};
+  }
+
+  // Test case for combination {1}/O|C|=1:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{2};
+    var B: multiset<int> := multiset{};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{2};
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{2, 2, 2, 5};
+    var B: multiset<int> := multiset{1, 1, 5};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{1, 1, 2, 2, 2, 5, 5};
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{-1, -1, -1, -1, 2, 2};
+    var B: multiset<int> := multiset{-2, -2, -1, 1};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{-2, -2, -1, -1, -1, -1, -1, 1, 2, 2};
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<int> := multiset{-2, 2, 2};
+    var B: multiset<int> := multiset{-2, 0, 0, 4, 4, 4, 4};
+    var C := MultisetUnion(A, B);
+    expect C == multiset{-2, -2, 0, 0, 2, 2, 4, 4, 4, 4};
   }
 
 }
@@ -156,10 +276,10 @@ method TestsForMultisetIntersection()
   // Test case for combination {1}:
   //   POST Q1: C == A * B
   {
-    var A: multiset<int> := multiset{-2, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
-    var B: multiset<int> := multiset{-2, -2, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4};
+    var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4};
+    var B: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
     var C := MultisetIntersection(A, B);
-    expect C == multiset{-2, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4};
+    expect C == multiset{-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4};
   }
 
   // Test case for combination {1}/O|A|=0:
@@ -189,6 +309,60 @@ method TestsForMultisetIntersection()
     expect C == multiset{};
   }
 
+  // Test case for combination {1}/O|B|=1:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{-1, 0, 1, 2, 3};
+    var B: multiset<int> := multiset{4};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{};
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{-2, 5};
+    var B: multiset<int> := multiset{5};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{5};
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{4, 4};
+    var B: multiset<int> := multiset{0, 0};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{};
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{-1, -1, 4};
+    var B: multiset<int> := multiset{-1};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{-1};
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{0, 0, 4};
+    var B: multiset<int> := multiset{-1, 0};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{0};
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: C == A * B
+  {
+    var A: multiset<int> := multiset{-1, 0, 4};
+    var B: multiset<int> := multiset{1, 1};
+    var C := MultisetIntersection(A, B);
+    expect C == multiset{};
+  }
+
 }
 
 method TestsForMultisetDifference()
@@ -196,17 +370,17 @@ method TestsForMultisetDifference()
   // Test case for combination {1}:
   //   POST Q1: C == A - B
   {
-    var A: multiset<int> := multiset{-2, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4, 4, 4, 5};
+    var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5};
     var B: multiset<int> := multiset{};
     var C := MultisetDifference(A, B);
-    expect C == multiset{-2, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4, 4, 4, 5};
+    expect C == multiset{-2, -2, -2, -2, -2, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5};
   }
 
   // Test case for combination {1}/O|A|=0:
   //   POST Q1: C == A - B
   {
     var A: multiset<int> := multiset{};
-    var B: multiset<int> := multiset{-2, -1, 0, 1, 2, 3, 4};
+    var B: multiset<int> := multiset{-1, 0, 1, 2, 3, 4, 5};
     var C := MultisetDifference(A, B);
     expect C == multiset{};
   }
@@ -214,19 +388,73 @@ method TestsForMultisetDifference()
   // Test case for combination {1}/O|A|=1:
   //   POST Q1: C == A - B
   {
-    var A: multiset<int> := multiset{4};
-    var B: multiset<int> := multiset{-1, 0, 1, 2, 3, 5};
+    var A: multiset<int> := multiset{5};
+    var B: multiset<int> := multiset{-2, -1, 0, 1, 2, 3, 4};
     var C := MultisetDifference(A, B);
-    expect C == multiset{4};
+    expect C == multiset{5};
   }
 
   // Test case for combination {1}/O|B|=1:
   //   POST Q1: C == A - B
   {
-    var A: multiset<int> := multiset{-2, -2, -2, -2, -1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 5};
+    var A: multiset<int> := multiset{-2, -2, -2, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
     var B: multiset<int> := multiset{-2};
     var C := MultisetDifference(A, B);
-    expect C == multiset{-2, -2, -2, -1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 5};
+    expect C == multiset{-2, -2, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{-2, -1, -1, -1, 0, 0, 0, 1, 2, 3, 4};
+    var B: multiset<int> := multiset{5, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{-2, -1, -1, -1, 0, 0, 0, 1, 2, 3, 4};
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{-1, 0, 0, 0, 0, 5, 5};
+    var B: multiset<int> := multiset{-1, -1, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{0, 0, 0, 0, 5};
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{-2, -2, -2, -2, 0, 5};
+    var B: multiset<int> := multiset{0, 0, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{-2, -2, -2, -2};
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{1, 1, 1, 5};
+    var B: multiset<int> := multiset{-1, 0, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{1, 1, 1};
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{-2, -2, 1, 1, 5};
+    var B: multiset<int> := multiset{1, 1, 1, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{-2, -2};
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: C == A - B
+  {
+    var A: multiset<int> := multiset{2, 2};
+    var B: multiset<int> := multiset{-1, 1, 1, 5, 5, 5};
+    var C := MultisetDifference(A, B);
+    expect C == multiset{2, 2};
   }
 
 }
@@ -273,6 +501,66 @@ method TestsForMultisetSubset()
     expect r == true;
   }
 
+  // Test case for combination P{2}/{1}/O|A|>=2:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{5, 5};
+    var B: multiset<int> := multiset{1};
+    var r := MultisetSubset(A, B);
+    expect r == false;
+  }
+
+  // Test case for combination P{2}/{1}/O|B|>=2:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{5};
+    var B: multiset<int> := multiset{0, 1};
+    var r := MultisetSubset(A, B);
+    expect r == false;
+  }
+
+  // Test case for combination P{1}/{1}/R4:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{5};
+    var r := MultisetSubset(A, B);
+    expect r == true;
+  }
+
+  // Test case for combination P{1}/{1}/R5:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{0};
+    var r := MultisetSubset(A, B);
+    expect r == true;
+  }
+
+  // Test case for combination P{1}/{1}/R6:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{1};
+    var r := MultisetSubset(A, B);
+    expect r == true;
+  }
+
+  // Test case for combination P{1}/{1}/R7:
+  //   PRE:  A <= B || !(A <= B)
+  //   POST Q1: r == (A <= B)
+  {
+    var A: multiset<int> := multiset{};
+    var B: multiset<int> := multiset{-1};
+    var r := MultisetSubset(A, B);
+    expect r == true;
+  }
+
 }
 
 method TestsForMultisetCount()
@@ -280,7 +568,7 @@ method TestsForMultisetCount()
   // Test case for combination {1}:
   //   POST Q1: r == M[x]
   {
-    var M: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 5, 5, 5};
+    var M: multiset<int> := multiset{-2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5};
     var x := -10;
     var r := MultisetCount(M, x);
     expect r == 0;
@@ -313,6 +601,60 @@ method TestsForMultisetCount()
     expect r == 8;
   }
 
+  // Test case for combination {1}/Or=1:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{-2, -1, -1, 1, 1, 1, 1, 1, 1, 3, 4, 5, 5, 5};
+    var x := -2;
+    var r := MultisetCount(M, x);
+    expect r == 1;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{0, 0, 0, 0, 1, 5, 5};
+    var x := 5;
+    var r := MultisetCount(M, x);
+    expect r == 2;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{};
+    var x := -9;
+    var r := MultisetCount(M, x);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{};
+    var x := -8;
+    var r := MultisetCount(M, x);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{};
+    var x := -7;
+    var r := MultisetCount(M, x);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: r == M[x]
+  {
+    var M: multiset<int> := multiset{};
+    var x := -6;
+    var r := MultisetCount(M, x);
+    expect r == 0;
+  }
+
 }
 
 method TestsForAddElement()
@@ -321,13 +663,73 @@ method TestsForAddElement()
   //   POST Q1: C == M + multiset{x}
   //   POST Q2: x in C
   {
-    var M: multiset<int> := multiset{-2, -2, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5};
+    var M: multiset<int> := multiset{-2, -2, -2, -2, -1, -1, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4};
     var x := -1;
     var C := AddElement(M, x);
-    expect C == multiset{-2, -2, -1, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5};
+    expect C == multiset{-2, -2, -2, -2, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 4, 4, 4, 4};
   }
 
   // Test case for combination {1}/O|M|=0:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{};
+    var x := -2;
+    var C := AddElement(M, x);
+    expect C == multiset{-2};
+  }
+
+  // Test case for combination {1}/O|M|=1:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{-1};
+    var x := -2;
+    var C := AddElement(M, x);
+    expect C == multiset{-2, -1};
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{-2, -2, -2, -2, -1, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
+    var x := 0;
+    var C := AddElement(M, x);
+    expect C == multiset{-2, -2, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4};
+  }
+
+  // Test case for combination {1}/Ox>0:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{-1, -1, 0, 0, 1, 4, 4, 5, 5, 5, 5, 5, 5, 5};
+    var x := 5;
+    var C := AddElement(M, x);
+    expect C == multiset{-1, -1, 0, 0, 1, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5};
+  }
+
+  // Test case for combination {1}/O|M|=0/R5:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{};
+    var x := 4;
+    var C := AddElement(M, x);
+    expect C == multiset{4};
+  }
+
+  // Test case for combination {1}/O|M|=0/R6:
+  //   POST Q1: C == M + multiset{x}
+  //   POST Q2: x in C
+  {
+    var M: multiset<int> := multiset{};
+    var x := -1;
+    var C := AddElement(M, x);
+    expect C == multiset{-1};
+  }
+
+  // Test case for combination {1}/O|M|=0/R7:
   //   POST Q1: C == M + multiset{x}
   //   POST Q2: x in C
   {
@@ -337,24 +739,24 @@ method TestsForAddElement()
     expect C == multiset{3};
   }
 
-  // Test case for combination {1}/O|M|=1:
+  // Test case for combination {1}/O|M|=0/R8:
   //   POST Q1: C == M + multiset{x}
   //   POST Q2: x in C
   {
-    var M: multiset<int> := multiset{4};
-    var x := 3;
+    var M: multiset<int> := multiset{};
+    var x := 5;
     var C := AddElement(M, x);
-    expect C == multiset{3, 4};
+    expect C == multiset{5};
   }
 
-  // Test case for combination {1}/Ox=0:
+  // Test case for combination {1}/O|M|=0/R9:
   //   POST Q1: C == M + multiset{x}
   //   POST Q2: x in C
   {
-    var M: multiset<int> := multiset{0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4};
-    var x := 0;
+    var M: multiset<int> := multiset{};
+    var x := 2;
     var C := AddElement(M, x);
-    expect C == multiset{0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4};
+    expect C == multiset{2};
   }
 
 }
@@ -397,8 +799,69 @@ method TestsForMultisetContainsNat()
   //   PRE:  |M| > 0
   //   POST Q1: r == (x in M)
   {
-    var M: multiset<nat> := multiset{4, 4};
-    var x := 9;
+    var M: multiset<nat> := multiset{0, 3};
+    var x := 10;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/Or=true:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{1, 1, 2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7};
+    var x := 4;
+    var r := MultisetContainsNat(M, x);
+    expect r == true || r == false;
+    expect r == true; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{6};
+    var x := 10;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{2};
+    var x := 10;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{4};
+    var x := 10;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{5};
+    var x := 10;
+    var r := MultisetContainsNat(M, x);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  |M| > 0
+  //   POST Q1: r == (x in M)
+  {
+    var M: multiset<nat> := multiset{1, 7, 7, 7, 7};
+    var x := 10;
     var r := MultisetContainsNat(M, x);
     expect r == false;
   }
@@ -410,37 +873,91 @@ method TestsForMultisetUnionNat()
   // Test case for combination {1}:
   //   POST Q1: C == A + B
   {
-    var A: multiset<nat> := multiset{3, 3, 3};
-    var B: multiset<nat> := multiset{0, 0, 0, 0, 1, 1, 2, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    var A: multiset<nat> := multiset{3, 3, 3, 3, 3};
+    var B: multiset<nat> := multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    expect C == multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
   }
 
   // Test case for combination {1}/O|A|=0:
   //   POST Q1: C == A + B
   {
     var A: multiset<nat> := multiset{};
-    var B: multiset<nat> := multiset{0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    var B: multiset<nat> := multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    expect C == multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
   }
 
   // Test case for combination {1}/O|A|=1:
   //   POST Q1: C == A + B
   {
     var A: multiset<nat> := multiset{1};
-    var B: multiset<nat> := multiset{2, 2, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6};
+    var B: multiset<nat> := multiset{0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{1, 2, 2, 3, 4, 4, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6};
+    expect C == multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7};
   }
 
   // Test case for combination {1}/O|B|=0:
   //   POST Q1: C == A + B
   {
-    var A: multiset<nat> := multiset{0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    var A: multiset<nat> := multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 6, 6};
     var B: multiset<nat> := multiset{};
     var C := MultisetUnionNat(A, B);
-    expect C == multiset{0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6};
+    expect C == multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 6, 6};
+  }
+
+  // Test case for combination {1}/O|B|=1:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7};
+    var B: multiset<nat> := multiset{4};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7};
+  }
+
+  // Test case for combination {1}/O|C|=0:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{};
+    var B: multiset<nat> := multiset{};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{};
+  }
+
+  // Test case for combination {1}/O|C|=1:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{};
+    var B: multiset<nat> := multiset{7};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{7};
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{0, 0, 2, 3, 3, 3, 4};
+    var B: multiset<nat> := multiset{1, 1, 3, 6, 6};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 6, 6};
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{3, 5};
+    var B: multiset<nat> := multiset{1};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{1, 3, 5};
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: C == A + B
+  {
+    var A: multiset<nat> := multiset{0, 7, 7, 7, 7};
+    var B: multiset<nat> := multiset{5};
+    var C := MultisetUnionNat(A, B);
+    expect C == multiset{0, 5, 7, 7, 7, 7};
   }
 
 }

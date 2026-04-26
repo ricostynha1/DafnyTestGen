@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_426.dfy
 // Method: FilterOddNumbers
-// Generated: 2026-04-22 21:32:26
+// Generated: 2026-04-23 20:38:18
 
 // Returns a sequence with the odd numbers in the input array, by the same order.
 method FilterOddNumbers(arr: array<int>) returns (oddList: seq<int>)
@@ -61,9 +61,9 @@ method TestsForFilterOddNumbers()
   // Test case for combination {2}:
   //   POST Q1: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[1] [-9];
+    var arr := new int[1] [-1];
     var oddList := FilterOddNumbers(arr);
-    expect oddList == [-9];
+    expect oddList == [-1];
   }
 
   // Test case for combination {3}:
@@ -77,9 +77,57 @@ method TestsForFilterOddNumbers()
   // Test case for combination {2}/O|arr|>=2:
   //   POST Q1: oddList == FilterOdd(arr[..])
   {
-    var arr := new int[2] [-8, -1];
+    var arr := new int[2] [-10, -1];
     var oddList := FilterOddNumbers(arr);
     expect oddList == [-1];
+  }
+
+  // Test case for combination {3}/O|arr|>=2:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[2] [-9, -10];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-9];
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [-9];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-9];
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [-3];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-3];
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [-5];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-5];
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [-7];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [-7];
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: oddList == FilterOdd(arr[..])
+  {
+    var arr := new int[1] [3];
+    var oddList := FilterOddNumbers(arr);
+    expect oddList == [3];
   }
 
 }

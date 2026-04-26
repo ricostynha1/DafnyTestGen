@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Fibonacci.dfy
 // Method: CalcFib
-// Generated: 2026-04-22 21:26:27
+// Generated: 2026-04-23 20:24:34
 
 /* 
 * Formal specification and verification of a simple method for calculating 
@@ -61,6 +61,54 @@ method TestsForCalcFib()
     var n := 9;
     var res := CalcFib(n);
     expect res == 34;
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 8;
+    var res := CalcFib(n);
+    expect res == 21;
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 7;
+    var res := CalcFib(n);
+    expect res == 13;
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 6;
+    var res := CalcFib(n);
+    expect res == 8;
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 5;
+    var res := CalcFib(n);
+    expect res == 5;
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 4;
+    var res := CalcFib(n);
+    expect res == 3;
+  }
+
+  // Test case for combination {2}/R8:
+  //   POST Q1: res == Fib(n)
+  {
+    var n := 3;
+    var res := CalcFib(n);
+    expect res == 2;
   }
 
 }

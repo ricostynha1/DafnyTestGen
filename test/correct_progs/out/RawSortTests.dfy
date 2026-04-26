@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\RawSort.dfy
 // Method: RawSort
-// Generated: 2026-04-22 21:28:38
+// Generated: 2026-04-23 20:31:25
 
 /**
  * Proves the correctness of a "raw" array sorting algorithm that swaps elements out of order, chosen randomly.
@@ -65,9 +65,9 @@ method TestsForRawSort()
   //   POST Q1: IsSorted(a[..])
   //   POST Q2: multiset(a[..]) == multiset(old(a[..]))
   {
-    var a := new T[2] [637, 635];
+    var a := new T[2] [5188, 5186];
     RawSort(a);
-    expect a[..] == [635, 637];
+    expect a[..] == [5186, 5188];
   }
 
   // Test case for combination {1}/O|a|=0:

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_624.dfy
 // Method: ToUppercase
-// Generated: 2026-04-22 21:35:12
+// Generated: 2026-04-23 20:43:15
 
 // Converts a string to uppercase (only 'a' to 'z' characters are converted).
 method ToUppercase(s: string) returns (v: string)
@@ -49,28 +49,82 @@ method TestsForToUppercase()
   // Test case for combination {1}/O|s|=1:
   //   POST Q1: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['>'];
+    var s: seq<char> := ['Z'];
     var v := ToUppercase(s);
     expect IsMapSeq(s, v, CharToUpper);
-    expect v == ['>']; // observed from implementation
+    expect v == ['Z']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['~', 'Q'];
+    var s: seq<char> := ['D', 'J'];
     var v := ToUppercase(s);
     expect IsMapSeq(s, v, CharToUpper);
-    expect v == ['~', 'Q']; // observed from implementation
+    expect v == ['D', 'J']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: IsMapSeq(s, v, CharToUpper)
   {
-    var s: seq<char> := ['E'];
+    var s: seq<char> := ['~'];
     var v := ToUppercase(s);
     expect IsMapSeq(s, v, CharToUpper);
-    expect v == ['E']; // observed from implementation
+    expect v == ['~']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['Y'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['Y']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['}'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['}']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['X'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['X']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['|'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['|']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['W'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['W']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: IsMapSeq(s, v, CharToUpper)
+  {
+    var s: seq<char> := ['V'];
+    var v := ToUppercase(s);
+    expect IsMapSeq(s, v, CharToUpper);
+    expect v == ['V']; // observed from implementation
   }
 
 }

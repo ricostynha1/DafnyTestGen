@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MapOps.dfy
 // Method: MapContains
-// Generated: 2026-04-22 21:27:34
+// Generated: 2026-04-23 20:27:51
 
 method MapContains(m: map<int, int>, k: int) returns (r: bool)
   requires |m| > 0
@@ -96,6 +96,66 @@ method TestsForMapContains()
     expect r == false;
   }
 
+  // Test case for combination {1}/R5:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[-2 := 0];
+    var k := -10;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[4 := 0];
+    var k := 10;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[4 := 0];
+    var k := 9;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0];
+    var k := -10;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0];
+    var k := -9;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  |m| > 0
+  //   POST Q1: r == (k in m)
+  {
+    var m: map<int, int> := map[-1 := 0];
+    var k := -10;
+    var r := MapContains(m, k);
+    expect r == false;
+  }
+
 }
 
 method TestsForMapLookup()
@@ -104,8 +164,8 @@ method TestsForMapLookup()
   //   PRE:  k in m
   //   POST Q1: r == m[k]
   {
-    var m: map<int, int> := map[3 := 0];
-    var k := 3;
+    var m: map<int, int> := map[5 := 0];
+    var k := 5;
     var r := MapLookup(m, k);
     expect r == 0;
   }
@@ -114,8 +174,8 @@ method TestsForMapLookup()
   //   PRE:  k in m
   //   POST Q1: r == m[k]
   {
-    var m: map<int, int> := map[0 := 0, 3 := 0, 4 := 0, 5 := 0];
-    var k := 3;
+    var m: map<int, int> := map[0 := 0, 2 := 0, 4 := 0, 5 := 0];
+    var k := 5;
     var r := MapLookup(m, k);
     expect r == 0;
   }
@@ -134,8 +194,68 @@ method TestsForMapLookup()
   //   PRE:  k in m
   //   POST Q1: r == m[k]
   {
-    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 2 := 0, 3 := 0, 4 := 0];
+    var m: map<int, int> := map[-2 := 0, 0 := 0, 1 := 0, 3 := 0];
     var k := -2;
+    var r := MapLookup(m, k);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/Or>0:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[-2 := 6, -1 := 7, 0 := 8, 2 := 10, 5 := 20625];
+    var k := 5;
+    var r := MapLookup(m, k);
+    expect r == 20625;
+  }
+
+  // Test case for combination {1}/Or<0:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[-2 := -14126, -1 := 7, 0 := 8, 1 := 9, 4 := 12, 5 := 13];
+    var k := -2;
+    var r := MapLookup(m, k);
+    expect r == -14126;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var k := 5;
+    var r := MapLookup(m, k);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[-2 := 0, 2 := 0, 4 := 0];
+    var k := 2;
+    var r := MapLookup(m, k);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[0 := 0, 4 := 0];
+    var k := 4;
+    var r := MapLookup(m, k);
+    expect r == 0;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  k in m
+  //   POST Q1: r == m[k]
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 4 := 0];
+    var k := 2;
     var r := MapLookup(m, k);
     expect r == 0;
   }
@@ -176,6 +296,54 @@ method TestsForMapSize()
     expect r == 3;
   }
 
+  // Test case for combination {1}/R5:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 2 := 0, 3 := 0, 4 := 0];
+    var r := MapSize(m);
+    expect r == 5;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[-1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var r := MapSize(m);
+    expect r == 5;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var r := MapSize(m);
+    expect r == 5;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[-2 := 0, 1 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var r := MapSize(m);
+    expect r == 5;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[-1 := 0, 1 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var r := MapSize(m);
+    expect r == 5;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: r == |m|
+  {
+    var m: map<int, int> := map[-1 := 0, 1 := 0, 4 := 0, 5 := 0];
+    var r := MapSize(m);
+    expect r == 4;
+  }
+
 }
 
 method TestsForMapUpdate()
@@ -186,11 +354,11 @@ method TestsForMapUpdate()
   //   POST Q3: r[k] == v
   {
     var m: map<int, int> := map[];
-    var k := -2;
+    var k := 5;
     var v := -10;
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
-    expect r == map[-2 := -10]; // observed from implementation
+    expect r == map[5 := -10]; // observed from implementation
   }
 
   // Test case for combination {1}/O|m|=1:
@@ -198,12 +366,12 @@ method TestsForMapUpdate()
   //   POST Q2: k in r
   //   POST Q3: r[k] == v
   {
-    var m: map<int, int> := map[1 := 0];
-    var k := -1;
+    var m: map<int, int> := map[-1 := 0];
+    var k := 4;
     var v := -10;
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
-    expect r == map[-1 := -10, 1 := 0]; // observed from implementation
+    expect r == map[-1 := 0, 4 := -10]; // observed from implementation
   }
 
   // Test case for combination {1}/O|m|>=2:
@@ -211,12 +379,12 @@ method TestsForMapUpdate()
   //   POST Q2: k in r
   //   POST Q3: r[k] == v
   {
-    var m: map<int, int> := map[-1 := 0, 0 := 0, 2 := 0, 4 := 0];
-    var k := -1;
+    var m: map<int, int> := map[-1 := 0, 2 := 0, 4 := 0];
+    var k := 4;
     var v := -9;
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
-    expect r == map[-1 := -9, 0 := 0, 2 := 0, 4 := 0]; // observed from implementation
+    expect r == map[-1 := 0, 2 := 0, 4 := -9]; // observed from implementation
   }
 
   // Test case for combination {1}/Ok=0:
@@ -230,6 +398,84 @@ method TestsForMapUpdate()
     var r := MapUpdate(m, k, v);
     expect r == m[k := v];
     expect r == map[0 := -10]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Ok<0:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[-2 := 0, 1 := 0];
+    var k := -1;
+    var v := -10;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[-2 := 0, -1 := -10, 1 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Ov=0:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[];
+    var k := 4;
+    var v := 0;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[4 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/Ov>0:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 5 := 0];
+    var k := 4;
+    var v := 10;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 4 := 10, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[-1 := 0, 0 := 0, 1 := 0, 3 := 0];
+    var k := 4;
+    var v := -8;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[-1 := 0, 0 := 0, 1 := 0, 3 := 0, 4 := -8]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var k := 4;
+    var v := -7;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := -7, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: r == m[k := v]
+  //   POST Q2: k in r
+  //   POST Q3: r[k] == v
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 3 := 0, 5 := 0];
+    var k := 4;
+    var v := -6;
+    var r := MapUpdate(m, k, v);
+    expect r == m[k := v];
+    expect r == map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := -6, 5 := 0]; // observed from implementation
   }
 
 }
@@ -276,6 +522,66 @@ method TestsForMapMerge()
     expect r == map[1 := 0]; // observed from implementation
   }
 
+  // Test case for combination {1}/O|b|>=2:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[];
+    var b: map<int, int> := map[0 := 0, 2 := 0, 3 := 0, 4 := 0];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[0 := 0, 2 := 0, 3 := 0, 4 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|r|=1:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[2 := 0, 3 := 0, 5 := 0];
+    var b: map<int, int> := map[];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[2 := 0, 3 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|r|>=2:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[-1 := 0];
+    var b: map<int, int> := map[-1 := 0];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[-1 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 3 := 0];
+    var b: map<int, int> := map[];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[-2 := 0, -1 := 0, 0 := 0, 3 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[-2 := 0, 3 := 0, 5 := 0];
+    var b: map<int, int> := map[-2 := 0];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[-2 := 0, 3 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: r == a + b
+  {
+    var a: map<int, int> := map[0 := 0, 5 := 0];
+    var b: map<int, int> := map[];
+    var r := MapMerge(a, b);
+    expect r == a + b;
+    expect r == map[0 := 0, 5 := 0]; // observed from implementation
+  }
+
 }
 
 method TestsForMapRemoveKey()
@@ -285,23 +591,23 @@ method TestsForMapRemoveKey()
   //   POST Q1: r == m - {k}
   //   POST Q2: k !in r
   {
-    var m: map<int, int> := map[4 := 0];
-    var k := 4;
+    var m: map<int, int> := map[-1 := 0, 1 := 0];
+    var k := -1;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
-    expect r == map[]; // observed from implementation
+    expect r == map[1 := 0]; // observed from implementation
   }
 
-  // Test case for combination {1}/O|m|>=2:
+  // Test case for combination {1}/O|m|=1:
   //   PRE:  k in m
   //   POST Q1: r == m - {k}
   //   POST Q2: k !in r
   {
-    var m: map<int, int> := map[-2 := 0, 2 := 0, 3 := 0, 4 := 0];
-    var k := 4;
+    var m: map<int, int> := map[5 := 0];
+    var k := 5;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
-    expect r == map[-2 := 0, 2 := 0, 3 := 0]; // observed from implementation
+    expect r == map[]; // observed from implementation
   }
 
   // Test case for combination {1}/Ok=0:
@@ -316,16 +622,88 @@ method TestsForMapRemoveKey()
     expect r == map[]; // observed from implementation
   }
 
-  // Test case for combination {1}/Ok<0:
+  // Test case for combination {1}/O|r|=1:
   //   PRE:  k in m
   //   POST Q1: r == m - {k}
   //   POST Q2: k !in r
   {
-    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0];
-    var k := -2;
+    var m: map<int, int> := map[-2 := 0, 0 := 0, 1 := 0, 3 := 0, 5 := 0];
+    var k := 3;
     var r := MapRemoveKey(m, k);
     expect r == m - {k};
-    expect r == map[-1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0]; // observed from implementation
+    expect r == map[-2 := 0, 0 := 0, 1 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|r|>=2:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 1 := 0, 2 := 0, 4 := 0, 5 := 0];
+    var k := -1;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[-2 := 0, 1 := 0, 2 := 0, 4 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[-1 := 0, 0 := 0, 1 := 0, 4 := 0];
+    var k := -1;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[0 := 0, 1 := 0, 4 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[0 := 0, 1 := 0, 5 := 0];
+    var k := 5;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[0 := 0, 1 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 5 := 0];
+    var k := -1;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[-2 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var k := -1;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[-2 := 0, 0 := 0, 1 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  k in m
+  //   POST Q1: r == m - {k}
+  //   POST Q2: k !in r
+  {
+    var m: map<int, int> := map[-2 := 0, -1 := 0, 0 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0];
+    var k := -1;
+    var r := MapRemoveKey(m, k);
+    expect r == m - {k};
+    expect r == map[-2 := 0, 0 := 0, 2 := 0, 3 := 0, 4 := 0, 5 := 0]; // observed from implementation
   }
 
 }
@@ -343,25 +721,73 @@ method TestsForMapKeys()
   // Test case for combination {1}/O|m|=1:
   //   POST Q1: r == m.Keys
   {
-    var m: map<int, int> := map[4 := 0];
+    var m: map<int, int> := map[2 := 0];
     var r := MapKeys(m);
-    expect r == {4};
+    expect r == {2};
   }
 
   // Test case for combination {1}/O|m|>=2:
   //   POST Q1: r == m.Keys
   {
-    var m: map<int, int> := map[2 := 0, 3 := 0];
+    var m: map<int, int> := map[3 := 0, 4 := 0];
     var r := MapKeys(m);
-    expect r == {2, 3};
+    expect r == {3, 4};
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: r == m.Keys
   {
-    var m: map<int, int> := map[0 := 0, 1 := 0];
+    var m: map<int, int> := map[1 := 0];
     var r := MapKeys(m);
-    expect r == {0, 1};
+    expect r == {1};
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[3 := 0];
+    var r := MapKeys(m);
+    expect r == {3};
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[4 := 0];
+    var r := MapKeys(m);
+    expect r == {4};
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[5 := 0];
+    var r := MapKeys(m);
+    expect r == {5};
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[2 := 0, 5 := 0];
+    var r := MapKeys(m);
+    expect r == {2, 5};
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[3 := 0, 5 := 0];
+    var r := MapKeys(m);
+    expect r == {3, 5};
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: r == m.Keys
+  {
+    var m: map<int, int> := map[0 := 0, 3 := 0];
+    var r := MapKeys(m);
+    expect r == {0, 3};
   }
 
 }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_627.dfy
 // Method: SmallestMissingNumber
-// Generated: 2026-04-22 21:35:17
+// Generated: 2026-04-23 20:43:23
 
 // Auxiliary predicate that checks if 'v' is the smallest natural number that 
 // is not present in a sequence (s) of natural numbers.
@@ -82,6 +82,66 @@ method TestsForSmallestMissingNumber()
   //   POST Q1: IsSmallestMissingNumber(s, v)
   {
     var s: seq<nat> := [];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|s|>=2:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [9, 10];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [9];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [2];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [5];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [3];
+    var v := SmallestMissingNumber(s);
+    expect IsSmallestMissingNumber(s, v);
+    expect v == 0; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  IsSorted(s)
+  //   POST Q1: IsSmallestMissingNumber(s, v)
+  {
+    var s: seq<nat> := [7];
     var v := SmallestMissingNumber(s);
     expect IsSmallestMissingNumber(s, v);
     expect v == 0; // observed from implementation

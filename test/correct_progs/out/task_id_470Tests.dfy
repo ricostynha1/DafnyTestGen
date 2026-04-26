@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_470.dfy
 // Method: PairwiseAddition
-// Generated: 2026-04-22 21:33:14
+// Generated: 2026-04-23 20:39:41
 
 // Takes an array of integers and returns an array of the sums of 
 // each pair of adjacent elements.
@@ -42,9 +42,9 @@ method TestsForPairwiseAddition()
   //   POST Q1: result.Length == a.Length / 2
   //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[2] [9, 2];
+    var a := new int[2] [4, 8];
     var result := PairwiseAddition(a);
-    expect result[..] == [11];
+    expect result[..] == [12];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -62,9 +62,9 @@ method TestsForPairwiseAddition()
   //   POST Q1: result.Length == a.Length / 2
   //   POST Q2: forall i: int :: 0 <= i < result.Length ==> result[i] == a[2 * i] + a[2 * i + 1]
   {
-    var a := new int[4] [-8, -10, 5, 26031];
+    var a := new int[4] [-1, -10, 5, 32132];
     var result := PairwiseAddition(a);
-    expect result[..] == [-18, 26036];
+    expect result[..] == [-11, 32137];
   }
 
 }

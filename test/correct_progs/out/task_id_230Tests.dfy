@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_230.dfy
 // Method: ReplaceBlanksWithChar
-// Generated: 2026-04-22 21:30:53
+// Generated: 2026-04-23 20:36:11
 
 // Replaces all blank characters in a string by a given character.
 method ReplaceBlanksWithChar(s: string, ch: char) returns (v: string)
@@ -45,9 +45,9 @@ method TestsForReplaceBlanksWithChar()
   //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
   {
     var s: seq<char> := [' '];
-    var ch := '~';
+    var ch := '}';
     var v := ReplaceBlanksWithChar(s, ch);
-    expect v == ['~'];
+    expect v == ['}'];
   }
 
   // Test case for combination {1}/O|s|=0:
@@ -78,6 +78,68 @@ method TestsForReplaceBlanksWithChar()
     var ch := '!';
     var v := ReplaceBlanksWithChar(s, ch);
     expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R4:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '"';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+    expect ch == '\"'; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|s|=0/R5:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '#';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R6:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '$';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R7:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '%';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R8:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '&';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R9:
+  //   POST Q1: IsMapSeq(s, v, (c: char) => if c == ' ' then ch else c)
+  //   POST Q2: forall i: int {:trigger s[i]} {:trigger v[i]} :: 0 <= i && i < |s| ==> v[i] == if s[i] == ' ' then ch else s[i]
+  {
+    var s: seq<char> := [];
+    var ch := '\U{0027}';
+    var v := ReplaceBlanksWithChar(s, ch);
+    expect v == [];
+    expect ch == '\''; // observed from implementation
   }
 
 }

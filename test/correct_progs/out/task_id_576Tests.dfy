@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_576.dfy
 // Method: IsSublist
-// Generated: 2026-04-22 21:34:06
+// Generated: 2026-04-23 20:40:59
 
 // Interesting example that previously had a bug for empty lists.
 // Checks if a sequence 's' is contained (as a subsequence) in another sequence 't'.
@@ -74,7 +74,7 @@ method TestsForIsSublist()
   //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
     var s: seq<int> := [];
-    var t: seq<int> := [11];
+    var t: seq<int> := [10];
     var result := IsSublist<int>(s, t);
     expect result == true;
   }
@@ -83,8 +83,68 @@ method TestsForIsSublist()
   //   POST Q1: result
   //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
   {
-    var s: seq<int> := [12, 13];
-    var t: seq<int> := [12, 13];
+    var s: seq<int> := [9, 8];
+    var t: seq<int> := [9, 8];
+    var result := IsSublist<int>(s, t);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/O|t|=0:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [];
+    var t: seq<int> := [];
+    var result := IsSublist<int>(s, t);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/O|s|>=2:
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [3, 4];
+    var t: seq<int> := [9];
+    var result := IsSublist<int>(s, t);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/O|t|>=2:
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [12, 15];
+    var t: seq<int> := [6, 5];
+    var result := IsSublist<int>(s, t);
+    expect result == false;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [12];
+    var t: seq<int> := [12];
+    var result := IsSublist<int>(s, t);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [15];
+    var t: seq<int> := [15];
+    var result := IsSublist<int>(s, t);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i <= j <= |t| && s == t[i .. j]
+  {
+    var s: seq<int> := [16];
+    var t: seq<int> := [16];
     var result := IsSublist<int>(s, t);
     expect result == true;
   }

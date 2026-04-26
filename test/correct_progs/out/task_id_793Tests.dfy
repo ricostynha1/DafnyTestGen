@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_793.dfy
 // Method: LastPosition
-// Generated: 2026-04-22 21:36:59
+// Generated: 2026-04-25 21:38:02
 
 // Determines the last position of an element 'elem' in a sorted array 'arr'.
 // If the element is not in the array, the method returns -1.
@@ -64,13 +64,13 @@ method TestsForLastPosition()
   //   POST Q1: elem !in arr[..]
   //   POST Q2: pos == -1
   {
-    var arr := new int[1] [-2];
+    var arr := new int[1] [-3];
     var elem := -10;
     var pos := LastPosition(arr, elem);
     expect pos == -1;
   }
 
-  // Test case for combination {2}/Bpos=0:
+  // Test case for combination {2}/Vi4:
   //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
   //   POST Q1: elem in arr[..]
   //   POST Q2: 0 <= pos
@@ -78,24 +78,24 @@ method TestsForLastPosition()
   //   POST Q4: arr[pos] == elem
   //   POST Q5: elem !in arr[pos + 1..]
   {
-    var arr := new int[1] [9];
-    var elem := 9;
-    var pos := LastPosition(arr, elem);
-    expect pos == 0;
-  }
-
-  // Test case for combination {2}/Bpos=1:
-  //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
-  //   POST Q1: elem in arr[..]
-  //   POST Q2: 0 <= pos
-  //   POST Q3: pos < arr.Length
-  //   POST Q4: arr[pos] == elem
-  //   POST Q5: elem !in arr[pos + 1..]
-  {
-    var arr := new int[2] [-10, -9];
-    var elem := -9;
+    var arr := new int[2] [-7719, -7719];
+    var elem := -7719;
     var pos := LastPosition(arr, elem);
     expect pos == 1;
+  }
+
+  // Test case for combination {2}/Vi5:
+  //   PRE:  forall i: int, j: int :: 0 <= i < j < arr.Length ==> arr[i] <= arr[j]
+  //   POST Q1: elem in arr[..]
+  //   POST Q2: 0 <= pos
+  //   POST Q3: pos < arr.Length
+  //   POST Q4: arr[pos] == elem
+  //   POST Q5: elem !in arr[pos + 1..]
+  {
+    var arr := new int[2] [-7916, -7915];
+    var elem := -7916;
+    var pos := LastPosition(arr, elem);
+    expect pos == 0;
   }
 
 }

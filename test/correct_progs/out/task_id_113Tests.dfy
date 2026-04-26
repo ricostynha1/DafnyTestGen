@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_113.dfy
 // Method: IsInteger
-// Generated: 2026-04-22 21:30:11
+// Generated: 2026-04-23 20:34:45
 
 // Auxiliary predicate to check if a character represents a digit
 predicate IsDigit(c: char) {
@@ -79,9 +79,69 @@ method TestsForIsInteger()
   //   POST Q2: |s| > 0
   //   POST Q3: exists i :: 1 <= i < (|s| - 1) && !IsDigit(s[i])
   {
-    var s: seq<char> := ['^', '~', 'K'];
+    var s: seq<char> := ['\U{005C}', ']', '~'];
     var result := IsInteger(s);
     expect result == false;
+  }
+
+  // Test case for combination {1}/O|s|>=2:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['8', '9'];
+    var result := IsInteger(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R3:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['8'];
+    var result := IsInteger(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['7'];
+    var result := IsInteger(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['6'];
+    var result := IsInteger(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['5'];
+    var result := IsInteger(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: |s| > 0
+  //   POST Q3: forall i: int :: 0 <= i < |s| ==> IsDigit(s[i])
+  {
+    var s: seq<char> := ['4'];
+    var result := IsInteger(s);
+    expect result == true;
   }
 
 }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\Recaman.dfy
 // Method: Contains
-// Generated: 2026-04-22 21:28:43
+// Generated: 2026-04-23 20:31:36
 
 /* the Recaman's sequence is defined as: 
     R(0) = 0
@@ -64,7 +64,7 @@ method TestsForContains()
   //   POST Q2: x in a[..len]
   {
     var x := 10;
-    var a := new nat[2] [10, 10];
+    var a := new nat[2] [2, 10];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
@@ -75,8 +75,8 @@ method TestsForContains()
   //   POST Q1: !res
   //   POST Q2: x !in a[..len]
   {
-    var x := 8;
-    var a := new nat[2] [9, 10];
+    var x := 9;
+    var a := new nat[2] [10, 8];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == false;
@@ -99,11 +99,83 @@ method TestsForContains()
   //   POST Q1: res
   //   POST Q2: x in a[..len]
   {
-    var x := 9;
-    var a := new nat[3] [10, 9, 5];
+    var x := 3;
+    var a := new nat[3] [10, 3, 2];
     var len := 2;
     var res := Contains(x, a, len);
     expect res == true;
+  }
+
+  // Test case for combination {2}/Blen=0:
+  //   PRE:  len <= a.Length
+  //   POST Q1: !res
+  //   POST Q2: x !in a[..len]
+  {
+    var x := 2;
+    var a := new nat[1] [10];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == false;
+  }
+
+  // Test case for combination {2}/Blen=1:
+  //   PRE:  len <= a.Length
+  //   POST Q1: !res
+  //   POST Q2: x !in a[..len]
+  {
+    var x := 10;
+    var a := new nat[1] [9];
+    var len := 1;
+    var res := Contains(x, a, len);
+    expect res == false;
+  }
+
+  // Test case for combination {1}/Ox=0:
+  //   PRE:  len <= a.Length
+  //   POST Q1: res
+  //   POST Q2: x in a[..len]
+  {
+    var x := 0;
+    var a := new nat[4] [3, 4, 4, 0];
+    var len := 4;
+    var res := Contains(x, a, len);
+    expect res == true;
+  }
+
+  // Test case for combination {2}/Ox=0:
+  //   PRE:  len <= a.Length
+  //   POST Q1: !res
+  //   POST Q2: x !in a[..len]
+  {
+    var x := 0;
+    var a := new nat[2] [3, 10];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == false;
+  }
+
+  // Test case for combination {2}/Ox<0:
+  //   PRE:  len <= a.Length
+  //   POST Q1: !res
+  //   POST Q2: x !in a[..len]
+  {
+    var x := -10;
+    var a := new nat[2] [8, 10];
+    var len := 2;
+    var res := Contains(x, a, len);
+    expect res == false;
+  }
+
+  // Test case for combination {2}/O|a|=0:
+  //   PRE:  len <= a.Length
+  //   POST Q1: !res
+  //   POST Q2: x !in a[..len]
+  {
+    var x := -10;
+    var a := new nat[0] [];
+    var len := 0;
+    var res := Contains(x, a, len);
+    expect res == false;
   }
 
 }
@@ -140,6 +212,54 @@ method TestsForRecaman()
     var n := 10;
     var res := Recaman(n);
     expect res == 11;
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: res == R(n)
+  {
+    var n := 9;
+    var res := Recaman(n);
+    expect res == 21;
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: res == R(n)
+  {
+    var n := 8;
+    var res := Recaman(n);
+    expect res == 12;
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: res == R(n)
+  {
+    var n := 7;
+    var res := Recaman(n);
+    expect res == 20;
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: res == R(n)
+  {
+    var n := 6;
+    var res := Recaman(n);
+    expect res == 13;
+  }
+
+  // Test case for combination {2}/R8:
+  //   POST Q1: res == R(n)
+  {
+    var n := 5;
+    var res := Recaman(n);
+    expect res == 7;
+  }
+
+  // Test case for combination {2}/R9:
+  //   POST Q1: res == R(n)
+  {
+    var n := 4;
+    var res := Recaman(n);
+    expect res == 2;
   }
 
 }

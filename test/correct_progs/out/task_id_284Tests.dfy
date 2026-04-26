@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_284.dfy
 // Method: AllElementsEqualTo
-// Generated: 2026-04-22 21:31:34
+// Generated: 2026-04-23 20:37:05
 
 // Checks if all elements in an array are equal to a given number.
 method AllElementsEqualTo<T(==)>(a: array<T>, x: T) returns (result: bool)
@@ -75,6 +75,68 @@ method TestsForAllElementsEqualTo()
     var x := 2;
     var result := AllElementsEqualTo<int>(a, x);
     expect result == true;
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[2] [8, 8];
+    var x := 8;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/Ox=1:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 0 <= i < a.Length ==> a[i] == x
+  {
+    var a := new int[0] [];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/Ox=0:
+  //   POST Q1: !result
+  //   POST Q2: 0 <= (a.Length - 1)
+  //   POST Q3: a[0] != x
+  {
+    var a := new int[1] [2];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/Ox=1:
+  //   POST Q1: !result
+  //   POST Q2: 0 <= (a.Length - 1)
+  //   POST Q3: a[0] != x
+  {
+    var a := new int[1] [2];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/Ox=0:
+  //   POST Q1: !result
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[3] [14, 7, 19];
+    var x := 0;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
+  }
+
+  // Test case for combination {3}/Ox=1:
+  //   POST Q1: !result
+  //   POST Q2: exists i :: 1 <= i < (a.Length - 1) && !(a[i] == x)
+  {
+    var a := new int[3] [14, 7, 19];
+    var x := 1;
+    var result := AllElementsEqualTo<int>(a, x);
+    expect result == false;
   }
 
 }

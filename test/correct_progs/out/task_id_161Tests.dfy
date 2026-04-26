@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_161.dfy
 // Method: RemoveElements
-// Generated: 2026-04-22 21:30:31
+// Generated: 2026-04-23 20:35:26
 
 // Returns a sequence with all elements belonging to the first array 
 // that are not in the second array, by the same order, without duplicates
@@ -116,6 +116,60 @@ method TestsForRemoveElements()
   {
     var a := new int[0] [];
     var b := new int[1] [2];
+    var res := RemoveElements<int>(a, b);
+    expect res == [];
+  }
+
+  // Test case for combination {1}/O|b|>=2:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[2] [3, 4];
+    var res := RemoveElements<int>(a, b);
+    expect res == [];
+  }
+
+  // Test case for combination {2}/O|a|>=2:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[2] [26, 9];
+    var b := new int[1] [12];
+    var res := RemoveElements<int>(a, b);
+    expect res == [26, 9];
+  }
+
+  // Test case for combination {2}/O|b|>=2:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[1] [10];
+    var b := new int[2] [14, 16];
+    var res := RemoveElements<int>(a, b);
+    expect res == [10];
+  }
+
+  // Test case for combination {3}/O|a|>=2:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[2] [25, 12];
+    var b := new int[2] [25, 12];
+    var res := RemoveElements<int>(a, b);
+    expect res == [];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[1] [6];
+    var res := RemoveElements<int>(a, b);
+    expect res == [];
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: res == removeElems(a[..], b[..])
+  {
+    var a := new int[0] [];
+    var b := new int[1] [5];
     var res := RemoveElements<int>(a, b);
     expect res == [];
   }

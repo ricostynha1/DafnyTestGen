@@ -1,0 +1,154 @@
+// Auto-generated test cases by DafnyCBT
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\dafny-exercise_tmp_tmpouftptir_absIt__1274_LVR_43.dfy
+// Method: AbsIt
+// Generated: 2026-04-24 23:35:02
+
+// dafny-exercise_tmp_tmpouftptir_absIt.dfy
+
+method AbsIt(s: array<int>)
+  modifies s
+  ensures forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  ensures s.Length == old(s).Length
+  decreases s
+{
+  var i: int := 0;
+  while i < s.Length
+    invariant 0 <= i <= s.Length
+    invariant forall j: int {:trigger s[j]} {:trigger old(s[j])} :: 0 <= j < i ==> if old(s[j]) < 0 then s[j] == -old(s[j]) else s[j] == old(s[j])
+    invariant forall j: int {:trigger old(s[j])} {:trigger s[j]} :: i <= j < s.Length ==> s[j] == old(s[j])
+    decreases s.Length - i
+  {
+    if s[i] < 0 {
+      s[i] := -s[i];
+    }
+    i := i + 1;
+  }
+}
+
+method Tester()
+{
+  var a := new int[] [-1, 2, -3, 4, -5, 6, -7, 8, -9];
+  assert a[0] == -1 && a[1] == 2 && a[2] == -3 && a[3] == 4 && a[4] == -5;
+  assert a[5] == 6 && a[6] == -7 && a[7] == 8 && a[8] == -9;
+  AbsIt(a);
+  assert a[0] == 1 && a[1] == 2 && a[2] == 3 && a[3] == 4 && a[4] == 5;
+  assert a[5] == 6 && a[6] == 7 && a[7] == 8 && a[8] == 9;
+  var b: array<int> := new int[] [-42, -2, -42, -2, -42, -2];
+  assert b[0] == -42 && b[1] == -2 && b[2] == -42;
+  assert b[3] == -2 && b[4] == -42 && b[5] == -2;
+  AbsIt(b);
+  assert b[0] == 42 && b[1] == 2 && b[2] == 42;
+  assert b[3] == 2 && b[4] == 42 && b[5] == 2;
+  var c: array<int> := new int[] [-1];
+  assert c[0] == -1;
+  AbsIt(c);
+  assert c[0] == 1;
+  var d: array<int> := new int[] [43];
+  assert d[0] == 42;
+  AbsIt(b);
+  assert d[0] == 42;
+  var e: array<int> := new int[] [];
+  AbsIt(e);
+  assert e.Length == 0;
+}
+
+
+method TestsForAbsIt()
+{
+  // Test case for combination {1}:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-10];
+    AbsIt(s);
+    expect s[..] == [10];
+  }
+
+  // Test case for combination {1}/O|s|=0:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[0] [];
+    AbsIt(s);
+    expect s[..] == [];
+  }
+
+  // Test case for combination {1}/O|s|>=2:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[2] [-9, -4];
+    AbsIt(s);
+    expect s[..] == [9, 4];
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [10];
+    AbsIt(s);
+    expect s[..] == [10];
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-8];
+    AbsIt(s);
+    expect s[..] == [8];
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-6];
+    AbsIt(s);
+    expect s[..] == [6];
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-9];
+    AbsIt(s);
+    expect s[..] == [9];
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-7];
+    AbsIt(s);
+    expect s[..] == [7];
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-2];
+    AbsIt(s);
+    expect s[..] == [2];
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: forall i: int {:trigger s[i]} {:trigger old(s[i])} :: 0 <= i < s.Length ==> if old(s[i]) < 0 then s[i] == -old(s[i]) else s[i] == old(s[i])
+  //   POST Q2: s.Length == old(s).Length
+  {
+    var s := new int[1] [-4];
+    AbsIt(s);
+    expect s[..] == [4];
+  }
+
+}
+
+method Main()
+{
+  TestsForAbsIt();
+  print "TestsForAbsIt: all non-failing tests passed!\n";
+}

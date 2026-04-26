@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\CountDistinct.dfy
 // Method: CountDistinct
-// Generated: 2026-04-22 21:25:55
+// Generated: 2026-04-23 20:23:12
 
 
 // Returns the number of distinct elements in a sorted array of integers.
@@ -67,7 +67,7 @@ method TestsForCountDistinct()
   //   PRE:  IsSorted(a)
   //   POST Q1: count == |AsSet(a)|
   {
-    var a := new int[2] [-4, -4];
+    var a := new int[2] [-5, -5];
     var count := CountDistinct(a);
     expect count == 1;
   }
@@ -77,6 +77,60 @@ method TestsForCountDistinct()
   //   POST Q1: count == |AsSet(a)|
   {
     var a := new int[1] [-9];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-8];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-7];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-6];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-4];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-5];
+    var count := CountDistinct(a);
+    expect count == 1;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  IsSorted(a)
+  //   POST Q1: count == |AsSet(a)|
+  {
+    var a := new int[1] [-3];
     var count := CountDistinct(a);
     expect count == 1;
   }

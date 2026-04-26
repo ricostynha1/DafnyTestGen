@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_2.dfy
 // Method: SharedElements
-// Generated: 2026-04-22 21:30:48
+// Generated: 2026-04-23 20:36:04
 
 // Obtains the set of elements (without duplicates) shared between two arrays. 
 method SharedElements<T(==)>(a: array<T>, b: array<T>) returns (result: set<T>)
@@ -83,6 +83,66 @@ method TestsForSharedElements()
   {
     var a := new int[1] [12];
     var b := new int[2] [5, 6];
+    var result := SharedElements<int>(a, b);
+    expect result == {};
+  }
+
+  // Test case for combination {1}/O|result|>=2:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[2] [-1, -2];
+    var b := new int[2] [-1, -2];
+    var result := SharedElements<int>(a, b);
+    expect result == {-2, -1};
+  }
+
+  // Test case for combination {1}/O|a|=0/R5:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[0] [];
+    var b := new int[1] [2];
+    var result := SharedElements<int>(a, b);
+    expect result == {};
+  }
+
+  // Test case for combination {1}/O|a|=0/R6:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[0] [];
+    var b := new int[1] [3];
+    var result := SharedElements<int>(a, b);
+    expect result == {};
+  }
+
+  // Test case for combination {1}/O|a|=0/R7:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[0] [];
+    var b := new int[1] [4];
+    var result := SharedElements<int>(a, b);
+    expect result == {};
+  }
+
+  // Test case for combination {1}/O|a|=0/R8:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[0] [];
+    var b := new int[1] [5];
+    var result := SharedElements<int>(a, b);
+    expect result == {};
+  }
+
+  // Test case for combination {1}/O|a|=0/R9:
+  //   POST Q1: forall x: int :: x in result ==> x in a[..] && x in b[..]
+  //   POST Q2: forall x: int :: x in a[..] && x in b[..] ==> x in result
+  {
+    var a := new int[0] [];
+    var b := new int[1] [6];
     var result := SharedElements<int>(a, b);
     expect result == {};
   }

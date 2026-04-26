@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_732.dfy
 // Method: ReplaceWithColon
-// Generated: 2026-04-22 21:35:58
+// Generated: 2026-04-23 20:44:16
 
 // Replaces all spaces, commas and dots in a string with colons.
 method ReplaceWithColon(s: string) returns (v: string)
@@ -53,28 +53,82 @@ method TestsForReplaceWithColon()
   // Test case for combination {1}/O|s|=1:
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   {
+    var s: seq<char> := ['@'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['@']; // observed from implementation
+  }
+
+  // Test case for combination {1}/O|s|>=2:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := ['~', '1'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['~', '1']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := ['}'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['}']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := ['|'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['|']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := ['{'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['{']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
     var s: seq<char> := ['?'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
     expect v == ['?']; // observed from implementation
   }
 
-  // Test case for combination {1}/O|s|>=2:
+  // Test case for combination {1}/R8:
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['~', 's'];
+    var s: seq<char> := ['z'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
-    expect v == ['~', 's']; // observed from implementation
+    expect v == ['z']; // observed from implementation
   }
 
-  // Test case for combination {1}/R4:
+  // Test case for combination {1}/R9:
   //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
   {
-    var s: seq<char> := ['>'];
+    var s: seq<char> := ['y'];
     var v := ReplaceWithColon(s);
     expect IsMapSeq(s, v, ReplaceCharWithColon);
-    expect v == ['>']; // observed from implementation
+    expect v == ['y']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: IsMapSeq(s, v, ReplaceCharWithColon)
+  {
+    var s: seq<char> := ['x'];
+    var v := ReplaceWithColon(s);
+    expect IsMapSeq(s, v, ReplaceCharWithColon);
+    expect v == ['x']; // observed from implementation
   }
 
 }

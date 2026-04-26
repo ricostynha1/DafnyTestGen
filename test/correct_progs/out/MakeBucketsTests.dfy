@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\MakeBuckets.dfy
 // Method: MakeBuckets
-// Generated: 2026-04-22 21:27:29
+// Generated: 2026-04-23 20:27:37
 
 // Given a non-empty array 'a' of natural numbers, generates a new array ‘b’ 
 // (buckets) such that b[k] gives the number of occurrences of 'k' in 'a',
@@ -72,11 +72,11 @@ method TestsForMakeBuckets()
   //   POST Q2: b.Length > 0 && b.Length == MaxSeq(a[..]) + 1
   //   POST Q3: forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..])
   {
-    var a := new nat[2] [5, 10];
+    var a := new nat[2] [4, 10];
     var b := MakeBuckets(a);
     expect b.Length > 0 && b.Length == MaxSeq(a[..]) + 1;
     expect forall k: int :: 0 <= k < b.Length ==> b[k] == count(k, a[..]);
-    expect b[..] == [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; // observed from implementation
+    expect b[..] == [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1]; // observed from implementation
   }
 
 }

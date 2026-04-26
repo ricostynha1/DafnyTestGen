@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-22 21:26:15
+// Generated: 2026-04-23 20:24:03
 
 // Computes x^n in time O(log n) and space O(1) 
 // using the fast exponentiation algorithm.
@@ -78,6 +78,60 @@ method TestsForFastExponentiation()
     var n := 2;
     var p := FastExponentiation(x, n);
     expect p == 0.0;
+  }
+
+  // Test case for combination {1}/Ox>0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 1.0;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0;
+  }
+
+  // Test case for combination {1}/Ox<0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := -496.0;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0;
+  }
+
+  // Test case for combination {1}/Op>0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := -497.0;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0;
+  }
+
+  // Test case for combination {2}/Ox>0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 0.5;
+    var n := 10;
+    var p := FastExponentiation(x, n);
+    expect p == 0.0009765625;
+  }
+
+  // Test case for combination {2}/Ox<0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := -1.0;
+    var n := 10;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := -498.0;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1.0;
   }
 
 }

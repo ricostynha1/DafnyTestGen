@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\IntersectIntervalsTuples.dfy
 // Method: IntersectIntervals
-// Generated: 2026-04-22 21:27:06
+// Generated: 2026-04-23 20:26:12
 
 // Compute the intersection of a non-empty array of non-empty closed intervals. 
 // If the intersection is empty, by convention returns (0.0, 0.0).
@@ -65,11 +65,11 @@ method TestsForIntersectIntervals()
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[1] [(0.0, 0.5)];
+    var a := new (real, real)[1] [(-1.0, 0.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
     expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
-    expect r == (0.0, 0.5); // observed from implementation
+    expect r == (-1.0, 0.0); // observed from implementation
   }
 
   // Test case for combination {1}/R2:
@@ -77,7 +77,7 @@ method TestsForIntersectIntervals()
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[2] [(0.0, 0.5), (21163.0, 21163.5)];
+    var a := new (real, real)[2] [(-1.0, 0.0), (13850.0, 13851.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
     expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
@@ -89,7 +89,7 @@ method TestsForIntersectIntervals()
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[3] [(0.0, 0.5), (5131.0, 5131.5), (15827.0, 15827.5)];
+    var a := new (real, real)[3] [(-1.0, 0.0), (28778.0, 28779.0), (4003.0, 4004.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
     expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
@@ -101,7 +101,55 @@ method TestsForIntersectIntervals()
   //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
   //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
   {
-    var a := new (real, real)[4] [(0.0, 0.5), (10737.0, 10737.5), (22163.0, 22163.5), (19857.5, 19858.0)];
+    var a := new (real, real)[4] [(-1.0, 0.0), (4003.0, 4004.0), (2416.0, 2417.0), (4045.0, 4046.0)];
+    var r := IntersectIntervals(a);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
+    expect r == (0.0, 0.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  {
+    var a := new (real, real)[5] [(-1.0, 0.0), (2416.0, 2417.0), (4045.0, 4046.0), (29398.0, 29399.0), (13071.0, 13072.0)];
+    var r := IntersectIntervals(a);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
+    expect r == (0.0, 0.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  {
+    var a := new (real, real)[6] [(-1.0, 0.0), (4045.0, 4046.0), (29398.0, 29399.0), (13070.0, 13071.0), (4960.0, 4961.0), (14515.0, 14516.0)];
+    var r := IntersectIntervals(a);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
+    expect r == (0.0, 0.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  {
+    var a := new (real, real)[7] [(-1.0, 0.0), (29398.0, 29399.0), (13070.0, 13071.0), (4959.0, 4960.0), (14516.0, 14517.0), (14931.0, 14932.0), (27158.0, 27159.0)];
+    var r := IntersectIntervals(a);
+    expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
+    expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation
+    expect r == (0.0, 0.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  a.Length > 0
+  //   PRE:  forall i: int :: 0 <= i < a.Length ==> a[i].0 < a[i].1
+  //   POST Q1: var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0)
+  {
+    var a := new (real, real)[8] [(-1.0, 0.0), (13070.0, 13071.0), (4959.0, 4960.0), (14515.0, 14516.0), (14932.0, 14933.0), (21322.0, 21323.0), (16410.0, 16411.0), (553.0, 554.0)];
     var r := IntersectIntervals(a);
     expect var r': (real, real) := MaxMin(a); if r'.0 < r'.1 then r == r' else r == (0.0, 0.0);
     expect a == _System._ITuple2`2[Dafny.BigRational,Dafny.BigRational][]; // observed from implementation

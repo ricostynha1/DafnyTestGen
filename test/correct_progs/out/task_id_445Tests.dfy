@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_445.dfy
 // Method: ElementWiseMultiplication
-// Generated: 2026-04-22 21:32:54
+// Generated: 2026-04-23 20:39:14
 
 // Multiplies the elements of two sequences element-wise.
 method ElementWiseMultiplication(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -34,10 +34,10 @@ method TestsForElementWiseMultiplication()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [4];
-    var b: seq<int> := [5];
+    var a: seq<int> := [-9];
+    var b: seq<int> := [-10];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [20];
+    expect result == [90];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -56,10 +56,10 @@ method TestsForElementWiseMultiplication()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] * b[i]
   {
-    var a: seq<int> := [-1, -4];
-    var b: seq<int> := [-2, -3];
+    var a: seq<int> := [-1, -9];
+    var b: seq<int> := [-2, -10];
     var result := ElementWiseMultiplication(a, b);
-    expect result == [2, 12];
+    expect result == [2, 90];
   }
 
 }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_770.dfy
 // Method: SumOfFourthPowerOfOddNumbers
-// Generated: 2026-04-22 21:36:31
+// Generated: 2026-04-23 20:45:16
 
 // Returns the sum of the fourth power of the first n odd numbers.
 method SumOfFourthPowerOfOddNumbers(n: nat) returns (sum: nat)
@@ -62,9 +62,57 @@ method TestsForSumOfFourthPowerOfOddNumbers()
   // Test case for combination {1}/R4:
   //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
   {
+    var n := 9;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 187017;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 8;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 103496;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 7;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 52871;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 6;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 24310;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
     var n := 5;
     var sum := SumOfFourthPowerOfOddNumbers(n);
     expect sum == 9669;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 4;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 3108;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: sum == n * (2 * n + 1) * (24 * n * n * n - 12 * n * n - 14 * n + 7) / 15
+  {
+    var n := 3;
+    var sum := SumOfFourthPowerOfOddNumbers(n);
+    expect sum == 707;
   }
 
 }

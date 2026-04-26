@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Clover_longest_prefix_325_VER_prefix.dfy
 // Method: LongestCommonPrefix
-// Generated: 2026-04-22 21:35:03
+// Generated: 2026-04-23 21:29:14
 
 // Clover_longest_prefix.dfy
 
@@ -26,48 +26,68 @@ method LongestCommonPrefix(str1: seq<char>, str2: seq<char>) returns (prefix: se
 
 method TestsForLongestCommonPrefix()
 {
-  // Test case for combination {1}/Rel:
+  // Test case for combination {1}:
   //   POST Q1: |prefix| == |str1|
   //   POST Q2: prefix == str1[0 .. |prefix|]
   //   POST Q3: |prefix| <= |str2|
   //   POST Q4: prefix == str2[0 .. |prefix|]
   {
-    var str1: seq<char> := ['|'];
-    var str2: seq<char> := ['|'];
+    var str1: seq<char> := [];
+    var str2: seq<char> := ['~'];
     var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == ['|'];
+    expect prefix == [];
   }
 
-  // FAILING: expects commented out; see VAL/RHS annotations below
-  // Test case for combination {2}/Rel:
+  // Test case for combination {2}:
   //   POST Q1: |prefix| < |str1|
   //   POST Q2: prefix == str1[0 .. |prefix|]
   //   POST Q3: |prefix| == |str2|
   //   POST Q4: prefix == str2[0 .. |prefix|]
   {
-    var str1: seq<char> := ['b', '~'];
-    var str2: seq<char> := ['b'];
+    var str1: seq<char> := ['~'];
+    var str2: seq<char> := [];
     var prefix := LongestCommonPrefix(str1, str2);
-    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
-    // runtime error: at System.Collections.Immutable.ImmutableArray`1.get_Item(Int32 index)
-    // runtime error: at Dafny.Sequence`1.Select(BigInteger index) in C:\cygwin64\tmp\DafnyTestGen_yb05uabibhr\runner.cs:line 1333
-    // expect prefix == ['b'];
+    expect prefix == [];
   }
 
-  // Test case for combination {3}/Rel:
+  // Test case for combination {3}:
   //   POST Q1: |prefix| < |str1|
   //   POST Q2: prefix == str1[0 .. |prefix|]
   //   POST Q3: |prefix| < |str2|
   //   POST Q4: prefix == str2[0 .. |prefix|]
   //   POST Q5: str1[|prefix|] != str2[|prefix|]
   {
-    var str1: seq<char> := ['S', '~', 'L'];
-    var str2: seq<char> := ['S', '}', 'M', ','];
+    var str1: seq<char> := ['~'];
+    var str2: seq<char> := ['}'];
     var prefix := LongestCommonPrefix(str1, str2);
-    expect prefix == ['S'];
+    expect prefix == [];
   }
 
-  // Test case for combination {1}/O|str1|=0:
+  // Test case for combination {1}/O|str1|=1:
+  //   POST Q1: |prefix| == |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| <= |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  {
+    var str1: seq<char> := [' '];
+    var str2: seq<char> := [' '];
+    var prefix := LongestCommonPrefix(str1, str2);
+    expect prefix == [' '];
+  }
+
+  // Test case for combination {1}/O|str1|>=2:
+  //   POST Q1: |prefix| == |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| <= |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  {
+    var str1: seq<char> := ['r', '~'];
+    var str2: seq<char> := ['r', '~'];
+    var prefix := LongestCommonPrefix(str1, str2);
+    expect prefix == ['r', '~'];
+  }
+
+  // Test case for combination {1}/O|str2|=0:
   //   POST Q1: |prefix| == |str1|
   //   POST Q2: prefix == str1[0 .. |prefix|]
   //   POST Q3: |prefix| <= |str2|
@@ -75,6 +95,64 @@ method TestsForLongestCommonPrefix()
   {
     var str1: seq<char> := [];
     var str2: seq<char> := [];
+    var prefix := LongestCommonPrefix(str1, str2);
+    expect prefix == [];
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/O|str1|>=2:
+  //   POST Q1: |prefix| < |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| == |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  {
+    var str1: seq<char> := ['}', '~'];
+    var str2: seq<char> := ['}'];
+    var prefix := LongestCommonPrefix(str1, str2);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at System.Collections.Immutable.ImmutableArray`1.get_Item(Int32 index)
+    // runtime error: at Dafny.Sequence`1.Select(BigInteger index) in C:\cygwin64\tmp\DafnyCBT_s1jygoo0din\runner.cs:line 1532
+    // expect prefix == ['}'];
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/O|str2|>=2:
+  //   POST Q1: |prefix| < |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| == |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  {
+    var str1: seq<char> := ['}', 'e', '~'];
+    var str2: seq<char> := ['}', 'e'];
+    var prefix := LongestCommonPrefix(str1, str2);
+    // runtime error: Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array.
+    // runtime error: at System.Collections.Immutable.ImmutableArray`1.get_Item(Int32 index)
+    // runtime error: at Dafny.Sequence`1.Select(BigInteger index) in C:\cygwin64\tmp\DafnyCBT_s1jygoo0din\runner.cs:line 1532
+    // expect prefix == ['}', 'e'];
+  }
+
+  // Test case for combination {3}/O|str1|>=2:
+  //   POST Q1: |prefix| < |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| < |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  //   POST Q5: str1[|prefix|] != str2[|prefix|]
+  {
+    var str1: seq<char> := ['~', 'U'];
+    var str2: seq<char> := ['}'];
+    var prefix := LongestCommonPrefix(str1, str2);
+    expect prefix == [];
+  }
+
+  // Test case for combination {3}/O|str2|>=2:
+  //   POST Q1: |prefix| < |str1|
+  //   POST Q2: prefix == str1[0 .. |prefix|]
+  //   POST Q3: |prefix| < |str2|
+  //   POST Q4: prefix == str2[0 .. |prefix|]
+  //   POST Q5: str1[|prefix|] != str2[|prefix|]
+  {
+    var str1: seq<char> := ['~'];
+    var str2: seq<char> := ['}', '"'];
     var prefix := LongestCommonPrefix(str1, str2);
     expect prefix == [];
   }

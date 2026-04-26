@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_477.dfy
 // Method: ToLowercase
-// Generated: 2026-04-22 21:33:33
+// Generated: 2026-04-23 20:40:06
 
 // Convert a string to lowercase
 method ToLowercase(s: string) returns (v: string)
@@ -61,28 +61,82 @@ method TestsForToLowercase()
   // Test case for combination {1}/O|s|=1:
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['g'];
+    var s: seq<char> := ['='];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
-    expect v == ['g']; // observed from implementation
+    expect v == ['=']; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['k', '&'];
+    var s: seq<char> := ['~', '^'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
-    expect v == ['k', '&']; // observed from implementation
+    expect v == ['~', '^']; // observed from implementation
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: IsMapSeq(s, v, CharToLower)
   {
-    var s: seq<char> := ['f'];
+    var s: seq<char> := ['<'];
     var v := ToLowercase(s);
     expect IsMapSeq(s, v, CharToLower);
-    expect v == ['f']; // observed from implementation
+    expect v == ['<']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := [';'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == [';']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := [':'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == [':']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := ['9'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == ['9']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := ['\U{0027}'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == [''']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := ['&'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == ['&']; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: IsMapSeq(s, v, CharToLower)
+  {
+    var s: seq<char> := ['%'];
+    var v := ToLowercase(s);
+    expect IsMapSeq(s, v, CharToLower);
+    expect v == ['%']; // observed from implementation
   }
 
 }

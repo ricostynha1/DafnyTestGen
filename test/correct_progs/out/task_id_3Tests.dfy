@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_3.dfy
 // Method: IsNonPrime
-// Generated: 2026-04-22 21:31:45
+// Generated: 2026-04-23 20:37:25
 
 // Checks if a natural number greater than 1 is non-prime.
 method IsNonPrime(n: nat) returns (result: bool)
@@ -46,16 +46,6 @@ method TestsForIsNonPrime()
     expect result == true;
   }
 
-  // Test case for combination {4}:
-  //   PRE:  n > 1
-  //   POST Q1: !result
-  //   POST Q2: !exists k: int :: 1 < k < n && n % k == 0
-  {
-    var n := 5;
-    var result := IsNonPrime(n);
-    expect result == false;
-  }
-
   // Test case for combination {4}/Bn=2:
   //   PRE:  n > 1
   //   POST Q1: !result
@@ -74,6 +64,72 @@ method TestsForIsNonPrime()
     var n := 3;
     var result := IsNonPrime(n);
     expect result == false;
+  }
+
+  // Test case for combination {1}/R2:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 8;
+    var result := IsNonPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R3:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 6;
+    var result := IsNonPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 4;
+    var result := IsNonPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 1850;
+    var result := IsNonPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 1848;
+    var result := IsNonPrime(n);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  n > 1
+  //   POST Q1: result
+  //   POST Q2: 2 <= (n - 1)
+  //   POST Q3: n % 2 == 0
+  {
+    var n := 1846;
+    var result := IsNonPrime(n);
+    expect result == true;
   }
 
 }

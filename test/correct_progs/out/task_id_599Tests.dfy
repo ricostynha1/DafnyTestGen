@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_599.dfy
 // Method: SumAndAverage
-// Generated: 2026-04-22 21:34:29
+// Generated: 2026-04-23 20:41:49
 
 // Calculates the sum and average of the first n natural numbers.
 method SumAndAverage(n: nat) returns (sum: nat, average: real)
@@ -78,6 +78,76 @@ method TestsForSumAndAverage()
     var sum, average := SumAndAverage(n);
     expect sum == 10;
     expect average == 2.50;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 6;
+    var sum, average := SumAndAverage(n);
+    expect sum == 21;
+    expect average == sum as real / n as real;
+    expect average == (21.0 / 6.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 8;
+    var sum, average := SumAndAverage(n);
+    expect sum == 36;
+    expect average == 4.500;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 9;
+    var sum, average := SumAndAverage(n);
+    expect sum == 45;
+    expect average == sum as real / n as real;
+    expect average == (45.0 / 9.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 7;
+    var sum, average := SumAndAverage(n);
+    expect sum == 28;
+    expect average == sum as real / n as real;
+    expect average == (28.0 / 7.0); // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 5;
+    var sum, average := SumAndAverage(n);
+    expect sum == 15;
+    expect average == 3.0;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  n > 0
+  //   POST Q1: sum == n * (n + 1) / 2
+  //   POST Q2: average == sum as real / n as real
+  {
+    var n := 3;
+    var sum, average := SumAndAverage(n);
+    expect sum == 6;
+    expect average == sum as real / n as real;
+    expect average == (6.0 / 3.0); // observed from implementation
   }
 
 }

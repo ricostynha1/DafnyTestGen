@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_629.dfy
 // Method: FindEvenNumbers
-// Generated: 2026-04-22 21:35:25
+// Generated: 2026-04-23 20:43:31
 
 // Retrives the sequence of even numbers from an array of integers.
 method FindEvenNumbers(arr: array<int>) returns (evenList: seq<int>)
@@ -93,9 +93,9 @@ method TestsForFindEvenNumbers()
   // Test case for combination {2}/O|arr|>=2:
   //   POST Q1: evenList == Filter(arr[..], IsEven)
   {
-    var arr := new int[2] [10, -1];
+    var arr := new int[2] [8, -1];
     var evenList := FindEvenNumbers(arr);
-    expect evenList == [10];
+    expect evenList == [8];
   }
 
   // Test case for combination {2}/R3:
@@ -104,6 +104,54 @@ method TestsForFindEvenNumbers()
     var arr := new int[1] [-10];
     var evenList := FindEvenNumbers(arr);
     expect evenList == [-10];
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-9];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [];
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-8];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [-8];
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-7];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [];
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-6];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [-6];
+  }
+
+  // Test case for combination {2}/R8:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-5];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [];
+  }
+
+  // Test case for combination {2}/R9:
+  //   POST Q1: evenList == Filter(arr[..], IsEven)
+  {
+    var arr := new int[1] [-4];
+    var evenList := FindEvenNumbers(arr);
+    expect evenList == [-4];
   }
 
 }

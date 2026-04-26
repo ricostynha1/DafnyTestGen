@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_751.dfy
 // Method: IsMinHeap
-// Generated: 2026-04-22 21:36:14
+// Generated: 2026-04-23 20:44:48
 
 // Check if an array of integers represents a min heap.
 method IsMinHeap(a: array<int>) returns (result: bool)
@@ -72,7 +72,7 @@ method TestsForIsMinHeap()
   //   POST Q1: !result
   //   POST Q2: exists i :: 2 <= i < (a.Length - 1) && !(a[Parent(i)] <= a[i])
   {
-    var a := new int[6] [-9, 8, -10, 7, 7, -11];
+    var a := new int[6] [-9, 2, -10, -29767, 1, -11];
     var result := IsMinHeap(a);
     expect result == false;
   }
@@ -82,6 +82,60 @@ method TestsForIsMinHeap()
   //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
   {
     var a := new int[0] [];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/O|a|>=2:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[2] [-9, 10];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [-9];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [-8];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [10];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [-7];
+    var result := IsMinHeap(a);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: result
+  //   POST Q2: forall i: int :: 1 <= i < a.Length ==> a[Parent(i)] <= a[i]
+  {
+    var a := new int[1] [9];
     var result := IsMinHeap(a);
     expect result == true;
   }

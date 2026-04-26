@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_431.dfy
 // Method: HasCommonElement
-// Generated: 2026-04-22 21:32:31
+// Generated: 2026-04-23 20:38:27
 
 // Checks if two arrays have a common element.
 method HasCommonElement<T(==)>(a: array<T>, b: array<T>) returns (result: bool)
@@ -75,7 +75,7 @@ method TestsForHasCommonElement()
   //   POST Q1: result
   //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[2] [9, 14];
+    var a := new int[2] [10, 9];
     var b := new int[1] [9];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
@@ -85,8 +85,68 @@ method TestsForHasCommonElement()
   //   POST Q1: result
   //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
   {
-    var a := new int[1] [10];
-    var b := new int[2] [10, 17];
+    var a := new int[1] [11];
+    var b := new int[2] [11, 17];
+    var result := HasCommonElement<int>(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/O|a|=0:
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[0] [];
+    var b := new int[0] [];
+    var result := HasCommonElement<int>(a, b);
+    expect result == false;
+  }
+
+  // Test case for combination {2}/O|a|>=2:
+  //   POST Q1: !result
+  //   POST Q2: !exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[2] [9, 10];
+    var b := new int[2] [8, 20];
+    var result := HasCommonElement<int>(a, b);
+    expect result == false;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[1] [13];
+    var b := new int[1] [13];
+    var result := HasCommonElement<int>(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[1] [12];
+    var b := new int[1] [12];
+    var result := HasCommonElement<int>(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[1] [14];
+    var b := new int[1] [14];
+    var result := HasCommonElement<int>(a, b);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: exists i: int, j: int :: 0 <= i < a.Length && 0 <= j < b.Length && a[i] == b[j]
+  {
+    var a := new int[1] [15];
+    var b := new int[1] [15];
     var result := HasCommonElement<int>(a, b);
     expect result == true;
   }

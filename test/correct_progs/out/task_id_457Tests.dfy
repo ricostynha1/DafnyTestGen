@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_457.dfy
 // Method: MinLengthSublist
-// Generated: 2026-04-22 21:33:09
+// Generated: 2026-04-23 20:39:34
 
 // Find the shortest sublist in a non-empty list of sublists.
 method MinLengthSublist<T>(s: seq<seq<T>>) returns (minSublist: seq<T>)
@@ -42,7 +42,7 @@ method TestsForMinLengthSublist()
   //   POST Q1: minSublist in s
   //   POST Q2: forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|
   {
-    var s: seq<seq<int>> := [[18, 26], [16], [15], [15], [9]];
+    var s: seq<seq<int>> := [[19, 25], [16], [9], [17], [18]];
     var minSublist := MinLengthSublist<int>(s);
     expect minSublist in s;
     expect forall sublist: seq<int> :: sublist in s ==> |minSublist| <= |sublist|;
@@ -66,7 +66,7 @@ method TestsForMinLengthSublist()
   {
     var s: seq<seq<int>> := [[5, 8], [10, 14]];
     var minSublist := MinLengthSublist<int>(s);
-    expect minSublist == [10, 14] || minSublist == [5, 8];
+    expect minSublist == [5, 8] || minSublist == [10, 14];
     expect minSublist[..] == [5, 8]; // observed from implementation
   }
 

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_310.dfy
 // Method: ToCharArray
-// Generated: 2026-04-22 21:31:49
+// Generated: 2026-04-23 20:37:31
 
 // Converts a string (sequence of characters) to an array of characters.
 method ToCharArray(s: string) returns (a: array<char>)
@@ -46,25 +46,70 @@ method TestsForToCharArray()
     var s: seq<char> := ['~'];
     var a := ToCharArray(s);
     expect a[..] == ['~'];
-    expect a == ~; // observed from implementation
   }
 
   // Test case for combination {1}/O|s|>=2:
   //   POST Q1: a[..] == s
   {
-    var s: seq<char> := ['~', '('];
+    var s: seq<char> := ['~', 'H'];
     var a := ToCharArray(s);
-    expect a[..] == ['~', '('];
-    expect a == ~(; // observed from implementation
+    expect a[..] == ['~', 'H'];
   }
 
   // Test case for combination {1}/R4:
   //   POST Q1: a[..] == s
   {
-    var s: seq<char> := [';'];
+    var s: seq<char> := ['}'];
     var a := ToCharArray(s);
-    expect a[..] == [';'];
-    expect a == ;; // observed from implementation
+    expect a[..] == ['}'];
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['|'];
+    var a := ToCharArray(s);
+    expect a[..] == ['|'];
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['{'];
+    var a := ToCharArray(s);
+    expect a[..] == ['{'];
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['z'];
+    var a := ToCharArray(s);
+    expect a[..] == ['z'];
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['y'];
+    var a := ToCharArray(s);
+    expect a[..] == ['y'];
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['x'];
+    var a := ToCharArray(s);
+    expect a[..] == ['x'];
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: a[..] == s
+  {
+    var s: seq<char> := ['w'];
+    var a := ToCharArray(s);
+    expect a[..] == ['w'];
   }
 
 }
@@ -72,5 +117,5 @@ method TestsForToCharArray()
 method Main()
 {
   TestsForToCharArray();
-  print "TestsForToCharArray: all non-failing tests passed!\n";
+  print "TestsForToCharArray: all tests passed!\n";
 }

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_261.dfy
 // Method: ElementWiseDivision
-// Generated: 2026-04-22 21:31:13
+// Generated: 2026-04-23 20:36:36
 
 // Calculates the element-wise division of two sequences of integers of equal length.
 method ElementWiseDivision(a: seq<int>, b: seq<int>) returns (result: seq<int>)
@@ -46,10 +46,10 @@ method TestsForElementWiseDivision()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [2];
-    var b: seq<int> := [-1];
+    var a: seq<int> := [-10];
+    var b: seq<int> := [-9];
     var result := ElementWiseDivision(a, b);
-    expect result == [-2];
+    expect result == [2];
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -70,10 +70,10 @@ method TestsForElementWiseDivision()
   //   POST Q1: |result| == |a|
   //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] / b[i]
   {
-    var a: seq<int> := [2, -3];
-    var b: seq<int> := [2, -1];
+    var a: seq<int> := [2, -8];
+    var b: seq<int> := [-3, -4];
     var result := ElementWiseDivision(a, b);
-    expect result == [1, 3];
+    expect result == [0, 2];
   }
 
 }

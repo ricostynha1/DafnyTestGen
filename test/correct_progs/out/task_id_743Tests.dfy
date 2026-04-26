@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_743.dfy
 // Method: RotateRight
-// Generated: 2026-04-22 21:36:10
+// Generated: 2026-04-23 20:44:40
 
 // Rotates a list to the right by n positions.
 method RotateRight(l: seq<int>, n: nat) returns (r: seq<int>)
@@ -48,20 +48,20 @@ method TestsForRotateRight()
   //   POST Q1: |r| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-10];
+    var l: seq<int> := [-2];
     var n := 0;
     var r := RotateRight(l, n);
-    expect r == [-10];
+    expect r == [-2];
   }
 
   // Test case for combination {1}/Bn=1:
   //   POST Q1: |r| == |l|
   //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
   {
-    var l: seq<int> := [-10];
+    var l: seq<int> := [-2];
     var n := 1;
     var r := RotateRight(l, n);
-    expect r == [-10];
+    expect r == [-2];
   }
 
   // Test case for combination {1}/O|l|=0:
@@ -72,6 +72,66 @@ method TestsForRotateRight()
     var n := 10;
     var r := RotateRight(l, n);
     expect r == [];
+  }
+
+  // Test case for combination {1}/O|l|>=2:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [-1, -2];
+    var n := 2;
+    var r := RotateRight(l, n);
+    expect r == [-1, -2];
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [2];
+    var n := 7;
+    var r := RotateRight(l, n);
+    expect r == [2];
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [3];
+    var n := 7;
+    var r := RotateRight(l, n);
+    expect r == [3];
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [-10];
+    var n := 7;
+    var r := RotateRight(l, n);
+    expect r == [-10];
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [4];
+    var n := 3;
+    var r := RotateRight(l, n);
+    expect r == [4];
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: |r| == |l|
+  //   POST Q2: forall i: int :: 0 <= i < |l| ==> r[i] == l[(i - n) % |l|]
+  {
+    var l: seq<int> := [5];
+    var n := 8;
+    var r := RotateRight(l, n);
+    expect r == [5];
   }
 
 }

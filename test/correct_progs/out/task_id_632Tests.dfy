@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_632.dfy
 // Method: MoveZeroesToEnd
-// Generated: 2026-04-22 21:35:36
+// Generated: 2026-04-23 20:43:43
 
 // Move all zeroes to the end of the array, preserving the order of non-zero elements.
 // Returns the number of non-zero elements in the array.
@@ -100,7 +100,7 @@ method TestsForMoveZeroesToEnd()
   //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
   //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
   {
-    var a := new int[4] [4, 6, 7, 0];
+    var a := new int[4] [-1, -4, 4, 0];
     var old_a := a[..];
     var nz := MoveZeroesToEnd(a);
     expect 0 <= nz <= a.Length;
@@ -121,6 +121,90 @@ method TestsForMoveZeroesToEnd()
     expect a[..nz] == FilterNZ(old_a);
     expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
     expect nz == 2; // observed from implementation
+  }
+
+  // Test case for combination {3}/O|a|=1:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [0];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 0; // observed from implementation
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [-1];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [8];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [-8];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [-7];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1; // observed from implementation
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: 0 <= nz <= a.Length
+  //   POST Q2: a[..nz] == FilterNZ(old(a[..]))
+  //   POST Q3: forall k: int :: nz <= k < a.Length ==> a[k] == 0
+  {
+    var a := new int[1] [-6];
+    var old_a := a[..];
+    var nz := MoveZeroesToEnd(a);
+    expect 0 <= nz <= a.Length;
+    expect a[..nz] == FilterNZ(old_a);
+    expect forall k: int :: nz <= k < a.Length ==> a[k] == 0;
+    expect nz == 1; // observed from implementation
   }
 
 }

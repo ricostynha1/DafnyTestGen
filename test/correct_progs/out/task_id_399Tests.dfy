@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_399.dfy
 // Method: BitwiseXOR
-// Generated: 2026-04-22 21:32:02
+// Generated: 2026-04-23 20:37:44
 
 // Performs the bitwise XOR operation on two sequences of bv32 values (with equal length).
 method BitwiseXOR(a: seq<bv32>, b: seq<bv32>) returns (result: seq<bv32>)
@@ -80,6 +80,84 @@ method TestsForBitwiseXOR()
     expect |result| == |a|;
     expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
     expect result == [6]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [14];
+    var b: seq<bv32> := [10];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [4]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [16];
+    var b: seq<bv32> := [12];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [28]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [20];
+    var b: seq<bv32> := [15];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [27]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [22];
+    var b: seq<bv32> := [17];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [7]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [24];
+    var b: seq<bv32> := [21];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [13]; // observed from implementation
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  |a| == |b|
+  //   POST Q1: |result| == |a|
+  //   POST Q2: forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i]
+  {
+    var a: seq<bv32> := [26];
+    var b: seq<bv32> := [23];
+    var result := BitwiseXOR(a, b);
+    expect |result| == |a|;
+    expect forall i: int :: 0 <= i < |result| ==> result[i] == a[i] ^ b[i];
+    expect result == [13]; // observed from implementation
   }
 
 }

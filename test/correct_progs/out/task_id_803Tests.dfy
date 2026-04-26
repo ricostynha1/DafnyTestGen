@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_803.dfy
 // Method: IsPerfectSquare
-// Generated: 2026-04-22 21:37:10
+// Generated: 2026-04-23 20:46:40
 
 // Checks if a natural number is a perfect square.
 method  IsPerfectSquare(n: nat) returns(result: bool)
@@ -81,6 +81,60 @@ method TestsForIsPerfectSquare()
   //   POST Q3: n * n == n
   {
     var n := 1;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R2:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 4;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 16;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 25;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 36;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 49;
+    var result := IsPerfectSquare(n);
+    expect result == true;
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: result
+  //   POST Q2: exists i :: 1 <= i < n && i * i == n
+  {
+    var n := 64;
     var result := IsPerfectSquare(n);
     expect result == true;
   }

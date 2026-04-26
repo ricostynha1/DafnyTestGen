@@ -3,15 +3,6 @@
 method random(a: int, b: int) returns (r: int)
   ensures a <= b ==> a <= r <= b
   decreases a, b
-  {
-    if a <= b {
-      var i :| a <= i <= b;
-      r := i;
-    }
-    else {
-        r := a; // or any value, since the precondition is not satisfied
-      }
-  }
 
 lemma eqMultiset_t<T>(t: T, s1: seq<T>, s2: seq<T>)
   requires multiset(s1) == multiset(s2)
@@ -77,11 +68,11 @@ function set_of_seq<T>(s: seq<T>): set<T>
   set x: T {:trigger x in s} | x in s :: x
 }
 
-lemma {:axiom} in_set_of_seq<T>(x: T, s: seq<T>)
+lemma in_set_of_seq<T>(x: T, s: seq<T>)
   ensures x in s <==> x in set_of_seq(s)
   decreases s
 
-lemma {:axiom} subset_set_of_seq<T>(s1: seq<T>, s2: seq<T>)
+lemma subset_set_of_seq<T>(s1: seq<T>, s2: seq<T>)
   requires set_of_seq(s1) <= set_of_seq(s2)
   ensures forall x: T {:trigger x in s2} {:trigger x in s1} :: x in s1 ==> x in s2
   decreases s1, s2

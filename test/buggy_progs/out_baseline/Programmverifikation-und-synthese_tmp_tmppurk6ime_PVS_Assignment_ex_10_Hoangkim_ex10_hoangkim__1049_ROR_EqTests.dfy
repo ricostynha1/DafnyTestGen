@@ -1,0 +1,349 @@
+// Auto-generated test cases by DafnyCBT
+// Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim__1049_ROR_Eq.dfy
+// Method: square0
+// Generated: 2026-04-24 20:34:08
+
+// Programmverifikation-und-synthese_tmp_tmppurk6ime_PVS_Assignment_ex_10_Hoangkim_ex10_hoangkim.dfy
+
+method square0(n: nat) returns (sqn: nat)
+  ensures sqn == n * n
+  decreases n
+{
+  sqn := 0;
+  var i := 0;
+  var x;
+  while i < n
+    invariant i <= n && sqn == i * i
+    decreases n - i
+  {
+    x := 2 * i + 1;
+    sqn := sqn + x;
+    i := i + 1;
+  }
+}
+
+method square1(n: nat) returns (sqn: nat)
+  ensures sqn == n * n
+  decreases n
+{
+  sqn := 0;
+  var i := 0;
+  while i == n
+    invariant i <= n && sqn == i * i
+  {
+    var x := 2 * i + 1;
+    sqn := sqn + x;
+    i := i + 1;
+  }
+}
+
+method q(x: nat, y: nat) returns (z: nat)
+  requires y - x > 2
+  ensures x < z * z < y
+  decreases x, y
+
+method strange()
+  ensures 1 == 2
+{
+  var x := 4;
+  var c: nat := q(x, 2 * x);
+}
+
+method test0()
+{
+  var x: int := *;
+  assume x * x < 100;
+  assert x <= 9;
+}
+
+
+method TestsForsquare0()
+{
+  // Test case for combination {1}:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 0;
+    var sqn := square0(n);
+    expect sqn == 0;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 1;
+    var sqn := square0(n);
+    expect sqn == 1;
+  }
+
+  // Test case for combination {1}/On>=2:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 3;
+    var sqn := square0(n);
+    expect sqn == 9;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 2;
+    var sqn := square0(n);
+    expect sqn == 4;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 4;
+    var sqn := square0(n);
+    expect sqn == 16;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 5;
+    var sqn := square0(n);
+    expect sqn == 25;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 6;
+    var sqn := square0(n);
+    expect sqn == 36;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 7;
+    var sqn := square0(n);
+    expect sqn == 49;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 8;
+    var sqn := square0(n);
+    expect sqn == 64;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 9;
+    var sqn := square0(n);
+    expect sqn == 81;
+  }
+
+}
+
+method TestsForsquare1()
+{
+  // Test case for combination {1}:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 0;
+    var sqn := square1(n);
+    expect sqn == 0;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 1;
+    var sqn := square1(n);
+    expect sqn == 1;
+  }
+
+  // Test case for combination {1}/On>=2:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 3;
+    var sqn := square1(n);
+    expect sqn == 9;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 2;
+    var sqn := square1(n);
+    expect sqn == 4;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 4;
+    var sqn := square1(n);
+    expect sqn == 16;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 5;
+    var sqn := square1(n);
+    expect sqn == 25;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 6;
+    var sqn := square1(n);
+    expect sqn == 36;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 7;
+    var sqn := square1(n);
+    expect sqn == 49;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 8;
+    var sqn := square1(n);
+    expect sqn == 64;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: sqn == n * n
+  {
+    var n := 9;
+    var sqn := square1(n);
+    expect sqn == 81;
+  }
+
+}
+
+method TestsForq()
+{
+  // Test case for combination {1}:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 2;
+    var y := 5;
+    // var z := q(x, y);
+    // expect z == 2;
+  }
+
+  // Test case for combination {1}/Bx=3:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 3;
+    var y := 7;
+    // var z := q(x, y);
+    // expect z == 2;
+  }
+
+  // Test case for combination {1}/Bx=4:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 4;
+    var y := 17;
+    // var z := q(x, y);
+    // expect z == 4 || z == 3;
+  }
+
+  // Test case for combination {1}/Bz=1:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 0;
+    var y := 3;
+    // var z := q(x, y);
+    // expect z == 1;
+  }
+
+  // Test case for combination {1}/Ox=1:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 1;
+    var y := 17;
+    // var z := q(x, y);
+    // expect z == 4 || z == 2 || z == 3;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 2;
+    var y := 13;
+    // var z := q(x, y);
+    // expect z == 3 || z == 2;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 2;
+    var y := 29;
+    // var z := q(x, y);
+    // expect z == 3 || z == 2 || z == 5 || z == 4;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 2;
+    var y := 31;
+    // var z := q(x, y);
+    // expect z == 2 || z == 3 || z == 5 || z == 4;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z
+  //   POST Q2: z * z < y
+  {
+    var x := 34;
+    var y := 63;
+    // var z := q(x, y);
+    // expect z == 7 || z == 6;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  y - x > 2
+  //   POST Q1: x < z * z < y
+  {
+    var x := 18;
+    var y := 99;
+    // var z := q(x, y);
+    // expect x < z * z < y;
+  }
+
+}
+
+method Main()
+{
+  TestsForsquare0();
+  print "TestsForsquare0: all tests passed!\n";
+  TestsForsquare1();
+  print "TestsForsquare1: all tests passed!\n";
+  TestsForq();
+  print "TestsForq: all tests passed!\n";
+}

@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_741.dfy
 // Method: AllCharactersSame
-// Generated: 2026-04-22 21:36:06
+// Generated: 2026-04-23 20:44:34
 
 // Checks if all characters in a string are equal 
 // (i.e., it does not hve two distinct characters).
@@ -48,7 +48,7 @@ method TestsForAllCharactersSame()
   //   POST Q1: !result
   //   POST Q2: !forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
-    var s: seq<char> := ['~', '}'];
+    var s: seq<char> := ['}', '~'];
     var result := AllCharactersSame(s);
     expect result == false;
   }
@@ -67,6 +67,60 @@ method TestsForAllCharactersSame()
   //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
   {
     var s: seq<char> := ['~', '~'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['}'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['|'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['{'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['z'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['y'];
+    var result := AllCharactersSame(s);
+    expect result == true;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: result
+  //   POST Q2: forall i: int, j: int :: 0 <= i < j < |s| ==> s[i] == s[j]
+  {
+    var s: seq<char> := ['x'];
     var result := AllCharactersSame(s);
     expect result == true;
   }

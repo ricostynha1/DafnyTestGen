@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\buggy_progs\in\CatalanBuggy.dfy
 // Method: CatalanNumber
-// Generated: 2026-04-22 21:34:58
+// Generated: 2026-04-23 21:29:04
 
 function C(n: nat): nat  
 {
@@ -55,6 +55,60 @@ method TestsForCatalanNumber()
     var n := 2;
     var res := CatalanNumber(n);
     // expect res == 2; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R4:
+  //   POST Q1: res == C(n)
+  {
+    var n := 9;
+    var res := CatalanNumber(n);
+    // expect res == 4862; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R5:
+  //   POST Q1: res == C(n)
+  {
+    var n := 8;
+    var res := CatalanNumber(n);
+    // expect res == 1430; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R6:
+  //   POST Q1: res == C(n)
+  {
+    var n := 7;
+    var res := CatalanNumber(n);
+    // expect res == 429; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R7:
+  //   POST Q1: res == C(n)
+  {
+    var n := 6;
+    var res := CatalanNumber(n);
+    // expect res == 132; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R8:
+  //   POST Q1: res == C(n)
+  {
+    var n := 5;
+    var res := CatalanNumber(n);
+    // expect res == 42; // got 0
+  }
+
+  // FAILING: expects commented out; see VAL/RHS annotations below
+  // Test case for combination {2}/R9:
+  //   POST Q1: res == C(n)
+  {
+    var n := 4;
+    var res := CatalanNumber(n);
+    // expect res == 14; // got 0
   }
 
 }

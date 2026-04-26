@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_555.dfy
 // Method: DifferenceSumCubesAndSumNumbers
-// Generated: 2026-04-22 21:33:38
+// Generated: 2026-04-23 20:40:12
 
 // Returns the difference between the sum of the cubes and the
 // sum of the first n positive natural numbers.
@@ -92,6 +92,54 @@ method TestsForDifferenceSumCubesAndSumNumbers()
     expect diff == 1980;
   }
 
+  // Test case for combination {1}/R5:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 8;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 1260;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 7;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 756;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 6;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 420;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 5;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 210;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 4;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 90;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: diff == n * n * (n + 1) * (n + 1) / 4 - n * (n + 1) / 2
+  {
+    var n := 3;
+    var diff := DifferenceSumCubesAndSumNumbers(n);
+    expect diff == 30;
+  }
+
 }
 
 method TestsForSumCubes()
@@ -128,6 +176,54 @@ method TestsForSumCubes()
     expect s == 2025;
   }
 
+  // Test case for combination {1}/R5:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 8;
+    var s := SumCubes(n);
+    expect s == 1296;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 7;
+    var s := SumCubes(n);
+    expect s == 784;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 6;
+    var s := SumCubes(n);
+    expect s == 441;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 5;
+    var s := SumCubes(n);
+    expect s == 225;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 4;
+    var s := SumCubes(n);
+    expect s == 100;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: s == n * n * (n + 1) * (n + 1) / 4
+  {
+    var n := 3;
+    var s := SumCubes(n);
+    expect s == 36;
+  }
+
 }
 
 method TestsForSumNumbers()
@@ -162,6 +258,54 @@ method TestsForSumNumbers()
     var n := 2;
     var s := SumNumbers(n);
     expect s == 3;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 4;
+    var s := SumNumbers(n);
+    expect s == 10;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 6;
+    var s := SumNumbers(n);
+    expect s == 21;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 8;
+    var s := SumNumbers(n);
+    expect s == 36;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 9;
+    var s := SumNumbers(n);
+    expect s == 45;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 7;
+    var s := SumNumbers(n);
+    expect s == 28;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: s == n * (n + 1) / 2
+  {
+    var n := 5;
+    var s := SumNumbers(n);
+    expect s == 15;
   }
 
 }

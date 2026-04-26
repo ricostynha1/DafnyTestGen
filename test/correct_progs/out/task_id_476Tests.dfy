@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_476.dfy
 // Method: SumMinMax
-// Generated: 2026-04-22 21:33:29
+// Generated: 2026-04-23 20:40:01
 
 // Returns the sum of the minimum and maximum elements of a non-empty array
 method SumMinMax(a: array<int>) returns (sum: int)
@@ -87,9 +87,9 @@ method TestsForSumMinMax()
   //   PRE:  a.Length > 0
   //   POST Q1: sum == Max(a[..]) + Min(a[..])
   {
-    var a := new int[2] [7, -10];
+    var a := new int[2] [8, -1];
     var sum := SumMinMax(a);
-    expect sum == -3;
+    expect sum == 7;
   }
 
   // Test case for combination {1}/R3:
@@ -108,6 +108,60 @@ method TestsForSumMinMax()
     var a := new int[1] [-8];
     var sum := SumMinMax(a);
     expect sum == -16;
+  }
+
+  // Test case for combination {1}/R5:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-7];
+    var sum := SumMinMax(a);
+    expect sum == -14;
+  }
+
+  // Test case for combination {1}/R6:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-6];
+    var sum := SumMinMax(a);
+    expect sum == -12;
+  }
+
+  // Test case for combination {1}/R7:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-5];
+    var sum := SumMinMax(a);
+    expect sum == -10;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-4];
+    var sum := SumMinMax(a);
+    expect sum == -8;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-3];
+    var sum := SumMinMax(a);
+    expect sum == -6;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  a.Length > 0
+  //   POST Q1: sum == Max(a[..]) + Min(a[..])
+  {
+    var a := new int[1] [-2];
+    var sum := SumMinMax(a);
+    expect sum == -4;
   }
 
 }

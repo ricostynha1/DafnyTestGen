@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_267.dfy
 // Method: SumOfSquaresOfFirstNOddNumbers
-// Generated: 2026-04-22 21:31:19
+// Generated: 2026-04-23 20:36:42
 
 // Calculate the sum of the squares of the first n odd numbers.
 // (Not a very good example, because the sum can be calculated directly by a formula,
@@ -64,6 +64,54 @@ method TestsForSumOfSquaresOfFirstNOddNumbers()
     var n := 9;
     var sum := SumOfSquaresOfFirstNOddNumbers(n);
     expect sum == 969;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 8;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 680;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 7;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 455;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 6;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 286;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 5;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 165;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 4;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 84;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: sum == n * (2 * n - 1) * (2 * n + 1) / 3
+  {
+    var n := 3;
+    var sum := SumOfSquaresOfFirstNOddNumbers(n);
+    expect sum == 35;
   }
 
 }

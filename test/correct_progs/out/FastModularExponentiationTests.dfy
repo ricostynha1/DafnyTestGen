@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\FastModularExponentiation.dfy
 // Method: FastExponentiation
-// Generated: 2026-04-22 21:26:20
+// Generated: 2026-04-23 20:24:19
 
 /* 
 * Verification in Dafny of the fast modular exponentiation algorithm,  
@@ -166,6 +166,60 @@ method TestsForFastExponentiation()
     expect p == 1;
   }
 
+  // Test case for combination {2}/Bx=0:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 0;
+    var n := 10;
+    var p := FastExponentiation(x, n);
+    expect p == 0;
+  }
+
+  // Test case for combination {2}/Bx=1:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 1;
+    var n := 10;
+    var p := FastExponentiation(x, n);
+    expect p == 1;
+  }
+
+  // Test case for combination {2}/Bn=1:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 10;
+    var n := 1;
+    var p := FastExponentiation(x, n);
+    expect p == 10;
+  }
+
+  // Test case for combination {2}/Bn=2:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 10;
+    var n := 2;
+    var p := FastExponentiation(x, n);
+    expect p == 100;
+  }
+
+  // Test case for combination {1}/R4:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 9;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: p == Power(x, n)
+  {
+    var x := 8;
+    var n := 0;
+    var p := FastExponentiation(x, n);
+    expect p == 1;
+  }
+
 }
 
 method TestsForFastModularExponentiation()
@@ -198,7 +252,7 @@ method TestsForFastModularExponentiation()
   {
     var x := 1;
     var n := 10;
-    var m := 10;
+    var m := 2;
     var res := FastModularExponentiation(x, n, m);
     expect res == 1;
   }
@@ -210,6 +264,72 @@ method TestsForFastModularExponentiation()
     var x := 10;
     var n := 0;
     var m := 2;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/Bn=1:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 10;
+    var n := 1;
+    var m := 10;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 0;
+  }
+
+  // Test case for combination {1}/Bm=1:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 10;
+    var n := 10;
+    var m := 1;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 0;
+  }
+
+  // Test case for combination {1}/Ores>=2:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 10;
+    var n := 2;
+    var m := 9;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 1;
+  }
+
+  // Test case for combination {1}/R8:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 10;
+    var n := 10;
+    var m := 10;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 0;
+  }
+
+  // Test case for combination {1}/R9:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 4;
+    var n := 10;
+    var m := 10;
+    var res := FastModularExponentiation(x, n, m);
+    expect res == 6;
+  }
+
+  // Test case for combination {1}/R10:
+  //   PRE:  m > 0
+  //   POST Q1: res == Power(x, n) % m
+  {
+    var x := 5;
+    var n := 10;
+    var m := 3;
     var res := FastModularExponentiation(x, n, m);
     expect res == 1;
   }

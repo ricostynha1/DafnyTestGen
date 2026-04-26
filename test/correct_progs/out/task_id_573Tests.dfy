@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_573.dfy
 // Method: UniqueProduct
-// Generated: 2026-04-22 21:34:02
+// Generated: 2026-04-23 20:40:51
 
 // Difficult example because of the need for auxiliary lemmas.
 
@@ -84,9 +84,9 @@ method TestsForUniqueProduct()
   // Test case for combination {1}:
   //   POST Q1: product == SetProduct(elems(a))
   {
-    var a := new int[1] [4];
+    var a := new int[1] [7];
     var product := UniqueProduct(a);
-    expect product == 4;
+    expect product == 7;
   }
 
   // Test case for combination {1}/O|a|=0:
@@ -100,9 +100,9 @@ method TestsForUniqueProduct()
   // Test case for combination {1}/O|a|>=2:
   //   POST Q1: product == SetProduct(elems(a))
   {
-    var a := new int[2] [5, -2];
+    var a := new int[2] [-1, -5];
     var product := UniqueProduct(a);
-    expect product == -10;
+    expect product == 5;
   }
 
   // Test case for combination {1}/R4:
@@ -111,6 +111,54 @@ method TestsForUniqueProduct()
     var a := new int[1] [-10];
     var product := UniqueProduct(a);
     expect product == -10;
+  }
+
+  // Test case for combination {1}/R5:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-9];
+    var product := UniqueProduct(a);
+    expect product == -9;
+  }
+
+  // Test case for combination {1}/R6:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-8];
+    var product := UniqueProduct(a);
+    expect product == -8;
+  }
+
+  // Test case for combination {1}/R7:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-7];
+    var product := UniqueProduct(a);
+    expect product == -7;
+  }
+
+  // Test case for combination {1}/R8:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-6];
+    var product := UniqueProduct(a);
+    expect product == -6;
+  }
+
+  // Test case for combination {1}/R9:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-5];
+    var product := UniqueProduct(a);
+    expect product == -5;
+  }
+
+  // Test case for combination {1}/R10:
+  //   POST Q1: product == SetProduct(elems(a))
+  {
+    var a := new int[1] [-4];
+    var product := UniqueProduct(a);
+    expect product == -4;
   }
 
 }

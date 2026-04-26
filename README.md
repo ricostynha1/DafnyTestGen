@@ -185,7 +185,7 @@ elem in arr[..]                  // Q1
 ∧ 0 ≤ pos                        // Q2
 ∧ pos < arr.Length               // Q3
 ∧ arr[pos] == elem               // Q4
-∧ elem !in arr[pos+1..]          // Q5  — the "last" constraint
+∧ elem !in arr[pos+1..]          // Q5 
 ```
 
 Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q1`, `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
@@ -296,7 +296,7 @@ Cost: up to `10` CEGIS attempts per candidate (vs. 3 in plain mode), each with o
 
 *Worked example — `LastPositionSorted` with a buggy binary-search implementation* (returns `mid` of the search range; correct for unique occurrences but wrong for duplicates). Generated tests at [test/new_buggy/in/LastPositionSorted.dfy](test/new_buggy/in/LastPositionSorted.dfy):
 
-- **`{2}/Vi4`** (`Q4 = arr[pos] == elem` vacuous, `Q5` active): `arr = [-9, -9], elem = -9, expected pos = 1`. Uniform array forces `Q4` to be auto-satisfied at any index; only `Q5` (the "last" constraint) is doing real work. Buggy implementation returns 0 (binary-search `mid`) → **fails on `Q5`**. Localization: bug is in the duplicate-handling / advance-to-last logic.
+- **`{2}/Vi4`** (`Q4 = arr[pos] == elem` vacuous, `Q5` active): `arr = [-9, -9], elem = -9, expected pos = 1`. Uniform array forces `Q4` to be auto-satisfied at any index; only `Q5` is doing real work. Buggy implementation returns 0 (binary-search `mid`) → **fails on `Q5`**. Localization: bug is in the duplicate-handling / advance-to-last logic.
 
 - **`{2}/Vi5`** (`Q5 = elem !in arr[pos+1..]` vacuous, `Q4` active): `arr = [0, 1, 1], elem = 0, expected pos = 0`. Single occurrence makes `Q5` automatic (no further `0`s after the first one); only `Q4` (the lookup) carries weight. Buggy implementation returns 0 → **passes**. The pass *rules out* lookup-path bugs in unique-occurrence regimes.
 

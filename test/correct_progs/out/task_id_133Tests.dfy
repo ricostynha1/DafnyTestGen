@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_133.dfy
 // Method: CalcSumOfNegatives
-// Generated: 2026-04-22 21:30:21
+// Generated: 2026-04-23 20:35:04
 
 // Recursive definition of the sum of negative numbers in
 // an array 'a' up to index 'n' (exclusive).  
@@ -69,9 +69,57 @@ method TestsForCalcSumOfNegatives()
   // Test case for combination {2}/O|a|>=2:
   //   POST Q1: result == SumOfNegatives(a)
   {
-    var a := new int[2] [-9, -10];
+    var a := new int[2] [6, -10];
     var result := CalcSumOfNegatives(a);
-    expect result == -19;
+    expect result == -10;
+  }
+
+  // Test case for combination {3}/O|a|>=2:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[2] [-1, 10];
+    var result := CalcSumOfNegatives(a);
+    expect result == -1;
+  }
+
+  // Test case for combination {2}/R3:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [-9];
+    var result := CalcSumOfNegatives(a);
+    expect result == -9;
+  }
+
+  // Test case for combination {2}/R4:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [-8];
+    var result := CalcSumOfNegatives(a);
+    expect result == -8;
+  }
+
+  // Test case for combination {2}/R5:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [-7];
+    var result := CalcSumOfNegatives(a);
+    expect result == -7;
+  }
+
+  // Test case for combination {2}/R6:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [-6];
+    var result := CalcSumOfNegatives(a);
+    expect result == -6;
+  }
+
+  // Test case for combination {2}/R7:
+  //   POST Q1: result == SumOfNegatives(a)
+  {
+    var a := new int[1] [-5];
+    var result := CalcSumOfNegatives(a);
+    expect result == -5;
   }
 
 }

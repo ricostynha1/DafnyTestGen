@@ -1,7 +1,7 @@
-// Auto-generated test cases by DafnyTestGen
+// Auto-generated test cases by DafnyCBT
 // Source: C:\Dados\Dafny\DafnyTestGen\test\correct_progs\in\task_id_251.dfy
 // Method: InsertBeforeEach
-// Generated: 2026-04-22 21:31:06
+// Generated: 2026-04-23 20:36:29
 
 // Given a list s = [e1, e2, ...] and an element x, 
 // returns a new list [x, e1, x, e2, ...].
@@ -68,6 +68,66 @@ method TestsForInsertBeforeEach()
   {
     var s: seq<int> := [];
     var x := 1;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R4:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 2;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R5:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 3;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R6:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 4;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R7:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 5;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R8:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 6;
+    var v := InsertBeforeEach<int>(s, x);
+    expect v == [];
+  }
+
+  // Test case for combination {1}/O|s|=0/R9:
+  //   POST Q1: |v| == 2 * |s|
+  //   POST Q2: forall i: int :: 0 <= i < |s| ==> v[2 * i] == x && v[2 * i + 1] == s[i]
+  {
+    var s: seq<int> := [];
+    var x := 7;
     var v := InsertBeforeEach<int>(s, x);
     expect v == [];
   }
