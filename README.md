@@ -58,7 +58,7 @@ The following table summarises the branching rules.
 
 | Expression | DNF Branches | 
 |---|---|
-| `A \|\| B` | `A`, `!A ∧ B` | 
+| `A \|\| B` | `A`, `!A ∧ B` (a) | 
 | `A ==> B` | `!A`, `A ∧ B`  | 
 | `A <==> B` | `A ∧ B`, `!A ∧ !B` | 
 | `!(A && B)` | `!A`,  `A ∧ !B` | 
