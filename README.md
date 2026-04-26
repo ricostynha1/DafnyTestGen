@@ -102,7 +102,7 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 | `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` | `a.Length > 0 ∧ result == a[0]` | SAT |
 | `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` | `a.Length == 0 ∧ result == 0`| SAT |
 | `!(a.Length == 0) ∧ !(a.Length > 0)` | `a.Length < 0`| UNSAT via Z3 |
-| `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | false | Pruned syntactically|
+| `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | false | Pruned |
 
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
