@@ -93,8 +93,8 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 
 | Cross-product merge (raw) | Post-pruning form | Verdict |
 |---|---|---|
-| `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` | `a.Length > 0 ∧ result == a[0]` | SAT (element found) |
-| `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` | `a.Length == 0 ∧ result == 0`| SAT (empty array) |
+| `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` | `a.Length > 0 ∧ result == a[0]` | SAT |
+| `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` | `a.Length == 0 ∧ result == 0`| SAT |
 | `!(a.Length == 0) ∧ !(a.Length > 0)` | `a.Length < 0`| UNSAT via Z3 |
 | `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | false | Pruned syntactically|
 
