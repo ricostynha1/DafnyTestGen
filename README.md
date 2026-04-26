@@ -93,15 +93,11 @@ In the above example, the cross-product of the two ensures clauses in DNF mode n
 
 | Cross-product merge (raw) | Post-pruning form | Verdict |
 |---|---|---|
-| `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` | `a.Length > 0 ∧ result == a[0]` (¹) | SAT (element found) |
-| `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` | `a.Length == 0 ∧ result == 0` (²) | SAT (empty array) |
-| `!(a.Length == 0) ∧ !(a.Length > 0)` | `a.Length < 0` (³) | UNSAT via Z3 |
-| `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | — | Pruned syntactically (⁴) |
+| `!(a.Length == 0) ∧ a.Length > 0 ∧ result == a[0]` | `a.Length > 0 ∧ result == a[0]` | SAT (element found) |
+| `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0)` | `a.Length == 0 ∧ result == 0`| SAT (empty array) |
+| `!(a.Length == 0) ∧ !(a.Length > 0)` | `a.Length < 0`| UNSAT via Z3 |
+| `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | — | Pruned syntactically|
 
-(¹) After `!(a.Length == 0)` → `a.Length != 0` and the rule "`a != b` is dropped if `a > b` is present", the `!=` literal is removed; `a.Length > 0` already implies it.
-(²) After `!(a.Length > 0)` → `a.Length <= 0` and the rule "`a <= b` is dropped if `a == b` is present", the `<=` literal is removed.
-(³) After `!(a.Length == 0)` → `a.Length != 0` and `!(a.Length > 0)` → `a.Length <= 0`, the strengthening rule `(a <= b) ∧ (a != b) → a < b` collapses both into a single `a.Length < 0`. Z3 returns UNSAT under the implicit `a.Length >= 0` length axiom.
-(⁴) `a.Length == 0 ∧ a.Length > 0` is detected by the numeric-range no-overlap rule (`maxLower = 0` exclusive, `minUpper = 0` inclusive — empty range), so the merge is discarded without canonicalisation or a Z3 call.
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`. Use FDND mode only when you understand the implications.
 
