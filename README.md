@@ -77,7 +77,7 @@ With multiple `requires` and/or `ensures` clauses, their cross-product forms the
    - **Same LHS string, same RHS string, incompatible operators**: both sides matched purely on string equality of their canonical printed forms — neither side has to be a plain variable, so any pair of literals sharing the same operands fires the rule (`x == 5 ∧ x != 5`, `x == y ∧ x != y`, `arr[i] < c ∧ arr[i] >= c`, `f(y) in S ∧ f(y) !in S`). The check is symmetric in the two orientations, so `x == y ∧ y != x` is also detected. No semantic equivalence is performed: `x == y+1 ∧ x != 1+y` is missed because the strings differ. 
    - **Numeric range with no overlap**: `x op1 a ∧ x op2 b` where both RHSs parse as numeric constants. Each relational literal defines an admissible interval for `x` (`x > 5` ↦ `(5, ∞)`, `x <= 10` ↦ `(-∞, 10]`, `x == k` ↦ `[k, k]`, etc.); the rule fires when the intersection of the two intervals is empty. Catches `x > 5 ∧ x < 3`, `x >= 10 ∧ x <= 5`, `x == 0 ∧ x > 0`, `x == 1 ∧ x == 2` (empty intersection of `[1,1]` and `[2,2]`), etc.
 
-2. **Implied-literal pruning and strengthening** — simplifies surviving clauses by collapsing redundant relational pairs.
+2. **Redundancy detection** — simplifies surviving clauses by collapsing redundant relational pairs.
    - **Same LHS string, same RHS string, overlapping operators** - dual of the incompatible operators rule: 
      - Drop the weaker literal when a stronger one is present:
        - `a <= b` is dropped if `a == b` or `a < b` is present.
