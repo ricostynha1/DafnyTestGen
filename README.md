@@ -176,7 +176,7 @@ Pass `--no-bias` / `-nb` to disable both mechanisms — useful for debugging or 
 
 ### Per-literal relevance check (disable with `--no-relevance`)
 
-Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour never bites (i.e., the literal does not constrain valid ouputs for the selected inputs), and so the spec is not really covered.
+Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour is **vacuously satisfied** (i.e., it adds no constraint on the valid outputs for the selected inputs), and so the spec is not really covered.
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
 
@@ -217,7 +217,7 @@ Regardless of mode:
 
 A concrete example where `ladder` matters: `LongestCommonPrefix(str1, str2)` has a DNF clause `|prefix|=|str1| ∧ prefix=str1[0..|prefix|] ∧ |prefix|≤|str2| ∧ prefix=str2[0..|prefix|]`. Under `combined`, the shadow block for `prefix=str2[0..|prefix|]` is UNSAT (given the other three literals, `prefix` is forced to equal `str2[0..|prefix|]` anyway), so pure combined falls through to the plain query which picks the degenerate `str1=[]`. Under `group`, the disjunction `¬(Q2 ∧ Q4)` is satisfiable when `str1=[a]` and `str2=[a]`, forcing a non-degenerate witness. `ladder` gets the non-degenerate witness for free.
 
-For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals bite simultaneously: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least on value different from  `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
+For `LastPosition`, `S = {Q1, Q4, Q5}` (guards `Q2`, `Q3` excluded). The query forces `arr` to contain *multiple* duplicates of `elem` (for `Q4`) and at least one value different from `elem` (for `Q5`) so all three literals are **simultaneously non-vacuous**: `Q1` (`elem ∈ arr`) needs any occurrence, `Q4` (`arr[pos] == elem`) needs the existence of at least one value different from `elem`, `Q5` (`elem !∈ arr[pos+1..]`) needs at least one earlier copy to distinguish "last" from "first". Generated test:
 
 ```dafny
 var arr := new int[4] [-10, -10, -10, -9];
@@ -242,7 +242,7 @@ Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then 
 
 ### Per-literal vacuity check (enable with `--vacuity`)
 
-Phase 1r (relevance) proves a literal `Qk` bites **somewhere** across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific input tuple `X` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
+Phase 1r (relevance) proves a literal `Qk` is **non-vacuous for at least one input** — i.e., it actively prunes the output space somewhere across all valid inputs. A complementary regime exists: `Qk` may be globally relevant (Phase 1r SAT) yet **vacuously satisfied** for some specific input tuple `X` — the other literals already force it true. Phase 1v (opt-in) generates *semantic boundary tests* that exhibit such per-input vacuity.
 
 Example — `LastPosition(arr, elem)`:
 
@@ -276,6 +276,31 @@ The outer `∃ X` quantifier-alternation is handled by **CEGIS**: Phase A asks Z
 **Phase 1r UNSAT skip.** Candidates where Phase 1r returned UNSAT (universally redundant literals) are skipped: the Phase 1 baseline test already exhibits vacuity for those, so a `/V{k}` test would duplicate it.
 
 Tests are labelled `{clause}/V{k+1}` (1-based literal index). Default **OFF**; enable with `--vacuity` / `-v1v`. Expect one CEGIS round to cost up to 6 Z3 calls per candidate literal.
+
+**Role and limits.** On the buggy_progs corpus (314 programs, 409 methods, `-n 10`, seed pinned), Phase 1v's kill-set was identical to or within 1–2 methods of every comparable strategy with vacuity disabled (full ≡ no-vacuity at 190 kills; `no-bias` and `no-bias-no-vacuity` differ by 2 methods; `no-rel` and `no-rel-no-vacuity` differ by 1 method *in favour* of vacuity-off). Anti-trivial bias plus seeded repetition already covers the boundary regimes Phase 1v targets. Vacuity's value is therefore not in raising kill rate but in two orthogonal aspects:
+
+- **Spectrum diversity for fault localization.** A vacuity test deterministically reaches an `ins` regime where one literal is implied by the rest. Such tests carry a sharper localization signal than random-bias tests: when a Q_k-vacuous test passes, it rules out the antecedent code path; when it fails on Q_k, the bug must lie in the relationship between Q_k and its antecedents. SFL rankers (Ochiai, Tarantula) consume pass/fail spectra, and adding deterministic boundary witnesses can improve the rank of the truly-faulty statement even when kill count is unchanged. Demonstrating this requires statement-level coverage instrumentation and an SFL experiment, which is left as future work.
+
+- **Tighter error conditions for the debugger.** Each `/V{k}` test's metadata states which spec literal is redundant under its `ins`. When such a test fails, the IDE can surface the redundancy as a debugging hint — narrowing the suspected fault location to code that violates a literal the spec itself treats as over-constrained in this regime.
+
+### Isolation mode (`--vacuity-isolated`)
+
+A `/V{k}` test reaches its full localization potential only when **exactly one** literal is vacuous. If both `Q_k` and some other `Q_j` are simultaneously implied by the remaining literals on the witness `ins`, a failure of `Q_k` could equally be attributed to `Q_j`'s code path — the test no longer points uniquely at the antecedent of `Q_k`. The ordinary Phase 1v CEGIS does not enforce this: Z3 returns the smallest model satisfying the clause, which often makes several literals vacuous at once (degenerate boundaries like singleton or empty arrays).
+
+The `--vacuity-isolated` flag (alias `-v1vi`) tightens Phase 1v to emit `/Vi{k}` tests only when **`Q_k` is vacuous AND no other candidate `Q_j` is vacuous on the same `ins`**. After Phase B confirms `Q_k` vacuity, an extra Phase B query is run for every other safe candidate `Q_j`; if any returns UNSAT, the witness is rejected as *shared-vacuous* and CEGIS retries. Two extra mechanisms keep CEGIS from looping on similarly degenerate models:
+
+- **Length-floor on rejection.** When a shared-vacuous witness is rejected, all sequence-typed inputs gain a per-iteration constraint `(seq.len <name>) > <rejected length>`, forcing structural progression toward longer arrays.
+- **Magnitude-only bias in Phase A under isolation.** Plain anti-trivial bias has two parts: weight-3 *magnitude/length caps* (keep integers in `[-10, 10]` and arrays short) and weight-1/2 *anti-trivial pushes* (steer values away from `0` and `1`). The trivial pushes conflict with isolation — several isolated witnesses (e.g. LastPosition's `Q4`-vacuous case) require *uniform* arrays like `arr = [X, X]` that the pushes avoid. Isolation mode therefore drops the anti-trivial pushes but **keeps the magnitude/length caps**, so Z3 can reach uniform-content models without exploding into million-magnitude integers that hurt performance and readability.
+
+Cost: up to `10` CEGIS attempts per candidate (vs. 3 in plain mode), each with one Phase B per other candidate. For a clause with 4 candidates, ≤ 40 Z3 calls per literal in the worst case. Default **OFF**; opt-in via `--vacuity-isolated`. Implies `--vacuity`.
+
+*Worked example — `LastPositionSorted` with a buggy binary-search implementation* (returns `mid` of the search range; correct for unique occurrences but wrong for duplicates). Generated tests at [test/new_buggy/in/LastPositionSorted.dfy](test/new_buggy/in/LastPositionSorted.dfy):
+
+- **`{2}/Vi4`** (`Q4 = arr[pos] == elem` vacuous, `Q5` active): `arr = [-9, -9], elem = -9, expected pos = 1`. Uniform array forces `Q4` to be auto-satisfied at any index; only `Q5` (the "last" constraint) is doing real work. Buggy implementation returns 0 (binary-search `mid`) → **fails on `Q5`**. Localization: bug is in the duplicate-handling / advance-to-last logic.
+
+- **`{2}/Vi5`** (`Q5 = elem !in arr[pos+1..]` vacuous, `Q4` active): `arr = [0, 1, 1], elem = 0, expected pos = 0`. Single occurrence makes `Q5` automatic (no further `0`s after the first one); only `Q4` (the lookup) carries weight. Buggy implementation returns 0 → **passes**. The pass *rules out* lookup-path bugs in unique-occurrence regimes.
+
+The pair (failing `/Vi4` + passing `/Vi5`) pinpoints the bug class to "duplicate handling" rather than just "somewhere in the method", which a regular `/Rel` test failure cannot disambiguate. That is the localization payoff isolation mode is designed for.
 
 
 ## Boundary Value Analysis
@@ -752,6 +777,7 @@ publish/DafnyCBT test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 | `--no-relevance` | `-nr` | Disable per-literal relevance check. By default, for each clause Q1 ∧ … ∧ Qm Phase 1 first tries a Z3 query that forces inputs where every non-guard payload literal Qk strictly prunes outputs (e.g. `arr` with multiple duplicates of `elem` for `LastPosition`), replacing the plain clause test on SAT |
 | `--relevance-mode <m>` | | Phase 1r shadow-block strategy: `combined` (per-literal shadow blocks, strictest), `group` (single shadow block with ¬(⋀ safe Qk), weakest), or `ladder` (default: combined then fall back to group on UNSAT — strictly dominates group) |
 | `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v). For each safe clause literal `Qk`, CEGIS searches for ins where `Qk` is vacuously satisfied (other literals force it true). Emits `{clause}/V{k+1}` tests. Default OFF |
+| `--vacuity-isolated` | `-v1vi` | Tighten Phase 1v to emit `{clause}/Vi{k+1}` only when `Qk` is vacuous AND no other candidate `Qj` is vacuous on the same ins. Better localization than `--vacuity` at the cost of more Z3 calls per CEGIS attempt. Implies `--vacuity`. Default OFF |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
