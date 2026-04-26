@@ -266,6 +266,8 @@ Literals whose negation would reference a residual uninterpreted function (typic
 
 Even when a relevance query yields a less-than-ideal choice of `X`, the emitted test remains correct: `Y` always satisfies the full clause, so the test case's `expect` conditions hold by construction.
 
+Relevance checking helps finding bugs with fewer test cases.
+
 Pass `--no-relevance` / `-nr` to disable the relevance check (every clause then uses the plain Phase 1 query).
 
 ### Per-literal vacuity check (enable with `--vacuity`)
