@@ -74,7 +74,7 @@ Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual
 With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. After each pairwise merge, two passes are applied before the clause reaches Z3:
 
 1. **Contradiction detection** — discards syntactically dead merges, never sending them to the solver. For each pair of relational literals on the same variable, the engine flags:
-   - **Same variable, same RHS string, incompatible operators**: matched purely on string equality of the canonical right-hand side, so the RHS may be a constant, variable, function call, or arbitrary term (`x == 5 ∧ x != 5`, `x == y ∧ x != y`, `x < a[i] ∧ x >= a[i]`, `x in S ∧ x !in S`). No semantic equivalence is performed — `x == y+1 ∧ x != 1+y` is missed because the strings differ.
+   - **Same variable, same RHS string, incompatible operators**: matched purely on string equality of the canonical right-hand side, so the RHS may be a constant, variable, function call, or arbitrary term (`x == 5 ∧ x != 5`, `x == y ∧ x != y`, `x < a[i] ∧ x >= a[i]`, `x in S ∧ x !in S`). 
    - **Numeric range with no overlap**: `x op1 a ∧ x op2 b` where both RHSs parse as numeric constants and the implied lower / upper bounds cross. Computed by tracking `maxLower` and `minUpper` with their inclusive / exclusive flags. Catches `x > 5 ∧ x < 3`, `x >= 10 ∧ x <= 5`, `x == 0 ∧ x > 0`, `x == 1 ∧ x == 2` (empty intersection of `[1,1]` and `[2,2]`), etc.
 
 2. **Implied-literal pruning and strengthening** — simplifies surviving clauses by collapsing redundant relational pairs on the same `(lhs, rhs)`:
