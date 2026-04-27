@@ -4,10 +4,10 @@ Automatic contract-based test generation for [Dafny](https://dafny.org/) program
 
 DafnyCBT analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs and expected outputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis. 
 
-DafnyCBT can be used in different scenarios, including:
-- **Complement the verifier** — find and localize bugs in the implementation (or the specification) when Dafny cannot prove (or disprove) correctness or cannot provide adequate diagnosis information or counter-examples.
-- **Specification-based (black-box) testing** — generate tests purely from contracts, reusable in Dafny or translatable to a target implementation language.
-- **Test-driven development** — generate test scaffolding from contracts before any implementation exists, to clarify requirements (not possible with white-box test generators).
+DafnyCBT can be used in different use cases, including:
+- **Fault detection and localization** — generate tests from the specification (contracts) to help find and localize bugs in the implementation, when the Dafny verifier cannot prove (or disprove) correctness or cannot provide sufficient diagnostic information or counter-examples; in this use case, it is important to generate a test suite with high diversity in **both** the input/output values **and** the spec clause / boundary condition each test was derived from, so failures point at distinct fault classes.
+- **Specification-based (black-box) regression and cross-language testing** — generate tests purely from contracts and run them against the same Dafny implementation across versions, or translate them to a target language (C#, Java, Python, JavaScript via Dafny's compilers) to test a port; in this use case, it is important to keep the test set deterministic across runs (fixed seed, output uniqueness enforced) and self-contained (no dependency on internal symbols).
+- **Test-driven development** — generate test scaffolding from contracts before any implementation exists, to clarify requirements (not possible with white-box test generators that need code to extract paths); in this use case, it is important to generate a small, readable suite that covers the highest-yield spec partitions per test (Phase 1 / 1r witnesses preferred over BVA repetition variants).
 
 
 ## Key Differentiators
