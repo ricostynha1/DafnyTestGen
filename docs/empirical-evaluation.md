@@ -1,6 +1,6 @@
 # Empirical evaluation
 
-Ablation study on the **buggy_progs** corpus, measuring the contribution of DafnyCBT's two optional refinements (ON by default) — anti-trivial **bias**, and per-literal **relevance check** (Phase 1r) — to mutation kill rate, kill@k, and wall-clock time. Optional features with negletible impact are also discussed in the end.
+Ablation study on the **buggy_progs** corpus, measuring the contribution of DafnyCBT's two optional refinements (ON by default) — anti-trivial **bias**, and per-literal **relevance check** — to mutation kill rate, kill@k, and wall-clock time. Optional features with negletible impact are also discussed in the end.
 
 ## Corpus
 
@@ -31,12 +31,12 @@ A method is "killed at budget k" iff the first failing test among its first k ge
 
 ![Mutation kill curve, per method](kill_curves_per_method.png)
 
-| Strategy | killed | kill@1 | kill@5 | kill@10 | AUC |
-|---|---:|---:|---:|---:|---:|
-| baseline | 177 | 65 | 161 | 172 | 8521 |
-| +bias | 182 | 84 | 170 | 176 | 8797 |
-| +relevance | 186 | 84 | 173 | 181 | 8984 |
-| +bias+rel *(default)* | **190** | **108** | **175** | **184** | **9218** |
+| Strategy | killed | kill@1 | kill@5 | kill@10 | kill@max | AUC |
+|---|---:|---:|---:|---:|---:|---:|
+| baseline | 177 | 65 | 161 | 172 | 177 | 8521 |
+| +bias | 182 | 84 | 170 | 176 | 182 | 8797 |
+| +relevance | 186 | 84 | 173 | 181 | 186 | 8984 |
+| +bias+rel *(default)* | **190** | **108** | **175** | **184** | **190** | **9218** |
 
 **Marginal contribution per refinement**:
 
@@ -70,21 +70,20 @@ Same shape as per-method, scaled to programs (each program has 1–3 methods on 
 
 ## Phase contribution (cost-benefit)
 
-Where do the kills come from? For each method with at least one failing test, the *first failing test*'s phase is recorded; aggregating across the corpus shows the relative contribution of each pipeline phase. The "tests" column is the total count of tests of each phase emitted across the whole corpus; "tests/fail" is the cost-benefit ratio (lower = better).
+Where do the kills come from? For each method with at least one failing test, the *first failing test*'s phase is recorded; aggregating across the corpus shows the relative contribution of each pipeline phase. Numbers below are for the **default `+bias+rel` strategy with vacuity disabled** (the same `no_vacuity` cell in the 2×2 above), so phases reflect what end-users see out of the box. The "tests" column is the total count of tests of each phase emitted across the whole corpus; "tests/fail" is the cost-benefit ratio (lower = better).
 
 ![Phase contribution to first failures](first_fail_phase.png)
 
 | Phase | Methods | %Fail | Programs | Tests | %Tests | Tests/Fail |
 |---|---:|---:|---:|---:|---:|---:|
-| Phase 1 baseline (clause witness) | 72 | 38.1% | 59 | 423 | 10.2% | **5.9** |
+| Phase 1 baseline (clause witness) | 72 | 38.1% | 59 | 423 | 10.1% | **5.9** |
 | Phase 1r relevance | 69 | 36.5% | 66 | 418 | 10.0% | **6.1** |
-| Phase 1v vacuity | 4 | 2.1% | 4 | 102 | 2.4% | 25.5 |
-| Phase 2 BVA (refined-range) | 8 | 4.2% | 8 | 761 | 18.3% | 95.1 |
-| Phase 2b outer range (categorical) | 31 | 16.4% | 29 | 1027 | 24.7% | 33.1 |
-| Phase 3 repetition (seeded variants) | 5 | 2.6% | 5 | 1433 | 34.4% | 286.6 |
-| **Total** | **189** | | | **4164** | | |
+| Phase 2 BVA (refined-range) | 10 | 5.3% | 10 | 798 | 19.1% | 79.8 |
+| Phase 2b outer range (categorical) | 33 | 17.5% | 31 | 1086 | 26.0% | 32.9 |
+| Phase 3 repetition (seeded variants) | 5 | 2.6% | 5 | 1458 | 34.9% | 291.6 |
+| **Total** | **189** | | | **4183** | | |
 
-**Phase 1 + 1r account for 75% of first-fails using 20% of the test budget** — the spec-driven phases are by far the most efficient. Phase 2b's per-clause refined-range pinning produces the next largest slice (16% of first-fails). Phase 3 repetition is the most expensive *and* lowest-yield phase: its 34% of the budget catches just 3% of first-fails, mostly the long tail of inputs whose magnitude / length exceeds Phase 2b's tier set.
+**Phase 1 + 1r account for 75% of first-fails using 20% of the test budget** — the spec-driven phases are by far the most efficient. Phase 2b's per-clause refined-range pinning produces the next largest slice (17% of first-fails). Phase 3 repetition is the most expensive *and* lowest-yield phase: its 35% of the budget catches just 3% of first-fails, mostly the long tail of inputs whose magnitude / length exceeds Phase 2b's tier set.
 
 If `--min-tests` were lowered from 10 to ~5, Phase 3 would shrink dramatically without losing more than ~3% of the kills — a possible knob for budget-constrained settings.
 
