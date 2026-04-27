@@ -811,6 +811,7 @@ publish/DafnyCBT test/correct_progs/in/Factorial.dfy -o test/correct_progs/out/
 | `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v). For each safe clause literal `Qk`, CEGIS searches for ins where `Qk` is vacuously satisfied (other literals force it true). Emits `{clause}/V{k+1}` tests. Default OFF |
 | `--vacuity-isolated` | `-v1vi` | Tighten Phase 1v to emit `{clause}/Vi{k+1}` only when `Qk` is vacuous AND no other candidate `Qj` is vacuous on the same ins. Better localization than `--vacuity` at the cost of more Z3 calls per CEGIS attempt. Implies `--vacuity`. Default OFF |
 | `--no-exists-decomposition` | `-ned` | Disable decomposition of single-variable existential quantifiers (and negated foralls) into left-boundary / middle-range / right-boundary cases. The quantifier is kept as a single literal in the DNF clause. Useful for ablation experiments measuring the contribution of quantifier decomposition. Default: decomposition ON |
+| `--reverse-bva-order` | `-rbva` | Run Phase 2b (categorical type/size coverage) before Phase 2 (refined-range BVA) instead of after. Default order is 2 → 2b. Phase 2's per-clause dedup against Phase 2b's keys is dropped under reverse, but solve-time subsumption still skips redundant entries. Useful for kill-curve ablation experiments comparing the two orderings |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 
