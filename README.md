@@ -378,6 +378,8 @@ Categorical fallback, one pin per query, when Phase 2 does not cover a variable 
 - **seq / array / string**: `|v|=0`, `|v|=1`, `|v|>=2`
 - **set / multiset / map**: `|v|=0`, `|v|=1`, `|v|>=2`
 
+As in Phase 2, this applies uniformly to inputs, outputs, and mutable class field post-states. Each tier is one pin per query (single-fault principle).
+
 Tier is skipped if `classLiterals` already implies it (syntactic prune), or if Phase 2 already emitted an equivalent pin (dedup by `dafnyKey`).
 
 #### Mutation tiers (post vs pre)
