@@ -25,6 +25,20 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 5. **No implementation required.** Because test generation is purely specification-based, tests can be generated for bodyless methods — supporting test-driven development where contracts are written first and tests scaffold the implementation.
 
 
+## Empirical evaluation
+
+A 2×2 ablation study (bias × relevance, vacuity off) on the [`buggy_progs`](test/buggy_progs/in/) corpus of 314 mutated Dafny programs / 409 methods, run at `-n 10` with a fixed Z3 seed, is documented in [`docs/empirical-evaluation.md`](docs/empirical-evaluation.md). Headline numbers:
+
+| Strategy | killed | kill@1 | kill@10 | gen total |
+|---|---:|---:|---:|---:|
+| baseline (no refinements) | 177 | 65 | 172 | 2206s |
+| +bias only | 182 | 84 | 176 | 2754s |
+| +relevance only | 186 | 84 | 181 | 2365s |
+| **default (+bias +rel)** | **190** | **108** | **184** | 2857s |
+
+Bias dominates early-budget kills (kill@1: 65 → 108); relevance dominates the asymptotic ceiling (kill@max: 182 → 190). Both refinements are roughly additive on this corpus. Phase 1 + Phase 1r together account for **75% of all first-failures using only 20% of the test budget** — a 4× yield over the corpus average. Vacuity (Phase 1v) is opt-in because it adds nothing to the kill rate at this budget; its value is for fault localisation (see [`docs/empirical-evaluation.md` §Vacuity](docs/empirical-evaluation.md#vacuity)).
+
+
 ## How It Works
 
 1. **Parse** Dafny source files and discover methods with contracts (`requires`/`ensures` clauses).
