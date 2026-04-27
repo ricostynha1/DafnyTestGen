@@ -4,9 +4,13 @@ Ablation study on the **buggy_progs** corpus, measuring the contribution of Dafn
 
 ## Corpus
 
-[`test/buggy_progs/in/`](../test/buggy_progs/in/) — 314 programs, 409 methods, all sourced from public Dafny repositories and mutated with a single seeded mutation operator per file (mutation kind encoded in the filename suffix: `EVR_int`, `MVR`, `SDL`, `ROR_Eq`, `LVR`, `AOI`, `BBR`, etc.). Each program contains exactly one "buggy" implementation; all generated tests should pass against the *correct* version of the same spec, and at least one test is expected to expose the mutant.
+[`test/buggy_progs/in/`](../test/buggy_progs/in/) — 314 programs, 409 methods.
 
-The corpus mixes simple numeric methods (`abs`, `factorial`, `power`, `fibonacci`), array/sequence operations (`bubble_sort`, `insertion_sort`, `find_max`, `count_distinct`), and more elaborate spec patterns (`merge_sort`, `binary_search`, `last_position`, classified-style intervals). 91 programs end up entirely passing — either the mutant is semantically equivalent to the spec, or no test in the budget happens to expose it.
+**Provenance**: 313 of the 314 programs are specifications from the **DafnyBench** benchmark suite [\[1\]](#ref-dafnybench) (a public collection of Dafny programs assembled from open-source Dafny repositories and student projects), each mutated with a single seeded operator per file by **MutDafny** [\[2\]](#ref-mutdafny) — a dedicated mutation tool for Dafny. The mutation kind is encoded in the filename suffix (`EVR_int`, `MVR`, `SDL`, `ROR_Eq`, `LVR`, `AOI`, `BBR`, `AOR_Sub`, `ODL_Mul`, `VER`, `MRR`, `MAP`, `CIR`, `CBE`, `COR`, …); the original source filename and repository are encoded in the prefix.
+
+The remaining program — `CatalanBuggy.dfy` — is a hand-crafted spec used to illustrate an off-by-one bug in the `CatalanNumber` recurrence. It has no MutDafny mutation suffix; it was added to the corpus to keep at least one minimal, easily-readable example for documentation purposes.
+
+Each program contains exactly one "buggy" implementation; all generated tests should pass against the *correct* version of the same spec, and at least one test is expected to expose the mutant. The corpus mixes simple numeric methods (`abs`, `factorial`, `power`, `fibonacci`), array/sequence operations (`bubble_sort`, `insertion_sort`, `find_max`, `count_distinct`), and more elaborate spec patterns (`merge_sort`, `binary_search`, `last_position`, classified-style intervals). 91 programs end up entirely passing — either the mutant is semantically equivalent to the spec, or no test in the budget happens to expose it.
 
 ## Methodology
 
@@ -109,3 +113,9 @@ Vacuity's value on this corpus is therefore not in raising kill rate but in *fau
 - Plotting: [`test/experimental_results/plot_kill_curves.py`](../test/experimental_results/plot_kill_curves.py), [`plot_timing.py`](../test/experimental_results/plot_timing.py), [`first_fail_phase.py`](../test/experimental_results/first_fail_phase.py).
 - Raw logs (one per strategy): `test/buggy_progs_<strategy>_log.txt`. Each `Test N/M [method]: STATUS` line carries the per-method test index and verdict; `[DafnyCBT] Results: … gen=Xs check=Ys [program]` summarises the program.
 - Generated tests per strategy live in `test/buggy_progs/out_<strategy>/` (excluded from the repo via `.gitignore`; regenerate locally with the run script).
+
+## References
+
+<a id="ref-dafnybench"></a>**[1]** Chloe Loughridge, Qinyi Sun, Seth Ahrenbach, Federico Cassano, Chuyue Sun, Ying Sheng, Anish Mudide, Md Rakib Hossain Misu, Nada Amin, Max Tegmark. *DafnyBench: A Benchmark for Formal Software Verification.* arXiv preprint arXiv:2406.08467, 2024. [arxiv.org/abs/2406.08467](https://arxiv.org/abs/2406.08467)
+
+<a id="ref-mutdafny"></a>**[2]** Isabel Amaral, Alexandra Mendes, José Campos. *MutDafny: A Mutation-Based Approach to Assess Dafny Specifications.* In Proceedings of the 48th International Conference on Software Engineering (ICSE), 2026.
