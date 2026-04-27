@@ -733,6 +733,17 @@ At method discovery time, DafnyCBT skips:
 
 ## Build
 
+The project file is not committed to the repository (it embeds a local user path under `<DafnyDir>` and is excluded for anonymisation). Copy the template and set `<DafnyDir>` to your local Dafny 4.11.0 install path:
+
+```bash
+cp DafnyCBT/DafnyCBT.csproj.template DafnyCBT/DafnyCBT.csproj
+# then edit DafnyCBT/DafnyCBT.csproj and replace PATH_TO_YOUR_LOCAL_DAFNY_INSTALL
+```
+
+With the VS Code Dafny extension installed, the path typically looks like `<USER>/.vscode/extensions/dafny-lang.ide-vscode-3.5.2/out/resources/4.11.0/github/dafny`. The directory must contain `DafnyCore.dll`, `DafnyPipeline.dll`, the `Boogie.*` DLLs, `System.CommandLine.dll`, and the `Microsoft.Extensions.*` DLLs referenced inside the template.
+
+Then build:
+
 ```bash
 cd DafnyCBT
 dotnet build
