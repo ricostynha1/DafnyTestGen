@@ -38,16 +38,20 @@ A method is "killed at budget k" iff the first failing test among its first k ge
 | +relevance | 186 | 84 | 173 | 181 | 8984 |
 | +bias+rel *(default)* | **190** | **108** | **175** | **184** | **9218** |
 
-**Main effects** — averaged over the other refinement's two values:
-- Bias: averaged uplift ≈ +4.5 methods at kill@max, +21 at kill@1.
-- Relevance: averaged uplift ≈ +8.5 methods at kill@max, +0 at kill@1.
+**Marginal contribution per refinement**:
 
-**Interaction** — when both refinements are on, the joint kill count (190) exceeds the sum-of-individual-uplifts over baseline (177 + 5 + 9 = 191 — within rounding); the two refinements' effects are roughly **additive**, not synergistic, on this corpus.
+| | over baseline | over the *other* refinement |
+|---|---|---|
+| Bias (+bias vs baseline) | kill@1 +19, kill@max +5 | kill@1 +24 (108−84), kill@max +4 (190−186) |
+| Relevance (+rel vs baseline) | kill@1 +19, kill@max +9 | kill@1 +24 (108−84), kill@max +8 (190−182) |
+
+**Interaction at kill@1 is super-additive**: the combined +bias+rel uplift over baseline (+43) exceeds the sum of individual uplifts (19 + 19 = 38) by 5 methods — bias-driven extreme inputs paired with relevance's non-vacuity requirement reach a regime neither refinement alone produces. At kill@max the two are roughly additive (5 + 9 = 14 ≈ +13 combined), with mild diminishing returns.
 
 **Reading the curve shape**:
-- **Bias dominates early-budget kills** (kill@1 = 108 vs 65 for baseline; +43). Bias's anti-trivial pushes mean the very first test for a clause is unlikely to be a degenerate `arr=[], x=0` model that absorbs many mutations. Without bias, kill@1 is barely above half the asymptote.
-- **Relevance dominates the ceiling** (kill@max +9 over `+bias` alone). The per-literal relevance query forces every literal in the clause to actively prune outputs; this catches mutants that need a "non-trivially-satisfying" witness to be exposed, rather than any model.
-- The two curves cross around k = 4–5: at small budgets bias matters more; at large budgets relevance matters more.
+- **At kill@1, both refinements lift by ~+19 individually and to +43 combined** (65 → 84 → 108). Both refinements' anti-trivial / non-vacuity machinery prevents the very first test for a clause from being a degenerate `arr=[], x=0` model that absorbs many mutations.
+- **Bias's marginal contribution shrinks toward the ceiling**: only +5 over baseline at kill@max, +4 over +relevance alone. Bias mostly buys *speed* — better choices early — rather than additional *coverage*.
+- **Relevance's contribution is preserved at the ceiling**: +9 over baseline at kill@max, +8 over +bias alone. Relevance buys *coverage* — non-vacuous witnesses for clauses that bias's random extreme values can't reach.
+- The bias-only and relevance-only curves cross multiple times in the k = 4–7 region: bias gets there faster, relevance reaches further.
 
 ## Mutation kill curves — per program
 

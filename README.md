@@ -36,7 +36,7 @@ A 2×2 ablation study (bias × relevance, vacuity off) on the [`buggy_progs`](te
 | +relevance only | 186 | 84 | 181 | 2365s |
 | **default (+bias +rel)** | **190** | **108** | **184** | 2857s |
 
-Bias dominates early-budget kills (kill@1: 65 → 108); relevance dominates the asymptotic ceiling (kill@max: 182 → 190). Both refinements are roughly additive on this corpus. Phase 1 + Phase 1r together account for **75% of all first-failures using only 20% of the test budget** — a 4× yield over the corpus average. Vacuity (Phase 1v) is opt-in because it adds nothing to the kill rate at this budget; its value is for fault localisation (see [`docs/empirical-evaluation.md` §Vacuity](docs/empirical-evaluation.md#vacuity)).
+Each refinement on its own lifts kill@1 by +19 over baseline (84 vs 65); together they reach kill@1 = 108 — a **super-additive** +43 boost. Toward the ceiling, bias's marginal contribution shrinks (+5 at kill@max) while relevance's is preserved (+9), so bias mostly buys *speed* and relevance buys *coverage*. Phase 1 + Phase 1r together account for **75% of all first-failures using only 20% of the test budget** — a 4× yield over the corpus average. Vacuity (Phase 1v) is opt-in because it adds nothing to the kill rate at this budget; its value is for fault localisation (see [`docs/empirical-evaluation.md` §Vacuity](docs/empirical-evaluation.md#vacuity)).
 
 
 ## How It Works
