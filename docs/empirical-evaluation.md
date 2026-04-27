@@ -118,4 +118,4 @@ Vacuity's value on this corpus is therefore not in raising kill rate but in *fau
 
 <a id="ref-dafnybench"></a>**[1]** Chloe Loughridge, Qinyi Sun, Seth Ahrenbach, Federico Cassano, Chuyue Sun, Ying Sheng, Anish Mudide, Md Rakib Hossain Misu, Nada Amin, Max Tegmark. *DafnyBench: A Benchmark for Formal Software Verification.* arXiv preprint arXiv:2406.08467, 2024. [arxiv.org/abs/2406.08467](https://arxiv.org/abs/2406.08467)
 
-<a id="ref-mutdafny"></a>**[2]** Isabel Amaral, Alexandra Mendes, José Campos. *MutDafny: A Mutation-Based Approach to Assess Dafny Specifications.* In Proceedings of the 48th International Conference on Software Engineering (ICSE), 2026.
+<a id="ref-mutdafny"></a>**[2]** Isabel Amaral, Alexandra Mendes, José Campos. *MutDafny: A Mutation-Based Approach to Assess Dafny Specifications.* In Proceedings of the 48th International Conference on Software Engineering (ICSE), 2026. [arxiv.org/abs/2511.15403](https://arxiv.org/abs/2511.15403)
