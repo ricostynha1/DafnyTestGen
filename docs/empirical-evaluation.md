@@ -1,6 +1,6 @@
 # Empirical evaluation
 
-Ablation study on the **buggy_progs** corpus, measuring the contribution of DafnyCBT's three optional refinements — anti-trivial **bias**, per-literal **relevance check** (Phase 1r), and per-literal **vacuity check** (Phase 1v) — to mutation kill rate, kill@k, and wall-clock time.
+Ablation study on the **buggy_progs** corpus, measuring the contribution of DafnyCBT's two optional refinements (ON by default) — anti-trivial **bias**, and per-literal **relevance check** (Phase 1r) — to mutation kill rate, kill@k, and wall-clock time. Optional features with negletible impact are also discussed in the end.
 
 ## Corpus
 
@@ -8,7 +8,7 @@ Ablation study on the **buggy_progs** corpus, measuring the contribution of Dafn
 
 **Provenance**: 313 of the 314 programs are specifications from the **DafnyBench** benchmark suite [\[1\]](#ref-dafnybench) (a public collection of Dafny programs assembled from open-source Dafny repositories and student projects), each mutated with a single seeded operator per file by **MutDafny** [\[2\]](#ref-mutdafny) — a dedicated mutation tool for Dafny. The mutation kind is encoded in the filename suffix (`EVR_int`, `MVR`, `SDL`, `ROR_Eq`, `LVR`, `AOI`, `BBR`, `AOR_Sub`, `ODL_Mul`, `VER`, `MRR`, `MAP`, `CIR`, `CBE`, `COR`, …); the original source filename and repository are encoded in the prefix.
 
-The remaining program — `CatalanBuggy.dfy` — is a hand-crafted spec used to illustrate an off-by-one bug in the `CatalanNumber` recurrence. It has no MutDafny mutation suffix; it was added to the corpus to keep at least one minimal, easily-readable example for documentation purposes.
+The remaining program — `CatalanBuggy.dfy` — is a hand-crafted spec used to illustrate an off-by-one bug in the `CatalanNumber` recurrence. It was added to the corpus to keep at least one minimal, easily-readable example for documentation purposes.
 
 Each program contains exactly one "buggy" implementation; all generated tests should pass against the *correct* version of the same spec, and at least one test is expected to expose the mutant. The corpus mixes simple numeric methods (`abs`, `factorial`, `power`, `fibonacci`), array/sequence operations (`bubble_sort`, `insertion_sort`, `find_max`, `count_distinct`), and more elaborate spec patterns (`merge_sort`, `binary_search`, `last_position`, classified-style intervals). 91 programs end up entirely passing — either the mutant is semantically equivalent to the spec, or no test in the budget happens to expose it.
 
