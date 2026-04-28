@@ -127,7 +127,8 @@ def _preprocess_source(src_text: str) -> str:
 
 
 def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
-                  preprocess_dir: Path, solver_path: str | None) -> tuple[float, str | None, str]:
+                  preprocess_dir: Path, solver_path: str | None,
+                  extra_args: list[str] | None = None) -> tuple[float, str | None, str]:
     """Run `dafny generate-tests`. Returns (elapsed_s, generated_text or None, stderr).
     The source is first rewritten under preprocess_dir to add the module wrapper
     and {:testEntry} annotations that `dafny generate-tests` requires."""
@@ -139,6 +140,8 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
     cmd = [dafny, 'generate-tests', mode, str(rewritten_path)]
     if solver_path:
         cmd.append(f'--solver-path={solver_path}')
+    if extra_args:
+        cmd.extend(extra_args)
 
     t0 = time.time()
     try:
@@ -286,7 +289,8 @@ def process_one(src: Path, out_dir: Path, preprocess_dir: Path, args, logf) -> N
     logf.flush()
 
     gen_time, generated, gen_err = _run_generate(
-        args.dafny, src, args.mode, args.timeout_gen, preprocess_dir, args.solver_path)
+        args.dafny, src, args.mode, args.timeout_gen, preprocess_dir,
+        args.solver_path, args.extra_gen_args)
     if generated is None:
         # Cap the inline error at 300 chars (joins of 3 specific errors fit);
         # the full output is in <prepname>.dfy.gen_error.txt.
@@ -352,6 +356,12 @@ def main() -> int:
                          '`--solver-path`. Useful when the bundled Z3 hits the Boogie '
                          'model-parser bug; try Z3 4.13+ or 4.10 to dodge it. Default: '
                          'use whichever Z3 Dafny finds.')
+    ap.add_argument('--gen-tests-extra-args', default='',
+                    help='extra arguments passed verbatim to `dafny generate-tests`. '
+                         'Space-separated. Example: '
+                         "--gen-tests-extra-args='--ignore-warnings --length-limit=5'. "
+                         'Disabling --enforce-determinism is possible but produces '
+                         'spurious kills on havoc-using programs (see README).')
     ap.add_argument('--timeout-gen', type=int, default=60,
                     help='per-program timeout for generate-tests, seconds (default 60)')
     ap.add_argument('--timeout-run', type=int, default=60,
@@ -359,6 +369,10 @@ def main() -> int:
     ap.add_argument('--resume', action='store_true',
                     help='skip programs already present in the existing log')
     args = ap.parse_args()
+    # Split the extra-args string into argv tokens (simple whitespace split;
+    # users wanting paths with spaces can quote them as a single shell arg
+    # that becomes a single token here, e.g. "--option=value with spaces").
+    args.extra_gen_args = args.gen_tests_extra_args.split() if args.gen_tests_extra_args else []
 
     in_dir = Path(args.input_dir)
     out_dir = Path(args.output_dir)
