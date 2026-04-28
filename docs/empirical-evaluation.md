@@ -139,33 +139,35 @@ The headline gap is structural: the corpus is dominated by methods over `array<T
 
 ### Head-to-head on the 57-program intersection
 
+After post-comparison fixes to two DafnyCBT bugs surfaced by this study (a soundness gap in the SMT encoding of set/multiset/map literals, and a method-discovery gap that missed methods declared inside named modules), the head-to-head numbers on the same 57-program intersection are:
+
 | | Killed mutants | Kill rate within tested |
 |---|---:|---:|
 | `dafny generate-tests` (Block, default) | 18 | 32 % |
-| DafnyCBT (no_vacuity default) | 43 | 75 % |
+| DafnyCBT (no_vacuity default) | 45 | 79 % |
 | Union (any tool) | 46 | 81 % |
-| Intersection (both tools) | 15 | 26 % |
+| Intersection (both tools) | 17 | 30 % |
 
 | Asymmetry | Programs |
 |---|---:|
-| Killed only by `dafny generate-tests` | 3 |
+| Killed only by `dafny generate-tests` | 1 |
 | Killed only by DafnyCBT | 28 |
-| Killed by both | 15 |
+| Killed by both | 17 |
 | Killed by neither | 11 |
 
-DafnyCBT kills strictly more mutants on the intersection (43 vs 18), with 28 programs unique to it that `dafny generate-tests` misses despite generating tests for them. This is consistent with the bias / relevance ablation: anti-trivial bias steers Z3 away from the small-model degenerate inputs that satisfy mutated postconditions trivially, and per-literal relevance forces every spec literal to actively prune outputs.
+DafnyCBT kills strictly more mutants on the intersection (45 vs 18), with 28 programs unique to it that `dafny generate-tests` misses despite generating tests for them. This is consistent with the bias / relevance ablation: anti-trivial bias steers Z3 away from the small-model degenerate inputs that satisfy mutated postconditions trivially, and per-literal relevance forces every spec literal to actively prune outputs.
 
-### Qualitative inspection of the 3 unique-to-`generate-tests` cases
+### Qualitative inspection: the unique-to-`generate-tests` cases
 
-Worth understanding because they're the *only* programs in the corpus where the implementation-instrumented approach beats the spec-driven one:
+The *initial* comparison surfaced three programs where `dafny generate-tests` killed mutants DafnyCBT missed. Two of the three turned out to be DafnyCBT-side bugs that we fixed during the comparison work itself; only one represents a real strategic gap. Each is documented here for the record.
 
-- **`dafny-synthesis_task_id_455__169-191_CIR`** — `MonthHas31Days(month: int) returns (result: bool) ensures result <==> month in {1, 3, 5, 7, 8, 10, 12}`. Mutation replaces `{1, 3, 5, 7, 8, 10, 12}` with `{}` in the body. *Genuine* generate-tests advantage: the spec uses `<==>`, which DafnyCBT decomposes into `(A ∧ B) ∨ (¬A ∧ ¬B)`. The `(¬A ∧ ¬B)` branch picks `month = 2`, `result = false` — both sides agree on the buggy impl too. The `(A ∧ B)` branch picks `month = 1` with the spec-side oracle `result = true`, but DafnyCBT's runtime-value injection captures the impl's actual output (`false`) and emits `expect result == false`, masking the mutation. `dafny generate-tests` Block mode emits one test per branch with concrete-from-spec oracles, hits a 31-day month, and the test fails. *Lesson*: handling `<==>` semantics with both directions actively asserted (rather than letting one direction be passively satisfied via runtime injection) would close this gap.
+- **`Dafny-Practice...BST__1554_MAP_1`** *(remaining gap)*. The methods take a parameter of recursive datatype `Tree = Leaf | Node(int, Tree, Tree)`. DafnyCBT's documented Limitations list non-enum algebraic datatypes as not yet supported (no SMT encoding for recursive datatypes), so the methods are skipped at discovery. `dafny generate-tests` instructs Z3 to synthesise constructor instances for datatype inputs, which is a feature DafnyCBT could in principle add; until then this is a real coverage gap.
 
-- **`test-generation-examples...RussianMultiplication...EVR_int`** — DafnyCBT logged `No testable methods found` despite the file containing `module RussianMultiplication { method mult(...) ensures res == n0 * m0 { ... } }`. *DafnyCBT discovery limitation*: its method scanner does not traverse named modules; `dafny generate-tests` does. Fixable independently of test-generation strategy.
+- **`dafny-synthesis_task_id_455__169-191_CIR`** *(fixed)*. `MonthHas31Days(month: int) returns (result: bool) ensures result <==> month in {1, 3, 5, 7, 8, 10, 12}` with a mutation that replaces `{1, 3, 5, 7, 8, 10, 12}` with `{}` in the body. Initial diagnosis traced the miss to DafnyCBT's `<==>` decomposition combined with runtime-value injection; deeper investigation revealed the actual root cause: a soundness bug in the SMT encoding of *set / multiset / map literals*. The `In` operator handler took the wrong code path on a *literal* RHS (matching by input-name only), falling through to a sequence-search emission that used `seq.len` and `seq.nth` over an `(Array Int Bool)` value — Z3 treated those as uninterpreted functions and freely fabricated witnesses, including spurious "alternative outputs" in uniqueness rounds. Fix: detect collection kind from the expression's *type* and AST class (`SetDisplayExpr`, etc.); also expand the preamble-emission gate so `EmptySet` etc. are declared whenever the spec contains the corresponding literal (not only when an input/output has the type). With the fix, this program is killed (3 PASS / 7 FAIL).
 
-- **`Dafny-Practice...BST__1554_MAP_1`** — DafnyCBT discovered 2 methods (`BuildBST`, `InsertBST`) but no Results line appeared in the log; an unhandled exception or timeout aborted the run mid-method. *DafnyCBT robustness issue*, not a strategic gap.
+- **`test-generation-examples...RussianMultiplication...EVR_int`** *(fixed)*. DafnyCBT reported `No testable methods found` despite the file containing `module RussianMultiplication { method mult(...) ensures res == n0 * m0 { ... } }`. Cause: method discovery walked only `program.DefaultModuleDef.TopLevelDecls` and never descended into `LiteralModuleDecl` nodes. Fix: recurse into named modules in `AllTopLevelDecls`, and prepend the enclosing module name to the call site in emitted tests (`var res := RussianMultiplication.mult(n0, m0)`). With the fix, this program is killed (2 PASS / 8 FAIL). A related limitation — methods inside *classes inside named modules* (e.g. `IntegerSet.Set`) — still requires module-qualified instance construction in `TestEmitter` and is left as a documented gap; the discovery-loop now skips those cases with a clear `class method inside named module … (not yet supported)` log line.
 
-So the genuine spec-handling advantage of `dafny generate-tests` on this corpus is **one program** (`<==>` case). The other two unique-kills are downstream of fixable DafnyCBT bugs.
+The Dafny 4.11.0 model-parser bug that prevents `generate-tests` from running on Windows at all (every program errors out with `Invalid model: invalid element name 0.0`) was confirmed across multiple flag combinations and Z3 versions; the comparison ran exclusively on WSL/Linux. That platform-specific fragility is itself a data point about the maturity of `generate-tests` for production use.
 
 ### Reproducibility (this comparison)
 
