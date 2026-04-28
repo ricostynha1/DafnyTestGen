@@ -109,21 +109,28 @@ RUN_OUTCOME_RE = re.compile(
 )
 
 
-def _preprocess_source(src_text: str) -> str:
+def _preprocess_source(src_text: str) -> tuple[str, int]:
     """`dafny generate-tests` requires (1) the code wrapped in a module,
     and (2) `{:testEntry}` on every method to be tested. The buggy_progs
     corpus is flat (no module, no annotations), so we rewrite each source
     on the fly. Methods are annotated only when they have an ensures clause,
-    matching DafnyCBT's discovery rule."""
+    matching DafnyCBT's discovery rule.
+
+    Returns (rewritten_source, n_annotated). When n_annotated == 0, the
+    caller should skip the program entirely (DafnyCBT skips it too — this
+    is a parity case, not a generate-tests defect)."""
     # 1. Annotate methods with {:testEntry}.
+    n_annotated = 0
     def annotate(m: re.Match) -> str:
+        nonlocal n_annotated
+        n_annotated += 1
         indent, name = m.group(1), m.group(2)
         return f'{indent}method {{:testEntry}} {name}'
     annotated = METHOD_DECL_RE.sub(annotate, src_text)
     # 2. Wrap in a module if not already inside one.
     if not MODULE_RE.search(annotated):
         annotated = 'module CBT {\n' + annotated + '\n}\n'
-    return annotated
+    return annotated, n_annotated
 
 
 def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
@@ -133,9 +140,14 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
     The source is first rewritten under preprocess_dir to add the module wrapper
     and {:testEntry} annotations that `dafny generate-tests` requires."""
     src_text = src.read_text(encoding='utf-8', errors='ignore')
-    rewritten = _preprocess_source(src_text)
+    rewritten, n_annotated = _preprocess_source(src_text)
     rewritten_path = preprocess_dir / src.name
     rewritten_path.write_text(rewritten, encoding='utf-8')
+    if n_annotated == 0:
+        # No method has an ensures clause — DafnyCBT also skips these
+        # ("No testable methods found"). Treat as a parity skip rather
+        # than a generate-tests failure.
+        return 0.0, None, 'skipped: no methods with ensures clause (parity with DafnyCBT)'
 
     cmd = [dafny, 'generate-tests', mode, str(rewritten_path)]
     if solver_path:
@@ -295,10 +307,18 @@ def process_one(src: Path, out_dir: Path, preprocess_dir: Path, args, logf) -> N
         # Cap the inline error at 300 chars (joins of 3 specific errors fit);
         # the full output is in <prepname>.dfy.gen_error.txt.
         snippet = gen_err if len(gen_err) <= 300 else gen_err[:297] + '...'
-        logf.write(
-            f'[DafnyCBT] Results: 0 passing, 0 failing, generation failed '
-            f'({snippet}), gen={gen_time:.1f}s check=0.0s [{prog}]\n\n'
-        )
+        # Distinguish the parity-skip case (no ensures clause) from real
+        # generation failures so the corpus bucket counts stay honest.
+        if gen_err.startswith('skipped:'):
+            logf.write(
+                f'[DafnyCBT] Results: 0 passing, 0 failing, {snippet}, '
+                f'gen={gen_time:.1f}s check=0.0s [{prog}]\n\n'
+            )
+        else:
+            logf.write(
+                f'[DafnyCBT] Results: 0 passing, 0 failing, generation failed '
+                f'({snippet}), gen={gen_time:.1f}s check=0.0s [{prog}]\n\n'
+            )
         return
 
     # Split off Dafny's leading warnings/errors from the actual test code.
