@@ -71,14 +71,16 @@ import sys
 import time
 from pathlib import Path
 
-# Match a top-level `method <Name>(...) ... ensures ...` declaration.
-# We only annotate methods that have an ensures clause (matching DafnyCBT's
-# discovery rule) and that are not already attribute-decorated. The pattern
-# is forgiving — captures everything from `method` up to the next `ensures`
-# keyword on the same or following lines.
-METHOD_DECL_RE = re.compile(
-    r'^(\s*)method\s+(\w+)\s*(?=\(.*?\)(?:[^{]*?\bensures\b))',
-    re.MULTILINE,
+# Match a `method <Name>` declaration header. The detailed "does this method
+# have an ensures clause" check happens line-by-line in _annotate_methods —
+# regex-only detection is brittle when attribute blocks like `{:trigger ...}`
+# or `{:autocontracts}` appear between the parameter list and the ensures
+# keyword (a literal-`{` lookahead would stop too early).
+METHOD_HEADER_RE = re.compile(r'^(\s*)method\s+(\w+)\b')
+# Top-level Dafny declarations that, when encountered, indicate we've left
+# the current method's header.
+NEXT_DECL_RE = re.compile(
+    r'^\s*(?:ghost\s+)?(method|function|predicate|class|datatype|module|trait|iterator|lemma|twostate)\b'
 )
 MODULE_RE = re.compile(r'^\s*(?:abstract\s+)?module\s+\w', re.MULTILINE)
 
@@ -109,6 +111,43 @@ RUN_OUTCOME_RE = re.compile(
 )
 
 
+def _annotate_methods(src_text: str) -> tuple[str, int]:
+    """Insert `{:testEntry}` after every `method <Name>` declaration whose
+    header contains an `ensures` keyword. Walks line-by-line so `{:trigger ...}`,
+    `{:autocontracts}` and other attribute blocks between the parameter list
+    and the `ensures` keyword don't fool the detector. Stops scanning a
+    method's header at the next top-level declaration keyword."""
+    lines = src_text.split('\n')
+    n_annotated = 0
+    for i, line in enumerate(lines):
+        m = METHOD_HEADER_RE.match(line)
+        if not m:
+            continue
+        # Skip if already annotated (any {:...} block between `method` and the name).
+        head_before_name = line[m.start():m.start(2)]
+        if '{:' in head_before_name:
+            continue
+        # Look for `ensures` on this line OR on subsequent lines until we hit
+        # the next top-level declaration. Cap at 60 lines to bound runtime.
+        has_ensures = False
+        for j in range(i, min(i + 60, len(lines))):
+            scan_line = lines[j]
+            # If we've stepped onto the next declaration (and we're past the
+            # first method line), stop.
+            if j > i and NEXT_DECL_RE.match(scan_line):
+                break
+            # Match the keyword as a whole word so we don't match `requires`
+            # ending in `_ensures` (no such keyword in Dafny but be safe).
+            if re.search(r'\bensures\b', scan_line):
+                has_ensures = True
+                break
+        if has_ensures:
+            indent, name = m.group(1), m.group(2)
+            lines[i] = f'{indent}method {{:testEntry}} {name}{line[m.end(2):]}'
+            n_annotated += 1
+    return '\n'.join(lines), n_annotated
+
+
 def _preprocess_source(src_text: str) -> tuple[str, int]:
     """`dafny generate-tests` requires (1) the code wrapped in a module,
     and (2) `{:testEntry}` on every method to be tested. The buggy_progs
@@ -120,13 +159,7 @@ def _preprocess_source(src_text: str) -> tuple[str, int]:
     caller should skip the program entirely (DafnyCBT skips it too — this
     is a parity case, not a generate-tests defect)."""
     # 1. Annotate methods with {:testEntry}.
-    n_annotated = 0
-    def annotate(m: re.Match) -> str:
-        nonlocal n_annotated
-        n_annotated += 1
-        indent, name = m.group(1), m.group(2)
-        return f'{indent}method {{:testEntry}} {name}'
-    annotated = METHOD_DECL_RE.sub(annotate, src_text)
+    annotated, n_annotated = _annotate_methods(src_text)
     # 2. Wrap in a module if not already inside one.
     if not MODULE_RE.search(annotated):
         annotated = 'module CBT {\n' + annotated + '\n}\n'
