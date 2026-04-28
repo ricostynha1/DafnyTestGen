@@ -165,11 +165,13 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
             log_dump.write_text(combined, encoding='utf-8')
         except Exception:
             pass
-        # Collect specific error lines (file:line:col-prefixed or "*** Error:")
-        # in order of appearance. Skip the summary "Test generation returned N
-        # errors" line — it's a counter, not a diagnosis.
+        # Collect error and warning lines separately. Prefer reporting Errors;
+        # fall back to Warnings only if no Errors exist. Skip the summary
+        # "Test generation returned N errors" line — it's a counter, not a
+        # diagnosis.
         SUMMARY_RE = re.compile(r'Test generation returned \d+ (error|warning)s?\b', re.IGNORECASE)
-        specific: list[str] = []
+        errors: list[str] = []
+        warnings: list[str] = []
         first_any = ''
         for line in combined.splitlines():
             line = line.strip()
@@ -177,17 +179,26 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
                 continue
             if not first_any:
                 first_any = line
-            is_error_marker = (
-                line.startswith(('*** Error:', 'Error:', 'Warning:'))
+            if SUMMARY_RE.search(line):
+                continue
+            is_error = (
+                line.startswith(('*** Error:', 'Error:'))
                 or '): Error' in line or '): error' in line
+            )
+            is_warning = (
+                line.startswith('Warning:')
                 or '): Warning' in line or '): warning' in line
             )
-            if is_error_marker and not SUMMARY_RE.search(line):
-                specific.append(line)
-                if len(specific) >= 3:
-                    break
-        if specific:
-            err_line = ' | '.join(specific)
+            if is_error and len(errors) < 3:
+                errors.append(line)
+            elif is_warning and len(warnings) < 3:
+                warnings.append(line)
+            if len(errors) >= 3:
+                break
+        if errors:
+            err_line = ' | '.join(errors)
+        elif warnings:
+            err_line = ' | '.join(warnings)
         elif first_any:
             err_line = first_any
         else:
