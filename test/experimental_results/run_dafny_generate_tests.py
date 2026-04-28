@@ -127,7 +127,7 @@ def _preprocess_source(src_text: str) -> str:
 
 
 def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
-                  preprocess_dir: Path) -> tuple[float, str | None, str]:
+                  preprocess_dir: Path, solver_path: str | None) -> tuple[float, str | None, str]:
     """Run `dafny generate-tests`. Returns (elapsed_s, generated_text or None, stderr).
     The source is first rewritten under preprocess_dir to add the module wrapper
     and {:testEntry} annotations that `dafny generate-tests` requires."""
@@ -136,10 +136,14 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
     rewritten_path = preprocess_dir / src.name
     rewritten_path.write_text(rewritten, encoding='utf-8')
 
+    cmd = [dafny, 'generate-tests', mode, str(rewritten_path)]
+    if solver_path:
+        cmd.append(f'--solver-path={solver_path}')
+
     t0 = time.time()
     try:
         r = subprocess.run(
-            [dafny, 'generate-tests', mode, str(rewritten_path)],
+            cmd,
             capture_output=True, text=True, timeout=timeout_sec,
             encoding='utf-8', errors='ignore',
         )
@@ -148,8 +152,36 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
     except FileNotFoundError:
         return time.time() - t0, None, f'dafny binary not found: {dafny}'
     elapsed = time.time() - t0
+
+    # Dafny prints errors to stdout (not stderr) for parse/type errors.
+    # Combine both streams and pick the most informative line for the log.
+    combined = ((r.stdout or '') + '\n' + (r.stderr or '')).strip()
+
     if r.returncode != 0 or not r.stdout.strip():
-        return elapsed, None, (r.stderr or 'non-zero exit / empty output').strip()
+        # Dump the FULL combined output to a sibling file for offline inspection
+        # — the truncated 80-char message in the log is just for at-a-glance.
+        log_dump = rewritten_path.with_suffix('.dfy.gen_error.txt')
+        try:
+            log_dump.write_text(combined, encoding='utf-8')
+        except Exception:
+            pass
+        # Pick the first error/warning line for the inline log message.
+        err_line = ''
+        for line in combined.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            # Prefer Dafny's "*** Error:" or compiler error markers; fall
+            # back to the first non-blank line.
+            if line.startswith(('*** Error:', 'Error:', 'Warning:')) \
+                    or '): Error' in line or '): error' in line:
+                err_line = line
+                break
+            if not err_line:
+                err_line = line
+        if not err_line:
+            err_line = 'non-zero exit / empty output'
+        return elapsed, None, err_line
     return elapsed, r.stdout, ''
 
 
@@ -211,13 +243,28 @@ def _attribute_test_to_method(generated: str, test_name: str) -> str:
     return test_name
 
 
+def _strip_dafny_diagnostics(generated: str) -> tuple[str, list[str]]:
+    """Dafny generate-tests prints warnings/errors on stdout BEFORE the actual
+    Dafny test code. The actual code starts with the first `include "..."`
+    line (or `module ...` if no include). Returns (clean_dafny_code, [stripped lines])."""
+    lines = generated.splitlines()
+    for i, line in enumerate(lines):
+        s = line.lstrip()
+        if s.startswith('include "') or s.startswith('module '):
+            return ('\n'.join(lines[i:]) + '\n', lines[:i])
+    # No include / module marker found — return as-is, treat all of stdout
+    # as test code (likely won't compile, but let `dafny test` give the
+    # canonical error).
+    return generated, []
+
+
 def process_one(src: Path, out_dir: Path, preprocess_dir: Path, args, logf) -> None:
     prog = src.stem
     logf.write(f'[DafnyCBT] Input: {src}\n')
     logf.flush()
 
     gen_time, generated, gen_err = _run_generate(
-        args.dafny, src, args.mode, args.timeout_gen, preprocess_dir)
+        args.dafny, src, args.mode, args.timeout_gen, preprocess_dir, args.solver_path)
     if generated is None:
         logf.write(
             f'[DafnyCBT] Results: 0 passing, 0 failing, generation failed '
@@ -225,8 +272,14 @@ def process_one(src: Path, out_dir: Path, preprocess_dir: Path, args, logf) -> N
         )
         return
 
+    # Split off Dafny's leading warnings/errors from the actual test code.
+    clean, stripped = _strip_dafny_diagnostics(generated)
     test_file = out_dir / f'{prog}_dafnyTests.dfy'
-    test_file.write_text(generated, encoding='utf-8')
+    test_file.write_text(clean, encoding='utf-8')
+    if stripped:
+        # Persist the diagnostics for offline inspection.
+        diag_file = out_dir / f'{prog}_dafnyTests.diag.txt'
+        diag_file.write_text('\n'.join(stripped) + '\n', encoding='utf-8')
 
     check_time, output, run_err = _run_tests(args.dafny, test_file, args.timeout_run)
     if output is None:
@@ -269,6 +322,11 @@ def main() -> int:
                     help='dafny generate-tests coverage mode (default: Path)')
     ap.add_argument('--dafny', default=os.environ.get('DAFNY', 'dafny'),
                     help='path to the dafny binary (default: $DAFNY or `dafny`)')
+    ap.add_argument('--solver-path', default=os.environ.get('Z3_PATH'),
+                    help='path to a specific Z3 binary to use, via dafny generate-tests '
+                         '`--solver-path`. Useful when the bundled Z3 hits the Boogie '
+                         'model-parser bug; try Z3 4.13+ or 4.10 to dodge it. Default: '
+                         'use whichever Z3 Dafny finds.')
     ap.add_argument('--timeout-gen', type=int, default=60,
                     help='per-program timeout for generate-tests, seconds (default 60)')
     ap.add_argument('--timeout-run', type=int, default=60,
