@@ -159,27 +159,38 @@ def _run_generate(dafny: str, src: Path, mode: str, timeout_sec: int,
 
     if r.returncode != 0 or not r.stdout.strip():
         # Dump the FULL combined output to a sibling file for offline inspection
-        # — the truncated 80-char message in the log is just for at-a-glance.
+        # — the truncated message in the log is just for at-a-glance.
         log_dump = rewritten_path.with_suffix('.dfy.gen_error.txt')
         try:
             log_dump.write_text(combined, encoding='utf-8')
         except Exception:
             pass
-        # Pick the first error/warning line for the inline log message.
-        err_line = ''
+        # Collect specific error lines (file:line:col-prefixed or "*** Error:")
+        # in order of appearance. Skip the summary "Test generation returned N
+        # errors" line — it's a counter, not a diagnosis.
+        SUMMARY_RE = re.compile(r'Test generation returned \d+ (error|warning)s?\b', re.IGNORECASE)
+        specific: list[str] = []
+        first_any = ''
         for line in combined.splitlines():
             line = line.strip()
             if not line:
                 continue
-            # Prefer Dafny's "*** Error:" or compiler error markers; fall
-            # back to the first non-blank line.
-            if line.startswith(('*** Error:', 'Error:', 'Warning:')) \
-                    or '): Error' in line or '): error' in line:
-                err_line = line
-                break
-            if not err_line:
-                err_line = line
-        if not err_line:
+            if not first_any:
+                first_any = line
+            is_error_marker = (
+                line.startswith(('*** Error:', 'Error:', 'Warning:'))
+                or '): Error' in line or '): error' in line
+                or '): Warning' in line or '): warning' in line
+            )
+            if is_error_marker and not SUMMARY_RE.search(line):
+                specific.append(line)
+                if len(specific) >= 3:
+                    break
+        if specific:
+            err_line = ' | '.join(specific)
+        elif first_any:
+            err_line = first_any
+        else:
             err_line = 'non-zero exit / empty output'
         return elapsed, None, err_line
     return elapsed, r.stdout, ''
@@ -266,9 +277,12 @@ def process_one(src: Path, out_dir: Path, preprocess_dir: Path, args, logf) -> N
     gen_time, generated, gen_err = _run_generate(
         args.dafny, src, args.mode, args.timeout_gen, preprocess_dir, args.solver_path)
     if generated is None:
+        # Cap the inline error at 300 chars (joins of 3 specific errors fit);
+        # the full output is in <prepname>.dfy.gen_error.txt.
+        snippet = gen_err if len(gen_err) <= 300 else gen_err[:297] + '...'
         logf.write(
             f'[DafnyCBT] Results: 0 passing, 0 failing, generation failed '
-            f'({gen_err[:80]}), gen={gen_time:.1f}s check=0.0s [{prog}]\n\n'
+            f'({snippet}), gen={gen_time:.1f}s check=0.0s [{prog}]\n\n'
         )
         return
 
