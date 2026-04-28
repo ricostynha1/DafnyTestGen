@@ -4,7 +4,7 @@ Automatic contract-based test generation for [Dafny](https://dafny.org/) program
 
 DafnyCBT analyzes `requires` and `ensures` clauses, converts them to Disjunctive Normal Form (DNF), and relies on the [Z3](https://github.com/Z3Prover/z3) SMT solver to find concrete test inputs and expected outputs that exercise different contract paths. Test generation combines equivalence class partitioning (via DNF analysis) with boundary value analysis.
 
-> **Note:** DafnyCBT does not currently support traits, function-typed parameters, non-enum algebraic datatypes (e.g. `List<T> = Nil | Cons(...)`), multi-dimensional arrays, or class/reference-typed method parameters. See [Limitations](#limitations) for the full list.
+> **Note:** DafnyCBT does not currently support traits, function-typed parameters, mutually-recursive or co-inductive datatypes, generic-parameter datatypes (e.g. `List<T> = Nil | Cons(head: T, tail: List<T>)`), multi-dimensional arrays, or class/reference-typed method parameters. See [Limitations](#limitations) for the full list.
 
 ## Use cases
 
@@ -208,7 +208,7 @@ Core flags most users will need:
 - **Bodyless functions/predicates referenced in contracts** — the semantics are unknown, so the method is skipped.
 - **Twostate predicates/functions** — reference two heap states and cannot be translated to SMT.
 - **Function-typed parameters** (e.g., `P: T -> bool`, `f: int ~> int`) — cannot be represented in SMT.
-- **Non-enum algebraic datatypes** (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`, `Tree = Node(int, Tree, Tree)`), including when nested in generics.
+- **Mutually-recursive or co-inductive datatypes** (`codatatype`, or two ADTs whose constructors reference each other) and **generic-parameter datatypes** (e.g., `List<T> = Nil | Cons(head: T, tail: List<T>)`). Single-self-recursive ADTs (e.g., `Tree = Empty | Node(int, Tree, Tree)`) and non-recursive multi-constructor ADTs (e.g., `Shape = Circle(int) | Rectangle(int, int)`) **are** supported and emitted as native Z3 `(declare-datatypes …)`; recursive predicates over them are handled via the precondition-only / runtime-`expect` path.
 - **Class/reference-typed method parameters** — Z3 cannot synthesise object values.
 - **Multi-dimensional arrays** (`array2<int>`, `array3<real>`).
 - **Nested collection types** other than `seq<seq<T>>`, `seq<string>`, and `set<string>` (e.g., `array<seq<T>>`, `set<seq<int>>`).

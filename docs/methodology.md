@@ -454,7 +454,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyCBT uses 
 
 ## Class Support
 
-DafnyCBT generates tests for methods defined inside classes. Classes with trait parents or unsupported field types are auto-skipped.
+DafnyCBT generates tests for methods defined inside classes, including classes nested inside named modules. The constructor call is module-qualified (`new <Module>.<Class>(...)`) when needed so the generated test method (which lives in the default module) can resolve the type. Classes with trait parents or unsupported field types are auto-skipped.
 
 Fields are treated as synthetic mutable parameters with separate pre- and post-state SMT variables (suffixes `_pre` and `_post`). Generated test code constructs a fresh object, assigns Z3-derived values to its fields, captures any `old()` state needed by postconditions, calls the method, and asserts postconditions using `obj.field` references.
 
@@ -660,6 +660,7 @@ When a test fails at runtime, the `expect` assertions are commented out in the e
 | `int`, `nat`, `real`, `char`, `bool` | native SMT sorts |
 | `array<T>`, `seq<T>`, `string` | bounded length (default up to 8); boundary analysis uses size tiers |
 | Simple enum datatypes (e.g., `datatype Color = Red \| White \| Blue`) | constructors with no parameters; mapped to bounded integers, one boundary tier per constructor |
+| Algebraic datatypes with formals (e.g., `datatype Pair = Mk(int, int)`, `datatype Shape = Circle(int) \| Rectangle(int, int)`, `datatype Tree = Empty \| Node(int, Tree, Tree)`) | emitted as native Z3 `(declare-datatypes …)`; supports constructor application, destructors (`p.fst`), discriminators (`s.Circle?`), and `match` patterns in the body. **Out of scope:** mutually-recursive groups, `codatatype`, and generic-parameter datatypes (`List<T>`) — those are skipped at discovery. For self-recursive ADTs whose specs use recursive predicates (e.g., `BST(t)`, `NumbersInTree(t)`), Z3 cannot solve `define-fun-rec` queries reliably, so the spec falls back to the precondition-only / runtime-`expect` path |
 | `set<T>`, `multiset<T>` | `(Array Int Bool)` / `(Array Int Int)` over a bounded element universe (8 values); supports `in`, `\|·\|`, `+`, `*`, `-`, `<=`. Element types: `int`, `nat`, `char`, enums, `T`. `set<string>` also supported via an `(Array (Seq Int) Bool)` encoding with 8 short string constants |
 | `map<K,V>` | parallel domain/values arrays over the same bounded key universe; supports `in`, `\|·\|`, lookup, merge. Key types: `int`, `nat`, `char`, enums, `T`. Value types: `int`, `nat`, `bool`, `real`, `char`, enums |
 | Tuples (e.g., `(int, int)`, `(real, real)`) | decomposed into per-component SMT variables; usable as parameters, returns, and inside `array<·>` / `seq<·>`. Component types: `int`, `nat`, `real`, `char`, `bool` |
