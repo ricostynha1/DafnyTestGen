@@ -110,6 +110,80 @@ The Phase 1v vacuity check ([Per-literal vacuity check in README](../README.md#p
 
 Vacuity's value on this corpus is therefore not in raising kill rate but in *fault localisation*: a `/V{k}` test deterministically reaches an input regime where literal `Q_k` is implied by the others, providing a sharper pass/fail signal for SFL than a random-bias test. See the [README's "Role and limits" subsection](../README.md#per-literal-vacuity-check-enable-with---vacuity) and the `LastPositionTwoPaths` worked example for an SFL story where adding the `/Vi4` isolation test breaks a 3-way suspiciousness tie.
 
+## Comparison with `dafny generate-tests`
+
+Dafny ships a built-in test generator (`dafny generate-tests <Block|Path|InlinedBlock> <file>`) that instruments method bodies to enumerate basic blocks or execution paths and asks Z3 for inputs reaching each. We ran it on the same corpus, with the same per-program timeout (60 s gen, 120 s test) and `Block` mode (the most permissive of the three). The wrapper script that drives it — handling source preprocessing, post-hoc result classification, and producing logs in the same format — is at [`test/experimental_results/run_dafny_generate_tests.py`](../test/experimental_results/run_dafny_generate_tests.py).
+
+### Coverage gap (which programs each tool can attempt)
+
+| | `dafny generate-tests` (4.11.0) | DafnyCBT (no_vacuity default) |
+|---|---:|---:|
+| Programs producing runnable tests | **57 / 314 (18%)** | **219 / 314 (70%)** |
+
+Why `dafny generate-tests` rejected 186 of 314 programs:
+
+| Cause | Count |
+|---|---:|
+| `array<T>` / abstract / trait input parameters | 113 |
+| `--enforce-determinism` (havoc, `:|`, case-`if`, nondet-`if`) | 39 |
+| `--enforce-determinism` (constructor-less classes) | 6 |
+| Filename contains spaces (Dafny `include` directive choke) | 11 |
+| Bodyless method (warning escalated to error) | 3 |
+| Internal Dafny exception or resolver failure | 7 |
+| Other / location-truncated | 7 |
+| **Total rejected up-front** | **186** |
+
+Plus 26 programs skipped with parity (no method has an `ensures` clause — both tools skip), 29 where the verifier could not prove any code point reachable, and 16 where post-generation compile/runtime failed.
+
+The headline gap is structural: the corpus is dominated by methods over `array<T>` (113 programs, 36% of the corpus), which `dafny generate-tests` rejects by design (its instrumentation cannot synthesise opaque-typed inputs). DafnyCBT translates `array<T>` to a sequence-backed SMT encoding with size tiers, so these are first-class.
+
+### Head-to-head on the 57-program intersection
+
+| | Killed mutants | Kill rate within tested |
+|---|---:|---:|
+| `dafny generate-tests` (Block, default) | 18 | 32 % |
+| DafnyCBT (no_vacuity default) | 43 | 75 % |
+| Union (any tool) | 46 | 81 % |
+| Intersection (both tools) | 15 | 26 % |
+
+| Asymmetry | Programs |
+|---|---:|
+| Killed only by `dafny generate-tests` | 3 |
+| Killed only by DafnyCBT | 28 |
+| Killed by both | 15 |
+| Killed by neither | 11 |
+
+DafnyCBT kills strictly more mutants on the intersection (43 vs 18), with 28 programs unique to it that `dafny generate-tests` misses despite generating tests for them. This is consistent with the bias / relevance ablation: anti-trivial bias steers Z3 away from the small-model degenerate inputs that satisfy mutated postconditions trivially, and per-literal relevance forces every spec literal to actively prune outputs.
+
+### Qualitative inspection of the 3 unique-to-`generate-tests` cases
+
+Worth understanding because they're the *only* programs in the corpus where the implementation-instrumented approach beats the spec-driven one:
+
+- **`dafny-synthesis_task_id_455__169-191_CIR`** — `MonthHas31Days(month: int) returns (result: bool) ensures result <==> month in {1, 3, 5, 7, 8, 10, 12}`. Mutation replaces `{1, 3, 5, 7, 8, 10, 12}` with `{}` in the body. *Genuine* generate-tests advantage: the spec uses `<==>`, which DafnyCBT decomposes into `(A ∧ B) ∨ (¬A ∧ ¬B)`. The `(¬A ∧ ¬B)` branch picks `month = 2`, `result = false` — both sides agree on the buggy impl too. The `(A ∧ B)` branch picks `month = 1` with the spec-side oracle `result = true`, but DafnyCBT's runtime-value injection captures the impl's actual output (`false`) and emits `expect result == false`, masking the mutation. `dafny generate-tests` Block mode emits one test per branch with concrete-from-spec oracles, hits a 31-day month, and the test fails. *Lesson*: handling `<==>` semantics with both directions actively asserted (rather than letting one direction be passively satisfied via runtime injection) would close this gap.
+
+- **`test-generation-examples...RussianMultiplication...EVR_int`** — DafnyCBT logged `No testable methods found` despite the file containing `module RussianMultiplication { method mult(...) ensures res == n0 * m0 { ... } }`. *DafnyCBT discovery limitation*: its method scanner does not traverse named modules; `dafny generate-tests` does. Fixable independently of test-generation strategy.
+
+- **`Dafny-Practice...BST__1554_MAP_1`** — DafnyCBT discovered 2 methods (`BuildBST`, `InsertBST`) but no Results line appeared in the log; an unhandled exception or timeout aborted the run mid-method. *DafnyCBT robustness issue*, not a strategic gap.
+
+So the genuine spec-handling advantage of `dafny generate-tests` on this corpus is **one program** (`<==>` case). The other two unique-kills are downstream of fixable DafnyCBT bugs.
+
+### Reproducibility (this comparison)
+
+```bash
+# Pre-requisites: WSL Ubuntu with Dafny 4.11.0 and .NET 8 SDK installed.
+# (The Dafny 4.11.0 Windows build hits a Boogie model-parser bug that
+# prevents generate-tests from running at all; Linux/WSL is required.)
+
+DAFNY=~/dafny/dafny python3 test/experimental_results/run_dafny_generate_tests.py \
+    test/buggy_progs/in/ \
+    ~/dafnycbt_run/buggy_progs_out_dafny_gentests \
+    test/buggy_progs_dafny_gentests_log.txt \
+    --mode Block --timeout-gen 60 --timeout-run 120 \
+    --gen-tests-extra-args='--ignore-warnings'
+```
+
+Wall-clock on the full 314-program corpus: ~60 minutes. Per-program failure causes are dumped to sibling `*.gen_error.txt` files for offline grep.
+
 ## Reproducibility
 
 - Run script: [`run_tests_buggy_progs_comparison.sh`](../run_tests_buggy_progs_comparison.sh).
