@@ -171,19 +171,30 @@ Per-program `gen=Xs check=Ys` times, summed across the 55 intersection programs.
 | Metric (55-program intersection) | `dafny generate-tests` | DafnyCBT (no_vacuity) |
 |---|---:|---:|
 | Programs killed | 18 | **46** |
+| Total tests generated | 169 | 842 |
+| Median tests per program | 2 | 10 |
+| Max tests per program | 11 | 78 |
 | Total gen time | 230 s | 461 s |
 | Total check time | 400 s | 503 s |
 | **Total wall-clock** | **630 s** | **964 s** |
 | **Cost per killed program** | **35.0 s/kill** | **21.0 s/kill** |
+| **Gen time per test** | **1.36 s/test** | **0.55 s/test** |
+| **Wall-clock per test** | **3.73 s/test** | **1.14 s/test** |
 | Median per-program gen | 4.0 s | 1.9 s |
 | Median per-program check | 6.0 s | 2.1 s |
 | Max per-program gen | 10.4 s | 137.4 s |
 | Max per-program check | 35.0 s | 212.5 s |
 
-Reading the table:
+Reading the table — **fault-detection use case** (cost per kill):
 - DafnyCBT spends **~1.5× more total wall-clock** but produces **2.6× more kills**, so it is **~1.7× more cost-efficient per kill** (21 s/kill vs 35 s/kill). Even allowing for the platform delta this is a robust ordering.
+
+Reading the table — **test-suite-generation use case** (cost per test, when the goal is to author a regression suite without a specific bug in mind):
+- DafnyCBT generates **~5× more tests** (842 vs 169) and is **~2.5–3× cheaper per test** on every metric — 0.55 s/test gen (vs 1.36 s) and 1.14 s/test wall-clock (vs 3.73 s). gen-tests' per-program test count is constrained by the basic blocks its instrumentation can reach; DafnyCBT's by the `--min-tests` budget (capped at 10 per method, so the 78-test outlier is a 7-method program), with anti-trivial bias and BVA tiers ensuring the extra tests aren't trivial duplicates.
+- The per-test efficiency gap is widest on the *check* side: each gen-tests test triggers a fresh `dafny build` for a small block-driven harness; each DafnyCBT test reuses a per-method `TestsForX` aggregator so check overhead amortises better.
+
+Distribution and platform notes:
 - DafnyCBT is *faster on the median program* (1.9 s gen, 2.1 s check) but has a **heavier tail** (max 137 s gen, 212 s check, both on programs with recursive predicates over ADTs that hit the per-method timeout). gen-tests has a flatter distribution (max 10.4 s gen) because its instrumentation skips programs it can't analyse rather than retrying.
-- Check-time dominates total wall-clock for both tools (~63% of gen-tests' total, ~52% of DafnyCBT's), because each emitted test triggers a fresh `dafny build`. Reducing per-test compilation cost is a much bigger lever than reducing generation cost for either tool.
+- Check-time dominates total wall-clock for both tools (~63% of gen-tests' total, ~52% of DafnyCBT's). Reducing per-test compilation cost is a much bigger lever than reducing generation cost for either tool.
 
 ### Qualitative inspection: the (formerly) unique-to-`generate-tests` cases
 
