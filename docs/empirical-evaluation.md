@@ -4,7 +4,7 @@ Ablation study on the **buggy_progs** corpus, measuring the contribution of Dafn
 
 ## Corpus
 
-[`test/buggy_progs/in/`](../test/buggy_progs/in/) — 314 programs, 409 methods.
+[`test/buggy_progs/in/`](../test/buggy_progs/in/) — 314 programs, 415 methods (a few previously-skipped methods are now tested thanks to the algebraic-datatype and class-in-named-module support added during the comparison study).
 
 **Provenance**: 313 of the 314 programs are specifications from the **DafnyBench** benchmark suite [\[1\]](#ref-dafnybench) (a public collection of Dafny programs assembled from open-source Dafny repositories and student projects), each mutated with a single seeded operator per file by **MutDafny** [\[2\]](#ref-mutdafny) — a dedicated mutation tool for Dafny. The mutation kind is encoded in the filename suffix (`EVR_int`, `MVR`, `SDL`, `ROR_Eq`, `LVR`, `AOI`, `BBR`, `AOR_Sub`, `ODL_Mul`, `VER`, `MRR`, `MAP`, `CIR`, `CBE`, `COR`, …); the original source filename and repository are encoded in the prefix.
 
@@ -33,25 +33,24 @@ A method is "killed at budget k" iff the first failing test among its first k ge
 
 | Strategy | killed | kill@1 | kill@5 | kill@10 | kill@max | AUC |
 |---|---:|---:|---:|---:|---:|---:|
-| baseline | 177 | 65 | 161 | 172 | 177 | 8521 |
-| +bias | 182 | 84 | 170 | 176 | 182 | 8797 |
-| +relevance | 186 | 84 | 173 | 181 | 186 | 8984 |
-| +bias+rel *(default)* | **190** | **108** | **175** | **184** | **190** | **9218** |
+| baseline | 180 | 67 | 162 | 173 | 180 | 8637 |
+| +bias | 189 | 90 | 177 | 183 | 189 | 9135 |
+| +relevance | 189 | 84 | 174 | 182 | 189 | 9098 |
+| +bias+rel *(default)* | **197** | **111** | **182** | **191** | **197** | **9552** |
 
 **Marginal contribution per refinement**:
 
 | | over baseline | over the *other* refinement |
 |---|---|---|
-| Bias (+bias vs baseline) | kill@1 +19, kill@max +5 | kill@1 +24 (108−84), kill@max +4 (190−186) |
-| Relevance (+rel vs baseline) | kill@1 +19, kill@max +9 | kill@1 +24 (108−84), kill@max +8 (190−182) |
+| Bias (+bias vs baseline) | kill@1 +23, kill@max +9 | kill@1 +27 (111−84), kill@max +8 (197−189) |
+| Relevance (+rel vs baseline) | kill@1 +17, kill@max +9 | kill@1 +21 (111−90), kill@max +8 (197−189) |
 
-**Interaction at kill@1 is super-additive**: the combined +bias+rel uplift over baseline (+43) exceeds the sum of individual uplifts (19 + 19 = 38) by 5 methods — bias-driven extreme inputs paired with relevance's non-vacuity requirement reach a regime neither refinement alone produces. At kill@max the two are roughly additive (5 + 9 = 14 ≈ +13 combined), with mild diminishing returns.
+**Interaction at kill@1 is super-additive**: the combined +bias+rel uplift over baseline (+44) exceeds the sum of individual uplifts (23 + 17 = 40) by 4 methods — bias-driven extreme inputs paired with relevance's non-vacuity requirement reach a regime neither refinement alone produces. At kill@max the two are essentially additive (9 + 9 = 18 ≈ +17 combined), with mild diminishing returns.
 
 **Reading the curve shape**:
-- **At kill@1, both refinements lift by ~+19 individually and to +43 combined** (65 → 84 → 108). Both refinements' anti-trivial / non-vacuity machinery prevents the very first test for a clause from being a degenerate `arr=[], x=0` model that absorbs many mutations.
-- **Bias's marginal contribution shrinks toward the ceiling**: only +5 over baseline at kill@max, +4 over +relevance alone. Bias mostly buys *speed* — better choices early — rather than additional *coverage*.
-- **Relevance's contribution is preserved at the ceiling**: +9 over baseline at kill@max, +8 over +bias alone. Relevance buys *coverage* — non-vacuous witnesses for clauses that bias's random extreme values can't reach.
-- The bias-only and relevance-only curves cross multiple times in the k = 4–7 region: bias gets there faster, relevance reaches further.
+- **At kill@1, both refinements lift the curve sharply** (67 → 84/90 → 111). Bias on its own contributes more here (+23) than relevance alone (+17), because anti-trivial pushes immediately move Z3 off `arr=[], x=0`-style models that absorb many mutations on the very first attempt.
+- **Toward the ceiling, both refinements contribute equally** (+9 each over baseline at kill@max, +8 each over the other). Relevance buys *coverage* by forcing non-vacuous witnesses for clauses bias's random extreme values can't reach; bias buys *speed* — better choices early. With the recent reductions in bias's per-query overhead (see [Wall-clock time](#wall-clock-time)), the two refinements now look much more symmetric than in earlier iterations.
+- The bias-only and relevance-only curves track each other closely in the k = 1–10 region (kill@10 = 183 vs 182), with bias reaching the asymptote a touch faster.
 
 ## Mutation kill curves — per program
 
@@ -61,10 +60,10 @@ A program is "killed at budget k" iff *any* of its methods has its first failing
 
 | Strategy | killed | kill@1 | kill@10 |
 |---|---:|---:|---:|
-| baseline | 148 | 50 | 142 |
-| +bias | 155 | 72 | 148 |
-| +relevance | 156 | 68 | 153 |
-| +bias+rel *(default)* | **161** | **95** | **158** |
+| baseline | 150 | 52 | 145 |
+| +bias | 160 | 79 | 157 |
+| +relevance | 158 | 68 | 153 |
+| +bias+rel *(default)* | **166** | **99** | **163** |
 
 Same shape as per-method, scaled to programs (each program has 1–3 methods on average).
 
@@ -76,16 +75,18 @@ Where do the kills come from? For each method with at least one failing test, th
 
 | Phase | Methods | %Fail | Programs | Tests | %Tests | Tests/Fail |
 |---|---:|---:|---:|---:|---:|---:|
-| Phase 1 baseline (clause witness) | 72 | 38.1% | 59 | 423 | 10.1% | **5.9** |
-| Phase 1r relevance | 69 | 36.5% | 66 | 418 | 10.0% | **6.1** |
-| Phase 2 BVA (refined-range) | 10 | 5.3% | 10 | 798 | 19.1% | 79.8 |
-| Phase 2b outer range (categorical) | 33 | 17.5% | 31 | 1086 | 26.0% | 32.9 |
-| Phase 3 repetition (seeded variants) | 5 | 2.6% | 5 | 1458 | 34.9% | 291.6 |
-| **Total** | **189** | | | **4183** | | |
+| Phase 1 baseline (clause witness) | 80 | 40.8% | 67 | 511 | 11.7% | **6.4** |
+| Phase 1r relevance | 66 | 33.7% | 63 | 354 | 8.1% | **5.4** |
+| Phase 2 BVA (refined-range) | 10 | 5.1% | 10 | 853 | 19.5% | 85.3 |
+| Phase 2b outer range (categorical) | 35 | 17.9% | 33 | 1140 | 26.1% | 32.6 |
+| Phase 3 repetition (seeded variants) | 5 | 2.6% | 5 | 1516 | 34.7% | 303.2 |
+| **Total** | **196** | | | **4374** | | |
 
-**Phase 1 + 1r account for 75% of first-fails using 20% of the test budget** — the spec-driven phases are by far the most efficient. Phase 2b's per-clause refined-range pinning produces the next largest slice (17% of first-fails). Phase 3 repetition is the most expensive *and* lowest-yield phase: its 35% of the budget catches just 3% of first-fails, mostly the long tail of inputs whose magnitude / length exceeds Phase 2b's tier set.
+**Phase 1 + 1r account for 75% of first-fails using 20% of the test budget** — the spec-driven phases are by far the most efficient, and Phase 1r is the single best cost-benefit row in the table (5.4 tests per first-fail). Phase 2b's per-clause refined-range pinning produces the next largest slice (18% of first-fails). Phase 3 repetition is the most expensive *and* lowest-yield phase: its 35% of the budget catches under 3% of first-fails, mostly the long tail of inputs whose magnitude / length exceeds Phase 2b's tier set.
 
 If `--min-tests` were lowered from 10 to ~5, Phase 3 would shrink dramatically without losing more than ~3% of the kills — a possible knob for budget-constrained settings.
+
+<a id="wall-clock-time"></a>
 
 ## Wall-clock time
 
@@ -93,16 +94,16 @@ If `--min-tests` were lowered from 10 to ~5, Phase 3 would shrink dramatically w
 
 | Strategy | gen total (s) | gen median (s/method) | check total (s) |
 |---|---:|---:|---:|
-| baseline | 2206 | 3.75 | 2976 |
-| +bias | 2754 | 3.60 | 3245 |
-| +relevance | 2365 | 3.85 | 3030 |
-| +bias+rel *(default)* | 2857 | 3.85 | 3289 |
+| baseline | 2583 | 3.60 | 2932 |
+| +bias | 2639 | 3.60 | 3198 |
+| +relevance | 2671 | 3.80 | 2970 |
+| +bias+rel *(default)* | 2723 | 3.70 | 3215 |
 
-Bias adds **~30%** to gen time over baseline; relevance adds **~7%**. Together they cost +30% gen / +10% check for +7% extra kills (177 → 190). Per-method medians stay near 4 s in all configurations — the totals differ mostly because bias triggers more retry loops on degenerate inputs.
+Bias adds **~2%** to gen time over baseline; relevance adds **~3%**. Together they cost only **+5% gen / +10% check** for **+9% extra kills** (180 → 197). Per-method medians stay near 3.7 s in all configurations. Earlier iterations of this evaluation reported a much larger bias overhead (~30%); recent SMT-encoding refinements have collapsed the bias cost to roughly the noise floor, so the cost-benefit case for keeping both refinements ON by default is now overwhelming.
 
 ## <a id="vacuity"></a>Vacuity ablation (separately)
 
-The Phase 1v vacuity check ([Per-literal vacuity check in README](../README.md#per-literal-vacuity-check-enable-with---vacuity)) is **disabled by default**. On this corpus at n = 10:
+The Phase 1v vacuity check ([Per-literal vacuity check in README](../README.md#per-literal-vacuity-check-enable-with---vacuity)) is **disabled by default**. The vacuity arm has not been re-run for this iteration of the evaluation; the most recent paired `full` vs `no_vacuity` measurement (at n = 10) found:
 
 - `full` (vacuity ON, with bias + relevance) kills **190** methods.
 - `no_vacuity` (vacuity OFF) kills **190** methods.
