@@ -206,14 +206,21 @@ The *initial* comparison surfaced three programs where `dafny generate-tests` ki
 
 - **`test-generation-examples...RussianMultiplication...EVR_int`** *(fixed)*. DafnyCBT reported `No testable methods found` despite the file containing `module RussianMultiplication { method mult(...) ensures res == n0 * m0 { ... } }`. Cause: method discovery walked only `program.DefaultModuleDef.TopLevelDecls` and never descended into `LiteralModuleDecl` nodes. Fix: recurse into named modules in `AllTopLevelDecls`, and prepend the enclosing module name to the call site in emitted tests (`var res := RussianMultiplication.mult(n0, m0)`). With the fix, this program is killed (2 PASS / 8 FAIL). The related limitation — methods inside *classes inside named modules* (e.g. `IntegerSet.Set`) — has also been lifted: `TestEmitter` now emits module-qualified instance construction (`var obj := new IntegerSet.Set.Set0()`) when the enclosing class lives in a non-default module, and the discovery skip for that case has been removed.
 
-The Dafny 4.11.0 model-parser bug that prevents `generate-tests` from running on Windows at all (every program errors out with `Invalid model: invalid element name 0.0`) was confirmed across multiple flag combinations and Z3 versions; the comparison ran exclusively on WSL/Linux. That platform-specific fragility is itself a data point about the maturity of `generate-tests` for production use.
+A locale-dependent Dafny 4.11.0 bug initially blocked `generate-tests` on the lead author's Windows install (every program errored out with `Invalid model: invalid element name 0.0`). The corpus run was therefore performed on WSL/Linux. The bug was traced to a `CultureInfo.CurrentCulture` vs `InvariantCulture` mismatch in Boogie's model parser: Z3 always emits numbers in C-locale form (`0.0` with a period), but Boogie parses them with the user's regional culture, which fails on any locale whose decimal separator is a comma (pt-PT, de-DE, fr-FR, es-ES, etc.). The error surfaces as "invalid element name 0.0" because the parser falls through to identifier-token classification once number parsing silently fails. **One-line workaround for Windows users:** set `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1` before invoking `dafny.exe`, e.g.
+
+```bash
+DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 dafny.exe generate-tests Block file.dfy
+```
+
+This forces .NET to use the invariant culture for all number parsing and resolves the issue. With the workaround the comparison would run identically on Windows native; the WSL path documented below remains valid but is no longer required.
 
 ### Reproducibility (this comparison)
 
 ```bash
 # Pre-requisites: WSL Ubuntu with Dafny 4.11.0 and .NET 8 SDK installed.
-# (The Dafny 4.11.0 Windows build hits a Boogie model-parser bug that
-# prevents generate-tests from running at all; Linux/WSL is required.)
+# (Or: Windows native with DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 set —
+# see the locale-bug note above. The wrapper script below was authored
+# for Linux paths and would need a small tweak to run under Cygwin.)
 
 DAFNY=~/dafny/dafny python3 test/experimental_results/run_dafny_generate_tests.py \
     test/buggy_progs/in/ \
