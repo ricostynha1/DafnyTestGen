@@ -119,7 +119,7 @@ Dafny ships a built-in test generator (`dafny generate-tests <Block|Path|Inlined
 
 | | `dafny generate-tests` (4.11.0) | DafnyCBT (no_vacuity default) |
 |---|---:|---:|
-| Programs producing runnable tests | **57 / 314 (18%)** | **219 / 314 (70%)** |
+| Programs producing runnable tests | **57 / 314 (18%)** | **222 / 314 (71%)** |
 
 Why `dafny generate-tests` rejected 186 of 314 programs:
 
@@ -138,29 +138,29 @@ Plus 26 programs skipped with parity (no method has an `ensures` clause — both
 
 The headline gap is structural: the corpus is dominated by methods over `array<T>` (113 programs, 36% of the corpus), which `dafny generate-tests` rejects by design (its instrumentation cannot synthesise opaque-typed inputs). DafnyCBT translates `array<T>` to a sequence-backed SMT encoding with size tiers, so these are first-class.
 
-### Head-to-head on the 57-program intersection
+### Head-to-head on the 55-program intersection
 
-After post-comparison fixes to four DafnyCBT bugs/gaps surfaced by this study — a soundness gap in the SMT encoding of set/multiset/map literals; a method-discovery gap that missed methods declared inside named modules; the previously-missing support for non-enum / single-self-recursive algebraic datatypes (now emitted as native Z3 `(declare-datatypes …)`); and module-qualified instance construction so class methods inside named modules can be tested — the head-to-head numbers on the same 57-program intersection are:
+After post-comparison fixes to four DafnyCBT bugs/gaps surfaced by this study — a soundness gap in the SMT encoding of set/multiset/map literals; a method-discovery gap that missed methods declared inside named modules; the previously-missing support for non-enum / single-self-recursive algebraic datatypes (now emitted as native Z3 `(declare-datatypes …)`); and module-qualified instance construction so class methods inside named modules can be tested — the head-to-head numbers on the intersection of programs both tools could exercise (55 programs: the 57 `dafny generate-tests` ran tests for, minus 2 named `test_prime` that DafnyCBT skips by its `test`/`Test`-named-method filter) are:
 
 | | Killed mutants | Kill rate within tested |
 |---|---:|---:|
-| `dafny generate-tests` (Block, default) | 18 | 32 % |
-| DafnyCBT (no_vacuity default) | 45 | 79 % |
-| Union (any tool) | 46 | 81 % |
-| Intersection (both tools) | 17 | 30 % |
+| `dafny generate-tests` (Block, default) | 18 | 33 % |
+| DafnyCBT (no_vacuity default) | 46 | 84 % |
+| Union (any tool) | 46 | 84 % |
+| Intersection (both tools) | 18 | 33 % |
 
 | Asymmetry | Programs |
 |---|---:|
-| Killed only by `dafny generate-tests` | 1 |
+| Killed only by `dafny generate-tests` | **0** |
 | Killed only by DafnyCBT | 28 |
-| Killed by both | 17 |
-| Killed by neither | 11 |
+| Killed by both | 18 |
+| Killed by neither | 9 |
 
-DafnyCBT kills strictly more mutants on the intersection (45 vs 18), with 28 programs unique to it that `dafny generate-tests` misses despite generating tests for them. This is consistent with the bias / relevance ablation: anti-trivial bias steers Z3 away from the small-model degenerate inputs that satisfy mutated postconditions trivially, and per-literal relevance forces every spec literal to actively prune outputs.
+After this iteration's fixes, **every program `dafny generate-tests` could kill is also killed by DafnyCBT** — the previously-asymmetric 1-program advantage for `generate-tests` (the BST recursive-datatype case) has been closed. DafnyCBT now strictly dominates on the intersection (46 vs 18 kills), with 28 additional unique kills despite both tools generating tests for the same programs. This is consistent with the bias / relevance ablation: anti-trivial bias steers Z3 away from the small-model degenerate inputs that satisfy mutated postconditions trivially, and per-literal relevance forces every spec literal to actively prune outputs.
 
-### Qualitative inspection: the unique-to-`generate-tests` cases
+### Qualitative inspection: the (formerly) unique-to-`generate-tests` cases
 
-The *initial* comparison surfaced three programs where `dafny generate-tests` killed mutants DafnyCBT missed. All three turned out to correspond to fixable DafnyCBT-side gaps; each is documented here for the record.
+The *initial* comparison surfaced three programs where `dafny generate-tests` killed mutants DafnyCBT missed. All three corresponded to fixable DafnyCBT-side gaps and are now closed (the only-gen column is **0** in the latest run); each is documented here for the record.
 
 - **`Dafny-Practice...BST__1554_MAP_1`** *(fixed)*. The methods take a parameter of recursive datatype `Tree = Empty | Node(int, Tree, Tree)`. The original DafnyCBT skipped any method whose parameter referenced a non-enum datatype. Fix: admit single-self-recursive ADTs (those whose constructors only reference primitives, enums, supported collections, and the ADT itself), emit them as native Z3 `(declare-datatypes ((Tree 0)) (((Empty) (Node (Node_0 Int) (Node_1 Tree) (Node_2 Tree)))))`, and translate constructor application (`Node(5, Empty, Empty)`), discriminators (`t.Empty?` → `((_ is Empty) t)`), and destructors (`t.left` → `(Node_1 t)`). Recursive predicates over the ADT (`BST(t)`, `NumbersInTree(t)`) are handled by the existing precondition-only / runtime-`expect` path, since `(define-fun-rec)` queries reliably return `unknown`. With the fix, this program is killed (1 PASS / 3 FAIL — the mutated `BuildBST` is correctly caught as it always returns `Empty`). Out of scope for this iteration: mutually-recursive groups, `codatatype`, and generic-parameter datatypes (`List<T>`).
 
