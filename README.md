@@ -33,10 +33,11 @@ Most automated test generators for contract-equipped languages — such as Pex/I
 3. **Solve** SMT queries via Z3 for each clause to find satisfying inputs and expected outputs. A progressive pipeline escalates through six phases until a per-method test budget is reached:
    - **Phase 1** — one baseline test per DNF clause.
    - **Phase 1r** *(default ON)* — replaces Phase 1's query with a stronger one forcing each safe spec literal to actively prune the output space (a kind of MC/DC for postconditions). Disable with `--no-relevance`.
-   - **Phase 1v** *(opt-in, `--vacuity`)* — finds inputs where one literal is implied by the others, useful for fault localisation. See [methodology §1v](docs/methodology.md#per-literal-vacuity-check---vacuity-to-enable).
+   - **Phase 1v** *(opt-in, `--vacuity`)* — finds inputs where one literal is implied by the others, useful for fault localisation. Tries isolated witnesses first (`/Vi{k}`: `Qk` vacuous AND every other `Qj` non-vacuous), falls back to non-isolated (`/V{k}`) automatically when no isolated witness exists. See [methodology §1v](docs/methodology.md#per-literal-vacuity-check---vacuity-to-enable).
    - **Phase 2** — refined-range BVA: per-clause-per-variable boundary values derived from clause literals.
    - **Phase 2b** — categorical type/size tiers (=0, >0, <0; |s|=0, |s|=1, |s|≥2; enum constructors; mutation pre/post pairs).
-   - **Phase 3** — seeded random repetition to fill the remaining test budget.
+   - **Phase 3** — repetition to fill the remaining test budget; per clause with a `/Rel` witness, alternates plain repeats (`/R{n}`) with genuine relevance-style repeats (`/Rel/R{n}`) so each repetition slot extends a structurally-rich starting witness.
+   - **Annotation pass** *(always on)* — post-phase scan that tags every test's vacuously-true postcondition literals with `// VACUOUSLY TRUE` for SFL precision.
 4. **Emit** a Dafny test file with `expect` assertions, runtime value injection where SMT can't compute the RHS, and a `Main()` that runs all non-failing tests.
 
 For decomposition rules, the relevance / vacuity formulations, BVA tier tables, output-uniqueness analysis, class support, and full test-emission details, see [`docs/methodology.md`](docs/methodology.md).
@@ -184,8 +185,7 @@ Core flags most users will need:
 | `--uniqueness-rounds <n>` | `-u` | Max rounds of uniqueness checking to enumerate alternative outputs (default: 2) |
 | `--no-bias` | `-nb` | Disable anti-trivial bias (soft constraints + randomized seed) |
 | `--no-relevance` | `-nr` | Disable per-literal relevance check (Phase 1r) |
-| `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v) — for fault localisation |
-| `--vacuity-isolated` | `-v1vi` | Tighten Phase 1v: emit `/Vi{k}` only when `Qk` is the *only* vacuous literal on the witness |
+| `--vacuity` | `-v1v` | Enable per-literal vacuity check (Phase 1v) — for fault localisation. Tries isolated witnesses first (`/Vi{k}`: `Qk` vacuous AND every other `Qj` non-vacuous on the same input), falls back to non-isolated (`/V{k}`) automatically when no isolated witness exists |
 | `--z3-path <path>` | | Path to Z3 executable (default: auto-discover) |
 
 #### Advanced flags (debugging / ablation)

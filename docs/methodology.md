@@ -22,10 +22,11 @@ DafnyCBT generates tests through a **progressive escalating pipeline**: each pha
 |--:|---|---|--:|:--:|
 | 1 | **Baseline DNF clause** | One concrete witness per DNF clause | always | ON |
 | 1r | **Relevance check** | Replace the Phase 1 query with one that forces every safe literal to non-trivially prune outputs | when `--no-relevance` is not set | ON |
-| 1v | **Vacuity check** (CEGIS) | Find inputs where one literal is implied by the others — *for fault localisation* | only with `--vacuity` | OFF |
+| 1v | **Vacuity check** (CEGIS) | Find inputs where one literal is vacuously true — *for fault localisation*. Tries isolated witnesses first, falls back to non-isolated automatically | only with `--vacuity` | OFF |
 | 2 | **Refined-range BVA** | Per-clause-per-variable boundaries derived from clause literals | when budget remaining | ON |
 | 2b | **Type/size coverage** | Categorical tiers (=0, >0, <0; |s|=0, |s|=1, |s|≥2; enum constructors; mutation pre/post) | when budget remaining | ON |
-| 3 | **Repetition** | Seeded random alternatives per clause | when budget remaining | ON |
+| 3 | **Repetition** | Distinct alternatives per clause; alternates plain repeats with genuine relevance-style repeats when a `/Rel` witness exists | when budget remaining | ON |
+| post | **Vacuity annotation** | Per-test scan tagging every vacuous `Qk` with `// VACUOUSLY TRUE` for SFL precision | always | ON |
 
 Phases 1 and 1r occupy **the same slot** — for each clause, 1r's enhanced SMT query is tried first; on UNSAT or unknown the plain Phase 1 query is the fallback. Phases 1v, 2, 2b, 3 add tests to the per-method test set in that order.
 
@@ -304,42 +305,49 @@ Let `X` be the tuple of inputs, `Y` the tuple of outputs, and `Y'` an alternate 
 ¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
 ```
 
-and Phase 1v asks for
+For full SFL value, the witness `X` should make **only `Qk`** vacuous — i.e., every other candidate `Qj` admits an alternate output that breaks it (`Qj` is non-vacuous on `X`). DafnyCBT seeks an *isolated* witness:
 
 ```
-∃ (X, Y).  Pre(X) ∧ ⋀_j Qj(X, Y)
-        ∧ ¬∃ Y'. (∧_{j≠k} Qj(X, Y')) ∧ ¬Qk(X, Y')
+∃ (X, Y, Y'_{j≠k}).  Pre(X) ∧ ⋀_j Qj(X, Y)                          (1) Y is a real witness
+                  ∧ ⋀_{j≠k}  ⋀_{i≠j}  Qi(X, Y'_j) ∧ ¬Qj(X, Y'_j)   (2) each non-k Qj non-vacuous
+                  ∧ ¬∃ Y''. (∧_{i≠k} Qi(X, Y'')) ∧ ¬Qk(X, Y'')      (3) Qk vacuous on X
 ```
 
-The outer `∃ X` quantifier-alternation is handled by **CEGIS**: Phase A asks Z3 for a candidate `X` (satisfying the full clause, excluding previously-tried inputs); Phase B pins that `X` and checks vacuity of `Qk` under it. Phase B UNSAT → vacuity witness found; Phase B SAT → exclude `X` and retry (up to 3 attempts per candidate).
+The outer `∃ X` is handled by **CEGIS** with two phases per attempt:
+- **Phase A** asks Z3 for a candidate `X` satisfying conditions (1) and (2) — one Z3 query. This is the same dual-block / shadow-output structure as Phase 1r's relevance query, but with safe indices = `candidates ∖ {k}` (every non-target literal must be active).
+- **Phase B** pins `X` and checks (3) — one Z3 query. UNSAT confirms `Qk` is vacuous; SAT means `Qk` was pruned for this `X` (exclude `X`, retry); UNKNOWN bails.
+
+When Phase A returns SAT, the model already contains concrete `Y'_j` witnesses proving every non-k `Qj` is non-vacuous, so isolation is **established by construction** — no per-`Qj` post-hoc check needed.
+
+If Phase A returns UNSAT (no isolated witness exists for this clause), DafnyCBT **falls back automatically** to a non-isolated query: Phase A is replaced by the bare `∃ (X, Y). Pre ∧ ⋀ Qj` (no isolation precondition); Phase B is unchanged. The resulting witness still proves `Qk` vacuous on `X`, but other `Qj` may also be vacuous on the same `X` — informative for SFL but less surgical. Such tests are labelled `/V{k}` (no `i`) to distinguish from the isolated `/Vi{k}` form.
 
 ### Implementation notes
 
-- **Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal.
-- **Subsumption pruning.** Pre-CEGIS: skip the candidate when a prior test from the same clause already exhibits vacuity. Post-CEGIS: drop the `/V{k}` registration when the witness is structurally identical to a prior test.
+- **Per-candidate, not combined.** Unlike Phase 1r (which collapses all safe indices into one combined query), Phase 1v runs the CEGIS loop once **per** candidate literal `Qk`.
+- **Two-mode CEGIS.** Try isolated first (Phase A = relevance-style query enforcing condition 2); on Phase A UNSAT, fall back to non-isolated (Phase A = bare SAT). Each mode has its own retry budget (3 attempts).
+- **Subsumption pruning.** Pre-CEGIS: skip the candidate when a prior test of the same clause is *isolated-equivalent* — i.e. its ins makes `Qk` vacuous AND every other `Qj` non-vacuous. Post-CEGIS: drop the `/V{k}` registration when the witness is structurally identical to a prior test.
 - **Phase 1r UNSAT skip.** Candidates where Phase 1r returned UNSAT are skipped (Phase 1 baseline already exhibits vacuity for those).
+- **Magnitude-only bias.** Phase A drops the weight-1/2 anti-trivial pushes (steer values away from `0` / `1`) but keeps the weight-3 magnitude / length caps (`|n| ≤ 10`, `|arr| ≤ 8`). The trivial pushes conflict with isolated witnesses that require uniform arrays (`[X, X]`); the magnitude caps keep values readable.
 
-Tests are labelled `{clause}/V{k+1}` (1-based literal index). Cost: up to 6 Z3 calls per candidate literal.
+Tests are labelled `{clause}/Vi{k+1}` when isolated, `{clause}/V{k+1}` when fallback (1-based literal index).
+
+**Cost per candidate:** typically **2 Z3 queries per attempt** (1 Phase A + 1 Phase B), up to 3 attempts per mode, two modes worst case → ≤ 12 queries. With Phase A's relevance-baked isolation, one attempt usually suffices, so the realistic cost is ~2 queries per candidate.
+
+### Per-test vacuity annotation (always on)
+
+Independent of `--vacuity`, every test in the final suite is scanned by a post-phase **annotation pass**: for each safe-candidate `Qk` of its clause, run the Phase B query (`¬∃ Y'. ⋀_{j≠k} Qj ∧ ¬Qk`). If UNSAT, mark `Qk` as vacuously-true on this test's ins and the test emitter renders `// VACUOUSLY TRUE` next to the matching `POST Q{k}` line in the comment.
+
+This means *every* test (Phase 1, 1r, 2, 2b, 3 — not just `/V` / `/Vi`) gets the per-Q vacuity signal. For SFL, a passing `/R` or `/B` test that happens to make `Qk` vacuous **does not** exonerate `Qk`'s implementation code: the annotation lets the SFL ranker discount that exoneration evidence per-Q. Cost: one Phase B query per (test, candidate), typically ≤ 4 queries per test.
 
 ### Role and limits
 
-Phase 1v is **opt-in** because on the buggy_progs corpus its kill-set was identical to or within 1–2 methods of every comparable strategy with vacuity disabled. Anti-trivial bias plus seeded repetition already covers the boundary regimes Phase 1v targets. Vacuity's value is therefore not in raising kill rate but in **fault localisation**:
+Phase 1v's primary value is **fault localisation**, not raw kill rate (on the buggy_progs corpus its kill-set was within 1–2 methods of strategies with vacuity disabled — anti-trivial bias plus seeded repetition already covers most boundary regimes). The `/Vi{k}` and per-test `// VACUOUSLY TRUE` annotations together provide:
 
-- A vacuity test deterministically reaches an `X` regime where one literal is implied by the rest. When such a test fails, the bug must lie in the relationship between `Qk` and its antecedents — a sharper pass/fail signal for spectrum-based fault localisation (SFL) rankers like Ochiai or Tarantula than a random-bias test produces.
-- Each `/V{k}` test's metadata states which spec literal is redundant under its `X`, which an IDE can surface as a debugging hint.
+- A vacuity-isolated test deterministically reaches an `X` regime where only `Qk` is implied by the rest. When such a test fails, the bug must lie in `Qj`'s code paths (since `Qk` is auto-satisfied) — a sharper pass/fail signal for SFL rankers like Ochiai / Tarantula.
+- A passing `/Vi{k}` test exonerates only the non-`Qk` code paths; passing `/V{k}` (non-isolated fallback) is weaker but still useful.
+- Per-test vacuity annotations let the SFL tool identify, for any test, *which* `Q` literals were actually checked — discounting test-passing exoneration for code that maintains a vacuous `Q` is the key to lifting suspicion ranking above the "every line covered by every test" plateau.
 
 Demonstrating this rigorously requires statement-level coverage instrumentation and an SFL experiment on a corpus where the faulty statement is known — left as future work. See [`empirical-evaluation.md` §Vacuity](empirical-evaluation.md#vacuity) for the kill-rate numbers.
-
-### Isolation mode (`--vacuity-isolated`)
-
-A `/V{k}` test reaches its full localization potential only when **exactly one** literal is vacuous. If both `Qk` and some other `Qj` are simultaneously implied by the remaining literals on the witness `X`, a failure of `Qk` could equally be attributed to `Qj`'s code path — the test no longer points uniquely at the antecedent of `Qk`.
-
-The `--vacuity-isolated` flag (alias `-v1vi`) tightens Phase 1v to emit `/Vi{k}` tests only when **`Qk` is vacuous AND no other candidate `Qj` is vacuous on the same `X`**. After Phase B confirms `Qk` vacuity, an extra Phase B query is run for every other safe candidate `Qj`; if any returns UNSAT, the witness is rejected as *shared-vacuous* and CEGIS retries. Two extra mechanisms keep CEGIS from looping on similarly degenerate models:
-
-- **Length-floor on rejection.** When a shared-vacuous witness is rejected, all sequence-typed inputs gain a per-iteration constraint `(seq.len <name>) > <rejected length>`, forcing structural progression toward longer arrays.
-- **Magnitude-only bias in Phase A under isolation.** Plain anti-trivial bias has two parts: weight-3 *magnitude/length caps* and weight-1/2 *anti-trivial pushes* (steer values away from `0` and `1`). The trivial pushes conflict with isolation — several isolated witnesses (e.g. LastPosition's `Q4`-vacuous case) require *uniform* arrays like `arr = [X, X]` that the pushes avoid. Isolation mode therefore drops the anti-trivial pushes but **keeps the magnitude/length caps**, so Z3 can reach uniform-content models without exploding into million-magnitude integers.
-
-Cost: up to 10 CEGIS attempts per candidate (vs. 3 in plain mode), each with one Phase B per other candidate. Implies `--vacuity`.
 
 *Worked example — `LastPositionSorted` with a buggy binary-search implementation* (returns `mid` of the search range; correct for unique occurrences but wrong for duplicates):
 
@@ -446,7 +454,7 @@ When no explicit strategy flag (`-a`, `-b`, `-s`, `-r`) is given, DafnyCBT uses 
 1. **Phase 1 — DNF clauses**: All clauses are solved directly using short-circuit safe DNF decomposition (including the existential and universal quantifier decompositions described above). Syntactic contradiction detection prunes infeasible clauses before Z3. Duplicate literals across generated clauses are deduplicated during cross-product.
 2. **Phase 2 — Refined-range BVA** (only when Phase 1 yields < `--min-tests`): For each (DNF clause, variable), solve the refined range from `classLiterals` and emit one SMT query per boundary value.
 3. **Phase 2b — Type/size coverage** (only when still < `--min-tests`): For each (DNF clause, variable) not covered by Phase 2, emit categorical pins. Still single-fault.
-4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached.
+4. **Phase 3 — Repeats**: Generate additional distinct inputs per clause (up to 3 per clause) until the minimum test count is reached. When a `/Rel` witness exists for a clause, Phase 3 **alternates per repeat** between two query forms: a *plain* `BuildSmt2Query` (labelled `{N}/R{n}`) and a *relevance-style* `BuildRelevanceQuery` (labelled `{N}/Rel/R{n}`), each accumulating the input-exclusion list. The relevance-style repeats are *genuine* relevance witnesses — every safe `Qk` actively prunes — not merely "another satisfying input." On UNSAT/UNKNOWN of the relevance-style query, the slot falls back to a plain repeat.
 
 **Subsumption pruning.** To maximize diversity with a limited number of test cases, across all phases (except Phase 3), each candidate `(clause, tier)` entry is first checked against already-generated test cases: if a prior test case (with its inputs and outputs pinned) already satisfies the candidate's literals and tier constraints under Z3, the candidate is skipped and no new Z3 search is launched.
 
