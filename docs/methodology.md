@@ -279,7 +279,6 @@ Negating a guard literal can leave later literals referencing undefined indices,
 
 1. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`. (These shapes typically protect a subsequent indexed access.)
 2. `Qk` references at least one output variable.
-3. Every output variable in `Qk` also appears in some other literal of the clause, so `Y_k` is partially constrained rather than free. (Vacuous when the clause has only one literal — the bite `Q1 ∧ ¬Q1` is still meaningful in that case and rejects vacuous-truth witnesses on its own.)
 
 Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `Y_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
