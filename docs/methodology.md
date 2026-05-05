@@ -116,7 +116,7 @@ In the `GetFirstOrZero` example above, the cross-product of the two ensures clau
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`.
 
-### Decomposition of existential quantifiers
+### Decomposition of existential quantifiers (`--exists-decomposition` to enable)
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **two mutually-exclusive clauses** that mirror the standard `A || B` ↦ `A`, `!A ∧ B` rule:
 
