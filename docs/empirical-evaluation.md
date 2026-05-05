@@ -111,6 +111,17 @@ The Phase 1v vacuity check ([Per-literal vacuity check in README](../README.md#p
 
 Vacuity's value on this corpus is therefore not in raising kill rate but in *fault localisation*: a `/V{k}` test deterministically reaches an input regime where literal `Q_k` is implied by the others, providing a sharper pass/fail signal for SFL than a random-bias test. See the [README's "Role and limits" subsection](../README.md#per-literal-vacuity-check-enable-with---vacuity) and the `LastPositionTwoPaths` worked example for an SFL story where adding the `/Vi4` isolation test breaks a 3-way suspiciousness tie.
 
+## <a id="exists-decomposition"></a>Existential-decomposition ablation (separately)
+
+Single-variable existential decomposition (`--exists-decomposition` / `-ed`, see [methodology §existential decomposition](methodology.md#dnf-decomposition-rules)) is **disabled by default** as of this iteration. Paired comparison at n = 10 with the legacy 3-way split (`P(lo)` / middle / `P(hi-1)`):
+
+| strategy | killed | kill@1 | AUC | gen time | wall-clock |
+|---|---:|---:|---:|---:|---:|
+| exists-decomp ON  *(legacy default)* | 196 | 118 | 9560 | 2996 s | 6319 s |
+| exists-decomp OFF *(new default)*    | 195 | 122 |  9530 | 2709 s | 6030 s |
+
+The decomposition arm gains **+1 unique kill** (1/419 ≈ 0.24 % of tested methods) and **+30 AUC** at the cost of **~5 % wall-clock**. Default flipped to OFF on this evidence; the post-flip implementation also replaces the legacy 3-way split with a 2-way **mutually-exclusive** split (`P(lo)` vs `!P(lo) ∧ ∃k>lo. P(k)`) that mirrors the standard `A || B` ↦ `A`, `!A ∧ B` rule. Re-running with the new 2-way variant has not yet been done; the numbers above measure the legacy 3-way arm, which informs the default choice but not the new strategy's exact contribution.
+
 ## Comparison with `dafny generate-tests`
 
 Dafny ships a built-in test generator (`dafny generate-tests <Block|Path|InlinedBlock> <file>`) that instruments method bodies to enumerate basic blocks or execution paths and asks Z3 for inputs reaching each. We ran it on the same corpus, with the same per-program timeout (60 s gen, 120 s test) and `Block` mode (the most permissive of the three). The wrapper script that drives it — handling source preprocessing, post-hoc result classification, and producing logs in the same format — is at [`test/experimental_results/run_dafny_generate_tests.py`](../test/experimental_results/run_dafny_generate_tests.py).
