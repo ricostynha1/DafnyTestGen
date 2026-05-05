@@ -193,7 +193,7 @@ Core flags most users will need:
 | Option | Alias | Description |
 |--------|-------|-------------|
 | `--relevance-mode <m>` | | Phase 1r shadow-block strategy: `combined` / `group` / `ladder` (default). See [methodology §1r modes](docs/methodology.md#modes---relevance-mode) |
-| `--no-exists-decomposition` | `-ned` | Disable decomposition of single-variable existentials into boundary cases (ablation) |
+| `--exists-decomposition` | `-ed` | Enable 2-way mutually-exclusive decomposition of single-variable existentials (`P(lo)`, `!P(lo) ∧ ∃k>lo. P(k)`). Default OFF — quantifier kept as a single literal. |
 | `--reverse-bva-order` | `-rbva` | Run Phase 2b before Phase 2 instead of after (ablation) |
 | `--trust-unknown` | | Trust Z3 output values when uniqueness check returns 'unknown' (default: false) |
 | `--drop-post-wf-guards <bool>` | | Internal: control treatment of well-formedness guards generated for postcondition accesses (default: true). Pass `false` only to reproduce legacy behaviour |

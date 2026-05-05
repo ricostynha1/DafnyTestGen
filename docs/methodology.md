@@ -118,13 +118,14 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 
 ### Decomposition of existential quantifiers
 
-Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P (hi-1)`, are automatically decomposed into 3 clauses representing boundary and middle cases:
+Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **two mutually-exclusive clauses** that mirror the standard `A || B` ↦ `A`, `!A ∧ B` rule:
 
-1. **Left boundary**: `lo < hi && P(lo)` — property holds at first position
-2. **Middle range**: `exists k :: lo+1 <= k < hi-1 && P(k)` — property holds somewhere in the middle
-3. **Right boundary**: `lo < hi && P(hi-1)` — property holds at last position
+1. **First satisfies**: `lo <= hi && P(lo)` — the property holds at the first position.
+2. **First doesn't, some `k > lo` does**: `lo+1 <= hi && !P(lo) && exists k :: lo+1 <= k <= hi && P(k)` — the first position fails, but some later position satisfies.
 
-These clauses feed into the same DNF/FDNF analysis, combining with other pre- and postcondition clauses via cross-product. The three clauses are **not mutually exclusive** — when `P` holds at multiple positions, all of them may be satisfied simultaneously. This is intentional: unlike equivalence class partitioning, which requires disjoint input regions, our approach deliberately allows overlap to preserve solver tractability while exercising distinct structural patterns of quantified predicates, without overcomplicating the generated expressions. Redundancy from overlap is then filtered by two complementary mechanisms: **input exclusion** drops tests whose inputs exactly match a prior test's inputs, and **subsumption pruning** skips a clause altogether when some prior test's inputs + outputs already witness it (detected by a pinned SMT check), so a clause that holds on an earlier test's model never triggers a second Z3 call.
+Mutual exclusivity follows from `P(lo)` in clause 1 vs `!P(lo)` in clause 2, matching how DNF handles ordinary disjunction. The right-boundary case from an earlier 3-way split (`P(hi-1)`) is absorbed into clause 2's existential — in practice it rarely produced a different witness from the first-satisfies case (Z3 picks any satisfying `k` in the range, and the same anti-trivial bias / seed usually leads to the same witness). The two clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
+
+Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). On our buggy_progs corpus at `n=10`, decomposition gains 1 unique kill (196 vs 195 methods) at the cost of ~5% wall-clock; the trade-off rarely matters for kill rate but the decomposed form is informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
 
 Equivalent range definitions are supported. For example, `exists k :: k >= lo && k < hi && P(k)` (using two relational operators in conjunction) is recognized as the same shape as `exists k :: lo <= k < hi && P(k)` (chained inequalities) and decomposed identically. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled the same way.
 
@@ -137,7 +138,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-The `exists` clause decomposes into: max at position 0 (left), max in middle, max at position `a.Length-1` (right). These are combined with the `forall` clause via DNF/FDNF cross-product, producing potentially distinct test scenarios for each structural case.
+With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, and (2) `max != a[0] ∧ exists k :: 1 <= k <= a.Length-1 ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for the "max-is-first" vs "max-is-not-first" structural cases.
 
 ### Predicate and function inlining
 
@@ -277,8 +278,8 @@ Corner cases such as vacuously-true clauses are covered by [per-literal vacuity 
 
 Negating a guard literal can leave later literals referencing undefined indices, lengths, or out-of-bounds positions, and Z3 is free to pick arbitrary values on undefined terms — **producing spurious SAT** with no real semantic content. To avoid that, DafnyCBT classifies a literal `Qk` as safe iff:
 
-1. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`. (These shapes typically protect a subsequent indexed access.)
-2. `Qk` references at least one output variable.
+1. `Qk` references at least one output variable.
+2. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`. (These shapes typically protect a subsequent indexed access.)
 
 Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `Y_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
