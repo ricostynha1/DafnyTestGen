@@ -276,10 +276,10 @@ The four redundancy regimes for the "found" clause are exhaustively enumerated b
 
 | Input | `Q4 = arr[pos] == elem` allows | `Q5 = elem !in arr[pos+1..]` allows | `Q4 ∧ Q5` | Regime |
 |---|:---:|:---:|:---:|---|
-| `LastPosition([5, 5, 6], 5)` | {0, 1} | {1, 2} | {1} | **Both relevant** — each literal prunes positions the other allows. The Phase 1r `/Rel` query targets exactly this regime. |
-| `LastPosition([5, 6], 5)`    | {0}    | {0, 1} | {0} | **Q4 relevant, Q5 vacuous** — single occurrence of `elem`; `Q4` alone pins `pos`. Phase 1v `/Vi5` test. |
-| `LastPosition([5, 5], 5)`    | {0, 1} | {1}    | {1} | **Q5 relevant, Q4 vacuous** — every element equals `elem`; `Q5` alone pins `pos = arr.Length - 1`. Phase 1v `/Vi4` test. |
-| `LastPosition([5], 5)`       | {0}    | {0}    | {0} | **Both vacuous** — single-element array; `Q2 ∧ Q3` already pin `pos = 0`. Phase 1r is UNSAT here; this regime is reached only via BVA tier `|arr|=1`. |
+| `LastPosition([5, 5, 6], 5)` | {0, 1} | {1, 2} | {1} | **Both relevant**. The Phase 1r `/Rel` query targets exactly this regime. |
+| `LastPosition([5, 6], 5)`    | {0}    | {0, 1} | {0} | **Q4 relevant, Q5 vacuous**. Phase 1v `/Vi5` test. |
+| `LastPosition([5, 5], 5)`    | {0, 1} | {1}    | {1} | **Q5 relevant, Q4 vacuous**. Phase 1v `/Vi4` test. |
+| `LastPosition([5], 5)`       | {0}    | {0}    | {0} | **Both vacuous**. BVA tier `|arr|=1` test. |
 
 Corner cases such as vacuously-true clauses are covered by [per-literal vacuity check](#per-literal-vacuity-check-vacuity-to-enable) or by [Boundary Value Analysis](#boundary-value-analysis).
 
