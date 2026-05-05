@@ -120,8 +120,8 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **two mutually-exclusive clauses** that mirror the standard `A || B` ↦ `A`, `!A ∧ B` rule:
 
-1. **First satisfies**: `lo <= hi && P(lo)` — the property holds at the first position.
-2. **First doesn't, some `k > lo` does**: `lo+1 <= hi && !P(lo) && exists k :: lo+1 <= k <= hi && P(k)` — the first position fails, but some later position satisfies.
+1. **First satisfies**: `lo < hi && P(lo)` — the property holds at the first position.
+2. **First doesn't, some `k > lo` does**: `lo+1 < hi && !P(lo) && exists k :: lo+1 <= k < hi && P(k)` — the first position fails, but some later position satisfies.
 
 Mutual exclusivity follows from `P(lo)` in clause 1 vs `!P(lo)` in clause 2, matching how DNF handles ordinary disjunction. The right-boundary case from an earlier 3-way split (`P(hi-1)`) is absorbed into clause 2's existential — in practice it rarely produced a different witness from the first-satisfies case (Z3 picks any satisfying `k` in the range, and the same anti-trivial bias / seed usually leads to the same witness). The two clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
 
@@ -138,7 +138,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, and (2) `max != a[0] ∧ exists k :: 1 <= k <= a.Length-1 ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for the "max-is-first" vs "max-is-not-first" structural cases.
+With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, and (2) `max != a[0] ∧ exists k :: 1 <= k < a.Length ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for the "max-is-first" vs "max-is-not-first" structural cases.
 
 ### Predicate and function inlining
 
