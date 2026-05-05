@@ -278,8 +278,8 @@ The four redundancy regimes for the "found" clause are exhaustively enumerated b
 |---|:---:|:---:|:---:|---|
 | `LastPosition([5, 5, 6], 5)` | {0, 1} | {1, 2} | {1} | **Both relevant**. Phase 1r`/Rel` test. |
 | `LastPosition([5, 6], 5)`    | {0}    | {0, 1} | {0} | **Q4 relevant, Q5 vacuous**. Phase 1v`/Vi5` test. |
-| `LastPosition([5, 5], 5)`    | {0, 1} | {1}    | {1} | **Q5 relevant, Q4 vacuous**. Phase 1v`/Vi4` test. |
-| `LastPosition([5], 5)`       | {0}    | {0}    | {0} | **Both vacuous**. BVA tier `|arr|=1` test. |
+| `LastPosition([5, 5], 5)`    | {0, 1} | {1}    | {1} | **Q4 vacuous, Q5 relevant**. Phase 1v`/Vi4` test. |
+| `LastPosition([5], 5)`       | {0}    | {0}    | {0} | **Both vacuous**. BVA tier `\|arr\|=1` test. |
 
 Corner cases such as vacuously-true clauses are covered by [per-literal vacuity check](#per-literal-vacuity-check-vacuity-to-enable) or by [Boundary Value Analysis](#boundary-value-analysis).
 
