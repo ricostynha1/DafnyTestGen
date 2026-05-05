@@ -24,7 +24,7 @@ DafnyCBT generates tests through a **progressive escalating pipeline**: each pha
 | 1r | **Relevance check** | Replace the Phase 1 query with one that forces every safe literal to non-trivially prune outputs | when `--no-relevance` is not set | ON |
 | 1v | **Vacuity check** (CEGIS) | Find inputs where one literal is vacuously true — *for fault localisation*. Tries isolated witnesses first, falls back to non-isolated automatically | only with `--vacuity` | OFF |
 | 2 | **Refined-range BVA** | Per-clause-per-variable boundaries derived from clause literals | when budget remaining | ON |
-| 2b | **Type/size coverage** | Categorical tiers (=0, >0, <0; |s|=0, |s|=1, |s|≥2; enum constructors; mutation pre/post) | when budget remaining | ON |
+| 2b | **Type/size coverage** | Categorical tiers (`=0`, `>0`, `<0`; `\|s\|=0`, `\|s\|=1`, `\|s\|=2`, `\|s\|≥3` at default `--tiers 4`; enum constructors; mutation pre/post) | when budget remaining | ON |
 | 3 | **Round-robin repetition** | Distinct alternatives per base (one query per base per round); alternates plain repeats with genuine relevance-style repeats when a `/Rel` witness exists; bases drop on plain UNSAT; cross-base input dedup with retry | when budget remaining | ON |
 | post | **Vacuity annotation** | Per-test scan tagging every vacuous `Qk` with `// VACUOUSLY TRUE` for SFL precision | always | ON |
 
