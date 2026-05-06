@@ -402,6 +402,7 @@ Phase 2 emits, per (clause, variable):
 - Numeric endpoints: `v = lo`, `v = hi`.
 - Numeric interior: `v = lo+1`, `v = hi-1` when distinct from endpoints.
 - Symbolic endpoints for each relational bound: `v = E`, plus `v = E-1` / `v = E+1` for the interior side.
+- **Mid-of-range pin**: `lo < v < hi` (label `v=mid`), emitted whenever both a lower and an upper bound on `v` are extractable (numeric or relational, including strict `<`). Forces a non-boundary value — exercises FIND-style methods where the bug only manifests when an index is in the middle of its range and the surrounding array is large enough that one inner-loop pass doesn't already resolve the postcondition. Subsumption pruning skips it when an existing test already lies in the strict interior.
 
 **Skip rule (single-value pin).** If `classLiterals` already pins `v` to a single value (refined `lo == hi`), Phase 2 emits **no** query for `v`. Phase 1 baseline already covers that point.
 
