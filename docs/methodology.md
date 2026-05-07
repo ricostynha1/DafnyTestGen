@@ -504,6 +504,22 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
 For each processed source file (e.g., `FindMax.dfy`), DafnyCBT writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
 
+### Making `expect` expressions runtime-executable
+
+Dafny's static verifier and its runtime compiler accept different fragments of the spec language: the verifier accepts unbounded quantifiers, ghost functions, chained relations, and `old()` wrappers everywhere, but the runtime compiler imposes a "compilable" subset. Generated tests must satisfy the compiler's rules, since they are executed by `dafny build`/`dafny run`. DafnyCBT applies several transformations at test-emit time so that spec literals translated into `expect` assertions actually compile.
+
+| Transformation | Why | Where |
+|---|---|---|
+| **Ghost qualifier stripping** on `function`/`predicate`/`var`/`const`/parameters | Ghost members aren't runtime-callable; `expect P(...)` fails to compile if `P` is ghost | Source-level regex on the emitted file. Lemmas (which are ghost-by-construction) keep their `lemma` keyword and stay ghost — their bodies (forall statements, calls to ghost helpers) remain in ghost context and skip compilability checks. |
+| **Ghost field assignability** — `ghost var`/`ghost const` become regular `var` | Tests need to assign Z3-derived values to ghost state to set up a starting world | Same regex pass, plus model-extraction code that emits assignments for ghost-typed fields. |
+| **`old()` stripping** in non-spec lines (statements, asserts) | `old(x)` is a spec-only construct; uses outside `requires`/`ensures`/`invariant`/`decreases`/`modifies` don't compile | Per-test capture variables (`old_x := x;` before the call) replace `old(x)` in the emitted `expect`. |
+| **Unbounded-forall rewrite** — `forall i: int :: A ∧ B ∧ …` (no top-level `==>`, no `\|`-range) → `(false)` | Such a forall is logically false (must hold for *every* int), but Dafny's runtime compiler can't enumerate ℤ to confirm. Rewriting to `(false)` gives the same semantics — the surrounding `==>` becomes vacuously true. | `RewriteUnboundedForalls` in `TestEmitter.cs`. Skips `forall vars \| range :: body` syntax (the `\|` provides bounded enumeration). |
+| **Chained-bound rewrite** — `LO ≤ V1 ≤ V2 ≤ HI` → `LO ≤ V1 ≤ HI ∧ LO ≤ V2 ≤ HI ∧ V1 ≤ V2` | Cross-dependent bounds (V1 bounded by V2, V2 by V1) defeat Dafny's enumeration heuristic; the rewrite gives each variable an independent constant range plus a filter on their relation. Same semantics. | `RewriteChainedForallBounds` in `TestEmitter.cs`. Applied to PRE-CHECK and POST-emit paths. |
+| **Vacuously-true literals commented out** | The post-vacuity scan tags each clause literal vacuous-on-this-input. Such literals pass trivially and add noise to the test body. Emitted as `// expect …; // VACUOUSLY TRUE on these inputs` instead of an active assertion. | `EmitTest` in `TestEmitter.cs`. Doesn't reduce kill rate — vacuous literals can't catch bugs by definition; the *other* literals of the same clause are still asserted. |
+| **`--comment-uncompilable` fallback** | Catches the residual: if `dafny build` fails on an uncompilable expect we didn't transform, the offending lines are commented out with a `// UNCOMPILABLE (...)` marker and the build is retried. | Opt-in flag, off by default — failing-to-build is informative when a new uncompilable pattern appears. |
+
+The combination of these passes lets DafnyCBT generate compilable tests for the great majority of corpus specs, including those using recursive predicates, autocontracts class invariants, and chained range quantifiers in postconditions. Specs that still fail to compile after these passes are rare and tend to come from `forall` *statements* inside non-ghost helper methods of the source — code we don't rewrite.
+
 ### Grouping (`--grouping` / `-g`)
 
 Two options control how test cases are grouped in the emitted file:
