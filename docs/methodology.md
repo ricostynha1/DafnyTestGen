@@ -504,9 +504,9 @@ Ghost fields (`ghost var`, `ghost const`) are fully supported:
 
 For each processed source file (e.g., `FindMax.dfy`), DafnyCBT writes a new file with the suffix `Tests` (e.g., `FindMaxTests.dfy`) containing the original source plus the generated tests. If the source already defines `Main`, it is renamed `OriginalMain`. Ghost functions and predicates have their `ghost` qualifier stripped so they can be called from `expect` assertions at runtime.
 
-### Making `expect` expressions runtime-executable
+### Making generated test code runtime-executable
 
-Dafny's static verifier and its runtime compiler accept different fragments of the spec language: the verifier accepts unbounded quantifiers, ghost functions, chained relations, and `old()` wrappers everywhere, but the runtime compiler imposes a "compilable" subset. Generated tests must satisfy the compiler's rules, since they are executed by `dafny build`/`dafny run`. DafnyCBT applies several transformations at test-emit time so that spec literals translated into `expect` assertions actually compile.
+Dafny's static verifier and its runtime compiler accept different fragments of the spec language: the verifier accepts unbounded quantifiers, ghost functions, chained relations, ghost fields, and `old()` wrappers everywhere; the runtime compiler imposes a "compilable" subset. Generated tests must satisfy the compiler's rules — they are executed by `dafny build`/`dafny run`, not just verified. DafnyCBT applies several transformations at test-emit time so the test setup (assigning Z3-derived values to ghost state, binding ghost return values, calling spec predicates) and the `expect` assertions all compile.
 
 | Transformation | Why | Where |
 |---|---|---|
