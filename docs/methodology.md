@@ -118,14 +118,17 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 
 ### Decomposition of existential quantifiers (`--exists-decomposition` to enable)
 
-Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **two mutually-exclusive clauses** that mirror the standard `A || B` ↦ `A`, `!A ∧ B` rule:
+Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **three mutually-exclusive clauses** that exercise the witness at structurally distinct positions (first / last / middle):
 
-1. **First satisfies**: `lo < hi && P(lo)` — the property holds at the first position.
-2. **First doesn't, some `k > lo` does**: `lo+1 < hi && !P(lo) && exists k :: lo+1 <= k < hi && P(k)` — the first position fails, but some later position satisfies.
+1. **First satisfies**: `lo <= hi && P(lo)` — the property holds at the first position.
+2. **Last satisfies, first doesn't**: `lo+1 <= hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
+3. **Strict middle satisfies, neither end does**: `lo+2 <= hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k <= hi-2 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
 
-Mutual exclusivity follows from `P(lo)` in clause 1 vs `!P(lo)` in clause 2, matching how DNF handles ordinary disjunction. The right-boundary case from an earlier 3-way split (`P(hi-1)`) is absorbed into clause 2's existential — in practice it rarely produced a different witness from the first-satisfies case (Z3 picks any satisfying `k` in the range, and the same anti-trivial bias / seed usually leads to the same witness). The two clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
+Mutual exclusivity is preserved by the `!P(lo)` ⇒ `!P(hi-1)` negation chain in clauses 2 and 3. Each guard (`lo <= hi`, `lo+1 <= hi`, `lo+2 <= hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
 
-Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). On our buggy_progs corpus at `n=10`, decomposition gains 1 unique kill (196 vs 195 methods) at the cost of ~5% wall-clock; the trade-off rarely matters for kill rate but the decomposed form is informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
+The middle clause is the load-bearing addition. Z3, given an unconstrained existential, defaults to the simplest model — typically picking the first or last index, since the boundary tiers (Phase 2 BVA) and the anti-trivial bias both nudge in those directions. Without clause 3, mutants whose runtime divergence depends on the witness landing at a non-trivial interior position escape: e.g. a linear-search variant that returns `-(n+1)` instead of `n+1` at iteration `n` only violates `position >= 1` when `n >= 1`, which requires the searched element to appear at a non-last (or under a reverse mapping, non-first) position — a configuration Z3 won't pick on its own. Clause 3 forces it.
+
+Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). The cost is one extra clause per `exists` (vs. the unsplit single-clause form), and the new middle clause adds another on top of the prior 2-way split. The decomposed form is also informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
 
 Equivalent range definitions are supported. For example, `exists k :: k >= lo && k < hi && P(k)` (using two relational operators in conjunction) is recognized as the same shape as `exists k :: lo <= k < hi && P(k)` (chained inequalities) and decomposed identically. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled the same way.
 
@@ -138,7 +141,7 @@ method FindMax(a: array<int>) returns (max: int)
   ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
 ```
 
-With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, and (2) `max != a[0] ∧ exists k :: 1 <= k < a.Length ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for the "max-is-first" vs "max-is-not-first" structural cases.
+With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, (2) `max != a[0] ∧ max == a[a.Length-1]`, and (3) `max != a[0] ∧ max != a[a.Length-1] ∧ exists k :: 1 <= k <= a.Length-2 ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for "max-is-first", "max-is-last (not first)", and "max-is-strictly-middle".
 
 ### Predicate and function inlining
 
