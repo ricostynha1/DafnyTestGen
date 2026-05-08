@@ -649,6 +649,16 @@ class {:autocontracts} StackOfInt {
 
 By default, tests are also generated for bodyless methods (declared without an implementation body), but the method call and expects are commented out since there is nothing to invoke. This supports **test-driven development with Dafny**: write the contracts first, generate test scaffolding from the spec, then implement the method body and uncomment the calls. Use `--skip-bodyless` (`-p`) to skip bodyless methods entirely instead.
 
+### Smoke tests for precondition-only methods (`--smoke-tests` / `-st`)
+
+By default, DafnyCBT only tests methods with at least one `ensures` clause — the postcondition is the test objective. Methods that have only `requires` (a precondition) and no `ensures` are skipped, since there is nothing to assert about the output. This excludes a class of helpers and side-effecting procedures from the corpus.
+
+`--smoke-tests` (`-st`) relaxes this filter to also include methods with at least one `requires` and no `ensures`. For each such method, DafnyCBT generates a single test that satisfies the precondition (Z3 solves for inputs against the `requires`) and calls the method, with no `expect` checks. The test passes if the method returns; it fails if the method crashes or hangs. This catches infinite-loop / out-of-bounds mutants in helpers that would otherwise have no test coverage, without requiring the developer to retrofit a postcondition.
+
+The flag is **OFF by default** — existing corpus runs are unaffected. The implementation reuses the existing `preOnlyMode` path that DafnyCBT already employs as a fallback when post-condition solving times out: when `ensures` is empty, the DNF degenerates to a single trivial clause and Z3 only constrains inputs to satisfy the `requires`. Methods named `Main` and methods whose name contains `test` / `Test` are still excluded, as in the standard mode. Methods with no `requires` AND no `ensures` (truly contract-free helpers) remain skipped — the broader scope was deemed too noisy without an entry-point constraint.
+
+Concrete example: in the dafleet `MVR_CountIndex` mutant, a loop guard is changed from `CountIndex != a.Length + 1` to `CountIndex != CountIndex + 1` (always-true → infinite loop). The mutation lives in `FooPreCompute`, which has `requires a.Length == b.Length` but no `ensures`. Without `--smoke-tests` the method is untested and the mutant escapes; with the flag, `FooPreCompute` gets four smoke tests and all four FAIL on the mutant (timeout / crash signal).
+
 ### Check Mode (`--check` / `-c`)
 
 Check mode is **on by default**, except that when any bodyless method is present in the source, the check is auto-disabled (since `dafny build` fails on them) and unchecked tests are written with a warning. Pass `--no-check` to disable explicitly.
