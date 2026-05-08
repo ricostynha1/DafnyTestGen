@@ -382,31 +382,31 @@ Each DNF clause produced by Phase 1 already defines an equivalence class as the 
 
 [Anti-trivial bias](#anti-trivial-bias---no-bias-to-disable) is applied to every BVA query as well. Only one variable is hard-pinned per query; the others remain free, so the soft-assert nudges steer them away from trivial values (`0`, `1`, empty / singleton collections) and into bounded magnitudes, producing tests that actually exercise the spec rather than degenerate corner cases.
 
-### Phase 2 — refined-range BVA
+### Phase 2 — literal-centric BVA
 
-For each (DNF clause, variable) pair, the refined range of the variable is solved from `classLiterals`:
+For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits two tiers per literal:
 
-| Pattern in `classLiterals` | Contribution |
+| Tier | SMT constraint | Purpose |
+|---|---|---|
+| **Boundary** | `(= E1 E2)` | Pins `E1 = E2` — the exact-at-boundary regime that ROR-mutated `≥` / `≤` → `==` bugs need (the buggy code catches the boundary but admits values strictly above/below). |
+| **Strict-companion** | `(> E1 E2)` for `≥`/`>`, `(< E1 E2)` for `≤`/`<` | The strictly-above (or strictly-below) region — where the buggy ROR-mutated implementation admits inputs the original would have refused. |
+
+Pure constant comparisons are skipped. Pairs of literals that form a chained range get an extra **mid-of-range** tier:
+
+| Chain shape | Tiers emitted |
 |---|---|
-| `v >= E`, `E <= v` | lower bound `E` |
-| `v > E`, `E < v` | lower bound `E+1` |
-| `v <= E`, `E >= v` | upper bound `E` |
-| `v < E`, `E > v` | upper bound `E-1` |
-| `v == E` | pins `v = E` (lower = upper = E) |
-| `v != E` | if `E == lo` numerically → `lo++`; if `E == hi` → `hi--` |
+| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO`, `EXP = HI`, **mid**: `(and (> EXP LO) (< EXP HI))` |
+| Strict variants (`<` on either side) | Same, but boundaries are dropped when their strictness makes them UNSAT |
 
-Numeric fold: `lo = max(lower bounds)`, `hi = min(upper bounds)`. Symbolic bounds that aren't comparable numerically are kept as separate relational boundary candidates.
+`EXP` can be any expression — bare variable, cardinality `\|s\|`, indexed access `arr[i]`, function call, etc. — so the scan reaches bounds the variable-centric extractor misses. Examples:
 
-Phase 2 emits, per (clause, variable):
+- `\|carPark\| ≥ normalSpaces - badParkingBuffer` (single literal) → boundary `\|carPark\| = K` and strict-above `\|carPark\| > K`. The strict-above is what catches the car-park ROR mutant whose buggy `==` admits `\|carPark\| > K`.
+- `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0`, `k=n`, and mid `0 < k < n`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs.
+- `m < arr[i] < M` (chain on indexed access) → boundaries `arr[i]=m+1`, `arr[i]=M-1`, and mid `m < arr[i] < M`.
 
-- Numeric endpoints: `v = lo`, `v = hi`.
-- Numeric interior: `v = lo+1`, `v = hi-1` when distinct from endpoints.
-- Symbolic endpoints for each relational bound: `v = E`, plus `v = E-1` / `v = E+1` for the interior side.
-- **Mid-of-range pin**: `lo < v < hi` (label `v=mid`), emitted whenever both a lower and an upper bound on `v` are extractable (numeric or relational, including strict `<`). Forces a non-boundary value — exercises FIND-style methods where the bug only manifests when an index is in the middle of its range and the surrounding array is large enough that one inner-loop pass doesn't already resolve the postcondition. Subsumption pruning skips it when an existing test already lies in the strict interior.
+**Subsumption pruning** at solve-time discards tiers whose witness is already covered by a prior test (typically Phase 1's `/Rel` witness lies in the strict interior, subsuming the mid tier).
 
-**Skip rule (single-value pin).** If `classLiterals` already pins `v` to a single value (refined `lo == hi`), Phase 2 emits **no** query for `v`. Phase 1 baseline already covers that point.
-
-Covered types: `int`, `nat`, and numeric type synonyms. Applies uniformly to inputs, outputs, and mutable class field post-states.
+Covered types: `int`, `nat`, `real`, and any expression that translates to an SMT-numeric value (cardinalities, indexed reads, etc.). The legacy variable-centric extractor (`--no-literal-bva` / `-nlbva`) walks input/output/field variables individually and emits boundary tiers per variable from extracted bounds — narrower than the literal-centric path because it can't see bounds on compound expressions.
 
 ### Phase 2b — type/size coverage
 
