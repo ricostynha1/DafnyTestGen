@@ -114,32 +114,9 @@ In the `GetFirstOrZero` example above, the cross-product of the two ensures clau
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`.
 
-### Decomposition of existential quantifiers (`--exists-decomposition` to enable)
+### Existential quantifier coverage
 
-Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **three mutually-exclusive clauses** that exercise the witness at structurally distinct positions (first / last / middle):
-
-1. **First satisfies**: `lo < hi && P(lo)` — the property holds at the first position.
-2. **Last satisfies, first doesn't**: `lo+1 < hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
-3. **Strict middle satisfies, neither end does**: `lo+2 < hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k < hi-1 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
-
-Each guard (`lo < hi`, `lo+1 <= hi`, `lo+2 < hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
-
-The middle clause is the load-bearing addition. Z3, given an unconstrained existential, defaults to the simplest model — typically picking the first or last index, since the boundary tiers (Phase 2 BVA) and the anti-trivial bias both nudge in those directions. Without clause 3, bugs whose runtime divergence depends on the witness landing at a non-trivial interior position escape.
-
-Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). The cost are two extra clauses per `exists` (vs. the unsplit single-clause form). The decomposed form is also informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
-
-Equivalent range definitions are supported. For example, `exists k :: k >= lo && k < hi && P(k)` (using two relational operators in conjunction) is recognized as the same shape as `exists k :: lo <= k < hi && P(k)` (chained inequalities) and decomposed identically. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled the same way.
-
-Consider the following example:
-
-```dafny
-method FindMax(a: array<int>) returns (max: int)
-  requires a.Length > 0
-  ensures exists k :: 0 <= k < a.Length && max == a[k]
-  ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
-```
-
-With `--exists-decomposition`, the `exists` clause decomposes into: (1) `max == a[0]`, (2) `max != a[0] ∧ max == a[a.Length-1]`, and (3) `max != a[0] ∧ max != a[a.Length-1] ∧ exists k :: 1 <= k <= a.Length-2 ∧ max == a[k]`. These are combined with the `forall` clause via DNF/FDNF cross-product, producing distinct test scenarios for "max-is-first", "max-is-last (not first)", and "max-is-strictly-middle".
+Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` (equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`) and their negated-forall equivalents `!(forall k :: lo <= k < hi ==> P(k))` keep their single-literal form in DNF — they are NOT split into multiple clauses. Witness diversity (first / last / middle position class) is provided downstream by Phase 2 BVA's existential boundary tiers (`/Eb<n>=lo`, `/Eb<n>=hi`, `/Eb<n>=mid`), described in [§Phase 2 — literal-centric BVA](#phase-2--literal-centric-bva). Each tier is a single Phase 2 SMT query that adds ONE narrower constraint as an extra (the original existential remains in the clause), avoiding the cross-product blowup an in-DNF split would incur — N existentials in one clause yields 3·N Phase 2 entries, not 3^N DNF clauses. Subsumption pruning at solve-time skips any tier already covered by a prior test's witness.
 
 ### Predicate and function inlining
 
@@ -409,17 +386,28 @@ The opposite-end strict constraint is the load-bearing part: without it, when th
 - `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0 ∧ k<n`, `k=n ∧ 0<k`, and mid `0 < k < n`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs.
 - `m < arr[i] < M` (chain on indexed access) → boundaries `arr[i]=m+1`, `arr[i]=M-1`, and mid `m < arr[i] < M`.
 
-**Existential boundary tiers**. Phase 2 also scans post-clause literals of the form `exists k :: lo <= k < hi && P(k)` (single-variable existentials matching the same range pattern as the quantifier-decomposition extractor) and emits up to three additional tiers per existential, each adding ONE narrower constraint as an extra (the original existential stays in the clause):
+**Existential boundary tiers**. Phase 2 also scans post-clause literals of the form `exists k :: lo <= k < hi && P(k)` and the equivalent negated-forall pattern `!(forall k :: lo <= k < hi ==> P(k))`, emitting up to three additional Phase 2 entries per quantifier — each adding ONE narrower constraint as an extra (the original quantifier STAYS in the clause):
 
-| Tier | Extra SMT constraint | Witness pinned at |
-|---|---|---|
-| `/Eb<n>=lo`  | `P[k := effectiveLo]` | first valid index |
-| `/Eb<n>=hi`  | `P[k := effectiveHi]` | last valid index |
-| `/Eb<n>=mid` | `exists k :: effectiveLo+1 <= k <= effectiveHi-1 && P(k)` | strictly-middle index |
+1. **First satisfies** (`/Eb<n>=lo`): `lo < hi && P(lo)` — the property holds at the first position.
+2. **Last satisfies, first doesn't** (`/Eb<n>=hi`): `lo+1 < hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
+3. **Strict middle satisfies, neither end does** (`/Eb<n>=mid`): `lo+2 < hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k < hi-1 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
 
-This is the same idea as the chained-relation tiers — strengthen with a narrower constraint to force a non-degenerate witness — but for existentials. The original existential literal STAYS in the clause; the boundary is just an extra. No DNF inflation (in contrast to `--exists-decomposition`, which splits the clause itself into 3 sub-clauses and multiplies cost across cross-products of multiple existentials). When Phase 1's plain witness already lands in one of the boundary regions, the corresponding tier is subsumed and skipped at solve time.
+Each guard (`lo < hi`, `lo+1 < hi`, `lo+2 < hi`) reflects the minimum range size for the tier to be satisfiable: ≥1 element for `=lo`, ≥2 distinct positions for `=hi`, ≥3 elements for `=mid`. The mutex chain (`!P(lo)` on `=hi`, `!P(lo) ∧ !P(hi-1)` on `=mid`) forces the three tiers to pick *distinct* witnesses even when the predicate happens to hold at multiple endpoints — without it, Z3 could return the same input for `=lo` and `=hi` (when P is true at both lo and hi-1) and subsumption would prune one, losing a test.
 
-Concrete win: a `LinearSearch3` mutant that returns `position = -(n+1)` instead of `position = n+1` only violates the spec `position == -1 || position >= 1` when the iteration index `n >= 1` — i.e. when the searched element appears at a non-trivial position in the input. Z3's default existential witness lands at the first or last index, where `n=0` makes `-(0+1) = -1` coincidentally match the "not found" sentinel and mask the bug. Without these tiers the mutant escapes (0 fails on 20 tests under default options); with them, the `/Eb1=mid` tier picks `s1=[23,12,13]` (Element at strict-middle index 1) and kills it. Same outcome as `--exists-decomposition` would give, at a fraction of the cost.
+This is the same idea as the chained-relation tiers — strengthen with a narrower constraint to force a non-degenerate witness — applied to existentials. Unlike a 3-way DNF clause split, the original existential literal STAYS in the clause; the boundary is just an extra. So no DNF inflation: N existentials in one clause yield 3·N Phase 2 entries, not 3^N DNF clauses. When Phase 1's plain witness already lands in one of the boundary regions, the corresponding tier is subsumed and skipped at solve time.
+
+Consider the following example:
+
+```dafny
+method FindMax(a: array<int>) returns (max: int)
+  requires a.Length > 0
+  ensures exists k :: 0 <= k < a.Length && max == a[k]
+  ensures forall k :: 0 <= k < a.Length ==> max >= a[k]
+```
+
+The `exists` literal yields three Phase 2 boundary tiers, decomposing into: (1) `max == a[0]`, (2) `max != a[0] ∧ max == a[a.Length-1]`, and (3) `max != a[0] ∧ max != a[a.Length-1] ∧ exists k :: 1 <= k <= a.Length-2 ∧ max == a[k]`. Combined with the Phase 2b size tiers (`|a|=1`, `|a|=2`, `|a|>=3`), this produces "max is first / last / strictly-middle" test scenarios.
+
+Concrete win: a `LinearSearch3` mutant that returns `position = -(n+1)` instead of `position = n+1` only violates the spec `position == -1 || position >= 1` when the iteration index `n >= 1` — i.e. when the searched element appears at a non-trivial position in the input. Z3's default existential witness lands at the first or last index, where `n=0` makes `-(0+1) = -1` coincidentally match the "not found" sentinel and mask the bug. Without these tiers the mutant escapes (0 fails on 20 tests under default options); with them, the `/Eb1=mid` tier picks `s1=[23,12,13]` (Element at strict-middle index 1) and kills it.
 
 **Subsumption pruning** at solve-time discards tiers whose witness is already covered by a prior test (typically Phase 1's `/Rel` witness lies in the strict interior, subsuming the mid tier).
 
