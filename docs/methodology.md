@@ -118,11 +118,11 @@ With **FDNF**, each implication produces 3 clauses instead of 2, giving more com
 
 Existential quantifiers represent repeated disjunctions, that can be also decomposed into multiple clauses. Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)`, equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`, can be decomposed into **three mutually-exclusive clauses** that exercise the witness at structurally distinct positions (first / last / middle):
 
-1. **First satisfies**: `lo <= hi && P(lo)` — the property holds at the first position.
-2. **Last satisfies, first doesn't**: `lo+1 <= hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
-3. **Strict middle satisfies, neither end does**: `lo+2 <= hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k <= hi-2 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
+1. **First satisfies**: `lo < hi && P(lo)` — the property holds at the first position.
+2. **Last satisfies, first doesn't**: `lo+1 < hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
+3. **Strict middle satisfies, neither end does**: `lo+2 < hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k < hi-1 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
 
-Mutual exclusivity is preserved by the `!P(lo)` ⇒ `!P(hi-1)` negation chain in clauses 2 and 3. Each guard (`lo <= hi`, `lo+1 <= hi`, `lo+2 <= hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
+Mutual exclusivity is preserved by the `!P(lo)` ⇒ `!P(hi-1)` negation chain in clauses 2 and 3. Each guard (`lo < hi`, `lo+1 <= hi`, `lo+2 < hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
 
 The middle clause is the load-bearing addition. Z3, given an unconstrained existential, defaults to the simplest model — typically picking the first or last index, since the boundary tiers (Phase 2 BVA) and the anti-trivial bias both nudge in those directions. Without clause 3, mutants whose runtime divergence depends on the witness landing at a non-trivial interior position escape: e.g. a linear-search variant that returns `-(n+1)` instead of `n+1` at iteration `n` only violates `position >= 1` when `n >= 1`, which requires the searched element to appear at a non-last (or under a reverse mapping, non-first) position — a configuration Z3 won't pick on its own. Clause 3 forces it.
 
