@@ -1,3 +1,10 @@
+// OUT OF SCOPE: doubly-erased mutation (line 117 of `longestPalindrome'`):
+// `lemma_mirrored_palindrome(..., radii[mirrored_center], ...)` →
+// `lemma_mirrored_palindrome(..., radii[loop_counter_inner2], ...)`. Two
+// reasons no test can detect this: (1) the call is to a `lemma` — lemmas
+// are erased by the Dafny compiler, so the call doesn't happen at runtime;
+// (2) `loop_counter_inner2` is itself a `ghost var` declared only to
+// strengthen verification, with no runtime existence at all.
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
 ghost predicate palindromic(s: string, i: int, j: int)
@@ -114,7 +121,7 @@ method {:vcs_split_on_every_assert} longestPalindrome'(s: string)
       loop_counter_inner2 := loop_counter_inner2 + 1;
       var mirrored_center := old_center - (center - old_center);
       var max_mirrored_radius := old_center + old_radius - center;
-      lemma_mirrored_palindrome(s', old_radius, old_center, mirrored_center, radii[mirrored_center], center);
+      lemma_mirrored_palindrome(s', old_center, old_radius, mirrored_center, radii[loop_counter_inner2], center);
       if radii[mirrored_center] < max_mirrored_radius {
         radii[center] := radii[mirrored_center];
         center := center + 1;

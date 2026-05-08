@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `Main` (line 122: `FindFirstOccurrence(str1, str2)`
+// → `FindFirstOccurrence([], str2)`). DafnyCBT excludes `Main` by design; the
+// method actually under test (`FindFirstOccurrence`) is unchanged.
 // AssertivePrograming_tmp_tmpwf43uz0e_Find_Substring.dfy
 
 ghost predicate ExistsSubstring(str1: string, str2: string)

@@ -1,3 +1,7 @@
+// OUT OF SCOPE: mutation is inside `Check` (line 49), a contract-free
+// hand-written test driver (no requires, no ensures). DafnyCBT only tests
+// methods with at least one ensures. The method actually under test
+// (`join`) is unchanged.
 // FlexWeek_tmp_tmpc_tfdj_3_ex4.dfy
 
 method join(a: array<int>, b: array<int>) returns (c: array<int>)

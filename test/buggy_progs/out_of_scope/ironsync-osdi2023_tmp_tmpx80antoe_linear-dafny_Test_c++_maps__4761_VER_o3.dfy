@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `TestNullsAmongValues` (line 136).
+// DafnyCBT excludes methods whose name contains "Test"/"test" by design.
+// The method actually under test (`GenericMap`) is unchanged.
 // ironsync-osdi2023_tmp_tmpx80antoe_linear-dafny_Test_c++_maps.dfy
 
 method Test(name: string, b: bool)

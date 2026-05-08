@@ -1,3 +1,11 @@
+// OUT OF SCOPE: havoc-method skip. The mutation is in `peek1`'s empty-stack
+// branch guard (`if n1 == 0` → `if false`), making that branch dead code.
+// The dead branch contains `TopItem := *` (havoc), and DafnyCBT skips any
+// method whose body uses `:= *` to avoid false-positive failures from the
+// runtime no-op semantics of havoc. So `peek1` is never tested, and the
+// mutation cannot be detected — even though on an empty stack the mutant
+// would crash with `data[-1]` while the original would safely return
+// `(false, default)`.
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week8_12_a3 copy 2.dfy
 
 class TwoStacks<T(==,0)> {

@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `Testing` (line 40). DafnyCBT excludes
+// methods whose name contains "Test"/"test" by design. The method actually
+// under test (`RemoveDuplicates`) is unchanged.
 // dafny-exercises_tmp_tmp5mvrowrx_leetcode_26-remove-duplicates-from-sorted-array.dfy
 
 method RemoveDuplicates(nums: array<int>) returns (num_length: int)

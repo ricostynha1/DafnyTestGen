@@ -1,3 +1,7 @@
+// OUT OF SCOPE: mutation is inside `Main` (line 28: `a := new char[]['!']`
+// → `a := null`). DafnyCBT excludes `Main` by design; the method actually
+// under test (`Reverse`) is unchanged, so generated tests pass on both
+// mutant and original.
 // dafny-exercise_tmp_tmpouftptir_reverse.dfy
 
 method Reverse(a: array<char>) returns (b: array<char>)

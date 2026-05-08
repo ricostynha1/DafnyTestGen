@@ -1,3 +1,11 @@
+// OUT OF SCOPE: equivalent mutation. Line 57 in predicate `pivot` was
+// changed from `... pivot < v < arr.Length ==> ...` to
+// `... pivot < v == arr.Length ==> ...`. The new range is unsatisfiable
+// (v cannot simultaneously index arr and equal arr.Length), making the
+// forall vacuously true on every input — `pivot` becomes the constant
+// `true`. The predicate is used only inside `invariant` clauses, which
+// the Dafny compiler erases at runtime, so `sortArray`'s actual
+// computation is unaffected. No test can distinguish mutant from original.
 // HATRA-2022-Paper_tmp_tmp5texxy8l_copilot_verification_Sort Array_sort_array.dfy
 
 method sortArray(arr: array<int>) returns (arr_sorted: array<int>)

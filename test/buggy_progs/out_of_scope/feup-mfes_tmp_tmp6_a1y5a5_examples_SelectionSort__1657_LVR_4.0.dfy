@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `testSelectionSort` (line 56). DafnyCBT
+// excludes methods whose name contains "Test"/"test" by design. The method
+// actually under test (`selectionSort`) is unchanged.
 // feup-mfes_tmp_tmp6_a1y5a5_examples_SelectionSort.dfy
 
 predicate isSorted(a: array<real>, from: nat, to: nat)

@@ -1,3 +1,11 @@
+// OUT OF SCOPE: proof-only mutation. The mutated line is inside a
+// `forall i, j | ... :: !palindromic(s, i, j) { ... }` proof statement at
+// line 38 of `expand_from_center` (range filter `&&` → `==>`). `forall`
+// statements with proof bodies are verification artefacts that the Dafny
+// compiler erases at runtime — they produce no observable side effect.
+// `expand_from_center`'s actual computation (the while loop above the
+// forall) is unchanged, so the returned `lo, hi` are identical between
+// mutant and original. No test can distinguish them.
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
 ghost predicate palindromic(s: string, i: int, j: int)
@@ -35,7 +43,7 @@ method expand_from_center(s: string, i0: int, j0: int)
   {
     lo, hi := lo - 1, hi + 1;
   }
-  forall i: int, j: int | 0 <= i <= j <= |s| && i + j == i0 + j0 && j - i > hi - lo
+  forall i: int, j: int | (0 <= i <= j <= |s| ==> i + j == i0 + j0) && j - i > hi - lo
     ensures !palindromic(s, i, j)
   {
     if palindromic(s, i, j) {
@@ -114,7 +122,7 @@ method {:vcs_split_on_every_assert} longestPalindrome'(s: string)
       loop_counter_inner2 := loop_counter_inner2 + 1;
       var mirrored_center := old_center - (center - old_center);
       var max_mirrored_radius := old_center + old_radius - center;
-      lemma_mirrored_palindrome(s', old_center, old_radius, mirrored_center, radii[loop_counter_inner2], center);
+      lemma_mirrored_palindrome(s', old_center, old_radius, mirrored_center, radii[mirrored_center], center);
       if radii[mirrored_center] < max_mirrored_radius {
         radii[center] := radii[mirrored_center];
         center := center + 1;

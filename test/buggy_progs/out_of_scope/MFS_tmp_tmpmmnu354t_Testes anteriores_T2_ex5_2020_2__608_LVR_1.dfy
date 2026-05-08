@@ -1,3 +1,7 @@
+// OUT OF SCOPE: trivially-equivalent mutant. The "mutated" file is
+// byte-identical to the unmutated original — the LVR mutation replaced
+// a literal `1` with `1`. No test can distinguish them because the
+// programs are the same.
 // MFS_tmp_tmpmmnu354t_Testes anteriores_T2_ex5_2020_2.dfy
 
 method leq(a: array<int>, b: array<int>) returns (result: bool)

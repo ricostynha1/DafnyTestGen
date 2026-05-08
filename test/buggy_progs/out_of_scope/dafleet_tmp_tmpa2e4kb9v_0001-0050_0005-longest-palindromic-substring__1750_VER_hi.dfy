@@ -1,3 +1,9 @@
+// OUT OF SCOPE: proof-only mutation. Same `forall ... ensures !palindromic(...)` proof
+// statement at line 38 of `expand_from_center` as the 1733_COR_Imp variant — this
+// time substituting `j0` with `hi` in the range filter. The forall is a Dafny
+// proof construct that the compiler erases at runtime, so `expand_from_center`'s
+// returned `lo, hi` are identical between mutant and original. No test can
+// distinguish them.
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
 ghost predicate palindromic(s: string, i: int, j: int)
@@ -35,10 +41,10 @@ method expand_from_center(s: string, i0: int, j0: int)
   {
     lo, hi := lo - 1, hi + 1;
   }
-  forall i: int, j: int | 0 <= i <= j <= |s| && i + j == i0 + j0 && j - i > hi - lo
+  forall i: int, j: int | 0 <= i <= j <= |s| && i + j == i0 + hi && j - i > hi - lo
     ensures !palindromic(s, i, j)
   {
-    if palindromic(s, i, -j) {
+    if palindromic(s, i, j) {
       lemma_palindromic_contains(s, i, j, lo - 1, hi + 1);
     }
   }

@@ -1,3 +1,7 @@
+// OUT OF SCOPE: mutation is inside method `Tester`, a hand-written test
+// driver. DafnyCBT excludes methods whose name contains "Test"/"test" by
+// design — they aren't units under test. The method actually under test
+// (`AbsIt`) is unchanged, so generated tests pass on both mutant and original.
 // dafny-exercise_tmp_tmpouftptir_absIt.dfy
 
 method AbsIt(s: array<int>)

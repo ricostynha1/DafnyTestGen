@@ -1,3 +1,9 @@
+// OUT OF SCOPE: lemma-call argument substitution (line 136 of
+// `longestPalindrome'`): `lemma_result_transfer(..., hi, lo)` →
+// `lemma_result_transfer(..., radius, lo)`. The mutated call is to a
+// `lemma`, which the Dafny compiler erases — the lemma doesn't execute
+// at runtime, so substituting any argument has zero observable effect.
+// `longestPalindrome'`'s returned values are unchanged.
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
 ghost predicate palindromic(s: string, i: int, j: int)

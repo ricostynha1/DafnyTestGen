@@ -1,3 +1,7 @@
+// OUT OF SCOPE: mutation is inside `DeliChecker`, a contract-free hand-written
+// test driver (no requires, no ensures, just assertions). DafnyCBT only tests
+// methods with at least one ensures (or requires under --smoke-tests); `Deli`
+// itself is unchanged so generated tests pass on both mutant and original.
 // dafny-exercise_tmp_tmpouftptir_prac1_ex2.dfy
 
 method Deli(a: array<char>, i: nat)

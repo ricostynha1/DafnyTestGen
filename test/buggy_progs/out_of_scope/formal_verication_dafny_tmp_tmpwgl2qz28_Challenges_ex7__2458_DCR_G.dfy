@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `Testerexchange` (line 80). DafnyCBT
+// excludes methods whose name contains "Test"/"test" by design. The method
+// actually under test (`Exchanger`) is unchanged.
 // formal_verication_dafny_tmp_tmpwgl2qz28_Challenges_ex7.dfy
 
 method Exchanger(s: seq<Bases>, x: nat, y: nat)

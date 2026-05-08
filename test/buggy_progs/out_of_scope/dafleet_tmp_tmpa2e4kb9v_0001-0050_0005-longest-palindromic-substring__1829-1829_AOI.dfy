@@ -1,3 +1,10 @@
+// OUT OF SCOPE: proof-only mutation. The mutation is in the body of the same
+// `forall ... ensures !palindromic(...)` proof statement at line 41 of
+// `expand_from_center` (`if palindromic(s, i, j)` → `if palindromic(s, i, -j)`).
+// The body of a forall proof statement, when it contains only predicate guards
+// and lemma calls, is erased by the Dafny compiler — nothing executes at
+// runtime. `expand_from_center`'s returned values are unchanged. No test can
+// distinguish the mutant from the original.
 // dafleet_tmp_tmpa2e4kb9v_0001-0050_0005-longest-palindromic-substring.dfy
 
 ghost predicate palindromic(s: string, i: int, j: int)
@@ -35,10 +42,10 @@ method expand_from_center(s: string, i0: int, j0: int)
   {
     lo, hi := lo - 1, hi + 1;
   }
-  forall i: int, j: int | (0 <= i <= j <= |s| ==> i + j == i0 + j0) && j - i > hi - lo
+  forall i: int, j: int | 0 <= i <= j <= |s| && i + j == i0 + j0 && j - i > hi - lo
     ensures !palindromic(s, i, j)
   {
-    if palindromic(s, i, j) {
+    if palindromic(s, i, -j) {
       lemma_palindromic_contains(s, i, j, lo - 1, hi + 1);
     }
   }

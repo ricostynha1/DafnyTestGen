@@ -1,3 +1,10 @@
+// OUT OF SCOPE: mutation is inside `Evens` (line 140: `n := n + 1` → `n := n + 2`),
+// a method WITHOUT a postcondition (no `ensures`, only a `decreases`). DafnyCBT
+// only generates tests for methods with at least one `ensures` clause (or
+// `requires` under --smoke-tests). Without a contract specifying expected
+// behavior there is no test objective, so the mutation cannot be detected even
+// though it would cause a real runtime issue (the inner loop iterates with
+// step 2 instead of step 1, producing a partially-uninitialized 2D array).
 // Dafny_Learning_Experience_tmp_tmpuxvcet_u_week1_7_A2_Q1_trimmed copy - 副本.dfy
 
 ghost function Count(hi: nat, s: seq<int>): int

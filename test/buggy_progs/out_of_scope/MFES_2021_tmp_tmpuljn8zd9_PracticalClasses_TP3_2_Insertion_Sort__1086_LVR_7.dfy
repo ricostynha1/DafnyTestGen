@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `testInsertionSort` (line 42). DafnyCBT
+// excludes methods whose name contains "Test"/"test" by design. The method
+// actually under test (`insertionSort`) is unchanged.
 // MFES_2021_tmp_tmpuljn8zd9_PracticalClasses_TP3_2_Insertion_Sort.dfy
 
 method insertionSort(a: array<int>)

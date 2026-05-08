@@ -1,3 +1,10 @@
+// OUT OF SCOPE: equivalent mutation. Line 120 was changed from
+// `if |str1| < k || |str2| < k` to `if false || |str2| < k`. When
+// `|str1| < k`, the original returned false directly; the mutant skips that
+// early-exit but then hits `i := |str1| - k < 0`, the loop guard `i >= 0`
+// fails immediately, and execution falls through to `return false;` at the
+// bottom. Same observable behavior on every input — no test can distinguish
+// mutant from original.
 // Formal-Verification_tmp_tmpuyt21wjt_Dafny_strings3.dfy
 
 predicate isPrefixPred(pre: string, str: string)

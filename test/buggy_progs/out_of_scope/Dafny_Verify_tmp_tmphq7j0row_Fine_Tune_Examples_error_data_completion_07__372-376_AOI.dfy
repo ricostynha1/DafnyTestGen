@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is in the `else` branch of an `if *` (verifier-only
+// nondeterministic choice). At runtime that branch is unreachable, so the
+// mutated line never executes and no test can distinguish mutant from original.
 // Dafny_Verify_tmp_tmphq7j0row_Fine_Tune_Examples_error_data_completion_07.dfy
 
 method main(n: int) returns (a: int, b: int)

@@ -1,3 +1,6 @@
+// OUT OF SCOPE: mutation is inside `Main` (line 28: `success := carPark.enterReservedCarPark("car6")`
+// → `success := success`). DafnyCBT excludes `Main` by design; the methods on
+// the `CarPark` class are unchanged.
 // CO3408-Advanced-Software-Modelling-Assignment-2022-23-Part-2-A-Specification-Spectacular_tmp_tmp4pj4p2zx_car_park.dfy
 
 method Main()

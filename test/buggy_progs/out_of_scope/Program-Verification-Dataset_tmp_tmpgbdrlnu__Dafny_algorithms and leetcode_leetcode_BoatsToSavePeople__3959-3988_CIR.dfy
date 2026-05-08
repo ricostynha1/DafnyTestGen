@@ -1,3 +1,10 @@
+// OUT OF SCOPE: mutation is on a `ghost var` inside `numRescueBoats` (line 99:
+// `safeBoats := [[people[upper], people[lower]]] + safeBoats` →
+// `safeBoats := [[]] + safeBoats`). `safeBoats` is a ghost variable used only
+// as a witness for the postcondition's `exists boatConfig`. The Dafny compiler
+// erases ghost code, so the runtime behavior of `numRescueBoats` (the value of
+// `boats` returned) is identical between mutant and original — no test can
+// distinguish them. The mutation breaks verification, not execution.
 // Program-Verification-Dataset_tmp_tmpgbdrlnu__Dafny_algorithms and leetcode_leetcode_BoatsToSavePeople.dfy
 
 function sumBoat(s: seq<nat>): nat
