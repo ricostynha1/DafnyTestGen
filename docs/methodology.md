@@ -122,11 +122,11 @@ Existential quantifiers represent repeated disjunctions, that can be also decomp
 2. **Last satisfies, first doesn't**: `lo+1 < hi && !P(lo) && P(hi-1)` — the property fails at the first position but holds at the last.
 3. **Strict middle satisfies, neither end does**: `lo+2 < hi && !P(lo) && !P(hi-1) && exists k :: lo+1 <= k < hi-1 && P(k)` — the property fails at both ends but holds at some strictly-interior position.
 
-Mutual exclusivity is preserved by the `!P(lo)` ⇒ `!P(hi-1)` negation chain in clauses 2 and 3. Each guard (`lo < hi`, `lo+1 <= hi`, `lo+2 < hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
+Each guard (`lo < hi`, `lo+1 <= hi`, `lo+2 < hi`) reflects the minimum range size for the clause to be satisfiable: ≥1 element for clause 1, ≥2 distinct positions for clause 2, ≥3 elements for clause 3. The three clauses feed into the same DNF/FDNF analysis and combine with other pre- and postcondition clauses via cross-product.
 
-The middle clause is the load-bearing addition. Z3, given an unconstrained existential, defaults to the simplest model — typically picking the first or last index, since the boundary tiers (Phase 2 BVA) and the anti-trivial bias both nudge in those directions. Without clause 3, mutants whose runtime divergence depends on the witness landing at a non-trivial interior position escape: e.g. a linear-search variant that returns `-(n+1)` instead of `n+1` at iteration `n` only violates `position >= 1` when `n >= 1`, which requires the searched element to appear at a non-last (or under a reverse mapping, non-first) position — a configuration Z3 won't pick on its own. Clause 3 forces it.
+The middle clause is the load-bearing addition. Z3, given an unconstrained existential, defaults to the simplest model — typically picking the first or last index, since the boundary tiers (Phase 2 BVA) and the anti-trivial bias both nudge in those directions. Without clause 3, bugs whose runtime divergence depends on the witness landing at a non-trivial interior position escape.
 
-Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). The cost is one extra clause per `exists` (vs. the unsplit single-clause form), and the new middle clause adds another on top of the prior 2-way split. The decomposed form is also informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
+Existential decomposition is **OFF by default** (`--exists-decomposition` / `-ed` to enable). The cost are two extra clauses per `exists` (vs. the unsplit single-clause form). The decomposed form is also informative for SFL when a clause's structural sub-cases produce visibly distinct vacuity profiles. Without decomposition the existential is kept as a single literal in the DNF clause and Z3 picks any satisfying `k`.
 
 Equivalent range definitions are supported. For example, `exists k :: k >= lo && k < hi && P(k)` (using two relational operators in conjunction) is recognized as the same shape as `exists k :: lo <= k < hi && P(k)` (chained inequalities) and decomposed identically. Negated `forall` quantifiers (`!(forall k :: range ==> P(k))`, equivalent to `exists k :: range && !P(k)`) are handled the same way.
 
@@ -227,11 +227,11 @@ elem in arr[..]                  // Q1
 ∧ elem !in arr[pos+1..]          // Q5
 ```
 
-Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q1`, `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
+Without a relevance check, Z3 could pick `arr = [10]`, `elem = 10`, `pos = 0`. All five literals hold, but `Q4` and `Q5` are each vacuous (single-element array → nothing for each literal to prune). The defining behaviour is never exercised.
 
 ### Formulation
 
-Let `X` be the tuple of input parameters and `Y` the tuple of output values. Each safe literal `Qk` is relevant iff there exist `X`, `Y`, and `Y_k` such that
+In general, let `X` be the tuple of input parameters and `Y` the tuple of output values. Each safe literal `Qk` is relevant iff there exist `X`, `Y`, and `Y_k` such that
 
 ```
 pre(X)
@@ -394,18 +394,32 @@ For each DNF clause, Phase 2 scans every relational literal in the precondition 
 | **Boundary** | `(= E1 E2)` | Pins `E1 = E2` — the exact-at-boundary regime that ROR-mutated `≥` / `≤` → `==` bugs need (the buggy code catches the boundary but admits values strictly above/below). |
 | **Strict-companion** | `(> E1 E2)` for `≥`/`>`, `(< E1 E2)` for `≤`/`<` | The strictly-above (or strictly-below) region — where the buggy ROR-mutated implementation admits inputs the original would have refused. |
 
-Pure constant comparisons are skipped. Pairs of literals that form a chained range get an extra **mid-of-range** tier:
+Pure constant comparisons are skipped. Pairs of literals that form a chained range get an extra **mid-of-range** tier, and the boundary tiers are strengthened with the *opposite-end* strict constraint so the three tiers can't collapse to the same model:
 
 | Chain shape | Tiers emitted |
 |---|---|
-| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO`, `EXP = HI`, **mid**: `(and (> EXP LO) (< EXP HI))` |
-| Strict variants (`<` on either side) | Same, but boundaries are dropped when their strictness makes them UNSAT |
+| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI`, `EXP = HI ∧ LO < EXP`, **mid**: `(and (> EXP LO) (< EXP HI))` |
+| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT |
+
+The opposite-end strict constraint is the load-bearing part: without it, when the precondition admits `LO == HI` (degenerate single-point range), Z3 can satisfy *both* `EXP=LO` and `EXP=HI` tiers with the identical `LO == EXP == HI` model — collapsing two tiers into one and defeating boundary diversity. Forcing `EXP < HI` on the `=lo` tier (and `LO < EXP` on the `=hi` tier) keeps them structurally distinct whenever the range can be widened.
 
 `EXP` can be any expression — bare variable, cardinality `\|s\|`, indexed access `arr[i]`, function call, etc. — so the scan reaches bounds the variable-centric extractor misses. Examples:
 
 - `\|carPark\| ≥ normalSpaces - badParkingBuffer` (single literal) → boundary `\|carPark\| = K` and strict-above `\|carPark\| > K`. The strict-above is what catches the car-park ROR mutant whose buggy `==` admits `\|carPark\| > K`.
-- `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0`, `k=n`, and mid `0 < k < n`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs.
+- `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0 ∧ k<n`, `k=n ∧ 0<k`, and mid `0 < k < n`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs.
 - `m < arr[i] < M` (chain on indexed access) → boundaries `arr[i]=m+1`, `arr[i]=M-1`, and mid `m < arr[i] < M`.
+
+**Existential boundary tiers**. Phase 2 also scans post-clause literals of the form `exists k :: lo <= k < hi && P(k)` (single-variable existentials matching the same range pattern as the quantifier-decomposition extractor) and emits up to three additional tiers per existential, each adding ONE narrower constraint as an extra (the original existential stays in the clause):
+
+| Tier | Extra SMT constraint | Witness pinned at |
+|---|---|---|
+| `/Eb<n>=lo`  | `P[k := effectiveLo]` | first valid index |
+| `/Eb<n>=hi`  | `P[k := effectiveHi]` | last valid index |
+| `/Eb<n>=mid` | `exists k :: effectiveLo+1 <= k <= effectiveHi-1 && P(k)` | strictly-middle index |
+
+This is the same idea as the chained-relation tiers — strengthen with a narrower constraint to force a non-degenerate witness — but for existentials. The original existential literal STAYS in the clause; the boundary is just an extra. No DNF inflation (in contrast to `--exists-decomposition`, which splits the clause itself into 3 sub-clauses and multiplies cost across cross-products of multiple existentials). When Phase 1's plain witness already lands in one of the boundary regions, the corresponding tier is subsumed and skipped at solve time.
+
+Concrete win: a `LinearSearch3` mutant that returns `position = -(n+1)` instead of `position = n+1` only violates the spec `position == -1 || position >= 1` when the iteration index `n >= 1` — i.e. when the searched element appears at a non-trivial position in the input. Z3's default existential witness lands at the first or last index, where `n=0` makes `-(0+1) = -1` coincidentally match the "not found" sentinel and mask the bug. Without these tiers the mutant escapes (0 fails on 20 tests under default options); with them, the `/Eb1=mid` tier picks `s1=[23,12,13]` (Element at strict-middle index 1) and kills it. Same outcome as `--exists-decomposition` would give, at a fraction of the cost.
 
 **Subsumption pruning** at solve-time discards tiers whose witness is already covered by a prior test (typically Phase 1's `/Rel` witness lies in the strict interior, subsuming the mid tier).
 
