@@ -14,9 +14,15 @@ ghost predicate valid_interval(s: string, iv: interval)
     s[i] != s[j]
 }
 
+ghost predicate valid_interval_majorant(s: string, n: nat)
+{
+  forall x: int, y: int | 0 <= x <= y <= |s| && valid_interval(s, (x, y)) :: length((x, y)) <= n
+  // to be executable at runtime
+}
+
 method lengthOfLongestSubstring(s: string) returns (n: int, ghost best_iv: interval)
   ensures valid_interval(s, best_iv) && length(best_iv) == n
-  ensures forall iv: interval {:trigger length(iv)} {:trigger valid_interval(s, iv)} | valid_interval(s, iv) :: length(iv) <= n
+  ensures valid_interval_majorant(s, n)
   decreases s
 {
   var lo, hi := 0, 0;
@@ -47,7 +53,7 @@ method lengthOfLongestSubstring(s: string) returns (n: int, ghost best_iv: inter
 
 method lengthOfLongestSubstring'(s: string) returns (n: int, ghost best_iv: interval)
   ensures valid_interval(s, best_iv) && length(best_iv) == n
-  ensures forall iv: interval {:trigger length(iv)} {:trigger valid_interval(s, iv)} | valid_interval(s, iv) :: length(iv) <= n
+  ensures valid_interval_majorant(s, n)
   decreases s
 {
   var lo, hi := 0, 0;
