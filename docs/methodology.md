@@ -192,6 +192,8 @@ Pass `--no-bias` / `-nb` to disable both mechanisms.
 
 ## Per-literal relevance check (`--no-relevance` to disable)
 
+The overarching goal of relevance checking — and of the layered strengthenings described in this section — is **full specification coverage**: every literal of every clause of the postcondition must be exercised non-trivially by at least one generated test, both for positive literals (`Q`) and negated quantifier literals (`!exists`, `forall ⇒ ¬body`). A test exercises `Q` non-trivially iff at the chosen input, removing or weakening `Q` from the spec would admit a *different* output than the one the implementation produces — i.e., `Q` is actively pruning the output space. This is the spec-side analogue of MC/DC for branch coverage (see §"Relation to MC/DC" below) and it is what gives a generated test suite real fault-detection power.
+
 Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour is **vacuously satisfied** (i.e., it adds no constraint on the valid outputs for the selected inputs), and so the spec is not really covered.
 
 Example — `LastPosition(arr, elem)` returns the last index of `elem` in sorted `arr`. The "found" clause is:
@@ -281,7 +283,7 @@ Even when a relevance query yields a less-than-ideal choice of `X`, the emitted 
 On top of the abstract bite, two extra assertions are added to every Phase 1r query (both default-on, disable with `--no-modification-relevance` / `--no-forall-relevance`):
 
 - **Modification relevance** — for any `modifies`-listed input, `pre ≠ post` must hold somewhere. Catches witnesses where the impl could legitimately do nothing: e.g. `reverse(a)` at `|a| = 1` is a no-op, vacuously satisfying the postcondition. With this constraint, Phase 1r picks `|a| ≥ 2` and exposes whether the loop body actually swaps elements.
-- **Forall non-vacuity** — for every top-level `forall i :: lo ≤ i < hi ==> P(i)` in the **post**conditions, `lo < hi` is **preferred** (soft, `(assert-soft … :weight 100)`) so Z3 picks an input that maximises the count of non-vacuous foralls. Skipped for preconditions (a vacuously-true precondition is just a weaker context — BVA's tier-0 `|a|=0` exists precisely to cover that case). Soft (rather than hard) avoids UNSAT when multiple postcondition foralls have mutually-exclusive non-empty-range requirements: e.g. `forall i < evenIndex :: lst[i] is odd` and `forall i < oddIndex :: lst[i] is even` in `FirstEvenOddIndices` cannot both have non-empty range, since `lst[0]` would need to be both odd and even. A hard assert would make the entire relevance query UNSAT and fall back to a non-relevance witness; the soft form lets Z3 satisfy whichever foralls it can while still finding a non-trivial witness.
+- **Forall non-vacuity** — for every top-level `forall i :: lo ≤ i < hi ==> P(i)` (and symmetrically every `!exists i :: lo ≤ i < hi ∧ P(i)`, which is logically equivalent) in the **post**conditions, `lo < hi` is **preferred** (soft, `(assert-soft … :weight 100)`) so Z3 picks an input that maximises the count of non-vacuous foralls. Skipped for preconditions (a vacuously-true precondition is just a weaker context — BVA's tier-0 `|a|=0` exists precisely to cover that case). Soft (rather than hard) avoids UNSAT when multiple postcondition foralls have mutually-exclusive non-empty-range requirements: e.g. `forall i < evenIndex :: lst[i] is odd` and `forall i < oddIndex :: lst[i] is even` in `FirstEvenOddIndices` cannot both have non-empty range, since `lst[0]` would need to be both odd and even. A hard assert would make the entire relevance query UNSAT and fall back to a non-relevance witness; the soft form lets Z3 satisfy whichever foralls it can while still finding a non-trivial witness. The non-vacuity preference handles the *empty-range* failure mode; for `!exists` literals whose body has multiple conjuncts, the deeper "near-witness" failure mode is covered by [`!exists` near-witness strengthening](#exists-near-witness-strengthening) below.
 
 ### Stripped-existential strengthening
 
@@ -308,6 +310,35 @@ the inner `forall` constrains `(i, j)` to be the *first* repeated pair. Without 
 The strengthening is tried first; if UNSAT, the query is retried without it. So the refinement can only enrich Phase 1r witnesses, never lose them. It also composes cleanly with the existing `combined`/`group`/`ladder` modes — the strengthened query is built from whichever mode is active, then the standard fallback ladder runs.
 
 This generalises [behavioural-relevance constraints](#behavioural-relevance-constraints) one level deeper: where forall-non-vacuity ensures *top-level* foralls in the postcondition are non-empty, the stripped-existential ensures *embedded* foralls (those occurring as the last conjunct of a postcondition existential) actually constrain the existential's witness on the chosen input.
+
+### `!exists` near-witness strengthening
+
+Symmetric refinement for **negated** existentials in postconditions: `!exists vars :: c1 ∧ c2 ∧ … ∧ cn`. The literal references inputs only (no output is bound), so the standard relevance shadow can't probe it (negating it would force `exists vars :: c1 ∧ … ∧ cn`, which by the spec's bi-implication structure typically contradicts a paired `result` literal and the shadow comes back UNSAT). Phase 1r then falls through to a plain query that picks the simplest input where the `!exists` holds *vacuously* — typically `seq=[]` or `seq=[c]` where the body has no near-witness — and the spec is again not really covered.
+
+The fix is to soft-assert one **stripped existential per body conjunct dropped** alongside the spec's hard `!exists`. For `!exists vars :: c1 ∧ c2 ∧ … ∧ cn`, emit n soft assertions:
+
+```
+(assert-soft (exists vars :: c2 ∧ … ∧ cn) :weight 200)
+(assert-soft (exists vars :: c1 ∧ c3 ∧ … ∧ cn) :weight 200)
+…
+(assert-soft (exists vars :: c1 ∧ … ∧ c(n-1)) :weight 200)
+```
+
+Each variant captures a different near-witness pattern. Z3's MaxSAT optimiser prefers the model that satisfies as many softs as possible — typically an input where every body conjunct individually has a witness, while the **full** conjunction still fails (so the spec hard-assert holds). This is the structurally-rich input that exposes the mutation: positions 0..|s|-1 with the right "almost-witness" geometry to differentiate original from mutant.
+
+Two canonical cases:
+
+- `IsDecimalWithTwoPrecision(s)` post: `!exists i :: 0 ≤ i < |s| ∧ s[i] == '.' ∧ |s|-i-1 == 2`. Body conjuncts: `s[i]=='.'` and `|s|-i-1==2`.
+  - Drop `s[i]=='.'` → `exists i :: range ∧ |s|-i-1 == 2` forces `|s| ≥ 3`.
+  - Drop `|s|-i-1==2` → `exists i :: range ∧ s[i]=='.'` forces a `.` somewhere.
+  - Combined cost-0 model: `|s| ≥ 3` with `'.'` at a position other than `|s|-3` (the spec forbids `'.'` at `|s|-3`). Mutant (drops `s[i]=='.'` from the loop guard) returns true at `i=|s|-3`; original returns false (no `'.'` at the matching index). Kill.
+
+- `has_close_elements(numbers, threshold)` post: `!exists i,j :: 0 ≤ i,j < |numbers| ∧ i != j ∧ abs(numbers[i] − numbers[j]) < threshold`.
+  - Drop `i != j` → forces a pair (possibly `i=j`) with `abs < threshold`, i.e. `threshold > 0`.
+  - Drop `abs < threshold` → forces `i != j` exists, i.e. `|numbers| ≥ 2`.
+  - Combined cost-0 model: `|numbers| ≥ 2` with `threshold > 0` and no `i ≠ j` close pair. Mutant (drops `i != j` from the loop guard) returns true at `i=j=0` (`abs=0 < threshold`); original returns false. Kill.
+
+These soft asserts are emitted in the **plain** query (Phase 1/2/2b) as well as the relevance shadow. The relevance-shadow case helps when the safe-index probe is otherwise structurally UNSAT; the plain-query case helps when `!exists` references inputs only and is filtered out of the relevance safe set entirely.
 
 ---
 
