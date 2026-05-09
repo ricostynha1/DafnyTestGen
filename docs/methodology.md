@@ -114,10 +114,6 @@ In the `GetFirstOrZero` example above, the cross-product of the two ensures clau
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`.
 
-### Existential quantifier coverage
-
-Single-variable existential quantifiers of the form `exists k :: lo <= k < hi && P(k)` (equivalent to `P(lo) || P(lo+1) || ... || P(hi-1)`) and their negated-forall equivalents `!(forall k :: lo <= k < hi ==> P(k))` keep their single-literal form in DNF — they are NOT split into multiple clauses. Witness diversity (first / last / middle position class) is provided downstream by Phase 2 BVA's existential boundary tiers (`/Eb<n>=lo`, `/Eb<n>=hi`, `/Eb<n>=mid`), described in [§Phase 2 — literal-centric BVA](#phase-2--literal-centric-bva). Each tier is a single Phase 2 SMT query that adds ONE narrower constraint as an extra (the original existential remains in the clause), avoiding the cross-product blowup an in-DNF split would incur — N existentials in one clause yields 3·N Phase 2 entries, not 3^N DNF clauses. Subsumption pruning at solve-time skips any tier already covered by a prior test's witness.
-
 ### Predicate and function inlining
 
 User-defined predicates and functions referenced in contracts are automatically inlined before DNF/FDNF conversion and SMT generation via **2-pass inlining** — substituting bodies into contract expressions to expose branching for DNF. For example, recursive specifications typically have at least two branches, for the recursive and the base case.
