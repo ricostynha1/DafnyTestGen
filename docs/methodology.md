@@ -281,6 +281,32 @@ On top of the abstract bite, two extra assertions are added to every Phase 1r qu
 - **Modification relevance** — for any `modifies`-listed input, `pre ≠ post` must hold somewhere. Catches witnesses where the impl could legitimately do nothing: e.g. `reverse(a)` at `|a| = 1` is a no-op, vacuously satisfying the postcondition. With this constraint, Phase 1r picks `|a| ≥ 2` and exposes whether the loop body actually swaps elements.
 - **Forall non-vacuity** — every top-level `forall i :: lo ≤ i < hi ==> P(i)` in the **post**conditions must have `lo < hi`. Skipped for preconditions (a vacuously-true precondition is just a weaker context — BVA's tier-0 `|a|=0` exists precisely to cover that case). Subsumed by the bite for n=1, but still meaningful for n≥2 when a forall isn't part of the bitten safe set.
 
+### Stripped-existential strengthening
+
+When a safe literal `Qk` is an existential `exists vars :: c1 ∧ c2 ∧ ... ∧ cn` whose **last conjunct** `cn` is itself a quantifier (typically a constraining inner `forall`), the bare `(¬Qk)` shadow lets Z3 satisfy the relevance query with degenerate inputs — e.g. picking the smallest existential witness, where the inner `forall` is vacuously true because no other index pair triggers its antecedent. The mutation we wanted to expose may rely precisely on the inner quantifier *having substance*.
+
+To force that substance, the shadow block additionally asserts the **stripped** existential
+
+```
+exists vars :: c1 ∧ c2 ∧ ... ∧ c(n-1)
+```
+
+so the combined shadow constraint becomes
+
+```
+… ∧ ¬Qk(X, Y_k) ∧ (∃ vars :: c1 ∧ … ∧ c(n-1))(X, Y_k)
+```
+
+i.e., *a witness exists for the first parts of the existential under `Y_k`, but the full `Qk` fails*. This pinpoints `cn` as the actively biting clause and steers Z3 toward inputs where the inner quantifier is non-vacuous.
+
+A canonical case is `FindFirstRepeatedChar(s)` whose post is
+`exists i, j :: 0 ≤ i < j < |s| ∧ s[i] == s[j] ∧ s[i] == c ∧ (∀ k, l :: 0 ≤ k < l < j ∧ s[k] == s[l] ⇒ k ≥ i)` —
+the inner `forall` constrains `(i, j)` to be the *first* repeated pair. Without strengthening, Phase 1r is happy with `s = "aa"` (a single-pair witness, inner forall vacuous). With the stripped existential asserted, Z3 must find an input with at least two distinct repeat pairs (e.g. `s = "aabb"`), which exposes mutations such as removing the loop's early-exit guard — the original returns `c='a'`, the mutant continues past the first match and returns `c='b'`.
+
+The strengthening is tried first; if UNSAT, the query is retried without it. So the refinement can only enrich Phase 1r witnesses, never lose them. It also composes cleanly with the existing `combined`/`group`/`ladder` modes — the strengthened query is built from whichever mode is active, then the standard fallback ladder runs.
+
+This generalises [behavioural-relevance constraints](#behavioural-relevance-constraints) one level deeper: where forall-non-vacuity ensures *top-level* foralls in the postcondition are non-empty, the stripped-existential ensures *embedded* foralls (those occurring as the last conjunct of a postcondition existential) actually constrain the existential's witness on the chosen input.
+
 ---
 
 ## Per-literal vacuity check (`--vacuity` to enable)
@@ -428,6 +454,8 @@ Categorical fallback, one pin per query, when Phase 2 does not cover a variable 
 As in Phase 2, this applies uniformly to inputs, outputs, and mutable class field post-states. Each tier is one pin per query (single-fault principle).
 
 Tier is skipped if `classLiterals` already implies it, or if Phase 2 already emitted an equivalent pin.
+
+Phase 2b interleaves tier emission **round-robin across DNF clauses**: the i-th tier of every clause is emitted before any clause's (i+1)-th. Within a clause, tier order is preserved (per-variable, per-position). Without this, with k clauses and a small test budget the schedule could spend its entire allocation on the first clause's tier sequence and starve later clauses entirely — e.g. `FindFirstRepeatedChar` has clauses `!found ∧ forall ... s[i] != s[j]` and `found ∧ exists ... s[i] == s[j]`; clause-major emission used the whole budget on the `!found` clause's `|s|=1`, `|s|=2` tiers, leaving the `found` clause with only its Phase 1 baseline.
 
 #### Mutation tiers (post vs pre)
 
