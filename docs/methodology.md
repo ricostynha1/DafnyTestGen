@@ -192,7 +192,7 @@ Pass `--no-bias` / `-nb` to disable both mechanisms.
 
 ## Per-literal relevance check (`--no-relevance` to disable)
 
-The overarching goal of relevance checking — and of the layered strengthenings described in this section — is **full specification coverage**: every literal of every clause of the postcondition must be exercised non-trivially by at least one generated test, both for positive literals (`Q`) and negated quantifier literals (`!exists`, `forall ⇒ ¬body`). A test exercises `Q` non-trivially iff at the chosen input, removing or weakening `Q` from the spec would admit a *different* output than the one the implementation produces — i.e., `Q` is actively pruning the output space. This is the spec-side analogue of MC/DC for branch coverage (see §"Relation to MC/DC" below) and it is what gives a generated test suite real fault-detection power.
+The overarching goal of relevance checking — and of the layered strengthenings described in this section — is **full specification coverage**: every literal of every clause of the postcondition must be exercised non-trivially by at least one generated test, both for positive literals (`Q`) and negated quantifier literals (`!exists`, `forall ⇒ ¬body`). A test exercises `Q` non-trivially iff at the chosen input, removing or weakening `Q` from the spec would admit a *different* output than the one the implementation produces — i.e., `Q` is actively pruning the output space. For conditional postconditions (`forall var :: if C then A else B`), full coverage further requires that *both* branches of the ITE are exercised by some input. This is the spec-side analogue of MC/DC for branch coverage (see §"Relation to MC/DC" below) and it is what gives a generated test suite real fault-detection power.
 
 Even with anti-trivial bias, Z3 can still satisfy a clause `P ∧ Q1 ∧ ... ∧ Qm` by picking inputs where a literal `Qk` is **trivially true**. The whole conjunction holds, but the literal that captures the method's distinguishing behaviour is **vacuously satisfied** (i.e., it adds no constraint on the valid outputs for the selected inputs), and so the spec is not really covered.
 
@@ -339,6 +339,33 @@ Two canonical cases:
   - Combined cost-0 model: `|numbers| ≥ 2` with `threshold > 0` and no `i ≠ j` close pair. Mutant (drops `i != j` from the loop guard) returns true at `i=j=0` (`abs=0 < threshold`); original returns false. Kill.
 
 These soft asserts are emitted in the **plain** query (Phase 1/2/2b) as well as the relevance shadow. The relevance-shadow case helps when the safe-index probe is otherwise structurally UNSAT; the plain-query case helps when `!exists` references inputs only and is filtered out of the relevance safe set entirely.
+
+### Conditional-forall branch coverage
+
+Symmetric refinement for **conditional foralls**: `forall var :: range ==> if C then A else B` (or directly `forall var :: if C then A else B` with no range implication). The body is an ITE — without further pressure, Z3 picks inputs where every `i` lands on a single branch (e.g. all elements satisfy `C`, all elements fail it), and mutations that affect just one branch are invisible.
+
+For each such forall, we soft-assert **both** branch witnesses:
+
+```
+exists var :: range ∧ C ∧ A      // then-branch witness
+exists var :: range ∧ ¬C ∧ B     // else-branch witness
+```
+
+Z3's MaxSAT optimiser prefers a model that satisfies both, which forces the input to contain at least one element where `C` holds *and* at least one where it doesn't — full case-coverage of the ITE.
+
+A canonical case is `ToLowercase(s)` whose post is
+
+```dafny
+forall i :: 0 ≤ i < |s| ==> if IsUpperCase(s[i])
+                              then IsUpperLowerPair(s[i], v[i])
+                              else v[i] == s[i]
+```
+
+The mutation deletes the upper-case branch's body in the implementation. Without ITE coverage, Z3 picks inputs like `s = []`, `['~']`, `['~',')']` — all non-upper-case, the mutation is invisible because the upper-case branch is never entered. With both branch witnesses asserted, Z3 picks an input like `s = ['Y','@','A']`: two upper-case (`Y`, `A`) plus one non-upper-case (`@`). The mutant returns `v = ['@']` (length 1, not 3), violating `|v| == |s|`. Kill.
+
+The strengthening composes with — and is independent of — the existing forall non-vacuity preference (which guarantees `lo < hi`); together they cover the two main "missed coverage" failure modes for postcondition foralls.
+
+These soft asserts are also emitted in the **plain** query (Phase 1/2/2b) at low weight (1), so non-relevance-driven witnesses still benefit from branch-coverage pressure when relevance probing is structurally UNSAT.
 
 ---
 
