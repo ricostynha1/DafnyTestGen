@@ -491,16 +491,15 @@ The `exists` literal yields three Phase 2 boundary tiers, decomposing into: (1) 
 
 Concrete win: consider a `LinearSearch3` defect that returns `position = -(n+1)` instead of `position = n+1` (a sign error). It only violates the spec `position == -1 || position >= 1` when the iteration index `n >= 1` — i.e. when the searched element appears at a non-trivial position in the input. Z3's default existential witness lands at the first or last index, where `n=0` makes `-(0+1) = -1` coincidentally match the "not found" sentinel and mask the bug. Without these tiers the defect escapes (0 fails on 20 tests under default options); with them, the `/Eb1=mid` tier picks `s1=[23,12,13]` (element at strict-middle index 1) and the test FAILs.
 
-**Spec-coverage row tiers (`/SC<i>r<j>`)**. For every post-clause literal of the form `!exists vars :: range ∧ c1 ∧ … ∧ cn` (with `n ≥ 2` body conjuncts after dropping range/guards), Phase 2 emits **n+1 row-coverage tiers** — one per truth-table row that distinguishes a buggy near-witness from the spec's full negation:
+**Spec-coverage all-flipped tier (`/SC<i>`)**. For every post-clause literal of the form `!exists vars :: range ∧ c1 ∧ … ∧ cn` (with `n ≥ 2` body conjuncts after dropping range/guards), Phase 2 emits **one** entry per literal with extra-constraint
 
-| Row | SMT extra-constraint |
-|---|---|
-| `/SC<i>r<j>` (j = 1..n, drop body conjunct j) | `(exists vars :: range ∧ c1 ∧ … ∧ ¬cj ∧ … ∧ cn)` |
-| `/SC<i>r<n+1>` (all-flipped) | `(exists vars :: range ∧ ¬c1 ∧ … ∧ ¬cn)` |
+```
+(exists vars :: range ∧ ¬c1 ∧ ¬c2 ∧ … ∧ ¬cn)
+```
 
-The drop-each rows are equivalent to the soft-assert near-witness pressure described in [`!exists` near-witness strengthening](#exists-near-witness-strengthening), promoted to hard constraints. The all-flipped row is the missing piece: it can't be combined with any drop-each row inside a single test (drop-`j` forces `cj` false but the others true; all-flipped forces every body conjunct false), so it has to be a separate test. It targets COR-style mutations whose discriminator is the *whole* conjunction — defects where every individual conjunct is allowed to be true or false but the *combination* shifts truth value.
+This is the truth-table row that no Phase 1r near-witness soft can reach. The Phase 1r drop-each softs (described in [`!exists` near-witness strengthening](#exists-near-witness-strengthening)) already cover the n single-conjunct-false rows in both the plain query and the relevance shadow — promoting those to hard Phase 2 tiers as well was tried and proved redundant. The all-flipped row is the missing piece: it can't be combined with any drop-each row inside a single test (drop-`j` forces `cj` false but the others true; all-flipped forces every body conjunct false), so it has to be a separate test. It targets COR-style mutations whose discriminator is the *whole* conjunction — defects where every individual conjunct can be true or false but the *combination* shifts truth value.
 
-Concrete win: a COR_Iff defect on `has_close_elements` replaces `&&` with `<==>` in the existential body. With `numbers = [-62330.0, -62329.875]` and `threshold = 0.0`, the spec demands `result == false` (no pair has distance `< 0`), but the buggy code evaluates `false <==> false` as true at `i=j` and returns `true`. The drop-each rows alone don't pick this input (each one biases threshold to `> 0`); the `/SC2r3` all-flipped row picks `threshold = 0` with two distinct numbers — the test FAILs.
+Concrete win: a COR_Iff defect on `has_close_elements` replaces `&&` with `<==>` in the existential body. With `numbers = [-62330.0, -62329.875]` and `threshold = 0.0`, the spec demands `result == false` (no pair has distance `< 0`), but the buggy code evaluates `false <==> false` as true at `i=j` and returns `true`. The drop-each soft pressure alone doesn't pick this input (each soft biases threshold to `> 0`); the `/SC2` all-flipped tier picks `threshold = 0` with two distinct numbers — the test FAILs.
 
 **Subsumption pruning** at solve-time discards tiers whose witness is already covered by a prior test (typically Phase 1's `/Rel` witness lies in the strict interior, subsuming the mid tier).
 
