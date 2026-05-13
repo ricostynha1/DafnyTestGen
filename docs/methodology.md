@@ -77,6 +77,18 @@ The following table summarises the branching rules:
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously.
 
+### Input-only ensures (preservation properties)
+
+Not every `ensures` clause describes the *behaviour* of the method. A class invariant restated in the postcondition (e.g., `ensures Valid()`) is a **preservation property**: it asserts that the post-state still satisfies the invariant, but doesn't differentiate equivalence classes of the method's output. Decomposing such literals can produce a 2^k blowup in clause count (k = number of internal implications in `Valid()`) without adding test value — the sub-cases just split the input space on invariant configurations the method's logic doesn't depend on.
+
+DafnyCBT therefore applies the following rule:
+
+> **For a non-mutating method (no `modifies` clause), any `ensures` literal that does not reference a return parameter is kept atomic in the DNF** — it contributes as a single conjunct to every clause without being internally decomposed.
+
+The literal is still emitted as a hard `assume` constraint in the SMT query; only its internal disjunctions/implications are skipped. Rationale: when a method has no `modifies` clause, all class state is immutable in its scope, so an ensures literal that references only pre-state values is semantically determined by the precondition, not by what the method does. For *mutating* methods (with a `modifies` clause), the rule is skipped — `ensures Valid()` may then meaningfully constrain how the mutation preserves the invariant.
+
+**Example.** In a `TwoStacks` class with a non-mutating `search1` method whose contract includes both `requires Valid()` and `ensures Valid()`, the `Valid()` postcondition references no return parameter (only `this.*`). Without the rule, `Valid()` decomposes via its internal `|s1|!=0 ⇒ …` and `|s2|!=0 ⇒ …` implications into four sub-cases that cross-product with the actual behavioural ensures, producing eight DNF clauses indistinguishable on `search1`'s behaviour. With the rule, the DNF collapses to **two** clauses (one per outcome direction); existential-boundary tiers then drive the witness to non-top positions in the input sequence, killing the canonical "always-checks-top-of-stack" mutation that survives under the eight-clause regime.
+
 ### Cross-product and incremental pruning and simplification
 
 With multiple `requires` and/or `ensures` clauses, their cross-product forms the full DNF/FDNF. After each pairwise merge, two passes are applied before the clause reaches Z3:
