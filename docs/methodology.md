@@ -279,8 +279,11 @@ Corner cases such as vacuously-true clauses are covered by [per-literal vacuity 
 
 Negating a guard literal can leave later literals referencing undefined indices, lengths, or out-of-bounds positions, and Z3 is free to pick arbitrary values on undefined terms — **producing spurious SAT** with no real semantic content. To avoid that, DafnyCBT classifies a literal `Qk` as safe iff:
 
-1. `Qk` references at least one output variable.
-2. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`. (These shapes typically protect a subsequent indexed access.)
+1. `Qk` references at least one output variable **outside any `old(...)` wrapper**. Literals whose only output occurrences are wrapped in `old(...)` (e.g. `car !in old(carPark)`, `old(|carPark|) < N`) reference pre-state only; pre-state values are shared between `Y` and `Y_k`, so the per-literal query is UNSAT by construction. Filtering them upfront saves a Z3 call without losing any witness.
+2. `Qk` is **not** a frame condition of the form `X == old(X)`. Such literals say "field X is preserved across the call" — trivially flippable by alt-`Y_k` (`Y_k`-X just takes a different value), but the resulting witness's input is unconstrained by the frame and reuses values Phase 1 already covers. Filtering them frees per-literal-sweep budget for genuinely informative literals.
+3. `Qk` does **not** match any guard shape: `0 ≤ X`, `X ≥ 0`, `X > 0`, `X < |Y|`, `X < Y.Length`, `X ≤ |Y|-1`, `|X| ⟨op⟩ E`, `X.Length ⟨op⟩ E`. (These shapes typically protect a subsequent indexed access.)
+
+The frame-condition and `old`-only filters matter most for `{:autocontracts}` class methods, whose DNF clauses are dominated by frame conjuncts (one per non-modified field) and pre-state guards (`car !in old(carPark)`, …). Without them, a single clause can spawn 5+ per-literal `/RelQ` tests that all probe the same success-case input shape, crowding out higher-value BVA tiers under tight budgets.
 
 Literals whose negation would reference a residual uninterpreted function (typically a recursive user-defined function like `Count`, `Power`, `R`) are also excluded from `S`, because Z3 can fabricate function values on the `Y_k` side that satisfy `¬Qk` without reflecting real semantics, defeating the separation. Remaining literals in the same clause are still checked; the full clause's relevance check is skipped only when `S` becomes empty after this filter. Literals *not* referencing the uninterpreted function stay eligible — Z3 cannot exploit the function's freedom to dodge a negation that doesn't mention it.
 
