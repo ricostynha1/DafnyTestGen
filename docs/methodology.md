@@ -176,6 +176,14 @@ The DNF engine splits the inlined expression `X == (if C then A else B)` into th
 
 Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch.
 
+**Fallback when recursive residuals remain in postconditions after inlining.**
+
+The `filter`-style case above works because the inlined post DNF-splits into multiple structural clauses — each guards a specific control-flow path, and BVA tiers within each clause then diversify inputs. For some recursive functions, however, the inlined post does **not** split: e.g. `sum == Max(a[..]) + Min(a[..])` after inlining becomes `sum == (if |a|==1 then a[0] else ...) + (if |a|==1 then a[0] else ...)`. DNF cannot distribute `==` over the `+` of two ITEs, so the whole post stays in a single DNF clause carrying residual `Max(...)` / `Min(...)` calls. Z3 then treats those residuals as uninterpreted, freely assigns values, and finds a SAT model on the cheapest input — typically the base case (`|a| = 1`) — where the mutant happens to agree with the spec. The mutant survives even though it misbehaves on every multi-element input.
+
+When this pattern is detected — at least one DNF clause of the inlined post contains a function call whose callee is in the recursive set — DafnyCBT falls back to the same "drop the post as an SMT constraint" path used for `multiset(...)` / double-slice patterns: replace the ensures DNF with the trivial `true` clause, generate inputs purely from preconditions + BVA tiers + relevance constraints, and emit the **full postcondition expression** as a runtime `expect` in each test. Dafny's executor evaluates `Max([3,1]) + Min([3,1])` concretely at test time, so the spec is enforced — just at the test-execution stage rather than the input-generation stage.
+
+The fallback is gated by `!hasNonInlinableFuncs` to avoid double-handling cases where the existing inlined-DNF-mismatch detector already flagged the spec (Fibonacci-style: `Fib`'s ITE splits the post into 2 clauses, the existing detector sets the flag, but the inlined DNF is still used for SMT input generation, giving BVA-diverse `n` values). For maxVal-style (single clause after inlining), only this new detector fires, and the result is diverse `|a|` values from BVA + correct expected outputs from runtime evaluation of Min/Max on each test input.
+
 **Deeper unfolding for linear-recursive predicates in preconditions.**
 
 Recursive predicates that appear in **preconditions** are a special case: shallow (depth-1) inlining leaves an uninterpreted residual recursive call that Z3 can certify only at the base case, collapsing the legal input space to one trivial witness. Concretely, for `requires Is2Pow(n+1)`:
