@@ -176,6 +176,38 @@ The DNF engine splits the inlined expression `X == (if C then A else B)` into th
 
 Z3 can freely assign values to the residual `filter(...)` calls, and the structural conditions already guide it to find inputs exercising each branch.
 
+**Deeper unfolding for linear-recursive predicates in preconditions.**
+
+Recursive predicates that appear in **preconditions** are a special case: shallow (depth-1) inlining leaves an uninterpreted residual recursive call that Z3 can certify only at the base case, collapsing the legal input space to one trivial witness. Concretely, for `requires Is2Pow(n+1)`:
+
+```dafny
+predicate Is2Pow(n: int) {
+  if n < 1 then false
+  else if n == 1 then true
+  else n % 2 == 0 && Is2Pow(n / 2)
+}
+```
+
+After one unfolding step, the body has `Is2Pow((n+1)/2)` still as an uninterpreted call. Z3 can certify the predicate only when `n+1 == 1` (base case) — so it picks `n = 0`. Every generated test ends up with `n = 0`, which short-circuits any method body that has a `if n == 0 then return …` guard before its recursive structure executes. Mutations in the recursive branch then survive untested.
+
+The fix is to deep-unfold (depth 3) such predicates in preconditions, then DNF the result. Successive unfoldings expose the natural disjunctive structure of the recursion:
+
+```
+Is2Pow(n+1)  ≡  (n+1 == 1)              // n = 0
+              ∨ (n+1 == 2)              // n = 1
+              ∨ (n+1 == 4)              // n = 3
+              ∨ (n+1 == 8)              // n = 7
+              ∨ (deeper residual)
+```
+
+DNF splits these into one clause per power-of-2 → one test goal per concrete `n`. The resulting tests cover `n ∈ {0, 1, 3, 7}` and reach the recursive code path.
+
+**Linearity gate (to prevent exponential blowup).**
+
+Deep unfolding is applied only to **linear-recursive** predicates — those whose body contains at most one self-call. Functions with two or more self-calls (e.g. `Min(a) := if |a| == 1 then a[0] else var m := Min(a[..|a|-1]); if a[|a|-1] <= m then a[|a|-1] else Min(a[..|a|-1])` — two `Min` calls in the else branch) double the AST size on each unfold; at depth 3 they generate 2³ = 8 copies of the body, blowing past Z3's tractability. Such predicates stay at depth 1.
+
+Detected automatically by `ComputeLinearRecursive` (count self-calls in the body). The gate also limits the unfolding to **preconditions**: in postconditions, even linear-recursive functions like `Count(s, x)` produce ITE-chained DNF clauses that explode the test suite size when cross-producted with the rest of the spec.
+
 ---
 
 ## Anti-trivial bias (`--no-bias` to disable)
