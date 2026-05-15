@@ -142,13 +142,27 @@ Before dedup/merge, every literal key is run through a canonicaliser that orient
 
 So `0 <= pos` and `pos >= 0`, or `0 > pos` and `pos < 0`, or `a.Length > 0` and `0 < a.Length`, all map to a single key. This matters because DNF cross-products of `A ⟹ B` with `!A ⟹ C` routinely surface antecedent-vs-negated-antecedent pairs that are the same constraint in different parses. Without canonicalisation the per-literal relevance check treats them as separate safe-indices (emitting redundant `/RelQ` tests) and test-goal labels list each constraint twice. Applied uniformly to `originalDnfExprs` and `dnfExprs` so the inlined-vs-original literal-count comparison stays fair.
 
-### Clause merging by input-fingerprint
+### Clause merging by input-projection equivalence
 
-DNF cross-product of a disjunctive-antecedent ensures (`(A1 ∨ A2) ⟹ C`) with other clauses produces multiple clauses that share the same **input-only** literals and differ only in **output-shape** literals. For binary search, the not-found case splits into `pos < 0 ∧ val !in a` and `pos ≥ a.Length ∧ val !in a` — same input region (`val !in a`), two output representations of "not found". These are operationally equivalent for testing: the implementation picks one output shape, and the runtime `expect` on the full original ensures accepts either.
+DNF cross-product of a disjunctive ensures with other clauses can split one logical outcome into several clauses that differ only in **output shape** over the **same input region**. For binary search, the not-found case splits into `pos < 0 ∧ val !in a` and `pos ≥ |a| ∧ val !in a` — same input region (`val !in a`), two sentinel encodings of "not found". Testing every shape adds no input-discrimination signal, so merging saves test slots. But the converse — LongestCommonPrefix's three maximality disjuncts `|prefix|==|str1| ∨ |prefix|==|str2| ∨ str1[|prefix|]≠str2[|prefix|]` — are **genuinely input-discriminable partitions**; merging those silently loses mutation kills. A purely syntactic input/output literal classification cannot tell the two apart: `pos ≥ |a|` and `|prefix| == |str1|` are structurally identical (`output_metric REL input_metric`) yet must be treated oppositely.
 
-After cross-product, clauses are grouped by the canonical key of their **input-only literals** (a literal is *output-touching* iff it references a return parameter or mutable-post-state variable — the same set the relevance safety filter uses). Each group of size ≥ 2 is merged into a single clause: the shared input-only literals are kept once, and the per-clause output conjunctions are OR-ed into one compound output literal (`BinaryExpr(Or, …)`). Skipped when any clause in the group has no output-touching literal (nothing to OR meaningfully) or the group has size 1.
+The only sound discriminator is **input-projection equivalence**. Define each clause's projection onto the inputs:
 
-Effect: Exercise6 binary search goes from 3 DNF clauses (`pos<0 ∧ not-found`, `pos≥a.Length ∧ not-found`, found) to 2 (merged not-found, found). Fewer test slots spent on operationally-equivalent clauses → higher kill-per-budget. The compound disjunction is also a single relevance safe-index: flipping it (`¬(out1 ∨ out2) = ¬out1 ∧ ¬out2`) is exactly the "force the found case" relevance witness for SelectionSort-style mutants.
+```
+proj(T)(X) := ∃ Y . ( pre(X) ∧ typeof(Y) ∧ T(X,Y) )      -- Y = outputs + mutable-post
+```
+
+Two clauses A, B may be merged iff `proj(A) ≡ proj(B)` — i.e. no precondition-admissible input makes one feasible while the other is infeasible *for every output*. Equivalently, both `∃X. proj(A) ∧ ¬proj(B)` and its converse are UNSAT, where `∃X.(∃Y.A) ∧ (∀Y'. typeof(Y') ⇒ ¬B)`. `typeof(Y)` carries the output type bounds (`nat ⇒ Y≥0`, `char`, enum range) into the quantifier — these can *induce* a forcing input region that appears nowhere in the spec text (e.g. `y<x ∨ y>x` with `y:nat` splits because `proj(y<x)=x>0` comes only from `y≥0`).
+
+This is decided by a Z3 probe, gated by two cheap sound heuristics:
+
+- **H1** — no clause mentions any input ⇒ every projection is trivially the full region ⇒ merge all into one disjunction (handles `rand(): i==0 ∨ i==1`).
+- **H2** — partition clauses by the canonical set of their **input-only** literals (mentions a pure input, nothing output/mutable). Clauses in different partitions have provably different input regions ⇒ never merged across. Sound regardless of precision, since splitting only ever costs a test slot, never a kill (handles `out<0 ∨ out>=n>0`, split by the input-only `n>0`).
+- **Residue** (same input-only set, ≥ 2 clauses): pairwise projection probe against the group representative (projection-equivalence is an equivalence relation, so rep comparison suffices). The probe **declines → keep split** on non-scalar outputs (the flattened seq/array/set/map encoding cannot be soundly universally quantified — over-approximating its domain is the unsound-merge direction), uninterpreted residuals, or any Z3 `unknown`/`timeout`. Every decline is sound.
+
+A confirmed-equivalent group keeps its shared input-only literals once and OR-s the per-clause remainders (`BinaryExpr(Or, …)`); an empty remainder collapses the group to the shared input region.
+
+Effect: Exercise6 binary-search not-found sentinels merge (probe proves equivalence within the `val !in a` region) → fewer slots on operationally-equivalent clauses; LongestCommonPrefix's `seq` output declines the probe → all three maximality disjuncts stay split → the discriminating `|str1|=0,|str2|=1` test is generated and the mutant is killed. This replaces the earlier syntactic input-fingerprint key, which over-merged disjunctive `returns`-spec postconditions and silently lost kills.
 
 ### Predicate and function inlining
 
