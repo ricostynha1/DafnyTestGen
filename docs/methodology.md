@@ -71,11 +71,15 @@ The following table summarises the branching rules:
 | `A \|\| B` | `A`, `!A ∧ B` (a) |
 | `A ==> B` | `!A`, `A ∧ B` |
 | `A <==> B` | `A ∧ B`, `!A ∧ !B` |
+| `A == B` (both Boolean) | `A ∧ B`, `!A ∧ !B` (b) |
+| `A != B` (both Boolean) | `A ∧ !B`, `!A ∧ B` (b) |
 | `!(A && B)` | `!A`, `A ∧ !B` |
 | `if C then A else B` | `C ∧ A`, `!C ∧ B` |
 | `x == (if C then U else V)` | `C ∧ (x == U)`, `!C ∧ (x == V)` |
 
 (a) With FDNF, the branches would be: `A ∧ B`, `A ∧ !B`, `!A ∧ B`.
+
+(b) Boolean `==` is logically `<==>` and `!=` is `xor`; both are decomposed accordingly. This matters for the ubiquitous spec shape `method m(...) returns (b: bool) ensures b == pred(...)` — without the rule, `b == pred(...)` stays a single atomic clause and Z3 is never forced into the `b ∧ pred` vs `¬b ∧ ¬pred` partition, so a defect in the `b`-computation that only diverges on (e.g.) the all-`pred`-satisfying input region is never exercised. Bool detection uses the resolved type with structural fallbacks (quantifier, logical/comparison `BinaryExpr`, `!`, bool-result function call). Excluded: either side a Boolean literal (`x == true` ≡ `x` is better left atomic — the contradiction-pruner collapses the trivial second clause), or either side an `if-then-else` (the more specific `x == (if …)` rule applies instead). Concrete win: `ExercisePositive`'s `mpositivertl` with `i := i-1` corrupted to `i := -i-1` returns `b=false` on every non-empty all-positive array; the `b ∧ positive(v[..])` clause forces exactly that input, flipping the mutant from never-killed to a deterministic kill at `-n 10`.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously.
 
