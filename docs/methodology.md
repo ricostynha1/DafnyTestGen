@@ -20,7 +20,7 @@ DafnyCBT generates tests through a **progressive escalating pipeline**: each pha
 |--:|---|---|--:|:--:|
 | 1 | **Baseline DNF clause** | One concrete witness per DNF clause | always | ON |
 | 1r | **Relevance check** | Replace the Phase 1 query with one that forces every safe literal to non-trivially prune outputs | when `--no-relevance` is not set | ON |
-| 1e | **Establish check** | For a clause whose post is a *pure target-state predicate* (references modified state; no `old(...)`; no return-only vars), generate an input where the clause is **false on the pre-state**, forcing the method to actively establish it. Kills mutants that only pass because the input was already in the goal state (e.g. array already partitioned for `FIND`, already sorted for a sort). Runs **before** 1v. `/Estab` label. Disable with `--no-establish` | when applicable | ON |
+| 1e | **Establish check** | For a clause whose post is a *pure target-state predicate* (references modified state; no `old(...)`; no return-only vars), generate an input where the clause is **false on the pre-state**, forcing the method to actively establish it. Kills mutants that only pass because the input was already in the goal state (e.g. array already partitioned for `FIND`, already sorted for a sort). The `/Estab` witness is also registered as a Phase 3 base carrying the hard `¬Post(pre)` constraint in `extras`, so Phase 3 repeats yield a *budget-scaling family* of distinct `¬Post(pre)` inputs (single-shot at low `-n`, deterministic once budget allows enough samples for content-pattern-sensitive kills). Runs **before** 1v. `/Estab` label. Disable with `--no-establish` | when applicable | ON |
 | 1v | **Vacuity check** (CEGIS) | Find inputs where one literal is vacuously true — *for fault localisation*. Tries isolated witnesses first, falls back to non-isolated automatically | only with `--vacuity` | OFF |
 | 1e-PreSat | **Pre-satisfied check** | Inverse of 1e: input where the clause is **already true** on the pre-state — the idempotent / no-op boundary. Runs **after** 1v. `/PreSat` label | only with `--presat` | OFF |
 | 2 | **Literal-centric BVA** | Per-clause-per-relational-literal `E1 op E2`: emits boundary (`E1 = E2`), strict-companion (`E1 < E2` or `E1 > E2`), and chained-range mid (`LO < EXP < HI`) tiers. Legacy variable-centric extractor available via `--no-literal-bva` / `-nlbva` | when budget remaining | ON |
@@ -127,6 +127,24 @@ In the `GetFirstOrZero` example above, the cross-product of the two ensures clau
 | `a.Length == 0 ∧ result == 0 ∧ a.Length > 0 ∧ result == a[0]` | false | Pruned |
 
 With **FDNF**, each implication produces 3 clauses instead of 2, giving more combinations but losing short-circuit safety, namely by including the unsafe clause `a.Length == 0 ∧ result == 0 ∧ !(a.Length > 0) ∧ result == a[0]`.
+
+### Relational-orientation canonicalisation
+
+Before dedup/merge, every literal key is run through a canonicaliser that orients relational operators so syntactically-different-but-equivalent literals collapse to one key:
+
+- `>` rewrites as `<` with swapped sides; `>=` as `<=` with swapped sides.
+- `==` / `!=` swap to put the lexicographically smaller side on the left.
+- balanced outer parens are stripped before parsing the operator.
+
+So `0 <= pos` and `pos >= 0`, or `0 > pos` and `pos < 0`, or `a.Length > 0` and `0 < a.Length`, all map to a single key. This matters because DNF cross-products of `A ⟹ B` with `!A ⟹ C` routinely surface antecedent-vs-negated-antecedent pairs that are the same constraint in different parses. Without canonicalisation the per-literal relevance check treats them as separate safe-indices (emitting redundant `/RelQ` tests) and test-goal labels list each constraint twice. Applied uniformly to `originalDnfExprs` and `dnfExprs` so the inlined-vs-original literal-count comparison stays fair.
+
+### Clause merging by input-fingerprint
+
+DNF cross-product of a disjunctive-antecedent ensures (`(A1 ∨ A2) ⟹ C`) with other clauses produces multiple clauses that share the same **input-only** literals and differ only in **output-shape** literals. For binary search, the not-found case splits into `pos < 0 ∧ val !in a` and `pos ≥ a.Length ∧ val !in a` — same input region (`val !in a`), two output representations of "not found". These are operationally equivalent for testing: the implementation picks one output shape, and the runtime `expect` on the full original ensures accepts either.
+
+After cross-product, clauses are grouped by the canonical key of their **input-only literals** (a literal is *output-touching* iff it references a return parameter or mutable-post-state variable — the same set the relevance safety filter uses). Each group of size ≥ 2 is merged into a single clause: the shared input-only literals are kept once, and the per-clause output conjunctions are OR-ed into one compound output literal (`BinaryExpr(Or, …)`). Skipped when any clause in the group has no output-touching literal (nothing to OR meaningfully) or the group has size 1.
+
+Effect: Exercise6 binary search goes from 3 DNF clauses (`pos<0 ∧ not-found`, `pos≥a.Length ∧ not-found`, found) to 2 (merged not-found, found). Fewer test slots spent on operationally-equivalent clauses → higher kill-per-budget. The compound disjunction is also a single relevance safe-index: flipping it (`¬(out1 ∨ out2) = ¬out1 ∧ ¬out2`) is exactly the "force the found case" relevance witness for SelectionSort-style mutants.
 
 ### Predicate and function inlining
 
