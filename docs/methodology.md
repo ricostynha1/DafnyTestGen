@@ -71,15 +71,23 @@ The following table summarises the branching rules:
 | `A \|\| B` | `A`, `!A ∧ B` (a) |
 | `A ==> B` | `!A`, `A ∧ B` |
 | `A <==> B` | `A ∧ B`, `!A ∧ !B` |
-| `A == B` (both Boolean) | `A ∧ B`, `!A ∧ !B` (b) |
-| `A != B` (both Boolean) | `A ∧ !B`, `!A ∧ B` (b) |
+| `A == B` (both Boolean, ≥1 side compound) | `A ∧ B`, `!A ∧ !B` (b) |
+| `A != B` (both Boolean, ≥1 side compound) | `A ∧ !B`, `!A ∧ B` (b) |
 | `!(A && B)` | `!A`, `A ∧ !B` |
 | `if C then A else B` | `C ∧ A`, `!C ∧ B` |
 | `x == (if C then U else V)` | `C ∧ (x == U)`, `!C ∧ (x == V)` |
 
 (a) With FDNF, the branches would be: `A ∧ B`, `A ∧ !B`, `!A ∧ B`.
 
-(b) Boolean `==` is logically `<==>` and `!=` is `xor`; both are decomposed accordingly. This matters for the ubiquitous spec shape `method m(...) returns (b: bool) ensures b == pred(...)` — without the rule, `b == pred(...)` stays a single atomic clause and Z3 is never forced into the `b ∧ pred` vs `¬b ∧ ¬pred` partition, so a defect in the `b`-computation that only diverges on (e.g.) the all-`pred`-satisfying input region is never exercised. Bool detection uses the resolved type with structural fallbacks (quantifier, logical/comparison `BinaryExpr`, `!`, bool-result function call). Excluded: either side a Boolean literal (`x == true` ≡ `x` is better left atomic — the contradiction-pruner collapses the trivial second clause), or either side an `if-then-else` (the more specific `x == (if …)` rule applies instead). Concrete win: `ExercisePositive`'s `mpositivertl` with `i := i-1` corrupted to `i := -i-1` returns `b=false` on every non-empty all-positive array; the `b ∧ positive(v[..])` clause forces exactly that input, flipping the mutant from never-killed to a deterministic kill at `-n 10`.
+(b) **Boolean `==` / `!=` (how `bool == bool` is handled).** A Boolean-typed `==` is logically `<==>` and `!=` is `xor`; both are decomposed like `A <==> B` (into the `A ∧ B` / `!A ∧ !B` truth-assignment partition) — **but only when at least one side is a *compound* Boolean**. "Compound" means a predicate/function call, a quantifier, or a Boolean connective/comparison `BinaryExpr` — i.e. an expression with internal predicate structure. Bool detection uses the resolved type with structural fallbacks (quantifier, logical/comparison `BinaryExpr`, `!`, bool-result function call).
+
+The rule **does not fire** in three cases, each kept as a single atomic conjunct:
+
+- **Either side a Boolean literal** (`x == true` ≡ `x` — better atomic; the contradiction-pruner collapses the trivial second clause).
+- **Either side an `if-then-else`** (the more specific `x == (if …)` rule applies instead).
+- **Both sides atomic Boolean references** — a Boolean variable / field / `MemberSelect`, optionally wrapped in `old(...)`, or a bool literal. An `atom == atom` equality has no predicate structure to partition against, so the split adds **no behavioural distinction** while multiplicatively inflating the FDNF cross-product (it crosses two truth-assignment sub-clauses into *every* other clause). This specifically keeps **frame conditions** like `weekend == old(weekend)` ("the method does not change `weekend`") and **aliasing equalities** like `b1 == b2` atomic. Splitting a frame condition is pure waste: it doubles the per-method clause/test count with sub-cases the method's logic is independent of, diluting the fixed test budget across redundant clauses — a measured contributing cause of the `car_park` ROR `>=`→`==` survivor (the budget dilution pushed the killing Phase-2 BVA tier out of reach).
+
+The motivating shape this rule *does* serve is the ubiquitous `method m(...) returns (b: bool) ensures b == pred(...)`: without the split, `b == pred(...)` stays atomic and Z3 is never forced into the `b ∧ pred` vs `¬b ∧ ¬pred` partition, so a defect in the `b`-computation that only diverges on (e.g.) the all-`pred`-satisfying input region is never exercised. Here one side (`pred(...)`) is compound, so the rule fires. Concrete win: `ExercisePositive`'s `mpositivertl` with `i := i-1` corrupted to `i := -i-1` returns `b=false` on every non-empty all-positive array; the `b ∧ positive(v[..])` clause forces exactly that input, flipping the mutant from never-killed to a deterministic kill at `-n 10`.
 
 Both DNF and FDNF are computed bottom-up, starting from leaf literals, by a dual-return recursive function that produces both the DNF/FDNF of an expression E and of its negation simultaneously.
 
