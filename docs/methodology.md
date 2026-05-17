@@ -905,6 +905,59 @@ When a test fails at runtime, the `expect` assertions are commented out in the e
 
 ---
 
+## Bounded scopes (small-scope analysis)
+
+DafnyCBT is a **bounded model finder**: like Alloy's `run … for N`, it searches for
+contract-satisfying inputs within finite scopes rather than over the full
+mathematical domains. The small-scope hypothesis — most contract-distinguishing
+inputs (and most mutation-killing inputs) are small — is what makes the SMT
+queries decidable and fast. Every implicit bound is collected here so the scope
+is explicit and reportable.
+
+| Scope | Constant / flag | Default | Applies to |
+|-------|-----------------|---------|------------|
+| **Value universe** — `int` | hardcoded in `GetElementUniverse` ([TypeUtils.cs:161](../DafnyCBT/TypeUtils.cs#L161)) | `{-2,-1,0,1,2,3,4,5}` (8 values, asymmetric: 2 negatives, biased small) | set/multiset/map element & key membership, `_mset_count` conjunction, permutation-domain pin |
+| **Value universe** — `nat` | `MAX_SET_UNIVERSE` ([SmtTranslator.cs:63](../DafnyCBT/SmtTranslator.cs#L63)) | `{0,…,7}` (8) | as above |
+| **Value universe** — `char` | `MAX_SET_UNIVERSE` | `'a'..'h'` (codes 97–104) | as above |
+| **Value universe** — enum / `T` | `min(#ctors, MAX_SET_UNIVERSE)` | up to 8 | as above |
+| **Value universe** — `string` | fixed constant table | 8 short string constants | `set<string>`, string-keyed maps |
+| **Sequence / array length** | `MAX_SEQ_LEN` ([SmtTranslator.cs:57](../DafnyCBT/SmtTranslator.cs#L57)) | ≤ 8 | every `seq<T>` / `array<T>` / `string` input; BVA size tiers |
+| **Nested inner length** | `MAX_INNER_SEQ_LEN` ([SmtTranslator.cs:60](../DafnyCBT/SmtTranslator.cs#L60)) | ≤ 4 | inner sequences of `seq<seq<T>>` / `seq<string>` |
+| **Recursive-function unrolling** | `RecursiveUnrollDepth` / `--unroll-depth N` ([Program.cs:35](../DafnyCBT/Program.cs#L35)) | 1 | recursive predicates/functions in specs (non-recursive funcs inline to depth 2) |
+| **Collection cardinality tiers** | BVA Phase 2b | 0–3 elements/keys | set / multiset / map size coverage |
+
+`GetElementUniverse(elementType)` is the **single source of truth** for the value
+universe; it feeds set, multiset, map-key, string, and the
+[permutation-domain pin](#per-literal-relevance-check---no-relevance-to-disable)
+encodings. The pin (`--no-permutation-domain-pin` to disable) exists precisely to
+keep this scope *consistent*: the bounded `_mset_count` is only sound if the
+sequence/array elements are themselves constrained into the same universe, so
+whenever a `multiset(X) == multiset(Y)` literal is present every element of the
+involved sequences is asserted to lie in `GetElementUniverse`. Without it the
+bounded count is blind to out-of-universe elements and Z3 can satisfy
+permutation-preservation with `pre ≠ post` differing only outside the universe —
+silently defeating modification-relevance (sort/permute reorder bugs survive).
+
+**Not bounded here (different axes):**
+
+- **Quantifier instantiation** — `forall`/`exists` over unbounded ranges (e.g.
+  primality `forall nr | 1 < nr < n :: n % nr != 0`) are handed to Z3's own
+  instantiation engine, which is incomplete. This is the source of the
+  `Z3 returned UNKNOWN` fallbacks (inputs from preconditions-only, postconditions
+  not verified). Widening the *value* universe does **not** help this; it is a
+  separate bounded-quantifier-expansion concern, sibling to `--unroll-depth`.
+- **Scalar integers not feeding a collection** — unbounded in SMT except for the
+  [anti-trivial bias](#anti-trivial-bias---no-bias-to-disable) soft nudges toward
+  small bounded magnitudes.
+
+A unifying `--domain-size N` knob (parametrising `GetElementUniverse` and
+`MAX_SET_UNIVERSE` so `int → [-N..N]`, default reproducing the table above) is a
+natural future extension — it would make the small-scope hypothesis a tunable,
+paper-reportable dial without inflating the default corpus run. It would *not*
+address the quantifier-instantiation axis above.
+
+---
+
 ## Supported Data Types
 
 | Type | Notes |
