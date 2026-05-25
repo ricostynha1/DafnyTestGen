@@ -23,7 +23,7 @@ DafnyCBT generates tests through a **progressive escalating pipeline**: each pha
 | 1e | **Establish check** | For a clause whose post is a *pure target-state predicate* (references modified state; no `old(...)`; no return-only vars), generate an input where the clause is **false on the pre-state**, forcing the method to actively establish it. Detects faults that only pass because the input was already in the goal state (e.g. array already partitioned for `FIND`, already sorted for a sort). The `/Estab` witness is also registered as a Phase 3 base carrying the hard `¬Post(pre)` constraint in `extras`, so Phase 3 repeats yield a *budget-scaling family* of distinct `¬Post(pre)` inputs (single-shot at low `-n`, deterministic once budget allows enough samples for content-pattern-sensitive kills). Runs **before** 1v. `/Estab` label. Disable with `--no-establish` | when applicable | ON |
 | 1v | **Vacuity check** (CEGIS) | Find inputs where one literal is vacuously true — *for fault localisation*. Tries isolated witnesses first, falls back to non-isolated automatically | only with `--vacuity` | OFF |
 | 1e-PreSat | **Pre-satisfied check** | Inverse of 1e: input where the clause is **already true** on the pre-state — the idempotent / no-op boundary. Runs **after** 1v. `/PreSat` label | only with `--presat` | OFF |
-| 2 | **Literal-centric BVA** | Per-clause-per-relational-literal `E1 op E2`: emits boundary (`E1 = E2`), strict-companion (`E1 < E2` or `E1 > E2`), and chained-range mid (`LO < EXP < HI`) tiers. Legacy variable-centric extractor available via `--no-literal-bva` / `-nlbva` | when budget remaining | ON |
+| 2 | **Literal-centric BVA** | Per-clause-per-relational-literal `E1 op E2`: emits boundary (`E1 = bound`) and strict-companion (`E1 < bound` or `E1 > bound`) tiers, plus chained-range `=lo`/`=hi`/`mid` when a chain is detected. Strict integer literals (`<` / `>`) are normalised via `X < Y ≡ X ≤ Y-1` so they get the same two tiers shifted by ±1. Optional off-by-one neighbor (`= bound ± 1`) re-enabled via `--bva-neighbors`. Legacy variable-centric extractor available via `--no-literal-bva` / `-nlbva` | when budget remaining | ON |
 | 2b | **Type/size coverage** | Categorical tiers (`=0`, `>0`, `<0`; `\|s\|=0`, `\|s\|=1`, `\|s\|=2`, `\|s\|≥3` at default `--tiers 4`; enum constructors; pre vs post modification) | when budget remaining | ON |
 | 3 | **Round-robin repetition** | Distinct alternatives per base (one query per base per round); alternates plain repeats with genuine relevance-style repeats when a `/Rel` witness exists; bases drop on plain UNSAT; cross-base input dedup with retry | when budget remaining | ON |
 | post | **Vacuity annotation** | Per-test scan tagging every vacuous `Qk` with `// VACUOUSLY TRUE` for SFL precision | always | ON |
@@ -577,31 +577,28 @@ Each DNF clause produced by Phase 1 already defines an equivalence class as the 
 
 ### Phase 2 — literal-centric BVA
 
-For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits up to three tiers per literal **against an effective (possibly shifted) integer bound**:
+For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits **two tiers per literal by default**, against an effective (possibly shifted) integer bound. The unification `X < Y ≡ X ≤ Y − 1` (and `X > Y ≡ X ≥ Y + 1`) gives strict integer literals the same tier coverage as non-strict ones, just shifted by ±1. Real-typed literals skip the strict cases (no integer step exists, and `(- realexpr 1)` is type-mismatched in SMT-LIB).
 
-| Op | Effective bound | Neighbor | Strict-companion |
-|---|---|---|---|
-| `≤` | `E2` | `E2 − 1` | `E1 < E2` |
-| `<` (integer) | `E2 − 1` | `E2 − 2` | `E1 < E2 − 1` |
-| `≥` | `E2` | `E2 + 1` | `E1 > E2` |
-| `>` (integer) | `E2 + 1` | `E2 + 2` | `E1 > E2 + 1` |
-
-The unification `X < Y ≡ X ≤ Y − 1` (and `X > Y ≡ X ≥ Y + 1`) gives strict integer literals the same three-tier coverage as non-strict ones, just shifted by ±1. Real-typed literals skip the strict cases (no integer step exists, and `(- realexpr 1)` is type-mismatched in SMT-LIB).
+| Op | Effective bound | Strict-companion |
+|---|---|---|
+| `≤` | `E2` | `E1 < E2` |
+| `<` (integer) | `E2 − 1` | `E1 < E2 − 1` |
+| `≥` | `E2` | `E1 > E2` |
+| `>` (integer) | `E2 + 1` | `E1 > E2 + 1` |
 
 | Tier | SMT constraint | Label | Purpose |
 |---|---|---|---|
-| **Boundary** | `(= E1 bound)` | `/BL:E1opE2=` (non-strict) / `=-1` / `=+1` (strict) | Pins `E1` to the inclusive endpoint — the exact-at-boundary regime that ROR-induced `≥` / `≤` → `==` faults need (the buggy implementation catches the boundary but admits values strictly above/below). |
+| **Boundary** | `(= E1 bound)` | `/BL:E1opE2=` (non-strict) / `=-1` / `=+1` (strict) | Pins `E1` to the inclusive endpoint — the exact-at-boundary regime that ROR-induced `≥` / `≤` → `==` faults need. |
 | **Strict-companion** | `(< E1 bound)` for upper, `(> E1 bound)` for lower | `/BL:E1opE2<` / `<-1` / `>` / `>+1` | The strictly-interior region — where a ROR-induced fault admits inputs the correct spec would have refused. |
-| **Off-by-one neighbor** | `(= E1 (- bound 1))` for upper, `(+ bound 1)` for lower | `/BL:E1opE2=-1` / `=-2` (strict) / `=+1` / `=+2` (strict) | Pins `E1` one step inside the effective bound. Targets off-by-one defects (LVR / VER faults replacing `E1` with `E1±1`, ROR-induced `≤` → `<` shifts). |
 
-For real-typed strict literals, none of the three tiers fire; coverage comes from Phase 1's `/Rel` query (which exercises the strict region) and from `/BLsub:` substitution for input-only literals (which substitutes `<` / `=` / `>` regions, reaching the boundary case the asserted strict literal would otherwise contradict).
+**Optional off-by-one neighbor tier (`--bva-neighbors`, default OFF).** Adds a third tier per literal pinning `E1` one step further inside the effective bound (`(= E1 (- bound 1))` for upper, `(+ bound 1)` for lower). Labels: `/BL:E1opE2=-1` (non-strict upper) / `=-2` (strict upper) / `=+1` (non-strict lower) / `=+2` (strict lower). Targets off-by-one defects (LVR / VER faults replacing `E1` with `E1±1`, ROR-induced `≤` → `<` shifts) where the explicit neighbor witness drives Z3 away from the strict-companion's model-minimised default. Useful on off-by-one-heavy corpora; otherwise leaves Z3 to land in the strict interior naturally.
 
-Pure constant comparisons are skipped. Pairs of literals that form a chained range get extra tiers, and the boundary tiers are strengthened with the *opposite-end* constraint so the three tiers can't collapse to the same model:
+Pure constant comparisons are skipped. Pairs of literals that form a chained range get extra tiers, and the boundary tiers are strengthened with the *opposite-end* constraint so the three tiers can't collapse to the same model. **Default: three tiers per chain** (`=lo`, `=hi`, `mid`) — uniform with the existential boundary's three-tier count below. The two neighbor tiers are opt-in via `--bva-neighbors`:
 
-| Chain shape | Tiers emitted |
-|---|---|
-| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI` (`/=lo`), `EXP = HI ∧ LO < EXP` (`/=hi`), **mid**: `(and (> EXP LO) (< EXP HI))` (`/mid`), **lo-neighbor inside**: `EXP = LO + 1 ∧ EXP < HI` (`/=lo+1`), **hi-neighbor inside**: `EXP = HI - 1 ∧ LO < EXP` (`/=hi-1`) |
-| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT. Neighbors `=lo+1` / `=hi-1` are still emitted (they remain SAT inside the chain). |
+| Chain shape | Default tiers (3) | With `--bva-neighbors` (+2) |
+|---|---|---|
+| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI` (`/=lo`), `EXP = HI ∧ LO < EXP` (`/=hi`), **mid**: `(and (> EXP LO) (< EXP HI))` (`/mid`) | **lo-neighbor inside**: `EXP = LO + 1 ∧ EXP < HI` (`/=lo+1`), **hi-neighbor inside**: `EXP = HI - 1 ∧ LO < EXP` (`/=hi-1`) |
+| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT. | Neighbors emitted when SAT against the chain's strictness. |
 
 The opposite-end strict constraint is the load-bearing part: without it, when the precondition admits `LO == HI` (degenerate single-point range), Z3 can satisfy *both* `EXP=LO` and `EXP=HI` tiers with the identical `LO == EXP == HI` model — collapsing two tiers into one and defeating boundary diversity. Forcing `EXP < HI` on the `=lo` tier (and `LO < EXP` on the `=hi` tier) keeps them structurally distinct whenever the range can be widened.
 
@@ -649,7 +646,7 @@ Concrete win: a COR_Iff defect on `has_close_elements` replaces `&&` with `<==>`
 
 Covered types: `int`, `nat`, `real`, and any expression that translates to an SMT-numeric value (cardinalities, indexed reads, etc.).
 
-**Order within Phase 2.** Literal-centric tiers are emitted FIRST, then variable-centric tiers (which mirror the literal-centric boundary tiers for the bare-variable subset and add nothing extra now that off-by-one neighbors are covered by the literal-centric path). The variable-centric tiers stay in the schedule as a safety net for variables that don't appear in any scanned relational literal (e.g., when the spec is a pure equality `result == expr` with no `<` / `≤` / `>` / `≥` on the variable), but most of them are subsumed at solve time by the literal-centric witnesses. The legacy variable-centric-only path is still available via `--no-literal-bva` / `-nlbva`. The architectural overlap is intentional: literal-centric reaches compound expressions (`r * r ≤ N`, `|carPark| > normalSpaces - K`) that variable-centric can't, while variable-centric remains the fallback for bare-variable cases that no literal touches.
+**Single-mechanism Phase 2.** Literal-centric is the only Phase 2 mechanism by default. Specific-value coverage for bare variables (and other type-default cases) is delegated to **Phase 2b** below, which emits categorical numeric/size tiers (`/Ox=0`, `=1`, `=2`, `>=3`, `|s|=0,…`). The legacy variable-centric extractor (`BoundaryAnalysis.ComputeRefinedBoundaries` — per-variable boundary tiers from extracted clause bounds, plus `=lo+1` / `=hi-1` off-by-one neighbors and `>rel` strict-above-relational tiers) is only invoked under `--no-literal-bva` / `-nlbva`. When literal-centric is on, the off-by-one density it provided is replaced by the optional `--bva-neighbors` tiers, and its specific-value coverage by Phase 2b.
 
 ### Phase 2b — type/size coverage
 
