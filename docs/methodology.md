@@ -577,27 +577,29 @@ Each DNF clause produced by Phase 1 already defines an equivalence class as the 
 
 ### Phase 2 — literal-centric BVA
 
-For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits two tiers per literal:
+For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits up to three tiers per literal:
 
 | Tier | SMT constraint | Purpose |
 |---|---|---|
-| **Boundary** | `(= E1 E2)` | Pins `E1 = E2` — the exact-at-boundary regime that ROR-mutated `≥` / `≤` → `==` bugs need (the buggy code catches the boundary but admits values strictly above/below). |
-| **Strict-companion** | `(> E1 E2)` for `≥`/`>`, `(< E1 E2)` for `≤`/`<` | The strictly-above (or strictly-below) region — where the buggy ROR-mutated implementation admits inputs the original would have refused. |
+| **Boundary** (`/BL:E1opE2=`) | `(= E1 E2)` | Pins `E1 = E2` — the exact-at-boundary regime that ROR-mutated `≥` / `≤` → `==` bugs need (the buggy code catches the boundary but admits values strictly above/below). |
+| **Strict-companion** (`/BL:E1opE2<` or `>`) | `(> E1 E2)` for `≥`/`>`, `(< E1 E2)` for `≤`/`<` | The strictly-above (or strictly-below) region — where the buggy ROR-mutated implementation admits inputs the original would have refused. |
+| **Off-by-one inside-boundary neighbor** (`/BL:E1opE2=-1` or `=+1`) — emitted only for non-strict `≤` / `≥` literals | `(= E1 (- E2 1))` for `≤`, `(= E1 (+ E2 1))` for `≥` | Pins `E1` one step inside the boundary, away from `E2`. Targets off-by-one defects adjacent to the boundary that the boundary or strict-companion tiers miss (LVR / VER mutations replacing `E1` with `E1±1`, ROR-mutated `≤` → `<` near the boundary). For strict `<` / `>` literals the boundary tier already IS the just-inside position (e.g. `x < N` boundary is `x = N-1`), so no extra neighbor tier is emitted. |
 
-Pure constant comparisons are skipped. Pairs of literals that form a chained range get an extra **mid-of-range** tier, and the boundary tiers are strengthened with the *opposite-end* strict constraint so the three tiers can't collapse to the same model:
+Pure constant comparisons are skipped. Pairs of literals that form a chained range get extra tiers, and the boundary tiers are strengthened with the *opposite-end* constraint so the three tiers can't collapse to the same model:
 
 | Chain shape | Tiers emitted |
 |---|---|
-| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI`, `EXP = HI ∧ LO < EXP`, **mid**: `(and (> EXP LO) (< EXP HI))` |
-| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT |
+| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI` (`/=lo`), `EXP = HI ∧ LO < EXP` (`/=hi`), **mid**: `(and (> EXP LO) (< EXP HI))` (`/mid`), **lo-neighbor inside**: `EXP = LO + 1 ∧ EXP < HI` (`/=lo+1`), **hi-neighbor inside**: `EXP = HI - 1 ∧ LO < EXP` (`/=hi-1`) |
+| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT. Neighbors `=lo+1` / `=hi-1` are still emitted (they remain SAT inside the chain). |
 
 The opposite-end strict constraint is the load-bearing part: without it, when the precondition admits `LO == HI` (degenerate single-point range), Z3 can satisfy *both* `EXP=LO` and `EXP=HI` tiers with the identical `LO == EXP == HI` model — collapsing two tiers into one and defeating boundary diversity. Forcing `EXP < HI` on the `=lo` tier (and `LO < EXP` on the `=hi` tier) keeps them structurally distinct whenever the range can be widened.
 
 `EXP` can be any expression — bare variable, cardinality `\|s\|`, indexed access `arr[i]`, function call, etc. — so the scan reaches bounds the variable-centric extractor misses. Examples:
 
-- `\|carPark\| ≥ normalSpaces - badParkingBuffer` (single literal) → boundary `\|carPark\| = K` and strict-above `\|carPark\| > K`. The strict-above is what catches an off-by-one defect (`==` instead of `≥`) that would admit `\|carPark\| > K` but be missed by a boundary-only test.
-- `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0 ∧ k<n`, `k=n ∧ 0<k`, and mid `0 < k < n`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs.
-- `m < arr[i] < M` (chain on indexed access) → boundaries `arr[i]=m+1`, `arr[i]=M-1`, and mid `m < arr[i] < M`.
+- `\|carPark\| ≥ normalSpaces - badParkingBuffer` (single literal) → boundary `\|carPark\| = K`, strict-above `\|carPark\| > K`, and inside-neighbor `\|carPark\| = K + 1`. The strict-above catches an off-by-one defect (`==` instead of `≥`) that would admit `\|carPark\| > K`; the inside-neighbor catches a defect that misjudges the just-inside position.
+- `0 ≤ k ≤ n` (chain in CombNK's precondition) → boundaries `k=0 ∧ k<n`, `k=n ∧ 0<k`, mid `0 < k < n`, lo-neighbor `k=1 ∧ k<n`, hi-neighbor `k=n-1 ∧ 0<k`. The mid tier forces non-boundary `k` for FIND-style midpoint bugs; the neighbors target off-by-one in the loop-guard arithmetic.
+- `m < arr[i] < M` (chain on indexed access) → boundary `arr[i]=m+1` (lo-tight, normalized from `<`), `arr[i]=M-1` (hi-tight), mid, plus neighbors `arr[i]=m+2`, `arr[i]=M-2` (one step further inside).
+- `r * r ≤ N < (r + 1) * (r + 1)` (Clover SquareRoot chain) → boundary `N = r*r` (perfect square pin), boundary `N = (r+1)*(r+1) - 1` (just-below next square), mid `r*r < N < (r+1)*(r+1)`, plus the inside-boundary neighbors. The spec-derived perfect-square boundary is the witness that catches the ROR-mutated loop guard.
 
 **Existential boundary tiers**. Phase 2 also scans post-clause literals of the form `exists k :: lo <= k < hi && P(k)` and the equivalent negated-forall pattern `!(forall k :: lo <= k < hi ==> P(k))`, emitting up to three additional Phase 2 entries per quantifier — each adding ONE narrower constraint as an extra (the original quantifier STAYS in the clause):
 
@@ -634,7 +636,9 @@ Concrete win: a COR_Iff defect on `has_close_elements` replaces `&&` with `<==>`
 
 **Subsumption pruning** at solve-time discards tiers whose witness is already covered by a prior test (typically Phase 1's `/Rel` witness lies in the strict interior, subsuming the mid tier).
 
-Covered types: `int`, `nat`, `real`, and any expression that translates to an SMT-numeric value (cardinalities, indexed reads, etc.). The legacy variable-centric extractor (`--no-literal-bva` / `-nlbva`) walks input/output/field variables individually and emits boundary tiers per variable from extracted bounds — narrower than the literal-centric path because it can't see bounds on compound expressions.
+Covered types: `int`, `nat`, `real`, and any expression that translates to an SMT-numeric value (cardinalities, indexed reads, etc.).
+
+**Order within Phase 2.** Literal-centric tiers are emitted FIRST, then variable-centric tiers (which mirror the literal-centric boundary tiers for the bare-variable subset and add nothing extra now that off-by-one neighbors are covered by the literal-centric path). The variable-centric tiers stay in the schedule as a safety net for variables that don't appear in any scanned relational literal (e.g., when the spec is a pure equality `result == expr` with no `<` / `≤` / `>` / `≥` on the variable), but most of them are subsumed at solve time by the literal-centric witnesses. The legacy variable-centric-only path is still available via `--no-literal-bva` / `-nlbva`. The architectural overlap is intentional: literal-centric reaches compound expressions (`r * r ≤ N`, `|carPark| > normalSpaces - K`) that variable-centric can't, while variable-centric remains the fallback for bare-variable cases that no literal touches.
 
 ### Phase 2b — type/size coverage
 
