@@ -593,12 +593,17 @@ For each DNF clause, Phase 2 scans every relational literal in the precondition 
 
 **Optional off-by-one neighbor tier (`--bva-neighbors`, default OFF).** Adds a third tier per literal pinning `E1` one step further inside the effective bound (`(= E1 (- bound 1))` for upper, `(+ bound 1)` for lower). Labels: `/BL:E1opE2=-1` (non-strict upper) / `=-2` (strict upper) / `=+1` (non-strict lower) / `=+2` (strict lower). Targets off-by-one defects (LVR / VER faults replacing `E1` with `E1±1`, ROR-induced `≤` → `<` shifts) where the explicit neighbor witness drives Z3 away from the strict-companion's model-minimised default. Useful on off-by-one-heavy corpora; otherwise leaves Z3 to land in the strict interior naturally.
 
-Pure constant comparisons are skipped. Pairs of literals that form a chained range get extra tiers, and the boundary tiers are strengthened with the *opposite-end* constraint so the three tiers can't collapse to the same model. **Default: three tiers per chain** (`=lo`, `=hi`, `mid`) — uniform with the existential boundary's three-tier count below. The two neighbor tiers are opt-in via `--bva-neighbors`:
+Pure constant comparisons are skipped. Pairs of literals that form a chained range get three tiers per chain, and they **subsume the per-literal tiers for the chain's constituent literals** (per-literal emission for those literals is skipped — the chain versions are stricter via the opposite-end constraint). The three tiers can't collapse to the same model because each carries the *opposite-end* constraint. **Default: three tiers per chain** (`=lo`, `=hi`, `mid`) — uniform with the existential boundary's three-tier count below. The two neighbor tiers are opt-in via `--bva-neighbors`:
+
+For strict bounds (`LO < EXP` or `EXP < HI`), the chain detector uses the integer-shift normalization (`LO < EXP ≡ LO+1 ≤ EXP`, `EXP < HI ≡ EXP ≤ HI-1`) to compute an **effective bound** that makes `=lo` / `=hi` SAT against the original literal's strictness. The unification applies to integer-typed chains (int/nat/char/enum); real-typed strict chains fall back to skipping the corresponding `=lo` / `=hi` tier (no integer step exists, and the SMT-LIB shifted expression `(- realexpr 1)` is type-mismatched).
 
 | Chain shape | Default tiers (3) | With `--bva-neighbors` (+2) |
 |---|---|---|
-| `LO ≤ EXP ≤ HI` (with `EXP` syntactically equal on both sides) | `EXP = LO ∧ EXP < HI` (`/=lo`), `EXP = HI ∧ LO < EXP` (`/=hi`), **mid**: `(and (> EXP LO) (< EXP HI))` (`/mid`) | **lo-neighbor inside**: `EXP = LO + 1 ∧ EXP < HI` (`/=lo+1`), **hi-neighbor inside**: `EXP = HI - 1 ∧ LO < EXP` (`/=hi-1`) |
-| Strict variants (`<` on either side) | Same, with the boundary's `<`/`<=` matching the chain's strictness; boundaries dropped when their strictness makes them UNSAT. | Neighbors emitted when SAT against the chain's strictness. |
+| `LO ≤ EXP ≤ HI` (integer or real) | `EXP = LO ∧ EXP ≤ HI` (`/=lo`), `EXP = HI ∧ LO ≤ EXP` (`/=hi`), **mid**: `LO < EXP < HI` (`/mid`) | `EXP = LO+1`, `EXP = HI-1` (with opposite-end constraint, integer-only) |
+| `LO ≤ EXP < HI` (integer) | `EXP = LO ∧ EXP < HI`, `EXP = HI-1 ∧ LO ≤ EXP`, `LO < EXP < HI` | symmetric |
+| `LO < EXP ≤ HI` (integer) | `EXP = LO+1 ∧ EXP ≤ HI`, `EXP = HI ∧ LO < EXP`, `LO < EXP < HI` | symmetric |
+| `LO < EXP < HI` (integer) | `EXP = LO+1 ∧ EXP < HI`, `EXP = HI-1 ∧ LO < EXP`, `LO < EXP < HI` | symmetric |
+| Strict real bounds (`< / >` on either side) | Corresponding endpoint tier skipped (no integer shift available); the other endpoint + mid still emitted. | n/a |
 
 The opposite-end strict constraint is the load-bearing part: without it, when the precondition admits `LO == HI` (degenerate single-point range), Z3 can satisfy *both* `EXP=LO` and `EXP=HI` tiers with the identical `LO == EXP == HI` model — collapsing two tiers into one and defeating boundary diversity. Forcing `EXP < HI` on the `=lo` tier (and `LO < EXP` on the `=hi` tier) keeps them structurally distinct whenever the range can be widened.
 
