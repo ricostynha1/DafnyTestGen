@@ -577,15 +577,24 @@ Each DNF clause produced by Phase 1 already defines an equivalence class as the 
 
 ### Phase 2 — literal-centric BVA
 
-For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits up to three tiers per literal **when the operator is non-strict (`≤` / `≥`)**:
+For each DNF clause, Phase 2 scans every relational literal in the precondition and postcondition (`E1 op E2` with `op ∈ {<, ≤, >, ≥}`, where `E1` and `E2` are arbitrary expressions — not necessarily bare variables) and emits up to three tiers per literal **against an effective (possibly shifted) integer bound**:
 
-| Tier | SMT constraint | Purpose |
-|---|---|---|
-| **Boundary** (`/BL:E1opE2=`) | `(= E1 E2)` | Pins `E1 = E2` — the exact-at-boundary regime that ROR-induced `≥` / `≤` → `==` faults need (the buggy implementation catches the boundary but admits values strictly above/below). |
-| **Strict-companion** (`/BL:E1opE2<` or `>`) | `(> E1 E2)` for `≥`, `(< E1 E2)` for `≤` | The strictly-above (or strictly-below) region — where a ROR-induced fault admits inputs the correct spec would have refused. |
-| **Off-by-one inside-boundary neighbor** (`/BL:E1opE2=-1` or `=+1`) | `(= E1 (- E2 1))` for `≤`, `(= E1 (+ E2 1))` for `≥` | Pins `E1` one step inside the boundary, away from `E2`. Targets off-by-one defects adjacent to the boundary that the boundary or strict-companion tiers miss (LVR / VER faults replacing `E1` with `E1±1`, ROR-induced `≤` → `<` near the boundary). |
+| Op | Effective bound | Neighbor | Strict-companion |
+|---|---|---|---|
+| `≤` | `E2` | `E2 − 1` | `E1 < E2` |
+| `<` (integer) | `E2 − 1` | `E2 − 2` | `E1 < E2 − 1` |
+| `≥` | `E2` | `E2 + 1` | `E1 > E2` |
+| `>` (integer) | `E2 + 1` | `E2 + 2` | `E1 > E2 + 1` |
 
-For **strict literals (`<` / `>`)** the non-substitution path emits **none** of these three tiers. The reasoning: the literal is asserted as true in the clause, so conjoining the boundary `(= E1 E2)` contradicts it and is UNSAT-skipped; the strict-companion `(op E1 E2)` IS the literal itself and produces the same SAT region as Phase 1's `/Rel` query (no narrowing); and the boundary already IS the just-inside position (e.g. `x < N` boundary would be `x = N-1`, so no further neighbor is meaningful). For input-only literals, the dedicated `/BLsub:` substitution path REMOVES the original literal from the clause copy and substitutes one of the three regions (`<` / `=` / `>`), which IS useful for strict literals (the boundary case becomes reachable once the strict assertion is gone). So strict literals' boundary coverage is provided by `/BLsub:` for input-only literals and by Phase 1's `/Rel` query for output-involving literals.
+The unification `X < Y ≡ X ≤ Y − 1` (and `X > Y ≡ X ≥ Y + 1`) gives strict integer literals the same three-tier coverage as non-strict ones, just shifted by ±1. Real-typed literals skip the strict cases (no integer step exists, and `(- realexpr 1)` is type-mismatched in SMT-LIB).
+
+| Tier | SMT constraint | Label | Purpose |
+|---|---|---|---|
+| **Boundary** | `(= E1 bound)` | `/BL:E1opE2=` (non-strict) / `=-1` / `=+1` (strict) | Pins `E1` to the inclusive endpoint — the exact-at-boundary regime that ROR-induced `≥` / `≤` → `==` faults need (the buggy implementation catches the boundary but admits values strictly above/below). |
+| **Strict-companion** | `(< E1 bound)` for upper, `(> E1 bound)` for lower | `/BL:E1opE2<` / `<-1` / `>` / `>+1` | The strictly-interior region — where a ROR-induced fault admits inputs the correct spec would have refused. |
+| **Off-by-one neighbor** | `(= E1 (- bound 1))` for upper, `(+ bound 1)` for lower | `/BL:E1opE2=-1` / `=-2` (strict) / `=+1` / `=+2` (strict) | Pins `E1` one step inside the effective bound. Targets off-by-one defects (LVR / VER faults replacing `E1` with `E1±1`, ROR-induced `≤` → `<` shifts). |
+
+For real-typed strict literals, none of the three tiers fire; coverage comes from Phase 1's `/Rel` query (which exercises the strict region) and from `/BLsub:` substitution for input-only literals (which substitutes `<` / `=` / `>` regions, reaching the boundary case the asserted strict literal would otherwise contradict).
 
 Pure constant comparisons are skipped. Pairs of literals that form a chained range get extra tiers, and the boundary tiers are strengthened with the *opposite-end* constraint so the three tiers can't collapse to the same model:
 
