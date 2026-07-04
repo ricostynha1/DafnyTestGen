@@ -16,7 +16,7 @@
       "<USER>/.vscode/extensions/dafny-lang.ide-vscode-3.5.2/out/resources/4.11.0/github/dafny".
       Copy this template to DafnyCBT.csproj and replace the value below.
     -->
-    <DafnyDir>/app/fault-loc-dafny/Binaries</DafnyDir>
+    <DafnyDir>/app/verifixer_fault_localization/dafny/Binaries</DafnyDir>
   </PropertyGroup>
 
   <ItemGroup>
